@@ -1,4 +1,15 @@
-# Fitbit
+# Fitbit on Phoenix
+
+## Overview
+I would like to build something to download my fitbit and strava data. I'm not sure how far I am going to get on this.
+
+## Goals
+
+- [ ] Deploy on heroku
+- [ ] Connect via oauth to fitbit api
+- [ ] Learn phoenix along the way
+
+## Basic Phoenix Stuff
 
 To start your Phoenix server:
 
