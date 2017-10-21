@@ -17,6 +17,11 @@ To run correctly, these variables must be set:
   * `FITBIT_CLIENT_SECRET`: Secret from fitbit oauth.
   * `HEROKU_URL`: This is the url of the server. Needed for the callback url.
 
+## Getting Started
+
+  1. Create an app for fitbit [here](https://dev.fitbit.com/apps/new).
+  2. Set environment variables above.
+
 ## Basic Phoenix Stuff
 
 To start your Phoenix server:
