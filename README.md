@@ -6,7 +6,7 @@ I would like to build something to download my fitbit and strava data. I'm not s
 ## Goals
 
 - [x] Deploy on heroku
-- [ ] Connect via oauth to fitbit api
+- [x] Connect via oauth to fitbit api
 - [ ] Learn phoenix along the way
 
 ## Basic Phoenix Stuff
