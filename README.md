@@ -9,6 +9,14 @@ I would like to build something to download my fitbit and strava data. I'm not s
 - [x] Connect via oauth to fitbit api
 - [ ] Learn phoenix along the way
 
+## ENV Variables
+
+To run correctly, these variables must be set:
+
+  * `FITBIT_CLIENT_ID`: Client id when setting up fitbit oauth.
+  * `FITBIT_CLIENT_SECRET`: Secret from fitbit oauth.
+  * `HEROKU_URL`: This is the url of the server. Needed for the callback url.
+
 ## Basic Phoenix Stuff
 
 To start your Phoenix server:

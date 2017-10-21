@@ -8,7 +8,7 @@ defmodule FitbitAuth do
       strategy: __MODULE__,
       client_id: System.get_env("FITBIT_CLIENT_ID"),
       client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-      redirect_uri: "https://powerful-reef-10480.herokuapp.com/auth/fitbit/callback",
+      redirect_uri: "#{System.get_env("HEROKU_URL")}/auth/fitbit/callback",
       site: "https://api.fitbit.com",
       authorize_url: "https://www.fitbit.com/oauth2/authorize",
       token_url: "https://api.fitbit.com/oauth2/token",
