@@ -2,8 +2,8 @@ defmodule FitbitWeb.AuthController do
   use FitbitWeb, :controller
   plug Ueberauth
 
-  require Logger
   alias Ueberauth.Strategy.Helpers
+  alias Fitbit.Accounts
 
   def request(conn, _params) do
     render(conn, "request.html", callback_url: Helpers.callback_url(conn))
@@ -23,10 +23,19 @@ defmodule FitbitWeb.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    conn
-    |> put_session(:access_token, auth.credentials.token)
-    |> put_session(:current_user, auth.info)
-    |> put_flash(:info, "Logged In")
-    |> redirect(to: "/")
+    credentials = %{provider: "fitbit", token: auth.credentials.token, uid: auth.uid}
+    user_params = Map.merge(Map.from_struct(auth.info), %{credential: credentials})
+    case Accounts.create_user(user_params) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Welcome back!")
+        |> put_session(:current_user, user)
+        |> configure_session(renew: true)
+        |> redirect(to: "/")
+      {:error, %Ecto.Changeset{}} ->
+        conn
+        |> put_flash(:info, "Didn't Work")
+        |> redirect(to: "/")
+    end
   end
 end
