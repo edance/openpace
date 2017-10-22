@@ -22,6 +22,20 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :ueberauth, Ueberauth,
+  providers: [
+    fitbit: { Ueberauth.Strategy.Fitbit, [] },
+    strava: {Ueberauth.Strategy.Strava, []}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Fitbit.OAuth,
+  client_id: System.get_env("FITBIT_CLIENT_ID"),
+  client_secret: System.get_env("FITBIT_CLIENT_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Strava.OAuth,
+  client_id: System.get_env("STRAVA_CLIENT_ID"),
+  client_secret: System.get_env("STRAVA_CLIENT_SECRET")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

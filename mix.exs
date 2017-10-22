@@ -20,7 +20,8 @@ defmodule Fitbit.Mixfile do
   def application do
     [
       mod: {Fitbit.Application, []},
-      extra_applications: [:logger, :runtime_tools, :oauth2]
+      extra_applications: [:logger, :runtime_tools, :oauth2, :ueberauth_fitbit,
+                          :ueberauth_strava]
     ]
   end
 
@@ -41,7 +42,9 @@ defmodule Fitbit.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:oauth2, "~> 0.9"}
+      {:oauth2, "~> 0.9"},
+      {:ueberauth_fitbit, "~> 0.2"},
+      {:ueberauth_strava, "~> 0.1"}
     ]
   end
 
