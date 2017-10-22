@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for activity <- @activities do %>
+      <tr>
+        <td><%=  activity["activityName"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
