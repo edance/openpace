@@ -2,7 +2,7 @@ use Mix.Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :fitbit, FitbitWeb.Endpoint,
+config :squeeze, SqueezeWeb.Endpoint,
   http: [port: 4001],
   server: false
 
@@ -10,10 +10,10 @@ config :fitbit, FitbitWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :fitbit, Fitbit.Repo,
+config :squeeze, Squeeze.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "fitbit_test",
+  database: "squeeze_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

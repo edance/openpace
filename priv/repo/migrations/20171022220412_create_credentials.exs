@@ -1,4 +1,4 @@
-defmodule Fitbit.Repo.Migrations.CreateCredentials do
+defmodule Squeeze.Repo.Migrations.CreateCredentials do
   use Ecto.Migration
 
   def change do

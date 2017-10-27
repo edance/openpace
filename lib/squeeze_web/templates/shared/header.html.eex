@@ -1,0 +1,23 @@
+<header class="ui borderless fixed menu">
+  <div class="ui container">
+    <a href="#" class="header item">
+      Squeeze Phoenix
+    </a>
+
+    <div class="right menu">
+      <%= if @current_user do %>
+        <div class="item">
+          <img class="ui avatar image" src="<%= @current_user.image %>">
+          <span><%= @current_user.name %></span>
+        </div>
+      <% else %>
+        <div class="item">
+          <%= link to: auth_path(@conn, :request, "fitbit"), class: "ui primary button" do %>
+            Sign in with Fitbit
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</header>
+

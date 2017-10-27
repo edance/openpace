@@ -1,4 +1,4 @@
-defmodule FitbitWeb.ChannelCase do
+defmodule SqueezeWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule FitbitWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint FitbitWeb.Endpoint
+      @endpoint SqueezeWeb.Endpoint
     end
   end
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Fitbit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Squeeze.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Fitbit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
     :ok
   end

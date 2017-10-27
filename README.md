@@ -1,4 +1,4 @@
-# Fitbit on Phoenix
+# Squeeze Running App
 
 ## Overview
 I would like to build something to download my fitbit and strava data. I'm not sure how far I am going to get on this.

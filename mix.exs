@@ -1,9 +1,9 @@
-defmodule Fitbit.Mixfile do
+defmodule Squeeze.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :fitbit,
+      app: :squeeze,
       version: "0.0.1",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
@@ -19,7 +19,7 @@ defmodule Fitbit.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Fitbit.Application, []},
+      mod: {Squeeze.Application, []},
       extra_applications: [:logger, :runtime_tools, :oauth2, :ueberauth_fitbit,
                           :ueberauth_strava]
     ]

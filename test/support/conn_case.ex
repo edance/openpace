@@ -1,4 +1,4 @@
-defmodule FitbitWeb.ConnCase do
+defmodule SqueezeWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,18 +19,18 @@ defmodule FitbitWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import FitbitWeb.Router.Helpers
+      import SqueezeWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint FitbitWeb.Endpoint
+      @endpoint SqueezeWeb.Endpoint
     end
   end
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Fitbit.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Squeeze.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Fitbit.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

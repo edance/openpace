@@ -6,15 +6,15 @@
 use Mix.Config
 
 # General application configuration
-config :fitbit,
-  ecto_repos: [Fitbit.Repo]
+config :squeeze,
+  ecto_repos: [Squeeze.Repo]
 
 # Configures the endpoint
-config :fitbit, FitbitWeb.Endpoint,
+config :squeeze, SqueezeWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "dQoFqEeDanLKBUOlYj3JJN3GOKv3AK9id6Je17YxqP2wg+c1Bs8ckUPo9YDTPD1k",
-  render_errors: [view: FitbitWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Fitbit.PubSub,
+  render_errors: [view: SqueezeWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Squeeze.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

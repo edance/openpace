@@ -1,4 +1,4 @@
 ExUnit.start()
 
-Ecto.Adapters.SQL.Sandbox.mode(Fitbit.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, :manual)
 
