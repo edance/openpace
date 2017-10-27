@@ -7,7 +7,15 @@ I would like to build something to download my fitbit and strava data. I'm not s
 
 - [x] Deploy on heroku
 - [x] Connect via oauth to fitbit api
-- [ ] Learn phoenix along the way
+- [ ] Connect to strava using [strava wrapper](https://github.com/slashdotdash/strava)
+- [ ] Refresh token for fitbit api
+- [x] Rename application to not be called fitbit
+- [ ] Add license
+- [ ] Get the tests to pass and add travis ci badge
+- [ ] Add inch-ci badge to project
+- [ ] Add exdoc and setup github pages
+- [ ] Add guide markdown pages to show how it works
+- [ ] Get a domain for this project
 
 ## ENV Variables
 
