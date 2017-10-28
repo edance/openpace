@@ -13,7 +13,7 @@ I would like to build something to download my fitbit and strava data. I'm not s
 - [x] Add license
 - [ ] Get the tests to pass and add travis ci badge
 - [ ] Add inch-ci badge to project
-- [ ] Add exdoc and setup github pages
+- [x] Add exdoc and setup github pages
 - [ ] Add guide markdown pages to show how it works
 - [ ] Get a domain for this project
 

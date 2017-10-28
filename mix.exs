@@ -44,7 +44,8 @@ defmodule Squeeze.Mixfile do
       {:cowboy, "~> 1.0"},
       {:oauth2, "~> 0.9"},
       {:ueberauth_fitbit, "~> 0.2"},
-      {:ueberauth_strava, "~> 0.1"}
+      {:ueberauth_strava, "~> 0.1"},
+      {:ex_doc, "~> 0.16", only: :dev, runtime: false}
     ]
   end
 
