@@ -9,18 +9,23 @@ defmodule Squeeze.Accounts do
   alias Squeeze.Accounts.{User, Credential}
 
   @doc """
-  Returns the list of users.
+  Gets or creates a user based on their credentials.
 
   ## Examples
 
-      iex> list_users()
-      [%User{}, ...]
+  iex> get_or_create_user_by_credential(%{field: field})
+  {:ok, %User{}}
+
+  iex> get_or_create_user_by_credential(%{field: bad_value})
+  {:error, %Ecto.Changeset{}}
 
   """
-  def list_users do
-    User
-    |> Repo.all
-    |> Repo.preload(:credential)
+  def get_or_create_user_by_credential(attrs \\ %{}) do
+    %{credential: %{provider: provider, uid: uid}} = attrs
+    case get_credential(provider, uid) do
+      nil -> create_user(attrs)
+      credential -> {:ok, credential.user}
+    end
   end
 
   @doc """
@@ -124,20 +129,24 @@ defmodule Squeeze.Accounts do
   end
 
   @doc """
-  Gets a single credential.
+  Gets a single credential by provider and uid.
 
-  Raises `Ecto.NoResultsError` if the Credential does not exist.
+  Returns nil if Credential does not exist.
 
   ## Examples
 
-      iex> get_credential!(123)
+      iex> get_credential("strava", 1)
       %Credential{}
 
-      iex> get_credential!(456)
-      ** (Ecto.NoResultsError)
+      iex> get_credential("strava", 2)
+      nil
 
   """
-  def get_credential!(id), do: Repo.get!(Credential, id)
+  def get_credential(provider, uid) do
+    Credential
+    |> Repo.get_by(provider: provider, uid: uid)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a credential.

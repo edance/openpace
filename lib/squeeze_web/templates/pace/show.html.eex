@@ -1,0 +1,18 @@
+<h2>Show Pace</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @pace.name %>
+  </li>
+
+  <li>
+    <strong>Offset:</strong>
+    <%= @pace.offset %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: pace_path(@conn, :edit, @pace) %></span>
+<span><%= link "Back", to: pace_path(@conn, :index) %></span>

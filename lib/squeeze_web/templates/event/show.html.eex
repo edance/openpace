@@ -1,0 +1,33 @@
+<h2>Show Event</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @event.name %>
+  </li>
+
+  <li>
+    <strong>Distance:</strong>
+    <%= @event.distance %>
+  </li>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @event.date %>
+  </li>
+
+  <li>
+    <strong>Warmup:</strong>
+    <%= @event.warmup %>
+  </li>
+
+  <li>
+    <strong>Cooldown:</strong>
+    <%= @event.cooldown %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: event_path(@conn, :edit, @event) %></span>
+<span><%= link "Back", to: event_path(@conn, :index) %></span>

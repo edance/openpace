@@ -3,11 +3,15 @@ defmodule Squeeze.Accounts.User do
   import Ecto.Changeset
   alias Squeeze.Accounts.{User, Credential}
 
-
   schema "users" do
-    field :name, :string
+    field :first_name, :string
+    field :last_name, :string
     field :description, :string
-    field :image, :string
+    field :avatar, :string
+    field :city, :string
+    field :state, :string
+    field :country, :string
+
     has_one :credential, Credential
 
     timestamps()
@@ -15,8 +19,9 @@ defmodule Squeeze.Accounts.User do
 
   @doc false
   def changeset(%User{} = user, attrs) do
+    fields = ~w(first_name last_name description avatar city state country)a
     user
-    |> cast(attrs, [:name, :description, :image])
-    |> validate_required([:name])
+    |> cast(attrs, fields)
+    |> validate_required([:first_name, :last_name])
   end
 end

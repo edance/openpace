@@ -4,7 +4,7 @@ defmodule Squeeze.Repo.Migrations.CreateCredentials do
   def change do
     create table(:credentials) do
       add :provider, :string
-      add :uid, :string
+      add :uid, :integer
       add :token, :string, size: 500
       add :user_id, references(:users, on_delete: :delete_all), null: false
 

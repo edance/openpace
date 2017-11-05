@@ -1,0 +1,5 @@
+<h2>Edit Goal</h2>
+
+<%= render "form.html", Map.put(assigns, :action, goal_path(@conn, :update, @goal)) %>
+
+<span><%= link "Back", to: goal_path(@conn, :index) %></span>

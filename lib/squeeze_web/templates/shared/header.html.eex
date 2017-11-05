@@ -7,13 +7,13 @@
     <div class="right menu">
       <%= if @current_user do %>
         <div class="item">
-          <img class="ui avatar image" src="<%= @current_user.image %>">
-          <span><%= @current_user.name %></span>
+          <img class="ui avatar image" src="<%= @current_user.avatar %>">
+          <span><%= @current_user.first_name %></span>
         </div>
       <% else %>
         <div class="item">
-          <%= link to: auth_path(@conn, :request, "fitbit"), class: "ui primary button" do %>
-            Sign in with Fitbit
+          <%= link to: auth_path(@conn, :request, "strava"), class: "ui primary button" do %>
+            Sign in with Strava
           <% end %>
         </div>
       <% end %>

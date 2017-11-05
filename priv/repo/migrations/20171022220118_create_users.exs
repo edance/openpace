@@ -3,9 +3,13 @@ defmodule Squeeze.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :name, :string
+      add :first_name, :string
+      add :last_name, :string
       add :description, :string
-      add :image, :string
+      add :avatar, :string
+      add :city, :string
+      add :state, :string
+      add :country, :string
 
       timestamps()
     end

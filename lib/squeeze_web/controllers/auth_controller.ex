@@ -1,12 +1,10 @@
 defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
-  plug Ueberauth
 
-  alias Ueberauth.Strategy.Helpers
   alias Squeeze.Accounts
 
-  def request(conn, _params) do
-    render(conn, "request.html", callback_url: Helpers.callback_url(conn))
+  def request(conn, %{"provider" => provider}) do
+    redirect(conn, external: authorize_url!(provider))
   end
 
   def delete(conn, _params) do
@@ -16,26 +14,45 @@ defmodule SqueezeWeb.AuthController do
     |> redirect(to: "/")
   end
 
-  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
-    conn
-    |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: "/")
-  end
-
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    credentials = %{provider: "fitbit", token: auth.credentials.token, uid: auth.uid}
-    user_params = Map.merge(Map.from_struct(auth.info), %{credential: credentials})
-    case Accounts.create_user(user_params) do
+  def callback(conn, %{"provider" => provider, "code" => code}) do
+    client = get_token!(provider, code)
+    user_params = get_user!(provider, client)
+    case Accounts.get_or_create_user_by_credential(user_params) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Welcome back!")
         |> put_session(:user_id, user.id)
         |> configure_session(renew: true)
-        |> redirect(to: "/")
+        |> redirect(to: activity_path(conn, :index))
       {:error, %Ecto.Changeset{}} ->
         conn
         |> put_flash(:info, "Didn't Work")
         |> redirect(to: "/")
     end
+  end
+
+  defp authorize_url!("strava") do
+    Strava.Auth.authorize_url!(scope: "public")
+  end
+
+  defp authorize_url!(_) do
+    raise "No matching provider available"
+  end
+
+  defp get_token!("strava", code) do
+    Strava.Auth.get_token!(code: code)
+  end
+
+  defp get_token!(_, _) do
+    raise "No matching provider available"
+  end
+
+  defp get_user!("strava", client) do
+    token = client.token.access_token
+    user = Strava.Auth.get_athlete!(client)
+    credential = %{provider: "strava", uid: user.id, token: token}
+    user
+    |> Map.from_struct
+    |> Map.merge(%{first_name: user.firstname, last_name: user.lastname, avatar: user.profile})
+    |> Map.merge(%{credential: credential})
   end
 end

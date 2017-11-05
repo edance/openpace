@@ -1,0 +1,34 @@
+<h2>Listing Goals</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Distance</th>
+      <th>Duration</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Current</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for goal <- @goals do %>
+    <tr>
+      <td><%= goal.distance %></td>
+      <td><%= goal.duration %></td>
+      <td><%= goal.name %></td>
+      <td><%= goal.date %></td>
+      <td><%= goal.current %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: goal_path(@conn, :show, goal), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: goal_path(@conn, :edit, goal), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: goal_path(@conn, :delete, goal), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Goal", to: goal_path(@conn, :new) %></span>

@@ -17,10 +17,7 @@ As a runner,
 ## Goals
 
 - [x] Deploy on heroku
-- [x] Connect via oauth to fitbit api
 - [ ] Connect to strava using [strava wrapper](https://github.com/slashdotdash/strava)
-- [ ] Refresh token for fitbit api
-- [x] Rename application to not be called fitbit
 - [x] Add license
 - [ ] Get the tests to pass and add travis ci badge
 - [ ] Add inch-ci badge to project
@@ -32,13 +29,13 @@ As a runner,
 
 To run correctly, these variables must be set:
 
-  * `FITBIT_CLIENT_ID`: Client id when setting up fitbit oauth.
-  * `FITBIT_CLIENT_SECRET`: Secret from fitbit oauth.
+  * `STRAVA_CLIENT_ID`: Client id when setting up strava oauth.
+  * `STRAVA_CLIENT_SECRET`: Secret from strava oauth.
   * `HEROKU_URL`: This is the url of the server. Needed for the callback url.
 
 ## Getting Started
 
-  1. Create an app for fitbit [here](https://dev.fitbit.com/apps/new).
+  1. Create an app for strava [here](https://developers.strava.com).
   2. Set environment variables above.
 
 ## Basic Phoenix Stuff
@@ -62,7 +59,6 @@ Stores the name and common information for a user. This is pretty obvious.
 - [string] last_name
 - [string] description
 - [string] avatar
-- [string] avatar_medium
 - [string] city
 - [string] state
 - [string] country
@@ -82,8 +78,8 @@ Every user has one current goal and many past goals. Goals are a distance and a
 pace. An example of a goal would be to run a 3 hour marathon.
 
 - [float] distance (in meters)
-- [integer] time (in seconds)
-- [string] race_name (optional) - the name of your race. Most goals will be for a given race.
+- [integer] duration (in seconds)
+- [string] name (optional) - the name of your race. Most goals will be for a given race.
 - [date] date (optional) - date to accomplish the goal.
 - [boolean] current - whether this is the current goal or past goal.
 - belongs_to user

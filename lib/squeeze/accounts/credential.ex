@@ -7,7 +7,7 @@ defmodule Squeeze.Accounts.Credential do
   schema "credentials" do
     field :provider, :string
     field :token, :string
-    field :uid, :string
+    field :uid, :integer
 
     belongs_to :user, User
 

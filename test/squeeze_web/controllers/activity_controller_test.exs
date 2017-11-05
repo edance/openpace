@@ -3,9 +3,9 @@ defmodule SqueezeWeb.ActivityControllerTest do
 
   alias Squeeze.Dashboard
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{distance: 120.5, duration: 42, name: "some name", start_at: ~N[2010-04-17 14:00:00.000000]}
+  @update_attrs %{distance: 456.7, duration: 43, name: "some updated name", start_at: ~N[2011-05-18 15:01:01.000000]}
+  @invalid_attrs %{distance: nil, duration: nil, name: nil, start_at: nil}
 
   def fixture(:activity) do
     {:ok, activity} = Dashboard.create_activity(@create_attrs)
@@ -60,7 +60,7 @@ defmodule SqueezeWeb.ActivityControllerTest do
       assert redirected_to(conn) == activity_path(conn, :show, activity)
 
       conn = get conn, activity_path(conn, :show, activity)
-      assert html_response(conn, 200)
+      assert html_response(conn, 200) =~ "some updated name"
     end
 
     test "renders errors when data is invalid", %{conn: conn, activity: activity} do

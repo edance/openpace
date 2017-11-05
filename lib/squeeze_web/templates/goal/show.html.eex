@@ -1,0 +1,33 @@
+<h2>Show Goal</h2>
+
+<ul>
+
+  <li>
+    <strong>Distance:</strong>
+    <%= @goal.distance %>
+  </li>
+
+  <li>
+    <strong>Duration:</strong>
+    <%= @goal.duration %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @goal.name %>
+  </li>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @goal.date %>
+  </li>
+
+  <li>
+    <strong>Current:</strong>
+    <%= @goal.current %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: goal_path(@conn, :edit, @goal) %></span>
+<span><%= link "Back", to: goal_path(@conn, :index) %></span>

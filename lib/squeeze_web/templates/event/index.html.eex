@@ -1,0 +1,34 @@
+<h2>Listing Events</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Distance</th>
+      <th>Date</th>
+      <th>Warmup</th>
+      <th>Cooldown</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for event <- @events do %>
+    <tr>
+      <td><%= event.name %></td>
+      <td><%= event.distance %></td>
+      <td><%= event.date %></td>
+      <td><%= event.warmup %></td>
+      <td><%= event.cooldown %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: event_path(@conn, :show, event), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: event_path(@conn, :edit, event), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Event", to: event_path(@conn, :new) %></span>
