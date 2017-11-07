@@ -7,7 +7,23 @@ defmodule Squeeze.Dashboard do
 
   import Ecto.Query, warn: false
   alias Squeeze.Repo
+  alias Squeeze.Accounts.User
 
+  alias Squeeze.Dashboard.Activity
+
+  @doc """
+  Fetch all strava activities and import into database.
+  """
+  def fetch_activities(user) do
+    client = Strava.Client.new(user.credential.token)
+    pagination = %Strava.Pagination{per_page: 200, page: 1}
+    Strava.Activity.list_athlete_activities(pagination, %{}, client)
+    |> Enum.map(fn (x) ->
+      Map.merge(Map.from_struct(x),
+        %{duration: x.moving_time, start_at: x.start_date, user: user})
+    end)
+    |> Enum.map(&create_activity(user, &1))
+  end
 
   @doc """
   Returns the list of activities.
@@ -18,28 +34,90 @@ defmodule Squeeze.Dashboard do
       [%Activity{}, ...]
 
   """
-  def list_activities(user) do
+  def list_activities do
+    Repo.all(Activity)
   end
 
   @doc """
   Gets a single activity.
 
-  Raises if the Activity does not exist.
+  Raises `Ecto.NoResultsError` if the Activity does not exist.
 
   ## Examples
 
       iex> get_activity!(123)
       %Activity{}
 
+      iex> get_activity!(456)
+      ** (Ecto.NoResultsError)
+
   """
-  def get_activity!(id), do: raise "TODO"
+  def get_activity!(id), do: Repo.get!(Activity, id)
 
-  defp query(opts) do
-    string = opts
-    |> Enum.map(fn {key, value} -> "#{key}=#{value}" end)
-    |> Enum.join("&")
+  @doc """
+  Creates a activity.
 
-    "?" <> string
+  ## Examples
+
+      iex> create_activity(%{field: value})
+      {:ok, %Activity{}}
+
+      iex> create_activity(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_activity(%User{} = user, attrs \\ %{}) do
+    %Activity{}
+    |> Activity.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, user.id)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a activity.
+
+  ## Examples
+
+      iex> update_activity(activity, %{field: new_value})
+      {:ok, %Activity{}}
+
+      iex> update_activity(activity, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_activity(%Activity{} = activity, attrs) do
+    activity
+    |> Activity.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Activity.
+
+  ## Examples
+
+      iex> delete_activity(activity)
+      {:ok, %Activity{}}
+
+      iex> delete_activity(activity)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_activity(%Activity{} = activity) do
+    Repo.delete(activity)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking activity changes.
+
+  ## Examples
+
+      iex> change_activity(activity)
+      %Ecto.Changeset{source: %Activity{}}
+
+  """
+  def change_activity(%Activity{} = activity) do
+    Activity.changeset(activity, %{})
   end
 
   alias Squeeze.Dashboard.Goal
@@ -328,101 +406,5 @@ defmodule Squeeze.Dashboard do
   """
   def change_event(%Event{} = event) do
     Event.changeset(event, %{})
-  end
-
-  alias Squeeze.Dashboard.Activity
-
-  @doc """
-  Returns the list of activities.
-
-  ## Examples
-
-      iex> list_activities()
-      [%Activity{}, ...]
-
-  """
-  def list_activities do
-    Repo.all(Activity)
-  end
-
-  @doc """
-  Gets a single activity.
-
-  Raises `Ecto.NoResultsError` if the Activity does not exist.
-
-  ## Examples
-
-      iex> get_activity!(123)
-      %Activity{}
-
-      iex> get_activity!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_activity!(id), do: Repo.get!(Activity, id)
-
-  @doc """
-  Creates a activity.
-
-  ## Examples
-
-      iex> create_activity(%{field: value})
-      {:ok, %Activity{}}
-
-      iex> create_activity(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_activity(attrs \\ %{}) do
-    %Activity{}
-    |> Activity.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a activity.
-
-  ## Examples
-
-      iex> update_activity(activity, %{field: new_value})
-      {:ok, %Activity{}}
-
-      iex> update_activity(activity, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_activity(%Activity{} = activity, attrs) do
-    activity
-    |> Activity.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Activity.
-
-  ## Examples
-
-      iex> delete_activity(activity)
-      {:ok, %Activity{}}
-
-      iex> delete_activity(activity)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_activity(%Activity{} = activity) do
-    Repo.delete(activity)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking activity changes.
-
-  ## Examples
-
-      iex> change_activity(activity)
-      %Ecto.Changeset{source: %Activity{}}
-
-  """
-  def change_activity(%Activity{} = activity) do
-    Activity.changeset(activity, %{})
   end
 end
