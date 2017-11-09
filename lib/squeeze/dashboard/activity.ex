@@ -2,6 +2,7 @@ defmodule Squeeze.Dashboard.Activity do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Dashboard.Activity
+  alias Squeeze.Accounts.User
 
 
   schema "activities" do
@@ -9,7 +10,9 @@ defmodule Squeeze.Dashboard.Activity do
     field :duration, :integer
     field :name, :string
     field :start_at, :naive_datetime
-    field :user_id, :id
+    field :external_id, :integer
+
+    belongs_to :user, User
 
     timestamps()
   end
@@ -17,7 +20,7 @@ defmodule Squeeze.Dashboard.Activity do
   @doc false
   def changeset(%Activity{} = activity, attrs) do
     activity
-    |> cast(attrs, [:name, :distance, :duration, :start_at])
-    |> validate_required([:name, :distance, :duration, :start_at])
+    |> cast(attrs, [:name, :distance, :duration, :start_at, :external_id])
+    |> validate_required([:name, :distance, :duration, :start_at, :external_id])
   end
 end
