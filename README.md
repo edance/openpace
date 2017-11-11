@@ -17,7 +17,7 @@ As a runner,
 ## Goals
 
 - [x] Deploy on heroku
-- [ ] Connect to strava using [strava wrapper](https://github.com/slashdotdash/strava)
+- [x] Connect to strava using [strava wrapper](https://github.com/slashdotdash/strava)
 - [x] Add license
 - [ ] Get the tests to pass and add travis ci badge
 - [ ] Add inch-ci badge to project

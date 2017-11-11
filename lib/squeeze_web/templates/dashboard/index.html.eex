@@ -1,4 +1,5 @@
 <div class="toc">
+  <%= @current_user.first_name %>
   Information about todays run?
 </div>
 
