@@ -159,6 +159,31 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
+  Returns the users current goal.
+
+  ## Examples
+
+    iex> get_current_goal(user)
+    %Goal{}
+
+  """
+  def get_current_goal(user) do
+    Repo.get_by(Goal, user_id: user.id, current: true)
+  end
+
+  @doc """
+  Returns a list of todays activities.
+
+  ## Examples
+
+    iex> get_todays_activities(user)
+    [%Activity{}, ...]
+  """
+  def get_todays_activities(user) do
+    []
+  end
+
+  @doc """
   Gets a single goal.
 
   Raises `Ecto.NoResultsError` if the Goal does not exist.
