@@ -39,16 +39,18 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
-  Returns the list of activities.
+  Returns the list of activities by user.
 
   ## Examples
 
-      iex> list_activities()
+      iex> list_activities(user)
       [%Activity{}, ...]
 
   """
-  def list_activities do
-    Repo.all(Activity)
+  def list_activities(user) do
+    Activity
+    |> where([a], a.user_id == ^user.id)
+    |> Repo.all
   end
 
   @doc """
@@ -72,10 +74,10 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
-      iex> create_activity(%{field: value})
+      iex> create_activity(%User{}, %{field: value})
       {:ok, %Activity{}}
 
-      iex> create_activity(%{field: bad_value})
+      iex> create_activity(%User{}, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
@@ -136,16 +138,18 @@ defmodule Squeeze.Dashboard do
   alias Squeeze.Dashboard.Goal
 
   @doc """
-  Returns the list of goals.
+  Returns the list of goals by user.
 
   ## Examples
 
-      iex> list_goals()
+      iex> list_goals(user)
       [%Goal{}, ...]
 
   """
-  def list_goals do
-    Repo.all(Goal)
+  def list_goals(user) do
+    Goal
+    |> where([a], a.user_id == ^user.id)
+    |> Repo.all
   end
 
   @doc """
@@ -169,16 +173,17 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
-      iex> create_goal(%{field: value})
+      iex> create_goal(%User{}, %{field: value})
       {:ok, %Goal{}}
 
-      iex> create_goal(%{field: bad_value})
+      iex> create_goal(%User{}, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_goal(attrs \\ %{}) do
+  def create_goal(%User{} = user, attrs \\ %{}) do
     %Goal{}
     |> Goal.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
@@ -232,16 +237,18 @@ defmodule Squeeze.Dashboard do
   alias Squeeze.Dashboard.Pace
 
   @doc """
-  Returns the list of paces.
+  Returns the list of paces by user.
 
   ## Examples
 
-      iex> list_paces()
+      iex> list_paces(user)
       [%Pace{}, ...]
 
   """
-  def list_paces do
-    Repo.all(Pace)
+  def list_paces(user) do
+    Pace
+    |> where([a], a.user_id == ^user.id)
+    |> Repo.all
   end
 
   @doc """
@@ -265,16 +272,17 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
-      iex> create_pace(%{field: value})
+      iex> create_pace(%User{}, %{field: value})
       {:ok, %Pace{}}
 
-      iex> create_pace(%{field: bad_value})
+      iex> create_pace(%User{}, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_pace(attrs \\ %{}) do
+  def create_pace(%User{} = user, attrs \\ %{}) do
     %Pace{}
     |> Pace.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
@@ -328,16 +336,18 @@ defmodule Squeeze.Dashboard do
   alias Squeeze.Dashboard.Event
 
   @doc """
-  Returns the list of events.
+  Returns the list of events by user.
 
   ## Examples
 
-      iex> list_events()
+      iex> list_events(user)
       [%Event{}, ...]
 
   """
-  def list_events do
-    Repo.all(Event)
+  def list_events(user) do
+    Event
+    |> where([a], a.user_id == ^user.id)
+    |> Repo.all
   end
 
   @doc """
@@ -361,16 +371,17 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
-      iex> create_event(%{field: value})
+      iex> create_event(%User{}, %{field: value})
       {:ok, %Event{}}
 
-      iex> create_event(%{field: bad_value})
+      iex> create_event(%User{}, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_event(attrs \\ %{}) do
+  def create_event(%User{} = user, attrs \\ %{}) do
     %Event{}
     |> Event.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 

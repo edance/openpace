@@ -1,8 +1,8 @@
 <header class="ui borderless fixed menu">
-  <a href="#" class="header item">
+  <%= link to: "/", class: "header item" do %>
     <img alt="" src="/images/logo.jpg"/>
     Squeeze
-  </a>
+  <%= end %>
 
   <div class="right menu">
     <%= if @current_user do %>

@@ -4,8 +4,10 @@ defmodule SqueezeWeb.ActivityController do
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Activity
 
+  plug :authorize_activity when action in [:edit, :update, :delete]
+
   def index(conn, _params) do
-    activities = Dashboard.list_activities()
+    activities = Dashboard.list_activities(conn.assigns.current_user)
     render(conn, "index.html", activities: activities)
   end
 
@@ -31,14 +33,13 @@ defmodule SqueezeWeb.ActivityController do
   end
 
   def edit(conn, %{"id" => id}) do
-    activity = Dashboard.get_activity!(id)
+    activity = conn.assigns.activity
     changeset = Dashboard.change_activity(activity)
     render(conn, "edit.html", activity: activity, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "activity" => activity_params}) do
-    activity = Dashboard.get_activity!(id)
-
+  def update(conn, %{"activity" => activity_params}) do
+    activity = conn.assigns.activity
     case Dashboard.update_activity(activity, activity_params) do
       {:ok, activity} ->
         conn
@@ -49,12 +50,24 @@ defmodule SqueezeWeb.ActivityController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    activity = Dashboard.get_activity!(id)
-    {:ok, _activity} = Dashboard.delete_activity(activity)
+  def delete(conn, _params) do
+    {:ok, _activity} = Dashboard.delete_activity(conn.assigns.activity)
 
     conn
     |> put_flash(:info, "Activity deleted successfully.")
     |> redirect(to: activity_path(conn, :index))
+  end
+
+  defp authorize_activity(conn, _) do
+    activity = Dashboard.get_activity!(conn.params["id"])
+
+    if conn.assigns.current_user.id == activity.user_id do
+      assign(conn, :activity, activity)
+    else
+      conn
+      |> put_flash(:error, "You can't modify that activity")
+      |> redirect(to: activity_path(conn, :index))
+      |> halt()
+    end
   end
 end

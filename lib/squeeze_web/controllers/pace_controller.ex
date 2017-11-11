@@ -4,8 +4,10 @@ defmodule SqueezeWeb.PaceController do
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Pace
 
+  plug :authorize_pace when action in [:edit, :update, :delete]
+
   def index(conn, _params) do
-    paces = Dashboard.list_paces()
+    paces = Dashboard.list_paces(conn.assigns.current_user)
     render(conn, "index.html", paces: paces)
   end
 
@@ -15,7 +17,8 @@ defmodule SqueezeWeb.PaceController do
   end
 
   def create(conn, %{"pace" => pace_params}) do
-    case Dashboard.create_pace(pace_params) do
+    user = conn.assigns.current_user
+    case Dashboard.create_pace(user, pace_params) do
       {:ok, pace} ->
         conn
         |> put_flash(:info, "Pace created successfully.")
@@ -30,14 +33,14 @@ defmodule SqueezeWeb.PaceController do
     render(conn, "show.html", pace: pace)
   end
 
-  def edit(conn, %{"id" => id}) do
-    pace = Dashboard.get_pace!(id)
+  def edit(conn, _pace) do
+    pace = conn.assigns.pace
     changeset = Dashboard.change_pace(pace)
     render(conn, "edit.html", pace: pace, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "pace" => pace_params}) do
-    pace = Dashboard.get_pace!(id)
+  def update(conn, %{"pace" => pace_params}) do
+    pace = conn.assigns.pace
 
     case Dashboard.update_pace(pace, pace_params) do
       {:ok, pace} ->
@@ -49,12 +52,24 @@ defmodule SqueezeWeb.PaceController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    pace = Dashboard.get_pace!(id)
-    {:ok, _pace} = Dashboard.delete_pace(pace)
+  def delete(conn, _params) do
+    {:ok, _pace} = Dashboard.delete_pace(conn.assigns.pace)
 
     conn
     |> put_flash(:info, "Pace deleted successfully.")
     |> redirect(to: pace_path(conn, :index))
+  end
+
+  defp authorize_pace(conn, _) do
+    pace = Dashboard.get_pace!(conn.params["id"])
+
+    if conn.assigns.current_user.id == pace.user_id do
+      assign(conn, :pace, pace)
+    else
+      conn
+      |> put_flash(:error, "You can't modify that pace")
+      |> redirect(to: pace_path(conn, :index))
+      |> halt()
+    end
   end
 end
