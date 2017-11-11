@@ -1,35 +1,33 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
+  <div class="field">
+    <%= label f, :name %>
+    <%= text_input f, :name %>
     <%= error_tag f, :name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :distance, class: "control-label" %>
-    <%= number_input f, :distance, step: "any", class: "form-control" %>
+  <div class="field">
+    <%= label f, :distance %>
+    <%= number_input f, :distance, step: "any" %>
     <%= error_tag f, :distance %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :duration, class: "control-label" %>
-    <%= number_input f, :duration, class: "form-control" %>
+  <div class="field">
+    <%= label f, :duration %>
+    <%= number_input f, :duration %>
     <%= error_tag f, :duration %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :start_at, class: "control-label" %>
-    <%= datetime_select f, :start_at, class: "form-control" %>
+  <div class="field">
+    <%= label f, :start_at %>
+    <%= datetime_select f, :start_at %>
     <%= error_tag f, :start_at %>
   </div>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
+  <%= submit "Submit", class: "ui submit button" %>
 <% end %>

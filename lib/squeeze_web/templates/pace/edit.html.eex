@@ -1,5 +1,7 @@
-<h2>Edit Pace</h2>
+<div class="ui text container">
+  <h2>Edit Pace</h2>
 
-<%= render "form.html", Map.put(assigns, :action, pace_path(@conn, :update, @pace)) %>
+  <span><%= link "Back", to: pace_path(@conn, :index) %></span>
 
-<span><%= link "Back", to: pace_path(@conn, :index) %></span>
+  <%= render "form.html", Map.put(assigns, :action, pace_path(@conn, :update, @pace)) %>
+</div>

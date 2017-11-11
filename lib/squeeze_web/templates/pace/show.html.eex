@@ -1,18 +1,17 @@
-<h2>Show Pace</h2>
+<div class="ui text container">
+  <h2>Show Pace</h2>
+  <span><%= link "Edit", to: pace_path(@conn, :edit, @pace) %></span>
+  <span><%= link "Back", to: pace_path(@conn, :index) %></span>
 
-<ul>
+  <ui class="ui list">
+    <li>
+      <strong>Name:</strong>
+      <%= @pace.name %>
+    </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @pace.name %>
-  </li>
-
-  <li>
-    <strong>Offset:</strong>
-    <%= @pace.offset %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: pace_path(@conn, :edit, @pace) %></span>
-<span><%= link "Back", to: pace_path(@conn, :index) %></span>
+    <li>
+      <strong>Offset:</strong>
+      <%= @pace.offset %>
+    </li>
+  </ui>
+</div>

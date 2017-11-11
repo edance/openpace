@@ -1,28 +1,27 @@
-<h2>Show Activity</h2>
+<div class="ui text container">
+  <h2>Show Activity</h2>
+  <span><%= link "Edit", to: activity_path(@conn, :edit, @activity) %></span>
+  <span><%= link "Back", to: activity_path(@conn, :index) %></span>
 
-<ul>
+  <ui class="ui list">
+    <li>
+      <strong>Name:</strong>
+      <%= @activity.name %>
+    </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @activity.name %>
-  </li>
+    <li>
+      <strong>Distance:</strong>
+      <%= @activity.distance %>
+    </li>
 
-  <li>
-    <strong>Distance:</strong>
-    <%= @activity.distance %>
-  </li>
+    <li>
+      <strong>Duration:</strong>
+      <%= @activity.duration %>
+    </li>
 
-  <li>
-    <strong>Duration:</strong>
-    <%= @activity.duration %>
-  </li>
-
-  <li>
-    <strong>Start at:</strong>
-    <%= @activity.start_at %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: activity_path(@conn, :edit, @activity) %></span>
-<span><%= link "Back", to: activity_path(@conn, :index) %></span>
+    <li>
+      <strong>Start at:</strong>
+      <%= @activity.start_at %>
+    </li>
+  </ul>
+</div>
