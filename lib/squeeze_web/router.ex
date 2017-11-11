@@ -40,7 +40,7 @@ defmodule SqueezeWeb.Router do
     resources "/activities", ActivityController
     resources "/events", EventController
     resources "/goals", GoalController
-    resources "/pace", PaceController
+    resources "/paces", PaceController
   end
 
   # Other scopes may use custom stacks.
