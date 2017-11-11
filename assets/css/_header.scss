@@ -1,0 +1,14 @@
+@import 'variables';
+
+header.ui.menu {
+  &:after {
+    background: linear-gradient(to right, $gradient-start, $gradient-end);
+    content: '';
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    left: 0;
+    visibility: visible;
+  }
+}
