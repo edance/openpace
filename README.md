@@ -35,13 +35,10 @@ To run correctly, these variables must be set:
 
 ## Getting Started
 
-  1. Create an app for strava [here](https://developers.strava.com).
-  2. Set environment variables above.
-
-## Basic Phoenix Stuff
-
-To start your Phoenix server:
-
+  * Copy `.env.example` file to `.env` with `cp .env.example .env`
+  * Create an app for strava [here](https://developers.strava.com).
+  * Set environment variables in your `.env` file.
+  * Import your environment variables with `export $(cat .env | grep -v ^# | xargs)`
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `cd assets && npm install`
