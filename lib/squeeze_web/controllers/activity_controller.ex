@@ -32,7 +32,7 @@ defmodule SqueezeWeb.ActivityController do
     render(conn, "show.html", activity: activity)
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, _params) do
     activity = conn.assigns.activity
     changeset = Dashboard.change_activity(activity)
     render(conn, "edit.html", activity: activity, changeset: changeset)
