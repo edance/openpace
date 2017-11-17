@@ -1,5 +1,38 @@
-<div class="ui container">
-  <%= link to: auth_path(@conn, :request, "strava") do %>
-    <img alt="Sign in with Strava" src="/images/btn_strava@2x.png" />
-  <% end %>
+<div class="ui inverted vertical masthead center aligned segment">
+  <div class="ui text container">
+    <h1 class="ui inverted header">
+      Squeeze
+    </h1>
+    <h2>Do whatever you want when you want to.</h2>
+    <%= link to: auth_path(@conn, :request, "strava") do %>
+      <img class="strava button" alt="Sign in with Strava" src="/images/btn_strava@2x.png" />
+    <% end %>
+  </div>
+</div>
+
+<div class="ui vertical footer segment">
+  <div class="ui container">
+    <div class="ui stackable divided equal height stackable grid">
+      <div class="three wide column">
+        <h4 class="ui header">About</h4>
+        <div class="ui link list">
+          <a href="mailto:evancdancer@gmail.com" class="item">Contact Us</a>
+          <a href="https://www.evandancer.com" target="_blank" class="item">About Me</a>
+          <a href="https://www.strava.com" target="_blank" class="item">Strava</a>
+        </div>
+      </div>
+      <div class="three wide column">
+        <h4 class="ui header">Github</h4>
+        <div class="ui link list">
+          <a href="https://github.com/edance/squeeze" target="_blank" class="item">View the Code</a>
+          <a href="https://github.com/edance/squeeze/issues" target="_blank" class="item">Request a Feature</a>
+          <a href="https://github.com/edance/squeeze/issues" target="_blank" class="item">Report an Issue</a>
+        </div>
+      </div>
+      <div class="seven wide column">
+        <h4 class="ui header">Squeeze</h4>
+        <p><%= get_random_quote() %></p>
+      </div>
+    </div>
+  </div>
 </div>
