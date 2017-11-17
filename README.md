@@ -1,4 +1,7 @@
-# Squeeze Running App
+# Squeeze
+
+[![Travis](https://img.shields.io/travis/edance/squeeze.svg?style=flat-square)]()
+[![license](https://img.shields.io/github/license/edance/squeeze.svg?style=flat-square)]()
 
 ## Overview
 
