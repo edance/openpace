@@ -13,6 +13,10 @@ defmodule SqueezeWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :dashboard_layout do
+    plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
+  end
+
   scope "/", SqueezeWeb do
     pipe_through :browser # Use the default browser stack
 
@@ -29,7 +33,7 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/dashboard", SqueezeWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :authenticate_user, :dashboard_layout]
 
     get "/", DashboardController, :index
 

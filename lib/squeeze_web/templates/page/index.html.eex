@@ -1,10 +1,5 @@
-<%= if @current_user do %>
-  <h2>Welcome, <%= @current_user.name %>!</h2>
-  <%= link to: auth_path(@conn, :delete), class: "btn btn-primary" do %>
-    Log Out
+<div class="ui container">
+  <%= link to: auth_path(@conn, :request, "strava") do %>
+    <img alt="Sign in with Strava" src="/images/btn_strava@2x.png" />
   <% end %>
-<% else %>
-  <%= link to: auth_path(@conn, :request, "squeeze"), class: "btn btn-primary" do %>
-    Sign in with Squeeze
-  <% end %>
-<% end %>
+</div>
