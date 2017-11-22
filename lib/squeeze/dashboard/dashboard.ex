@@ -51,6 +51,7 @@ defmodule Squeeze.Dashboard do
     Activity
     |> where([a], a.user_id == ^user.id)
     |> Repo.all
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -67,7 +68,11 @@ defmodule Squeeze.Dashboard do
       ** (Ecto.NoResultsError)
 
   """
-  def get_activity!(id), do: Repo.get!(Activity, id)
+  def get_activity!(id) do
+    Activity
+    |> Repo.get!(id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a activity.
@@ -150,6 +155,7 @@ defmodule Squeeze.Dashboard do
     Goal
     |> where([a], a.user_id == ^user.id)
     |> Repo.all
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -166,7 +172,11 @@ defmodule Squeeze.Dashboard do
       ** (Ecto.NoResultsError)
 
   """
-  def get_goal!(id), do: Repo.get!(Goal, id)
+  def get_goal!(id) do
+    Goal
+    |> Repo.get!(id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a goal.
@@ -249,6 +259,7 @@ defmodule Squeeze.Dashboard do
     Pace
     |> where([a], a.user_id == ^user.id)
     |> Repo.all
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -265,7 +276,11 @@ defmodule Squeeze.Dashboard do
       ** (Ecto.NoResultsError)
 
   """
-  def get_pace!(id), do: Repo.get!(Pace, id)
+  def get_pace!(id) do
+    Pace
+    |> Repo.get!(id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a pace.
@@ -348,6 +363,7 @@ defmodule Squeeze.Dashboard do
     Event
     |> where([a], a.user_id == ^user.id)
     |> Repo.all
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -364,7 +380,11 @@ defmodule Squeeze.Dashboard do
       ** (Ecto.NoResultsError)
 
   """
-  def get_event!(id), do: Repo.get!(Event, id)
+  def get_event!(id) do
+    Event
+    |> Repo.get!(id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a event.
