@@ -33,6 +33,7 @@ defmodule Squeeze.Factory do
     %Pace{
       name: Enum.random(["Easy", "Tempo", "Speed", "Long"]),
       offset: :rand.uniform(120), # Random offset up to 120 seconds
+      color: "##{Faker.Color.rgb_hex()}",
       user: build(:user)
     }
   end

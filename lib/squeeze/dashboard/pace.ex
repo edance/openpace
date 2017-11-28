@@ -8,6 +8,7 @@ defmodule Squeeze.Dashboard.Pace do
   schema "paces" do
     field :name, :string
     field :offset, :integer
+    field :color, :string
 
     belongs_to :user, User
 
@@ -17,7 +18,8 @@ defmodule Squeeze.Dashboard.Pace do
   @doc false
   def changeset(%Pace{} = pace, attrs) do
     pace
-    |> cast(attrs, [:name, :offset])
-    |> validate_required([:name, :offset])
+    |> cast(attrs, [:name, :offset, :color])
+    |> validate_required([:name, :offset, :color])
+    |> validate_format(:color, ~r/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
   end
 end
