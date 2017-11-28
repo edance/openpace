@@ -9,6 +9,7 @@ defmodule Squeeze.Factory do
     %User{
       first_name: Name.first_name(),
       last_name: Name.last_name(),
+      email: Faker.Internet.email(),
       description: Lorem.paragraph(),
       avatar: "",
       city: Address.city(),

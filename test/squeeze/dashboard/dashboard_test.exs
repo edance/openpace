@@ -5,8 +5,6 @@ defmodule Squeeze.DashboardTest do
 
   import Squeeze.Factory
 
-  require IEx
-
   describe "goals" do
     alias Squeeze.Dashboard.Goal
 

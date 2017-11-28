@@ -179,7 +179,7 @@ defmodule Squeeze.Dashboard do
     iex> get_todays_activities(user)
     [%Activity{}, ...]
   """
-  def get_todays_activities(user) do
+  def get_todays_activities(_user) do
     []
   end
 

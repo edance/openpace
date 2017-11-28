@@ -6,6 +6,7 @@ defmodule Squeeze.Accounts.User do
   schema "users" do
     field :first_name, :string
     field :last_name, :string
+    field :email, :string
     field :description, :string
     field :avatar, :string
     field :city, :string
@@ -19,9 +20,10 @@ defmodule Squeeze.Accounts.User do
 
   @doc false
   def changeset(%User{} = user, attrs) do
-    fields = ~w(first_name last_name description avatar city state country)a
+    fields = ~w(first_name last_name email description avatar city state country)a
     user
     |> cast(attrs, fields)
-    |> validate_required([:first_name, :last_name])
+    |> validate_required([:first_name, :last_name, :email])
+    |> validate_format(:email, ~r/@/)
   end
 end

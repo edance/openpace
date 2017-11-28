@@ -22,15 +22,15 @@
 
   <%= link to: activity_path(@conn, :index) do %>
     Activities
-  <%= end %>
+  <% end %>
 
   <%= link to: pace_path(@conn, :index) do %>
     Paces
-  <%= end %>
+  <% end %>
 
   <%= link to: goal_path(@conn, :index) do %>
     Goals
-  <%= end %>
+  <% end %>
 </div>
 
 <div class="article">
