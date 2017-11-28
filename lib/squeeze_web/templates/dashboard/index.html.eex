@@ -6,17 +6,19 @@
   <%= city_state(@current_user) %>
   <br/>
 
-  <b>Current Goal</b>
-  <br/>
+  <%= if @goal do %>
+    <b>Current Goal</b>
+    <br/>
 
-  <%= goal_time(@goal) %>
-  <br/>
+    <%= goal_time(@goal) %>
+    <br/>
 
-  <%= @goal.name %>
-  <br/>
+    <%= @goal.name %>
+    <br/>
 
-  <%= goal_pace(@goal) %>
-  <br/>
+    <%= goal_pace(@goal) %>
+    <br/>
+  <% end %>
 
   <b>Today's Activity</b>
 

@@ -27,6 +27,10 @@ config :strava,
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
   redirect_uri: "#{System.get_env("HEROKU_URL")}/auth/strava/callback"
 
+config :squeeze, Squeeze.Guardian,
+  issuer: "squeeze",
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

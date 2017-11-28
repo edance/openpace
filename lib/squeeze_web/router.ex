@@ -7,6 +7,14 @@ defmodule SqueezeWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Guardian.Plug.Pipeline, module: Squeeze.Guardian, error_handler: Squeeze.AuthErrorHandler
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug :set_user
+  end
+
+  pipeline :authorized do
+    plug Guardian.Plug.EnsureAuthenticated
   end
 
   pipeline :api do
@@ -33,7 +41,7 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/dashboard", SqueezeWeb do
-    pipe_through [:browser, :authenticate_user, :dashboard_layout]
+    pipe_through [:browser, :authorized, :dashboard_layout]
 
     get "/", DashboardController, :index
 
@@ -52,16 +60,10 @@ defmodule SqueezeWeb.Router do
     end
   end
 
-  # Code to auth a user
-  defp authenticate_user(conn, _) do
-    case get_session(conn, :user_id) do
-      nil ->
-        conn
-        |> Phoenix.Controller.put_flash(:error, "Login required")
-        |> Phoenix.Controller.redirect(to: "/")
-        |> halt()
-      user_id ->
-        assign(conn, :current_user, Squeeze.Accounts.get_user!(user_id))
+  defp set_user(conn, _) do
+    case Squeeze.Guardian.Plug.current_resource(conn) do
+      nil -> conn
+      user -> assign(conn, :current_user, user)
     end
   end
 end

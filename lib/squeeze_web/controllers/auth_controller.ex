@@ -1,7 +1,7 @@
 defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
 
-  alias Squeeze.Accounts
+  alias Squeeze.{Accounts, Guardian}
 
   def request(conn, %{"provider" => provider}) do
     redirect(conn, external: authorize_url!(provider))
@@ -9,8 +9,8 @@ defmodule SqueezeWeb.AuthController do
 
   def delete(conn, _params) do
     conn
+    |> Guardian.Plug.sign_out()
     |> put_flash(:info, "You have been logged out!")
-    |> configure_session(drop: true)
     |> redirect(to: "/")
   end
 
@@ -20,8 +20,7 @@ defmodule SqueezeWeb.AuthController do
     case Accounts.get_or_create_user_by_credential(user_params) do
       {:ok, user} ->
         conn
-        |> put_session(:user_id, user.id)
-        |> configure_session(renew: true)
+        |> Guardian.Plug.sign_in(user)
         |> redirect(to: activity_path(conn, :index))
       {:error, %Ecto.Changeset{}} ->
         conn

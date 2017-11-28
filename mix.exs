@@ -42,6 +42,7 @@ defmodule Squeeze.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:strava, "~> 0.4"},
+      {:guardian, "~> 1.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:inch_ex, only: :docs},
       {:ex_machina, "~> 2.1", only: :test},
