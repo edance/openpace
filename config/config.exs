@@ -25,7 +25,7 @@ config :logger, :console,
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HEROKU_URL")}/auth/strava/callback"
+  redirect_uri: "#{System.get_env("HOST_URL")}/auth/strava/callback"
 
 config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
