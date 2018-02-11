@@ -1,6 +1,6 @@
-# App Schema
-
-### Accounts/Users
+* Squeeze Schema
+** Accounts
+*** Users
 
 Stores the name and common information for a user. This is pretty obvious.
 
@@ -12,7 +12,7 @@ Stores the name and common information for a user. This is pretty obvious.
 - [string] state
 - [string] country
 
-### Accounts/Credentials
+*** Credentials
 
 Stores the data to connect to one of the services. Right now only, we will only have strava.
 
@@ -21,7 +21,20 @@ Stores the data to connect to one of the services. Right now only, we will only 
 - [string] uid - unique identifier for the user on strava (used for authentication)
 - belongs_to user
 
-### Dashboard/Goals
+** Data
+*** Activities
+
+Activities are where the strava integration comes in. An activity holds the data
+about a run that has already been completed. Eventually we will match up the
+events with activities and display if the pace/distance/time was sufficient to
+mark the workout as complete.
+
+- [string] name
+- [float] distance (in meters)
+- [integer] duration
+- [datetime] start_at
+** Dashboard
+*** Goals
 
 Every user has one current goal and many past goals. Goals are a distance and a
 pace. An example of a goal would be to run a 3 hour marathon.
@@ -33,7 +46,7 @@ pace. An example of a goal would be to run a 3 hour marathon.
 - [boolean] current - whether this is the current goal or past goal.
 - belongs_to user
 
-### Dashboard/Paces
+*** Paces
 
 Paces are a little bit more complicated. A user has many paces and a pace
 includes a modifier on the users current goal. Seems confusing right? Yeah I'm
@@ -41,19 +54,19 @@ not sure exactly how this will work yet.
 
 Here are some basic paces based on our goal above:
 
-|Workout             |Pace per mile       |Modifier            |
-|--------------------|--------------------|--------------------|
-|Easy                |8:52                |goal + 120 secs     |
-|Tempo               |6:52                |goal + 0 secs       |
-|Speed               |6:17                |goal - 35 secs      |
-|Strength            |6:42                |goal - 10 secs      |
-|Long                |7:22                |goal + 30 secs      |
+| Workout  | Pace per mile | Modifier        |
+|----------+---------------+-----------------|
+| Easy     |          8:52 | goal + 120 secs |
+| Tempo    |          6:52 | goal + 0 secs   |
+| Speed    |          6:17 | goal - 35 secs  |
+| Strength |          6:42 | goal - 10 secs  |
+| Long     |          7:22 | goal + 30 secs  |
 
 - [string] name - the name of the pace e.g. Easy, Tempo, Long
 - [integer] offset - number of seconds difference from goal pace
 - belongs_to user
 
-### Dashboard/Events (Workout)
+*** Events (Workout)
 
 Events for the most part are planned runs. They belong to a user and a pace.
 They hold the distance or time to be covered in the run. For example, today's
@@ -68,14 +81,17 @@ around 8:52 a mile.
 - belongs_to user
 - belongs_to pace
 
-### Dashboard/Activities
+** Plans
+*** PlanTemplate
 
-Activities are where the strava integration comes in. An activity holds the data
-about a run that has already been completed. Eventually we will match up the
-events with activities and display if the pace/distance/time was sufficient to
-mark the workout as complete.
+| field           | type     | purpose                | example           |
+|-----------------+----------+------------------------+-------------------|
+| name            | string   | name of the plan       | "advanced plan 1" |
+| duration        | integer  | number of weeks        | 18                |
+| author          | user     | the author of the plan | "Evan Dancer"     |
+| event_templates | has_many | events of the plan     | idk...            |
 
-- [string] name
-- [float] distance (in meters)
-- [integer] duration
-- [datetime] start_at
+*** EventTemplate
+| field | type | purpose | example |
+|       |      |         |         |
+*** PaceTemplate?
