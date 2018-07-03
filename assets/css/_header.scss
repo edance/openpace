@@ -1,5 +1,10 @@
 @import 'variables';
 
+header {
+  height: 60px;
+  width: 100%;
+}
+
 header.ui.menu {
   &:after {
     background: linear-gradient(to right, $gradient-start, $gradient-end);

@@ -1,0 +1,51 @@
+<aside class="sidebar">
+  <div class="logo">
+    <%= link to: "/" do %>
+      Squeeze
+    <% end %>
+  </div>
+
+  <div class="user">
+    <img class="avatar" src="<%= @current_user.avatar %>">
+    <div class="name"><%= full_name(@current_user) %></div>
+  </div>
+
+  <ul>
+    <li>
+      <%= link to: activity_path(@conn, :index) do %>
+        Activity Log
+      <% end %>
+    </li>
+    <li>
+      <%= link to: event_path(@conn, :index) do %>
+        Calendar
+      <% end %>
+    </li>
+    <li>
+      <%= link to: goal_path(@conn, :index) do %>
+        Goals
+      <% end %>
+    </li>
+    <li>
+      <%= link to: pace_path(@conn, :index) do %>
+        Paces
+      <% end %>
+    </li>
+  </ul>
+
+  <div class="goal time">
+    17:05
+  </div>
+
+  <div class="goal title">
+    Current Goal
+  </div>
+
+  <div class="workout title">
+    Today's Workout
+  </div>
+
+  <div class="workout event">
+    7 mi @ easy
+  </div>
+</aside>

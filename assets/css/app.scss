@@ -1,6 +1,7 @@
 /* This file is for your main application css. */
 @import 'layout';
-@import 'header';
+
+@import 'shared/sidebar';
 
 @import 'landing';
 @import 'events';

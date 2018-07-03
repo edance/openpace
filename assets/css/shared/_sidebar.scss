@@ -1,0 +1,43 @@
+aside.sidebar {
+  background: white;
+  height: 100%;
+  width: 300px;
+
+  .logo {
+    font-family: $serif;
+    font-size: 30px;
+    margin: auto;
+    padding: 24px 0;
+    text-align: center;
+
+    a {
+      color: $melon;
+    }
+
+    a:hover {
+      color: darken($melon, 5);
+    }
+  }
+
+  .user {
+    text-align: center;
+  }
+
+  .avatar {
+    border: 4px #e6e6e6 solid;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+  }
+
+  li a {
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  .name {
+    color: rgba(72, 72, 72, 0.75);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
