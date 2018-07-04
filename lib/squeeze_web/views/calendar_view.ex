@@ -2,7 +2,7 @@ defmodule SqueezeWeb.CalendarView do
   use SqueezeWeb, :view
 
   def today do
-    Date.utc_today()
+    Timex.today()
   end
 
   def days_in_month do
