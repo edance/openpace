@@ -1,0 +1,7 @@
+<%= today().month %> Calendar
+
+<%= for date <- dates() do %>
+  <div class="c-day">
+    <%= date.day %>
+  </div>
+<% end %>

@@ -33,13 +33,15 @@
     </li>
   </ul>
 
-  <div class="goal time">
-    17:05
-  </div>
+  <%= if @goal do %>
+    <div class="goal time">
+      <%= goal_time(@goal) %>
+    </div>
 
-  <div class="goal title">
-    Current Goal
-  </div>
+    <div class="goal title">
+      Current Goal
+    </div>
+  <% end %>
 
   <div class="workout title">
     Today's Workout
