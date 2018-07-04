@@ -1,7 +1,7 @@
-<%= Timex.format!(today(), "%B %Y", :strftime) %> Calendar
+<%= Timex.format!(@date, "%B %Y", :strftime) %> Calendar
 
 <div class="calendar container">
-  <%= for date <- dates() do %>
+  <%= for date <- dates(@date) do %>
     <div class="calendar date">
       <%= date.day %>
     </div>
