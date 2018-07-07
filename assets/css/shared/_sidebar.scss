@@ -6,8 +6,7 @@ aside.sidebar {
   .logo {
     font-family: $serif;
     font-size: 30px;
-    margin: auto;
-    padding: 24px 0;
+    margin: 24px auto 10px auto;
     text-align: center;
 
     a {
@@ -24,10 +23,12 @@ aside.sidebar {
   }
 
   .avatar {
-    border: 4px #e6e6e6 solid;
+    $size: 60px;
+    border: 2px #e6e6e6 solid;
     border-radius: 50%;
-    height: 80px;
-    width: 80px;
+    box-shadow: 0 2px 4px 0 #e6e6e6;
+    height: $size;
+    width: $size;
   }
 
   li a {
