@@ -1,4 +1,10 @@
-<%= Timex.format!(@date, "%B %Y", :strftime) %> Calendar
+<div class="calendar title">
+  <%= Timex.format!(@date, "%B %Y", :strftime) %>
+
+  <%= link "Today", to: dashboard_path(@conn, :index) %>
+  <%= link "<", to: dashboard_path(@conn, :index, date: previous(@date)) %>
+  <%= link ">", to: dashboard_path(@conn, :index, date: next(@date)) %>
+</div>
 
 <div class="calendar container">
   <%= for date <- dates(@date) do %>
