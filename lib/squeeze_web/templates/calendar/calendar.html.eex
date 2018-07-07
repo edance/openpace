@@ -1,15 +1,20 @@
-<div class="calendar title">
-  <%= Timex.format!(@date, "%B %Y", :strftime) %>
+<div class="calendar wrapper">
+  <div class="calendar title">
+    <%= link "Today", to: dashboard_path(@conn, :index) %>
+    <%= link to: dashboard_path(@conn, :index, date: previous(@date)) do %>
+      <i class="icon-arrow-left-circle"></i>
+    <% end %>
+    <%= link to: dashboard_path(@conn, :index, date: next(@date)) do %>
+      <i class="icon-arrow-right-circle"></i>
+    <% end %>
+    <%= Timex.format!(@date, "%B %Y", :strftime) %>
+  </div>
 
-  <%= link "Today", to: dashboard_path(@conn, :index) %>
-  <%= link "<", to: dashboard_path(@conn, :index, date: previous(@date)) %>
-  <%= link ">", to: dashboard_path(@conn, :index, date: next(@date)) %>
-</div>
-
-<div class="calendar container">
-  <%= for date <- dates(@date) do %>
-    <div class="calendar date">
-      <%= date.day %>
-    </div>
-  <% end %>
+  <div class="calendar container">
+    <%= for date <- dates(@date) do %>
+      <div class="calendar date">
+        <%= date.day %>
+      </div>
+    <% end %>
+  </div>
 </div>

@@ -1,4 +1,11 @@
+.calendar.wrapper {
+  height: 100%;
+  width: 100%;
+  padding: 24px;
+}
+
 .calendar.container {
+  background: $white;
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -6,8 +13,12 @@
 }
 
 .calendar.date {
+  $border: solid 2px $background;
   $height: 100%;
   $width: 100%;
+  border-right: $border;
+  border-bottom: $border;
   height: $height/5;
+  padding: 4px 8px;
   width: $width/7;
 }
