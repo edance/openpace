@@ -8,8 +8,15 @@ defmodule SqueezeWeb.SidebarView do
   end
 
   def goal_time(goal) do
-    Duration.from_seconds(goal.duration)
-    |> Duration.to_time!()
-    |> Timex.format!("%-H:%M:%S", :strftime)
+    duration = Duration.from_seconds(goal.duration)
+    Duration.to_time!(duration)
+    |> Timex.format!(format(duration), :strftime)
+  end
+
+  def format(duration) do
+    case Duration.to_hours(duration) do
+      x when x < 1 -> "%-M:%S"
+      _ -> "%-H:%M:%S"
+    end
   end
 end
