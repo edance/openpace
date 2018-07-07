@@ -13,21 +13,25 @@
   <ul>
     <li>
       <%= link to: activity_path(@conn, :index) do %>
+        <i class="icon-map"></i>
         Activity Log
       <% end %>
     </li>
     <li>
       <%= link to: event_path(@conn, :index) do %>
+        <i class="icon-calendar"></i>
         Calendar
       <% end %>
     </li>
     <li>
       <%= link to: goal_path(@conn, :index) do %>
+        <i class="icon-trophy"></i>
         Goals
       <% end %>
     </li>
     <li>
       <%= link to: pace_path(@conn, :index) do %>
+        <i class="icon-clock"></i>
         Paces
       <% end %>
     </li>
