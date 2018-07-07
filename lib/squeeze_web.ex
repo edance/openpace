@@ -40,6 +40,7 @@ defmodule SqueezeWeb do
       import SqueezeWeb.Router.Helpers
       import SqueezeWeb.ErrorHelpers
       import SqueezeWeb.Gettext
+      import PhoenixActiveLink
     end
   end
 

@@ -31,14 +31,44 @@ aside.sidebar {
     width: $size;
   }
 
-  li a {
-    font-size: 14px;
-    text-transform: uppercase;
-  }
-
   .name {
     color: rgba(72, 72, 72, 0.75);
     font-weight: 600;
     text-transform: uppercase;
   }
+
+  .links {
+    margin-top: 50px;
+    padding-left: 0;
+
+    li {
+      margin-bottom: 14px;
+      position: relative;
+
+    }
+
+    li.active:before {
+      background-color: $dull-yellow;
+      content: '';
+      height: 100%;
+      left: 1px;
+      position: absolute;
+      width: 4px;
+    }
+
+    a {
+      display: flex;
+      line-height: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    i {
+      font-size: 24px;
+      margin-left: 24px;
+      margin-right: 12px;
+    }
+  }
+
 }

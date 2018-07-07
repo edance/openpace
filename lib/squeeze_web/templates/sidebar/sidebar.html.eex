@@ -10,31 +10,23 @@
     <div class="name"><%= full_name(@current_user) %></div>
   </div>
 
-  <ul>
-    <li>
-      <%= link to: activity_path(@conn, :index) do %>
-        <i class="icon-map"></i>
-        Activity Log
-      <% end %>
-    </li>
-    <li>
-      <%= link to: event_path(@conn, :index) do %>
-        <i class="icon-calendar"></i>
-        Calendar
-      <% end %>
-    </li>
-    <li>
-      <%= link to: goal_path(@conn, :index) do %>
-        <i class="icon-trophy"></i>
-        Goals
-      <% end %>
-    </li>
-    <li>
-      <%= link to: pace_path(@conn, :index) do %>
-        <i class="icon-clock"></i>
-        Paces
-      <% end %>
-    </li>
+  <ul class="links">
+    <%= active_link(@conn, to: activity_path(@conn, :index), wrap_tag: :li) do %>
+      <i class="icon-map"></i>
+      Activity Log
+    <% end %>
+    <%= active_link(@conn, to: dashboard_path(@conn, :index), wrap_tag: :li) do %>
+      <i class="icon-calendar"></i>
+      Calendar
+    <% end %>
+    <%= active_link(@conn, to: goal_path(@conn, :index), wrap_tag: :li) do %>
+      <i class="icon-trophy"></i>
+      Goals
+    <% end %>
+    <%= active_link(@conn, to: pace_path(@conn, :index), wrap_tag: :li) do %>
+      <i class="icon-clock"></i>
+      Paces
+    <% end %>
   </ul>
 
   <%= if @goal do %>
