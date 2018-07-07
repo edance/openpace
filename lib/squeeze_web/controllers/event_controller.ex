@@ -6,9 +6,12 @@ defmodule SqueezeWeb.EventController do
 
   plug :authorize_event when action in [:edit, :update, :delete]
 
-  def index(conn, _params) do
-    events = Dashboard.list_events(conn.assigns.current_user)
-    render(conn, "index.html", events: events)
+  def index(conn, params) do
+    user = conn.assigns.current_user
+    conn
+    |> assign(:date, parse_date(params["date"]))
+    |> assign(:events, Dashboard.list_events(user))
+    |> render("index.html")
   end
 
   def new(conn, _params) do
@@ -70,6 +73,17 @@ defmodule SqueezeWeb.EventController do
       |> put_flash(:error, "You can't modify that event")
       |> redirect(to: event_path(conn, :index))
       |> halt()
+    end
+  end
+
+  def parse_date(nil) do
+    Timex.today
+  end
+
+  def parse_date(date) do
+    case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
+      {:ok, date} -> date
+      {:error, _} -> Timex.today
     end
   end
 end

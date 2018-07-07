@@ -1,9 +1,9 @@
 <div class="calendar title">
-  <%= link "Today", to: dashboard_path(@conn, :index) %>
-  <%= link to: dashboard_path(@conn, :index, date: previous(@date)) do %>
+  <%= link "Today", to: event_path(@conn, :index) %>
+  <%= link to: event_path(@conn, :index, date: previous(@date)) do %>
     <i class="icon-arrow-left-circle"></i>
   <% end %>
-  <%= link to: dashboard_path(@conn, :index, date: next(@date)) do %>
+  <%= link to: event_path(@conn, :index, date: next(@date)) do %>
     <i class="icon-arrow-right-circle"></i>
   <% end %>
   <%= Timex.format!(@date, "%B %Y", :strftime) %>

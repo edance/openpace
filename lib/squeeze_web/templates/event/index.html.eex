@@ -1,3 +1,5 @@
+<%= render SqueezeWeb.CalendarView, "calendar.html", assigns %>
+
 <div class="ui container">
   <h2>Listing Events</h2>
 
