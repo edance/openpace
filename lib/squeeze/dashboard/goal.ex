@@ -6,7 +6,6 @@ defmodule Squeeze.Dashboard.Goal do
 
 
   schema "goals" do
-    field :current, :boolean, default: false
     field :date, :date
     field :distance, :float
     field :duration, :integer
@@ -20,7 +19,7 @@ defmodule Squeeze.Dashboard.Goal do
   @doc false
   def changeset(%Goal{} = goal, attrs) do
     goal
-    |> cast(attrs, [:distance, :duration, :name, :date, :current])
+    |> cast(attrs, [:distance, :duration, :name, :date])
     |> validate_required([:distance, :duration])
   end
 end

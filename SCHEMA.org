@@ -43,7 +43,6 @@ pace. An example of a goal would be to run a 3 hour marathon.
 - [integer] duration (in seconds)
 - [string] name (optional) - the name of your race. Most goals will be for a given race.
 - [date] date (optional) - date to accomplish the goal.
-- [boolean] current - whether this is the current goal or past goal.
 - belongs_to user
 
 *** Paces

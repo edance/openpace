@@ -29,11 +29,5 @@
     <%= error_tag f, :date %>
   </div>
 
-  <div class="field">
-    <%= label f, :current %>
-    <%= checkbox f, :current %>
-    <%= error_tag f, :current %>
-  </div>
-
   <%= submit "Submit", class: "ui submit button" %>
 <% end %>

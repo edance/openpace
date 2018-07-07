@@ -20,7 +20,6 @@ defmodule Squeeze.Factory do
 
   def goal_factory do
     %Goal{
-      current: true,
       date: Faker.Date.forward(:rand.uniform(100)),
       distance: 42195.0, # Marathon in meters
       duration: 3 * 60 * 60, # 3 hours in seconds

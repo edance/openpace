@@ -3,9 +3,9 @@ defmodule SqueezeWeb.GoalControllerTest do
 
   alias Squeeze.Dashboard
 
-  @create_attrs %{current: true, date: ~D[2010-04-17], distance: 120.5, duration: 42, name: "some name"}
-  @update_attrs %{current: false, date: ~D[2011-05-18], distance: 456.7, duration: 43, name: "some updated name"}
-  @invalid_attrs %{current: nil, date: nil, distance: nil, duration: nil, name: nil}
+  @create_attrs %{date: ~D[2010-04-17], distance: 120.5, duration: 42, name: "some name"}
+  @update_attrs %{date: ~D[2011-05-18], distance: 456.7, duration: 43, name: "some updated name"}
+  @invalid_attrs %{date: nil, distance: nil, duration: nil, name: nil}
 
   def fixture(:goal) do
     {:ok, goal} = Dashboard.create_goal(@create_attrs)

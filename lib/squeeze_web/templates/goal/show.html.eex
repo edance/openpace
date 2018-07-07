@@ -23,10 +23,5 @@
       <strong>Date:</strong>
       <%= @goal.date %>
     </li>
-
-    <li>
-      <strong>Current:</strong>
-      <%= @goal.current %>
-    </li>
   </ul>
 </div>

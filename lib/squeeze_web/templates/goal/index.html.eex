@@ -10,7 +10,6 @@
         <th>Duration</th>
         <th>Name</th>
         <th>Date</th>
-        <th>Current</th>
 
         <th></th>
       </tr>
@@ -22,7 +21,6 @@
           <td><%= goal.duration %></td>
           <td><%= goal.name %></td>
           <td><%= goal.date %></td>
-          <td><%= goal.current %></td>
 
           <td class="text-right">
             <span><%= link "Show", to: goal_path(@conn, :show, goal), class: "btn btn-default btn-xs" %></span>

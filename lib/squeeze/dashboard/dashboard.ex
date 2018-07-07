@@ -168,7 +168,12 @@ defmodule Squeeze.Dashboard do
 
   """
   def get_current_goal(user) do
-    Repo.get_by(Goal, user_id: user.id, current: true)
+    query = from g in Goal,
+      where: g.user_id == ^user.id,
+      order_by: [desc: g.id],
+      limit: 1
+
+    Repo.one(query)
   end
 
   @doc """

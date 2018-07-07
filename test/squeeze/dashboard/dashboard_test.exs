@@ -9,7 +9,7 @@ defmodule Squeeze.DashboardTest do
     alias Squeeze.Dashboard.Goal
 
     @valid_attrs params_for(:goal)
-    @update_attrs %{name: "some updated name", current: false}
+    @update_attrs %{name: "some updated name"}
     @invalid_attrs %{distance: nil, duration: nil}
 
     test "list_goals/1 returns all users goals" do
