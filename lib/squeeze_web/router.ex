@@ -22,6 +22,7 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :dashboard_layout do
+    plug :set_goal
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
@@ -65,5 +66,11 @@ defmodule SqueezeWeb.Router do
       nil -> conn
       user -> assign(conn, :current_user, user)
     end
+  end
+
+  defp set_goal(conn, _) do
+    user = conn.assigns.current_user
+    goal = Squeeze.Dashboard.get_current_goal(user)
+    assign(conn, :goal, goal)
   end
 end

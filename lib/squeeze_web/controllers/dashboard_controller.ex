@@ -7,7 +7,6 @@ defmodule SqueezeWeb.DashboardController do
     user = conn.assigns.current_user
     conn
     |> assign(:date, parse_date(params["date"]))
-    |> assign(:goal, Dashboard.get_current_goal(user))
     |> assign(:activities, Dashboard.get_todays_activities(user))
     |> render("index.html")
   end
