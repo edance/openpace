@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Bree+Serif|Open+Sans');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css');
 
+@font-face {
+  font-family: 'digital';
+  src: url('/fonts/digital.ttf');
+}
+
 // Colors
 $gradient-start: #f2854c;
 $gradient-end: #ed4a6b;
@@ -16,4 +21,4 @@ $background: #f3f5f7;
 // Fonts
 $serif: 'Bree Serif', serif;
 $sans-serif: 'Open Sans', sans-serif;
-
+$digital: 'digital', sans-serif;
