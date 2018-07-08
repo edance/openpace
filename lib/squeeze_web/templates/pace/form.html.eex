@@ -17,5 +17,11 @@
     <%= error_tag f, :offset %>
   </div>
 
+  <div class="field">
+    <%= label f, :color %>
+    <%= color_input f, :color %>
+    <%= error_tag f, :color %>
+  </div>
+
   <%= submit "Submit", class: "ui submit button" %>
 <% end %>
