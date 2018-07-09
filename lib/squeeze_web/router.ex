@@ -10,6 +10,7 @@ defmodule SqueezeWeb.Router do
     plug Guardian.Plug.Pipeline, module: Squeeze.Guardian, error_handler: Squeeze.AuthErrorHandler
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource, allow_blank: true
+    plug Turbolinks
     plug :set_user
   end
 

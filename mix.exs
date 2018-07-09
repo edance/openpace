@@ -40,6 +40,7 @@ defmodule Squeeze.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_active_link, "~> 0.2.1"},
+      {:turbolinks, "~> 0.3.4"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:strava, "~> 0.4"},
