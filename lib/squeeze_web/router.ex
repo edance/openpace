@@ -46,7 +46,7 @@ defmodule SqueezeWeb.Router do
     pipe_through [:browser, :authorized, :dashboard_layout]
 
     get "/", DashboardController, :index
-    resources "/activities", ActivityController
+    resources "/activities", ActivityController, only: [:index, :show]
     resources "/events", EventController
     resources "/goals", GoalController
     resources "/paces", PaceController

@@ -1,6 +1,5 @@
 <div class="ui text container">
   <h2>Show Activity</h2>
-  <span><%= link "Edit", to: activity_path(@conn, :edit, @activity) %></span>
   <span><%= link "Back", to: activity_path(@conn, :index) %></span>
 
   <ui class="ui list">

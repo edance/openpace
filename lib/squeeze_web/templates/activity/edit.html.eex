@@ -1,7 +1,0 @@
-<div class="ui text container">
-  <h2>Edit Activity</h2>
-
-  <span><%= link "Back", to: activity_path(@conn, :index) %></span>
-
-  <%= render "form.html", Map.put(assigns, :action, activity_path(@conn, :update, @activity)) %>
-</div>
