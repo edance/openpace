@@ -41,3 +41,17 @@ main.ui {
   padding: 24px;
   width: 100%;
 }
+
+.ui.container {
+  background: $white;
+  padding: 24px;
+  width: 100%;
+
+  > h2 {
+    margin-top: 0;
+  }
+}
+
+table {
+  width: 100%;
+}
