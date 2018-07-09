@@ -54,6 +54,10 @@ main.ui {
 
 table {
   width: 100%;
+
+  th {
+    text-align: left;
+  }
 }
 
 .turbolinks-progress-bar {
