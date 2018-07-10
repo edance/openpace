@@ -39,23 +39,5 @@ defmodule Squeeze.Calendar do
       Date.add(date, 6 - day_of_week)
     end
   end
-
-  defp add_month(date) do
-    case date.month do
-      12 -> Date.new(date.year + 1, 1, 1)
-      x -> Date.new(date.year, x + 1, 1)
-    end
-  end
-
-  defp subtract_month(date) do
-    case date.month do
-      1 -> Date.new(date.year - 1, 12, 1)
-      x -> Date.new(date.year, x - 1, 1)
-    end
-  end
-
-  defp format_date(date) do
-    Timex.format!(date, "{YYYY}-{0M}-{0D}")
-  end
 end
 
