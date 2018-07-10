@@ -2,6 +2,7 @@ aside.sidebar {
   background: white;
   box-shadow: 0 0 20px 0 rgba(230, 230, 230, 0.5);
   height: 100%;
+  padding: 24px;
   width: 300px;
 
   .logo {
@@ -39,8 +40,7 @@ aside.sidebar {
   }
 
   .links {
-    margin-top: 50px;
-    margin-bottom: 100px;
+    margin: 50px -24px 100px;
     padding-left: 0;
 
     li {
@@ -76,6 +76,7 @@ aside.sidebar {
   .goal.time {
     font-family: $digital;
     font-size: 80px;
+    margin-bottom: -8px;
     text-align: center;
     color: #6d6d6d;
   }
@@ -85,5 +86,19 @@ aside.sidebar {
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
+  }
+
+  .progress {
+    background-image: linear-gradient(to right, #fad961, #f76b1c);
+    border-radius: 4px;
+    margin-bottom: 40px;
+    width: 100%;
+    height: 8px;
+  }
+
+  .workout.event {
+    font-size: 30px;
+    text-align: center;
+    color: $dark-gray;
   }
 }

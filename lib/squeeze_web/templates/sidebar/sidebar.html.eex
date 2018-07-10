@@ -30,20 +30,8 @@
   </ul>
 
   <%= if @goal do %>
-    <div class="goal time">
-      <%= goal_time(@goal) %>
-    </div>
-
-    <div class="goal title">
-      Current Goal
-    </div>
+    <%= render("_goal.html", assigns) %>
   <% end %>
 
-  <div class="workout title">
-    Today's Workout
-  </div>
-
-  <div class="workout event">
-    7 mi @ easy
-  </div>
+  <%= render("_workout.html", assigns) %>
 </aside>
