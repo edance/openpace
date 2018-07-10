@@ -1,12 +1,37 @@
 .calendar.container {
   background: $white;
+  box-shadow: $box-shadow;
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  height: calc(100% - #{$calendar-header-height});
   width: 100%;
 }
 
 .calendar.title {
+  display: flex;
+  margin-bottom: 8px;
+
+  .today.btn {
+    background-color: $gray;
+    padding: 4px 12px;
+    margin-right: 24px;
+    text-transform: uppercase;
+  }
+
+  .next {
+    margin-left: 4px;
+  }
+
+  .next, .prev {
+    font-size: 18px;
+    line-height: $calendar-header-height;
+  }
+
+  .date {
+    font-size: 20px;
+    margin-left: 24px;
+  }
+
 }
 
 .calendar.date {

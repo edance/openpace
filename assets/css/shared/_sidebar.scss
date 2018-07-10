@@ -1,14 +1,15 @@
 aside.sidebar {
   background: white;
-  box-shadow: 0 0 20px 0 rgba(230, 230, 230, 0.5);
+  box-shadow: $box-shadow;
   height: 100%;
   padding: 24px;
-  width: 300px;
+  position: fixed;
+  width: $sidebar-width;
 
   .logo {
     font-family: $serif;
     font-size: 30px;
-    margin: 24px auto 10px auto;
+    margin: 0 auto 10px auto;
     text-align: center;
 
     a {

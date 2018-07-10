@@ -36,9 +36,12 @@ p.alert {
 }
 
 main.ui {
+  $padding: 24px;
+
   height: 100%;
   margin: 0;
   padding: 24px;
+  padding-left: $padding + $sidebar-width;
   width: 100%;
 }
 

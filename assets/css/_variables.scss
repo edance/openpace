@@ -12,6 +12,7 @@ $gradient-end: #ed4a6b;
 
 $melon: #ff8552;
 $dark-gray: #484848;
+$gray: #e6e6e6;
 $dull-yellow: #e9d758;
 $white: #fff;
 
@@ -22,3 +23,10 @@ $background: #f3f5f7;
 $serif: 'Bree Serif', serif;
 $sans-serif: 'Open Sans', sans-serif;
 $digital: 'digital', sans-serif;
+
+// Shadows
+$box-shadow: 0 0 20px 0 rgba(230, 230, 230, 0.5);
+
+// Constants
+$calendar-header-height: 30px;
+$sidebar-width: 250px;
