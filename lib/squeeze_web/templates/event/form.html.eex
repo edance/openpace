@@ -19,7 +19,7 @@
 
   <div class="field">
     <%= label f, :date %>
-    <%= date_select f, :date %>
+    <%= date_input f, :date %>
     <%= error_tag f, :date %>
   </div>
 
