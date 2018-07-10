@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.EventController do
   use SqueezeWeb, :controller
 
+  alias Squeeze.Calendar
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Event
 
@@ -8,9 +9,12 @@ defmodule SqueezeWeb.EventController do
 
   def index(conn, params) do
     user = conn.assigns.current_user
+    date = parse_date(params["date"])
+    dates = Calendar.visible_dates(date)
     conn
-    |> assign(:date, parse_date(params["date"]))
-    |> assign(:events, Dashboard.list_events(user))
+    |> assign(:date, date)
+    |> assign(:dates, dates)
+    |> assign(:events, Dashboard.list_events(user, dates))
     |> render("index.html")
   end
 
