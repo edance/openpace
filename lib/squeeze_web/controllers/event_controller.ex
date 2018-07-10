@@ -15,8 +15,9 @@ defmodule SqueezeWeb.EventController do
   end
 
   def new(conn, _params) do
+    paces = Dashboard.list_paces(conn.assigns.current_user)
     changeset = Dashboard.change_event(%Event{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", paces: paces, changeset: changeset)
   end
 
   def create(conn, %{"event" => event_params}) do

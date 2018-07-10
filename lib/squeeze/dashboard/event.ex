@@ -21,7 +21,7 @@ defmodule Squeeze.Dashboard.Event do
   @doc false
   def changeset(%Event{} = event, attrs) do
     event
-    |> cast(attrs, [:name, :distance, :date, :warmup, :cooldown])
+    |> cast(attrs, [:name, :distance, :date, :warmup, :cooldown, :pace_id])
     |> validate_required([:distance, :date])
   end
 end

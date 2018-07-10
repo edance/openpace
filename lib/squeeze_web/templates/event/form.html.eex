@@ -35,5 +35,7 @@
     <%= error_tag f, :cooldown %>
   </div>
 
+  <%= select f, :pace_id, Enum.map(@paces, &{&1.name, &1.id}) %>
+
   <%= submit "Submit", class: "ui submit button" %>
 <% end %>
