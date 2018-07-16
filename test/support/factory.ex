@@ -2,7 +2,7 @@ defmodule Squeeze.Factory do
   use ExMachina.Ecto, repo: Squeeze.Repo
 
   alias Faker.{Name, Address}
-  alias Squeeze.Accounts.User
+  alias Squeeze.Accounts.{Credential, User}
   alias Squeeze.Dashboard.{Activity, Event, Goal, Pace}
 
   def user_factory do
@@ -13,6 +13,15 @@ defmodule Squeeze.Factory do
       city: Address.city(),
       state: Address.state_abbr(),
       country: Address.country_code()
+    }
+  end
+
+  def credential_factory do
+    %Credential{
+      provider: "strava",
+      token: "abcdefg",
+      uid: 12345,
+      user: build(:user)
     }
   end
 
