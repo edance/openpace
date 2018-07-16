@@ -45,15 +45,14 @@ defmodule Squeeze.Factory do
   end
 
   def event_factory do
-    user = build(:user)
     %Event{
       cooldown: Enum.random([true, false]),
       warmup: Enum.random([true, false]),
       date: Faker.Date.forward(:rand.uniform(100)),
       distance: 120.5,
       name: "some name",
-      pace: build(:pace, user: user),
-      user: user
+      pace: build(:pace),
+      user: build(:user)
     }
   end
 

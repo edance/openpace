@@ -29,7 +29,8 @@ defmodule Squeeze.DashboardTest do
     end
 
     test "create_goal/2 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Dashboard.create_goal(@invalid_attrs)
+      user = insert(:user)
+      assert {:error, %Ecto.Changeset{}} = Dashboard.create_goal(user, @invalid_attrs)
     end
 
     test "update_goal/2 with valid data updates the goal" do
@@ -118,14 +119,19 @@ defmodule Squeeze.DashboardTest do
     @update_attrs %{name: "some updated name"}
     @invalid_attrs %{date: nil, distance: nil}
 
-    test "list_events/1 returns all events" do
-      event = insert(:event)
-      assert Dashboard.list_events(event.user) == [event]
+    test "list_events/2 returns events in date range" do
+      user = insert(:user)
+      yesterday = Timex.today |> Timex.shift(days: -1)
+      insert(:event, date: yesterday, user: user)
+      current = insert(:event, date: Timex.today, user: user)
+      range = Date.range(Timex.today, Timex.shift(Timex.today, days: 1))
+      events = Dashboard.list_events(user, range)
+      assert Enum.map(events, fn x -> x.id end) == [current.id]
     end
 
     test "get_event!/1 returns the event with given id" do
       event = insert(:event)
-      assert Dashboard.get_event!(event.id) == event
+      assert Dashboard.get_event!(event.id).id == event.id
     end
 
     test "create_event/2 with valid data creates a event" do
@@ -149,7 +155,7 @@ defmodule Squeeze.DashboardTest do
     test "update_event/2 with invalid data returns error changeset" do
       event = insert(:event)
       assert {:error, %Ecto.Changeset{}} = Dashboard.update_event(event, @invalid_attrs)
-      assert event == Dashboard.get_event!(event.id)
+      assert event.id == Dashboard.get_event!(event.id).id
     end
 
     test "delete_event/1 deletes the event" do
