@@ -19,7 +19,7 @@ defmodule Squeeze.Dashboard.Pace do
   def changeset(%Pace{} = pace, attrs) do
     pace
     |> cast(attrs, [:name, :offset, :color])
-    |> validate_required([:name, :offset, :color])
+    |> validate_required([:name, :offset])
     |> validate_format(:color, ~r/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
   end
 end

@@ -1,7 +1,7 @@
 defmodule Squeeze.Factory do
   use ExMachina.Ecto, repo: Squeeze.Repo
 
-  alias Faker.{Name, Lorem, Address}
+  alias Faker.{Name, Address}
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, Event, Goal, Pace}
 
