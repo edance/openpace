@@ -115,7 +115,6 @@ defmodule Squeeze.DashboardTest do
   describe "events" do
     alias Squeeze.Dashboard.Event
 
-    @valid_attrs params_for(:event)
     @update_attrs %{name: "some updated name"}
     @invalid_attrs %{date: nil, distance: nil}
 
@@ -136,8 +135,9 @@ defmodule Squeeze.DashboardTest do
 
     test "create_event/2 with valid data creates a event" do
       user = insert(:user)
-      assert {:ok, %Event{} = event} = Dashboard.create_event(user, @valid_attrs)
-      assert event.name == @valid_attrs.name
+      attrs = %{params_with_assocs(:event) | name: "Test Event"}
+      assert {:ok, %Event{} = event} = Dashboard.create_event(user, attrs)
+      assert event.name == "Test Event"
     end
 
     test "create_event/2 with invalid data returns error changeset" do
