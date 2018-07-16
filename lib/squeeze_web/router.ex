@@ -17,7 +17,7 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :authorized do
-    plug Guardian.Plug.EnsureAuthenticated
+    plug Plug.RequireUser
   end
 
   pipeline :api do
