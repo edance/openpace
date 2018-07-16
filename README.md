@@ -1,9 +1,9 @@
-![](https://github.com/edance/art/blob/master/squeeze/repo-banner.png)
+![Squeeze](https://github.com/edance/art/blob/master/squeeze/repo-banner.png)
 
-[![Travis](https://img.shields.io/travis/edance/squeeze.svg?style=flat-square)]()
-[![license](https://img.shields.io/github/license/edance/squeeze.svg?style=flat-square)]()
+[![Travis](https://img.shields.io/travis/edance/squeeze.svg?style=flat-square)](https://travis-ci.org/edance/squeeze)
+[![license](https://img.shields.io/github/license/edance/squeeze.svg?style=flat-square)](https://github.com/edance/squeeze/blob/master/LICENSE.md)
 
-Try it yourself: [https://squeeze-run.herokuapp.com](https://squeeze-run.herokuapp.com)
+Try it yourself: [https://squeeze.run](https://squeeze.run)
 
 ## Scenarios
 
@@ -30,7 +30,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## FAQ/Contact
 
-  * Official website: https://squeeze-run.herokuapp.com
+  * Official website: https://squeeze.run
   * Guides: WIP
   * Docs: WIP
   * Source: https://github.com/edance/squeeze
