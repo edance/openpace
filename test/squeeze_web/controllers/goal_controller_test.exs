@@ -12,11 +12,14 @@ defmodule SqueezeWeb.GoalControllerTest do
     goal
   end
 
-  describe "index" do
-    test "lists all goals", %{conn: conn} do
-      conn = get conn, goal_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Goals"
-    end
+  @tag :as_user
+  test "lists all goals on index", %{conn: conn} do
+    goal = insert(:goal, user: conn.assigns.current_user)
+
+    conn = get(conn, goal_path(conn, :index))
+
+    assert html_response(conn, 200) =~ ~r/Goals/
+    assert String.contains?(conn.resp_body, goal.name)
   end
 
   describe "new goal" do
