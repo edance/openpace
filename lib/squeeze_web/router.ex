@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.Router do
   use SqueezeWeb, :router
 
+  alias SqueezeWeb.Plug
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -10,8 +12,8 @@ defmodule SqueezeWeb.Router do
     plug Guardian.Plug.Pipeline, module: Squeeze.Guardian, error_handler: Squeeze.AuthErrorHandler
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource, allow_blank: true
+    plug Plug.Auth
     plug Turbolinks
-    plug :set_user
   end
 
   pipeline :authorized do
@@ -55,13 +57,6 @@ defmodule SqueezeWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", SqueezeWeb, as: :api do
     pipe_through :api
-  end
-
-  defp set_user(conn, _) do
-    case Squeeze.Guardian.Plug.current_resource(conn) do
-      nil -> conn
-      user -> assign(conn, :current_user, user)
-    end
   end
 
   defp set_goal(conn, _) do
