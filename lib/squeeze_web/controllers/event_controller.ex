@@ -6,22 +6,19 @@ defmodule SqueezeWeb.EventController do
   alias Squeeze.Dashboard.Event
 
   plug :authorize_event when action in [:edit, :update, :delete]
+  plug :set_paces when action in [:new, :create, :edit, :update]
+  plug :set_dates when action in [:index]
 
-  def index(conn, params) do
+  def index(conn, _params) do
     user = conn.assigns.current_user
-    date = parse_date(params["date"])
-    dates = Calendar.visible_dates(date)
     conn
-    |> assign(:date, date)
-    |> assign(:dates, dates)
-    |> assign(:events, Dashboard.list_events(user, dates))
+    |> assign(:events, Dashboard.list_events(user, conn.assigns.dates))
     |> render("index.html")
   end
 
   def new(conn, _params) do
-    paces = Dashboard.list_paces(conn.assigns.current_user)
     changeset = Dashboard.change_event(%Event{})
-    render(conn, "new.html", paces: paces, changeset: changeset)
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"event" => event_params}) do
@@ -68,6 +65,19 @@ defmodule SqueezeWeb.EventController do
     |> redirect(to: event_path(conn, :index))
   end
 
+  defp set_paces(conn, _) do
+    paces = Dashboard.list_paces(conn.assigns.current_user)
+    assign(conn, :paces, paces)
+  end
+
+  defp set_dates(conn, params) do
+    date = parse_date(params["date"])
+    dates = Calendar.visible_dates(date)
+    conn
+    |> assign(:date, date)
+    |> assign(:dates, dates)
+  end
+
   defp authorize_event(conn, _) do
     event = Dashboard.get_event!(conn.params["id"])
 
@@ -81,11 +91,11 @@ defmodule SqueezeWeb.EventController do
     end
   end
 
-  def parse_date(nil) do
+  defp parse_date(nil) do
     Timex.today
   end
 
-  def parse_date(date) do
+  defp parse_date(date) do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date
       {:error, _} -> Timex.today
