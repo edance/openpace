@@ -47,7 +47,6 @@ defmodule Squeeze.Mixfile do
       {:timex, "~> 3.3"},
       {:guardian, "~> 1.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:inch_ex, only: :docs},
       {:ex_machina, "~> 2.1", only: :test},
       {:faker, "~> 0.9", only: :test}
     ]
