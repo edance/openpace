@@ -25,7 +25,7 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :dashboard_layout do
-    plug :set_goal
+    plug Plug.LoadGoal
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
@@ -57,11 +57,5 @@ defmodule SqueezeWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", SqueezeWeb, as: :api do
     pipe_through :api
-  end
-
-  defp set_goal(conn, _) do
-    user = conn.assigns.current_user
-    goal = Squeeze.Dashboard.get_current_goal(user)
-    assign(conn, :goal, goal)
   end
 end
