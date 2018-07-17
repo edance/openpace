@@ -73,14 +73,6 @@ defmodule SqueezeWeb.EventController do
     assign(conn, :paces, paces)
   end
 
-  defp set_dates(conn, params) do
-    date = parse_date(params[:date])
-    dates = Calendar.visible_dates(date)
-    conn
-    |> assign(:date, date)
-    |> assign(:dates, dates)
-  end
-
   defp authorize_event(conn, _) do
     event = Dashboard.get_event!(conn.params["id"])
 
