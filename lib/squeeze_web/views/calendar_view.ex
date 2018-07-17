@@ -5,12 +5,22 @@ defmodule SqueezeWeb.CalendarView do
     "Calendar"
   end
 
-  def previous(base) do
+  def previous_short(base) do
+    date = Date.add(base, -3)
+    format_date(date)
+  end
+
+  def next_short(base) do
+    date = Date.add(base, 3)
+    format_date(date)
+  end
+
+  def previous_month(base) do
     {:ok, date} = subtract_month(base)
     format_date(date)
   end
 
-  def next(base) do
+  def next_month(base) do
     {:ok, date} = add_month(base)
     format_date(date)
   end

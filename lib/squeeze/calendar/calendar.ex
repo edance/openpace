@@ -3,8 +3,8 @@ defmodule Squeeze.Calendar do
   The Calendar context.
   """
 
-  def visible_dates(base) do
-    Date.range(first_date(base), last_date(base))
+  def visible_dates(base, type) do
+    Date.range(first_date(base, type), last_date(base, type))
   end
 
   defp first_of_month(base) do
@@ -18,8 +18,16 @@ defmodule Squeeze.Calendar do
     date
   end
 
+  defp first_date(date, "short") do
+    Date.add(date, -1)
+  end
+
+  defp last_date(date, "short") do
+    Date.add(date, 1)
+  end
+
   # 7 is Sunday in elxir
-  defp first_date(base) do
+  defp first_date(base, "month") do
     date = first_of_month(base)
     day_of_week = Date.day_of_week(date)
     if day_of_week == 7 do
@@ -30,7 +38,7 @@ defmodule Squeeze.Calendar do
   end
 
   # Last day is 6 Saturday
-  defp last_date(base) do
+  defp last_date(base, "month") do
     date = last_day_of_month(base)
     day_of_week = Date.day_of_week(date)
     if day_of_week == 7 do
