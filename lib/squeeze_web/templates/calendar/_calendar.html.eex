@@ -1,0 +1,10 @@
+<%= for date <- @dates do %>
+  <div class="calendar date">
+    <%= date.day %>
+    <br/>
+    <%= for event <- Enum.filter(@events, fn(x) -> x.date == date end) do %>
+      <%= event.name %>
+      <br/>
+    <% end %>
+  </div>
+<% end %>

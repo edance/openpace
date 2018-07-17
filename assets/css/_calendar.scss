@@ -36,11 +36,20 @@
 
 .calendar.date {
   $border: solid 2px $background;
-  $height: 100%;
   $width: 100%;
   border-right: $border;
   border-bottom: $border;
-  height: $height/5;
+  height: 100%;
   padding: 4px 8px;
-  width: $width/7;
+  width: $width/3;
+}
+
+.month.calendar {
+  $height: 100%;
+  $width: 100%;
+
+  .date {
+    height: $height/5;
+    width: $width/7;
+  }
 }
