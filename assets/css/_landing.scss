@@ -1,23 +1,45 @@
 @import 'variables';
 
-.ui.masthead.segment {
-  background: linear-gradient(to right, $gradient-start, $gradient-end);
-  padding: 3em;
+.landing.page {
+  background: $white;
+  height: 100vh;
+  width: 100%;
 
-  h1.ui.header {
-    font-size: 5em;
+  .logo {
+    font-family: $serif;
+    font-size: 30px;
+    padding: 24px;
+
+    a {
+      color: $melon;
+    }
   }
 
-  .ui.text.container {
-    margin-top: 8em;
-    margin-bottom: 8em;
+  .hero {
+    text-align: center;
+    width: 100%;
   }
 
-  .strava.button {
-    height: 48px;
+  h1, h2 {
+    color: $medium-gray;
+    font-family: $sans-serif;
+    font-weight: 300;
+    margin: 0;
   }
-}
 
-.footer.segment {
-  padding: 5em 0;
+  h1 {
+    font-size: 50px;
+    margin-top: 1em;
+  }
+
+  h2 {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  .strava-btn {
+    img {
+      width: 225px;
+    }
+  }
 }

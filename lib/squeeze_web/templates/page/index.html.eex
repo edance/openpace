@@ -1,12 +1,14 @@
-<div class="ui inverted vertical masthead center aligned segment">
-  <div class="ui text container">
-    <h1 class="ui inverted header">
+<div class="landing page">
+  <div class="logo">
+    <%= link to: "/" do %>
       Squeeze
-    </h1>
-    <h2>Do whatever you want when you want to.</h2>
-    <%= link to: auth_path(@conn, :request, "strava") do %>
-      <img class="strava button" alt="Sign in with Strava" src="/images/btn_strava@2x.png" />
     <% end %>
+  </div>
+
+  <div class="hero">
+    <h1>Run with Us.</h1>
+    <h2>1,239 miles and counting</h2>
+    <%= render("_strava-btn.html", assigns) %>
   </div>
 </div>
 
