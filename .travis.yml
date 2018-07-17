@@ -1,11 +1,16 @@
 language: elixir
 elixir:
-  - 1.5
+- 1.5
 otp_release:
-  - 20.0
+- 20.0
 before_script:
-  - mix deps.get
+- mix deps.get
 script:
-  - mix test
+- mix test
 notifications:
   email: false
+deploy:
+  provider: heroku
+  app: squeeze-run
+  api_key:
+    secure: j0VYSgyvUbrGYBZ/JFiNUJaNgSmGvVhcSuuCarTiCAGT8TYEEMBhlJDqvSlSse8yNTmjxzw7+zwgVVd7rTDEjxx0pGrCwcYp/muGxK+597+/wTVUZB52LPNRKByuMMMB4ML1WgJyrqZi0GoMF3ZpCUDQNS/rUGX7MPwK55cGI4WzYuSGWhKsLwGtKxtHpcw0mSHoOeK4viLwIMBIkQFtOH0mftH3QQv+4eBfP7gYvHT8jgR2+chC9pCHXBnlCfttttcBCNHc79dmtPs7zkk9Row/EWmHItC6Teif67JUwrC7pT8rljd21swuRmyFU8AW9F+aAkTGbODZfg1d4k80vopey2mzb3yL/FQfNGh5SLScLRLmg3GbW5PMT0tzBuuA9P2HWZ4FYNgQuNI2nb+Eq2uR4TzTtaUY1qBDn7FCZeaalH2mE8zHi4KtXyrIuo+BhSHYjpx4AfcuTIautHoE9esGnDtYTGNsuYnw8xUUL9yRDjLvfFlQJlrArlR3tCKYm9o/WPEegFuMzThYAJHSLElY15pzTFX5pnoCuFowJKa4E03ZuLxVHbRVt3/sJdl1nZeVhhO7I4US0IT2kXhWxyiBecg6ScdaKJ3yOu51LdQ3zlHzHlUySLZDFMnvC3W0Vo1m5lOILpaxeD5alpFJf2yAbsanpWORnUOAH2FE7iw=
