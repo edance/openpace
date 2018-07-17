@@ -7,12 +7,15 @@ defmodule SqueezeWeb.EventController do
 
   plug :authorize_event when action in [:edit, :update, :delete]
   plug :set_paces when action in [:new, :create, :edit, :update]
-  plug :set_dates when action in [:index]
 
-  def index(conn, _params) do
+  def index(conn, params) do
     user = conn.assigns.current_user
+    date = parse_date(params["date"])
+    dates = Calendar.visible_dates(date)
     conn
-    |> assign(:events, Dashboard.list_events(user, conn.assigns.dates))
+    |> assign(:date, date)
+    |> assign(:dates, dates)
+    |> assign(:events, Dashboard.list_events(user, dates))
     |> render("index.html")
   end
 
@@ -71,7 +74,7 @@ defmodule SqueezeWeb.EventController do
   end
 
   defp set_dates(conn, params) do
-    date = parse_date(params["date"])
+    date = parse_date(params[:date])
     dates = Calendar.visible_dates(date)
     conn
     |> assign(:date, date)
