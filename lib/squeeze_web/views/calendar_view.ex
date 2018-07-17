@@ -1,6 +1,10 @@
 defmodule SqueezeWeb.CalendarView do
   use SqueezeWeb, :view
 
+  def title(_page, _assigns) do
+    "Calendar"
+  end
+
   def previous(base) do
     {:ok, date} = subtract_month(base)
     format_date(date)

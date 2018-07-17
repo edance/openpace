@@ -16,7 +16,7 @@ defmodule Squeeze.Dashboard do
   """
   def fetch_activities(user) do
     client = Strava.Client.new(user.credential.token)
-    pagination = %Strava.Pagination{per_page: 200, page: 1}
+    pagination = %Strava.Pagination{per_page: 50, page: 1}
     ids = existing_activity_ids(user)
     Strava.Activity.list_athlete_activities(pagination, %{}, client)
     |> Enum.map(&map_strava_activity(&1))
