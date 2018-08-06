@@ -1,40 +1,29 @@
 <div class="landing page">
-  <div class="logo">
-    <%= link to: "/" do %>
-      Squeeze
-    <% end %>
-  </div>
-
-  <div class="hero">
-    <h1>Run with Us.</h1>
-    <h2>1,239 miles and counting</h2>
-    <%= render("_strava-btn.html", assigns) %>
-  </div>
-</div>
-
-<div class="ui vertical footer segment">
-  <div class="ui container">
-    <div class="ui stackable divided equal height stackable grid">
-      <div class="three wide column">
-        <h4 class="ui header">About</h4>
-        <div class="ui link list">
-          <a href="mailto:evancdancer@gmail.com" class="item">Contact Us</a>
-          <a href="https://www.evandancer.com" target="_blank" class="item">About Me</a>
-          <a href="https://www.strava.com" target="_blank" class="item">Strava</a>
-        </div>
-      </div>
-      <div class="three wide column">
-        <h4 class="ui header">Github</h4>
-        <div class="ui link list">
-          <a href="https://github.com/edance/squeeze" target="_blank" class="item">View the Code</a>
-          <a href="https://github.com/edance/squeeze/issues" target="_blank" class="item">Request a Feature</a>
-          <a href="https://github.com/edance/squeeze/issues" target="_blank" class="item">Report an Issue</a>
-        </div>
-      </div>
-      <div class="seven wide column">
-        <h4 class="ui header">Squeeze</h4>
-        <p><%= get_random_quote() %></p>
-      </div>
+  <div class="header">
+    <div class="logo">
+      <%= link to: "/" do %>
+        Squeeze
+      <% end %>
     </div>
+  </div>
+
+  <div class="hero section">
+    <h1>I am training to run a</h1>
+
+    <div class="dropdown">
+      <select autofocus>
+        <option>5k</option>
+        <option>10k</option>
+        <option>Half Marathon</option>
+        <option selected>Marathon</option>
+      </select>
+      <i class="icon-arrow-down"></i>
+    </div>
+
+    <button class="primary button">Next</button>
+  </div>
+
+  <div class="footer">
+    <img class="waves" src="/images/waves.svg" />
   </div>
 </div>
