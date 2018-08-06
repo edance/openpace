@@ -23,7 +23,6 @@ defmodule Squeeze.Accounts.User do
     fields = ~w(first_name last_name email description avatar city state country)a
     user
     |> cast(attrs, fields)
-    |> validate_required([:first_name, :last_name, :email])
     |> validate_format(:email, ~r/@/)
   end
 end

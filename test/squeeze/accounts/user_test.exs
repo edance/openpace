@@ -6,20 +6,14 @@ defmodule Squeeze.Accounts.UserTest do
   import Squeeze.Factory
 
   @valid_attrs params_for(:user)
-  @invalid_attrs %{}
 
-  test "changeset with valid attributes" do
+  test "changeset with full attributes" do
     changeset = User.changeset(%User{}, @valid_attrs)
     assert changeset.valid?
   end
 
-  test "changeset with invalid attributes" do
-    changeset = User.changeset(%User{}, @invalid_attrs)
-    refute changeset.valid?
-  end
-
-  test "description is not required" do
-    changeset = User.changeset(%User{}, Map.delete(@valid_attrs, :description))
+  test "changeset with no attributes" do
+    changeset = User.changeset(%User{}, %{})
     assert changeset.valid?
   end
 

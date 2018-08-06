@@ -22,21 +22,11 @@ defmodule Squeeze.AccountsTest do
       assert user.first_name == @valid_attrs.first_name
     end
 
-    test "create_user/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
-    end
-
     test "update_user/2 with valid data updates the user" do
       user = insert(:user)
       assert {:ok, user} = Accounts.update_user(user, @update_attrs)
       assert %User{} = user
       assert user.first_name == "Brian"
-    end
-
-    test "update_user/2 with invalid data returns error changeset" do
-      user = insert(:user)
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
-      assert user.id == Accounts.get_user!(user.id).id
     end
 
     test "delete_user/1 deletes the user" do
