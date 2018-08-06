@@ -26,17 +26,17 @@ defmodule Squeeze.Accounts do
 
   ## Examples
 
-  iex> get_or_create_user_by_credential(%{field: field})
+  iex> get_or_update_user_by_credential(%{field: field})
   {:ok, %User{}}
 
-  iex> get_or_create_user_by_credential(%{field: bad_value})
+  iex> get_or_update_user_by_credential(%{field: bad_value})
   {:error, %Ecto.Changeset{}}
 
   """
-  def get_or_create_user_by_credential(attrs \\ %{}) do
+  def get_or_update_user_by_credential(%User{} = user, attrs \\ %{}) do
     %{credential: %{provider: provider, uid: uid}} = attrs
     case get_credential(provider, uid) do
-      nil -> create_user(attrs)
+      nil -> update_user(user, attrs)
       credential -> {:ok, credential.user}
     end
   end

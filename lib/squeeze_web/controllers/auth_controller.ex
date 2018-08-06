@@ -17,7 +17,8 @@ defmodule SqueezeWeb.AuthController do
   def callback(conn, %{"provider" => provider, "code" => code}) do
     client = get_token!(provider, code)
     user_params = get_user!(provider, client)
-    case Accounts.get_or_create_user_by_credential(user_params) do
+    user = conn.assigns.current_user
+    case Accounts.get_or_update_user_by_credential(user, user_params) do
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user)
