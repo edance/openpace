@@ -6,7 +6,7 @@ defmodule Squeeze.Accounts do
   import Ecto.Query, warn: false
   alias Squeeze.Repo
 
-  alias Squeeze.Accounts.{User, Credential}
+  alias Squeeze.Accounts.{User, Credential, UserPrefs}
 
   @doc """
   Creates a guest user account. All visitors are assigned an account to help
@@ -58,7 +58,7 @@ defmodule Squeeze.Accounts do
   def get_user!(id) do
     User
     |> Repo.get!(id)
-    |> Repo.preload(:credential)
+    |> Repo.preload([:credential, :user_prefs])
   end
 
   @doc """
@@ -77,6 +77,7 @@ defmodule Squeeze.Accounts do
     %User{}
     |> User.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
+    |> Ecto.Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.insert()
   end
 
@@ -96,6 +97,7 @@ defmodule Squeeze.Accounts do
     user
     |> User.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
+    |> Ecto.Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.update()
   end
 

@@ -1,7 +1,7 @@
 defmodule Squeeze.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Accounts.{User, Credential}
+  alias Squeeze.Accounts.{User, Credential, UserPrefs}
 
   schema "users" do
     field :first_name, :string
@@ -14,6 +14,7 @@ defmodule Squeeze.Accounts.User do
     field :country, :string
 
     has_one :credential, Credential
+    has_one :user_prefs, UserPrefs
 
     timestamps()
   end
