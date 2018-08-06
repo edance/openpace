@@ -1,0 +1,27 @@
+.dropdown {
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;       /* remove default arrow */
+
+    width: 100%;
+    border-radius: 4px;
+    border: none;
+    background-color: #f9f9f9;
+
+    font-family: LucidaGrande;
+    font-size: 20px;
+    color: #abacaf;
+
+    padding: 14px;
+
+    position: relative;
+  }
+
+  .icon-arrow-down {
+    color: $gray;
+    position: absolute;
+    right: 1em;
+    top: 18px;
+  }
+}
