@@ -35,10 +35,7 @@ defmodule SqueezeWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
 
-    user = cond do
-      tags[:as_user] -> Squeeze.Factory.insert(:user)
-      true -> nil
-    end
+    user = Squeeze.Factory.insert(:user)
 
     conn =
       Phoenix.ConnTest.build_conn()

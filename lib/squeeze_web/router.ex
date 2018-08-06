@@ -16,10 +16,6 @@ defmodule SqueezeWeb.Router do
     plug Turbolinks
   end
 
-  pipeline :authorized do
-    plug Plug.RequireUser
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -45,7 +41,7 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/dashboard", SqueezeWeb do
-    pipe_through [:browser, :authorized, :dashboard_layout]
+    pipe_through [:browser, :dashboard_layout]
 
     get "/", DashboardController, :index
     get "/calendar", CalendarController, :index
