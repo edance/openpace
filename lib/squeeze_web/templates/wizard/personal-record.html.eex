@@ -1,1 +1,18 @@
 Personal Record
+
+<%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
+
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= label f, :personal_record %>
+    <%= number_input f, :personal_record %>
+    <%= error_tag f, :personal_record %>
+  </div>
+
+  <%= submit "Submit", class: "ui submit button" %>
+<% end %>

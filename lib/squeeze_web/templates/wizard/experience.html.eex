@@ -1,1 +1,18 @@
 Experience
+
+<%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
+
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= label f, :duration %>
+    <%= number_input f, :duration %>
+    <%= error_tag f, :duration %>
+  </div>
+
+  <%= submit "Submit", class: "ui submit button" %>
+<% end %>

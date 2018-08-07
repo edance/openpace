@@ -32,7 +32,7 @@ defmodule SqueezeWeb.Router do
 
     get "/quiz", WizardController, :index
     get "/quiz/:step", WizardController, :step
-    put "/quiz", WizardController, :update
+    put "/quiz/:step", WizardController, :update
   end
 
   scope "/auth", SqueezeWeb do
