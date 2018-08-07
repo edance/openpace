@@ -8,6 +8,7 @@
   <div class="field">
     <%= label f, :distance %>
     <%= number_input f, :distance, step: "any" %>
+    <%= select(f, :distance, distances()) %>
     <%= error_tag f, :distance %>
   </div>
 
