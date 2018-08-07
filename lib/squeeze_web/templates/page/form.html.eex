@@ -1,11 +1,27 @@
-<div class="dropdown">
-  <select autofocus>
-    <option>5k</option>
-    <option>10k</option>
-    <option>Half Marathon</option>
-    <option selected>Marathon</option>
-  </select>
-  <i class="icon-arrow-down"></i>
-</div>
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
 
-<button class="primary button">Next</button>
+  <div class="field">
+    <%= label f, :distance %>
+    <%= number_input f, :distance, step: "any" %>
+    <%= error_tag f, :distance %>
+  </div>
+
+  <%= submit "Submit", class: "primary button" %>
+<% end %>
+
+<!-- <div class="dropdown"> -->
+<!-- <select autofocus> -->
+<!-- <option>5k</option> -->
+<!-- <option>10k</option> -->
+<!-- <option>Half Marathon</option> -->
+<!-- <option selected>Marathon</option> -->
+<!-- </select> -->
+<!-- <i class="icon-arrow-down"></i> -->
+<!-- </div> -->
+
+<!-- <button class="primary button">Next</button> -->

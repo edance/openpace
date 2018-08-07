@@ -73,7 +73,7 @@ defmodule Squeeze.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user(attrs \\ %{}) do
+  def create_user(attrs \\ %{user_prefs: %{}}) do
     %User{}
     |> User.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
@@ -148,5 +148,36 @@ defmodule Squeeze.Accounts do
     Credential
     |> Repo.get_by(provider: provider, uid: uid)
     |> Repo.preload(:user)
+  end
+
+  @doc """
+  Updates a user_prefs.
+
+  ## Examples
+
+  iex> update_user_prefs(user_prefs, %{field: new_value})
+  {:ok, %UserPrefs{}}
+
+  iex> update_user_prefs(user_prefs, %{field: bad_value})
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def update_user_prefs(%UserPrefs{} = user_prefs, attrs) do
+    user_prefs
+    |> UserPrefs.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user_prefs changes.
+
+  ## Examples
+
+  iex> change_user_prefs(user_prefs)
+  %Ecto.Changeset{source: %UserPrefs{}}
+
+  """
+  def change_user_prefs(%UserPrefs{} = user_prefs) do
+    UserPrefs.changeset(user_prefs, %{})
   end
 end

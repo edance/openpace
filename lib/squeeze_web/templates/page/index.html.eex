@@ -10,6 +10,7 @@
   <div class="hero section">
     <h1>I am training to run a</h1>
 
+    <%= render "form.html", Map.put(assigns, :action, wizard_path(@conn, :update)) %>
   </div>
 
   <div class="footer">
