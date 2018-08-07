@@ -10,17 +10,6 @@
   <div class="hero section">
     <h1>I am training to run a</h1>
 
-    <div class="dropdown">
-      <select autofocus>
-        <option>5k</option>
-        <option>10k</option>
-        <option>Half Marathon</option>
-        <option selected>Marathon</option>
-      </select>
-      <i class="icon-arrow-down"></i>
-    </div>
-
-    <button class="primary button">Next</button>
   </div>
 
   <div class="footer">
