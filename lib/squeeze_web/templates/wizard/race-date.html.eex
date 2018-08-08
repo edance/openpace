@@ -1,4 +1,3 @@
-<div class="step">
 <h2>When is your next race?</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
@@ -16,4 +15,3 @@
 
   <%= submit "Next", class: "primary button" %>
 <% end %>
-</div>

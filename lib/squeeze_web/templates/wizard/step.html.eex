@@ -1,0 +1,3 @@
+<div class="step">
+  <%= render "#{@step}.html", assigns %>
+</div>

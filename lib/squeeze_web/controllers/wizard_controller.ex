@@ -17,7 +17,7 @@ defmodule SqueezeWeb.WizardController do
   def step(conn, %{"step"=> step}) do
     user = conn.assigns.current_user
     changeset = Accounts.change_user_prefs(user.user_prefs)
-    render(conn, "#{step}.html", changeset: changeset, step: step)
+    render(conn, "step.html", changeset: changeset, step: step)
   end
 
   def update(conn, %{"step" => step, "user_prefs" => pref_params}) do
@@ -29,7 +29,7 @@ defmodule SqueezeWeb.WizardController do
         conn
         |> redirect(to: wizard_path(conn, :step, next_step))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "#{step}.html", changeset: changeset)
+        render(conn, "step.html", changeset: changeset, step: step)
     end
   end
 
