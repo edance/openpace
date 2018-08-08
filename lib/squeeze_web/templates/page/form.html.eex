@@ -5,24 +5,11 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= label f, :distance %>
-    <%= number_input f, :distance, step: "any" %>
+  <div class="dropdown">
     <%= select(f, :distance, distances()) %>
+    <i class="icon-arrow-down"></i>
     <%= error_tag f, :distance %>
   </div>
 
   <%= submit "Submit", class: "primary button" %>
 <% end %>
-
-<!-- <div class="dropdown"> -->
-<!-- <select autofocus> -->
-<!-- <option>5k</option> -->
-<!-- <option>10k</option> -->
-<!-- <option>Half Marathon</option> -->
-<!-- <option selected>Marathon</option> -->
-<!-- </select> -->
-<!-- <i class="icon-arrow-down"></i> -->
-<!-- </div> -->
-
-<!-- <button class="primary button">Next</button> -->

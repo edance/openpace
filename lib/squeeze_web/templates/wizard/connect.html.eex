@@ -1,4 +1,5 @@
-Connect Strava
+<div class="step">
+<h2>Connect Strava</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
   <%= if @changeset.action do %>
@@ -9,3 +10,4 @@ Connect Strava
 
   <%= submit "Submit", class: "ui submit button" %>
 <% end %>
+</div>

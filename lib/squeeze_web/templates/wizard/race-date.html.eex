@@ -1,4 +1,5 @@
-Race Date
+<div class="step">
+<h2>When is your next race?</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
 
@@ -9,10 +10,10 @@ Race Date
   <% end %>
 
   <div class="field">
-    <%= label f, :race_date %>
     <%= date_input f, :race_date %>
     <%= error_tag f, :race_date %>
   </div>
 
-  <%= submit "Submit", class: "ui submit button" %>
+  <%= submit "Next", class: "primary button" %>
 <% end %>
+</div>

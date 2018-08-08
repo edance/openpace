@@ -1,4 +1,5 @@
-Goal Time
+<div class="step">
+<h2>What is your goal time?</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
 
@@ -9,10 +10,10 @@ Goal Time
   <% end %>
 
   <div class="field">
-    <%= label f, :duration %>
     <%= number_input f, :duration %>
     <%= error_tag f, :duration %>
   </div>
 
   <%= submit "Submit", class: "ui submit button" %>
 <% end %>
+</div>

@@ -1,4 +1,5 @@
-Personal Record
+<div class="step">
+<h2>Personal Record</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
 
@@ -16,3 +17,4 @@ Personal Record
 
   <%= submit "Submit", class: "ui submit button" %>
 <% end %>
+</div>
