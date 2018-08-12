@@ -9,7 +9,7 @@
   <% end %>
 
   <div class="field">
-    <%= number_input f, :duration %>
+    <%= duration_select f, :duration %>
     <%= error_tag f, :duration %>
   </div>
 

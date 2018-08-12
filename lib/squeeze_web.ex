@@ -39,6 +39,7 @@ defmodule SqueezeWeb do
       use Phoenix.HTML
 
       import SqueezeWeb.Router.Helpers
+      import SqueezeWeb.InputHelpers
       import SqueezeWeb.ErrorHelpers
       import SqueezeWeb.Gettext
       import PhoenixActiveLink
