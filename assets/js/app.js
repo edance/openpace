@@ -21,3 +21,6 @@ Turbolinks.start();
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket";
+
+// DatePicker
+flatpickr('.date-picker', { inline: true, static: true });

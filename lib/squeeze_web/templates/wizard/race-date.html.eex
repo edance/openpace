@@ -9,7 +9,7 @@
   <% end %>
 
   <div class="field">
-    <%= date_input f, :race_date %>
+    <%= text_input f, :race_date, class: 'date-picker' %>
     <%= error_tag f, :race_date %>
   </div>
 

@@ -1,0 +1,10 @@
+.date-picker,
+.flatpickr-calendar:before,
+.flatpickr-calendar:after
+{
+  display: none;
+}
+
+.flatpickr-current-month {
+  font-size: 120%;
+}

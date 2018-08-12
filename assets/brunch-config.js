@@ -60,7 +60,11 @@ exports.config = {
     enabled: true,
     globals: {
       $: 'jquery',
-      jQuery: 'jquery'
-    }
+      flatpickr: 'flatpickr',
+      jQuery: 'jquery',
+    },
+    styles: {
+      flatpickr: ['dist/flatpickr.css'],
+    },
   }
 };
