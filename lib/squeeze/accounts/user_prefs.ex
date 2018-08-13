@@ -5,7 +5,7 @@ defmodule Squeeze.Accounts.UserPrefs do
 
   schema "user_prefs" do
     field :distance, :float
-    field :duration, :integer
+    field :duration, Squeeze.Duration
     field :name, :string
     field :personal_record, :integer
     field :race_date, :date

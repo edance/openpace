@@ -9,9 +9,9 @@
   <% end %>
 
   <div class="field">
-    <%= label f, :duration %>
-    <%= number_input f, :duration %>
-    <%= error_tag f, :duration %>
+    <%= label f, :name %>
+    <%= text_input f, :name %>
+    <%= error_tag f, :name %>
   </div>
 
   <%= submit "Submit", class: "ui submit button" %>
