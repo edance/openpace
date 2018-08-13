@@ -9,8 +9,7 @@
   <% end %>
 
   <div class="field">
-    <%= label f, :personal_record %>
-    <%= number_input f, :personal_record %>
+    <%= duration_select f, :personal_record, class: "dropdown" %>
     <%= error_tag f, :personal_record %>
   </div>
 
