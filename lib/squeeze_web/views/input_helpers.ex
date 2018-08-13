@@ -6,7 +6,7 @@ defmodule SqueezeWeb.InputHelpers do
   def duration_select(form, field) do
     id = input_id(form, field)
     name = input_name(form, field)
-    value = input_value(form, field)
+    value = input_value(form, field) || %{}
 
     content_tag :div do
       [
@@ -20,9 +20,9 @@ defmodule SqueezeWeb.InputHelpers do
   end
 
   defp select_tag(form, parent, field, value) do
-    id = input_id(form, parent)
-    name = input_name(form, parent)
+    id = "#{input_id(form, parent)}_#{field}"
+    name = "#{input_name(form, parent)}[#{field}]"
     value = Map.get(value, field)
-    select(form, parent, 0..59, value: value, id: "#{id}_#{field}", name: "#{name}[#{field}]")
+    select(form, parent, 0..59, prompt: field, value: value, id: id, name: name)
   end
 end
