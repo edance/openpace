@@ -9,7 +9,7 @@
   <% end %>
 
   <div class="field">
-    <%= duration_select f, :duration %>
+    <%= duration_select f, :duration, class: "dropdown" %>
     <%= error_tag f, :duration %>
   </div>
 
