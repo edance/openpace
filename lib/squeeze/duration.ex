@@ -2,9 +2,9 @@ defmodule Squeeze.Duration do
   @behaviour Ecto.Type
 
   def cast(%{"hours" => hours, "minutes" => minutes, "seconds" => seconds}) do
-    {hours, _} = Integer.parse(hours)
-    {minutes, _} = Integer.parse(minutes)
-    {seconds, _} = Integer.parse(seconds)
+    hours = parse_int(hours)
+    minutes = parse_int(minutes)
+    seconds = parse_int(seconds)
     cast(hours * 3600 + minutes * 60 + seconds)
   end
 
@@ -26,5 +26,12 @@ defmodule Squeeze.Duration do
 
   def type() do
     Ecto.Type.type(:integer)
+  end
+
+  defp parse_int(str) do
+    case Integer.parse(str) do
+      {num, _} -> num
+      :error -> 0
+    end
   end
 end

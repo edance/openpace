@@ -13,5 +13,5 @@
     <%= error_tag f, :duration %>
   </div>
 
-  <%= submit "Submit", class: "ui submit button" %>
+  <%= submit "Next", class: "primary button" %>
 <% end %>
