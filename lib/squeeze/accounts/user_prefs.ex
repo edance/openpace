@@ -9,6 +9,7 @@ defmodule Squeeze.Accounts.UserPrefs do
     field :name, :string
     field :personal_record, Squeeze.Duration
     field :race_date, :date
+    field :experience, :integer
 
     belongs_to :user, User
 
@@ -18,6 +19,6 @@ defmodule Squeeze.Accounts.UserPrefs do
   @doc false
   def changeset(%UserPrefs{} = user_prefs, attrs) do
     user_prefs
-    |> cast(attrs, [:distance, :duration, :personal_record, :name, :race_date])
+    |> cast(attrs, [:distance, :duration, :personal_record, :name, :race_date, :experience])
   end
 end

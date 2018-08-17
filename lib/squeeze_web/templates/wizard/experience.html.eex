@@ -9,9 +9,19 @@
   <% end %>
 
   <div class="field">
-    <%= label f, :name %>
-    <%= text_input f, :name %>
-    <%= error_tag f, :name %>
+    <label>
+      Beginner
+      <%= radio_button f, :experience, 0 %>
+    </label>
+    <label>
+      Intermediate
+      <%= radio_button f, :experience, 1 %>
+    </label>
+    <label>
+      Expert
+      <%= radio_button f, :experience, 2 %>
+    </label>
+    <%= error_tag f, :experience %>
   </div>
 
   <%= submit "Next", class: "primary button" %>
