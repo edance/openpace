@@ -1,4 +1,4 @@
-<h2>You are looking for a 18% improvement</h2>
+<h2>You are looking for a <%= improvement_amount(@current_user) %> improvement</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
   <%= if @changeset.action do %>
@@ -7,5 +7,5 @@
     </div>
   <% end %>
 
-  <%= submit "Submit", class: "ui submit button" %>
+  <%= submit "Next", class: "primary button" %>
 <% end %>

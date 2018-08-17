@@ -21,7 +21,7 @@ defmodule Squeeze.Duration do
       Timex.Duration.from_seconds(number)
       |> Timex.Duration.to_clock()
 
-    {:ok, %{hours: hours, minutes: minutes, seconds: seconds}}
+    {:ok, %{hours: hours, minutes: minutes, seconds: seconds, total: number}}
   end
 
   def type() do
