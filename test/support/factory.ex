@@ -2,7 +2,7 @@ defmodule Squeeze.Factory do
   use ExMachina.Ecto, repo: Squeeze.Repo
 
   alias Faker.{Name, Address}
-  alias Squeeze.Accounts.{Credential, User}
+  alias Squeeze.Accounts.{Credential, User, UserPrefs}
   alias Squeeze.Dashboard.{Activity, Event, Goal, Pace}
 
   def user_factory do
@@ -12,7 +12,8 @@ defmodule Squeeze.Factory do
       email: Faker.Internet.email(),
       city: Address.city(),
       state: Address.state_abbr(),
-      country: Address.country_code()
+      country: Address.country_code(),
+      user_prefs: build(:user_prefs)
     }
   end
 
@@ -22,6 +23,16 @@ defmodule Squeeze.Factory do
       token: "abcdefg",
       uid: 12345,
       user: build(:user)
+    }
+  end
+
+  def user_prefs_factory do
+    %UserPrefs{
+      distance: 42195, # Marathon in meters
+      duration: 3 * 60 * 60, # 3 hours in seconds
+      personal_record: 3 * 60 * 60, # 3 hours in seconds
+      name: "#{Address.city()} Marathon",
+      race_date: Faker.Date.forward(:rand.uniform(100))
     }
   end
 

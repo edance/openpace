@@ -4,7 +4,7 @@ defmodule Squeeze.Accounts.UserPrefs do
   alias Squeeze.Accounts.{User, UserPrefs}
 
   schema "user_prefs" do
-    field :distance, :float
+    field :distance, :integer
     field :duration, Squeeze.Duration
     field :name, :string
     field :personal_record, Squeeze.Duration
