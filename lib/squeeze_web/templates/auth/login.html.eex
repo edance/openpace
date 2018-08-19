@@ -1,0 +1,7 @@
+<div class="ui container">
+  <h1>Welcome Back!</h1>
+
+  <%= link to: auth_path(@conn, :request, "strava"), class: "strava-btn" do %>
+    <img alt="Sign in with Strava" src="/images/btn_strava.svg" />
+  <% end %>
+</div>
