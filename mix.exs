@@ -10,7 +10,9 @@ defmodule Squeeze.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
   end
 
@@ -49,7 +51,8 @@ defmodule Squeeze.Mixfile do
       {:browser, "~> 0.1.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
-      {:faker, "~> 0.9", only: :test}
+      {:faker, "~> 0.9", only: :test},
+      {:excoveralls, "~> 0.9", only: :test}
     ]
   end
 
