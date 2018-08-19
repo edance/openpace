@@ -3,7 +3,7 @@
 <div class="step-container">
   <div class="step">
     <div class="step-header">
-      <i class="icon-menu"></i>
+      <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
     </div>
 
     <%= render "#{@step}.html", assigns %>
