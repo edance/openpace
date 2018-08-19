@@ -23,6 +23,10 @@ defmodule Squeeze.Accounts.User do
     timestamps()
   end
 
+  def onboarded?(%User{} = user) do
+    UserPrefs.complete?(user.user_prefs)
+  end
+
   @doc false
   def changeset(%User{} = user, attrs) do
     fields = ~w(first_name last_name email description avatar city state country)a
