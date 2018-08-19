@@ -3,7 +3,7 @@ defmodule Squeeze.Factory do
 
   alias Faker.{Name, Address}
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
-  alias Squeeze.Dashboard.{Activity, Event, Goal, Pace}
+  alias Squeeze.Dashboard.{Activity, Event, Pace}
 
   def user_factory do
     %User{
@@ -33,16 +33,6 @@ defmodule Squeeze.Factory do
       personal_record: 3 * 60 * 60, # 3 hours in seconds
       name: "#{Address.city()} Marathon",
       race_date: Faker.Date.forward(:rand.uniform(100))
-    }
-  end
-
-  def goal_factory do
-    %Goal{
-      date: Faker.Date.forward(:rand.uniform(100)),
-      distance: 42195.0, # Marathon in meters
-      duration: 3 * 60 * 60, # 3 hours in seconds
-      name: "#{Address.city()} Marathon",
-      user: build(:user)
     }
   end
 

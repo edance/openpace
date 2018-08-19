@@ -19,19 +19,11 @@
       <i class="icon-calendar"></i>
       Calendar
     <% end %>
-    <%= active_link(@conn, to: goal_path(@conn, :index), wrap_tag: :li) do %>
-      <i class="icon-trophy"></i>
-      Goals
-    <% end %>
     <%= active_link(@conn, to: pace_path(@conn, :index), wrap_tag: :li) do %>
       <i class="icon-clock"></i>
       Paces
     <% end %>
   </ul>
-
-  <%= if @goal do %>
-    <%= render("_goal.html", assigns) %>
-  <% end %>
 
   <%= render("_workout.html", assigns) %>
 </aside>

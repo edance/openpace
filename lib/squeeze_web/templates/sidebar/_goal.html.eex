@@ -1,9 +1,0 @@
-<div class="goal time">
-  <%= goal_time(@goal) %>
-</div>
-
-<div class="goal title">
-  Current Goal
-</div>
-
-<div class="progress"></div>

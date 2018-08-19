@@ -5,59 +5,6 @@ defmodule Squeeze.DashboardTest do
 
   import Squeeze.Factory
 
-  # describe "goals" do
-  #   alias Squeeze.Dashboard.Goal
-
-  #   @valid_attrs params_for(:goal)
-  #   @update_attrs %{name: "some updated name"}
-  #   @invalid_attrs %{distance: nil, duration: nil}
-
-  #   test "list_goals/1 returns all users goals" do
-  #     goal = insert(:goal)
-  #     assert Dashboard.list_goals(goal.user) == [goal]
-  #   end
-
-  #   test "get_goal!/1 returns the goal with given id" do
-  #     goal = insert(:goal)
-  #     assert Dashboard.get_goal!(goal.id) == goal
-  #   end
-
-  #   test "create_goal/2 with valid data creates a goal" do
-  #     user = insert(:user)
-  #     assert {:ok, %Goal{} = goal} = Dashboard.create_goal(user, @valid_attrs)
-  #     assert goal.name == @valid_attrs.name
-  #   end
-
-  #   test "create_goal/2 with invalid data returns error changeset" do
-  #     user = insert(:user)
-  #     assert {:error, %Ecto.Changeset{}} = Dashboard.create_goal(user, @invalid_attrs)
-  #   end
-
-  #   test "update_goal/2 with valid data updates the goal" do
-  #     goal = insert(:goal)
-  #     assert {:ok, goal} = Dashboard.update_goal(goal, @update_attrs)
-  #     assert %Goal{} = goal
-  #     assert goal.name == "some updated name"
-  #   end
-
-  #   test "update_goal/2 with invalid data returns error changeset" do
-  #     goal = insert(:goal)
-  #     assert {:error, %Ecto.Changeset{}} = Dashboard.update_goal(goal, @invalid_attrs)
-  #     assert goal == Dashboard.get_goal!(goal.id)
-  #   end
-
-  #   test "delete_goal/1 deletes the goal" do
-  #     goal = insert(:goal)
-  #     assert {:ok, %Goal{}} = Dashboard.delete_goal(goal)
-  #     assert_raise Ecto.NoResultsError, fn -> Dashboard.get_goal!(goal.id) end
-  #   end
-
-  #   test "change_goal/1 returns a goal changeset" do
-  #     goal = insert(:goal)
-  #     assert %Ecto.Changeset{} = Dashboard.change_goal(goal)
-  #   end
-  # end
-
   # describe "paces" do
   #   alias Squeeze.Dashboard.Pace
 

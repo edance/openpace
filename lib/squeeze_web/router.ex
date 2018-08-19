@@ -21,7 +21,6 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :dashboard_layout do
-    plug Plug.LoadGoal
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
@@ -54,7 +53,6 @@ defmodule SqueezeWeb.Router do
 
     resources "/activities", ActivityController, only: [:index, :show]
     resources "/events", EventController
-    resources "/goals", GoalController
     resources "/paces", PaceController
   end
 
