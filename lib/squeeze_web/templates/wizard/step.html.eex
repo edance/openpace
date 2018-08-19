@@ -2,6 +2,10 @@
 
 <div class="step-container">
   <div class="step">
+    <div class="step-header">
+      <i class="icon-menu"></i>
+    </div>
+
     <%= render "#{@step}.html", assigns %>
   </div>
 </div>
