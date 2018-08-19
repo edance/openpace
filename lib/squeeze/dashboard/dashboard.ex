@@ -12,33 +12,6 @@ defmodule Squeeze.Dashboard do
   alias Squeeze.Dashboard.Activity
 
   @doc """
-  Fetch all strava activities and import into database.
-  """
-  def fetch_activities(user) do
-    client = Strava.Client.new(user.credential.token)
-    pagination = %Strava.Pagination{per_page: 50, page: 1}
-    ids = existing_activity_ids(user)
-    Strava.Activity.list_athlete_activities(pagination, %{}, client)
-    |> Enum.map(&map_strava_activity(&1))
-    |> Enum.filter(fn(x) -> !Enum.member?(ids, x.external_id) end)
-    |> Enum.map(&create_activity(user, &1))
-  end
-
-  @doc false
-  defp map_strava_activity(x) do
-    %{name: x.name, distance: x.distance, duration: x.moving_time,
-      start_at: x.start_date, external_id: x.id}
-  end
-
-  @doc false
-  defp existing_activity_ids(user) do
-    Activity
-    |> where([a], a.user_id == ^user.id)
-    |> select([a], a.external_id)
-    |> Repo.all
-  end
-
-  @doc """
   Returns the list of activities by user.
 
   ## Examples
