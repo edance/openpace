@@ -5,8 +5,9 @@ otp_release:
 - 20.0
 before_script:
 - mix deps.get
-script:
-- mix test
+env:
+ - MIX_ENV=test
+script: mix coveralls.travis
 notifications:
   email: false
 deploy:

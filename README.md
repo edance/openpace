@@ -1,6 +1,7 @@
 ![Squeeze](https://github.com/edance/art/blob/master/squeeze/repo-banner.png)
 
 [![Travis](https://img.shields.io/travis/edance/squeeze.svg?style=flat-square)](https://travis-ci.org/edance/squeeze)
+[![Coverage Status](https://coveralls.io/repos/github/edance/squeeze/badge.svg)](https://coveralls.io/github/edance/squeeze)
 [![license](https://img.shields.io/github/license/edance/squeeze.svg?style=flat-square)](https://github.com/edance/squeeze/blob/master/LICENSE.md)
 
 Try it yourself: [https://squeeze.run](https://squeeze.run)
