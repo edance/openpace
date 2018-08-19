@@ -50,7 +50,6 @@ defmodule SqueezeWeb.Router do
 
     resources "/activities", ActivityController, only: [:index, :show]
     resources "/events", EventController
-    resources "/paces", PaceController
   end
 
   # Other scopes may use custom stacks.

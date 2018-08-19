@@ -5,7 +5,6 @@ defmodule SqueezeWeb.EventController do
   alias Squeeze.Dashboard.Event
 
   plug :authorize_event when action in [:edit, :update, :delete]
-  plug :set_paces when action in [:new, :create, :edit, :update]
 
   def index(conn, _params) do
     user = conn.assigns.current_user
@@ -61,11 +60,6 @@ defmodule SqueezeWeb.EventController do
     conn
     |> put_flash(:info, "Event deleted successfully.")
     |> redirect(to: event_path(conn, :index))
-  end
-
-  defp set_paces(conn, _) do
-    paces = Dashboard.list_paces(conn.assigns.current_user)
-    assign(conn, :paces, paces)
   end
 
   defp authorize_event(conn, _) do
