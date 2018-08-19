@@ -6,6 +6,8 @@
       <%= link to: "/" do %>
         Squeeze
       <% end %>
+
+      <i class="icon-menu"></i>
     </div>
   </div>
 
