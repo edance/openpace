@@ -15,10 +15,6 @@
       <i class="icon-map"></i>
       Activity Log
     <% end %>
-    <%= active_link(@conn, to: calendar_path(@conn, :index), wrap_tag: :li) do %>
-      <i class="icon-calendar"></i>
-      Calendar
-    <% end %>
     <%= active_link(@conn, to: pace_path(@conn, :index), wrap_tag: :li) do %>
       <i class="icon-clock"></i>
       Paces
