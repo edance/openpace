@@ -25,7 +25,7 @@ defmodule SqueezeWeb.WizardController do
     next_step = next_step(step)
 
     case Accounts.update_user_prefs(user.user_prefs, pref_params) do
-      {:ok, goal} ->
+      {:ok, _} ->
         conn
         |> redirect(to: wizard_path(conn, :step, next_step))
       {:error, %Ecto.Changeset{} = changeset} ->

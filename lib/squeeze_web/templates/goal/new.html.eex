@@ -1,7 +1,0 @@
-<div class="ui text container">
-  <span><%= link "Back", to: goal_path(@conn, :index) %></span>
-
-  <h2>New Goal</h2>
-
-  <%= render "form.html", Map.put(assigns, :action, goal_path(@conn, :create)) %>
-</div>
