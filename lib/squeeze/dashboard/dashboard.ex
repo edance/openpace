@@ -255,11 +255,9 @@ defmodule Squeeze.Dashboard do
       [%Event{}, ...]
 
   """
-  def list_events(user, dates) do
+  def list_events(user) do
     Event
     |> where([a], a.user_id == ^user.id)
-    |> where([a], a.date >= ^dates.first)
-    |> where([a], a.date <= ^dates.last)
     |> Repo.all
     |> Repo.preload(:user)
   end

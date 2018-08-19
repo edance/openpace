@@ -3,6 +3,6 @@ defmodule SqueezeWeb.DashboardController do
 
   def index(conn, _params) do
     conn
-    |> redirect(to: calendar_path(conn, :index))
+    |> redirect(to: event_path(conn, :index))
   end
 end
