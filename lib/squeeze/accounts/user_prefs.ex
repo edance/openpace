@@ -8,6 +8,9 @@ defmodule Squeeze.Accounts.UserPrefs do
   import Ecto.Changeset
   alias Squeeze.Accounts.{User, UserPrefs}
 
+  @required_fields ~w()a
+  @optional_fields ~w(distance duration personal_record name race_date experience)a
+
   schema "user_prefs" do
     field :distance, :integer
     field :duration, Squeeze.Duration
@@ -21,9 +24,17 @@ defmodule Squeeze.Accounts.UserPrefs do
     timestamps()
   end
 
+  def complete?(%UserPrefs{} = user_prefs) do
+    !is_nil(user_prefs.distance) &&
+      !is_nil(user_prefs.duration) &&
+      !is_nil(user_prefs.personal_record) &&
+      !is_nil(user_prefs.race_date)
+  end
+
   @doc false
   def changeset(%UserPrefs{} = user_prefs, attrs) do
     user_prefs
-    |> cast(attrs, [:distance, :duration, :personal_record, :name, :race_date, :experience])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
   end
 end
