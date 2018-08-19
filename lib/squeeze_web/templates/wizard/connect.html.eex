@@ -1,5 +1,6 @@
-<h2>Connect Strava</h2>
+<h2>Connect your Strava Account?</h2>
+<p>Automatically update your training status through Strava.</p>
 
 <%= link to: auth_path(@conn, :request, "strava"), class: "strava-btn" do %>
-  <img alt="Sign in with Strava" src="/images/btn_strava@2x.png" />
+  <img alt="Sign in with Strava" src="/images/btn_strava.svg" />
 <% end %>

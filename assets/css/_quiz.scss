@@ -28,6 +28,10 @@
     color: #1e2124;
   }
 
+  p {
+    color: #6d6d6d;
+  }
+
   input {
     width: 100%;
     border-radius: 4px;
@@ -42,9 +46,16 @@
     position: relative;
   }
 
-  .primary.button {
+  .strava-btn {
+    img {
+      width: 100%;
+    }
+  }
+
+  .primary.button, .strava-btn {
+    bottom: 0;
     margin-top: 3em;
     position: absolute;
-    bottom: 0;
+    width: 100%;
   }
 }

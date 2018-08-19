@@ -1,4 +1,4 @@
-<h2>Personal Record</h2>
+<h2>What is your current personal record?</h2>
 
 <%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
 

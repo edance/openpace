@@ -1,31 +1,46 @@
 /* The pill-button */
 .pill-button {
+  $checkmark-size: 30px;
+
   display: block;
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
+  padding-left: 40px;
+  margin-bottom: 20px;
   cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
 
-/* Hide the browser's default radio button */
-.pill-button input {
-  display: none;
-}
+  /* Hide the browser's default radio button */
+  input {
+    display: none;
+  }
 
-/* Create a custom radio button */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-  border-radius: 50%;
+  /* Create a custom radio button */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $checkmark-size;
+    width: $checkmark-size;
+    background-color: #eee;
+    border-radius: 50%;
+  }
+
+
+  /* Style the indicator (dot/circle) */
+  .checkmark:after {
+    $size: 8px;
+
+    top: $checkmark-size / 2 - $size / 2;
+    left: $checkmark-size / 2 - $size / 2;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background: white;
+  }
 }
 
 /* On mouse-over, add a grey background color */
@@ -48,14 +63,4 @@
 /* Show the indicator (dot/circle) when checked */
 .pill-button input:checked ~ .checkmark:after {
   display: block;
-}
-
-/* Style the indicator (dot/circle) */
-.pill-button .checkmark:after {
-  top: 9px;
-  left: 9px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: white;
 }
