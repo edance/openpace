@@ -47,12 +47,28 @@
   }
 
   .strava-btn {
+    display: block;
+    width: 100%;
+
     img {
       width: 100%;
     }
   }
 
-  .primary.button, .strava-btn {
+  .actions {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+
+  .link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a90e2;
+  }
+
+  .primary.button {
     bottom: 0;
     margin-top: 3em;
     position: absolute;
