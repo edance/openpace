@@ -1,3 +1,0 @@
-<%= link to: auth_path(@conn, :request, "strava"), class: "strava-btn" do %>
-  <img class="strava button" alt="Sign in with Strava" src="/images/btn_strava@2x.png" />
-<% end %>

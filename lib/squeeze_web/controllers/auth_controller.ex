@@ -3,6 +3,10 @@ defmodule SqueezeWeb.AuthController do
 
   alias Squeeze.{Accounts, Guardian}
 
+  def login(conn, _params) do
+    render(conn, "login.html")
+  end
+
   def request(conn, %{"provider" => provider}) do
     redirect(conn, external: authorize_url!(provider))
   end
