@@ -1,11 +1,3 @@
 <h2>You are looking for a <%= improvement_amount(@current_user) %> improvement</h2>
 
-<%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= submit "Next", class: "primary button" %>
-<% end %>
+<%= link "Next", to: wizard_path(@conn, :step, "connect"), class: "primary button" %>
