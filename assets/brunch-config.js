@@ -59,9 +59,7 @@ exports.config = {
   npm: {
     enabled: true,
     globals: {
-      $: 'jquery',
       flatpickr: 'flatpickr',
-      jQuery: 'jquery',
     },
     styles: {
       flatpickr: ['dist/flatpickr.css'],

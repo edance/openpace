@@ -11,7 +11,6 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import 'jquery-ujs';
 import Turbolinks from 'turbolinks';
 Turbolinks.start();
 
