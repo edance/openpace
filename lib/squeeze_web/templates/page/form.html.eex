@@ -11,5 +11,5 @@
     <%= error_tag f, :distance %>
   </div>
 
-  <%= submit "Submit", class: "primary button" %>
+  <%= submit "Next", class: "primary button" %>
 <% end %>

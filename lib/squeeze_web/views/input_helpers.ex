@@ -3,8 +3,6 @@ defmodule SqueezeWeb.InputHelpers do
 
   import Phoenix.HTML
 
-  require IEx
-
   map =
     &Enum.map(&1, fn i ->
       pre = if i < 10, do: "0"
@@ -21,9 +19,7 @@ defmodule SqueezeWeb.InputHelpers do
     content_tag(:div, class: "duration-select")do
       [
         select_tag(form, field, :hours, value, opts),
-        ":",
         select_tag(form, field, :minutes, value, opts),
-        ":",
         select_tag(form, field, :seconds, value, opts)
       ]
     end

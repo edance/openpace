@@ -1,19 +1,25 @@
-.step {
-  background: $white;
+.step-container {
   height: 100%;
   padding: 2em;
   position: relative;
+}
+
+.step {
+  height: 100%;
+  width: 100%;
+  position: relative;
 
   h2 {
-      width: 245px;
-      height: 66px;
-      font-size: 24px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      color: #1e2124;
+    margin: 0;
+    width: 245px;
+    height: 66px;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #1e2124;
   }
 
   input {
@@ -22,7 +28,6 @@
     border: none;
     background-color: #f9f9f9;
 
-    font-family: LucidaGrande;
     font-size: 20px;
     color: #abacaf;
 
@@ -33,5 +38,7 @@
 
   .primary.button {
     margin-top: 3em;
+    position: absolute;
+    bottom: 0;
   }
 }

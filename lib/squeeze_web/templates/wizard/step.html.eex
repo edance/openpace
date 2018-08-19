@@ -1,3 +1,7 @@
-<div class="step">
-  <%= render "#{@step}.html", assigns %>
+<img class="waves" src="/images/waves.svg" />
+
+<div class="step-container">
+  <div class="step">
+    <%= render "#{@step}.html", assigns %>
+  </div>
 </div>
