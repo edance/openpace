@@ -1,7 +1,7 @@
 defmodule SqueezeWeb.EventControllerTest do
   use SqueezeWeb.ConnCase
 
-  @valid_attrs %{cooldown: true, date: ~D[2010-04-17], distance: 120.5, name: "some name", warmup: true, pace_id: nil}
+  @valid_attrs %{cooldown: true, date: ~D[2010-04-17], distance: 120.5, name: "some name", warmup: true}
   @invalid_attrs %{cooldown: nil, date: nil, distance: nil, name: nil, warmup: nil}
 
   @tag :as_user
@@ -12,8 +12,7 @@ defmodule SqueezeWeb.EventControllerTest do
 
   @tag :as_user
   test "creates event and redirects", %{conn: conn} do
-    pace = insert(:pace, user: conn.assigns.current_user)
-    conn = post(conn, event_path(conn, :create), event: %{@valid_attrs | pace_id: pace.id})
+    conn = post(conn, event_path(conn, :create), event: @valid_attrs)
 
     assert %{id: id} = redirected_params(conn)
     assert redirected_to(conn) == event_path(conn, :show, id)

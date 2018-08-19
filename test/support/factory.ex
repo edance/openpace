@@ -3,7 +3,7 @@ defmodule Squeeze.Factory do
 
   alias Faker.{Name, Address}
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
-  alias Squeeze.Dashboard.{Activity, Event, Pace}
+  alias Squeeze.Dashboard.{Activity, Event}
 
   def user_factory do
     %User{
@@ -36,15 +36,6 @@ defmodule Squeeze.Factory do
     }
   end
 
-  def pace_factory do
-    %Pace{
-      name: Enum.random(["Easy", "Tempo", "Speed", "Long"]),
-      offset: :rand.uniform(120), # Random offset up to 120 seconds
-      color: "##{Faker.Color.rgb_hex()}",
-      user: build(:user)
-    }
-  end
-
   def event_factory do
     %Event{
       cooldown: Enum.random([true, false]),
@@ -52,7 +43,6 @@ defmodule Squeeze.Factory do
       date: Faker.Date.forward(:rand.uniform(100)),
       distance: 120.5,
       name: "some name",
-      pace: build(:pace),
       user: build(:user)
     }
   end

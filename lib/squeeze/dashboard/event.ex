@@ -1,7 +1,7 @@
 defmodule Squeeze.Dashboard.Event do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Dashboard.{Event, Pace}
+  alias Squeeze.Dashboard.Event
   alias Squeeze.Accounts.User
 
 
@@ -12,7 +12,6 @@ defmodule Squeeze.Dashboard.Event do
     field :name, :string
     field :warmup, :boolean, default: false
 
-    belongs_to :pace, Pace
     belongs_to :user, User
 
     timestamps()
@@ -21,7 +20,7 @@ defmodule Squeeze.Dashboard.Event do
   @doc false
   def changeset(%Event{} = event, attrs) do
     event
-    |> cast(attrs, [:name, :distance, :date, :warmup, :cooldown, :pace_id])
+    |> cast(attrs, [:name, :distance, :date, :warmup, :cooldown])
     |> validate_required([:distance, :date])
   end
 end

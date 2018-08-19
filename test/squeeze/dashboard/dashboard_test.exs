@@ -5,60 +5,6 @@ defmodule Squeeze.DashboardTest do
 
   import Squeeze.Factory
 
-  # describe "paces" do
-  #   alias Squeeze.Dashboard.Pace
-
-  #   @valid_attrs params_for(:pace)
-  #   @update_attrs %{name: "some updated name"}
-  #   @invalid_attrs %{name: nil, offset: nil}
-
-  #   test "list_paces/1 returns all users paces" do
-  #     pace = insert(:pace)
-  #     assert Dashboard.list_paces(pace.user) == [pace]
-  #   end
-
-  #   test "get_pace!/1 returns the pace with given id" do
-  #     pace = insert(:pace)
-  #     assert Dashboard.get_pace!(pace.id) == pace
-  #   end
-
-  #   test "create_pace/2 with valid data creates a pace" do
-  #     user = insert(:user)
-  #     assert {:ok, %Pace{} = pace} = Dashboard.create_pace(user, @valid_attrs)
-  #     assert pace.name == @valid_attrs.name
-  #     assert pace.offset == @valid_attrs.offset
-  #   end
-
-  #   test "create_pace/2 with invalid data returns error changeset" do
-  #     user = insert(:user)
-  #     assert {:error, %Ecto.Changeset{}} = Dashboard.create_pace(user, @invalid_attrs)
-  #   end
-
-  #   test "update_pace/2 with valid data updates the pace" do
-  #     pace = insert(:pace)
-  #     assert {:ok, pace} = Dashboard.update_pace(pace, @update_attrs)
-  #     assert %Pace{} = pace
-  #     assert pace.name == "some updated name"
-  #   end
-
-  #   test "update_pace/2 with invalid data returns error changeset" do
-  #     pace = insert(:pace)
-  #     assert {:error, %Ecto.Changeset{}} = Dashboard.update_pace(pace, @invalid_attrs)
-  #     assert pace == Dashboard.get_pace!(pace.id)
-  #   end
-
-  #   test "delete_pace/1 deletes the pace" do
-  #     pace = insert(:pace)
-  #     assert {:ok, %Pace{}} = Dashboard.delete_pace(pace)
-  #     assert_raise Ecto.NoResultsError, fn -> Dashboard.get_pace!(pace.id) end
-  #   end
-
-  #   test "change_pace/1 returns a pace changeset" do
-  #     pace = insert(:pace)
-  #     assert %Ecto.Changeset{} = Dashboard.change_pace(pace)
-  #   end
-  # end
-
   # describe "events" do
   #   alias Squeeze.Dashboard.Event
 
