@@ -1,0 +1,22 @@
+<div id="menuToggle">
+  <!--
+       A fake / hidden checkbox is used as click reciever,
+       so you can use the :checked selector on it.
+  -->
+  <input type="checkbox" />
+
+  <!-- Some spans to act as a hamburger. -->
+  <span></span>
+  <span></span>
+  <span></span>
+
+  <ul id="menu">
+    <%= active_link(@conn, to: page_path(@conn, :index), wrap_tag: :li) do %>
+      Home
+    <% end %>
+
+    <%= active_link(@conn, to: dashboard_path(@conn, :index), wrap_tag: :li) do %>
+      Dashboard
+    <% end %>
+  </ul>
+</div>

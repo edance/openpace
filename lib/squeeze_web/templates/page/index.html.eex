@@ -2,13 +2,8 @@
 
 <div class="landing page">
   <div class="header">
-    <div class="logo">
-      <%= link to: "/" do %>
-        Squeeze
-      <% end %>
-
-      <i class="icon-menu"></i>
-    </div>
+    <%= link("Squeeze", to: "/", class: "logo") %>
+    <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
   </div>
 
   <div class="hero section">
