@@ -7,7 +7,6 @@
 
   <div class="dropdown">
     <%= select(f, :distance, distances()) %>
-    <i class="icon-arrow-down"></i>
     <%= error_tag f, :distance %>
   </div>
 
