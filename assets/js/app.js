@@ -23,4 +23,6 @@ Turbolinks.start();
 // import socket from "./socket";
 
 // DatePicker
-flatpickr('.date-picker', { inline: true, static: true });
+document.addEventListener("turbolinks:load", function() {
+  flatpickr('.date-picker', { inline: true, static: true });
+})

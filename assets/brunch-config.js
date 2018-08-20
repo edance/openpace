@@ -59,6 +59,7 @@ exports.config = {
   npm: {
     enabled: true,
     globals: {
+      // jquery is required for turbolinks
       $: 'jquery',
       flatpickr: 'flatpickr',
       jQuery: 'jquery',

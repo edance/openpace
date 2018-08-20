@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.InputHelpers do
+defmodule SqueezeWeb.FormHelpers do
   use Phoenix.HTML
 
   import Phoenix.HTML
@@ -10,6 +10,10 @@ defmodule SqueezeWeb.InputHelpers do
     end)
 
   @minsec map.(0..59)
+
+  def async_form(form_data, action, options \\ [], fun) do
+    form_for(form_data, action, options ++ [data: [remote: "true"]], fun)
+  end
 
   def pill_button(form, field, label, value, opts \\ []) do
     content_tag(:label, class: "pill-button") do
