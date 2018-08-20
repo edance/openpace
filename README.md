@@ -1,8 +1,8 @@
 ![Squeeze](https://github.com/edance/art/blob/master/squeeze/repo-banner.png)
 
 [![Built with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://spacemacs.org)
-[![Travis](https://img.shields.io/travis/edance/squeeze.svg)](https://travis-ci.org/edance/squeeze)
-[![Coverage Status](https://coveralls.io/repos/github/edance/squeeze/badge.svg)](https://coveralls.io/github/edance/squeeze)
+[![Build Status](https://travis-ci.org/edance/squeeze.svg?branch=master)](https://travis-ci.org/edance/squeeze)
+[![Coverage Status](https://coveralls.io/repos/github/edance/squeeze/badge.svg?branch=master)](https://coveralls.io/github/edance/squeeze?branch=master)
 [![license](https://img.shields.io/github/license/edance/squeeze.svg)](https://github.com/edance/squeeze/blob/master/LICENSE.md)
 
 Try it yourself: [https://squeeze.run](https://squeeze.run)
