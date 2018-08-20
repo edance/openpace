@@ -1,6 +1,6 @@
 <h2>What is your current personal record?</h2>
 
-<%= form_for @changeset, wizard_path(@conn, :update, @step), [class: "ui form"], fn f -> %>
+<%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
 
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
