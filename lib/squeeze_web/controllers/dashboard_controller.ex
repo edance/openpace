@@ -4,8 +4,6 @@ defmodule SqueezeWeb.DashboardController do
   alias Squeeze.Sync
 
   def index(conn, _params) do
-    Sync.load_activities(conn.assigns.current_user)
-    conn
-    |> redirect(to: activity_path(conn, :index))
+    render(conn, "index.html")
   end
 end
