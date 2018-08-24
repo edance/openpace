@@ -20,7 +20,7 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def format_distance(distance) do
-    raw("Marathon")
+    Squeeze.Distances.from_meters(distance).name
   end
 
   defp format(duration) do
