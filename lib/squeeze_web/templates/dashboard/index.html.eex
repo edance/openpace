@@ -18,11 +18,12 @@
   </div>
 
   <div class="content">
-    3:00:00
+    <%= format_duration(@current_user.user_prefs.duration) %>
+
   </div>
 
   <div class="footer">
-    MARATHON
+    <%= format_distance(@current_user.user_prefs.distance) %>
   </div>
 </div>
 
