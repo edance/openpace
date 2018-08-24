@@ -4,4 +4,8 @@ defmodule SqueezeWeb.DashboardView do
   def title(_page, _assigns) do
     "Dashboard"
   end
+
+  def full_name(user) do
+    "#{user.first_name} #{user.last_name}"
+  end
 end
