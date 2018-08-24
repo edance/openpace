@@ -50,6 +50,8 @@ defmodule SqueezeWeb.Router do
 
     get "/", DashboardController, :index
 
+    get "/sync", SyncController, :sync
+
     resources "/activities", ActivityController, only: [:index, :show]
     resources "/events", EventController
   end
