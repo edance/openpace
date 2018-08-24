@@ -26,7 +26,7 @@ defmodule SqueezeWeb.AuthController do
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user)
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: sync_path(conn, :sync))
       {:error, %Ecto.Changeset{}} ->
         conn
         |> put_flash(:info, "Didn't Work")
