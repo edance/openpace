@@ -1,0 +1,29 @@
+<div class="header">
+  <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
+</div>
+
+<div class="profile">
+  <img class="image" alt="Profile Picture" src="<%= @current_user.avatar %>"/>
+
+  <div class="name">
+    Hello
+    <br/>
+    <%= full_name(@current_user) %>!
+  </div>
+</div>
+
+<div class="card">
+  <div class="title">
+    Current Goal
+  </div>
+
+  <div class="content">
+    3:00:00
+  </div>
+
+  <div class="footer">
+    MARATHON
+  </div>
+</div>
+
+<img class="waves" src="/images/waves.svg" />
