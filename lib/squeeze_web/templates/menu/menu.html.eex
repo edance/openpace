@@ -15,7 +15,7 @@
       Home
     <% end %>
 
-    <%= active_link(@conn, to: dashboard_path(@conn, :index), wrap_tag: :li) do %>
+    <%= active_link(@conn, to: sync_path(@conn, :sync), wrap_tag: :li) do %>
       Dashboard
     <% end %>
   </ul>
