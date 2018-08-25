@@ -10,7 +10,6 @@ defmodule Squeeze.AccountsTest do
 
     @valid_attrs params_for(:user)
     @update_attrs %{first_name: "Brian"}
-    @invalid_attrs %{first_name: nil}
 
     test "get_user!/1 returns the user with given id" do
       user = insert(:user)
