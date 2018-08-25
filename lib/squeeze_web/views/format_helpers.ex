@@ -1,8 +1,6 @@
 defmodule SqueezeWeb.FormatHelpers do
   use Phoenix.HTML
 
-  import Phoenix.HTML
-
   alias Timex.Duration
 
   @doc """
@@ -27,7 +25,7 @@ defmodule SqueezeWeb.FormatHelpers do
     Timex.format!(time, "{relative}", :relative)
   end
 
-  def format_pace(duration, distance) when distance <= 0, do: ""
+  def format_pace(_, distance) when distance <= 0, do: ""
 
   def format_pace(duration, distance) do
     case pace_duration(duration, distance) do

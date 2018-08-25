@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.DashboardController do
   use SqueezeWeb, :controller
 
-  alias Squeeze.Sync
   alias Squeeze.Dashboard
 
   def index(conn, _params) do
