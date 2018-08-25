@@ -3,8 +3,6 @@ defmodule Squeeze.Dashboard do
   The Dashboard context.
   """
 
-  use OAuth2.Strategy
-
   import Ecto.Query, warn: false
   alias Squeeze.Repo
   alias Squeeze.Accounts.User
@@ -64,53 +62,6 @@ defmodule Squeeze.Dashboard do
     |> Activity.changeset(attrs)
     |> Ecto.Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
-  end
-
-  @doc """
-  Updates a activity.
-
-  ## Examples
-
-      iex> update_activity(activity, %{field: new_value})
-      {:ok, %Activity{}}
-
-      iex> update_activity(activity, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_activity(%Activity{} = activity, attrs) do
-    activity
-    |> Activity.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Activity.
-
-  ## Examples
-
-      iex> delete_activity(activity)
-      {:ok, %Activity{}}
-
-      iex> delete_activity(activity)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_activity(%Activity{} = activity) do
-    Repo.delete(activity)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking activity changes.
-
-  ## Examples
-
-      iex> change_activity(activity)
-      %Ecto.Changeset{source: %Activity{}}
-
-  """
-  def change_activity(%Activity{} = activity) do
-    Activity.changeset(activity, %{})
   end
 
   alias Squeeze.Dashboard.Event
