@@ -6,11 +6,7 @@ defmodule SqueezeWeb.PageView do
   end
 
   def distances() do
-    [
-      "5k": 5000,
-      "10k": 10000,
-      "Half Marathon": 21097,
-      "Marathon": 42195
-    ]
+    Squeeze.Distances.distances
+    |> Enum.map(fn(x) -> {x.name, x.distance} end)
   end
 end
