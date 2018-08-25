@@ -39,9 +39,15 @@ defmodule SqueezeWeb.FormatHelpers do
   defp pace_duration(duration, distance) do
     miles = distance / 1609
     pace = duration.total / miles
-    Duration.from_seconds(pace)
-    |> Duration.to_time!
-    |> Timex.format("%-M:%S", :strftime)
+    case duration_to_time(pace) do
+      {:ok, time} -> Timex.format(time, "%-M:%S", :strftime)
+      {:error, _} -> :error
+    end
+  end
+
+  defp duration_to_time(duration) do
+    Duration.from_seconds(duration)
+    |> Duration.to_time
   end
 
   defp format(duration) do
