@@ -39,7 +39,7 @@
         7:30 min/mile
       </div>
       <div class="date">
-        Today
+        <%= relative_time(activity.start_at) %>
       </div>
     </div>
   <% end %>

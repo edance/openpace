@@ -23,6 +23,10 @@ defmodule SqueezeWeb.FormatHelpers do
     Squeeze.Distances.from_meters(distance).name
   end
 
+  def relative_time(time) do
+    Timex.format!(time, "{relative}", :relative)
+  end
+
   defp format(duration) do
     case Duration.to_hours(duration) do
       x when x < 1 -> "%-M:%S"
