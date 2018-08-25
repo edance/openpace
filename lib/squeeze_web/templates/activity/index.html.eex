@@ -16,9 +16,6 @@
       <%= for activity <- @activities do %>
         <tr>
           <td><%= activity.name %></td>
-          <td><%= activity.distance %></td>
-          <td><%= activity.duration %></td>
-          <td><%= activity.start_at %></td>
 
           <td class="text-right">
             <span><%= link "Show", to: activity_path(@conn, :show, activity), class: "btn btn-default btn-xs" %></span>
