@@ -26,8 +26,6 @@ defmodule SqueezeWeb.FormHelpers do
   end
 
   def duration_select(form, field, opts \\ []) do
-    id = input_id(form, field)
-    name = input_name(form, field)
     value = input_value(form, field) || %{}
 
     content_tag(:div, class: "duration-select") do
