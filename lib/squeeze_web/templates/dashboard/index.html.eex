@@ -36,7 +36,7 @@
         <%= activity.name %>
       </div>
       <div class="pace">
-        7:30 min/mile
+        <%= format_pace(activity.duration, activity.distance) %>
       </div>
       <div class="date">
         <%= relative_time(activity.start_at) %>

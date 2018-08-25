@@ -27,6 +27,23 @@ defmodule SqueezeWeb.FormatHelpers do
     Timex.format!(time, "{relative}", :relative)
   end
 
+  def format_pace(duration, distance) when distance <= 0, do: ""
+
+  def format_pace(duration, distance) do
+    case pace_duration(duration, distance) do
+      {:ok, str} -> "#{str} min/mile"
+      :error -> ""
+    end
+  end
+
+  defp pace_duration(duration, distance) do
+    miles = distance / 1609
+    pace = duration.total / miles
+    Duration.from_seconds(pace)
+    |> Duration.to_time!
+    |> Timex.format("%-M:%S", :strftime)
+  end
+
   defp format(duration) do
     case Duration.to_hours(duration) do
       x when x < 1 -> "%-M:%S"
