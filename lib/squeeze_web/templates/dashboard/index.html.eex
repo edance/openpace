@@ -28,3 +28,19 @@
 </div>
 
 <img class="waves" src="/images/waves.svg" />
+
+<div class="activites">
+  <%= for activity <- @activities do %>
+    <div class="activity">
+      <div class="title">
+        <%= activity.name %>
+      </div>
+      <div class="pace">
+        7:30 min/mile
+      </div>
+      <div class="date">
+        Today
+      </div>
+    </div>
+  <% end %>
+</div>
