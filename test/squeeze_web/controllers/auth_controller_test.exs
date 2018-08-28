@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.AuthControllerTest do
   use SqueezeWeb.ConnCase
 
+  alias Squeeze.Guardian.Plug
+
   test "renders login page", %{conn: conn} do
     conn = get(conn, auth_path(conn, :login))
     assert html_response(conn, 200) =~ ~r/Welcome/
@@ -13,7 +15,7 @@ defmodule SqueezeWeb.AuthControllerTest do
 
   test "logs out user on delete", %{conn: conn} do
     conn = delete conn, auth_path(conn, :delete)
-    user = Squeeze.Guardian.Plug.current_resource(conn)
+    user = Plug.current_resource(conn)
     assert user == nil
   end
 end

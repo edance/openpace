@@ -1,9 +1,13 @@
 defmodule Squeeze.Dashboard.Activity do
+  @moduledoc """
+  This module contains the schema for the activity. Activities are pulled from
+  different services.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Dashboard.Activity
   alias Squeeze.Accounts.User
-
+  alias Squeeze.Dashboard.Activity
 
   schema "activities" do
     field :distance, :float

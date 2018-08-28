@@ -1,6 +1,16 @@
 defmodule SqueezeWeb.Plug.Auth do
   import Plug.Conn
 
+  @moduledoc """
+  This module defines the auth plug which does one of two things:
+
+  1. Pulls the user from the current session
+  2. Creates a new guest user
+
+  All visitors are a user which allows us to collect user preferences
+  before they actually sign up.
+  """
+
   alias Squeeze.{Accounts, Guardian}
 
   def init(options) do

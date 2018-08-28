@@ -15,10 +15,15 @@ defmodule SqueezeWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+  alias Phoenix.ConnTest
+  alias Plug.Conn
+  alias Squeeze.{Factory, Repo}
+
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
+      use ConnTest
       import SqueezeWeb.Router.Helpers
       import Squeeze.Factory
 
@@ -27,19 +32,18 @@ defmodule SqueezeWeb.ConnCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Squeeze.Repo)
+    :ok = Sandbox.checkout(Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
+      Sandbox.mode(Repo, {:shared, self()})
     end
 
-    user = Squeeze.Factory.insert(:user)
+    user = Factory.insert(:user)
 
     conn =
-      Phoenix.ConnTest.build_conn()
-      |> Plug.Conn.assign(:current_user, user)
+      ConnTest.build_conn()
+      |> Conn.assign(:current_user, user)
 
     {:ok, conn: conn, user: user}
   end

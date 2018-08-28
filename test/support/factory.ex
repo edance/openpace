@@ -1,7 +1,9 @@
 defmodule Squeeze.Factory do
   use ExMachina.Ecto, repo: Squeeze.Repo
 
-  alias Faker.{Name, Address}
+  @moduledoc false
+
+  alias Faker.{Address, Date, Internet, Name}
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
   alias Squeeze.Dashboard.{Activity, Event}
 
@@ -9,7 +11,7 @@ defmodule Squeeze.Factory do
     %User{
       first_name: Name.first_name(),
       last_name: Name.last_name(),
-      email: Faker.Internet.email(),
+      email: Internet.email(),
       city: Address.city(),
       state: Address.state_abbr(),
       country: Address.country_code(),
@@ -21,18 +23,18 @@ defmodule Squeeze.Factory do
     %Credential{
       provider: "strava",
       token: "abcdefg",
-      uid: 12345,
+      uid: 12_345,
       user: build(:user)
     }
   end
 
   def user_prefs_factory do
     %UserPrefs{
-      distance: 42195, # Marathon in meters
+      distance: 42_195, # Marathon in meters
       duration: 3 * 60 * 60, # 3 hours in seconds
       personal_record: 3 * 60 * 60, # 3 hours in seconds
       name: "#{Address.city()} Marathon",
-      race_date: Faker.Date.forward(:rand.uniform(100))
+      race_date: Date.forward(:rand.uniform(100))
     }
   end
 
@@ -40,7 +42,7 @@ defmodule Squeeze.Factory do
     %Event{
       cooldown: Enum.random([true, false]),
       warmup: Enum.random([true, false]),
-      date: Faker.Date.forward(:rand.uniform(100)),
+      date: Date.forward(:rand.uniform(100)),
       distance: 120.5,
       name: "some name",
       user: build(:user)

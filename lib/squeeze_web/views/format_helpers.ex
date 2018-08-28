@@ -1,6 +1,12 @@
 defmodule SqueezeWeb.FormatHelpers do
+  @moduledoc """
+  This module defines helpers common running related formatting like pace,
+  distance, duration.
+  """
+
   use Phoenix.HTML
 
+  alias Squeeze.Distances
   alias Timex.Duration
 
   @doc """
@@ -13,12 +19,13 @@ defmodule SqueezeWeb.FormatHelpers do
   """
   def format_duration(%{total: seconds}) do
     duration = Duration.from_seconds(seconds)
-    Duration.to_time!(duration)
+    duration
+    |> Duration.to_time!()
     |> Timex.format!(format(duration), :strftime)
   end
 
   def format_distance(distance) do
-    Squeeze.Distances.from_meters(distance).name
+    Distances.from_meters(distance).name
   end
 
   def relative_time(time) do
@@ -26,7 +33,6 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def format_pace(_, distance) when distance <= 0, do: ""
-
   def format_pace(duration, distance) do
     case pace_duration(duration, distance) do
       {:ok, str} -> "#{str} min/mile"
@@ -44,8 +50,9 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   defp duration_to_time(duration) do
-    Duration.from_seconds(duration)
-    |> Duration.to_time
+    duration
+    |> Duration.from_seconds()
+    |> Duration.to_time()
   end
 
   defp format(duration) do

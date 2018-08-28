@@ -4,9 +4,9 @@ defmodule Squeeze.Accounts do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
+  alias Squeeze.Accounts.{Credential, User, UserPrefs}
   alias Squeeze.Repo
-
-  alias Squeeze.Accounts.{User, Credential, UserPrefs}
 
   @doc """
   Creates a guest user account. All visitors are assigned an account to help
@@ -17,7 +17,7 @@ defmodule Squeeze.Accounts do
   iex> create_guest_user()
   {:ok, %User{}}
   """
-  def create_guest_user() do
+  def create_guest_user do
     create_user()
   end
 
@@ -76,8 +76,8 @@ defmodule Squeeze.Accounts do
   def create_user(attrs \\ %{user_prefs: %{}}) do
     %User{}
     |> User.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
-    |> Ecto.Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
+    |> Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
+    |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.insert()
   end
 
@@ -96,8 +96,8 @@ defmodule Squeeze.Accounts do
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
-    |> Ecto.Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
+    |> Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
+    |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.update()
   end
 
