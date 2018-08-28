@@ -50,6 +50,7 @@ defmodule Squeeze.Mixfile do
       {:guardian, "~> 1.0"},
       {:browser, "~> 0.1.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
       {:faker, "~> 0.9", only: :test},
       {:excoveralls, "~> 0.9", only: :test}
