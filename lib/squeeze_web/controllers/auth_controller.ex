@@ -1,7 +1,9 @@
 defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
 
-  alias Squeeze.{Accounts, Guardian}
+  alias Squeeze.Accounts
+  alias Squeeze.Guardian.Plug
+  alias Strava.Auth
 
   def login(conn, _params) do
     render(conn, "login.html")
@@ -13,7 +15,7 @@ defmodule SqueezeWeb.AuthController do
 
   def delete(conn, _params) do
     conn
-    |> Guardian.Plug.sign_out()
+    |> Plug.sign_out()
     |> put_flash(:info, "You have been logged out!")
     |> redirect(to: "/")
   end
@@ -25,7 +27,7 @@ defmodule SqueezeWeb.AuthController do
     case Accounts.get_or_update_user_by_credential(user, user_params) do
       {:ok, user} ->
         conn
-        |> Guardian.Plug.sign_in(user)
+        |> Plug.sign_in(user)
         |> redirect(to: sync_path(conn, :sync))
       {:error, %Ecto.Changeset{}} ->
         conn
@@ -35,7 +37,7 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp authorize_url!("strava") do
-    Strava.Auth.authorize_url!(scope: "public")
+    Auth.authorize_url!(scope: "public")
   end
 
   defp authorize_url!(_) do
@@ -43,7 +45,7 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp get_token!("strava", code) do
-    Strava.Auth.get_token!(code: code)
+    Auth.get_token!(code: code)
   end
 
   defp get_token!(_, _) do
@@ -52,7 +54,7 @@ defmodule SqueezeWeb.AuthController do
 
   defp get_user!("strava", client) do
     token = client.token.access_token
-    user = Strava.Auth.get_athlete!(client)
+    user = Auth.get_athlete!(client)
     credential = %{provider: "strava", uid: user.id, token: token}
     user
     |> Map.from_struct

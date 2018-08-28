@@ -1,4 +1,9 @@
 defmodule SqueezeWeb.FormHelpers do
+  @moduledoc """
+  This module contains different helper functions for the different data types
+  used in the app.
+  """
+
   use Phoenix.HTML
 
   import Phoenix.HTML

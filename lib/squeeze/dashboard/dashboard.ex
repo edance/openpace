@@ -4,10 +4,10 @@ defmodule Squeeze.Dashboard do
   """
 
   import Ecto.Query, warn: false
-  alias Squeeze.Repo
+  alias Ecto.Changeset
   alias Squeeze.Accounts.User
-
   alias Squeeze.Dashboard.Activity
+  alias Squeeze.Repo
 
   @doc """
   Returns the list of activities by user.
@@ -60,7 +60,7 @@ defmodule Squeeze.Dashboard do
   def create_activity(%User{} = user, attrs \\ %{}) do
     %Activity{}
     |> Activity.changeset(attrs)
-    |> Ecto.Changeset.put_change(:user_id, user.id)
+    |> Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
@@ -117,7 +117,7 @@ defmodule Squeeze.Dashboard do
   def create_event(%User{} = user, attrs \\ %{}) do
     %Event{}
     |> Event.changeset(attrs)
-    |> Ecto.Changeset.put_change(:user_id, user.id)
+    |> Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 

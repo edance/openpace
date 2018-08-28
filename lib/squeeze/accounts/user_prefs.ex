@@ -1,4 +1,9 @@
 defmodule Squeeze.Accounts.UserPrefs do
+  @moduledoc """
+  This module is the schema for the user preferences that are collected with
+  onboarding.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.{User, UserPrefs}

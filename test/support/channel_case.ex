@@ -15,6 +15,8 @@ defmodule SqueezeWeb.ChannelCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       # Import conveniences for testing with channels
@@ -25,13 +27,11 @@ defmodule SqueezeWeb.ChannelCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Squeeze.Repo)
+    :ok = Sandbox.checkout(Squeeze.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
+      Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
     :ok
   end
-
 end

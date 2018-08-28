@@ -1,9 +1,13 @@
 defmodule Squeeze.Dashboard.Event do
   use Ecto.Schema
-  import Ecto.Changeset
-  alias Squeeze.Dashboard.Event
-  alias Squeeze.Accounts.User
 
+  @moduledoc """
+  This module is the schema for an event in the database.
+  """
+
+  import Ecto.Changeset
+  alias Squeeze.Accounts.User
+  alias Squeeze.Dashboard.Event
 
   schema "events" do
     field :cooldown, :boolean, default: false

@@ -1,7 +1,11 @@
 defmodule Squeeze.Accounts.User do
+  @moduledoc """
+  This module is the schema for the user in the database.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Accounts.{User, Credential, UserPrefs}
+  alias Squeeze.Accounts.{Credential, User, UserPrefs}
 
   schema "users" do
     field :first_name, :string
