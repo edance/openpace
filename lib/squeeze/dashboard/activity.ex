@@ -9,10 +9,14 @@ defmodule Squeeze.Dashboard.Activity do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Activity
 
+  @required_fields ~w(name distance duration start_at external_id)a
+  @optional_fields ~w(polyline)a
+
   schema "activities" do
     field :distance, :float
     field :duration, Squeeze.Duration
     field :name, :string
+    field :polyline, :string
     field :start_at, :naive_datetime
     field :external_id, :integer
 
@@ -24,7 +28,7 @@ defmodule Squeeze.Dashboard.Activity do
   @doc false
   def changeset(%Activity{} = activity, attrs) do
     activity
-    |> cast(attrs, [:name, :distance, :duration, :start_at, :external_id])
-    |> validate_required([:name, :distance, :duration, :start_at, :external_id])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
   end
 end
