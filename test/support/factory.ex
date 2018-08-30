@@ -58,6 +58,7 @@ defmodule Squeeze.Factory do
       name: Enum.random(["Morning Run", "Afternoon Run", "Evening Run"]),
       start_at: DateTime.utc_now,
       external_id: sequence(:external_id, fn(x) -> x end),
+      polyline: "abc",
       user: build(:user)
     }
   end

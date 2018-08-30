@@ -41,6 +41,8 @@
       <div class="date">
         <%= relative_time(activity.start_at) %>
       </div>
+
+      <%= activity.polyline %>
     </div>
   <% end %>
 </div>
