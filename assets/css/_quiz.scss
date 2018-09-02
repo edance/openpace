@@ -2,6 +2,13 @@
   height: 100%;
   padding: 2em;
   position: relative;
+
+  .waves {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    z-index: $background;
+  }
 }
 
 .step-header {
@@ -14,6 +21,7 @@
   height: 100%;
   width: 100%;
   position: relative;
+  z-index: $foreground;
 
   h2 {
     margin: 0;

@@ -1,5 +1,3 @@
-<img class="waves" src="/images/waves.svg" />
-
 <div class="step-container">
   <div class="step">
     <div class="step-header">
@@ -8,4 +6,6 @@
 
     <%= render "#{@step}.html", assigns %>
   </div>
+
+  <img class="waves" src="/images/waves.svg" />
 </div>
