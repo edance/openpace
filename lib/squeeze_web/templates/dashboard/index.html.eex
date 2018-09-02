@@ -30,7 +30,7 @@
     </div>
 
   </div>
-  <img class="waves" src="/images/waves.svg" />
+  <%= render SqueezeWeb.SharedView, "waves.html", assigns %>
 </div>
 
 <div class="activites">
