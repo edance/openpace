@@ -1,48 +1,54 @@
-<div class="header">
-  <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
-</div>
-
-<div class="profile">
-  <img class="image" alt="Profile Picture" src="<%= @current_user.avatar %>"/>
-
-  <div class="name">
-    Hello
-    <br/>
-    <%= full_name(@current_user) %>!
-  </div>
-</div>
-
-<div class="card">
-  <div class="title">
-    Current Goal
-  </div>
-
+<div class="dashboard overview">
   <div class="content">
-    <%= format_duration(@current_user.user_prefs.duration) %>
+    <div class="header">
+      <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
+    </div>
+
+    <div class="profile">
+      <img class="image" alt="Profile Picture" src="<%= @current_user.avatar %>"/>
+
+      <div class="name">
+        Hello
+        <br/>
+        <%= full_name(@current_user) %>!
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">
+        Current Goal
+      </div>
+
+      <div class="content">
+        <%= format_duration(@current_user.user_prefs.duration) %>
+
+      </div>
+
+      <div class="footer">
+        <%= format_distance(@current_user.user_prefs.distance) %>
+      </div>
+    </div>
 
   </div>
-
-  <div class="footer">
-    <%= format_distance(@current_user.user_prefs.distance) %>
-  </div>
+  <img class="waves" src="/images/waves.svg" />
 </div>
-
-<img class="waves" src="/images/waves.svg" />
 
 <div class="activites">
   <%= for activity <- @activities do %>
     <div class="activity">
-      <div class="title">
-        <%= activity.name %>
+      <div class="dot">
       </div>
-      <div class="pace">
-        <%= format_pace(activity.duration, activity.distance) %>
+      <div class="content">
+        <div class="title">
+          <%= activity.name %>
+        </div>
+        <div class="pace">
+          <%= format_pace(activity.duration, activity.distance) %>
+        </div>
+        <div class="date">
+          <%= relative_time(activity.start_at) %>
+        </div>
       </div>
-      <div class="date">
-        <%= relative_time(activity.start_at) %>
-      </div>
-
-      <%= activity.polyline %>
     </div>
   <% end %>
 </div>
