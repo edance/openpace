@@ -4,18 +4,20 @@ defmodule SqueezeWeb.EventController do
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Event
 
+  require IEx
+
   plug :authorize_event when action in [:edit, :update, :delete]
 
-  def index(conn, _params) do
-    user = conn.assigns.current_user
-    conn
-    |> assign(:events, Dashboard.list_events(user))
-    |> render("index.html")
-  end
-
-  def new(conn, _params) do
-    changeset = Dashboard.change_event(%Event{})
-    render(conn, "new.html", changeset: changeset)
+  def new(conn, params) do
+    date = parse_date(params["date"])
+    current_week = String.to_integer(params["current_week"])
+    start_date = Date.add(date, 7 * current_week)
+    end_date = Date.add(start_date, 7)
+    # end_date = start_date + 7
+    range = Date.range(start_date, end_date)
+    changesets = range
+    |> Enum.map(fn(x) -> Dashboard.change_event(%Event{date: x}) end)
+    render(conn, "new.html", changesets: changesets)
   end
 
   def create(conn, %{"event" => event_params}) do
@@ -72,6 +74,13 @@ defmodule SqueezeWeb.EventController do
       |> put_flash(:error, "You can't modify that event")
       |> redirect(to: event_path(conn, :index))
       |> halt()
+    end
+  end
+
+  defp parse_date(date) do
+    case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
+      {:ok, date} -> date
+      {:error, _} -> Timex.today
     end
   end
 end

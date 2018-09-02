@@ -1,7 +1,13 @@
-<div class="ui text container">
-  <span><%= link "Back", to: event_path(@conn, :index) %></span>
+<div class="step-container">
+  <div class="step">
+    <div class="step-header">
+      <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
+    </div>
+  </div>
 
-  <h2>New Event</h2>
+  <h2>Training Plan: Week 1</h2>
 
   <%= render "form.html", Map.put(assigns, :action, event_path(@conn, :create)) %>
+
+  <%= render SqueezeWeb.SharedView, "waves.html", assigns %>
 </div>
