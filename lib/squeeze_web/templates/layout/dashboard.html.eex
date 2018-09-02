@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="csrf-token" content="<%= get_csrf_token() %>" />
-    <meta name="csrf-param" content="_csrf_token" />
-
     <title><%= @view_module.title(@view_template, assigns) %> | Squeeze</title>
+    <%= render SqueezeWeb.SharedView, "head.html", assigns %>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
   <body>
-    <main class="ui main" role="main">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <%= render @view_module, @view_template, assigns %>
-    </main>
-
-    <script data-turbolinks-track="reload" src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= render @view_module, @view_template, assigns %>
   </body>
 </html>
