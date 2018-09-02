@@ -1,5 +1,3 @@
-<img class="waves" src="/images/waves.svg" />
-
 <div class="landing page">
   <div class="header">
     <%= link("Squeeze", to: "/", class: "logo") %>
@@ -11,4 +9,6 @@
 
     <%= render "form.html", Map.put(assigns, :action, wizard_path(@conn, :update, @step)) %>
   </div>
+
+  <%= render SqueezeWeb.SharedView, "waves.html", assigns %>
 </div>

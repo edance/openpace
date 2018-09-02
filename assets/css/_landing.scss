@@ -32,6 +32,7 @@
     height: calc(100vh - #{$header-height});
     position: relative;
     width: 100%;
+    z-index: $foreground;
   }
 
   h1 {
@@ -59,9 +60,10 @@
   }
 
   .waves {
-    position: absolute;
-    top: -400px;
+    bottom: 0;
     left: 0;
+    position: fixed;
+    z-index: $background;
   }
 
   .footer {
