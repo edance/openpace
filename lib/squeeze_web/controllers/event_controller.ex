@@ -13,7 +13,7 @@ defmodule SqueezeWeb.EventController do
     date = parse_date(params["date"])
     start_date = Date.add(date, 7 * current_week)
     changesets = start_date
-    |> Date.range(Date.add(start_date, 7))
+    |> Date.range(Date.add(start_date, 6))
     |> Enum.map(fn(x) -> Dashboard.change_event(%Event{date: x}) end)
     render(conn, "new.html", changesets: changesets)
   end
