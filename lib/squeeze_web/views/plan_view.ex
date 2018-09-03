@@ -1,8 +1,8 @@
-defmodule SqueezeWeb.EventView do
+defmodule SqueezeWeb.PlanView do
   use SqueezeWeb, :view
 
   def title(_page, _assigns) do
-    "Events"
+    "Build your training plan"
   end
 
   def day_name(date) do

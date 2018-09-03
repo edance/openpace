@@ -1,4 +1,4 @@
-<%= form_for @conn, @action, [as: "events[]"], fn f -> %>
+<%= async_form @conn, @action, [as: "events[]"], fn f -> %>
   <%= for {changeset, k} <- (@changesets |> Enum.with_index()) do %>
     <%= day_name(changeset.data.date) %>
     <%= hidden_input f, :id, name: "events[#{k}][id]", value: changeset.data.id %>

@@ -5,6 +5,6 @@
     </div>
     <h2>Training Plan: Week <%= @week %></h2>
 
-    <%= render "form.html", Map.put(assigns, :action, event_path(@conn, :create, @week)) %>
+    <%= render "form.html", Map.put(assigns, :action, plan_path(@conn, :create, @week)) %>
   </div>
 </div>
