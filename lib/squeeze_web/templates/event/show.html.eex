@@ -1,7 +1,6 @@
 <div class="ui text container">
   <h2>Show Event</h2>
   <span><%= link "Edit", to: event_path(@conn, :edit, @event) %></span>
-  <span><%= link "Back", to: event_path(@conn, :index) %></span>
 
   <ui class="ui list">
     <li>

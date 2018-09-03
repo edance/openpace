@@ -43,6 +43,6 @@ defmodule SqueezeWeb.EventControllerTest do
   test "deletes chosen event on delete", %{conn: conn} do
     event = insert(:event, user: conn.assigns.current_user)
     conn = delete conn, event_path(conn, :delete, event)
-    assert redirected_to(conn) == event_path(conn, :index)
+    assert redirected_to(conn) == dashboard_path(conn, :index)
   end
 end
