@@ -1,0 +1,9 @@
+<h2>How many weeks is your training plan?</h2>
+
+<%= async_form @conn, event_path(@conn, :update, @step), fn f -> %>
+  <div class="field">
+    <%= number_input f, :weeks, class: "dropdown" %>
+  </div>
+
+  <%= submit "Next", class: "primary button" %>
+<% end %>

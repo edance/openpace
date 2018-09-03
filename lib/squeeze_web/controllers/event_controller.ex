@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.EventController do
   use SqueezeWeb, :controller
 
+  @steps ~w(weeks start)
+
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Event
   alias Squeeze.Distances
@@ -8,25 +10,47 @@ defmodule SqueezeWeb.EventController do
   require IEx
   require IO
 
-  def new(conn, params) do
-    current_week = String.to_integer(params["current_week"])
-    date = parse_date(params["date"])
+  def step(conn, %{"step" => step}) do
+    render(conn, "step.html", step: step)
+  end
+
+  def update(conn, %{"step" => step, "weeks" => weeks}) do
+    next_step = next_step(step)
+    conn
+    |> put_session(:weeks, weeks)
+    |> redirect(to: event_path(conn, :step, next_step))
+  end
+
+  def update(conn, %{"step" => step, "start_at" => start_at}) do
+    conn
+    |> put_session(:start_at, parse_date(start_at))
+    |> redirect(to: event_path(conn, :new, 1))
+  end
+
+  def new(conn, %{"week" => week}) do
+    current_week = String.to_integer(week) - 1
+    date = get_session(conn, :start_at)
     start_date = Date.add(date, 7 * current_week)
     changesets = start_date
     |> Date.range(Date.add(start_date, 6))
     |> Enum.map(fn(x) -> Dashboard.change_event(%Event{date: x}) end)
-    render(conn, "new.html", changesets: changesets)
+
+    render(conn, "new.html", changesets: changesets, week: week)
   end
 
-  def create(conn, %{"events" => events}) do
+  def create(conn, %{"events" => events, "week" => week}) do
     user = conn.assigns.current_user
+    current_week = String.to_integer(week) - 1
     events
     |> Enum.map(fn({_, v}) -> v end)
     |> Enum.map(&format_name(&1))
     |> Enum.map(&add_distance_to_event(&1))
     |> Enum.each(&Dashboard.create_event(user, &1))
-    conn
-    |> redirect(to: dashboard_path(conn, :index))
+    if current_week < get_session(conn, :weeks) do
+      redirect(conn, to: event_path(conn, :new, current_week + 2))
+    else
+      redirect(conn, to: dashboard_path(conn, :index))
+    end
   end
 
   defp parse_date(date) do
@@ -49,4 +73,10 @@ defmodule SqueezeWeb.EventController do
       {:error} -> 0
     end
   end
+
+  defp next_step(step) do
+    idx = Enum.find_index(@steps, fn(x) -> x == step end) + 1
+    Enum.at(@steps, idx)
+  end
+
 end
