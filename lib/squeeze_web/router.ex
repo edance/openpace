@@ -53,7 +53,11 @@ defmodule SqueezeWeb.Router do
     get "/sync", SyncController, :sync
 
     resources "/activities", ActivityController, only: [:index, :show]
-    resources "/events", EventController, except: [:index]
+
+    get "/plan/:step", EventController, :step
+    post "/plan/:step", EventController, :update
+    get "/plan/weeks/:week", EventController, :new
+    post "/plan/weeks/:week", EventController, :create
   end
 
   # Other scopes may use custom stacks.
