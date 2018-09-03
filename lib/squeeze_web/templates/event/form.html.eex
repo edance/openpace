@@ -1,11 +1,10 @@
 <%= form_for @conn, @action, [as: "events[]"], fn f -> %>
-  <%= for changeset <- @changesets do %>
-    <div>
-      <%= day_name(changeset.data.date) %>
-      <%= hidden_input f, :id, step: "any", value: changeset.data.id %>
-      <%= text_input f, :distance, step: "any", value: changeset.data.distance %>
-      <%= hidden_input f, :date, step: "any", value: changeset.data.date %>
-    </div>
+
+  <%= for {changeset, k} <- (@changesets |> Enum.with_index()) do %>
+    <%= day_name(changeset.data.date) %>
+    <%= hidden_input f, :id, name: "events[#{k}][id]", value: changeset.data.id %>
+    <%= text_input f, :distance, name: "events[#{k}][name]", value: changeset.data.distance %>
+    <%= hidden_input f, :date, name: "events[#{k}][date]", value: changeset.data.date %>
   <% end %>
 
   <%= submit "Submit", class: "ui submit button" %>
