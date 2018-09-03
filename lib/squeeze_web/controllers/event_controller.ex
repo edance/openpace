@@ -7,9 +7,6 @@ defmodule SqueezeWeb.EventController do
   alias Squeeze.Dashboard.Event
   alias Squeeze.Distances
 
-  require IEx
-  require IO
-
   def step(conn, %{"step" => step}) do
     render(conn, "step.html", step: step)
   end
@@ -17,7 +14,7 @@ defmodule SqueezeWeb.EventController do
   def update(conn, %{"step" => step, "weeks" => weeks}) do
     next_step = next_step(step)
     conn
-    |> put_session(:weeks, weeks)
+    |> put_session(:weeks, String.to_integer(weeks))
     |> redirect(to: event_path(conn, :step, next_step))
   end
 
@@ -40,14 +37,14 @@ defmodule SqueezeWeb.EventController do
 
   def create(conn, %{"events" => events, "week" => week}) do
     user = conn.assigns.current_user
-    current_week = String.to_integer(week) - 1
+    current_week = String.to_integer(week)
     events
     |> Enum.map(fn({_, v}) -> v end)
     |> Enum.map(&format_name(&1))
     |> Enum.map(&add_distance_to_event(&1))
     |> Enum.each(&Dashboard.create_event(user, &1))
     if current_week < get_session(conn, :weeks) do
-      redirect(conn, to: event_path(conn, :new, current_week + 2))
+      redirect(conn, to: event_path(conn, :new, current_week + 1))
     else
       redirect(conn, to: dashboard_path(conn, :index))
     end
@@ -78,5 +75,4 @@ defmodule SqueezeWeb.EventController do
     idx = Enum.find_index(@steps, fn(x) -> x == step end) + 1
     Enum.at(@steps, idx)
   end
-
 end
