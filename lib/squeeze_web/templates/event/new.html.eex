@@ -3,11 +3,8 @@
     <div class="step-header">
       <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
     </div>
+    <h2>Training Plan: Week 1</h2>
+
+    <%= render "form.html", Map.put(assigns, :action, event_path(@conn, :create)) %>
   </div>
-
-  <h2>Training Plan: Week 1</h2>
-
-  <%= render "form.html", Map.put(assigns, :action, event_path(@conn, :create)) %>
-
-  <%= render SqueezeWeb.SharedView, "waves.html", assigns %>
 </div>
