@@ -54,10 +54,10 @@ defmodule SqueezeWeb.Router do
 
     resources "/activities", ActivityController, only: [:index, :show]
 
-    get "/plan/:step", EventController, :step
-    post "/plan/:step", EventController, :update
-    get "/plan/weeks/:week", EventController, :new
-    post "/plan/weeks/:week", EventController, :create
+    get "/plan/:step", PlanController, :step
+    post "/plan/:step", PlanController, :update
+    get "/plan/weeks/:week", PlanController, :new
+    post "/plan/weeks/:week", PlanController, :create
   end
 
   # Other scopes may use custom stacks.

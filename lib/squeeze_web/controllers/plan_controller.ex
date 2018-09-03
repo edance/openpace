@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.EventController do
+defmodule SqueezeWeb.PlanController do
   use SqueezeWeb, :controller
 
   @steps ~w(weeks start)
@@ -15,13 +15,13 @@ defmodule SqueezeWeb.EventController do
     next_step = next_step(step)
     conn
     |> put_session(:weeks, String.to_integer(weeks))
-    |> redirect(to: event_path(conn, :step, next_step))
+    |> redirect(to: plan_path(conn, :step, next_step))
   end
 
-  def update(conn, %{"step" => step, "start_at" => start_at}) do
+  def update(conn, %{"start_at" => start_at}) do
     conn
     |> put_session(:start_at, parse_date(start_at))
-    |> redirect(to: event_path(conn, :new, 1))
+    |> redirect(to: plan_path(conn, :new, 1))
   end
 
   def new(conn, %{"week" => week}) do
@@ -44,7 +44,7 @@ defmodule SqueezeWeb.EventController do
     |> Enum.map(&add_distance_to_event(&1))
     |> Enum.each(&Dashboard.create_event(user, &1))
     if current_week < get_session(conn, :weeks) do
-      redirect(conn, to: event_path(conn, :new, current_week + 1))
+      redirect(conn, to: plan_path(conn, :new, current_week + 1))
     else
       redirect(conn, to: dashboard_path(conn, :index))
     end
