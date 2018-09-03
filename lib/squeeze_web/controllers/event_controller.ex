@@ -69,7 +69,7 @@ defmodule SqueezeWeb.EventController do
 
     conn
     |> put_flash(:info, "Event deleted successfully.")
-    |> redirect(to: event_path(conn, :index))
+    |> redirect(to: dashboard_path(conn, :index))
   end
 
   defp authorize_event(conn, _) do
@@ -80,7 +80,7 @@ defmodule SqueezeWeb.EventController do
     else
       conn
       |> put_flash(:error, "You can't modify that event")
-      |> redirect(to: event_path(conn, :index))
+      |> redirect(to: dashboard_path(conn, :index))
       |> halt()
     end
   end
