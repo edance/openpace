@@ -1,11 +1,17 @@
 defmodule SqueezeWeb.PlanController do
   use SqueezeWeb, :controller
 
+  @moduledoc """
+  Controller module to help create training plans
+  """
+
   @steps ~w(weeks start)
 
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Event
   alias Squeeze.Distances
+
+  plug :validate_step when action in [:step, :update]
 
   def step(conn, %{"step" => step}) do
     render(conn, "step.html", step: step)
@@ -74,5 +80,18 @@ defmodule SqueezeWeb.PlanController do
   defp next_step(step) do
     idx = Enum.find_index(@steps, fn(x) -> x == step end) + 1
     Enum.at(@steps, idx)
+  end
+
+  defp validate_step(conn, _) do
+    %{"step" => step} = conn.params
+    case Enum.member?(@steps, step) do
+      true -> put_session(conn, :current_step, step)
+      false ->
+        conn
+        |> put_status(:not_found)
+        |> put_view(SqueezeWeb.ErrorView)
+        |> render("404.html")
+        |> halt()
+    end
   end
 end
