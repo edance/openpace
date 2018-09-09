@@ -13,6 +13,12 @@ defmodule SqueezeWeb.PlanController do
 
   plug :validate_step when action in [:step, :update]
 
+  def index(conn, _params) do
+    step = Enum.at(@steps, 0)
+    conn
+    |> redirect(to: plan_path(conn, :step, step))
+  end
+
   def step(conn, %{"step" => step}) do
     render(conn, "step.html", step: step)
   end

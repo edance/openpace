@@ -1,6 +1,11 @@
 defmodule SqueezeWeb.PlanControllerTest do
   use SqueezeWeb.ConnCase
 
+  test "index redirects to the first step", %{conn: conn} do
+    conn = get(conn, "/dashboard/plan")
+    assert redirected_to(conn) == plan_path(conn, :step, "weeks")
+  end
+
   describe "#step" do
     test "valid step name", %{conn: conn} do
       conn = get(conn, "/dashboard/plan/weeks")
