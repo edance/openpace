@@ -54,6 +54,7 @@ defmodule SqueezeWeb.Router do
 
     resources "/activities", ActivityController, only: [:index, :show]
 
+    get "/plan", PlanController, :index
     get "/plan/:step", PlanController, :step
     post "/plan/:step", PlanController, :update
     get "/plan/weeks/:week", PlanController, :new
