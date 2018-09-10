@@ -29,7 +29,9 @@
       </div>
     </div>
 
-    <%= link("Create Training Plan", to: plan_path(@conn, :index), class: "primary button") %>
+    <%= if Enum.empty?(@events) do %>
+      <%= link("Create Training Plan", to: plan_path(@conn, :index), class: "primary button") %>
+    <% end %>
   </div>
   <%= render SqueezeWeb.SharedView, "waves.html", assigns %>
 </div>
