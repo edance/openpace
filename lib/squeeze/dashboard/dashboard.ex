@@ -67,17 +67,37 @@ defmodule Squeeze.Dashboard do
   alias Squeeze.Dashboard.Event
 
   @doc """
-  Returns the list of events by user.
+  Returns the list of events by user in a date range.
 
   ## Examples
 
-      iex> list_events(user)
+      iex> list_events(user, date_range)
       [%Event{}, ...]
 
   """
-  def list_events(user) do
+  def list_events(%User{} = user, date_range) do
     Event
     |> where([a], a.user_id == ^user.id)
+    |> where([a], a.date >= ^date_range.first)
+    |> where([a], a.date <= ^date_range.last)
+    |> order_by([a], a.date)
+    |> Repo.all
+    |> Repo.preload(:user)
+  end
+
+  @doc """
+  Returns list of events by user in the past including today.
+
+  ## Examples
+
+      iex> list_past_events(user)
+      [%Event{}, ...]
+
+  """
+  def list_past_events(%User{} = user) do
+    Event
+    |> where([a], a.user_id == ^user.id)
+    |> where([a], a.date <= ^Date.utc_today())
     |> Repo.all
     |> Repo.preload(:user)
   end
