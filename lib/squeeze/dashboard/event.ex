@@ -7,7 +7,7 @@ defmodule Squeeze.Dashboard.Event do
 
   import Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.Event
+  alias Squeeze.Dashboard.{Activity, Event}
 
   schema "events" do
     field :cooldown, :boolean, default: false
@@ -17,6 +17,7 @@ defmodule Squeeze.Dashboard.Event do
     field :warmup, :boolean, default: false
 
     belongs_to :user, User
+    has_one :activity, Activity
 
     timestamps()
   end
