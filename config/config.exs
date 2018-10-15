@@ -31,6 +31,13 @@ config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
+config :exq,
+  host: "127.0.0.1",
+  port: 6379,
+  namespace: "exq",
+  concurrency: 1000,
+  queues: ["default"]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
