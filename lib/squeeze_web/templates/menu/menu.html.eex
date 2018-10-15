@@ -15,6 +15,10 @@
       Home
     <% end %>
 
+    <%= active_link(@conn, to: auth_path(@conn, :login), wrap_tag: :li) do %>
+      Log In
+    <% end %>
+
     <%= active_link(@conn, to: sync_path(@conn, :sync), wrap_tag: :li) do %>
       Dashboard
     <% end %>
