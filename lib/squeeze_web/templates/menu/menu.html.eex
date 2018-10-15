@@ -15,12 +15,23 @@
       Home
     <% end %>
 
-    <%= active_link(@conn, to: auth_path(@conn, :login), wrap_tag: :li) do %>
-      Log In
-    <% end %>
+    <%= if authenticated?(@current_user) do %>
+      <%= active_link(@conn, to: sync_path(@conn, :sync), wrap_tag: :li) do %>
+        Dashboard
+      <% end %>
 
-    <%= active_link(@conn, to: sync_path(@conn, :sync), wrap_tag: :li) do %>
-      Dashboard
+      <li>
+        <%= link "Log Out", to: auth_path(@conn, :delete), method: :delete %>
+      </li>
+
+    <% else %>
+      <%= active_link(@conn, to: auth_path(@conn, :login), wrap_tag: :li) do %>
+        Log In
+      <% end %>
+
+      <%= active_link(@conn, to: page_path(@conn, :index), wrap_tag: :li) do %>
+        Sign Up
+      <% end %>
     <% end %>
   </ul>
 </div>
