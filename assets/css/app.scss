@@ -1,4 +1,6 @@
 /* This file is for your main application css. */
+@import 'mixins';
+
 @import 'layout';
 
 @import 'components';
@@ -10,4 +12,3 @@
 @import 'menu';
 
 @import 'dashboard';
-
