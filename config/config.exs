@@ -32,8 +32,7 @@ config :squeeze, Squeeze.Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
 config :exq,
-  host: "127.0.0.1",
-  port: 6379,
+  url: System.get_env("REDIS_URL") || "redis://127.0.0.1:6379",
   namespace: "exq",
   concurrency: 1000,
   queues: ["default"]
