@@ -6,5 +6,5 @@
     <img alt="Sign in with Strava" src="/images/btn_strava.svg" />
   <% end %>
 
-  <%= link("Skip", to: sync_path(@conn, :sync), class: "link") %>
+  <%= link("Skip", to: dashboard_path(@conn, :index), class: "link") %>
 </div>
