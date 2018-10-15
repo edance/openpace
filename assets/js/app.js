@@ -25,4 +25,7 @@ Turbolinks.start();
 // DatePicker
 document.addEventListener("turbolinks:load", function() {
   flatpickr('.date-picker', { inline: true, static: true });
+
+  // jquery-ujs handles deletes incorrectly
+  $('a[data-to]').each((idx, el) => el.href = el.dataset['to']);
 })
