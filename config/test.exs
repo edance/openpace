@@ -17,3 +17,10 @@ config :squeeze, Squeeze.Repo,
   database: "squeeze_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Test configuration for strava
+config :strava,
+  client_id: "1",
+  client_secret: "123456789",
+  redirect_uri: "http://localhost:4000/auth/strava/callback",
+  webhook_challenge: "STRAVA"
