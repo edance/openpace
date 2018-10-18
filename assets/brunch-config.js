@@ -47,6 +47,12 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
+    },
+    postcss: {
+      processors: [
+        require('autoprefixer')(['last 8 versions']),
+        require('csswring')()
+      ]
     }
   },
 
