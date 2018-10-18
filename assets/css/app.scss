@@ -1,13 +1,5 @@
 /* This file is for your main application css. */
-@import 'layout';
 
-@import 'components';
 
-@import 'landing';
-
-@import 'quiz';
-
-@import 'menu';
-
-@import 'dashboard';
-
+// Import bootstrap
+@import 'node_modules/bootstrap/scss/bootstrap';
