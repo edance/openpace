@@ -1,0 +1,10 @@
+<% info_msg = get_flash(@conn, :info) %>
+<% error_msg = get_flash(@conn, :error) %>
+
+<%= if info_msg do %>
+  <p class="alert alert-info" role="alert"><%= info_msg %></p>
+<% end %>
+
+<%= if error_msg do %>
+  <p class="alert alert-danger" role="alert"><%= error_msg %></p>
+<% end %>
