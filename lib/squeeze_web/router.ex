@@ -49,6 +49,7 @@ defmodule SqueezeWeb.Router do
     pipe_through [:browser, :dashboard_layout]
 
     get "/", DashboardController, :index
+    get "/example", DashboardController, :example
 
     get "/sync", SyncController, :sync
 
