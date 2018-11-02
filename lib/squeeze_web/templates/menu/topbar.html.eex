@@ -38,10 +38,11 @@
             <span>Support</span>
           </a>
           <div class="dropdown-divider"></div>
-          <%= link "Log Out", to: auth_path(@conn, :delete), method: :delete %>
-          <a href="#!" class="dropdown-item">
+
+          <%= link class: "dropdown-item", to: auth_path(@conn, :delete), method: :delete do %>
             <i class="ni ni-user-run"></i>
             <span>Logout</span>
+          <% end %>
           </a>
         </div>
       </li>
