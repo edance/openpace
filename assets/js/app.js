@@ -14,6 +14,7 @@
 import 'jquery-ujs';
 import Turbolinks from 'turbolinks';
 Turbolinks.start();
+import 'bootstrap';
 
 // Import local files
 //
