@@ -1,9 +1,9 @@
 <h2>When do you want to start training?</h2>
 
 <%= async_form @conn, plan_path(@conn, :update, @step), fn f -> %>
-  <div class="field">
+  <div class="form-group">
     <%= text_input f, :start_at, class: 'date-picker' %>
   </div>
 
-  <%= submit "Next", class: "primary button" %>
+  <%= submit "Next", class: "btn btn-primary" %>
 <% end %>

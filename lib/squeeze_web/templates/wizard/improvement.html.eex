@@ -1,6 +1,9 @@
-<h2>You are looking for a <%= improvement_amount(@current_user) %> improvement</h2>
+<h1 class="display-4 font-weight-normal">
+  You are looking for a <%= improvement_amount(@current_user) %> improvement
+</h1>
+
 <p>
   You have set your goals high! Let's build your training program.
 </p>
 
-<%= link "Next", to: wizard_path(@conn, :step, "connect"), class: "primary button" %>
+<%= link "Next", to: wizard_path(@conn, :step, "connect"), class: "btn btn-primary" %>

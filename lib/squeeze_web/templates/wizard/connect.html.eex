@@ -1,10 +1,11 @@
-<h2>Connect your Strava Account?</h2>
+<h1 class="display-4 font-weight-normal">
+  Connect your Strava Account?
+</h1>
+
 <p>Automatically update your training status through Strava.</p>
 
-<div class="actions">
-  <%= link to: auth_path(@conn, :request, "strava"), class: "strava-btn" do %>
-    <img alt="Sign in with Strava" src="/images/btn_strava.svg" />
-  <% end %>
+<%= link to: auth_path(@conn, :request, "strava"), class: "strava-btn" do %>
+  <img alt="Sign in with Strava" src="/images/btn_strava.svg" />
+<% end %>
 
-  <%= link("Skip", to: sync_path(@conn, :sync), class: "link") %>
-</div>
+<%= link("Skip", to: sync_path(@conn, :sync), class: "link") %>
