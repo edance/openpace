@@ -6,10 +6,10 @@
     </div>
   <% end %>
 
-  <div class="dropdown">
-    <%= select(f, :distance, distances()) %>
+  <div class="form-group">
+    <%= select(f, :distance, distances(), class: "form-control") %>
     <%= error_tag f, :distance %>
   </div>
 
-  <%= submit "Next", class: "primary button" %>
+  <%= submit "Next", class: "btn btn-primary" %>
 <% end %>

@@ -1,7 +1,6 @@
 <div class="step-container">
   <div class="step">
     <div class="step-header">
-      <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
     </div>
     <h2>Training Plan: Week <%= @week %></h2>
 
