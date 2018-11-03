@@ -1,0 +1,22 @@
+<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+  <div class=" dropdown-header noti-title">
+    <h6 class="text-overflow m-0">Welcome!</h6>
+  </div>
+
+  <a href="#" class="dropdown-item">
+    <i class="icon-user"></i>
+    <span>Profile</span>
+  </a>
+
+  <a href="#" class="dropdown-item">
+    <i class="icon-settings"></i>
+    <span>Settings</span>
+  </a>
+
+  <div class="dropdown-divider"></div>
+
+  <%= link class: "dropdown-item", to: auth_path(@conn, :delete), method: :delete do %>
+    <i class="icon-logout"></i>
+    <span>Logout</span>
+  <% end %>
+</div>
