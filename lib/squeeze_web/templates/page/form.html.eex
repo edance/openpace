@@ -7,7 +7,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= select(f, :distance, distances(), class: "form-control") %>
+    <%= autocomplete(f, :distance, distances(), class: "form-control") %>
     <%= error_tag f, :distance %>
   </div>
 

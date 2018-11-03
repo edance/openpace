@@ -20,6 +20,17 @@ defmodule SqueezeWeb.FormHelpers do
     form_for(form_data, action, options ++ [data: [remote: "true"]], fun)
   end
 
+  def autocomplete(form, field, options, opts \\ []) do
+    list_name = "autocomplete-#{:rand.uniform(1000)}"
+    options_html = options
+    |> Enum.map(fn({k, v}) -> "<option value='#{v}'>#{k}</option>" end)
+
+    [
+      text_input(form, field, opts ++ [list: list_name]),
+      raw("<datalist id='#{list_name}'>#{options_html}</datalist>")
+    ]
+  end
+
   def pill_button(form, field, label, value, opts \\ []) do
     content_tag(:label, class: "pill-button") do
       [
