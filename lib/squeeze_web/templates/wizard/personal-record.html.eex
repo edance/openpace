@@ -1,4 +1,4 @@
-<h2>What is your current personal record?</h2>
+<h1 class="display-4 font-weight-normal">What is your current personal record?</h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
 
@@ -8,10 +8,10 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= duration_select f, :personal_record, class: "dropdown" %>
+  <div class="form-group">
+    <%= duration_select f, :personal_record, class: "form-control" %>
     <%= error_tag f, :personal_record %>
   </div>
 
-  <%= submit "Next", class: "primary button" %>
+  <%= submit "Next", class: "btn btn-primary" %>
 <% end %>

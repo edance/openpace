@@ -1,9 +1,5 @@
 <div class="dashboard overview">
   <div class="content">
-    <div class="header">
-      <%= render SqueezeWeb.MenuView, "menu.html", assigns %>
-    </div>
-
     <div class="profile">
       <img class="image" alt="Profile Picture" src="<%= @current_user.avatar %>"/>
 

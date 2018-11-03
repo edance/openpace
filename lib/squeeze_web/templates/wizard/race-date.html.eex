@@ -1,4 +1,6 @@
-<h2>When is your next race?</h2>
+<h1 class="display-4 font-weight-normal">
+  When is your next race?
+</h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
 
@@ -8,10 +10,10 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= text_input f, :race_date, class: 'date-picker' %>
     <%= error_tag f, :race_date %>
   </div>
 
-  <%= submit "Next", class: "primary button" %>
+  <%= submit "Next", class: "btn btn-primary" %>
 <% end %>
