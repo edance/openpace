@@ -69,6 +69,7 @@ exports.config = {
       $: 'jquery',
       flatpickr: 'flatpickr',
       jQuery: 'jquery',
+      vue: 'vue/dist/vue.common.js',
     },
     styles: {
       flatpickr: ['dist/flatpickr.css'],
