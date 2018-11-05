@@ -12,21 +12,20 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import 'jquery-ujs';
-import Turbolinks from 'turbolinks';
-Turbolinks.start();
 import 'bootstrap';
 
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
+import './components/base';
 
-// import socket from "./socket";
+// Turbolinks
+import Turbolinks from 'turbolinks';
+Turbolinks.start();
 
-// DatePicker
+// jquery-ujs handles deletes incorrectly
 document.addEventListener("turbolinks:load", function() {
-  flatpickr('.date-picker', { inline: true, static: true });
-
-  // jquery-ujs handles deletes incorrectly
   $('a[data-to]').each((idx, el) => el.href = el.dataset['to']);
-})
+});
+
