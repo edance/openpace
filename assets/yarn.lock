@@ -198,12 +198,6 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-autocomplete.js@^0.31.0:
-  version "0.31.0"
-  resolved "https://registry.yarnpkg.com/autocomplete.js/-/autocomplete.js-0.31.0.tgz#2387c4e9759dbfd03558777705f6f14a66ba446c"
-  dependencies:
-    immediate "^3.2.3"
-
 autoprefixer@^6.3.1:
   version "6.7.7"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.7.7.tgz#1dbd1c835658e35ce3f9984099db00585c782014"
@@ -1447,6 +1441,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+datalist-polyfill@^1.22.1:
+  version "1.22.1"
+  resolved "https://registry.yarnpkg.com/datalist-polyfill/-/datalist-polyfill-1.22.1.tgz#c91c504144117e689d49d347f61e348dc5aafa37"
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -2291,10 +2289,6 @@ icss-replace-symbols@1.1.0, icss-replace-symbols@^1.1.0:
 ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
-
-immediate@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.2.3.tgz#d140fa8f614659bd6541233097ddaac25cdd991c"
 
 in-publish@^2.0.0:
   version "2.0.0"
