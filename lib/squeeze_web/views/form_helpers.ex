@@ -34,6 +34,15 @@ defmodule SqueezeWeb.FormHelpers do
     form_for(form_data, action, options ++ [data: [remote: "true"]], fun)
   end
 
+  def input(form, field, opts \\ []) do
+    case Keyword.get_values(form.errors, field) do
+      [] -> text_input(form, field, opts)
+      _ ->
+        class_list = "#{opts[:class]} is-invalid"
+        text_input(form, field, Keyword.merge(opts, [class: class_list]))
+    end
+  end
+
   def pill_button(form, field, label, value, opts \\ []) do
     content_tag(:label, class: "pill-button") do
       [
