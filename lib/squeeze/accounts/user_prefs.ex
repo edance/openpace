@@ -9,6 +9,7 @@ defmodule Squeeze.Accounts.UserPrefs do
   alias Squeeze.Accounts.{User, UserPrefs}
 
   @required_fields ~w()a
+  @non_empty_fields ~w(race_date)a
   @optional_fields ~w(distance duration personal_record name race_date experience)a
 
   schema "user_prefs" do
@@ -33,8 +34,13 @@ defmodule Squeeze.Accounts.UserPrefs do
 
   @doc false
   def changeset(%UserPrefs{} = user_prefs, attrs) do
+    fields = attrs
+    |> Map.keys()
+    |> Enum.map(&String.to_atom(&1))
+    |> Enum.filter(&Enum.member?(@non_empty_fields, &1))
+
     user_prefs
     |> cast(attrs, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+    |> validate_required(@required_fields ++ fields)
   end
 end
