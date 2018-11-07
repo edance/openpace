@@ -13,6 +13,8 @@
 // to also remove its path from "config.paths.watched".
 import 'jquery-ujs';
 import 'bootstrap';
+import 'whatwg-fetch';
+import { u } from 'umbrellajs';
 
 // Import local files
 //
@@ -25,7 +27,34 @@ import Turbolinks from 'turbolinks';
 Turbolinks.start();
 
 // jquery-ujs handles deletes incorrectly
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener('turbolinks:load', function() {
   $('a[data-to]').each((idx, el) => el.href = el.dataset['to']);
 });
 
+
+// Found in changelog
+// https://github.com/thechangelog/changelog.com/blob/master/assets/app/app.js#L121
+// submit forms with Turbolinks
+u(document).on('submit', 'form', function(event) {
+  event.preventDefault();
+
+  const form = u(this);
+  const action = form.attr('action');
+  const method = form.attr('method');
+  const referrer = location.href;
+
+  if (method == 'get') {
+    return Turbolinks.visit(`${action}?${form.serialize()}`);
+  }
+
+  const options = {method: method, body: new FormData(form.first()), headers: {'Turbolinks-Referrer': referrer}};
+  const andThen = function(resp) {
+    const snapshot = Turbolinks.Snapshot.wrap(resp);
+    Turbolinks.controller.cache.put(referrer, snapshot);
+    Turbolinks.visit(referrer, {action: 'restore'});
+  };
+
+  fetch(action, options)
+    .then(res => res.text())
+    .then(andThen);
+});
