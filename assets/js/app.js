@@ -48,13 +48,13 @@ u(document).on('submit', 'form', function(event) {
   }
 
   const options = {method: method, body: new FormData(form.first()), headers: {'Turbolinks-Referrer': referrer}};
-  const andThen = function(resp) {
-    const snapshot = Turbolinks.Snapshot.wrap(resp);
-    Turbolinks.controller.cache.put(referrer, snapshot);
-    Turbolinks.visit(referrer, {action: 'restore'});
+  const andThen = ([resp, body]) => {
+    const snapshot = Turbolinks.Snapshot.wrap(body);
+    Turbolinks.controller.cache.put(resp.url, snapshot);
+    Turbolinks.visit(resp.url, {action: 'restore'});
   };
 
   fetch(action, options)
-    .then(res => res.text())
+    .then(resp => Promise.all([resp, resp.text()]))
     .then(andThen);
 });
