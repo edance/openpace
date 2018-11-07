@@ -11,7 +11,7 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import 'jquery-ujs';
+import 'phoenix_html';
 import 'bootstrap';
 import 'whatwg-fetch';
 import { u } from 'umbrellajs';
@@ -25,12 +25,6 @@ import './components/base';
 // Turbolinks
 import Turbolinks from 'turbolinks';
 Turbolinks.start();
-
-// jquery-ujs handles deletes incorrectly
-document.addEventListener('turbolinks:load', function() {
-  $('a[data-to]').each((idx, el) => el.href = el.dataset['to']);
-});
-
 
 // Found in changelog
 // https://github.com/thechangelog/changelog.com/blob/master/assets/app/app.js#L121
