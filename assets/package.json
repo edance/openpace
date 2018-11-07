@@ -16,8 +16,10 @@
     "popper.js": "^1.14.4",
     "sass-brunch": "^2.10.4",
     "turbolinks": "^5.0.0",
+    "umbrellajs": "^3.1.0",
     "vue": "^2.5.17",
-    "vue-brunch": "^2.0.3"
+    "vue-brunch": "^2.0.3",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.2.1",
