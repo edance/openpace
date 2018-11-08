@@ -15,7 +15,7 @@ defmodule Squeeze.Factory do
       city: Address.city(),
       state: Address.state_abbr(),
       country: Address.country_code(),
-      user_prefs: build(:user_prefs)
+      user_prefs: %UserPrefs{}
     }
   end
 

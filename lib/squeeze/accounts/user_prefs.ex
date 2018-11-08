@@ -36,7 +36,7 @@ defmodule Squeeze.Accounts.UserPrefs do
   def changeset(%UserPrefs{} = user_prefs, attrs) do
     fields = attrs
     |> Map.keys()
-    |> Enum.map(&String.to_atom(&1))
+    |> Enum.map(fn(x) -> is_atom(x) && x || String.to_atom(x) end)
     |> Enum.filter(&Enum.member?(@non_empty_fields, &1))
 
     user_prefs
