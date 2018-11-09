@@ -930,33 +930,7 @@ $modal-header-padding:        1.25rem !default;
 
 // Datepicker
 
-$datepicker-border-radius: $card-border-radius !default;
-$datepicker-dropdown-padding: 20px 22px !default;
-
-$datepicker-cell-transition: $transition-base !default;
-$datepicker-cell-hover-background: lighten($gray-400, 55%);
-$datepicker-cell-border-radius: 50% !default;
-$datepicker-cell-width: 36px !default;
-$datepicker-cell-height: 36px !default;
-
-$datepicker-disabled-cell-color: $gray-300 !default;
-$datepicker-disabled-old-new-color: $gray-500 !default;
-
-$datepicker-header-cell-border-radius: $border-radius !default;
-
-$datepicker-active-color: $white !default;
-$datepicker-active-background: theme-color("primary") !default;
-$datepicker-active-box-shadow:      none !default;
-
-$datepicker-range-background: theme-color("primary") !default;
-$datepicker-range-cell-focused-background: darken($datepicker-range-background, 5%);
-$datepicker-range-color: $white !default;
-$datepicker-range-highlighted-bg: $gray-200 !default;
-
-$datepicker-dropdown-border: lighten($gray-400, 40%);
-$datepicker-dropdown-bg: $white !default;
-$datepicker-highlighted-bg: $datepicker-active-background !default;
-
+$datepicker-active-color: theme-color("primary") !default;
 
 // Footer
 

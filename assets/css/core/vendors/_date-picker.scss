@@ -1,0 +1,13 @@
+input.date-picker {
+  display: none;
+}
+
+.flatpickr-day.selected {
+  background: $datepicker-active-color;
+  border-color: $datepicker-active-color;
+
+  &:hover {
+    background: $datepicker-active-color;
+    border-color: $datepicker-active-color;
+  }
+}
