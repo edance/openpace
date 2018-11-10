@@ -29,13 +29,20 @@ defmodule SqueezeWeb.WizardController do
         conn
         |> redirect(to: wizard_path(conn, :step, next_step))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "step.html", changeset: changeset, step: step)
+        render_error(conn, changeset, step)
     end
   end
 
+  defp render_error(conn, changeset, step)  do
+    render(conn, "step.html", changeset: changeset, step: step)
+  end
+
+  defp step_index(step) do
+    Enum.find_index(@steps, fn(x) -> x == step end)
+  end
+
   defp next_step(step) do
-    idx = Enum.find_index(@steps, fn(x) -> x == step end) + 1
-    Enum.at(@steps, idx)
+    Enum.at(@steps, step_index(step) + 1)
   end
 
   defp validate_step(conn, _) do

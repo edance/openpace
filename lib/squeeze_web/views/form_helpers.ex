@@ -24,7 +24,7 @@ defmodule SqueezeWeb.FormHelpers do
     opts = Keyword.merge(opts, [class: class_list])
 
     [
-      text_input(form, field, opts ++ [class: class_list, list: list_name]),
+      input(form, field, opts ++ [class: class_list, list: list_name]),
       hidden_input(form, field, id: "#{list_name}-hidden"),
       raw("<datalist id=#{list_name}>#{option_html}</datalist>")
     ]
