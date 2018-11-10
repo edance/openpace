@@ -44,11 +44,10 @@ defmodule SqueezeWeb.FormHelpers do
   end
 
   def pill_button(form, field, label, value, opts \\ []) do
-    content_tag(:label, class: "pill-button") do
+    content_tag(:label, class: "btn btn-secondary") do
       [
         label,
-        radio_button(form, field, value, opts),
-        raw("<span class='checkmark'></span>")
+        radio_button(form, field, value, opts)
       ]
     end
   end
