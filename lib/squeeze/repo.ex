@@ -1,5 +1,7 @@
 defmodule Squeeze.Repo do
-  use Ecto.Repo, otp_app: :squeeze
+  use Ecto.Repo,
+    adapter: Ecto.Adapters.Postgres,
+    otp_app: :squeeze
 
   @doc """
   Dynamically loads the repository url from the

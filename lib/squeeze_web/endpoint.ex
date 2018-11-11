@@ -1,7 +1,8 @@
 defmodule SqueezeWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :squeeze
 
-  socket "/socket", SqueezeWeb.UserSocket
+  socket "/socket", SqueezeWeb.UserSocket,
+    websocket: true
 
   # Serve at "/" the static files from "priv/static" directory.
   #
