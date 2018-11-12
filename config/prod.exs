@@ -21,7 +21,8 @@ config :squeeze, SqueezeWeb.Endpoint,
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, :console, format: "[$level] $message\n"
+# config :logger, level: :info
 
 # Configure database for heroku
 config :squeeze, Squeeze.Repo,
