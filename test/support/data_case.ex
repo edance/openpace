@@ -14,32 +14,29 @@ defmodule Squeeze.DataCase do
 
   use ExUnit.CaseTemplate
 
-  alias Ecto.Adapters.SQL.Sandbox
-  alias Ecto.Changeset
-
   using do
     quote do
       alias Squeeze.Repo
 
       import Ecto
-      import Changeset
+      import Ecto.Changeset
       import Ecto.Query
       import Squeeze.DataCase
     end
   end
 
   setup tags do
-    :ok = Sandbox.checkout(Squeeze.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Squeeze.Repo)
 
     unless tags[:async] do
-      Sandbox.mode(Squeeze.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
 
     :ok
   end
 
   @doc """
-  A helper that transform changeset errors to a map of messages.
+  A helper that transforms changeset errors into a map of messages.
 
       assert {:error, changeset} = Accounts.create_user(%{password: "short"})
       assert "password is too short" in errors_on(changeset).password
@@ -47,7 +44,7 @@ defmodule Squeeze.DataCase do
 
   """
   def errors_on(changeset) do
-    Changeset.traverse_errors(changeset, fn {message, opts} ->
+    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
       Enum.reduce(opts, message, fn {key, value}, acc ->
         String.replace(acc, "%{#{key}}", to_string(value))
       end)

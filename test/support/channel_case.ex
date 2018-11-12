@@ -5,7 +5,7 @@ defmodule SqueezeWeb.ChannelCase do
 
   Such tests rely on `Phoenix.ChannelTest` and also
   import other functionality to make it easier
-  to build common datastructures and query the data layer.
+  to build common data structures and query the data layer.
 
   Finally, if the test case interacts with the database,
   it cannot be async. For this reason, every test runs
@@ -14,8 +14,6 @@ defmodule SqueezeWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
-
-  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -28,10 +26,12 @@ defmodule SqueezeWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Sandbox.checkout(Squeeze.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Squeeze.Repo)
+
     unless tags[:async] do
-      Sandbox.mode(Squeeze.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
+
     :ok
   end
 end
