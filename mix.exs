@@ -1,18 +1,18 @@
-defmodule Squeeze.MixProject do
+defmodule Squeeze.Mixfile do
   use Mix.Project
 
   def project do
     [
       app: :squeeze,
-      version: "0.1.0",
+      version: "0.0.1",
       elixir: "~> 1.5",
-      elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      start_permanent: Mix.env == :prod,
       aliases: aliases(),
+      deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-      deps: deps()
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
   end
 
@@ -28,34 +28,32 @@ defmodule Squeeze.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.0"},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.0"},
+      {:phoenix, "~> 1.3.0"},
+      {:phoenix_pubsub, "~> 1.0"},
+      {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_active_link, "~> 0.2.1"},
       {:turbolinks, "~> 0.3.4"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
+      {:cowboy, "~> 1.0"},
       {:strava, "~> 0.4"},
       {:timex, "~> 3.3"},
       {:guardian, "~> 1.0"},
       {:browser, "~> 0.1.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.2", only: :test},
+      {:ex_machina, "~> 2.1", only: :test},
       {:faker, "~> 0.9", only: :test},
-      {:excoveralls, "~> 0.9", only: :test},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:excoveralls, "~> 0.9", only: :test}
     ]
   end
 
