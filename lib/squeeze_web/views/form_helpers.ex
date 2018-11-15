@@ -55,11 +55,12 @@ defmodule SqueezeWeb.FormHelpers do
   def duration_select(form, field, opts \\ []) do
     value = input_value(form, field) || %{}
 
-    content_tag(:div, class: "form-row") do
+    content_tag(:div, class: "form-row duration-select") do
       [
         select_tag(form, field, :hours, value, opts),
         select_tag(form, field, :minutes, value, opts),
-        select_tag(form, field, :seconds, value, opts)
+        select_tag(form, field, :seconds, value, opts),
+        raw("{{minutes}}")
       ]
     end
   end
@@ -70,6 +71,7 @@ defmodule SqueezeWeb.FormHelpers do
     |> Keyword.put(:name, "#{input_name(form, parent)}[#{field}]")
     |> Keyword.put(:value, Map.get(value, field))
     |> Keyword.put(:prompt, field)
+    |> Keyword.merge("v-model": field)
 
     content_tag(:div, class: "col") do
       select(form, parent, @minsec, opts)

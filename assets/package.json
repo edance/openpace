@@ -15,6 +15,7 @@
     "popper.js": "^1.14.4",
     "turbolinks": "^5.0.0",
     "umbrellajs": "^3.1.0",
+    "vue": "^2.5.17",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
