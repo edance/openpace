@@ -14,7 +14,7 @@ defmodule Squeeze.Dashboard.Activity do
 
   schema "activities" do
     field :distance, :float
-    field :duration, Squeeze.Duration
+    field :duration, :integer
     field :name, :string
     field :polyline, :string
     field :start_at, :naive_datetime
