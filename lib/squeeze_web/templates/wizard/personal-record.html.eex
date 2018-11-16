@@ -2,7 +2,7 @@
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
   <div class="form-group">
-    <%= input f, :personal_record, class: "form-control" %>
+    <%= duration_select f, :personal_record, class: "form-control" %>
     <%= error_tag f, :personal_record %>
   </div>
 

@@ -4,7 +4,7 @@
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
   <div class="form-group">
-    <%= input f, :duration, class: "form-control" %>
+    <%= duration_select f, :duration, class: "form-control" %>
     <%= error_tag f, :duration %>
   </div>
 
