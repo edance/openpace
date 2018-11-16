@@ -2,9 +2,23 @@
   What is your goal time?
 </h1>
 
+<div id="components-demo">
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+</div>
+
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
+
   <div class="form-group">
-    <%= duration_select f, :duration, class: "form-control" %>
+    <div class="duration-select" duration="1234">
+      {{message}}
+      {{duration}}
+
+    </div>
     <%= error_tag f, :duration %>
   </div>
 

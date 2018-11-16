@@ -1,12 +1,9 @@
 import Vue from 'vue';
+import Hello from './Hello.vue';
 
 document.addEventListener("turbolinks:load", function() {
   new Vue({
-    el: '.duration-select',
-    data: {
-      hours: '',
-      minutes: '',
-      seconds: '',
-    }
+    el: '#components-demo',
+    components: Hello
   });
 });
