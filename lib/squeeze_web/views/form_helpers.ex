@@ -8,6 +8,16 @@ defmodule SqueezeWeb.FormHelpers do
 
   import Phoenix.HTML
 
+  require IEx
+
+  map =
+    &Enum.map(&1, fn i ->
+      pre = if i < 10, do: "0"
+      {"#{pre}#{i}", i}
+    end)
+
+  @minsec map.(0..59)
+
   def autocomplete(form, field, options, opts \\ []) do
     list_name = "autocomplete-#{:rand.uniform(1000)}"
     option_html = options
@@ -41,6 +51,28 @@ defmodule SqueezeWeb.FormHelpers do
         label,
         radio_button(form, field, value, opts)
       ]
+    end
+  end
+
+  def duration_select(form, field, opts \\ []) do
+    content_tag(:div, class: "duration-select form-row") do
+
+      [
+        select_tag(form, field, :hours, opts),
+        select_tag(form, field, :minutes, opts),
+        select_tag(form, field, :seconds, opts),
+        hidden_input(form, field)
+      ]
+    end
+  end
+
+  defp select_tag(form, parent, field, opts) do
+    opts = opts
+    |> Keyword.put(:name, field)
+    |> Keyword.put(:prompt, field)
+
+    content_tag(:div, class: "col") do
+      select(form, parent, @minsec, opts)
     end
   end
 end
