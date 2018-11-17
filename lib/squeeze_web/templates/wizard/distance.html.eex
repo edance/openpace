@@ -7,6 +7,5 @@
     <%= autocomplete(f, :distance, distances(), class: "form-control", placeholder: "Choose a distance") %>
     <%= error_tag f, :distance %>
   </div>
-
-  <%= submit "Next", class: "btn btn-primary" %>
+  <%= submit "Get Started", class: "btn btn-primary" %>
 <% end %>

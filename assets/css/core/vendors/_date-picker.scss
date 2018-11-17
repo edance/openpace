@@ -1,7 +1,7 @@
 @import "node_modules/flatpickr/dist/flatpickr";
 
 input.date-picker {
-  display: none;
+  background-color: $white !important;
 }
 
 .flatpickr-day.selected {

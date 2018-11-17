@@ -4,8 +4,10 @@
 
 <p>Automatically update your training status through Strava.</p>
 
-<%= link to: auth_path(@conn, :request, "strava"), class: "strava-btn" do %>
-  <img alt="Sign in with Strava" src="/images/btn_strava.svg" />
+<%= link to: auth_path(@conn, :request, "strava") do %>
+  <img alt="Sign in with Strava" class="shadow" src="/images/btn_strava.svg" />
 <% end %>
 
-<%= link("Skip", to: sync_path(@conn, :sync), class: "link") %>
+<div>
+  <%= link("Skip", to: sync_path(@conn, :sync), class: "btn btn-link") %>
+</div>
