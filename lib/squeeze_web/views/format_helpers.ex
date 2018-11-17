@@ -17,7 +17,7 @@ defmodule SqueezeWeb.FormatHelpers do
     iex> format_duration(duration)
     "3:00:00"
   """
-  def format_duration(%{total: seconds}) do
+  def format_duration(seconds) do
     duration = Duration.from_seconds(seconds)
     duration
     |> Duration.to_time!()
