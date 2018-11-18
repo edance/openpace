@@ -9,5 +9,5 @@
 <% end %>
 
 <div>
-  <%= link("Skip", to: sync_path(@conn, :sync), class: "btn btn-link") %>
+  <%= link("Skip", to: dashboard_path(@conn, :index), class: "btn btn-link") %>
 </div>

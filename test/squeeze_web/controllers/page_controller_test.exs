@@ -13,7 +13,7 @@ defmodule SqueezeWeb.PageControllerTest do
       conn = conn
       |> assign(:current_user, user)
       |> get("/")
-      assert redirected_to(conn) == sync_path(conn, :sync)
+      assert redirected_to(conn) == dashboard_path(conn, :index)
     end
   end
 end
