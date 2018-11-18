@@ -37,7 +37,7 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp authorize_url!("strava") do
-    Auth.authorize_url!(scope: "public")
+    Auth.authorize_url!(scope: "read,activity:read_all")
   end
 
   defp authorize_url!(_) do
@@ -45,7 +45,7 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp get_token!("strava", code) do
-    Auth.get_token!(code: code)
+    Auth.get_token!(code: code, grant_type: "authorization_code")
   end
 
   defp get_token!(_, _) do
@@ -53,9 +53,9 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp get_user!("strava", client) do
-    token = client.token.access_token
+    %{access_token: access_token, refresh_token: refresh_token} = client.token
     user = Auth.get_athlete!(client)
-    credential = %{provider: "strava", uid: user.id, token: token}
+    credential = %{provider: "strava", uid: user.id, access_token: access_token, refresh_token: refresh_token}
     user
     |> Map.from_struct
     |> Map.merge(%{first_name: user.firstname, last_name: user.lastname, avatar: user.profile})
