@@ -17,6 +17,7 @@ defmodule SqueezeWeb.FormatHelpers do
     iex> format_duration(duration)
     "3:00:00"
   """
+  def format_duration(nil), do: nil
   def format_duration(seconds) do
     duration = Duration.from_seconds(seconds)
     duration
@@ -42,7 +43,7 @@ defmodule SqueezeWeb.FormatHelpers do
 
   defp pace_duration(duration, distance) do
     miles = distance / 1609
-    pace = duration.total / miles
+    pace = duration / miles
     case duration_to_time(pace) do
       {:ok, time} -> Timex.format(time, "%-M:%S", :strftime)
       {:error, _} -> :error
