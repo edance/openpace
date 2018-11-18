@@ -28,7 +28,7 @@ defmodule SqueezeWeb.AuthController do
       {:ok, user} ->
         conn
         |> Plug.sign_in(user)
-        |> redirect(to: sync_path(conn, :sync))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, %Ecto.Changeset{}} ->
         conn
         |> put_flash(:info, "Didn't Work")
