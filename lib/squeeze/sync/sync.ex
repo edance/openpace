@@ -7,6 +7,7 @@ defmodule Squeeze.Sync do
 
   import Ecto.Query, warn: false
   alias Ecto.Multi
+  alias Squeeze.Accounts
   alias Squeeze.Accounts.{Credential, User}
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
@@ -27,7 +28,7 @@ defmodule Squeeze.Sync do
   def fetch_activities(%Credential{provider: "strava"} = credential) do
     client = Client.new(credential.access_token,
       refresh_token: credential. refresh_token,
-      token_refreshed: fn client -> IO.inspect(client, label: "client") end
+      token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
     )
     filter = strava_filter(credential)
     {:ok, activities} = Strava.Activities.get_logged_in_athlete_activities(client, filter)
