@@ -25,17 +25,19 @@ defmodule Squeeze.Sync do
   Fetch all activities and import into database.
   """
   def fetch_activities(%Credential{provider: "strava"} = credential) do
-    client = Client.new(credential.token)
+    client = Client.new(credential.access_token,
+      refresh_token: credential. refresh_token,
+      token_refreshed: fn client -> IO.inspect(client, label: "client") end
+    )
     filter = strava_filter(credential)
-    %Strava.Pagination{}
-    |> Strava.Activity.list_athlete_activities(filter, client)
-    |> Enum.map(&map_strava_activity(&1, credential.user_id))
+    {:ok, activities} = Strava.Activities.get_logged_in_athlete_activities(client, filter)
+    Enum.map(activities, &map_strava_activity(&1, credential.user_id))
   end
   def fetch_activities(_), do: []
 
   defp strava_filter(%Credential{sync_at: nil}), do: %{}
   defp strava_filter(%Credential{sync_at: sync_at}) do
-    %{after: DateTime.to_unix(sync_at)}
+    [after: DateTime.to_unix(sync_at)]
   end
 
   @doc false
