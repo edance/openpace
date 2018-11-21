@@ -20,9 +20,10 @@ defmodule SqueezeWeb.StravaWebhookController do
       refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
     )
-    {:ok, %DetailedActivity{} = activity} = Activities.get_activity_by_id(client, activity_id)
+    {:ok, %DetailedActivity{}} = Activities.get_activity_by_id(client, activity_id)
     render(conn, "success.json")
   end
+  def webhook(conn, _), do: render(conn, "success.json")
 
   def challenge(conn, %{"hub.challenge" => challenge}) do
     render(conn, "challenge.json", challenge: challenge)
