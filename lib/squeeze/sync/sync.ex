@@ -27,7 +27,7 @@ defmodule Squeeze.Sync do
   """
   def fetch_activities(%Credential{provider: "strava"} = credential) do
     client = Client.new(credential.access_token,
-      refresh_token: credential. refresh_token,
+      refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
     )
     filter = strava_filter(credential)
