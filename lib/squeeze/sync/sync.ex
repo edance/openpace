@@ -11,7 +11,7 @@ defmodule Squeeze.Sync do
   alias Squeeze.Accounts.{Credential, User}
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
-  alias Strava.Client
+  alias Strava.{Activities, Client}
 
   def load_activities(%User{credential: nil}), do: []
   def load_activities(%User{credential: credential}) do
@@ -31,7 +31,7 @@ defmodule Squeeze.Sync do
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
     )
     filter = strava_filter(credential)
-    {:ok, activities} = Strava.Activities.get_logged_in_athlete_activities(client, filter)
+    {:ok, activities} = Activities.get_logged_in_athlete_activities(client, filter)
     Enum.map(activities, &map_strava_activity(&1, credential.user_id))
   end
   def fetch_activities(_), do: []
