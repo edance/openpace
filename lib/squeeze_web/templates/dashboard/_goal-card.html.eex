@@ -1,0 +1,4 @@
+<%= render "_card.html",
+title: goal_card_title(@current_user),
+content: format_goal(@current_user),
+color: "red" %>

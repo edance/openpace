@@ -1,0 +1,4 @@
+<%= render "_card.html",
+title: "Race Date",
+content: format_date(@current_user),
+color: "orange" %>

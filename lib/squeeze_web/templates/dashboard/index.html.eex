@@ -5,16 +5,16 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-3 col-lg-6">
-          <%= render "_card.html" %>
+          <%= render "_goal-card.html", assigns %>
         </div>
         <div class="col-xl-3 col-lg-6">
-          <%= render "_card.html" %>
+          <%= render "_race-card.html", assigns %>
         </div>
         <div class="col-xl-3 col-lg-6">
-          <%= render "_card.html" %>
+          <%= render "_card.html", title: "Today's Workout", content: "6mi easy", color: "yellow" %>
         </div>
         <div class="col-xl-3 col-lg-6">
-          <%= render "_card.html" %>
+          <%= render "_card.html", title: "Weekly Milage", content: "66 miles", color: "purple" %>
         </div>
       </div>
     </div>
