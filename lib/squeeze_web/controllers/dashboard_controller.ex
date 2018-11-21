@@ -21,7 +21,4 @@ defmodule SqueezeWeb.DashboardController do
     range = Date.range(today, Date.add(today, 1))
     Dashboard.list_events(current_user, range)
   end
-
-  defp weekly_milage  do
-  end
 end
