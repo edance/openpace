@@ -36,7 +36,7 @@ defmodule Squeeze.Sync do
   end
   def fetch_activities(_), do: []
 
-  defp strava_filter(%Credential{sync_at: nil}), do: %{}
+  defp strava_filter(%Credential{sync_at: nil}), do: []
   defp strava_filter(%Credential{sync_at: sync_at}) do
     [after: DateTime.to_unix(sync_at)]
   end
