@@ -12,8 +12,16 @@ defmodule SqueezeWeb.DashboardController do
   def index(conn, _params, current_user) do
     Task.start(fn -> Sync.load_activities(current_user) end)
 
-    events = Dashboard.list_past_events(current_user)
     activities = Dashboard.list_activities(current_user)
-    render(conn, "index.html", activities: activities, events: events)
+    render(conn, "index.html", activities: activities, events: events(current_user))
+  end
+
+  defp events(current_user) do
+    today = Date.utc_today()
+    range = Date.range(today, Date.add(today, 1))
+    Dashboard.list_events(current_user, range)
+  end
+
+  defp weekly_milage  do
   end
 end

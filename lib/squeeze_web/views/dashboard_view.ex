@@ -3,6 +3,7 @@ defmodule SqueezeWeb.DashboardView do
 
   alias Squeeze.Distances
   alias Squeeze.Accounts.User
+  alias Squeeze.Dashboard.Event
 
   def title(_page, _assigns) do
     "Dashboard"
@@ -38,5 +39,26 @@ defmodule SqueezeWeb.DashboardView do
   def relative_date(user) do
     user.user_prefs.race_date
     |> relative_time()
+  end
+
+  def format_event(nil), do: "Rest"
+  def format_event(%Event{} = event) do
+    event.name
+  end
+
+  def todays_workout(events) do
+    events
+    |> List.first()
+    |> format_event()
+  end
+
+  def next_workout(events) when length(events) > 2 do
+    event = Enum.at(events, 1)
+    "Today's next workout: #{format_event(event)}"
+  end
+
+  def next_workout(events) do
+    event = events |> List.last()
+    "Tomorrow's workout: #{format_event(event)}"
   end
 end
