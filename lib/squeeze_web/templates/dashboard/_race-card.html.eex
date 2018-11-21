@@ -1,4 +1,21 @@
-<%= render "_card.html",
-title: "Race Date",
-content: format_date(@current_user),
-color: "orange" %>
+<div class="card card-stats mb-4 mb-xl-0">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <h5 class="card-title text-uppercase text-muted mb-0">Race Date</h5>
+        <span class="h2 font-weight-bold mb-0">
+          <%= race_date(@current_user) %>
+        </span>
+      </div>
+      <div class="col-auto">
+        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+          <i class="icon-calendar"></i>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-3 mb-0 text-muted text-sm">
+      <span class="text-nowrap">Race <%= relative_date(@current_user) %></span>
+    </p>
+  </div>
+</div>
