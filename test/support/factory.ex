@@ -22,7 +22,8 @@ defmodule Squeeze.Factory do
   def credential_factory do
     %Credential{
       provider: "strava",
-      token: "abcdefg",
+      access_token: "abcdefg",
+      refresh_token: "abcdefg",
       uid: 12_345,
       user: build(:user)
     }
