@@ -16,8 +16,4 @@ defmodule SqueezeWeb.DashboardController do
     activities = Dashboard.list_activities(current_user)
     render(conn, "index.html", activities: activities, events: events)
   end
-
-  def example(conn, _params, _current_user) do
-    render(conn, "example.html")
-  end
 end
