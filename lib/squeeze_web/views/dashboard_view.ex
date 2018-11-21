@@ -4,8 +4,6 @@ defmodule SqueezeWeb.DashboardView do
   alias Squeeze.Distances
   alias Squeeze.Accounts.User
 
-  require IEx
-
   def title(_page, _assigns) do
     "Dashboard"
   end
@@ -32,7 +30,12 @@ defmodule SqueezeWeb.DashboardView do
     |> format_duration()
   end
 
-  def format_date(user) do
+  def race_date(%User{user_prefs: %{race_date: date}}) do
+    date
+    |> Timex.format!("%b %d", :strftime)
+  end
+
+  def relative_date(user) do
     user.user_prefs.race_date
     |> relative_time()
   end
