@@ -61,4 +61,18 @@ defmodule SqueezeWeb.DashboardView do
     event = events |> List.last()
     "Tomorrow's workout: #{format_event(event)}"
   end
+
+  def weekly_distance(activities) do
+    today = Date.utc_today()
+    date = Date.add(today, -7)
+    activities
+    |> Enum.filter(fn(x) -> Timex.after?(x.start_at, date) end)
+    |> Enum.map(&(&1.distance))
+    |> Enum.sum()
+  end
+
+  def weekly_milage(activities) do
+    meters = activities |> weekly_distance()
+    meters / Distances.mile_in_meters
+  end
 end
