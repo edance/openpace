@@ -150,7 +150,9 @@ defmodule Squeeze.Accounts do
     |> Repo.preload(:user)
   end
 
-
+  @doc """
+  Updates a credential
+  """
   def update_credential(%Credential{} = credential, attrs) do
     credential
     |> Credential.changeset(attrs)

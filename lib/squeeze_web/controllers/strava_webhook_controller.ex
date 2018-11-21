@@ -6,7 +6,7 @@ defmodule SqueezeWeb.StravaWebhookController do
   """
 
   alias Squeeze.Accounts
-  alias Strava.Client
+  alias Strava.{Activities, Client, DetailedActivity}
 
   @challenge_token Application.get_env(:strava, :webhook_challenge)
 
@@ -20,7 +20,7 @@ defmodule SqueezeWeb.StravaWebhookController do
       refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
     )
-    {:ok, %Strava.DetailedActivity{} = activity} = Strava.Activities.get_activity_by_id(client, activity_id)
+    {:ok, %DetailedActivity{} = activity} = Activities.get_activity_by_id(client, activity_id)
     render(conn, "success.json")
   end
 
