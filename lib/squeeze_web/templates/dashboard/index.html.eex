@@ -11,10 +11,10 @@
           <%= render "_race-card.html", assigns %>
         </div>
         <div class="col-xl-3 col-lg-6">
-          <%= render "_card.html", title: "Today's Workout", content: "6mi easy", color: "yellow" %>
+          <%= render "_workout-card.html", assigns %>
         </div>
         <div class="col-xl-3 col-lg-6">
-          <%= render "_card.html", title: "Weekly Milage", content: "66 miles", color: "purple" %>
+          <%= render "_milage-card.html", assigns %>
         </div>
       </div>
     </div>
