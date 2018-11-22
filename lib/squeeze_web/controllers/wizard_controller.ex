@@ -51,7 +51,9 @@ defmodule SqueezeWeb.WizardController do
       true -> put_session(conn, :current_step, step)
       false ->
         conn
-        |> redirect(to: wizard_path(conn, :index))
+        |> put_status(:not_found)
+        |> put_view(SqueezeWeb.ErrorView)
+        |> render("404.html")
         |> halt()
     end
   end
