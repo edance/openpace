@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.WizardView do
   use SqueezeWeb, :view
 
+  alias Squeeze.Accounts.User
   alias Squeeze.Distances
 
   def title(_page, _assigns) do
@@ -12,10 +13,10 @@ defmodule SqueezeWeb.WizardView do
     |> Enum.map(fn(x) -> {x.name, x.distance} end)
   end
 
-  def improvement_amount(user) do
-    prefs = user.user_prefs
+  def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
+  def improvement_amount(%User{user_prefs: prefs}) do
     personal_record = prefs.personal_record
-    percent = (personal_record - prefs.duration) / personal_record * 100
+    percent = abs(personal_record - prefs.duration) / personal_record * 100
     "#{Decimal.round(Decimal.new(percent), 1)}%"
   end
 end
