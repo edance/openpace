@@ -1,9 +1,9 @@
 defmodule SqueezeWeb.DashboardView do
   use SqueezeWeb, :view
 
-  alias Squeeze.Distances
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Event
+  alias Squeeze.Distances
 
   def title(_page, _assigns) do
     "Dashboard"
