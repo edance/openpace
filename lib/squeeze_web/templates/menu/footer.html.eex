@@ -1,0 +1,22 @@
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row align-items-center justify-content-xl-between">
+      <div class="col-xl-6">
+        <div class="copyright text-center text-xl-left text-muted">
+          © <%= copyright_year() %> <a href="https://evandancer.com" class="font-weight-bold ml-1" target="_blank">Evan Dancer</a>
+        </div>
+      </div>
+      <div class="col-xl-6">
+        <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+          <li class="nav-item">
+            <a href="https://github.com/edance/squeeze" class="nav-link" target="_blank">Source Code</a>
+          </li>
+          <li class="nav-item">
+            <a href="https://github.com/edance/squeeze/blob/master/LICENSE.md" class="nav-link" target="_blank">License</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
