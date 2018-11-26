@@ -7,9 +7,7 @@
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
       <li class="nav-item">
-        <a class="nav-link" href="#">
-          Sign Up
-        </a>
+        <%= active_link(@conn, "Sign Up", to: wizard_path(@conn, :index), class: "nav-link") %>
       </li>
       <li class="nav-item">
         <%= active_link(@conn, "Log In", to: auth_path(@conn, :login), class: "nav-link pr-0") %>

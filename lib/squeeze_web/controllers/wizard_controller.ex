@@ -9,7 +9,7 @@ defmodule SqueezeWeb.WizardController do
 
   def index(conn, _params) do
     case get_session(conn, :current_step) do
-      nil -> redirect(conn, to: page_path(conn, :index))
+      nil -> redirect(conn, to: wizard_path(conn, :step, List.first(@steps)))
       step -> redirect(conn, to: wizard_path(conn, :step, step))
     end
   end

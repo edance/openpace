@@ -4,7 +4,7 @@ defmodule SqueezeWeb.WizardControllerTest do
   describe "#index" do
     test "redirects to the first step", %{conn: conn} do
       conn = get(conn, wizard_path(conn, :index))
-      assert redirected_to(conn) == page_path(conn, :index)
+      assert redirected_to(conn) == wizard_path(conn, :step, "distance")
     end
   end
 
