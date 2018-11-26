@@ -9,6 +9,19 @@ defmodule Squeeze.DistancesTest do
     assert Distances.mile_in_meters == 1609
   end
 
+  test '#distances' do
+    %{name: name, distance: distance} = Distances.distances
+    |> List.first()
+    assert is_binary(name)
+    assert is_integer(distance)
+  end
+
+  describe "#from_meters" do
+    test 'returns the name of the event if found' do
+      assert Distances.from_meters(5_000) == %{name: "5k", distance: 5_000}
+    end
+  end
+
   describe "#parse" do
     test "default number to miles" do
       assert {:ok, distance} = Distances.parse("3")

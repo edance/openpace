@@ -42,7 +42,7 @@ defmodule Squeeze.Distances do
   end
   def parse(_), do: {:error}
 
-  def remove_whitespace(str) do
+  defp remove_whitespace(str) do
     str |> String.replace(" ", "")
   end
 end

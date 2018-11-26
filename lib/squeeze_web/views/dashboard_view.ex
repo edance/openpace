@@ -9,12 +9,12 @@ defmodule SqueezeWeb.DashboardView do
     "Dashboard"
   end
 
-  def full_name(user) do
-    "#{user.first_name} #{user.last_name}"
+  def full_name(%User{first_name: first_name, last_name: nil}), do: first_name
+  def full_name(%User{first_name: first_name, last_name: last_name}) do
+    "#{first_name} #{last_name}"
   end
 
-  def race_name(user) do
-    distance = user.user_prefs.distance
+  def race_name(%User{user_prefs: %{distance: distance}}) do
     %{name: name} = Distances.from_meters(distance)
     name
   end
