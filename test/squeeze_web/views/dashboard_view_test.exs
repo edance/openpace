@@ -1,0 +1,30 @@
+defmodule SqueezeWeb.DashboardViewTest do
+  use SqueezeWeb.ConnCase, async: true
+
+  @moduletag :dashboard_view_case
+
+  alias SqueezeWeb.DashboardView
+
+  test "title includes sign in" do
+    assert DashboardView.title(%{}, %{}) =~ "Dashboard"
+  end
+
+  describe "#full_name" do
+    test "returns first and last name" do
+      user = build(:user)
+      assert DashboardView.full_name(user) == "#{user.first_name} #{user.last_name}"
+    end
+
+    test "returns just the first name if last name is nil" do
+      user = build(:user, %{last_name: nil})
+      assert DashboardView.full_name(user) == user.first_name
+    end
+  end
+
+  describe "#race_name" do
+    test "converts the distance in meters to a string" do
+      user = build(:user, %{user_prefs: %{distance: 5_000}})
+      assert DashboardView.race_name(user) == "5k"
+    end
+  end
+end
