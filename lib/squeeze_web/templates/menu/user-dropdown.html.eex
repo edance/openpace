@@ -3,10 +3,10 @@
     <h6 class="text-overflow m-0">Welcome!</h6>
   </div>
 
-  <a href="#" class="dropdown-item">
+  <%= link(to: profile_path(@conn, :show), class: "dropdown-item") do %>
     <i class="icon-user"></i>
     <span>Profile</span>
-  </a>
+  <% end %>
 
   <a href="#" class="dropdown-item">
     <i class="icon-settings"></i>

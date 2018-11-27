@@ -44,6 +44,11 @@
             <i class="icon-compass text-primary"></i> Dashboard
           <% end %>
         </li>
+        <li class="nav-item">
+          <%= active_link(@conn, to: profile_path(@conn, :show), class: "nav-link") do %>
+            <i class="icon-user text-primary"></i> Profile
+          <% end %>
+        </li>
       </ul>
     </div>
   </div>
