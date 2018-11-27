@@ -33,7 +33,7 @@ defmodule SqueezeWeb.DashboardView do
 
   def race_date(%User{user_prefs: %{race_date: date}}) do
     date
-    |> Timex.format!("%b %d", :strftime)
+    |> Timex.format!("%b #{Ordinal.ordinalize(date.day)}", :strftime)
   end
 
   def relative_date(user) do
