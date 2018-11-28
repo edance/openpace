@@ -52,8 +52,6 @@ defmodule SqueezeWeb.Router do
 
     get "/profile", ProfileController, :show
 
-    get "/sync", SyncController, :sync
-
     resources "/activities", ActivityController, only: [:index, :show]
 
     get "/plan", PlanController, :index
