@@ -26,7 +26,8 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def format_distance(distance) do
-    Distances.from_meters(distance).name
+    miles = Float.round(distance / Distances.mile_in_meters, 2)
+    "#{miles} mi"
   end
 
   def relative_time(time) do

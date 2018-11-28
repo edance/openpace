@@ -14,11 +14,6 @@ defmodule SqueezeWeb.DashboardView do
     "#{first_name} #{last_name}"
   end
 
-  def race_name(%User{user_prefs: %{distance: distance}}) do
-    %{name: name} = Distances.from_meters(distance)
-    name
-  end
-
   def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
   def improvement_amount(%User{user_prefs: prefs}) do
     personal_record = prefs.personal_record
@@ -73,6 +68,6 @@ defmodule SqueezeWeb.DashboardView do
 
   def weekly_milage(activities) do
     meters = activities |> weekly_distance()
-    meters / Distances.mile_in_meters
+    Float.round(meters / Distances.mile_in_meters, 2)
   end
 end

@@ -21,13 +21,6 @@ defmodule SqueezeWeb.DashboardViewTest do
     end
   end
 
-  describe "#race_name" do
-    test "converts the distance in meters to a string" do
-      user = build(:user, %{user_prefs: %{distance: 5_000}})
-      assert DashboardView.race_name(user) == "5k"
-    end
-  end
-
   describe "#improvement_amount" do
     test "returns nil without a personal record" do
       user = build(:user, %{user_prefs: %{personal_record: nil}})
