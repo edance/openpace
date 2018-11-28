@@ -30,7 +30,7 @@
           <div class="row align-items-center">
             <div class="col">
               <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-              <h2 class="text-white mb-0">Sales value</h2>
+              <h2 class="text-white mb-0">Mileage</h2>
             </div>
             <div class="col">
               <ul class="nav nav-pills justify-content-end">
@@ -65,15 +65,32 @@
           <div class="row align-items-center">
             <div class="col">
               <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-              <h2 class="mb-0">Total orders</h2>
+              <h2 class="mb-0">Recent Activites</h2>
+            </div>
+            <div class="col text-right">
+              <%= link("See all", to: activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <!-- Chart -->
-          <div class="chart">
-            <canvas id="chart-orders" class="chart-canvas"></canvas>
-          </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Distance</th>
+                <th scope="col">Start at</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for activity <- @activities do %>
+                <tr scope="row">
+                  <td><%= link activity.name, to: activity_path(@conn, :show, activity) %></td>
+                  <td><%= format_distance(activity.distance) %></td>
+                  <td><%= relative_time(activity.start_at) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
