@@ -34,7 +34,7 @@ defmodule SqueezeWeb.DashboardViewTest do
       assert DashboardView.improvement_amount(user) == nil
     end
 
-    test 'returns percentage improvement' do
+    test "returns percentage improvement" do
       user = build(:user, %{user_prefs: %{personal_record: 3, duration: 2}})
       assert DashboardView.improvement_amount(user) == "33.3%"
     end
@@ -44,5 +44,17 @@ defmodule SqueezeWeb.DashboardViewTest do
     {:ok, date} = Date.new(2018, 11, 11)
     user = build(:user, %{user_prefs: %{race_date: date}})
     assert DashboardView.race_date(user) == "Nov 11th"
+  end
+
+  describe "#format_event" do
+    test "returns Rest if nil event" do
+      assert DashboardView.format_event(nil) == "Rest"
+    end
+
+    test "returns the name of the event" do
+      name = "Boston Marathon"
+      event = build(:event, %{name: name})
+      assert DashboardView.format_event(event) == name
+    end
   end
 end
