@@ -16,11 +16,6 @@ defmodule Squeeze.Distances do
 
   def distances, do: @distances
 
-  def from_meters(meters) do
-    @distances
-    |> Enum.find(fn(x) -> x.distance == meters end)
-  end
-
   def parse({distance, "mi"}), do: {:ok, distance * @mile_in_meters}
   def parse({distance, "mile"}), do: {:ok, distance * @mile_in_meters}
   def parse({distance, "miles"}), do: {:ok, distance * @mile_in_meters}
