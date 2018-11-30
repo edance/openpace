@@ -16,7 +16,7 @@ defmodule Squeeze.Stats do
       order_by: months.month,
       select: %{
         day: months.month,
-        sum: sum(a.distance)
+        sum: sum(fragment("coalesce(?, 0)", a.distance))
       }
     Repo.all(query)
   end
@@ -29,7 +29,7 @@ defmodule Squeeze.Stats do
       order_by: days.day,
       select: %{
         day: days.day,
-        sum: sum(a.distance)
+        sum: sum(fragment("coalesce(?, 0)", a.distance))
       }
     Repo.all(query)
   end
