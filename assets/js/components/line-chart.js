@@ -2,48 +2,48 @@ import Chart from 'chart.js';
 import { colors, fonts } from './../variables.js';
 
 document.addEventListener("turbolinks:load", function() {
-	const $chart = document.getElementById('chart-sales');
+  const $chart = document.getElementById('chart-sales');
 
   new Chart($chart, {
     type: 'line',
     options: {
       responsive: true,
-			maintainAspectRatio: false,
-			defaultColor: colors.gray[600],
-			defaultFontColor: colors.gray[600],
-			defaultFontFamily: fonts.base,
-			defaultFontSize: 13,
-			layout: {
-				padding: 0
-			},
-			legend: {
-				display: false,
-				position: 'bottom',
-				labels: {
-					usePointStyle: true,
-					padding: 16
-				}
-			},
-			elements: {
-				point: {
-					radius: 0,
-					backgroundColor: colors.theme['primary']
-				},
-				line: {
-					tension: .4,
-					borderWidth: 4,
-					borderColor: colors.theme['primary'],
-					backgroundColor: colors.transparent,
-					borderCapStyle: 'rounded'
-				},
-				rectangle: {
-					backgroundColor: colors.theme['warning']
-				},
-				arc: {
-					backgroundColor: colors.theme['primary'],
-					borderColor: colors.white,
-					borderWidth: 4
-				}
+      maintainAspectRatio: false,
+      defaultColor: colors.gray[600],
+      defaultFontColor: colors.gray[600],
+      defaultFontFamily: fonts.base,
+      defaultFontSize: 13,
+      layout: {
+        padding: 0
+      },
+      legend: {
+        display: false,
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          padding: 16
+        }
+      },
+      elements: {
+        point: {
+          radius: 0,
+          backgroundColor: colors.theme['primary']
+        },
+        line: {
+          tension: .4,
+          borderWidth: 4,
+          borderColor: colors.theme['primary'],
+          backgroundColor: colors.transparent,
+          borderCapStyle: 'rounded'
+        },
+        rectangle: {
+          backgroundColor: colors.theme['warning']
+        },
+        arc: {
+          backgroundColor: colors.theme['primary'],
+          borderColor: colors.white,
+          borderWidth: 4
+        }
       },
 
       scales: {

@@ -14,10 +14,7 @@ defmodule Squeeze.Stats do
       on: a.user_id == ^user.id and months.month == fragment("date_trunc('month', ?)", a.start_at),
       group_by: months.month,
       order_by: months.month,
-      select: %{
-        day: months.month,
-        sum: sum(a.distance)
-      }
+      select: [months.month, sum(fragment("coalesce(?,0)", a.distance))]
     Repo.all(query)
   end
 
@@ -27,10 +24,7 @@ defmodule Squeeze.Stats do
       on: a.user_id == ^user.id and days.day == fragment("date_trunc('day', ?)", a.start_at),
       group_by: days.day,
       order_by: days.day,
-      select: %{
-        day: days.day,
-        sum: sum(a.distance)
-      }
+      select: [days.day, sum(fragment("coalesce(?,0)", a.distance))]
     Repo.all(query)
   end
 end
