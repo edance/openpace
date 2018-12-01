@@ -1,10 +1,12 @@
 import Chart from 'chart.js';
+import { u } from 'umbrellajs';
 import { colors, fonts } from './../variables.js';
 
 document.addEventListener("turbolinks:load", function() {
-  const $chart = document.getElementById('chart-sales');
+  const $chart = u('#chart-distance');
+  const dataset = JSON.parse($chart.data('dataset'));
 
-  new Chart($chart, {
+  new Chart($chart.first(), {
     type: 'line',
     options: {
       responsive: true,
@@ -79,10 +81,10 @@ document.addEventListener("turbolinks:load", function() {
       }
     },
     data: {
-      labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      labels: dataset.map(x => x.date),
       datasets: [{
         label: 'Performance',
-        data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+        data: dataset.map(x => x.sum),
       }]
     }
   });
