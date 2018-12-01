@@ -54,7 +54,7 @@
           <!-- Chart -->
           <div class="chart">
             <!-- Chart wrapper -->
-            <canvas id="chart-sales" class="chart-canvas"></canvas>
+            <canvas id="chart-distance" data-dataset="<%= Poison.encode!(@distance_by_month) %>"></canvas>
           </div>
         </div>
       </div>
