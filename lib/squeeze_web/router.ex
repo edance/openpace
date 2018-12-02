@@ -50,6 +50,8 @@ defmodule SqueezeWeb.Router do
 
     get "/", DashboardController, :index
 
+    get "/overview", OverviewController, :index
+
     get "/profile", ProfileController, :show
 
     resources "/activities", ActivityController, only: [:index, :show]

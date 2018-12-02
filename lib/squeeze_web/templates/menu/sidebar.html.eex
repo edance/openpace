@@ -40,7 +40,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <%= active_link(@conn, to: dashboard_path(@conn, :index), class: "nav-link") do %>
+          <%= active_link(@conn, to: overview_path(@conn, :index), class: "nav-link") do %>
             <i class="icon-compass text-primary"></i> Dashboard
           <% end %>
         </li>
