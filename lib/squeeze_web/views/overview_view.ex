@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.DashboardView do
+defmodule SqueezeWeb.OverviewView do
   use SqueezeWeb, :view
 
   alias Squeeze.Accounts.User
