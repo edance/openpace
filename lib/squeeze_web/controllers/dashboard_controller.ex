@@ -13,13 +13,12 @@ defmodule SqueezeWeb.DashboardController do
   def index(conn, _params, current_user) do
     Task.start(fn -> Sync.load_activities(current_user) end)
 
-    distance_by_month = Stats.distance_by_month(current_user)
-
     activities = Dashboard.list_activities(current_user)
     render(conn, "index.html",
       activities: activities,
       events: events(current_user),
-      distance_by_month: distance_by_month
+      distance_by_week: Stats.distance_by_week(current_user),
+      distance_by_day: Stats.distance_by_day(current_user)
     )
   end
 
