@@ -9,17 +9,9 @@ defmodule SqueezeWeb.OverviewView do
     "Dashboard"
   end
 
-  def full_name(%User{first_name: first_name, last_name: nil}), do: first_name
-  def full_name(%User{first_name: first_name, last_name: last_name}) do
-    "#{first_name} #{last_name}"
-  end
+  def full_name(%User{} = user), do: User.full_name(user)
 
-  def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
-  def improvement_amount(%User{user_prefs: prefs}) do
-    personal_record = prefs.personal_record
-    percent = abs(personal_record - prefs.duration) / personal_record * 100
-    "#{Decimal.round(Decimal.new(percent), 1)}%"
-  end
+  def improvement_amount(%User{} = user), do: User.improvement_amount(user)
 
   def format_goal(user) do
     user.user_prefs.duration

@@ -23,6 +23,18 @@ defmodule Squeeze.Accounts.User do
     timestamps()
   end
 
+  def full_name(%User{first_name: first_name, last_name: nil}), do: first_name
+  def full_name(%User{first_name: first_name, last_name: last_name}) do
+    "#{first_name} #{last_name}"
+  end
+
+  def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
+  def improvement_amount(%User{user_prefs: prefs}) do
+    duration = prefs.duration
+    percent = abs(prefs.personal_record - prefs.duration) / duration * 100
+    "#{Decimal.round(Decimal.new(percent), 1)}%"
+  end
+
   def onboarded?(%User{} = user) do
     UserPrefs.complete?(user.user_prefs)
   end

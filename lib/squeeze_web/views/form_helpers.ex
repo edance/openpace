@@ -8,8 +8,6 @@ defmodule SqueezeWeb.FormHelpers do
 
   import Phoenix.HTML
 
-  require IEx
-
   map =
     &Enum.map(&1, fn i ->
       pre = if i < 10, do: "0"
