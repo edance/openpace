@@ -15,8 +15,8 @@ defmodule SqueezeWeb.WizardView do
 
   def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
   def improvement_amount(%User{user_prefs: prefs}) do
-    personal_record = prefs.personal_record
-    percent = abs(personal_record - prefs.duration) / personal_record * 100
+    duration = prefs.duration
+    percent = abs(prefs.personal_record - prefs.duration) / duration * 100
     "#{Decimal.round(Decimal.new(percent), 1)}%"
   end
 end
