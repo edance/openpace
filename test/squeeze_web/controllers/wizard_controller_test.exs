@@ -1,10 +1,19 @@
 defmodule SqueezeWeb.WizardControllerTest do
   use SqueezeWeb.ConnCase
 
+  import Plug.Test
+
   describe "#index" do
     test "redirects to the first step", %{conn: conn} do
       conn = get(conn, wizard_path(conn, :index))
       assert redirected_to(conn) == wizard_path(conn, :step, "distance")
+    end
+
+    test "redirects to session step", %{conn: conn} do
+      conn = conn
+      |> init_test_session(current_step: "duration")
+      |> get(wizard_path(conn, :index))
+      assert redirected_to(conn) == wizard_path(conn, :step, "duration")
     end
   end
 
