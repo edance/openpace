@@ -31,6 +31,12 @@ defmodule SqueezeWeb.FormatHelpersTest do
     end
   end
 
+  describe "#format_distance" do
+    test "rounds and adds mi for miles" do
+      assert FormatHelpers.format_distance(10_000) == "6.22 mi"
+    end
+  end
+
   describe "#relative_time" do
     test "returns Timex.format with relative" do
       now = Timex.now

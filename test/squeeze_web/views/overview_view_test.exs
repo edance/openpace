@@ -3,34 +3,21 @@ defmodule SqueezeWeb.OverviewViewTest do
 
   @moduletag :overview_view_case
 
+  alias Squeeze.Accounts.User
   alias SqueezeWeb.OverviewView
 
   test "title includes sign in" do
     assert OverviewView.title(%{}, %{}) =~ "Dashboard"
   end
 
-  describe "#full_name" do
-    test "returns first and last name" do
-      user = build(:user)
-      assert OverviewView.full_name(user) == "#{user.first_name} #{user.last_name}"
-    end
-
-    test "returns just the first name if last name is nil" do
-      user = build(:user, %{last_name: nil})
-      assert OverviewView.full_name(user) == user.first_name
-    end
+  test "#full_name is User.full_name" do
+    user = build(:user)
+    assert OverviewView.full_name(user) == User.full_name(user)
   end
 
-  describe "#improvement_amount" do
-    test "returns nil without a personal record" do
-      user = build(:user, %{user_prefs: %{personal_record: nil}})
-      assert OverviewView.improvement_amount(user) == nil
-    end
-
-    test "returns percentage improvement" do
-      user = build(:user, %{user_prefs: %{personal_record: 3, duration: 2}})
-      assert OverviewView.improvement_amount(user) == "33.3%"
-    end
+  test "#improvement_amount is User.improvement_amount" do
+    user = build(:user)
+    assert OverviewView.improvement_amount(user) == User.improvement_amount(user)
   end
 
   test "#race_date formats the date" do

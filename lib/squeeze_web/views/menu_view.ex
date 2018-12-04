@@ -7,9 +7,7 @@ defmodule SqueezeWeb.MenuView do
     User.onboarded?(user)
   end
 
-  def full_name(user) do
-    "#{user.first_name} #{user.last_name}"
-  end
+  def full_name(%User{} = user), do: User.full_name(user)
 
   def copyright_year do
     Date.utc_today.year
