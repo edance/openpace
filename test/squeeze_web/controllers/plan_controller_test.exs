@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.PlanControllerTest do
   use SqueezeWeb.ConnCase
 
+  import Plug.Test
+
   test "index redirects to the first step", %{conn: conn} do
     conn = get(conn, "/dashboard/plan")
     assert redirected_to(conn) == plan_path(conn, :step, "weeks")
@@ -30,6 +32,15 @@ defmodule SqueezeWeb.PlanControllerTest do
       conn = post(conn, "/dashboard/plan/start", start_at: date)
       assert get_session(conn, :start_at) == Timex.parse!(date, "{YYYY}-{0M}-{0D}")
       assert redirected_to(conn) == plan_path(conn, :new, 1)
+    end
+  end
+
+  describe "#new" do
+    test "includes the week number", %{conn: conn} do
+      conn = conn
+      |> init_test_session(start_at: Timex.today)
+      |> get("/dashboard/plan/weeks/2")
+      assert html_response(conn, 200) =~ ~r/week 2/i
     end
   end
 end
