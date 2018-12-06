@@ -1,0 +1,19 @@
+<div class="calendar title">
+  <%= link "Today", to: "?date=", class: "today btn" %>
+
+  <%= link to: "?date=#{ previous_month(@date) }", class: "prev" do %>
+    <i class="icon-arrow-left-circle"></i>
+  <% end %>
+
+  <%= link to: "?date=#{ next_month(@date) }", class: "next" do %>
+    <i class="icon-arrow-right-circle"></i>
+  <% end %>
+
+  <div class="date">
+    <%= Timex.format!(@date, "%B %Y", :strftime) %>
+  </div>
+</div>
+
+<div class="month calendar container">
+  <%= render("_calendar.html", assigns) %>
+</div>
