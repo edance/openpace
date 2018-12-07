@@ -35,10 +35,7 @@ defmodule SqueezeWeb.CalendarController do
     |> render("month.html")
   end
 
-  defp parse_date(nil) do
-    Timex.today
-  end
-
+  defp parse_date(nil), do: Timex.today
   defp parse_date(date) do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date
