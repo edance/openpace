@@ -16,7 +16,6 @@ defmodule Squeeze.CalendarTest do
       assert range.last == Date.add(date, 6)
     end
 
-
     test "with month includes the days of the prev/next months" do
       {:ok, date} = Date.new(2018, 12, 6)
       {:ok, start_date} = Date.new(2018, 11, 25)
