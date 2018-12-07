@@ -21,22 +21,18 @@ defmodule Squeeze.Calendar do
   defp first_date(date, "short"), do: Date.add(date, -1)
   defp first_date(base, "month") do
     date = first_of_month(base)
-    day_of_week = Date.day_of_week(date)
-    if day_of_week == 7 do
-      date
-    else
-     Date.add(date, -day_of_week)
+    case Date.day_of_week(date) do
+      7 -> date
+      x -> Date.add(date, -x)
     end
   end
 
   defp last_date(date, "short"), do: Date.add(date, 1)
   defp last_date(base, "month") do
     date = last_day_of_month(base)
-    day_of_week = Date.day_of_week(date)
-    if day_of_week == 7 do
-      Date.add(date, 6)
-    else
-      Date.add(date, 6 - day_of_week)
+    case Date.day_of_week(date) do
+      7 -> Date.add(date, 6)
+      x -> Date.add(date, 6 - x)
     end
   end
 end
