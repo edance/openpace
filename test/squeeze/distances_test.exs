@@ -61,5 +61,13 @@ defmodule Squeeze.DistancesTest do
       assert {:ok, distance} = Distances.parse("4x1600m")
       assert distance == 1600 * 4
     end
+
+    test "multiplication with junk" do
+      assert {:error} = Distances.parse("4xjunk")
+    end
+
+    test "with junk" do
+      assert {:error} = Distances.parse("junk")
+    end
   end
 end

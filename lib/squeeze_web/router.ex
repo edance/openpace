@@ -16,10 +16,6 @@ defmodule SqueezeWeb.Router do
     plug Turbolinks
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   pipeline :dashboard_layout do
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
@@ -64,11 +60,6 @@ defmodule SqueezeWeb.Router do
     post "/plan/:step", PlanController, :update
     get "/plan/weeks/:week", PlanController, :new
     post "/plan/weeks/:week", PlanController, :create
-  end
-
-  # Other scopes may use custom stacks.
-  scope "/api", SqueezeWeb, as: :api do
-    pipe_through :api
   end
 
   scope "/webhook", SqueezeWeb do
