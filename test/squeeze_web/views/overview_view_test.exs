@@ -37,4 +37,15 @@ defmodule SqueezeWeb.OverviewViewTest do
       assert OverviewView.format_event(event) == name
     end
   end
+
+  test "#format_goal" do
+    user = build(:user, %{user_prefs: %{duration: 3 * 60 * 60}})
+    assert OverviewView.format_goal(user) == "3:00:00"
+  end
+
+  test "#race_date" do
+    {:ok, date} = Date.new(2018, 1, 1)
+    user = build(:user, %{user_prefs: %{race_date: date}})
+    assert OverviewView.race_date(user) == "Jan 1st"
+  end
 end
