@@ -18,14 +18,15 @@ defmodule SqueezeWeb.OverviewView do
     |> format_duration()
   end
 
+  def race_date(%User{user_prefs: %{race_date: nil}}), do: nil
   def race_date(%User{user_prefs: %{race_date: date}}) do
     date
     |> Timex.format!("%b #{Ordinal.ordinalize(date.day)}", :strftime)
   end
 
-  def relative_date(user) do
-    user.user_prefs.race_date
-    |> relative_time()
+  def relative_date(%User{user_prefs: %{race_date: nil}}), do: nil
+  def relative_date(%User{user_prefs: %{race_date: date}}) do
+    relative_time(date)
   end
 
   def format_event(nil), do: "Rest"
