@@ -55,7 +55,8 @@ defmodule Squeeze.Mixfile do
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
       {:faker, "~> 0.9", only: :test},
-      {:excoveralls, "~> 0.9", only: :test}
+      {:excoveralls, "~> 0.9", only: :test},
+      {:mox, "~> 0.4", only: :test}
     ]
   end
 
