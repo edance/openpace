@@ -1,3 +1,10 @@
+<!-- Top navbar -->
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+    Profile
+  </span>
+<% end %>
+
 <!-- Header -->
 <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
   <!-- Mask -->
