@@ -2,27 +2,31 @@
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
   <ul class="navbar-nav mr-auto">
     <li class="navbar-item mr-3">
-      <%= link "Today", to: calendar_path(@conn, :month), class: "navbar-link" %>
+      <%= link "Today", to: calendar_path(@conn, :month), class: "btn btn-sm btn-secondary mt--1" %>
     </li>
 
     <li class="navbar-item mr-2">
-      <%= link to: calendar_path(@conn, :month, date: previous_month(@date)), class: "navbar-link" do %>
+      <%= link to: calendar_path(@conn, :month, date: previous_month(@date)), class: "navbar-link text-white" do %>
         <i class="icon-arrow-left-circle"></i>
       <% end %>
     </li>
 
     <li class="navbar-item mr-3">
-      <%= link to: calendar_path(@conn, :month, date: next_month(@date)), class: "navbar-link" do %>
+      <%= link to: calendar_path(@conn, :month, date: next_month(@date)), class: "navbar-link text-white" do %>
         <i class="icon-arrow-right-circle"></i>
       <% end %>
     </li>
 
-    <li class="navbar-item">
+    <li class="navbar-item text-white">
       <%= Timex.format!(@date, "%B %Y", :strftime) %>
     </li>
   </ul>
 <% end %>
 
-<div class="container-fluid pt-6">
-  <%= render("_calendar.html", assigns) %>
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-6">
+  <div class="container-fluid">
+    <div class="card">
+      <%= render("_calendar.html", assigns) %>
+    </div>
+  </div>
 </div>
