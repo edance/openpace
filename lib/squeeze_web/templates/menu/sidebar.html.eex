@@ -45,6 +45,11 @@
           <% end %>
         </li>
         <li class="nav-item">
+          <%= active_link(@conn, to: calendar_path(@conn, :index), class: "nav-link") do %>
+            <i class="icon-calendar text-primary"></i> Calendar
+          <% end %>
+        </li>
+        <li class="nav-item">
           <%= active_link(@conn, to: profile_path(@conn, :show), class: "nav-link") do %>
             <i class="icon-user text-primary"></i> Profile
           <% end %>
