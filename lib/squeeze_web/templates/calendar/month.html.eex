@@ -1,19 +1,48 @@
-<div class="calendar title">
-  <%= link "Today", to: "?date=", class: "today btn" %>
+<!-- Top navbar -->
+<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+  <div class="container-fluid">
+    <ul class="navbar-nav mr-auto">
+      <li class="navbar-item mr-3">
+        <%= link "Today", to: "?date=", class: "navbar-link" %>
+      </li>
 
-  <%= link to: "?date=#{ previous_month(@date) }", class: "prev" do %>
-    <i class="icon-arrow-left-circle"></i>
-  <% end %>
+      <li class="navbar-item mr-2">
+        <%= link to: calendar_path(@conn, :month, date: previous_month(@date)), class: "navbar-link" do %>
+          <i class="icon-arrow-left-circle"></i>
+        <% end %>
+      </li>
 
-  <%= link to: "?date=#{ next_month(@date) }", class: "next" do %>
-    <i class="icon-arrow-right-circle"></i>
-  <% end %>
+      <li class="navbar-item mr-3">
+        <%= link to: calendar_path(@conn, :month, date: next_month(@date)), class: "navbar-link" do %>
+          <i class="icon-arrow-right-circle"></i>
+        <% end %>
+      </li>
 
-  <div class="date">
-    <%= Timex.format!(@date, "%B %Y", :strftime) %>
+      <li class="navbar-item">
+        <%= Timex.format!(@date, "%B %Y", :strftime) %>
+      </li>
+    </ul>
+
+    <!-- User -->
+    <ul class="navbar-nav align-items-center d-none d-md-flex">
+      <li class="nav-item dropdown">
+        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="media align-items-center">
+            <span class="avatar avatar-sm rounded-circle">
+              <img src="<%= @current_user.avatar %>"/>
+            </span>
+            <div class="media-body ml-2 d-none d-lg-block">
+              <span class="mb-0 text-sm  font-weight-bold"></span>
+            </div>
+          </div>
+        </a>
+
+        <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
+      </li>
+    </ul>
   </div>
-</div>
+</nav>
 
-<div class="month calendar container">
+<div class="container-fluid pt-6">
   <%= render("_calendar.html", assigns) %>
 </div>
