@@ -1,0 +1,16 @@
+.calendar {
+  height: calc(100vh - #{map_get($spacers, 7)});
+}
+
+.calendar-date {
+  $width: 100%;
+  width: $width/3;
+}
+
+.month.calendar {
+  $width: 100%;
+
+  .calendar-date {
+    width: $width/7;
+  }
+}

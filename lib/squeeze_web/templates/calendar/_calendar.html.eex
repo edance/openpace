@@ -1,5 +1,5 @@
 <%= for date <- @dates do %>
-  <div class="calendar date">
+  <div class="calendar-date border-right border-bottom">
     <%= date.day %>
     <br/>
     <%= for event <- Enum.filter(@events, fn(x) -> x.date == date end) do %>
