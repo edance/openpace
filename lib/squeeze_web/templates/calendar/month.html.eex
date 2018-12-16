@@ -23,9 +23,9 @@
   </ul>
 <% end %>
 
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-6">
+<div class="header bg-gradient-primary pb-5 pt-5 pt-md-6">
   <div class="container-fluid">
-    <div class="card">
+    <div class="card d-flex flex-wrap flex-row month calendar">
       <%= render("_calendar.html", assigns) %>
     </div>
   </div>
