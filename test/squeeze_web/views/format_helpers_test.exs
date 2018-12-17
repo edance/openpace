@@ -37,6 +37,27 @@ defmodule SqueezeWeb.FormatHelpersTest do
     end
   end
 
+  describe "#relative_date" do
+    test "returns today if today" do
+      assert FormatHelpers.relative_date(Timex.today) == "today"
+    end
+
+    test "returns tomorrow if in one day" do
+      date = Timex.shift(Timex.today, days: 1)
+      assert FormatHelpers.relative_date(date) == "tomorrow"
+    end
+
+    test "returns day count if less than two weeks" do
+      date = Timex.shift(Timex.today, days: 14)
+      assert FormatHelpers.relative_date(date) == "in 14 days"
+    end
+
+    test "returns week count if over than two weeks" do
+      date = Timex.shift(Timex.today, days: 15)
+      assert FormatHelpers.relative_date(date) == "in 3 weeks"
+    end
+  end
+
   describe "#relative_time" do
     test "returns Timex.format with relative" do
       now = Timex.now
