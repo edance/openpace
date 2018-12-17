@@ -1,10 +1,11 @@
-<%= for date <- @dates do %>
-  <div class="calendar-date border-right border-bottom">
-    <%= date.day %>
-    <br/>
+<%= for {date, idx} <- Enum.with_index(@dates) do %>
+  <%= content_tag(:div, class: class_list(idx, @dates)) do %>
+    <%= date_label(date, idx) %>
+
     <%= for event <- Enum.filter(@events, fn(x) -> x.date == date end) do %>
+
       <%= event.name %>
       <br/>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

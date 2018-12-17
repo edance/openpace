@@ -7,6 +7,17 @@
   width: $width/3;
 }
 
+.date-label {
+  &.active {
+    background: $primary;
+    border-radius: 50%;
+    color: $white;
+    height: $font-size-xl;
+    text-align: center;
+    width: $font-size-xl;
+  }
+}
+
 .month.calendar {
   $width: 100%;
 
