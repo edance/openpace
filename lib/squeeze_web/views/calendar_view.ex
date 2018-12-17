@@ -64,7 +64,7 @@ defmodule SqueezeWeb.CalendarView do
   end
 
   def class_list(idx, dates) do
-    class_list = ["calendar-date"]
+    class_list = ["calendar-date p-1"]
     if !last_column?(idx) do
       class_list = class_list ++ ["border-right"]
     end
