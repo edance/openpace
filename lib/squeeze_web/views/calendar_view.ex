@@ -59,6 +59,14 @@ defmodule SqueezeWeb.CalendarView do
 
   defp date_label(date) do
     content_tag(:div, class: "date-label", data: [date: format_date(date)]) do
+      date_label_content(date)
+    end
+  end
+
+  defp date_label_content(date) do
+    if date.day == 1 do
+      Timex.format!(date, "%b %-d", :strftime)
+    else
       date.day
     end
   end
