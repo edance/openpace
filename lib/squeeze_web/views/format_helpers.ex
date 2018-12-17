@@ -30,6 +30,15 @@ defmodule SqueezeWeb.FormatHelpers do
     "#{miles} mi"
   end
 
+  def relative_date(date) do
+    case Timex.diff(date, Timex.today, :days) do
+      0 -> "today"
+      1 -> "tomorrow"
+      x when x <= 14 -> "in #{x} days"
+      x -> "in #{trunc(Float.ceil(x / 7))} weeks"
+    end
+  end
+
   def relative_time(time) do
     Timex.format!(time, "{relative}", :relative)
   end
