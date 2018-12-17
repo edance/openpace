@@ -43,7 +43,6 @@ defmodule SqueezeWeb.CalendarView do
     Timex.format!(date, "{YYYY}-{0M}-{0D}")
   end
 
-  # First row
   def date_label(date, idx) when idx < 7 do
     content_tag(:div) do
       [
@@ -53,7 +52,7 @@ defmodule SqueezeWeb.CalendarView do
     end
   end
 
-  def date_label(date, idx) do
+  def date_label(date, _idx) do
     date_label(date)
   end
 
@@ -73,12 +72,16 @@ defmodule SqueezeWeb.CalendarView do
 
   def class_list(idx, dates) do
     class_list = ["calendar-date p-1"]
-    if !last_column?(idx) do
-      class_list = class_list ++ ["border-right"]
-    end
-    unless last_row?(idx, dates) do
-      class_list = class_list ++ ["border-bottom"]
-    end
+    class_list =
+      case last_column?(idx) do
+        true ->  class_list
+        false -> class_list ++ ["border-right"]
+      end
+    class_list =
+      case last_row?(idx, dates) do
+        true -> class_list
+        false -> class_list ++ ["border-bottom"]
+      end
     Enum.join(class_list, " ")
   end
 
