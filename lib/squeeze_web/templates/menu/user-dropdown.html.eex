@@ -3,7 +3,7 @@
     <h6 class="text-overflow m-0">Welcome!</h6>
   </div>
 
-  <%= link(to: profile_path(@conn, :show), class: "dropdown-item") do %>
+  <%= link(to: profile_path(@conn, :edit), class: "dropdown-item") do %>
     <i class="icon-user"></i>
     <span>Profile</span>
   <% end %>

@@ -1,9 +1,9 @@
 defmodule SqueezeWeb.ProfileControllerTest do
   use SqueezeWeb.ConnCase
 
-  test "#show includes profile", %{conn: conn} do
+  test "#edit includes profile", %{conn: conn} do
     conn = conn
-    |> get(profile_path(conn, :show))
+    |> get(profile_path(conn, :edit))
     assert html_response(conn, 200) =~ ~r/profile/i
   end
 end
