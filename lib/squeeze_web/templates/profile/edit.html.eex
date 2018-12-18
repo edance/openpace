@@ -1,0 +1,123 @@
+<!-- Top navbar -->
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+    Profile
+  </span>
+<% end %>
+
+<!-- Header -->
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+        <h1 class="display-2 text-white">Hello <%= @current_user.first_name %></h1>
+        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">My account</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <%= form_for @changeset, profile_path(@conn, :update), fn f -> %>
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <%= label(f, :first_name, class: "form-control-label") %>
+                    <%= input(f, :first_name, class: "form-control form-control-alternative", placeholder: "First name") %>
+                    <%= error_tag(f, :first_name) %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <%= label(f, :last_name, class: "form-control-label") %>
+                    <%= input(f, :last_name, class: "form-control form-control-alternative", placeholder: "Last name") %>
+                    <%= error_tag(f, :first_name) %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <%= label(f, :last_name, class: "form-control-label") %>
+                    <%= input(f, :city, class: "form-control form-control-alternative", placeholder: "City") %>
+                    <%= error_tag(f, :first_name) %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <%= label(f, :country, class: "form-control-label") %>
+                    <%= input(f, :country, class: "form-control form-control-alternative", placeholder: "Country") %>
+                    <%= error_tag(f, :country) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4">
+
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Race information</h6>
+
+            <%= inputs_for f, :user_prefs, fn p -> %>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group focused">
+                      <%= label(f, :distance, class: "form-control-label") %>
+                      <%= autocomplete(p, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
+                      <%= error_tag(f, :distance) %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group focused">
+                      <%= label(f, :race_date, class: "form-control-label") %>
+                      <%= input p, :race_date, class: "date-picker form-control form-control-alternative" %>
+                      <%= error_tag(f, :race_date) %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group focused">
+                      <%= label(f, :duration, class: "form-control-label") %>
+                      <%= duration_select p, :duration, class: "form-control form-control-alternative" %>
+                      <%= error_tag(f, :duration) %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group focused">
+                      <%= label(f, :personal_record, class: "form-control-label") %>
+                      <%= duration_select p, :personal_record, class: "form-control form-control-alternative" %>
+                      <%= error_tag(f, :personal_record) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <button class="btn btn-primary" type="submit">Save</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
