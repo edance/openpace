@@ -10,15 +10,15 @@ defmodule Squeeze.Accounts.UserPrefs do
 
   @required_fields ~w()a
   @non_empty_fields ~w(distance duration race_date)a
-  @optional_fields ~w(distance duration personal_record name race_date experience)a
+  @optional_fields ~w(distance duration personal_record race_date experience timezone)a
 
   schema "user_prefs" do
     field :distance, :integer
     field :duration, :integer
-    field :name, :string
     field :personal_record, :integer
     field :race_date, :date
     field :experience, :integer
+    field :timezone, :string
 
     belongs_to :user, User
 
