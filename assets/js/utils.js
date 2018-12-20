@@ -9,3 +9,11 @@ export function formatDate(date) {
 function pad(num) {
   return num < 10 ? `0${num}` : num;
 }
+
+export function guessTimezone() {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch(err) {
+    return 'America/New_York';
+  }
+}

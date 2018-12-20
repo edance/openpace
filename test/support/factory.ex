@@ -34,8 +34,8 @@ defmodule Squeeze.Factory do
       distance: 42_195, # Marathon in meters
       duration: 3 * 60 * 60, # 3 hours in seconds
       personal_record: 3 * 60 * 60, # 3 hours in seconds
-      name: "#{Address.city()} Marathon",
-      race_date: Date.forward(:rand.uniform(100))
+      race_date: Date.forward(:rand.uniform(100)),
+      timezone: "America/New_York"
     }
   end
 
