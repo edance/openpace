@@ -33,6 +33,12 @@ defmodule SqueezeWeb.PlanControllerTest do
       assert get_session(conn, :start_at) == Timex.parse!(date, "{YYYY}-{0M}-{0D}")
       assert redirected_to(conn) == plan_path(conn, :new, 1)
     end
+
+    test "with an invalid date sets session to today", %{conn: conn} do
+      date = "invalid"
+      conn = post(conn, "/dashboard/plan/start", start_at: date)
+      assert get_session(conn, :start_at) == Timex.today
+    end
   end
 
   describe "#new" do
