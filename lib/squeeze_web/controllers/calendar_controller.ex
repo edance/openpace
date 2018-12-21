@@ -20,7 +20,7 @@ defmodule SqueezeWeb.CalendarController do
     conn
     |> assign(:date, date)
     |> assign(:dates, dates)
-    |> assign(:events, Dashboard.list_events(user, dates))
+    |> assign(:activities, Dashboard.list_activities(user, dates))
     |> render("short.html")
   end
 
@@ -31,7 +31,7 @@ defmodule SqueezeWeb.CalendarController do
     conn
     |> assign(:date, date)
     |> assign(:dates, dates)
-    |> assign(:events, Dashboard.list_events(user, dates))
+    |> assign(:activities, Dashboard.list_activities(user, dates))
     |> render("month.html")
   end
 

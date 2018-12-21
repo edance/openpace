@@ -6,7 +6,7 @@ defmodule Squeeze.Dashboard.ActivityTest do
   import Squeeze.Factory
 
   @valid_attrs params_for(:activity)
-  @invalid_attrs params_for(:activity, external_id: nil)
+  @invalid_attrs params_for(:activity, distance: nil)
 
   test "changeset with valid attributes" do
     changeset = Activity.changeset(%Activity{}, @valid_attrs)
