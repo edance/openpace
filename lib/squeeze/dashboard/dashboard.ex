@@ -26,6 +26,23 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
+  Returns the list of activities by user in a date range.
+
+  ## Examples
+
+  iex> list_activities(user, date_range)
+  [%Activity{}, ...]
+
+  """
+  def list_activities(%User{} = user, _date_range) do
+    Activity
+    |> where([a], a.user_id == ^user.id)
+    |> order_by([a], a.start_at)
+    |> Repo.all
+    |> Repo.preload(:user)
+  end
+
+  @doc """
   Gets a single activity.
 
   Raises `Ecto.NoResultsError` if the Activity does not exist.
