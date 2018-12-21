@@ -1,9 +1,9 @@
-<%= async_form @conn, @action, [as: "events[]"], fn f -> %>
+<%= async_form @conn, @action, [as: "activities[]"], fn f -> %>
   <%= for {changeset, k} <- (@changesets |> Enum.with_index()) do %>
-    <%= day_name(changeset.data.date) %>
-    <%= hidden_input f, :id, name: "events[#{k}][id]", value: changeset.data.id %>
-    <%= text_input f, :distance, name: "events[#{k}][name]", value: changeset.data.distance %>
-    <%= hidden_input f, :date, name: "events[#{k}][date]", value: changeset.data.date %>
+    <%= day_name(changeset.data.start_at) %>
+    <%= hidden_input f, :id, name: "activities[#{k}][id]", value: changeset.data.id %>
+    <%= text_input f, :distance, name: "activities[#{k}][name]", value: changeset.data.distance %>
+    <%= hidden_input f, :start_at, name: "activities[#{k}][start_at]", value: changeset.data.start_at %>
   <% end %>
 
   <%= submit "Submit", class: "ui submit button" %>

@@ -8,7 +8,7 @@ defmodule SqueezeWeb.PlanController do
   @steps ~w(weeks start)
 
   alias Squeeze.Dashboard
-  alias Squeeze.Dashboard.Event
+  alias Squeeze.Dashboard.Activity
   alias Squeeze.Distances
 
   plug :validate_step when action in [:step, :update]
@@ -42,19 +42,19 @@ defmodule SqueezeWeb.PlanController do
     start_date = Date.add(date, 7 * current_week)
     changesets = start_date
     |> Date.range(Date.add(start_date, 6))
-    |> Enum.map(fn(x) -> Dashboard.change_event(%Event{date: x}) end)
+    |> Enum.map(fn(x) -> Dashboard.change_activity(%Activity{start_at: x}) end)
 
     render(conn, "new.html", changesets: changesets, week: week)
   end
 
-  def create(conn, %{"events" => events, "week" => week}) do
+  def create(conn, %{"activities" => activities, "week" => week}) do
     user = conn.assigns.current_user
     current_week = String.to_integer(week)
-    events
+    activities
     |> Enum.map(fn({_, v}) -> v end)
     |> Enum.map(&format_name(&1))
-    |> Enum.map(&add_distance_to_event(&1))
-    |> Enum.each(&Dashboard.create_event(user, &1))
+    |> Enum.map(&add_distance_to_activity(&1))
+    |> Enum.each(&Dashboard.create_activity(user, &1))
     if current_week < get_session(conn, :weeks) do
       redirect(conn, to: plan_path(conn, :new, current_week + 1))
     else
@@ -69,11 +69,11 @@ defmodule SqueezeWeb.PlanController do
     end
   end
 
-  defp format_name(%{"name" => ""} = event), do: %{event | "name" => "Rest"}
-  defp format_name(event), do: event
+  defp format_name(%{"name" => ""} = activity), do: %{activity | "name" => "Rest"}
+  defp format_name(activity), do: activity
 
-  defp add_distance_to_event(event) do
-    Map.merge(event, %{"distance" => parse_distance(event["name"])})
+  defp add_distance_to_activity(activity) do
+    Map.merge(activity, %{"distance" => parse_distance(activity["name"])})
   end
 
   defp parse_distance(str) do
