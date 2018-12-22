@@ -49,4 +49,25 @@ defmodule SqueezeWeb.PlanControllerTest do
       assert html_response(conn, 200) =~ ~r/week 2/i
     end
   end
+
+  describe "#create" do
+    test "with last week redirects to dashboard", %{conn: conn} do
+      activities = %{}
+      conn = conn
+      |> init_test_session(weeks: 1)
+      |> post("/dashboard/plan/weeks/1", activities: activities)
+      assert redirected_to(conn) == dashboard_path(conn, :index)
+    end
+
+    test "with not last week redirects to next week", %{conn: conn} do
+      activities = %{
+        "0" => %{"name" => "3", "start_at" => "2019-01-01"},
+        "1" => %{"name" => "", "start_at" => "2019-01-02"}
+      }
+      conn = conn
+      |> init_test_session(weeks: 2)
+      |> post("/dashboard/plan/weeks/1", activities: activities)
+      assert redirected_to(conn) == plan_path(conn, :new, 2)
+    end
+  end
 end
