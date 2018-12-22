@@ -4,6 +4,7 @@ defmodule SqueezeWeb.OverviewViewTest do
   @moduletag :overview_view_case
 
   alias Squeeze.Accounts.User
+  alias SqueezeWeb.FormatHelpers
   alias SqueezeWeb.OverviewView
 
   test "title includes sign in" do
@@ -47,5 +48,19 @@ defmodule SqueezeWeb.OverviewViewTest do
     {:ok, date} = Date.new(2018, 1, 1)
     user = build(:user, %{user_prefs: %{race_date: date}})
     assert OverviewView.race_date(user) == "Jan 1st"
+  end
+
+  describe "#weeks_until_race" do
+    test "without a race date" do
+      user = build(:user)
+      assert OverviewView.weeks_until_race(user) == nil
+    end
+
+    test "with valid date" do
+      date = Date.add(Timex.today, 21)
+      user = build(:user, %{user_prefs: %{race_date: date}})
+      weeks_until = OverviewView.weeks_until_race(user)
+      assert weeks_until == FormatHelpers.relative_date(date)
+    end
   end
 end
