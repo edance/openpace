@@ -8,11 +8,6 @@
     <span>Profile</span>
   <% end %>
 
-  <a href="#" class="dropdown-item">
-    <i class="icon-settings"></i>
-    <span>Settings</span>
-  </a>
-
   <div class="dropdown-divider"></div>
 
   <%= link class: "dropdown-item", to: auth_path(@conn, :delete), method: :delete do %>

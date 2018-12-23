@@ -33,6 +33,7 @@ config :squeeze, Squeeze.Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
 config :squeeze, gtm_id: System.get_env("GTM_ID")
+config :squeeze, :strava_auth, Squeeze.Strava.Auth
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -24,3 +24,5 @@ config :strava,
   client_secret: "123456789",
   redirect_uri: "http://localhost:4000/auth/strava/callback",
   webhook_challenge: "STRAVA"
+
+config :squeeze, :strava_auth, Squeeze.Strava.MockAuth
