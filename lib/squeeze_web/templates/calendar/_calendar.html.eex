@@ -2,10 +2,5 @@
   <%= content_tag(:div, class: class_list(idx, @dates)) do %>
     <%= date_label(date, idx) %>
 
-    <%= for event <- Enum.filter(@activities, fn(x) -> NaiveDateTime.to_date(x.start_at) == date end) do %>
-
-      <%= event.name %>
-      <br/>
-    <% end %>
   <% end %>
 <% end %>
