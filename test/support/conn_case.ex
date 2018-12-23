@@ -39,7 +39,7 @@ defmodule SqueezeWeb.ConnCase do
       Sandbox.mode(Repo, {:shared, self()})
     end
 
-    user = Factory.insert(:user)
+    user = Factory.insert(:user, credential: nil)
 
     conn =
       ConnTest.build_conn()
