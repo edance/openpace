@@ -42,7 +42,7 @@ defmodule SqueezeWeb.PlanController do
     start_date = Date.add(date, 7 * current_week)
     changesets = start_date
     |> Date.range(Date.add(start_date, 6))
-    |> Enum.map(fn(x) -> Dashboard.change_activity(%Activity{start_at: x}) end)
+    |> Enum.map(fn(x) -> Dashboard.change_activity(%Activity{planned_date: x}) end)
 
     render(conn, "new.html", changesets: changesets, week: week)
   end
@@ -73,7 +73,7 @@ defmodule SqueezeWeb.PlanController do
   defp format_name(activity), do: activity
 
   defp add_distance_to_activity(activity) do
-    Map.merge(activity, %{"distance" => parse_distance(activity["name"])})
+    Map.merge(activity, %{"planned_distance" => parse_distance(activity["name"])})
   end
 
   defp parse_distance(str) do
