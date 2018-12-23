@@ -39,6 +39,7 @@ defmodule SqueezeWeb.FormatHelpers do
     end
   end
 
+  def relative_time(nil), do: nil
   def relative_time(time) do
     Timex.format!(time, "{relative}", :relative)
   end

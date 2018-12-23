@@ -4,7 +4,7 @@ defmodule SqueezeWeb.ActivityController do
   alias Squeeze.Dashboard
 
   def index(conn, _params) do
-    activities = Dashboard.list_activities(conn.assigns.current_user)
+    activities = Dashboard.recent_activities(conn.assigns.current_user)
     render(conn, "index.html", activities: activities)
   end
 
