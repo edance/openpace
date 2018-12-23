@@ -43,6 +43,24 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
+  Returns the list of recent activities by user.
+
+  ## Examples
+
+  iex> recent_activities(user)
+  [%Activity{}, ...]
+
+  """
+  def recent_activities(%User{} = user) do
+    Activity
+    |> where([a], a.user_id == ^user.id)
+    |> where([a], not(is_nil(a.start_at)))
+    |> order_by([a], [desc: a.start_at])
+    |> Repo.all
+    |> Repo.preload(:user)
+  end
+
+  @doc """
   Gets a single activity.
 
   Raises `Ecto.NoResultsError` if the Activity does not exist.
