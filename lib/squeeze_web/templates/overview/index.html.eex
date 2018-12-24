@@ -45,7 +45,7 @@
           <!-- Chart -->
           <div class="chart">
             <!-- Chart wrapper -->
-            <canvas id="chart-year" data-dataset="<%= Poison.encode!(@distance_by_week) %>"></canvas>
+            <canvas id="chart-year" data-dataset="<%= Poison.encode!(@year_dataset) %>"></canvas>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
         <div class="card-body">
           <!-- Chart -->
           <div class="chart">
-            <canvas id="chart-week" data-dataset="<%= Poison.encode!(@distance_by_day) %>"></canvas>
+            <canvas id="chart-week" data-dataset="<%= Poison.encode!(@week_dataset) %>"></canvas>
           </div>
         </div>
       </div>

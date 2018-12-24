@@ -14,8 +14,8 @@ defmodule SqueezeWeb.OverviewController do
     render(conn, "index.html",
       activities: activities,
       events: events(current_user),
-      distance_by_week: Stats.distance_by_week(current_user),
-      distance_by_day: Stats.distance_by_day(current_user)
+      week_dataset: Stats.dataset_for_week_chart(current_user),
+      year_dataset: Stats.dataset_for_year_chart(current_user)
     )
   end
 
