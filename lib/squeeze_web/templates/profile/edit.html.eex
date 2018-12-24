@@ -126,6 +126,12 @@
                       <%= select p, :timezone, Tzdata.zone_list(), class: "form-control form-control-alternative" %>
                     </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="form-group focused">
+                      <%= label(p, :imperial, "Units & Measurements", class: "form-control-label") %>
+                      <%= select p, :imperial, ["Metric": false, "Imperial": true], class: "form-control form-control-alternative" %>
+                    </div>
+                  </div>
                 </div>
               </div>
             <% end %>
