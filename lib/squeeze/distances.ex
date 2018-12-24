@@ -10,12 +10,14 @@ defmodule Squeeze.Distances do
     %{name: "Marathon", distance: 42_195},
   ]
 
-  @mile_in_meters 1609 # 1 mile == 1609 meters
+  @mile_in_meters 1_609 # 1 mile == 1609 meters
 
   def mile_in_meters, do: @mile_in_meters
 
-  def format(distance, [imperial: true]), do: "#{round_distance(distance / mile_in_meters())} mi"
-  def format(distance, [imperial: _]), do: "#{round_distance(distance / 1_000)} km"
+  def to_float(distance, [imperial: true]), do: round_distance(distance / mile_in_meters())
+  def to_float(distance, [imperial: _]), do: round_distance(distance / 1_000)
+
+  def format(distance, opts), do: "#{to_float(distance, opts)} #{label(opts)}"
   def format(distance), do: format(distance, imperial: false)
 
   def distances, do: @distances
@@ -46,4 +48,7 @@ defmodule Squeeze.Distances do
   end
 
   defp round_distance(num), do: Float.round(num, 2)
+
+  def label([imperial: true]), do: "mi"
+  def label([imperial: _]), do: "km"
 end

@@ -23,7 +23,7 @@ document.addEventListener("turbolinks:load", function() {
       },
       elements: {
         point: {
-          radius: 0,
+          radius: 5,
           backgroundColor: colors.theme['primary']
         },
         line: {
@@ -34,11 +34,19 @@ document.addEventListener("turbolinks:load", function() {
           borderCapStyle: 'rounded'
         },
       },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return dataset[tooltipItem.index].formatted_distance;
+          },
+        },
+        displayColors: false,
+      },
     },
     data: {
-      labels: dataset.map(x => x.date),
+      labels: dataset.map(x => x.label),
       datasets: [{
-        data: dataset.map(x => x.sum / 1609),
+        data: dataset.map(x => x.distance),
       }]
     }
   });

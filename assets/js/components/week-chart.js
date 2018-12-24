@@ -21,12 +21,20 @@ document.addEventListener("turbolinks:load", function() {
       legend: {
         display: false,
       },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return dataset[tooltipItem.index].formatted_distance;
+          },
+        },
+        displayColors: false,
+      },
     },
     data: {
       labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
       datasets: [{
         backgroundColor: colors.theme['warning'],
-        data: dataset.map(x => x.sum / 1609),
+        data: dataset.map(x => x.distance),
       }],
     }
   });
