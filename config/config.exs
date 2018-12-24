@@ -29,7 +29,7 @@ config :strava,
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 config :squeeze, gtm_id: System.get_env("GTM_ID")
-config :squeeze, :strava_auth, Squeeze.Strava.Auth
+config :squeeze, :strava_auth, Strava.Auth
 
 config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
