@@ -25,15 +25,15 @@ config :logger, :console,
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/auth/strava/callback",
+  redirect_uri: "http://localhost:4000/auth/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
-
-config :squeeze, Squeeze.Guardian,
-  issuer: "squeeze",
-  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
 config :squeeze, gtm_id: System.get_env("GTM_ID")
 config :squeeze, :strava_auth, Squeeze.Strava.Auth
+
+config :squeeze, Squeeze.Guardian,
+  issuer: "squeeze",
+  secret_key: "1kALJhfwksHIiVmnVwuZv327H+u1jnE7ZC/c3EAJcurvH5sAHbm+KA87R/eivO29"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

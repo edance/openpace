@@ -30,6 +30,16 @@ config :squeeze, Squeeze.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
 
+config :squeeze, Squeeze.Guardian,
+  issuer: "squeeze",
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+config :strava,
+  client_id: System.get_env("STRAVA_CLIENT_ID"),
+  client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
+  redirect_uri: "#{System.get_env("HOST_URL")}/auth/strava/callback",
+  webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
