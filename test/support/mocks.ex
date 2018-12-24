@@ -1,1 +1,1 @@
-Mox.defmock(Squeeze.Strava.MockAuth, for: Squeeze.Strava.AuthBehavior)
+Mox.defmock(Squeeze.Strava.MockAuth, for: Strava.AuthBehavior)
