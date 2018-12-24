@@ -16,6 +16,20 @@ defmodule Squeeze.DistancesTest do
     assert is_integer(distance)
   end
 
+  describe "#format/2" do
+    test "with imperial: true returns miles" do
+      assert Distances.format(10_000, imperial: true) == "6.22 mi"
+    end
+
+    test "with imperial: false returns km" do
+      assert Distances.format(10_000, imperial: false) == "10.0 km"
+    end
+  end
+
+  test "#format/1 returns km" do
+    assert Distances.format(10_000) == "10.0 km"
+  end
+
   describe "#parse" do
     test "default number to miles" do
       assert {:ok, distance} = Distances.parse("3")
