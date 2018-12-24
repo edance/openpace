@@ -9,6 +9,7 @@
   </div>
 
   <%= hidden_input(f, :timezone, class: "timezone-hidden-input") %>
+  <%= hidden_input(f, :imperial, class: "imperial-hidden-input") %>
 
   <%= submit "Get Started", class: "btn btn-primary" %>
 <% end %>
