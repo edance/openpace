@@ -6,6 +6,7 @@ defmodule SqueezeWeb.FormatHelpers do
 
   use Phoenix.HTML
 
+  alias Squeeze.Accounts.UserPrefs
   alias Squeeze.Distances
   alias Timex.Duration
 
@@ -25,9 +26,8 @@ defmodule SqueezeWeb.FormatHelpers do
     |> Timex.format!(format(duration), :strftime)
   end
 
-  def format_distance(distance) do
-    miles = Float.round(distance / Distances.mile_in_meters, 2)
-    "#{miles} mi"
+  def format_distance(distance, %UserPrefs{} = user_prefs) do
+    Distances.format(distance, imperial: user_prefs.imperial)
   end
 
   def relative_date(date) do

@@ -33,7 +33,8 @@ defmodule SqueezeWeb.FormatHelpersTest do
 
   describe "#format_distance" do
     test "rounds and adds mi for miles" do
-      assert FormatHelpers.format_distance(10_000) == "6.22 mi"
+      user_prefs = build(:user_prefs, imperial: true)
+      assert FormatHelpers.format_distance(10_000, user_prefs) == "6.22 mi"
     end
   end
 

@@ -3,7 +3,6 @@ defmodule SqueezeWeb.OverviewView do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Event
-  alias Squeeze.Distances
 
   def title(_page, _assigns) do
     "Dashboard"
@@ -57,10 +56,5 @@ defmodule SqueezeWeb.OverviewView do
     |> Enum.filter(fn(x) -> Timex.after?(x.start_at, date) end)
     |> Enum.map(&(&1.distance))
     |> Enum.sum()
-  end
-
-  def weekly_milage(activities) do
-    meters = activities |> weekly_distance()
-    Float.round(meters / Distances.mile_in_meters, 2)
   end
 end

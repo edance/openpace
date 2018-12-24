@@ -14,6 +14,10 @@ defmodule Squeeze.Distances do
 
   def mile_in_meters, do: @mile_in_meters
 
+  def format(distance, [imperial: true]), do: "#{round_distance(distance / mile_in_meters())} mi"
+  def format(distance, [imperial: _]), do: "#{round_distance(distance / 1_000)} km"
+  def format(distance), do: format(distance, imperial: false)
+
   def distances, do: @distances
 
   def parse({distance, "mi"}), do: {:ok, distance * @mile_in_meters}
@@ -40,4 +44,6 @@ defmodule Squeeze.Distances do
   defp remove_whitespace(str) do
     str |> String.replace(" ", "")
   end
+
+  defp round_distance(num), do: Float.round(num, 2)
 end

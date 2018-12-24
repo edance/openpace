@@ -3,11 +3,10 @@
     <div class="row">
       <div class="col">
         <h5 class="card-title text-uppercase text-muted mb-0">
-          Weekly Milage
+          Weekly Distance
         </h5>
         <span class="h2 font-weight-bold mb-0">
-          <%= weekly_milage(@activities) %>
-          miles
+          <%= format_distance(weekly_distance(@activities), @current_user.user_prefs) %>
         </span>
       </div>
       <div class="col-auto">

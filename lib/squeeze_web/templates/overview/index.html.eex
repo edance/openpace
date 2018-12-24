@@ -37,7 +37,7 @@
           <div class="row align-items-center">
             <div class="col">
               <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-              <h2 class="text-white mb-0">Weekly Mileage</h2>
+              <h2 class="text-white mb-0">Weekly Distance</h2>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
               <%= for activity <- @activities do %>
                 <tr scope="row">
                   <td><%= link activity.name, to: activity_path(@conn, :show, activity) %></td>
-                  <td><%= format_distance(activity.distance) %></td>
+                  <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
                   <td><%= relative_time(activity.start_at) %></td>
                 </tr>
               <% end %>
