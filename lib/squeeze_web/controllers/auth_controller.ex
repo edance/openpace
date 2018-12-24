@@ -41,16 +41,8 @@ defmodule SqueezeWeb.AuthController do
     @strava_auth.authorize_url!(scope: "read,activity:read_all")
   end
 
-  defp authorize_url!(_) do
-    raise "No matching provider available"
-  end
-
   defp get_token!("strava", code) do
     @strava_auth.get_token!(code: code, grant_type: "authorization_code")
-  end
-
-  defp get_token!(_, _) do
-    raise "No matching provider available"
   end
 
   defp get_user!("strava", client) do
