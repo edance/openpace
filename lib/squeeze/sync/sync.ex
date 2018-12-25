@@ -32,7 +32,9 @@ defmodule Squeeze.Sync do
     )
     filter = strava_filter(credential)
     {:ok, activities} = Activities.get_logged_in_athlete_activities(client, filter)
-    Enum.map(activities, &map_strava_activity(&1, credential.user_id))
+    activities
+    |> Enum.filter(&String.contains?(&1.type, "Run"))
+    |> Enum.map(&map_strava_activity(&1, credential.user_id))
   end
   def fetch_activities(_), do: []
 
