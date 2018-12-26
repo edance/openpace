@@ -50,8 +50,8 @@ defmodule SqueezeWeb.OverviewView do
   end
 
   def weekly_distance(activities) do
-    today = Date.utc_today()
-    date = Date.add(today, -7)
+    today = Timex.today()
+    date = Timex.shift(today, days: -Timex.days_to_beginning_of_week(today))
     activities
     |> Enum.filter(fn(x) -> Timex.after?(x.start_at, date) end)
     |> Enum.map(&(&1.distance))
