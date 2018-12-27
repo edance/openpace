@@ -18,7 +18,7 @@ defmodule SqueezeWeb.WizardViewTest do
 
   describe "#improvement_amount" do
     test "without a personal record" do
-      user = build(:user)
+      user = build(:user, user_prefs: %{duration: nil, personal_record: nil})
       assert WizardView.improvement_amount(user) == nil
     end
 
