@@ -3,6 +3,7 @@ defmodule SqueezeWeb.OverviewView do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Event
+  alias Squeeze.TimeHelper
 
   def title(_page, _assigns) do
     "Dashboard"
@@ -49,12 +50,13 @@ defmodule SqueezeWeb.OverviewView do
     "Tomorrow's workout: #{format_event(event)}"
   end
 
-  def weekly_distance(activities) do
-    today = Timex.today()
+  def weekly_distance(%User{} = user, activities) do
+    today = TimeHelper.today(user)
     date = Timex.shift(today, days: -Timex.days_to_beginning_of_week(today))
     activities
     |> Enum.filter(fn(x) -> Timex.after?(x.start_at, date) end)
     |> Enum.map(&(&1.distance))
     |> Enum.sum()
+    |> format_distance(user.user_prefs)
   end
 end

@@ -6,7 +6,7 @@
           Weekly Distance
         </h5>
         <span class="h2 font-weight-bold mb-0">
-          <%= format_distance(weekly_distance(@activities), @current_user.user_prefs) %>
+          <%= weekly_distance(@current_user, @activities) %>
         </span>
       </div>
       <div class="col-auto">

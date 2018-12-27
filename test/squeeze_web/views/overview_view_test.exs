@@ -52,7 +52,7 @@ defmodule SqueezeWeb.OverviewViewTest do
 
   describe "#weeks_until_race" do
     test "without a race date" do
-      user = build(:user)
+      user = build(:user, user_prefs: %{race_date: nil})
       assert OverviewView.weeks_until_race(user) == nil
     end
 
