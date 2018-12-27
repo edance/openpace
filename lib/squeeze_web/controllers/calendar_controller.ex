@@ -2,8 +2,10 @@ defmodule SqueezeWeb.CalendarController do
   use SqueezeWeb, :controller
 
   alias Plug.Conn
+  alias Squeeze.Accounts.User
   alias Squeeze.Calendar
   alias Squeeze.Dashboard
+  alias Squeeze.TimeHelper
 
   def index(conn, _) do
     [ua | _] = Conn.get_req_header(conn, "user-agent")
@@ -15,7 +17,7 @@ defmodule SqueezeWeb.CalendarController do
 
   def short(conn, params) do
     user = conn.assigns.current_user
-    date = parse_date(params["date"])
+    date = parse_date(user, params["date"])
     dates = Calendar.visible_dates(date, "short")
     conn
     |> assign(:date, date)
@@ -26,7 +28,7 @@ defmodule SqueezeWeb.CalendarController do
 
   def month(conn, params) do
     user = conn.assigns.current_user
-    date = parse_date(params["date"])
+    date = parse_date(user, params["date"])
     dates = Calendar.visible_dates(date, "month")
     conn
     |> assign(:date, date)
@@ -35,11 +37,11 @@ defmodule SqueezeWeb.CalendarController do
     |> render("month.html")
   end
 
-  defp parse_date(nil), do: Timex.today
-  defp parse_date(date) do
+  defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
+  defp parse_date(%User{} = user, date) do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date
-      {:error, _} -> Timex.today
+      {:error, _} -> parse_date(user, nil)
     end
   end
 end
