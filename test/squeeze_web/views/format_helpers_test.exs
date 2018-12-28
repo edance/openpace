@@ -3,6 +3,7 @@ defmodule SqueezeWeb.FormatHelpersTest do
 
   @moduletag :format_helpers_case
 
+  alias Squeeze.TimeHelper
   alias SqueezeWeb.FormatHelpers
 
   describe "#format_duration" do
@@ -40,22 +41,30 @@ defmodule SqueezeWeb.FormatHelpersTest do
 
   describe "#relative_date" do
     test "returns today if today" do
-      assert FormatHelpers.relative_date(Timex.today) == "today"
+      user = build(:user)
+      today = TimeHelper.today(user)
+      assert FormatHelpers.relative_date(user, today) == "today"
     end
 
     test "returns tomorrow if in one day" do
-      date = Timex.shift(Timex.today, days: 1)
-      assert FormatHelpers.relative_date(date) == "tomorrow"
+      user = build(:user)
+      today = TimeHelper.today(user)
+      date = Timex.shift(today, days: 1)
+      assert FormatHelpers.relative_date(user, date) == "tomorrow"
     end
 
     test "returns day count if less than two weeks" do
-      date = Timex.shift(Timex.today, days: 14)
-      assert FormatHelpers.relative_date(date) == "in 14 days"
+      user = build(:user)
+      today = TimeHelper.today(user)
+      date = Timex.shift(today, days: 14)
+      assert FormatHelpers.relative_date(user, date) == "in 14 days"
     end
 
     test "returns week count if over than two weeks" do
-      date = Timex.shift(Timex.today, days: 15)
-      assert FormatHelpers.relative_date(date) == "in 3 weeks"
+      user = build(:user)
+      today = TimeHelper.today(user)
+      date = Timex.shift(today, days: 15)
+      assert FormatHelpers.relative_date(user, date) == "in 3 weeks"
     end
   end
 
