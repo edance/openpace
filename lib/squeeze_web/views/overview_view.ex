@@ -25,8 +25,8 @@ defmodule SqueezeWeb.OverviewView do
   end
 
   def weeks_until_race(%User{user_prefs: %{race_date: nil}}), do: nil
-  def weeks_until_race(%User{user_prefs: %{race_date: date}}) do
-    relative_date(date)
+  def weeks_until_race(%User{user_prefs: %{race_date: date}} = user) do
+    relative_date(user, date)
   end
 
   def format_event(nil), do: "Rest"

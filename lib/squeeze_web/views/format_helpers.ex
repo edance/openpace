@@ -6,8 +6,9 @@ defmodule SqueezeWeb.FormatHelpers do
 
   use Phoenix.HTML
 
-  alias Squeeze.Accounts.UserPrefs
+  alias Squeeze.Accounts.{User, UserPrefs}
   alias Squeeze.Distances
+  alias Squeeze.TimeHelper
   alias Timex.Duration
 
   @doc """
@@ -30,8 +31,8 @@ defmodule SqueezeWeb.FormatHelpers do
     Distances.format(distance, imperial: user_prefs.imperial)
   end
 
-  def relative_date(date) do
-    case Timex.diff(date, Timex.today, :days) do
+  def relative_date(%User{} = user, date) do
+    case Timex.diff(date, TimeHelper.today(user), :days) do
       0 -> "today"
       1 -> "tomorrow"
       x when x <= 14 -> "in #{x} days"

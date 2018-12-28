@@ -52,15 +52,16 @@ defmodule SqueezeWeb.OverviewViewTest do
 
   describe "#weeks_until_race" do
     test "without a race date" do
-      user = build(:user, user_prefs: %{race_date: nil})
+      user_prefs = build(:user_prefs, %{race_date: nil})
+      user = build(:user, user_prefs: user_prefs)
       assert OverviewView.weeks_until_race(user) == nil
     end
 
     test "with valid date" do
-      date = Date.add(Timex.today, 21)
-      user = build(:user, %{user_prefs: %{race_date: date}})
+      user = build(:user)
+      date = user.user_prefs.race_date
       weeks_until = OverviewView.weeks_until_race(user)
-      assert weeks_until == FormatHelpers.relative_date(date)
+      assert weeks_until == FormatHelpers.relative_date(user, date)
     end
   end
 end
