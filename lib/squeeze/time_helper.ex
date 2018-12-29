@@ -10,4 +10,10 @@ defmodule Squeeze.TimeHelper do
     |> Timex.now()
     |> Timex.to_date()
   end
+
+  def to_date(%User{user_prefs: %{timezone: timezone}}, datetime \\ Timex.now) do
+    datetime
+    |> Timex.to_datetime(timezone)
+    |> Timex.to_date()
+  end
 end
