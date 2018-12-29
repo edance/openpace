@@ -8,6 +8,7 @@ defmodule Squeeze.Dashboard do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
+  alias Squeeze.TimeHelper
 
   @doc """
   Returns the list of activities by user in a date range.
@@ -37,11 +38,24 @@ defmodule Squeeze.Dashboard do
   """
   def recent_activities(%User{} = user) do
     Activity
-    |> where([a], a.user_id == ^user.id)
+    |> by_user(user)
     |> where([a], not(is_nil(a.start_at)))
     |> order_by([a], [desc: a.start_at])
     |> Repo.all
     |> Repo.preload(:user)
+  end
+
+  @doc """
+  Gets a planned activity for the user on the specific date
+  """
+  def get_planned_activity(%User{} = user, %{start_at: start_at}) do
+    date = TimeHelper.to_date(user, start_at)
+    Activity
+    |> by_user(user)
+    |> where([a], is_nil(a.start_at))
+    |> where([a], a.planned_date == ^date)
+    |> limit(1)
+    |> Repo.one()
   end
 
   @doc """
@@ -94,6 +108,10 @@ defmodule Squeeze.Dashboard do
   """
   def change_activity(%Activity{} = activity) do
     Activity.changeset(activity, %{})
+  end
+
+  defp by_user(query, %User{} = user) do
+    from q in query, where: [user_id: ^user.id]
   end
 
   alias Squeeze.Dashboard.Event
