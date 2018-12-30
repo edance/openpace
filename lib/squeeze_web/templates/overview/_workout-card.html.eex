@@ -4,7 +4,7 @@
       <div class="col">
         <h5 class="card-title text-uppercase text-muted mb-0">Today's Workout</h5>
         <span class="h2 font-weight-bold mb-0">
-          <%= todays_workout(@events) %>
+          REST
         </span>
       </div>
       <div class="col-auto">
@@ -15,13 +15,7 @@
     </div>
 
     <p class="mt-3 mb-0 text-muted text-sm">
-      <%= if length(@events) == 0 do %>
-        <%= link("Create a Training Plan", to: plan_path(@conn, :index), class: "text-no-wrap") %>
-      <% else %>
-        <span class="text-nowrap">
-          <%= next_workout(@events) %>
-        </span>
-      <% end %>
+      <%= link("Create a Training Plan", to: plan_path(@conn, :index), class: "text-no-wrap") %>
     </p>
   </div>
 </div>

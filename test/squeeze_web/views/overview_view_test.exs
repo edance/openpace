@@ -27,18 +27,6 @@ defmodule SqueezeWeb.OverviewViewTest do
     assert OverviewView.race_date(user) == "Nov 11th"
   end
 
-  describe "#format_event" do
-    test "returns Rest if nil event" do
-      assert OverviewView.format_event(nil) == "Rest"
-    end
-
-    test "returns the name of the event" do
-      name = "Boston Marathon"
-      event = build(:event, %{name: name})
-      assert OverviewView.format_event(event) == name
-    end
-  end
-
   test "#format_goal" do
     user = build(:user, %{user_prefs: %{duration: 3 * 60 * 60}})
     assert OverviewView.format_goal(user) == "3:00:00"

@@ -2,7 +2,6 @@ defmodule SqueezeWeb.OverviewView do
   use SqueezeWeb, :view
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.Event
   alias Squeeze.TimeHelper
 
   def title(_page, _assigns) do
@@ -27,27 +26,6 @@ defmodule SqueezeWeb.OverviewView do
   def weeks_until_race(%User{user_prefs: %{race_date: nil}}), do: nil
   def weeks_until_race(%User{user_prefs: %{race_date: date}} = user) do
     relative_date(user, date)
-  end
-
-  def format_event(nil), do: "Rest"
-  def format_event(%Event{} = event) do
-    event.name
-  end
-
-  def todays_workout(events) do
-    events
-    |> List.first()
-    |> format_event()
-  end
-
-  def next_workout(events) when length(events) > 2 do
-    event = Enum.at(events, 1)
-    "Today's next workout: #{format_event(event)}"
-  end
-
-  def next_workout(events) do
-    event = events |> List.last()
-    "Tomorrow's workout: #{format_event(event)}"
   end
 
   def weekly_distance(%User{} = user, activities) do

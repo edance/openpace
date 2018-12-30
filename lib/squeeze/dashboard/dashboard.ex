@@ -113,25 +113,4 @@ defmodule Squeeze.Dashboard do
   defp by_user(query, %User{} = user) do
     from q in query, where: [user_id: ^user.id]
   end
-
-  alias Squeeze.Dashboard.Event
-
-  @doc """
-  Returns the list of events by user in a date range.
-
-  ## Examples
-
-      iex> list_events(user, date_range)
-      [%Event{}, ...]
-
-  """
-  def list_events(%User{} = user, date_range) do
-    Event
-    |> where([a], a.user_id == ^user.id)
-    |> where([a], a.date >= ^date_range.first)
-    |> where([a], a.date <= ^date_range.last)
-    |> order_by([a], a.date)
-    |> Repo.all
-    |> Repo.preload(:user)
-  end
 end
