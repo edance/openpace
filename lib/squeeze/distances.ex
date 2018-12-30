@@ -28,13 +28,13 @@ defmodule Squeeze.Distances do
   def parse({distance, "m"}), do: {:ok, distance}
   def parse({distance, "k"}), do: {:ok, distance * 1000}
   def parse({distance, "km"}), do: {:ok, distance * 1000}
-  def parse({distance, ""}), do: {:ok, distance * @mile_in_meters}
   def parse({multiplier, "x" <> rest}) do
     case parse(rest) do
       {:ok, distance} -> {:ok, multiplier * distance}
       {:error} -> {:error}
     end
   end
+  def parse({_distance, ""}), do: {:error}
   def parse(str) when is_binary(str) do
     str
     |> remove_whitespace()

@@ -53,7 +53,6 @@ defmodule SqueezeWeb.PlanController do
     activities
     |> Enum.map(fn({_, v}) -> v end)
     |> Enum.filter(&(&1["name"] != ""))
-    |> Enum.map(&format_name(&1))
     |> Enum.map(&add_distance_to_activity(&1))
     |> Enum.each(&Dashboard.create_activity(user, &1))
     if current_week < get_session(conn, :weeks) do
@@ -69,9 +68,6 @@ defmodule SqueezeWeb.PlanController do
       {:error, _} -> Timex.today
     end
   end
-
-  defp format_name(%{"name" => ""} = activity), do: %{activity | "name" => "Rest"}
-  defp format_name(activity), do: activity
 
   defp add_distance_to_activity(activity) do
     Map.merge(activity, %{"planned_distance" => parse_distance(activity["name"])})

@@ -31,9 +31,8 @@ defmodule Squeeze.DistancesTest do
   end
 
   describe "#parse" do
-    test "default number to miles" do
-      assert {:ok, distance} = Distances.parse("3")
-      assert distance == Distances.mile_in_meters * 3
+    test "errors if no distance specified" do
+      assert {:error} = Distances.parse("3")
     end
 
     test "parse for mi" do
