@@ -10,7 +10,17 @@ defmodule Squeeze.Dashboard.Activity do
   alias Squeeze.Dashboard.{Activity, Event}
 
   @required_fields ~w(name)a
-  @optional_fields ~w(distance start_at duration external_id polyline event_id)a
+  @optional_fields ~w(
+    planned_distance
+    planned_duration
+    planned_date
+    distance
+    start_at
+    duration
+    external_id
+    polyline
+    event_id
+  )a
 
   schema "activities" do
     field :name, :string
