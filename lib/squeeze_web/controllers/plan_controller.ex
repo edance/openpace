@@ -52,6 +52,7 @@ defmodule SqueezeWeb.PlanController do
     current_week = String.to_integer(week)
     activities
     |> Enum.map(fn({_, v}) -> v end)
+    |> Enum.filter(&(&1["name"] != ""))
     |> Enum.map(&format_name(&1))
     |> Enum.map(&add_distance_to_activity(&1))
     |> Enum.each(&Dashboard.create_activity(user, &1))
