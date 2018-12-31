@@ -13,6 +13,9 @@ defmodule Squeeze.Sync do
   alias Squeeze.Repo
   alias Strava.{Activities, Client}
 
+  @doc """
+  Fetch all activities and import into database.
+  """
   def load_activities(%User{credential: nil}), do: []
   def load_activities(%User{credential: credential}) do
     changeset = Credential.changeset(credential, %{sync_at: DateTime.utc_now})
@@ -22,10 +25,7 @@ defmodule Squeeze.Sync do
     |> Repo.transaction()
   end
 
-  @doc """
-  Fetch all activities and import into database.
-  """
-  def fetch_activities(%Credential{provider: "strava"} = credential) do
+  defp fetch_activities(%Credential{provider: "strava"} = credential) do
     client = Client.new(credential.access_token,
       refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
@@ -36,7 +36,7 @@ defmodule Squeeze.Sync do
     |> Enum.filter(&String.contains?(&1.type, "Run"))
     |> Enum.map(&map_strava_activity(&1, credential.user_id))
   end
-  def fetch_activities(_), do: []
+  defp fetch_activities(_), do: []
 
   defp strava_filter(%Credential{sync_at: nil}), do: []
   defp strava_filter(%Credential{sync_at: sync_at}) do
