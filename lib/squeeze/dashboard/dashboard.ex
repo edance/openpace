@@ -45,6 +45,14 @@ defmodule Squeeze.Dashboard do
     |> Repo.preload(:user)
   end
 
+  def todays_activities(%User{} = user) do
+    date = TimeHelper.today(user)
+    Activity
+    |> by_user(user)
+    |> where([a], a.planned_date == ^date)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a planned activity for the user on the specific date
   """

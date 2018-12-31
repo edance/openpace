@@ -2,6 +2,7 @@ defmodule Squeeze.DashboardTest do
   use Squeeze.DataCase
 
   alias Squeeze.Dashboard
+  alias Squeeze.TimeHelper
 
   import Squeeze.Factory
 
@@ -28,6 +29,18 @@ defmodule Squeeze.DashboardTest do
     end
 
     test "orders by most recent activities first" do
+    end
+  end
+
+  describe "#todays_activities/1" do
+    test "returns only activities for today" do
+      user = insert(:user)
+      date = TimeHelper.today(user)
+      activity1 = insert(:activity, %{user: user, planned_date: date})
+      activity2 = insert(:activity, %{user: user, planned_date: Date.add(date, 1)})
+      activities = Dashboard.todays_activities(user)
+      assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
+      refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
     end
   end
 

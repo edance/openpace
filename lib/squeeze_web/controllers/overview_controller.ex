@@ -9,12 +9,12 @@ defmodule SqueezeWeb.OverviewController do
     apply(__MODULE__, action_name(conn), args)
   end
 
-  def index(conn, _params, current_user) do
-    activities = Dashboard.recent_activities(current_user)
+  def index(conn, _params, user) do
     render(conn, "index.html",
-      activities: activities,
-      week_dataset: Stats.dataset_for_week_chart(current_user),
-      year_dataset: Stats.dataset_for_year_chart(current_user)
+      activities: Dashboard.recent_activities(user),
+      todays_activities: Dashboard.todays_activities(user),
+      week_dataset: Stats.dataset_for_week_chart(user),
+      year_dataset: Stats.dataset_for_year_chart(user)
     )
   end
 end
