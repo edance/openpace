@@ -4,7 +4,12 @@
       <div class="col">
         <h5 class="card-title text-uppercase text-muted mb-0">Today's Workout</h5>
         <span class="h2 font-weight-bold mb-0">
-          REST
+          <%= if length(@todays_activities) == 0 do %>
+            Rest
+          <% end %>
+          <%= for activity <- @todays_activities do %>
+            <%= activity.name %>
+          <% end %>
         </span>
       </div>
       <div class="col-auto">
