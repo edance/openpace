@@ -46,10 +46,13 @@ defmodule Squeeze.Dashboard do
   end
 
   def todays_activities(%User{} = user) do
-    date = TimeHelper.today(user)
+    get_activities_by_date(user, TimeHelper.today(user))
+  end
+
+  def get_activities_by_date(%User{} = user, date) do
     Activity
     |> by_user(user)
-    |> where([a], a.planned_date == ^date)
+    |> by_date(date)
     |> Repo.all()
   end
 
@@ -120,5 +123,9 @@ defmodule Squeeze.Dashboard do
 
   defp by_user(query, %User{} = user) do
     from q in query, where: [user_id: ^user.id]
+  end
+
+  defp by_date(query, date) do
+    from q in query, where: [planned_date: ^date]
   end
 end

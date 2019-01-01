@@ -15,7 +15,8 @@ defmodule SqueezeWeb.StravaWebhookController do
   def webhook(conn, %{"object_type" => "activity"} = params) do
     uid = params["owner_id"]
     activity_id = params["object_id"]
-    credential = Accounts.get_credential("strava", uid)
+    user = Accounts.get_user_by_credential(%{provider: "strava", uid: uid})
+    credential = user.credential
     client = Client.new(credential.access_token,
       refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))

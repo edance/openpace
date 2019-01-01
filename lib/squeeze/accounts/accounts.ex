@@ -34,12 +34,21 @@ defmodule Squeeze.Accounts do
 
   """
   def get_or_update_user_by_credential(%User{} = user, attrs \\ %{}) do
-    %{credential: %{provider: provider, uid: uid}} = attrs
-    case get_credential(provider, uid) do
+    case get_user_by_credential(attrs.credential) do
       nil -> update_user(user, attrs)
-      credential -> {:ok, credential.user}
+      user -> {:ok, user}
     end
   end
+
+  def get_user_by_credential(%{provider: provider, uid: uid}) do
+    query = from u in User,
+      left_join: c in assoc(u, :credential),
+      where: c.provider == ^provider and c.uid == ^uid
+    query
+    |> Repo.one()
+    |> Repo.preload([:credential, :user_prefs])
+  end
+  def get_user_by_credential(_), do: nil
 
   @doc """
   Gets a single user.
