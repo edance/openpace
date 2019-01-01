@@ -11,12 +11,14 @@ defmodule Squeeze.Sync do
   alias Squeeze.Accounts.{Credential, User}
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
-  alias Strava.{Activities, Client}
+
+  @strava_activities Application.get_env(:squeeze, :strava_activities)
+  @strava_client Application.get_env(:squeeze, :strava_client)
 
   @doc """
   Fetch all activities and import into database.
   """
-  def load_activities(%User{credential: nil}), do: []
+  def load_activities(%User{credential: nil}), do: {:ok, %{}}
   def load_activities(%User{credential: credential}) do
     changeset = Credential.changeset(credential, %{sync_at: DateTime.utc_now})
     Multi.new
@@ -26,12 +28,12 @@ defmodule Squeeze.Sync do
   end
 
   defp fetch_activities(%Credential{provider: "strava"} = credential) do
-    client = Client.new(credential.access_token,
+    client = @strava_client.new(credential.access_token,
       refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
     )
     filter = strava_filter(credential)
-    {:ok, activities} = Activities.get_logged_in_athlete_activities(client, filter)
+    {:ok, activities} = @strava_activities.get_logged_in_athlete_activities(client, filter)
     activities
     |> Enum.filter(&String.contains?(&1.type, "Run"))
     |> Enum.map(&map_strava_activity(&1, credential.user_id))
