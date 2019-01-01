@@ -42,6 +42,18 @@ document.addEventListener("turbolinks:load", function() {
         },
         displayColors: false,
       },
+      scales: {
+        xAxes: [{
+          display: true,
+        }],
+        yAxes: [{
+          display: true,
+          ticks: {
+            beginAtZero: true,
+            suggestedMax: 10,
+          }
+        }],
+      },
     },
     data: {
       labels: dataset.map(x => x.label),
