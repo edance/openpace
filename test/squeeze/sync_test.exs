@@ -10,7 +10,7 @@ defmodule Squeeze.SyncTest do
 
   describe "#load_activities/1" do
     test "without credentials returns an empty array" do
-      user = build(:user, %{credential: nil})
+      user = build(:guest_user)
       assert Sync.load_activities(user) == {:ok, %{}}
     end
 
@@ -21,8 +21,7 @@ defmodule Squeeze.SyncTest do
       Squeeze.Strava.MockActivities
       |> expect(:get_logged_in_athlete_activities, fn(_, _) -> {:ok, []} end)
 
-      credential = insert(:credential)
-      user = insert(:user, %{credential: credential})
+      user = insert(:user) |> with_credential()
       Sync.load_activities(user)
       refute Accounts.get_user!(user.id).credential.sync_at == nil
     end
@@ -34,8 +33,7 @@ defmodule Squeeze.SyncTest do
       Squeeze.Strava.MockActivities
       |> expect(:get_logged_in_athlete_activities, fn(_, _) -> {:ok, [strava_activity()]} end)
 
-      credential = insert(:credential)
-      user = insert(:user, %{credential: credential})
+      user = insert(:user) |> with_credential()
       Sync.load_activities(user)
       activity = user |> Dashboard.recent_activities() |> List.first()
       assert activity.name == strava_activity().name
