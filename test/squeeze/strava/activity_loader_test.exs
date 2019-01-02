@@ -49,8 +49,7 @@ defmodule Squeeze.ActivityLoaderTest do
   end
 
   defp create_user(_) do
-    credential = insert(:credential)
-    user = insert(:user, %{credential: credential})
+    user = insert(:user) |> with_credential()
     {:ok, user: user}
   end
 
