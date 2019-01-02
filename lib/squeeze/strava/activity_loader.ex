@@ -3,13 +3,12 @@ defmodule Squeeze.Strava.ActivityLoader do
   Loads data from strava and updates the activity
   """
 
-  alias Squeeze.Accounts
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard
+  alias Squeeze.Strava.Client
   alias Squeeze.TimeHelper
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
-  @strava_client Application.get_env(:squeeze, :strava_client)
 
   def update_or_create_activity(%User{} = user, strava_activity_id) do
     {:ok, strava_activity} = fetch_strava_activity(user, strava_activity_id)
@@ -30,16 +29,8 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   defp fetch_strava_activity(%User{} = user, activity_id) do
     user
-    |> strava_client()
+    |> Client.new
     |> @strava_activities.get_activity_by_id(activity_id)
-  end
-
-  defp strava_client(%User{} = user) do
-    credential = user.credential
-    @strava_client.new(credential.access_token,
-      refresh_token: credential.refresh_token,
-      token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
-    )
   end
 
   defp map_strava_activity(x) do
