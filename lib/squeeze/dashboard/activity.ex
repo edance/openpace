@@ -37,6 +37,8 @@ defmodule Squeeze.Dashboard.Activity do
     field :polyline, :string
     field :external_id, :integer
 
+    field :complete, :boolean
+
     belongs_to :user, User
     belongs_to :event, Event
 
