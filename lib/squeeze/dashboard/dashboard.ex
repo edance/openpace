@@ -56,6 +56,14 @@ defmodule Squeeze.Dashboard do
     |> Repo.all()
   end
 
+  def get_incomplete_activities_by_date(%User{} = user, date) do
+    Activity
+    |> by_user(user)
+    |> by_date(date)
+    |> incomplete()
+    |> Repo.all()
+  end
+
   @doc """
   Gets a planned activity for the user on the specific date
   """
@@ -109,6 +117,24 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
+  Updates a activity.
+
+  ## Examples
+
+  iex> update_activity(activity, %{field: new_value})
+  {:ok, %Activity{}}
+
+  iex> update_activity(activity, %{field: bad_value})
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def update_activity(%Activity{} = activity, attrs) do
+    activity
+    |> Activity.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking activity changes.
 
   ## Examples
@@ -127,10 +153,6 @@ defmodule Squeeze.Dashboard do
 
   defp by_date(query, date) do
     from q in query, where: [planned_date: ^date]
-  end
-
-  defp complete(query) do
-    from q in query, where: [complete: true]
   end
 
   defp incomplete(query) do
