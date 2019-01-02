@@ -7,7 +7,7 @@ defmodule Squeeze.Dashboard.Activity do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, Event}
+  alias Squeeze.Dashboard.{Activity}
 
   @required_fields ~w(name)a
   @optional_fields ~w(
@@ -19,7 +19,6 @@ defmodule Squeeze.Dashboard.Activity do
     duration
     external_id
     polyline
-    event_id
   )a
 
   schema "activities" do
@@ -40,7 +39,6 @@ defmodule Squeeze.Dashboard.Activity do
     field :complete, :boolean
 
     belongs_to :user, User
-    belongs_to :event, Event
 
     timestamps()
   end
