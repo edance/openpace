@@ -55,6 +55,7 @@ defmodule Squeeze.Sync do
       external_id: x.id,
       user_id: user_id,
       polyline: x.map.summary_polyline,
+      complete: true,
       inserted_at: DateTime.utc_now,
       updated_at: DateTime.utc_now
     }

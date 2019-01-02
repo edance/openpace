@@ -21,7 +21,7 @@ defmodule Squeeze.Dashboard do
   """
   def list_activities(%User{} = user, _date_range) do
     Activity
-    |> where([a], a.user_id == ^user.id)
+    |> by_user(user)
     |> order_by([a], a.start_at)
     |> Repo.all
     |> Repo.preload(:user)
@@ -127,5 +127,13 @@ defmodule Squeeze.Dashboard do
 
   defp by_date(query, date) do
     from q in query, where: [planned_date: ^date]
+  end
+
+  defp complete(query) do
+    from q in query, where: [complete: true]
+  end
+
+  defp incomplete(query) do
+    from q in query, where: [complete: false]
   end
 end
