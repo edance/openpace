@@ -17,6 +17,15 @@ defmodule Squeeze.UserFactory do
           user_prefs: build(:user_prefs)
         }
       end
+
+      def guest_user_factory do
+        struct!(
+          user_factory(),
+          %{
+            user_prefs: %{}
+          }
+        )
+      end
     end
   end
 end
