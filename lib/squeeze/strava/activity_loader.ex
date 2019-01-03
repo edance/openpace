@@ -10,12 +10,19 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
 
+  def update_or_create_activity(%User{} = user, %{type: type} = activity) do
+    if String.contains?(type, "Run") do
+      case get_closest_activity(user, activity) do
+        nil -> Dashboard.create_activity(user, map_strava_activity(activity))
+        x -> Dashboard.update_activity(x, map_strava_activity(activity))
+      end
+    else
+      {:ok, nil}
+    end
+  end
   def update_or_create_activity(%User{} = user, strava_activity_id) do
     {:ok, strava_activity} = fetch_strava_activity(user, strava_activity_id)
-    case get_closest_activity(user, strava_activity) do
-      nil -> Dashboard.create_activity(user, map_strava_activity(strava_activity))
-      x -> Dashboard.update_activity(x, map_strava_activity(strava_activity))
-    end
+    update_or_create_activity(user, strava_activity)
   end
 
   def get_closest_activity(%User{} = user, strava_activity) do
