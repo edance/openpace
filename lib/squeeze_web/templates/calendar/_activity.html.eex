@@ -1,0 +1,7 @@
+<%= link to: activity_path(@conn, :show, @activity) do %>
+  <%= if @activity.complete do %>
+    <i class="icon-check"></i>
+  <% end %>
+
+  <%= @activity.name %>
+<% end %>
