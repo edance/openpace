@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.CalendarView do
   use SqueezeWeb, :view
 
+  alias Squeeze.TimeHelper
+
   def title(_page, _assigns) do
     "Calendar"
   end
@@ -60,6 +62,11 @@ defmodule SqueezeWeb.CalendarView do
     content_tag(:div, class: "date-label", data: [date: format_date(date)]) do
       date_label_content(date)
     end
+  end
+
+  def on_date?(user, date, activity) do
+    activity.planned_date == date ||
+      TimeHelper.to_date(user, activity.start_at)  == date
   end
 
   defp date_label_content(date) do

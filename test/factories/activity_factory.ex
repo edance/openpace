@@ -1,6 +1,7 @@
 defmodule Squeeze.ActivityFactory do
   @moduledoc false
 
+  alias Faker.{Date}
   alias Squeeze.Dashboard.Activity
 
   defmacro __using__(_opts) do
@@ -15,6 +16,18 @@ defmodule Squeeze.ActivityFactory do
           start_at: DateTime.utc_now,
           external_id: sequence(:external_id, &(&1)),
           polyline: "abc",
+          user: build(:user)
+        }
+      end
+
+      def planned_activity_factory do
+        miles = Enum.random(2..16) # 2-16 miles
+        pace = Enum.random(5..8) # 5-9 min/miles
+        %Activity{
+          planned_date: Date.forward(100),
+          planned_distance: miles * 1609.0,
+          planned_duration: pace * miles * 60,
+          name: "#{miles} mi",
           user: build(:user)
         }
       end

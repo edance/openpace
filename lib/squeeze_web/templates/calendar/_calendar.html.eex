@@ -2,5 +2,8 @@
   <%= content_tag(:div, class: class_list(idx, @dates)) do %>
     <%= date_label(date, idx) %>
 
+    <%= for activity <- Enum.filter(@activities, &(on_date?(@current_user, date, &1))) do %>
+      <%= activity.name %>
+    <% end %>
   <% end %>
 <% end %>
