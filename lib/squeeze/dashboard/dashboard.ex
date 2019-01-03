@@ -19,10 +19,10 @@ defmodule Squeeze.Dashboard do
   [%Activity{}, ...]
 
   """
-  def list_activities(%User{} = user, _date_range) do
+  def list_activities(%User{} = user, date_range) do
     Activity
     |> by_user(user)
-    |> order_by([a], a.start_at)
+    |> by_date_range(user, date_range)
     |> Repo.all
     |> Repo.preload(:user)
   end
@@ -62,19 +62,6 @@ defmodule Squeeze.Dashboard do
     |> by_date(date)
     |> incomplete()
     |> Repo.all()
-  end
-
-  @doc """
-  Gets a planned activity for the user on the specific date
-  """
-  def get_planned_activity(%User{} = user, %{start_at: start_at}) do
-    date = TimeHelper.to_date(user, start_at)
-    Activity
-    |> by_user(user)
-    |> where([a], is_nil(a.start_at))
-    |> where([a], a.planned_date == ^date)
-    |> limit(1)
-    |> Repo.one()
   end
 
   @doc """
@@ -153,6 +140,14 @@ defmodule Squeeze.Dashboard do
 
   defp by_date(query, date) do
     from q in query, where: [planned_date: ^date]
+  end
+
+  defp by_date_range(query, %User{} = user, date_range) do
+    start_at = TimeHelper.beginning_of_day(user, date_range.first)
+    end_at = TimeHelper.end_of_day(user, date_range.last)
+    from q in query,
+      where: q.start_at >= ^start_at and q.start_at <= ^end_at,
+      or_where: q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last
   end
 
   defp incomplete(query) do

@@ -8,14 +8,26 @@ defmodule Squeeze.DashboardTest do
 
   describe "#list_activities/2" do
     test "includes only the users activities" do
-      activity1 = insert(:activity)
-      activity2 = insert(:activity, start_at: activity1.start_at)
-      activities = Dashboard.list_activities(activity1.user, nil)
-      assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
-      refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
+      now = Timex.now
+      [activity, _] = insert_pair(:activity, start_at: now)
+      today = Timex.to_date(now)
+      range = Date.range(Timex.shift(today, days: -1), Timex.shift(today, days: 1))
+      activities = Dashboard.list_activities(activity.user, range)
+
+      assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity.id)
+      assert length(activities) == 1
     end
 
     test "includes only activities in the date range" do
+      user = insert(:user)
+      today = TimeHelper.today(user)
+      beginning_of_day = TimeHelper.beginning_of_day(user, today)
+      end_of_day = TimeHelper.end_of_day(user, today)
+      insert(:activity, user: user, start_at: beginning_of_day)
+      insert(:activity, user: user, start_at: end_of_day)
+      insert(:activity, user: user, start_at: Timex.shift(end_of_day, minutes: 1))
+      activities = Dashboard.list_activities(user, Date.range(today, today))
+      assert length(activities) == 2
     end
   end
 
