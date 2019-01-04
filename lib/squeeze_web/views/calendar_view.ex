@@ -64,6 +64,11 @@ defmodule SqueezeWeb.CalendarView do
     end
   end
 
+  def activity_color(%{status: :pending}), do: "info"
+  def activity_color(%{status: :complete}), do: "success"
+  def activity_color(%{status: :incomplete}), do: "danger"
+  def activity_color(%{status: :partial}), do: "warning"
+
   def on_date?(user, date, activity) do
     activity.planned_date == date ||
       TimeHelper.to_date(user, activity.start_at)  == date

@@ -1,6 +1,7 @@
-<% status = Enum.random(["success", "info", "danger", "warning"]) %>
-<%= link to: activity_path(@conn, :show, @activity), class: "d-block text-left badge badge-#{status}" do %>
+<% color = activity_color(@activity) %>
+
+<%= link to: activity_path(@conn, :show, @activity), class: "d-block text-left badge badge-#{color}" do %>
   <span class="badge badge-dot mr-4">
-    <i class="<%= "bg-#{status}" %>"></i> <%= @activity.name %>
+    <i class="<%= "bg-#{color}" %>"></i> <%= @activity.name %>
   </span>
 <% end %>
