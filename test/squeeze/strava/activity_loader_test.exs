@@ -10,16 +10,28 @@ defmodule Squeeze.ActivityLoaderTest do
   describe "update_or_create_activity/2" do
     setup [:build_strava_activity, :setup_mocks, :create_user]
 
-    test "creates an activity if none exist", %{user: user, run_activity: strava_activity} do
+    test "creates an activity if none exist",
+      %{user: user, run_activity: strava_activity} do
       {:ok, activity} = ActivityLoader.update_or_create_activity(user, strava_activity.id)
       refute activity.id == nil
     end
 
-    test "updates activity if matched activity exists",
+    test "updates activity if matched activity exists and sets status to complete",
       %{user: user, run_activity: strava_activity} do
-      existing_activity = insert(:activity, user: user, planned_date: TimeHelper.today(user))
+      distance = strava_activity.distance
+      existing_activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
       {:ok, activity} = ActivityLoader.update_or_create_activity(user, strava_activity.id)
       assert activity.id == existing_activity.id
+      assert activity.status == :complete
+    end
+
+    test "updates activity if matched activity exists and sets status to partial",
+      %{user: user, run_activity: strava_activity} do
+      distance = strava_activity.distance * 1.5
+      existing_activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
+      {:ok, activity} = ActivityLoader.update_or_create_activity(user, strava_activity.id)
+      assert activity.id == existing_activity.id
+      assert activity.status == :partial
     end
 
     test "does nothing if strava_activity is not a run",
@@ -36,7 +48,8 @@ defmodule Squeeze.ActivityLoaderTest do
       assert ActivityLoader.get_closest_activity(user, strava_activity).id == activity.id
     end
 
-    test "returns the closest activity on that date", %{user: user, activity: activity, run_activity: strava_activity} do
+    test "returns the closest activity on that date",
+      %{user: user, activity: activity, run_activity: strava_activity} do
       create_activity(%{user: user, planned_distance: 6000.0})
       create_activity(%{user: user, planned_distance: 4000.0})
       assert ActivityLoader.get_closest_activity(user, strava_activity).id == activity.id
