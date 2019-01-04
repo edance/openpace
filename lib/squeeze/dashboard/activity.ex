@@ -19,6 +19,7 @@ defmodule Squeeze.Dashboard.Activity do
     duration
     external_id
     polyline
+    status
   )a
 
   schema "activities" do
@@ -36,6 +37,7 @@ defmodule Squeeze.Dashboard.Activity do
     field :polyline, :string
     field :external_id, :integer
 
+    field :status, ActivityStatusEnum
     field :complete, :boolean
 
     belongs_to :user, User

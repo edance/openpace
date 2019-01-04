@@ -56,11 +56,11 @@ defmodule Squeeze.Dashboard do
     |> Repo.all()
   end
 
-  def get_incomplete_activities_by_date(%User{} = user, date) do
+  def get_pending_activities_by_date(%User{} = user, date) do
     Activity
     |> by_user(user)
     |> by_date(date)
-    |> incomplete()
+    |> status(:pending)
     |> Repo.all()
   end
 
@@ -150,7 +150,7 @@ defmodule Squeeze.Dashboard do
       or_where: q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last
   end
 
-  defp incomplete(query) do
-    from q in query, where: [complete: false]
+  defp status(query, status) do
+    from q in query, where: [status: ^status]
   end
 end

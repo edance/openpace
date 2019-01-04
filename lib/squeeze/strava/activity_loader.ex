@@ -27,7 +27,7 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   def get_closest_activity(%User{} = user, strava_activity) do
     date = TimeHelper.to_date(user, strava_activity.start_date)
-    activities = Dashboard.get_incomplete_activities_by_date(user, date)
+    activities = Dashboard.get_pending_activities_by_date(user, date)
     case length(activities) do
       1 -> List.first(activities)
       _ -> List.first(activities) # match on duration or distance, check within threshold of 10%?
@@ -48,7 +48,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       start_at: x.start_date,
       external_id: x.id,
       polyline: x.map.summary_polyline,
-      complete: true
+      status: :complete
     }
   end
 end
