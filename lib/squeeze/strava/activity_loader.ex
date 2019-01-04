@@ -5,16 +5,19 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard
+  alias Squeeze.Dashboard.Activity
   alias Squeeze.Strava.Client
   alias Squeeze.TimeHelper
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
 
-  def update_or_create_activity(%User{} = user, %{type: type} = activity) do
+  def update_or_create_activity(%User{} = user, %{type: type} = strava_activity) do
     if String.contains?(type, "Run") do
-      case get_closest_activity(user, activity) do
-        nil -> Dashboard.create_activity(user, map_strava_activity(activity))
-        x -> Dashboard.update_activity(x, map_strava_activity(activity))
+      case get_closest_activity(user, strava_activity) do
+        nil -> Dashboard.create_activity(user, map_strava_activity(strava_activity))
+        activity ->
+          activity
+          |> Dashboard.update_activity(map_strava_activity(activity, strava_activity))
       end
     else
       {:ok, nil}
@@ -29,8 +32,11 @@ defmodule Squeeze.Strava.ActivityLoader do
     date = TimeHelper.to_date(user, strava_activity.start_date)
     activities = Dashboard.get_pending_activities_by_date(user, date)
     case length(activities) do
-      1 -> List.first(activities)
-      _ -> List.first(activities) # match on duration or distance, check within threshold of 10%?
+      x when x <= 1 -> List.first(activities)
+      _ ->
+        activities
+        |> Enum.sort(fn(a, b) -> diff(a, strava_activity) < diff(b, strava_activity) end)
+        |> List.first()
     end
   end
 
@@ -40,14 +46,35 @@ defmodule Squeeze.Strava.ActivityLoader do
     |> @strava_activities.get_activity_by_id(activity_id)
   end
 
-  defp map_strava_activity(x) do
+  def diff(%Activity{planned_distance: planned_distance}, %{distance: distance})
+  when is_number(planned_distance) and planned_distance > 0 do
+    abs(planned_distance - distance) / planned_distance
+  end
+  def diff(_, _), do: 1
+
+  defp percent_complete(%Activity{planned_distance: planned_distance}, %{distance: distance})
+  when is_number(planned_distance) and planned_distance > 0 do
+    distance / planned_distance
+  end
+  defp percent_complete(_, _), do: 1
+
+  defp activity_status(percentage) when percentage > 0.95, do: :complete
+  defp activity_status(_), do: :partial
+
+  defp map_strava_activity(activity, strava_activity)  do
+    attrs = map_strava_activity(strava_activity)
+    percent_complete = percent_complete(activity, strava_activity)
+    %{attrs | name: activity.name, status: activity_status(percent_complete)}
+  end
+
+  defp map_strava_activity(strava_activity) do
     %{
-      name: x.name,
-      distance: x.distance,
-      duration: x.moving_time,
-      start_at: x.start_date,
-      external_id: x.id,
-      polyline: x.map.summary_polyline,
+      name: strava_activity.name,
+      distance: strava_activity.distance,
+      duration: strava_activity.moving_time,
+      start_at: strava_activity.start_date,
+      external_id: strava_activity.id,
+      polyline: strava_activity.map.summary_polyline,
       status: :complete
     }
   end
