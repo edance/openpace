@@ -1,6 +1,8 @@
 <%= for {date, idx} <- Enum.with_index(@dates) do %>
   <%= content_tag(:div, class: class_list(idx, @dates)) do %>
-    <%= date_label(date, idx) %>
+    <div class="pb-1">
+      <%= date_label(date, idx) %>
+    </div>
 
     <%= for activity <- Enum.filter(@activities, &(on_date?(@current_user, date, &1))) do %>
       <%= render("_activity.html", activity: activity, conn: @conn) %>
