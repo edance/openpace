@@ -77,25 +77,33 @@ defmodule SqueezeWeb.FormatHelpersTest do
   end
 
   describe "#format_pace" do
-    test "with a valid distance" do
-      distance = 2 * 1609 # 2 miles in meters
-      duration = 14 * 60 # 14 minutes in seconds
-      pace_str = FormatHelpers.format_pace(duration, distance)
-      assert pace_str == "7:00 min/mile"
+    setup [:build_user_prefs, :build_activity]
+
+    test "with a valid distance", %{activity: activity, user_prefs: user_prefs} do
+      assert FormatHelpers.format_pace(activity, user_prefs) == "7:00/mi"
     end
 
-    test "with an invalid distance > 0" do
-      distance = 1 # 1 meter
-      duration = 14 * 60 # 14 minutes in seconds
-      pace_str = FormatHelpers.format_pace(duration, distance)
-      assert pace_str == ""
+    test "with valid distance and metric user_prefs",
+      %{activity: activity, user_prefs: user_prefs} do
+      user_prefs = %{user_prefs | imperial: false}
+      assert FormatHelpers.format_pace(activity, user_prefs) == "4:20/km"
     end
 
-    test "with a distance of 0" do
-      distance = 0 # 1 meter
-      duration = 30 * 60 # 30 minutes in seconds
-      pace_str = FormatHelpers.format_pace(duration, distance)
-      assert pace_str == ""
+    test "with a distance of 0", %{activity: activity, user_prefs: user_prefs} do
+      activity = %{activity | distance: 0}
+      assert FormatHelpers.format_pace(activity, user_prefs) == "N/A"
     end
+  end
+
+  defp build_user_prefs(_) do
+    {:ok, user_prefs: build(:user_prefs)}
+  end
+
+  defp build_activity(_) do
+    attrs = %{
+      distance: 2 * 1609, # 2 miles in meters
+      duration: 14 * 60 # 14 minutes in seconds
+    }
+    {:ok, activity: build(:activity, attrs)}
   end
 end
