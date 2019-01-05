@@ -1,26 +1,108 @@
-<div class="ui text container">
-  <h2>Show Activity</h2>
-  <span><%= link "Back", to: activity_path(@conn, :index) %></span>
+<!-- Top navbar -->
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+    <%= @activity.name %>
+  </span>
+<% end %>
 
-  <ui class="ui list">
-    <li>
-      <strong>Name:</strong>
-      <%= @activity.name %>
-    </li>
-
-    <li>
-      <strong>Distance:</strong>
-      <%= @activity.distance %>
-    </li>
-
-    <li>
-      <strong>Duration:</strong>
-      <%= @activity.duration %>
-    </li>
-
-    <li>
-      <strong>Start at:</strong>
-      <%= @activity.start_at %>
-    </li>
-  </ul>
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Distance</h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= format_distance(@activity.distance, @current_user.user_prefs) %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Duration
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= format_duration(@activity.duration) %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Pace
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= format_pace(@activity, @current_user.user_prefs) %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Fitness Increase
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    N/A
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="fas fa-percent"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <div id="map-canvas" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>
+      </div>
+    </div>
+  </div>
 </div>

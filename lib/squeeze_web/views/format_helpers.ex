@@ -45,21 +45,13 @@ defmodule SqueezeWeb.FormatHelpers do
     Timex.format!(time, "{relative}", :relative)
   end
 
-  def format_pace(_, distance) when distance <= 0, do: ""
-  def format_pace(duration, distance) do
-    case pace_duration(duration, distance) do
-      {:ok, str} -> "#{str} min/mile"
-      :error -> ""
-    end
-  end
-
-  defp pace_duration(duration, distance) do
-    miles = distance / 1609
+  def format_pace(%{distance: distance}, _) when distance <= 0, do: "N/A"
+  def format_pace(%{distance: distance, duration: duration}, %UserPrefs{} = user_prefs) do
+    miles = Distances.to_float(distance, imperial: user_prefs.imperial)
+    label = Distances.label(imperial: user_prefs.imperial)
     pace = duration / miles
-    case duration_to_time(pace) do
-      {:ok, time} -> Timex.format(time, "%-M:%S", :strftime)
-      {:error, _} -> :error
-    end
+    {:ok, time} = duration_to_time(pace)
+    "#{Timex.format!(time, "%-M:%S", :strftime)}/#{label}"
   end
 
   defp duration_to_time(duration) do
