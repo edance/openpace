@@ -11,6 +11,11 @@ defmodule Squeeze.AccountsTest do
     @valid_attrs params_for(:user)
     @update_attrs %{first_name: "Brian"}
 
+    test "create_guest_user/0 creates a user" do
+      assert {:ok, %User{} = user} = Accounts.create_guest_user()
+      assert user.id != nil
+    end
+
     test "get_user!/1 returns the user with given id" do
       user = insert(:user)
       assert Accounts.get_user!(user.id).id == user.id
@@ -41,9 +46,19 @@ defmodule Squeeze.AccountsTest do
   end
 
   describe "credentials" do
+    alias Squeeze.Accounts.Credential
+
     test "get_credential!/2 returns the credential with given id" do
       credential = insert(:credential)
       assert Accounts.get_credential(credential.provider, credential.uid).id == credential.id
+    end
+
+    test "update_credential/2 with valid data updates the credential" do
+      access_token = "ACCESS_TOKEN"
+      credential = insert(:credential)
+      attrs = %{access_token: access_token}
+      assert {:ok, %Credential{} = credential} = Accounts.update_credential(credential, attrs)
+      assert credential.access_token == access_token
     end
   end
 end

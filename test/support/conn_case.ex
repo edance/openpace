@@ -39,7 +39,7 @@ defmodule SqueezeWeb.ConnCase do
       Sandbox.mode(Repo, {:shared, self()})
     end
 
-    user = Factory.insert(:user, credential: nil)
+    user = create_user(tags)
 
     conn =
       ConnTest.build_conn()
@@ -47,4 +47,7 @@ defmodule SqueezeWeb.ConnCase do
 
     {:ok, conn: conn, user: user}
   end
+
+  defp create_user(%{guest_user: true}), do: Factory.insert(:guest_user)
+  defp create_user(_), do: Factory.insert(:user, credential: nil)
 end

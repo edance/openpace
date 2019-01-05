@@ -2,9 +2,9 @@ defmodule SqueezeWeb.PageControllerTest do
   use SqueezeWeb.ConnCase
 
   describe "GET /" do
+    @tag :guest_user
     test "as a guest user", %{conn: conn} do
       conn = conn
-      |> assign(:current_user, insert(:guest_user))
       |> get("/")
       assert html_response(conn, 200) =~ "Squeeze"
     end
