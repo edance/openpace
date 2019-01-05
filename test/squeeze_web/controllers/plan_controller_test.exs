@@ -3,6 +3,8 @@ defmodule SqueezeWeb.PlanControllerTest do
 
   import Plug.Test
 
+  alias Squeeze.Dashboard
+
   test "index redirects to the first step", %{conn: conn} do
     conn = get(conn, "/dashboard/plan")
     assert redirected_to(conn) == plan_path(conn, :step, "weeks")
@@ -61,13 +63,21 @@ defmodule SqueezeWeb.PlanControllerTest do
 
     test "with not last week redirects to next week", %{conn: conn} do
       activities = %{
-        "0" => %{"name" => "3", "start_at" => "2019-01-01"},
-        "1" => %{"name" => "", "start_at" => "2019-01-02"}
+        "0" => %{"name" => "3 miles", "planned_date" => "2019-01-01"},
+        "1" => %{"name" => "", "planned_date" => "2019-01-02"},
+        "2" => %{"name" => "2 km", "planned_date" => "2019-01-03"}
       }
       conn = conn
       |> init_test_session(weeks: 2)
       |> post("/dashboard/plan/weeks/1", activities: activities)
+
+      user = conn.assigns.current_user
+      {:ok, date} = Date.new(2019, 1, 1)
+      date_range = Date.range(date, Date.add(date, 3))
+      activities = Dashboard.list_activities(user, date_range)
+
       assert redirected_to(conn) == plan_path(conn, :new, 2)
+      assert length(activities) == 2
     end
   end
 end
