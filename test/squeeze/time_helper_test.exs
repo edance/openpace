@@ -10,10 +10,19 @@ defmodule Squeeze.TimeHelperTest do
   setup [:create_user]
 
   describe "to_date/2" do
-    test "returns a date based on the users timezone", %{user: user} do
+    test "with a DateTime returns a date based on the users timezone", %{user: user} do
       datetime = Timex.beginning_of_day(Timex.now()) # UTC 00:00 of today
       date = datetime |> Timex.shift(days: -1) |> Timex.to_date() # One day ago in New York
       assert TimeHelper.to_date(user, datetime) == date
+    end
+
+    test "with a NaiveDateTime returns a date based on the users timezone", %{user: user} do
+      datetime = Timex.beginning_of_day(Timex.now()) # UTC 00:00 of today
+      date = DateTime.to_date(datetime)
+      time = DateTime.to_time(datetime)
+      {:ok, naive_datetime} = NaiveDateTime.new(date, time)
+      assert TimeHelper.to_date(user, naive_datetime) ==
+        TimeHelper.to_date(user, datetime)
     end
   end
 
@@ -21,7 +30,7 @@ defmodule Squeeze.TimeHelperTest do
     test "returns the utc datetime for the beginning of the day", %{user: user} do
       now = Timex.now()
       date = Timex.to_date(now)
-      beginning_of_day = Timex.beginning_of_day(Timex.now())
+      beginning_of_day = Timex.beginning_of_day(now)
       datetime = TimeHelper.beginning_of_day(user, date)
       diff = Timex.diff(datetime, beginning_of_day, :hours)
       # New York is either 4 or 5 hours behind depending on Daylight Savings
