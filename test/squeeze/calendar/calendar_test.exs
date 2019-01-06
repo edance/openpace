@@ -4,22 +4,22 @@ defmodule Squeeze.CalendarTest do
   alias Squeeze.Calendar
 
   describe "#visible_dates" do
-    test "with month that starts on a Sunday" do
-      {:ok, date} = Date.new(2018, 7, 1)
+    test "with month that starts on a Monday" do
+      {:ok, date} = Date.new(2019, 4, 1)
       range = Calendar.visible_dates(date, "month")
       assert range.first == date
     end
 
-    test "with month that ends on a Sunday" do
-      {:ok, date} = Date.new(2018, 9, 30)
+    test "with month that ends on a Monday" do
+      {:ok, date} = Date.new(2017, 7, 31)
       range = Calendar.visible_dates(date, "month")
       assert range.last == Date.add(date, 6)
     end
 
     test "with month includes the days of the prev/next months" do
       {:ok, date} = Date.new(2018, 12, 6)
-      {:ok, start_date} = Date.new(2018, 11, 25)
-      {:ok, end_date} = Date.new(2019, 1, 5)
+      {:ok, start_date} = Date.new(2018, 11, 26)
+      {:ok, end_date} = Date.new(2019, 1, 6)
       range = Calendar.visible_dates(date, "month")
       assert range.first == start_date
       assert range.last == end_date

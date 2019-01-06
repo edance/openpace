@@ -22,8 +22,8 @@ defmodule Squeeze.Calendar do
   defp first_date(base, "month") do
     date = first_of_month(base)
     case Date.day_of_week(date) do
-      7 -> date
-      x -> Date.add(date, -x)
+      1 -> date
+      x -> Date.add(date, -(x - 1))
     end
   end
 
@@ -31,8 +31,8 @@ defmodule Squeeze.Calendar do
   defp last_date(base, "month") do
     date = last_day_of_month(base)
     case Date.day_of_week(date) do
-      7 -> Date.add(date, 6)
-      x -> Date.add(date, 6 - x)
+      1 -> Date.add(date, 6)
+      x -> Date.add(date, 7 - x)
     end
   end
 end
