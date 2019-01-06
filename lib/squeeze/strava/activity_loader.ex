@@ -52,19 +52,8 @@ defmodule Squeeze.Strava.ActivityLoader do
   end
   def diff(_, _), do: 1
 
-  defp percent_complete(%Activity{planned_distance: planned_distance}, %{distance: distance})
-  when is_number(planned_distance) and planned_distance > 0 do
-    distance / planned_distance
-  end
-  defp percent_complete(_, _), do: 1
-
-  defp activity_status(percentage) when percentage > 0.95, do: :complete
-  defp activity_status(_), do: :partial
-
   defp map_strava_activity(activity, strava_activity)  do
-    attrs = map_strava_activity(strava_activity)
-    percent_complete = percent_complete(activity, strava_activity)
-    %{attrs | name: activity.name, status: activity_status(percent_complete)}
+    %{map_strava_activity(strava_activity) | name: activity.name}
   end
 
   defp map_strava_activity(strava_activity) do
@@ -74,8 +63,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       duration: strava_activity.moving_time,
       start_at: strava_activity.start_date,
       external_id: strava_activity.id,
-      polyline: strava_activity.map.summary_polyline,
-      status: :complete
+      polyline: strava_activity.map.summary_polyline
     }
   end
 end
