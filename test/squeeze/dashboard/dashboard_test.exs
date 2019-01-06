@@ -56,14 +56,24 @@ defmodule Squeeze.DashboardTest do
     end
   end
 
-  describe "#get_activity!/1" do
+  describe "#get_activity!/2" do
     test "returns the activity if found" do
       activity = insert(:activity)
-      assert activity.id == Dashboard.get_activity!(activity.id).id
+      user = activity.user
+      assert activity.id == Dashboard.get_activity!(user, activity.id).id
     end
 
-    test "raises error if not found" do
-      assert_raise Ecto.NoResultsError, fn -> Dashboard.get_activity!("1234") end
+    test "raises error if activity does not belong to user" do
+      activity = insert(:activity)
+      user = insert(:user)
+      assert_raise Ecto.NoResultsError, fn ->
+        Dashboard.get_activity!(user, activity.id) end
+    end
+
+    test "raises error if activity does not exist" do
+      user = insert(:user)
+      assert_raise Ecto.NoResultsError, fn ->
+        Dashboard.get_activity!(user, "1234") end
     end
   end
 end
