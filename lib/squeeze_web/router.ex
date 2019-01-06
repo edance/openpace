@@ -46,8 +46,7 @@ defmodule SqueezeWeb.Router do
 
     get "/", DashboardController, :index
     get "/calendar", CalendarController, :index
-    get "/calendar/month", CalendarController, :month
-    get "/calendar/short", CalendarController, :short
+    get "/calendar/:type", CalendarController, :show
 
     get "/overview", OverviewController, :index
 

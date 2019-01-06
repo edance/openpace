@@ -7,34 +7,27 @@ defmodule SqueezeWeb.CalendarController do
   alias Squeeze.Dashboard
   alias Squeeze.TimeHelper
 
+  @types ~w(month short)
+
+  plug :validate_type when action in [:show]
+
   def index(conn, _) do
     [ua | _] = Conn.get_req_header(conn, "user-agent")
     case Browser.mobile?(ua) do
-      true -> redirect(conn, to: calendar_path(conn, :short))
-      _ -> redirect(conn, to: calendar_path(conn, :month))
+      true -> redirect(conn, to: calendar_path(conn, :show, "short"))
+      _ -> redirect(conn, to: calendar_path(conn, :show, "month"))
     end
   end
 
-  def short(conn, params) do
+  def show(conn, %{"type" => type} = params) do
     user = conn.assigns.current_user
     date = parse_date(user, params["date"])
-    dates = Calendar.visible_dates(date, "short")
+    dates = Calendar.visible_dates(date, type)
     conn
     |> assign(:date, date)
     |> assign(:dates, dates)
     |> assign(:activities, Dashboard.list_activities(user, dates))
-    |> render("short.html")
-  end
-
-  def month(conn, params) do
-    user = conn.assigns.current_user
-    date = parse_date(user, params["date"])
-    dates = Calendar.visible_dates(date, "month")
-    conn
-    |> assign(:date, date)
-    |> assign(:dates, dates)
-    |> assign(:activities, Dashboard.list_activities(user, dates))
-    |> render("month.html")
+    |> render("#{type}.html")
   end
 
   defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
@@ -42,6 +35,19 @@ defmodule SqueezeWeb.CalendarController do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date
       {:error, _} -> parse_date(user, nil)
+    end
+  end
+
+  defp validate_type(conn, _) do
+    %{"type" => type} = conn.params
+    case Enum.member?(@types, type) do
+      true -> conn
+      false ->
+        conn
+        |> put_status(:not_found)
+        |> put_view(SqueezeWeb.ErrorView)
+        |> render("404.html")
+        |> halt()
     end
   end
 end

@@ -7,7 +7,7 @@ defmodule SqueezeWeb.CalendarControllerTest do
       conn = conn
       |> put_req_header("user-agent", user_agent)
       |> get(calendar_path(conn, :index))
-      assert redirected_to(conn) == calendar_path(conn, :short)
+      assert redirected_to(conn) == calendar_path(conn, :show, "short")
     end
 
     test "on non-mobile redirects to monthly calendar", %{conn: conn} do
@@ -15,41 +15,47 @@ defmodule SqueezeWeb.CalendarControllerTest do
       conn = conn
       |> put_req_header("user-agent", user_agent)
       |> get(calendar_path(conn, :index))
-      assert redirected_to(conn) == calendar_path(conn, :month)
+      assert redirected_to(conn) == calendar_path(conn, :show, "month")
     end
   end
 
-  describe "#short" do
+  describe "#show short" do
     test "without date params renders correctly", %{conn: conn} do
       conn = conn
-      |> get(calendar_path(conn, :short))
+      |> get(calendar_path(conn, :show, "short"))
       assert html_response(conn, 200)
     end
 
     test "with date params renders correctly", %{conn: conn} do
       conn = conn
-      |> get(calendar_path(conn, :short, date: "2018-01-01"))
+      |> get(calendar_path(conn, :show, "short", date: "2018-01-01"))
       assert html_response(conn, 200)
     end
   end
 
-  describe "#month" do
+  describe "#show month" do
     test "without date params renders correctly", %{conn: conn} do
       conn = conn
-      |> get(calendar_path(conn, :month))
+      |> get(calendar_path(conn, :show, "month"))
       assert html_response(conn, 200)
     end
 
     test "with date params renders correctly", %{conn: conn} do
       conn = conn
-      |> get(calendar_path(conn, :month, date: "2018-01-01"))
+      |> get(calendar_path(conn, :show, "month", date: "2018-01-01"))
       assert html_response(conn, 200)
     end
 
     test "with invalid date renders today", %{conn: conn} do
       conn = conn
-      |> get(calendar_path(conn, :month, date: "abcdef"))
+      |> get(calendar_path(conn, :show, "month", date: "abcdef"))
       assert html_response(conn, 200)
     end
+  end
+
+  test "with invalid calendar type", %{conn: conn} do
+    conn = conn
+    |> get(calendar_path(conn, :show, "abcd"))
+    assert html_response(conn, 404)
   end
 end

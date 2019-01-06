@@ -2,17 +2,17 @@
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
   <ul class="navbar-nav mr-auto">
     <li class="navbar-item mr-3">
-      <%= link "Today", to: calendar_path(@conn, :month), class: "btn btn-sm btn-secondary mt--1" %>
+      <%= link "Today", to: calendar_path(@conn, :show, "month"), class: "btn btn-sm btn-secondary mt--1" %>
     </li>
 
     <li class="navbar-item mr-2">
-      <%= link to: calendar_path(@conn, :month, date: previous_month(@date)), class: "navbar-link text-white" do %>
+      <%= link to: calendar_path(@conn, :show, "month", date: previous_month(@date)), class: "navbar-link text-white" do %>
         <i class="icon-arrow-left-circle"></i>
       <% end %>
     </li>
 
     <li class="navbar-item mr-3">
-      <%= link to: calendar_path(@conn, :month, date: next_month(@date)), class: "navbar-link text-white" do %>
+      <%= link to: calendar_path(@conn, :show, "month", date: next_month(@date)), class: "navbar-link text-white" do %>
         <i class="icon-arrow-right-circle"></i>
       <% end %>
     </li>
