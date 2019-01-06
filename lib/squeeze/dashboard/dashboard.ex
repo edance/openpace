@@ -71,15 +71,16 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
-      iex> get_activity!(123)
+      iex> get_activity!(%User{}, 123)
       %Activity{}
 
-      iex> get_activity!(456)
+      iex> get_activity!(%User{}, 456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_activity!(id) do
+  def get_activity!(%User{} = user, id) do
     Activity
+    |> by_user(user)
     |> Repo.get!(id)
     |> Repo.preload(:user)
   end

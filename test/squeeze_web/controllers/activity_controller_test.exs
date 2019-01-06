@@ -7,8 +7,8 @@ defmodule SqueezeWeb.ActivityControllerTest do
   end
 
   describe "GET show" do
-    test "renders the activity", %{conn: conn} do
-      activity = insert(:activity)
+    test "renders the activity", %{conn: conn, user: user} do
+      activity = insert(:activity, user: user)
       conn = get conn, activity_path(conn, :show, activity)
       assert html_response(conn, 200) =~ activity.name
     end
