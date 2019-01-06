@@ -7,14 +7,14 @@ defmodule SqueezeWeb.CalendarController do
   alias Squeeze.Dashboard
   alias Squeeze.TimeHelper
 
-  @types ~w(month short)
+  @types ~w(month day)
 
   plug :validate_type when action in [:show]
 
   def index(conn, _) do
     [ua | _] = Conn.get_req_header(conn, "user-agent")
     case Browser.mobile?(ua) do
-      true -> redirect(conn, to: calendar_path(conn, :show, "short"))
+      true -> redirect(conn, to: calendar_path(conn, :show, "day"))
       _ -> redirect(conn, to: calendar_path(conn, :show, "month"))
     end
   end

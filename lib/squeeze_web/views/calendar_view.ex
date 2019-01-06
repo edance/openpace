@@ -7,43 +7,15 @@ defmodule SqueezeWeb.CalendarView do
     "Calendar"
   end
 
-  def previous_short(base) do
-    date = Date.add(base, -3)
-    format_date(date)
-  end
+  def prev(base, "day"), do: shift(base, days: -1)
+  def prev(base, "month"), do: shift(base, months: -1)
 
-  def next_short(base) do
-    date = Date.add(base, 3)
-    format_date(date)
-  end
+  def next(base, "day"), do: shift(base, days: 1)
+  def next(base, "month"), do: shift(base, months: 1)
 
-  def previous_month(base) do
-    {:ok, date} = subtract_month(base)
-    format_date(date)
-  end
+  defp format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")
 
-  def next_month(base) do
-    {:ok, date} = add_month(base)
-    format_date(date)
-  end
-
-  def add_month(date) do
-    case date.month do
-      12 -> Date.new(date.year + 1, 1, 1)
-      x -> Date.new(date.year, x + 1, 1)
-    end
-  end
-
-  def subtract_month(date) do
-    case date.month do
-      1 -> Date.new(date.year - 1, 12, 1)
-      x -> Date.new(date.year, x - 1, 1)
-    end
-  end
-
-  def format_date(date) do
-    Timex.format!(date, "{YYYY}-{0M}-{0D}")
-  end
+  defp shift(date, opts), do: date |> Timex.shift(opts) |> format_date()
 
   def date_label(date, idx) when idx < 7 do
     content_tag(:div) do
@@ -58,7 +30,7 @@ defmodule SqueezeWeb.CalendarView do
     date_label(date)
   end
 
-  defp date_label(date) do
+  def date_label(date) do
     content_tag(:div, class: "date-label", data: [date: format_date(date)]) do
       date_label_content(date)
     end

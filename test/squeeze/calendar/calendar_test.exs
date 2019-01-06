@@ -25,11 +25,11 @@ defmodule Squeeze.CalendarTest do
       assert range.last == end_date
     end
 
-    test "with short includes 3 day range" do
+    test "with day includes just today" do
       date = Timex.today()
-      range = Calendar.visible_dates(date, "short")
-      assert range.first == Date.add(date, -1)
-      assert range.last == Date.add(date, 1)
+      range = Calendar.visible_dates(date, "day")
+      assert range.first == date
+      assert range.last == date
     end
   end
 end
