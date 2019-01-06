@@ -1,0 +1,33 @@
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <%= link "Today", to: calendar_path(@conn, :show, "day"),
+                    class: "navbar-item btn btn-sm btn-secondary mt--1 ml-3 ml-md-0 mr-4" %>
+
+  <%= link to: calendar_path(@conn, :show, "day", date: prev(@date, "day")), class: "navbar-item navbar-link text-white mr-4" do %>
+    <i class="icon-arrow-left-circle"></i>
+  <% end %>
+
+  <div class="navbar-item navbar-text">
+    <%= Timex.format!(@date, "%a, %b %-d", :strftime) %>
+  </div>
+
+  <%= link to: calendar_path(@conn, :show, "day", date: next(@date, "day")),
+           class: "navbar-item navbar-link text-white ml-4 mr-3 mr-md-0" do %>
+    <i class="icon-arrow-right-circle"></i>
+  <% end %>
+<% end %>
+
+<div class="header bg-gradient-primary pb-5 pt-6">
+  <div class="container-fluid">
+    <div class="card d-flex flex-wrap flex-row calendar">
+      <%= content_tag(:div, class: "p-1") do %>
+        <div class="pb-1">
+          <%= date_label(@date) %>
+        </div>
+
+        <%= for activity <- @activities do %>
+          <%= render("_activity.html", activity: activity, conn: @conn) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

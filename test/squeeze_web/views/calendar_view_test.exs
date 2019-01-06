@@ -10,37 +10,27 @@ defmodule SqueezeWeb.CalendarViewTest do
     assert CalendarView.title(%{}, %{}) =~ ~r/calendar/i
   end
 
-  test "#previous_short is 3 days before base" do
+  test "#prev day 1 day before base" do
     {:ok, date} = Date.new(2018, 12, 5)
-    assert CalendarView.previous_short(date) == "2018-12-02"
+    assert CalendarView.prev(date, "day") == "2018-12-04"
   end
 
-  test "#next_short is 3 days after base" do
+  test "#next day is 1 day after base" do
     {:ok, date} = Date.new(2018, 12, 5)
-    assert CalendarView.next_short(date) == "2018-12-08"
+    assert CalendarView.next(date, "day") == "2018-12-06"
   end
 
-  describe "#previous_month" do
+  describe "#prev for month" do
     test "returns the previous month" do
-      {:ok, date} = Date.new(2018, 12, 5)
-      assert CalendarView.previous_month(date) == "2018-11-01"
-    end
-
-    test "returns the previous month when it is January" do
       {:ok, date} = Date.new(2018, 1, 5)
-      assert CalendarView.previous_month(date) == "2017-12-01"
+      assert CalendarView.prev(date, "month") == "2017-12-05"
     end
   end
 
-  describe "#next_month" do
+  describe "#next for month" do
     test "returns the next month" do
-      {:ok, date} = Date.new(2018, 11, 5)
-      assert CalendarView.next_month(date) == "2018-12-01"
-    end
-
-    test "returns the previous month when it is December" do
       {:ok, date} = Date.new(2018, 12, 5)
-      assert CalendarView.next_month(date) == "2019-01-01"
+      assert CalendarView.next(date, "month") == "2019-01-05"
     end
   end
 

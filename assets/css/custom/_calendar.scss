@@ -2,11 +2,6 @@
   height: calc(100vh - #{map_get($spacers, 7)});
 }
 
-.calendar-date {
-  $width: 100%;
-  width: $width/3;
-}
-
 .date-label {
   &.active {
     background: $primary;
