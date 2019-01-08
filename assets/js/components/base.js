@@ -4,6 +4,7 @@ import './date-picker';
 import './duration-select';
 import './form';
 import './imperial-hidden-input';
+import './route-map';
 import './timezone-hidden-input';
 import './week-chart';
 import './year-chart';

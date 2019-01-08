@@ -11,3 +11,7 @@
 <script src="<%= static_path(@conn, "/js/app.js") %>" defer></script>
 
 <%= render("_gtm.html", assigns) %>
+
+<script>
+ window.MAPBOX_ACCESS_TOKEN = '<%= Application.get_env(:squeeze, :mapbox_access_token) %>';
+</script>
