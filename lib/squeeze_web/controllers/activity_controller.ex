@@ -15,6 +15,8 @@ defmodule SqueezeWeb.ActivityController do
 
   def show(conn, %{"id" => id}, current_user) do
     activity = Dashboard.get_activity!(current_user, id)
-    render(conn, "show.html", activity: activity)
+    render(conn, "show.html",
+      activity: activity,
+      coordinates: []) # array of [lat, lon]
   end
 end
