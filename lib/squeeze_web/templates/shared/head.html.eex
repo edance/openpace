@@ -8,8 +8,6 @@
 
 <link rel="stylesheet" type="text/css" href="<%= static_path(@conn, "/css/app.css") %>">
 
-<script src="<%= static_path(@conn, "/js/app.js") %>" defer></script>
-
 <%= render("_gtm.html", assigns) %>
 
 <script>
