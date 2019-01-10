@@ -3,7 +3,8 @@ defmodule SqueezeWeb.ActivityController do
 
   alias Squeeze.Dashboard
   alias Squeeze.Strava.Client
-  alias Strava.Streams
+
+  @strava_streams Application.get_env(:squeeze, :strava_streams)
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.current_user]
@@ -20,17 +21,24 @@ defmodule SqueezeWeb.ActivityController do
     stream_set = fetch_streams(activity, current_user)
     render(conn, "show.html",
       activity: activity,
-      altitude: stream_set.altitude.data,
-      coordinates: stream_set.latlng.data,
-      distance: stream_set.distance.data,
-      heartrate: stream_set.heartrate.data)
+      altitude: stream_data(stream_set.altitude),
+      coordinates: stream_data(stream_set.latlng),
+      distance: stream_data(stream_set.distance),
+      heartrate: stream_data(stream_set.heartrate))
   end
 
-  defp fetch_streams(activity, user) do
+  defp stream_data(stream) do
+    case stream do
+      nil -> []
+      stream -> stream.data
+    end
+  end
+
+  defp fetch_streams(%{external_id: id}, user) do
     client = Client.new(user)
     streams = "altitude,heartrate,latlng"
     {:ok, stream_set} =
-      Streams.get_activity_streams(client, activity.external_id, streams, true)
+      @strava_streams.get_activity_streams(client, id, streams, true)
     stream_set
   end
 end
