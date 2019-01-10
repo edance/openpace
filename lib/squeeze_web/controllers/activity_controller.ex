@@ -20,14 +20,15 @@ defmodule SqueezeWeb.ActivityController do
     stream_set = fetch_streams(activity, current_user)
     render(conn, "show.html",
       activity: activity,
+      altitude: stream_set.altitude.data,
       coordinates: stream_set.latlng.data,
-      heartrate: stream_set.heartrate.data,
-      stream_set: stream_set)
+      distance: stream_set.distance.data,
+      heartrate: stream_set.heartrate.data)
   end
 
   defp fetch_streams(activity, user) do
     client = Client.new(user)
-    streams = "heartrate,latlng"
+    streams = "altitude,heartrate,latlng"
     {:ok, stream_set} =
       Streams.get_activity_streams(client, activity.external_id, streams, true)
     stream_set
