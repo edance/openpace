@@ -49,5 +49,8 @@ defmodule SqueezeWeb.ConnCase do
   end
 
   defp create_user(%{guest_user: true}), do: Factory.insert(:guest_user)
+  defp create_user(%{strava_user: true}) do
+    Factory.insert(:user) |> Factory.with_credential()
+  end
   defp create_user(_), do: Factory.insert(:user, credential: nil)
 end
