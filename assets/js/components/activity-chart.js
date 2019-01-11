@@ -11,6 +11,7 @@ document.addEventListener("turbolinks:load", function() {
   const altitude = JSON.parse($chart.data('altitude'));
   const distance = JSON.parse($chart.data('distance'));
   const heartrate = JSON.parse($chart.data('heartrate'));
+  const velocity = JSON.parse($chart.data('velocity'));
 
   let options = {
     responsive: true,
@@ -36,7 +37,11 @@ document.addEventListener("turbolinks:load", function() {
         {
           label: 'Elevation',
           data: altitude,
-        }
+        },
+        {
+          label: 'Velocity',
+          data: velocity,
+        },
       ],
       labels: distance,
     },
