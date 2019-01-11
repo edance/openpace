@@ -112,6 +112,7 @@
              data-altitude="<%= Poison.encode!(@altitude) %>"
              data-distance="<%= Poison.encode!(@distance) %>"
              data-heartrate="<%= Poison.encode!(@heartrate) %>"
+             data-velocity="<%= Poison.encode!(@velocity) %>"
              style="height: 600px;">
         </canvas>
       </div>

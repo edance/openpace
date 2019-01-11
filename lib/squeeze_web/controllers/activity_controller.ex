@@ -24,7 +24,9 @@ defmodule SqueezeWeb.ActivityController do
       altitude: stream_data(stream_set.altitude),
       coordinates: stream_data(stream_set.latlng),
       distance: stream_data(stream_set.distance),
-      heartrate: stream_data(stream_set.heartrate))
+      heartrate: stream_data(stream_set.heartrate),
+      velocity: stream_data(stream_set.velocity_smooth)
+    )
   end
 
   defp stream_data(stream) do
@@ -36,7 +38,7 @@ defmodule SqueezeWeb.ActivityController do
 
   defp fetch_streams(%{external_id: id}, user) do
     client = Client.new(user)
-    streams = "altitude,heartrate,latlng"
+    streams = "altitude,heartrate,latlng,velocity_smooth"
     {:ok, stream_set} =
       @strava_streams.get_activity_streams(client, id, streams, true)
     stream_set
