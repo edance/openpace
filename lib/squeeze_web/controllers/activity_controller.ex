@@ -4,8 +4,10 @@ defmodule SqueezeWeb.ActivityController do
   alias Squeeze.Dashboard
   alias Squeeze.Distances
   alias Squeeze.Strava.Client
+  alias Squeeze.Velocity
 
   @strava_streams Application.get_env(:squeeze, :strava_streams)
+  @meter_in_feet 3.28084
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.current_user]
@@ -17,22 +19,35 @@ defmodule SqueezeWeb.ActivityController do
     render(conn, "index.html", activities: activities)
   end
 
-  def show(conn, %{"id" => id}, current_user) do
-    activity = Dashboard.get_activity!(current_user, id)
-    stream_set = fetch_streams(activity, current_user)
+  def show(conn, %{"id" => id}, user) do
+    activity = Dashboard.get_activity!(user, id)
+    stream_set = fetch_streams(activity, user)
     render(conn, "show.html",
       activity: activity,
-      altitude: stream_data(stream_set.altitude),
+      altitude: altitude_stream(user, stream_data(stream_set.altitude)),
       coordinates: stream_data(stream_set.latlng),
-      distance: distance_stream(current_user, stream_data(stream_set.distance)),
+      distance: distance_stream(user, stream_data(stream_set.distance)),
       heartrate: stream_data(stream_set.heartrate),
-      velocity: stream_data(stream_set.velocity_smooth)
+      velocity: velocity_stream(user, stream_data(stream_set.velocity_smooth)),
     )
   end
 
   defp distance_stream(user, data) do
     data
     |> Enum.map(&Distances.to_float(&1, imperial: user.user_prefs.imperial))
+  end
+
+  defp altitude_stream(user, data) do
+    if user.user_prefs.imperial do
+      data
+      |> Enum.map(fn(x) -> x * @meter_in_feet end)
+    else
+      data
+    end
+  end
+
+  defp velocity_stream(user, data) do
+    Enum.map(data, &Velocity.to_float(&1, imperial: user.user_prefs.imperial))
   end
 
   defp stream_data(stream) do
@@ -44,7 +59,7 @@ defmodule SqueezeWeb.ActivityController do
 
   defp fetch_streams(%{external_id: id}, user) do
     client = Client.new(user)
-    streams = "altitude,heartrate,latlng,velocity_smooth"
+    streams = "altitude,cadence,time,moving,heartrate,latlng,velocity_smooth"
     {:ok, stream_set} =
       @strava_streams.get_activity_streams(client, id, streams, true)
     stream_set
