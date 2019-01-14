@@ -2,6 +2,7 @@ defmodule SqueezeWeb.ActivityController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Dashboard
+  alias Squeeze.Distances
   alias Squeeze.Strava.Client
 
   @strava_streams Application.get_env(:squeeze, :strava_streams)
@@ -23,10 +24,15 @@ defmodule SqueezeWeb.ActivityController do
       activity: activity,
       altitude: stream_data(stream_set.altitude),
       coordinates: stream_data(stream_set.latlng),
-      distance: stream_data(stream_set.distance),
+      distance: distance_stream(current_user, stream_data(stream_set.distance)),
       heartrate: stream_data(stream_set.heartrate),
       velocity: stream_data(stream_set.velocity_smooth)
     )
+  end
+
+  defp distance_stream(user, data) do
+    data
+    |> Enum.map(&Distances.to_float(&1, imperial: user.user_prefs.imperial))
   end
 
   defp stream_data(stream) do
