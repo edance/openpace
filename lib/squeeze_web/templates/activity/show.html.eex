@@ -119,3 +119,8 @@
     </div>
   </div>
 </div>
+
+<%= for split <- @splits do %>
+  <%= split.distance %> - <%= format_duration(split.total_time) %>
+  <br/>
+<% end %>
