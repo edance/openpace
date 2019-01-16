@@ -37,7 +37,7 @@ document.addEventListener("turbolinks:load", function() {
       tooltips: {
         callbacks: {
           label: function(tooltipItem) {
-            return dataset[tooltipItem.index].formatted_distance;
+            return dataset[tooltipItem.index].distance;
           },
         },
         displayColors: false,
@@ -56,7 +56,7 @@ document.addEventListener("turbolinks:load", function() {
       },
     },
     data: {
-      labels: dataset.map(x => x.label),
+      labels: dataset.map(x => x.date),
       datasets: [{
         data: dataset.map(x => x.distance),
       }]

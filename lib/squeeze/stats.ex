@@ -3,60 +3,68 @@ defmodule Squeeze.Stats do
   The Stats context.
   """
 
-  import Ecto.Query, warn: false
   alias Squeeze.Accounts.User
+  alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Distances
-  alias Squeeze.Repo
+  alias Squeeze.TimeHelper
 
-  def dataset_for_year_chart(%User{user_prefs: %{imperial: imperial}} = user) do
+  def dataset_for_year_chart(%User{} = user) do
+    dates = yearly_dateset(user)
+    map = user
+    |> fetch_activities(dates)
+    |> Enum.reduce(%{}, fn(x, acc) ->
+      date = Timex.beginning_of_week(x.date)
+      value = Map.get(acc, date, 0)
+      Map.put(acc, date, value + x.distance)
+    end)
+
+    dates
+    |> Enum.map(&(%{date: &1, distance: map[&1] || 0}))
+  end
+
+  def dataset_for_week_chart(%User{} = user) do
+    dates = weekly_dateset(user)
+    map = user
+    |> fetch_activities(dates)
+    |> Enum.reduce(%{}, fn(x, acc) ->
+      value = Map.get(acc, x.date, 0)
+      Map.put(acc, x.date, value + x.distance)
+    end)
+
+    dates
+    |> Enum.map(&(%{date: &1, distance: map[&1] || 0}))
+  end
+
+  def weekly_dateset(user) do
+    today = TimeHelper.today(user)
+    range = Date.range(Timex.beginning_of_week(today), Timex.end_of_week(today))
+    Enum.to_list(range)
+  end
+
+  def yearly_dateset(user) do
+    date = user
+    |> TimeHelper.today()
+    |> Timex.beginning_of_week()
+    0..30
+    |> Enum.map(&Timex.shift(date, weeks: -&1))
+    |> Enum.reverse()
+  end
+
+  defp fetch_activities(user, dates) do
+    today = TimeHelper.today(user)
+    range = Date.range(List.first(dates), today)
     user
-    |> distance_by_week()
-    |> Enum.map(&format_distance(&1, imperial: imperial))
-    |> Enum.map(&format_label(&1))
+    |> Dashboard.list_activities(range)
+    |> Enum.filter(&(&1.status == :complete))
+    |> Enum.map(&map_activity(&1, user))
   end
 
-  def dataset_for_week_chart(%User{user_prefs: %{imperial: imperial}} = user) do
-    user
-    |> distance_by_day()
-    |> Enum.map(&format_distance(&1, imperial: imperial))
-    |> Enum.map(&format_label(&1))
-  end
-
-  defp distance_by_week(%User{} = user) do
-    query = from a in Activity,
-      right_join: weeks in fragment("select generate_series(date_trunc('week', now() - '1 year'::interval), date_trunc('week', now()), '1 week'::interval) as week"),
-      on: a.user_id == ^user.id and weeks.week == fragment("date_trunc('week', ?)", a.start_at),
-      group_by: weeks.week,
-      order_by: weeks.week,
-      select: %{
-        date: type(weeks.week, :date),
-        distance: sum(fragment("coalesce(?, 0)", a.distance))
-      }
-    Repo.all(query)
-  end
-
-  defp distance_by_day(%User{} = user) do
-    query = from a in Activity,
-      right_join: days in fragment("select generate_series(date_trunc('week', now()), date_trunc('week', now()) + '6 days'::interval, '1 day'::interval) as day"),
-      on: a.user_id == ^user.id and days.day == fragment("date_trunc('day', ?)", a.start_at),
-      group_by: days.day,
-      order_by: days.day,
-      select: %{
-        date: type(days.day, :date),
-        distance: sum(fragment("coalesce(?, 0)", a.distance))
-      }
-    Repo.all(query)
-  end
-
-  defp format_distance(%{distance: distance} = item, opts) do
-    Map.merge(item, %{
+  defp map_activity(%Activity{distance: distance, start_at: start_at}, user) do
+    opts = [imperial: user.user_prefs.imperial]
+    %{
       distance: Distances.to_float(distance, opts),
-      formatted_distance: Distances.format(distance, opts)
-    })
-  end
-
-  defp format_label(item) do
-    Map.merge(item, %{label: Timex.format!(item.date, "%b %-d", :strftime)})
+      date: TimeHelper.to_date(user, start_at)
+    }
   end
 end
