@@ -24,7 +24,7 @@ document.addEventListener("turbolinks:load", function() {
       tooltips: {
         callbacks: {
           label: function(tooltipItem) {
-            return dataset[tooltipItem.index].formatted_distance;
+            return dataset[tooltipItem.index].distance;
           },
         },
         displayColors: false,
