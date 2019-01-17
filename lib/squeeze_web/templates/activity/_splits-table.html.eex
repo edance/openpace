@@ -1,0 +1,29 @@
+<div class="card-header border-0">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="mb-0">
+        Splits
+      </h3>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Increment</th>
+        <th scope="col">Pace</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for split <- @splits do %>
+        <tr>
+          <td><%= split.distance %></td>
+          <td>TBD</td>
+          <td><%= format_duration(split.total_time) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

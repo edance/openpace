@@ -98,13 +98,17 @@
 </div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow border-0">
+  <div class="card shadow">
+    <div class="row no-gutters">
+      <div class="col">
+        <%= render "_splits-table.html", assigns %>
+      </div>
+      <div class="col-8">
         <div id="map-canvas" data-coordinates="<%= Poison.encode!(@coordinates) %>" style="height: 600px;"></div>
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
@@ -119,8 +123,3 @@
     </div>
   </div>
 </div>
-
-<%= for split <- @splits do %>
-  <%= split.distance %> - <%= format_duration(split.total_time) %>
-  <br/>
-<% end %>
