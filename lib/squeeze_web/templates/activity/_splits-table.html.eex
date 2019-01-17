@@ -20,7 +20,7 @@
       <%= for split <- @splits do %>
         <tr>
           <td><%= split.distance %></td>
-          <td>TBD</td>
+          <td><%= format_duration(split.pace) %></td>
           <td><%= format_duration(split.total_time) %></td>
         </tr>
       <% end %>
