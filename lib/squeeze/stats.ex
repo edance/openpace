@@ -46,7 +46,7 @@ defmodule Squeeze.Stats do
     date = user
     |> TimeHelper.today()
     |> Timex.beginning_of_week()
-    0..30
+    0..29
     |> Enum.map(&Timex.shift(date, weeks: -&1))
     |> Enum.reverse()
   end
