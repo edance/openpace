@@ -2,12 +2,29 @@
   <div class="container">
     <%= link("Squeeze", to: "/", class: "navbar-brand pt-0") %>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="nav-collapse">
+      <!-- Collapse header -->
+      <div class="navbar-collapse-header d-md-none">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            Squeeze
+          </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle sidenav">
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <ul class="navbar-nav mt-2 mt-lg-0 ml-auto">
         <li class="nav-item">
           <%= active_link(@conn, "Sign Up", to: wizard_path(@conn, :index), class: "nav-link") %>
         </li>
