@@ -1,10 +1,17 @@
-<%= async_form @conn, @action, [as: "activities[]"], fn f -> %>
-  <%= for {changeset, k} <- (@changesets |> Enum.with_index()) do %>
-    <%= day_name(changeset.data.planned_date) %>
-    <%= hidden_input f, :id, name: "activities[#{k}][id]", value: changeset.data.id %>
-    <%= text_input f, :name, name: "activities[#{k}][name]", value: changeset.data.name %>
-    <%= hidden_input f, :planned_date, name: "activities[#{k}][planned_date]", value: changeset.data.planned_date %>
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
   <% end %>
 
-  <%= submit "Submit", class: "ui submit button" %>
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
 <% end %>

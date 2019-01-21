@@ -1,0 +1,13 @@
+<h2>Show Plan</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @plan.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: plan_path(@conn, :edit, @plan) %></span>
+<span><%= link "Back", to: plan_path(@conn, :index) %></span>

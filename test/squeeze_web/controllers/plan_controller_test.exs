@@ -1,83 +1,81 @@
 defmodule SqueezeWeb.PlanControllerTest do
   use SqueezeWeb.ConnCase
 
-  import Plug.Test
+  alias Squeeze.TrainingPlans
 
-  alias Squeeze.Dashboard
+  @create_attrs %{name: "some name"}
+  @update_attrs %{name: "some updated name"}
+  @invalid_attrs %{name: nil}
 
-  test "index redirects to the first step", %{conn: conn} do
-    conn = get(conn, "/dashboard/plan")
-    assert redirected_to(conn) == plan_path(conn, :step, "weeks")
-  end
+  describe "index" do
+    setup [:create_plan]
 
-  describe "#step" do
-    test "valid step name", %{conn: conn} do
-      conn = get(conn, "/dashboard/plan/weeks")
-      assert html_response(conn, 200) =~ "weeks"
-    end
-
-    test "invalid step name", %{conn: conn} do
-      conn = get(conn, "/dashboard/plan/abcd")
-      assert html_response(conn, 404) =~ "not found"
+    test "lists all training_plans", %{conn: conn, plan: plan} do
+      conn = get conn, plan_path(conn, :index)
+      assert html_response(conn, 200) =~ plan.name
     end
   end
 
-  describe "#update" do
-    test "weeks updates session and redirects", %{conn: conn} do
-      conn = post(conn, "/dashboard/plan/weeks", weeks: "18")
-      assert get_session(conn, :weeks) == 18
-      assert redirected_to(conn) == plan_path(conn, :step, "start")
-    end
-
-    test "start updates session and redirects", %{conn: conn} do
-      date = "2018-01-01"
-      conn = post(conn, "/dashboard/plan/start", start_at: date)
-      assert get_session(conn, :start_at) == Timex.parse!(date, "{YYYY}-{0M}-{0D}")
-      assert redirected_to(conn) == plan_path(conn, :new, 1)
-    end
-
-    test "with an invalid date sets session to today", %{conn: conn} do
-      date = "invalid"
-      conn = post(conn, "/dashboard/plan/start", start_at: date)
-      assert get_session(conn, :start_at) == Timex.today
+  describe "new plan" do
+    test "renders form", %{conn: conn} do
+      conn = get conn, plan_path(conn, :new)
+      assert html_response(conn, 200) =~ "New Plan"
     end
   end
 
-  describe "#new" do
-    test "includes the week number", %{conn: conn} do
-      conn = conn
-      |> init_test_session(start_at: Timex.today)
-      |> get("/dashboard/plan/weeks/2")
-      assert html_response(conn, 200) =~ ~r/week 2/i
+  describe "create plan" do
+    test "redirects to show when data is valid", %{conn: conn, user: user} do
+      conn = post conn, plan_path(conn, :create), plan: @create_attrs
+
+      assert %{id: id} = redirected_params(conn)
+      assert redirected_to(conn) == plan_path(conn, :show, id)
+      assert TrainingPlans.get_plan!(user, id).name == "some name"
+    end
+
+    test "renders errors when data is invalid", %{conn: conn} do
+      conn = post conn, plan_path(conn, :create), plan: @invalid_attrs
+      assert html_response(conn, 200) =~ "New Plan"
     end
   end
 
-  describe "#create" do
-    test "with last week redirects to dashboard", %{conn: conn} do
-      activities = %{}
-      conn = conn
-      |> init_test_session(weeks: 1)
-      |> post("/dashboard/plan/weeks/1", activities: activities)
-      assert redirected_to(conn) == dashboard_path(conn, :index)
+  describe "edit plan" do
+    setup [:create_plan]
+
+    test "renders form for editing chosen plan", %{conn: conn, plan: plan} do
+      conn = get conn, plan_path(conn, :edit, plan)
+      assert html_response(conn, 200) =~ "Edit Plan"
+    end
+  end
+
+  describe "update plan" do
+    setup [:create_plan]
+
+    test "redirects when data is valid", %{conn: conn, plan: plan, user: user} do
+      conn = put conn, plan_path(conn, :update, plan), plan: @update_attrs
+      assert redirected_to(conn) == plan_path(conn, :show, plan)
+      assert TrainingPlans.get_plan!(user, plan.id).name == "some updated name"
     end
 
-    test "with not last week redirects to next week", %{conn: conn} do
-      activities = %{
-        "0" => %{"name" => "3 miles", "planned_date" => "2019-01-01"},
-        "1" => %{"name" => "", "planned_date" => "2019-01-02"},
-        "2" => %{"name" => "2 km", "planned_date" => "2019-01-03"}
-      }
-      conn = conn
-      |> init_test_session(weeks: 2)
-      |> post("/dashboard/plan/weeks/1", activities: activities)
-
-      user = conn.assigns.current_user
-      {:ok, date} = Date.new(2019, 1, 1)
-      date_range = Date.range(date, Date.add(date, 3))
-      activities = Dashboard.list_activities(user, date_range)
-
-      assert redirected_to(conn) == plan_path(conn, :new, 2)
-      assert length(activities) == 2
+    test "renders errors when data is invalid", %{conn: conn, plan: plan} do
+      conn = put conn, plan_path(conn, :update, plan), plan: @invalid_attrs
+      assert html_response(conn, 200) =~ "Edit Plan"
     end
+  end
+
+  describe "delete plan" do
+    setup [:create_plan]
+
+    test "deletes chosen plan", %{conn: conn, plan: plan} do
+      conn = delete conn, plan_path(conn, :delete, plan)
+      assert redirected_to(conn) == plan_path(conn, :index)
+      assert_error_sent 404, fn ->
+        get conn, plan_path(conn, :show, plan)
+      end
+    end
+  end
+
+  defp create_plan(%{user: user}) do
+    plan = insert(:training_plan, user: user)
+    {:ok, plan: plan}
   end
 end
