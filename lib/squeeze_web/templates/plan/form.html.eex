@@ -12,6 +12,18 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :week_count, class: "control-label" %>
+    <%= number_input f, :week_count, class: "form-control" %>
+    <%= error_tag f, :week_count %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :description, class: "control-label" %>
+    <%= textarea f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

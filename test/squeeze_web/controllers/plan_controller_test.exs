@@ -3,10 +3,6 @@ defmodule SqueezeWeb.PlanControllerTest do
 
   alias Squeeze.TrainingPlans
 
-  @create_attrs %{name: "some name"}
-  @update_attrs %{name: "some updated name"}
-  @invalid_attrs %{name: nil}
-
   describe "index" do
     setup [:create_plan]
 
@@ -25,7 +21,8 @@ defmodule SqueezeWeb.PlanControllerTest do
 
   describe "create plan" do
     test "redirects to show when data is valid", %{conn: conn, user: user} do
-      conn = post conn, plan_path(conn, :create), plan: @create_attrs
+      attrs = params_for(:training_plan, %{name: "some name"})
+      conn = post conn, plan_path(conn, :create), plan: attrs
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == plan_path(conn, :show, id)
@@ -33,7 +30,8 @@ defmodule SqueezeWeb.PlanControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, plan_path(conn, :create), plan: @invalid_attrs
+      attrs = %{name: nil}
+      conn = post conn, plan_path(conn, :create), plan: attrs
       assert html_response(conn, 200) =~ "New Plan"
     end
   end
@@ -51,13 +49,15 @@ defmodule SqueezeWeb.PlanControllerTest do
     setup [:create_plan]
 
     test "redirects when data is valid", %{conn: conn, plan: plan, user: user} do
-      conn = put conn, plan_path(conn, :update, plan), plan: @update_attrs
+      attrs = %{name: "some updated name"}
+      conn = put conn, plan_path(conn, :update, plan), plan: attrs
       assert redirected_to(conn) == plan_path(conn, :show, plan)
       assert TrainingPlans.get_plan!(user, plan.id).name == "some updated name"
     end
 
     test "renders errors when data is invalid", %{conn: conn, plan: plan} do
-      conn = put conn, plan_path(conn, :update, plan), plan: @invalid_attrs
+      attrs = %{name: nil}
+      conn = put conn, plan_path(conn, :update, plan), plan: attrs
       assert html_response(conn, 200) =~ "Edit Plan"
     end
   end
