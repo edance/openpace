@@ -10,6 +10,7 @@ defmodule Squeeze.TrainingPlanFactory do
 
         %Plan{
           name: "#{miles} mi run",
+          week_count: 18,
           user: build(:user)
         }
       end
