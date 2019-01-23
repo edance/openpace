@@ -52,6 +52,7 @@ defmodule Squeeze.Mixfile do
       {:guardian, "~> 1.0"},
       {:browser, "~> 0.1.0"},
       {:ecto_enum, "~> 1.1"},
+      {:stripity_stripe, "~> 2.2.2"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
