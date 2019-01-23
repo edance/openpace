@@ -40,6 +40,8 @@ config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
   secret_key: "1kALJhfwksHIiVmnVwuZv327H+u1jnE7ZC/c3EAJcurvH5sAHbm+KA87R/eivO29"
 
+config :stripity_stripe, api_key: System.get_env("STRIPE_SECRET_KEY")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
