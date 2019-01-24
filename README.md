@@ -35,16 +35,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 These tasks are not required to run squeeze.
 
 * `mix setup.stripe` - creates the stripe billing options
-
-### Setup Strava Webhook
-
-```bash
-curl -X POST https://api.strava.com/api/v3/push_subscriptions \
-      -F client_id=$STRAVA_CLIENT_ID \
-      -F client_secret=$STRAVA_CLIENT_SECRET \
-      -F 'callback_url=$HOST_URL/webhook/strava' \
-      -F 'verify_token=$STRAVA_WEBHOOK_TOKEN'
-```
+* `mix setup.subscriptions` - creates the strava webhook subscription
 
 ## FAQ/Contact
 
