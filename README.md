@@ -30,7 +30,13 @@ As a runner,
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Create Strava Webhook
+## Additional Setup Tasks
+
+These tasks are not required to run squeeze.
+
+* `mix setup.stripe` - creates the stripe billing options
+
+### Setup Strava Webhook
 
 ```bash
 curl -X POST https://api.strava.com/api/v3/push_subscriptions \
