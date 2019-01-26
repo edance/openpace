@@ -40,31 +40,37 @@ defmodule SqueezeWeb.FormatHelpersTest do
   end
 
   describe "#relative_date" do
-    test "returns today if today" do
-      user = build(:user)
-      today = TimeHelper.today(user)
+    setup [:build_user]
+
+    test "returns today if today", %{user: user, today: today} do
       assert FormatHelpers.relative_date(user, today) == "today"
     end
 
-    test "returns tomorrow if in one day" do
-      user = build(:user)
-      today = TimeHelper.today(user)
+    test "returns tomorrow if in one day", %{user: user, today: today} do
       date = Timex.shift(today, days: 1)
       assert FormatHelpers.relative_date(user, date) == "tomorrow"
     end
 
-    test "returns day count if less than two weeks" do
-      user = build(:user)
-      today = TimeHelper.today(user)
+    test "returns day count if less than two weeks",
+      %{user: user, today: today} do
       date = Timex.shift(today, days: 14)
       assert FormatHelpers.relative_date(user, date) == "in 14 days"
     end
 
-    test "returns week count if over than two weeks" do
-      user = build(:user)
-      today = TimeHelper.today(user)
+    test "returns week and day count if over than two weeks",
+      %{user: user, today: today} do
       date = Timex.shift(today, days: 15)
-      assert FormatHelpers.relative_date(user, date) == "in 3 weeks"
+      assert FormatHelpers.relative_date(user, date) == "in 2 wks, 1 day"
+    end
+
+    test "correctly pluralizes days", %{user: user, today: today} do
+      date = Timex.shift(today, days: 16)
+      assert FormatHelpers.relative_date(user, date) == "in 2 wks, 2 days"
+    end
+
+    test "does not have days if divisible by 7", %{user: user, today: today} do
+      date = Timex.shift(today, days: 21)
+      assert FormatHelpers.relative_date(user, date) == "in 3 wks"
     end
   end
 
@@ -93,6 +99,12 @@ defmodule SqueezeWeb.FormatHelpersTest do
       activity = %{activity | distance: 0}
       assert FormatHelpers.format_pace(activity, user_prefs) == "N/A"
     end
+  end
+
+  defp build_user(_) do
+    user = build(:user)
+    today = TimeHelper.today(user)
+    {:ok, user: user, today: today}
   end
 
   defp build_user_prefs(_) do
