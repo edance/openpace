@@ -1,4 +1,7 @@
 import { loadScript } from '../utils';
+import { colors, fonts } from '../variables';
+
+const FONT_SIZE = 16;
 
 document.addEventListener("turbolinks:load", function() {
   loadScript('//js.stripe.com/v3/').then(() => {
@@ -8,27 +11,29 @@ document.addEventListener("turbolinks:load", function() {
     // Create an instance of Elements.
     const elements = stripe.elements();
 
-    // Custom styling can be passed to options when creating an Element.
-    // (Note that this demo uses a wider set of styles than the guide below.)
     const style = {
       base: {
-        color: '#32325d',
-        lineHeight: '18px',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        color: colors.gray[800],
+        lineHeight: `${FONT_SIZE * 1.5}px`,
+        fontFamily: fonts.base,
         fontSmoothing: 'antialiased',
-        fontSize: '16px',
+        fontSize: `${FONT_SIZE - 2}px`,
         '::placeholder': {
-          color: '#aab7c4'
-        }
+          color: colors.gray[500],
+        },
       },
       invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a'
+        color: colors.theme['danger'],
+        iconColor: colors.theme['danger'],
       }
     };
 
+    const classes = {
+      base: 'form-control form-control-alternative',
+    };
+
     // Create an instance of the card Element.
-    const card = elements.create('card', {style: style});
+    const card = elements.create('card', {classes, style});
 
     // Add an instance of the card Element into the `card-element` <div>.
     card.mount('#credit-card-input');

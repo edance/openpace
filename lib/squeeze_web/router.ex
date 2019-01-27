@@ -54,6 +54,8 @@ defmodule SqueezeWeb.Router do
     get "/profile", ProfileController, :edit
     put "/profile", ProfileController, :update
 
+    get "/billing", BillingController, :show
+
     resources "/activities", ActivityController, only: [:index, :show]
 
     resources "/plans", PlanController
