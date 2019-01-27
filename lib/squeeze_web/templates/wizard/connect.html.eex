@@ -1,8 +1,10 @@
 <h1 class="display-4 font-weight-normal">
-  Connect your Strava Account?
+  <%= gettext "Connect your Strava Account?" %>
 </h1>
 
-<p>Automatically update your training status through Strava.</p>
+<p>
+  <%= gettext "Automatically update your training status through Strava." %>
+</p>
 
 <%= link to: auth_path(@conn, :request, "strava") do %>
   <img alt="Sign in with Strava" class="shadow" src="/images/btn_strava.svg" />

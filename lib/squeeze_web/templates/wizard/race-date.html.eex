@@ -1,5 +1,5 @@
 <h1 class="display-4 font-weight-normal">
-  When is your next race?
+  <%= gettext "When is your next race?" %>
 </h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>

@@ -1,5 +1,5 @@
 <h1 class="display-4 font-weight-normal">
-  What is your goal time?
+  <%= gettext "What is your goal time?" %>
 </h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>

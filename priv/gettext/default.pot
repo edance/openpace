@@ -1,0 +1,47 @@
+## This file is a PO Template file.
+##
+## `msgid`s here are often extracted from source code.
+## Add new translations manually only if they're dynamic
+## translations that can't be statically extracted.
+##
+## Run `mix gettext.extract` to bring this file up to
+## date. Leave `msgstr`s empty as changing them here as no
+## effect: edit them in PO (`.po`) files instead.
+msgid ""
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/distance.html.eex:2
+msgid "I am training to run a"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/duration.html.eex:2
+msgid "What is your goal time?"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/experience.html.eex:2
+msgid "What is your level of experience?"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/race-date.html.eex:2
+msgid "When is your next race?"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/connect.html.eex:6
+msgid "Automatically update your training status through Strava."
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/connect.html.eex:2
+msgid "Connect your Strava Account?"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/personal-record.html.eex:2
+msgid "What is your current personal record?"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/improvement.html.eex:2
+msgid "You are looking for a %{percent} improvement"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/improvement.html.eex:7
+msgid "You have set your goals high! Let's build your training program."
+msgstr ""
