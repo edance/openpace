@@ -13,9 +13,7 @@ defmodule SqueezeWeb.Plug.Auth do
 
   alias Squeeze.{Accounts, Guardian}
 
-  def init(options) do
-    options
-  end
+  def init(_), do: nil
 
   def call(conn, _) do
     cond do
