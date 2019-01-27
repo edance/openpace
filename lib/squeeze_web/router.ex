@@ -13,6 +13,7 @@ defmodule SqueezeWeb.Router do
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource, allow_blank: true
     plug Plug.Auth
+    plug Plug.Locale
     plug Turbolinks
   end
 
