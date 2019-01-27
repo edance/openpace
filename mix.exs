@@ -54,6 +54,7 @@ defmodule Squeeze.Mixfile do
       {:ecto_enum, "~> 1.1"},
       {:stripity_stripe, "~> 2.2.2"},
       {:httpoison, "~> 1.5"},
+      {:set_locale, "~> 0.2.4"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
