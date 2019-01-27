@@ -24,12 +24,15 @@
           </div>
         </div>
         <div class="card-body">
-          <h6 class="heading-small text-muted mb-4">Credit Card</h6>
-          <label class="form-control-label">Credit or Debit Card</label>
-          <div id="credit-card-input">
-            <input class="form-control form-control-alternative" />
-          </div>
-            <input class="form-control form-control-alternative" placeholder="Evan Dancer" />
+
+          <!-- Stripe Payment Form -->
+          <form class="payment-form">
+            <label class="form-control-label">Credit or Debit Card</label>
+            <div class="credit-card-input form-control form-control-alternative">
+            </div>
+
+            <div class="invalid-feedback"></div>
+          </form>
         </div>
       </div>
     </div>
