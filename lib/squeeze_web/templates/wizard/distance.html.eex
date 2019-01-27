@@ -1,5 +1,5 @@
 <h1 class="display-4 font-weight-normal">
-  I am training to run a
+  <%= gettext "I am training to run a" %>
 </h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>

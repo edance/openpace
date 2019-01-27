@@ -1,9 +1,10 @@
 <h1 class="display-4 font-weight-normal">
-  You are looking for a <%= improvement_amount(@current_user) %> improvement
+  <%= gettext "You are looking for a %{percent} improvement",
+    percent: improvement_amount(@current_user) %>
 </h1>
 
 <p>
-  You have set your goals high! Let's build your training program.
+  <%= gettext "You have set your goals high! Let's build your training program." %>
 </p>
 
 <%= link "Next", to: wizard_path(@conn, :step, "connect"), class: "btn btn-primary" %>
