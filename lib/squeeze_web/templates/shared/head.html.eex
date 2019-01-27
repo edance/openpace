@@ -11,5 +11,7 @@
 <%= render("_gtm.html", assigns) %>
 
 <script>
+ window.STRIPE_PUBLISHABLE_KEY =
+   '<%= Application.get_env(:stripity_stripe, :publishable_key) %>';
  window.MAPBOX_ACCESS_TOKEN = '<%= Application.get_env(:squeeze, :mapbox_access_token) %>';
 </script>
