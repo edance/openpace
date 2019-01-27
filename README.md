@@ -37,6 +37,35 @@ These tasks are not required to run squeeze.
 * `mix setup.stripe` - creates the stripe billing options
 * `mix setup.subscriptions` - creates the strava webhook subscription
 
+## Translations
+
+Every time that we add a new call to gettext in the templates, we need to update our POT and PO files. We can accomplish that with a single task:
+
+```bash
+mix gettext.extract --merge
+```
+
+### Pending Translations
+
+To update and add to existing locales, please visit the folders below and update the PO files.
+
+* [French (fr)](https://github.com/edance/squeeze/blob/master/priv/gettext/fr/LC_MESSAGES)
+* [German (de)](https://github.com/edance/squeeze/blob/master/priv/gettext/de/LC_MESSAGES)
+* [Spanish (es)](https://github.com/edance/squeeze/blob/master/priv/gettext/es/LC_MESSAGES)
+* [Russian (ru)](https://github.com/edance/squeeze/blob/master/priv/gettext/ru/LC_MESSAGES)
+
+### New Translations
+
+To add new locales, run this task below to create PO files for that locale:
+
+```bash
+mix gettext.merge priv/gettext --locale it
+```
+
+### Testing Translations
+
+Locale is set in the locale plug which first checks the `locale` query param, then the `locale` cookie, and finally the `Accept-Language` request header. The easiest way to test is to visit [`localhost:4000?locale=fr`](http://localhost:4000?locale=fr)
+
 ## FAQ/Contact
 
   * Official website: https://squeeze.run
