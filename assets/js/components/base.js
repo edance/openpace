@@ -1,5 +1,6 @@
 import './autocomplete-input';
 import './calendar';
+import './credit-card-input';
 import './date-picker';
 import './duration-select';
 import './form';
