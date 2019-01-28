@@ -1,0 +1,33 @@
+<h2>Show Payment method</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @payment_method.name %>
+  </li>
+
+  <li>
+    <strong>Stripe:</strong>
+    <%= @payment_method.stripe_id %>
+  </li>
+
+  <li>
+    <strong>Last4:</strong>
+    <%= @payment_method.last4 %>
+  </li>
+
+  <li>
+    <strong>Exp month:</strong>
+    <%= @payment_method.exp_month %>
+  </li>
+
+  <li>
+    <strong>Exp year:</strong>
+    <%= @payment_method.exp_year %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: payment_method_path(@conn, :edit, @payment_method) %></span>
+<span><%= link "Back", to: payment_method_path(@conn, :index) %></span>
