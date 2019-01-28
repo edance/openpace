@@ -42,7 +42,8 @@ config :squeeze, Squeeze.Guardian,
 
 config :stripity_stripe,
   api_key: System.get_env("STRIPE_SECRET_KEY"),
-  publishable_key: System.get_env("STRIPE_PUBLISHABLE_KEY")
+  publishable_key: System.get_env("STRIPE_PUBLISHABLE_KEY"),
+  webhook_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
