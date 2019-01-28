@@ -4,6 +4,7 @@ defmodule Squeeze.Factory do
   use Squeeze.ActivityFactory
   use Squeeze.CredentialFactory
   use Squeeze.DetailedActivityFactory
+  use Squeeze.PaymentMethodFactory
   use Squeeze.TrainingPlanFactory
   use Squeeze.UserFactory
   use Squeeze.UserPrefsFactory

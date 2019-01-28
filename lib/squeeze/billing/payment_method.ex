@@ -9,10 +9,20 @@ defmodule Squeeze.Billing.PaymentMethod do
   alias Squeeze.Accounts.User
 
   schema "payment_methods" do
+    # Billing Information
+    field :owner_name, :string
+    field :address_city, :string
+    field :address_country, :string
+    field :address_line1, :string
+    field :address_line2, :string
+    field :address_state, :string
+    field :address_zip, :string
+
+    # Card Information
+    field :name, :string
     field :exp_month, :integer
     field :exp_year, :integer
     field :last4, :string
-    field :name, :string
     field :stripe_id, :string
 
     belongs_to :user, User
