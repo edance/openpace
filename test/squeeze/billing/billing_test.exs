@@ -2,72 +2,103 @@ defmodule Squeeze.BillingTest do
   use Squeeze.DataCase
 
   alias Squeeze.Billing
+  alias Squeeze.Billing.PaymentMethod
 
-  describe "payment_methods" do
-    alias Squeeze.Billing.PaymentMethod
+  import Squeeze.Factory
 
-    @valid_attrs %{exp_month: 42, exp_year: 42, last4: "some last4", name: "some name", stripe_id: "some stripe_id"}
-    @update_attrs %{exp_month: 43, exp_year: 43, last4: "some updated last4", name: "some updated name", stripe_id: "some updated stripe_id"}
-    @invalid_attrs %{exp_month: nil, exp_year: nil, last4: nil, name: nil, stripe_id: nil}
+  describe "list_payment_methods/1" do
+    test "includes only the users payment_methods" do
+      [payment_method, _] = insert_pair(:payment_method)
 
-    def payment_method_fixture(attrs \\ %{}) do
-      {:ok, payment_method} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Billing.create_payment_method()
+      payment_methods = Billing.list_payment_methods(payment_method.user)
+      assert length(payment_methods) == 1
+      assert List.first(payment_methods).id == payment_method.id
+    end
+  end
 
-      payment_method
+  describe "get_payment_method!/2" do
+    setup [:create_payment_method]
+
+    test "returns the payment_method if found",
+      %{payment_method: payment_method, user: user} do
+      assert payment_method.id ==
+        Billing.get_payment_method!(user, payment_method.id).id
     end
 
-    test "list_payment_methods/0 returns all payment_methods" do
-      payment_method = payment_method_fixture()
-      assert Billing.list_payment_methods() == [payment_method]
+    test "raises error if payment_method does not belong to user",
+      %{payment_method: payment_method} do
+      user = insert(:user)
+      assert_raise Ecto.NoResultsError, fn ->
+        Billing.get_payment_method!(user, payment_method.id) end
     end
 
-    test "get_payment_method!/1 returns the payment_method with given id" do
-      payment_method = payment_method_fixture()
-      assert Billing.get_payment_method!(payment_method.id) == payment_method
+    test "raises error if payment_method does not exist", %{user: user} do
+      assert_raise Ecto.NoResultsError, fn ->
+        Billing.get_payment_method!(user, "1234") end
+    end
+  end
+
+  describe "create_payment_method/2" do
+    setup [:create_user]
+
+    test "with valid attrs creates a payment_method", %{user: user} do
+      attrs = params_for(:payment_method)
+      assert {:ok, payment_method} = Billing.create_payment_method(user, attrs)
+      assert payment_method.user_id == user.id
     end
 
-    test "create_payment_method/1 with valid data creates a payment_method" do
-      assert {:ok, %PaymentMethod{} = payment_method} = Billing.create_payment_method(@valid_attrs)
-      assert payment_method.exp_month == 42
-      assert payment_method.exp_year == 42
-      assert payment_method.last4 == "some last4"
-      assert payment_method.name == "some name"
-      assert payment_method.stripe_id == "some stripe_id"
+    test "with invalid attrs returns error changeset", %{user: user} do
+      assert {:error, %Ecto.Changeset{}} = Billing.create_payment_method(user, %{})
     end
+  end
 
-    test "create_payment_method/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Billing.create_payment_method(@invalid_attrs)
-    end
+  describe "update_payment_method/2" do
+    setup [:create_payment_method]
 
-    test "update_payment_method/2 with valid data updates the payment_method" do
-      payment_method = payment_method_fixture()
-      assert {:ok, payment_method} = Billing.update_payment_method(payment_method, @update_attrs)
-      assert %PaymentMethod{} = payment_method
-      assert payment_method.exp_month == 43
-      assert payment_method.exp_year == 43
-      assert payment_method.last4 == "some updated last4"
+    test "with valid attrs updates the payment method",
+      %{payment_method: payment_method} do
+      attrs = %{name: "some updated name"}
+      assert {:ok, payment_method} =
+        Billing.update_payment_method(payment_method, attrs)
       assert payment_method.name == "some updated name"
-      assert payment_method.stripe_id == "some updated stripe_id"
     end
 
-    test "update_payment_method/2 with invalid data returns error changeset" do
-      payment_method = payment_method_fixture()
-      assert {:error, %Ecto.Changeset{}} = Billing.update_payment_method(payment_method, @invalid_attrs)
-      assert payment_method == Billing.get_payment_method!(payment_method.id)
+    test "with invalid attrs returns error changeset",
+      %{payment_method: payment_method} do
+      assert {:error, %Ecto.Changeset{}} =
+        Billing.update_payment_method(payment_method, %{stripe_id: nil})
     end
 
-    test "delete_payment_method/1 deletes the payment_method" do
-      payment_method = payment_method_fixture()
-      assert {:ok, %PaymentMethod{}} = Billing.delete_payment_method(payment_method)
-      assert_raise Ecto.NoResultsError, fn -> Billing.get_payment_method!(payment_method.id) end
+    test "cannot update the user_id", %{payment_method: payment_method} do
+      user = insert(:user)
+      attrs = %{user_id: user.id}
+      assert {:ok, payment_method} =
+        Billing.update_payment_method(payment_method, attrs)
+      refute payment_method.user_id == user.id
     end
+  end
 
-    test "change_payment_method/1 returns a payment_method changeset" do
-      payment_method = payment_method_fixture()
-      assert %Ecto.Changeset{} = Billing.change_payment_method(payment_method)
-    end
+  test "delete_payment_method/1 deletes the payment_method" do
+    payment_method = insert(:payment_method)
+    user = payment_method.user
+
+    assert {:ok, %PaymentMethod{}} =
+      Billing.delete_payment_method(payment_method)
+    assert_raise Ecto.NoResultsError, fn ->
+      Billing.get_payment_method!(user, payment_method.id) end
+  end
+
+  test "change_payment_method/1 returns a payment_method changeset" do
+    payment_method = build(:payment_method)
+    assert %Ecto.Changeset{} = Billing.change_payment_method(payment_method)
+  end
+
+  defp create_user(_) do
+    {:ok, user: insert(:user)}
+  end
+
+  defp create_payment_method(_) do
+    payment_method = insert(:payment_method)
+    {:ok, payment_method: payment_method, user: payment_method.user}
   end
 end
