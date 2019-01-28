@@ -1,0 +1,5 @@
+<h2>New Payment method</h2>
+
+<%= render "form.html", Map.put(assigns, :action, payment_method_path(@conn, :create)) %>
+
+<span><%= link "Back", to: payment_method_path(@conn, :index) %></span>
