@@ -19,7 +19,7 @@ defmodule Squeeze.PaymentMethodFactory do
           address_state: Address.state(),
           address_zip: Address.zip(),
 
-          name: "#{owner}'s #{company}",
+          name: "#{owner} #{company}",
           exp_month: Enum.random(1..12),
           exp_year: Timex.today.year + Enum.random(1..6),
           last4: "1234",

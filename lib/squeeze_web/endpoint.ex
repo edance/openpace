@@ -24,7 +24,7 @@ defmodule SqueezeWeb.Endpoint do
 
   # https://hexdocs.pm/plug/Plug.Parsers.html#module-custom-body-reader
   plug Plug.Parsers,
-    parsers: [:urlencoded, :json],
+    parsers: [:urlencoded, :multipart, :json],
     pass: ["text/*"],
     body_reader: {CacheBodyReader, :read_body, []},
     json_decoder: Poison

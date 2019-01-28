@@ -29,46 +29,19 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Name</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 <%= for payment_method <- @payment_methods do %>
                   <tr>
                     <td><%= payment_method.name %></td>
+                    <td><%= payment_method.last4 %></td>
                   </tr>
                 <% end %>
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Page content -->
-<div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col-xl-8 order-xl-1">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">My account</h3>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-
-          <!-- Stripe Payment Form -->
-          <form class="payment-form">
-            <label class="form-control-label">Credit or Debit Card</label>
-            <div class="credit-card-input form-control form-control-alternative">
-            </div>
-
-            <div class="invalid-feedback"></div>
-          </form>
         </div>
       </div>
     </div>
