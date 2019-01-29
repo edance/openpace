@@ -5,9 +5,9 @@ defmodule Squeeze.Billing do
 
   import Ecto.Query, warn: false
   alias Ecto.Changeset
-  alias Squeeze.Repo
   alias Squeeze.Accounts.User
   alias Squeeze.Billing.PaymentMethod
+  alias Squeeze.Repo
 
   @doc """
   Returns the list of payment_methods.

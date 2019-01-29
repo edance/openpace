@@ -4,8 +4,10 @@ defmodule CacheBodyReader do
   Cache the body to perform verification later, such as HTTP Signature Verification.
   """
 
+  alias Plug.Conn
+
   def read_body(conn, opts) do
-    {:ok, body, conn} = Plug.Conn.read_body(conn, opts)
+    {:ok, body, conn} = Conn.read_body(conn, opts)
     conn = update_in(conn.assigns[:raw_body], &[body | (&1 || [])])
     {:ok, body, conn}
   end
