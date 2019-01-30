@@ -61,7 +61,7 @@ function stripeTokenHandler(form, token) {
   form.submit();
 }
 
-function addListenersToForm(form, errorContainer, stripe) {
+function addListenersToForm(form, card, errorContainer, stripe) {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -86,12 +86,13 @@ document.addEventListener("turbolinks:load", function() {
 
   loadScript('//js.stripe.com/v3/').then(() => {
     $form.each(element => {
-      const cardElement = u(element).find('.credit-card-input').first();
-      const errorContainer = u(element).find('.invalid-feedback').first();
+      const cardContainer = u(element).find('.card-input-group');
+      const cardElement = cardContainer.find('.credit-card-input').first();
+      const errorContainer = cardContainer.find('.invalid-feedback').first();
       const stripe = window.Stripe(window.STRIPE_PUBLISHABLE_KEY);
       const card = createCardElement(cardElement, stripe);
       addListenersToCard(card, errorContainer);
-      addListenersToForm(element, errorContainer, stripe);
+      addListenersToForm(element, card, errorContainer, stripe);
     });
   });
 });

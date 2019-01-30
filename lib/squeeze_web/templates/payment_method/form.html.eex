@@ -1,4 +1,5 @@
-<%= form_for @changeset, @action, fn f -> %>
+<!-- Stripe Payment Form -->
+<%= form_for @changeset, @action, [class: "payment-form"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -6,33 +7,16 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
+    <%= label f, :owner_name, class: "form-control-label" %>
+    <%= text_input f, :owner_name, class: "form-control form-control-alternative" %>
+    <%= error_tag f, :owner_name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :stripe_id, class: "control-label" %>
-    <%= text_input f, :stripe_id, class: "form-control" %>
-    <%= error_tag f, :stripe_id %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :last4, class: "control-label" %>
-    <%= text_input f, :last4, class: "form-control" %>
-    <%= error_tag f, :last4 %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :exp_month, class: "control-label" %>
-    <%= number_input f, :exp_month, class: "form-control" %>
-    <%= error_tag f, :exp_month %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :exp_year, class: "control-label" %>
-    <%= number_input f, :exp_year, class: "form-control" %>
-    <%= error_tag f, :exp_year %>
+  <div class="form-group card-input-group">
+    <label class="form-control-label">Credit or Debit Card</label>
+    <div class="credit-card-input form-control form-control-alternative">
+    </div>
+    <div class="invalid-feedback"></div>
   </div>
 
   <div class="form-group">
