@@ -28,6 +28,8 @@ config :strava,
   redirect_uri: "http://localhost:4000/auth/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
+config :sendgrid, api_key: System.get_env("SENDGRID_API_KEY")
+
 config :squeeze, gtm_id: System.get_env("GTM_ID")
 config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
 
