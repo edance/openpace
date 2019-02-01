@@ -25,6 +25,9 @@ config :strava,
   redirect_uri: "http://localhost:4000/auth/strava/callback",
   webhook_challenge: "STRAVA"
 
+config :squeeze, Squeeze.Mailer,
+  adapter: Bamboo.TestAdapter
+
 config :squeeze, :strava_activities, Squeeze.Strava.MockActivities
 config :squeeze, :strava_auth, Squeeze.Strava.MockAuth
 config :squeeze, :strava_client, Squeeze.Strava.MockClient
