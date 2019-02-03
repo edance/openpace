@@ -10,7 +10,7 @@ defmodule Squeeze.CredentialFactory do
           provider: "strava",
           access_token: "abcdefg",
           refresh_token: "abcdefg",
-          uid: sequence(:uid, &(&1)),
+          uid: sequence(:uid, &("#{&1}")),
           user: build(:user)
         }
       end
