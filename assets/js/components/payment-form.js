@@ -51,11 +51,8 @@ function addListenersToCard(card, errorContainer) {
 
 // Submit the form with the token ID.
 function stripeTokenHandler(form, token) {
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
+  const input = u(form).find('.stripe-token-input');
+  input.attr('value', token.id);
 
   // Submit the form
   form.submit();

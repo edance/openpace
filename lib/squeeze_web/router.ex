@@ -56,7 +56,7 @@ defmodule SqueezeWeb.Router do
 
     get "/billing", BillingController, :index
 
-    resources "/payment_methods", PaymentMethodController,
+    resources "/payment", PaymentMethodController,
       only: [:new, :create, :delete]
 
     resources "/activities", ActivityController, only: [:index, :show]

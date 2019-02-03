@@ -33,7 +33,7 @@ defmodule Squeeze.Billing.PaymentMethod do
   @doc false
   def changeset(payment_method, attrs) do
     payment_method
-    |> cast(attrs, [:name, :stripe_id, :last4, :exp_month, :exp_year])
-    |> validate_required([:name, :stripe_id, :last4, :exp_month, :exp_year])
+    |> cast(attrs, [:owner_name, :stripe_id, :last4, :exp_month, :exp_year])
+    |> validate_required([:owner_name, :stripe_id, :last4, :exp_month, :exp_year])
   end
 end

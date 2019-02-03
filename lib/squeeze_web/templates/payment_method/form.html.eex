@@ -12,6 +12,8 @@
     <%= error_tag f, :owner_name %>
   </div>
 
+  <%= hidden_input f, :stripe_token, class: "stripe-token-input" %>
+
   <div class="form-group card-input-group">
     <label class="form-control-label">Credit or Debit Card</label>
     <div class="credit-card-input form-control form-control-alternative">
