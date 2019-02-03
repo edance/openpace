@@ -4,7 +4,7 @@ defmodule SqueezeWeb.PaymentMethodController do
   alias Squeeze.Billing
   alias Squeeze.Billing.PaymentMethod
 
-  @stripe_card Application.get_env(:squeeze, :stripe_card)
+  @payment_processor Application.get_env(:squeeze, :payment_processor)
 
   def index(conn, _params) do
     redirect(conn, to: billing_path(conn, :index))
@@ -40,7 +40,7 @@ defmodule SqueezeWeb.PaymentMethodController do
   defp create_stripe_card(user, params) do
     customer = user.stripe_customer_id
     source = params["stripe_token"]
-    case @stripe_card.create(%{customer: customer, source: source}) do
+    case @payment_processor.create_card(%{customer: customer, source: source}) do
       {:ok, card} ->
         attrs = %{
           address_zip: card.address_zip,

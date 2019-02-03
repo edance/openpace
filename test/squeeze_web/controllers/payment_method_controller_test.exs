@@ -57,15 +57,15 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
   end
 
   defp setup_mocks(_) do
-    card = %Stripe.Card{
+    card = %{
       address_zip: "49686",
       exp_month: 12,
       exp_year: 2050,
       id: "card_123456789",
       last4: "1234"
     }
-    Squeeze.Stripe.MockCard
-    |> expect(:create, fn(_) -> {:ok, card} end)
+    Squeeze.MockPaymentProcessor
+    |> expect(:create_card, fn(_) -> {:ok, card} end)
 
     {:ok, []}
   end

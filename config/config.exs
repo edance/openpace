@@ -40,7 +40,7 @@ config :squeeze, :strava_auth, Strava.Auth
 config :squeeze, :strava_client, Strava.Client
 config :squeeze, :strava_streams, Strava.Streams
 
-config :squeeze, :stripe_card, Stripe.Card
+config :squeeze, :payment_processor, Squeeze.StripePaymentProcessor
 
 config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
