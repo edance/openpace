@@ -6,13 +6,20 @@ defmodule Squeeze.BillingTest do
 
   import Squeeze.Factory
 
-  describe "list_payment_methods/1" do
-    test "includes only the users payment_methods" do
+  describe "get_default_payment_method/1" do
+    test "includes only the users payment_method" do
       [payment_method, _] = insert_pair(:payment_method)
 
-      payment_methods = Billing.list_payment_methods(payment_method.user)
-      assert length(payment_methods) == 1
-      assert List.first(payment_methods).id == payment_method.id
+      default_method = Billing.get_default_payment_method(payment_method.user)
+      assert default_method.id == payment_method.id
+    end
+
+    test "returns only the latest payment_method" do
+      method_1 = insert(:payment_method)
+      user = method_1.user
+      method_2 = insert(:payment_method, user: user)
+      default_method = Billing.get_default_payment_method(user)
+      assert default_method.id == method_2.id
     end
   end
 
@@ -57,10 +64,10 @@ defmodule Squeeze.BillingTest do
 
     test "with valid attrs updates the payment method",
       %{payment_method: payment_method} do
-      attrs = %{name: "some updated name"}
+      attrs = %{owner_name: "some updated name"}
       assert {:ok, payment_method} =
         Billing.update_payment_method(payment_method, attrs)
-      assert payment_method.name == "some updated name"
+      assert payment_method.owner_name == "some updated name"
     end
 
     test "with invalid attrs returns error changeset",

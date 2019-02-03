@@ -4,6 +4,10 @@ defmodule SqueezeWeb.PaymentMethodController do
   alias Squeeze.Billing
   alias Squeeze.Billing.PaymentMethod
 
+  def index(conn, _params) do
+    redirect(conn, to: billing_path(conn, :index))
+  end
+
   def new(conn, _params) do
     changeset = Billing.change_payment_method(%PaymentMethod{})
     render(conn, "new.html", changeset: changeset)
