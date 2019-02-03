@@ -25,6 +25,8 @@ defmodule SqueezeWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/privacy", PageController, :privacy_policy
+    get "/terms", PageController, :terms
 
     get "/quiz", WizardController, :index
     get "/quiz/:step", WizardController, :step

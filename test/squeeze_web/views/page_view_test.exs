@@ -11,4 +11,10 @@ defmodule SqueezeWeb.PageViewTest do
       assert is_integer(value)
     end
   end
+
+  test "terms helper methods" do
+    assert PageView.company_name == "Squeeze.Run"
+    assert PageView.website_name == "Squeeze.Run"
+    assert PageView.website_url == "https://squeeze.run"
+  end
 end
