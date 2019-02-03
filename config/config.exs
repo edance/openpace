@@ -40,6 +40,8 @@ config :squeeze, :strava_auth, Strava.Auth
 config :squeeze, :strava_client, Strava.Client
 config :squeeze, :strava_streams, Strava.Streams
 
+config :squeeze, :stripe_card, Stripe.Card
+
 config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
   secret_key: "1kALJhfwksHIiVmnVwuZv327H+u1jnE7ZC/c3EAJcurvH5sAHbm+KA87R/eivO29"

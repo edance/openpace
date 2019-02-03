@@ -32,3 +32,5 @@ config :squeeze, :strava_activities, Squeeze.Strava.MockActivities
 config :squeeze, :strava_auth, Squeeze.Strava.MockAuth
 config :squeeze, :strava_client, Squeeze.Strava.MockClient
 config :squeeze, :strava_streams, Squeeze.Strava.MockStreams
+
+config :squeeze, :stripe_card, Squeeze.Stripe.MockCard

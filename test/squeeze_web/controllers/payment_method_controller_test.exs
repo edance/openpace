@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.PaymentMethodControllerTest do
   use SqueezeWeb.ConnCase
+  import Mox
 
   alias Squeeze.Billing
 
@@ -11,15 +12,17 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
   end
 
   describe "#create" do
+    setup [:setup_mocks]
+
     test "redirects to billing#index when data is valid",
       %{conn: conn, user: user} do
-      attrs = params_for(:payment_method)
+      attrs = %{"owner_name" => "Evan Dancer", "stripe_token" => "123456789"}
       conn = conn
       |> post(payment_method_path(conn, :create), payment_method: attrs)
 
       assert redirected_to(conn) == billing_path(conn, :index)
-      payment_methods = Billing.list_payment_methods(user)
-      assert length(payment_methods) == 1
+      payment_method = Billing.get_default_payment_method(user)
+      assert payment_method.owner_name == "Evan Dancer"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -49,7 +52,21 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
     end
   end
 
-  def create_payment_method(%{user: user}) do
+  defp create_payment_method(%{user: user}) do
     {:ok, payment_method: insert(:payment_method, user: user)}
+  end
+
+  defp setup_mocks(_) do
+    card = %Stripe.Card{
+      address_zip: "49686",
+      exp_month: 12,
+      exp_year: 2050,
+      id: "card_123456789",
+      last4: "1234"
+    }
+    Squeeze.Stripe.MockCard
+    |> expect(:create, fn(_) -> {:ok, card} end)
+
+    {:ok, []}
   end
 end
