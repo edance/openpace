@@ -14,7 +14,7 @@ defmodule Squeeze.Accounts.Credential do
     field :provider, :string
     field :access_token, :string
     field :refresh_token, :string
-    field :uid, :integer
+    field :uid, :string
     field :sync_at, :utc_datetime
 
     belongs_to :user, User
@@ -26,6 +26,6 @@ defmodule Squeeze.Accounts.Credential do
   def changeset(%Credential{} = credential, attrs) do
     credential
     |> cast(attrs, [:provider, :uid, :access_token, :refresh_token, :sync_at])
-    |> validate_required([:provider, :uid, :access_token, :refresh_token])
+    |> validate_required([:provider, :uid])
   end
 end
