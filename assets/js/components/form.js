@@ -6,9 +6,14 @@ import Turbolinks from 'turbolinks';
 import { u } from 'umbrellajs';
 
 u(document).on('submit', 'form', function(event) {
+  const form = u(this);
+
+  if (form.data("remote") !== "true") {
+    return;
+  }
+
   event.preventDefault();
 
-  const form = u(this);
   const action = form.attr('action');
   const method = form.attr('method');
   const referrer = location.href;
