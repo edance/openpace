@@ -1,8 +1,10 @@
 defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
 
+  alias OAuth2.Client
   alias Squeeze.Accounts
   alias Squeeze.Guardian.Plug
+  alias Squeeze.OAuth2.Google
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
@@ -41,17 +43,39 @@ defmodule SqueezeWeb.AuthController do
     @strava_auth.authorize_url!(scope: "read,activity:read_all")
   end
 
+  defp authorize_url!("google") do
+    Google.authorize_url!(scope: "email")
+  end
+
   defp get_token!("strava", code) do
     @strava_auth.get_token!(code: code, grant_type: "authorization_code")
   end
 
+  defp get_token!("google", code), do: Google.get_token!(code: code)
+
   defp get_user!("strava", client) do
     %{access_token: access_token, refresh_token: refresh_token} = client.token
     user = @strava_auth.get_athlete!(client)
-    credential = %{provider: "strava", uid: user.id, access_token: access_token, refresh_token: refresh_token}
+    credential = %{provider: "strava", uid: "#{user.id}", access_token: access_token, refresh_token: refresh_token}
     user
     |> Map.from_struct
     |> Map.merge(%{first_name: user.firstname, last_name: user.lastname, avatar: user.profile})
     |> Map.merge(%{credential: credential})
+  end
+
+  defp get_user!("google", client) do
+    %{body: user} =
+      Client.get!(client, "https://www.googleapis.com/userinfo/v2/me")
+    %{
+      avatar: user["picture"],
+      email: user["email"],
+      first_name: user["given_name"],
+      last_name: user["family_name"],
+      credential: %{
+        access_token: client.token.access_token,
+        provider: "google",
+        uid: user["id"]
+      }
+    }
   end
 end

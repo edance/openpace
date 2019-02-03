@@ -8,18 +8,21 @@ defmodule Squeeze.OAuth2.Google do
   alias OAuth2.Client
   alias OAuth2.Strategy.AuthCode
 
-  defp config do
-    [strategy: Squeeze.OAuth2.Google,
-     site: "https://accounts.google.com",
-     authorize_url: "/o/oauth2/auth",
-     token_url: "/o/oauth2/token"]
-  end
+  @defaults [
+    strategy: __MODULE__,
+    site: "https://accounts.google.com",
+    authorize_url: "/o/oauth2/auth",
+    token_url: "/o/oauth2/token"
+  ]
 
   # Public API
 
-  def client do
-    Application.get_env(:squeeze, Squeeze.OAuth2.Google)
-    |> Keyword.merge(config())
+  def client(opts \\ []) do
+    config = Application.get_env(:squeeze, Squeeze.OAuth2.Google)
+
+    @defaults
+    |> Keyword.merge(config)
+    |> Keyword.merge(opts)
     |> Client.new()
   end
 
@@ -30,8 +33,6 @@ defmodule Squeeze.OAuth2.Google do
   def get_token!(params \\ [], _headers \\ []) do
     Client.get_token!(client(), Keyword.merge(params, client_secret: client().client_secret))
   end
-
-  # Strategy Callbacks
 
   def authorize_url(client, params) do
     AuthCode.authorize_url(client, params)
