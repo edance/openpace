@@ -4,7 +4,7 @@ defmodule SqueezeWeb.AuthController do
   alias OAuth2.Client
   alias Squeeze.Accounts
   alias Squeeze.Guardian.Plug
-  alias Squeeze.OAuth2.Google
+  alias Squeeze.OAuth2.{Facebook, Google}
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
@@ -47,11 +47,16 @@ defmodule SqueezeWeb.AuthController do
     Google.authorize_url!(scope: "email")
   end
 
+  defp authorize_url!("facebook") do
+    Facebook.authorize_url!(scope: "email,public_profile")
+  end
+
   defp get_token!("strava", code) do
     @strava_auth.get_token!(code: code, grant_type: "authorization_code")
   end
 
   defp get_token!("google", code), do: Google.get_token!(code: code)
+  defp get_token!("facebook", code), do: Facebook.get_token!(code: code)
 
   defp get_user!("strava", client) do
     %{access_token: access_token, refresh_token: refresh_token} = client.token
@@ -75,6 +80,23 @@ defmodule SqueezeWeb.AuthController do
         access_token: client.token.access_token,
         provider: "google",
         uid: user["id"]
+      }
+    }
+  end
+
+  defp get_user!("facebook", client) do
+    %{body: user} =
+      Client.get!(client, "/me?fields=email,id,first_name,last_name")
+    uid = user["id"]
+    %{
+      avatar: "https://graph.facebook.com/#{uid}/picture?type=square",
+      email: user["email"],
+      first_name: user["first_name"],
+      last_name: user["last_name"],
+      credential: %{
+        access_token: client.token.access_token,
+        provider: "facebook",
+        uid: uid
       }
     }
   end
