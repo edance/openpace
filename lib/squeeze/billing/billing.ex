@@ -14,14 +14,19 @@ defmodule Squeeze.Billing do
 
   ## Examples
 
-      iex> list_payment_methods(%User{})
-      [%PaymentMethod{}, ...]
+      iex> get_default_payment_method(%User{})
+      %PaymentMethod{}
+
+      iex> get_default_payment_method(%User{})
+      nil
 
   """
-  def list_payment_methods(%User{} = user) do
+  def get_default_payment_method(%User{} = user) do
     PaymentMethod
     |> by_user(user)
-    |> Repo.all()
+    |> order_by([a], [desc: a.inserted_at])
+    |> limit(1)
+    |> Repo.one()
   end
 
   @doc """

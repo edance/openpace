@@ -8,18 +8,21 @@ defmodule Squeeze.Billing.PaymentMethod do
 
   alias Squeeze.Accounts.User
 
+  @required_fields ~w(
+    owner_name
+    address_zip
+    exp_month
+    exp_year
+    last4
+    stripe_id
+  )a
+
   schema "payment_methods" do
     # Billing Information
     field :owner_name, :string
-    field :address_city, :string
-    field :address_country, :string
-    field :address_line1, :string
-    field :address_line2, :string
-    field :address_state, :string
     field :address_zip, :string
 
     # Card Information
-    field :name, :string
     field :exp_month, :integer
     field :exp_year, :integer
     field :last4, :string
@@ -33,7 +36,7 @@ defmodule Squeeze.Billing.PaymentMethod do
   @doc false
   def changeset(payment_method, attrs) do
     payment_method
-    |> cast(attrs, [:owner_name, :stripe_id, :last4, :exp_month, :exp_year])
-    |> validate_required([:owner_name, :stripe_id, :last4, :exp_month, :exp_year])
+    |> cast(attrs, @required_fields)
+    |> validate_required(@required_fields)
   end
 end

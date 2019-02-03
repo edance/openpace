@@ -13,7 +13,7 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
   describe "#create" do
     test "redirects to billing#index when data is valid",
       %{conn: conn, user: user} do
-      attrs = params_for(:payment_method, %{name: "some name"})
+      attrs = params_for(:payment_method)
       conn = conn
       |> post(payment_method_path(conn, :create), payment_method: attrs)
 

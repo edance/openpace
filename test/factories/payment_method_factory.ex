@@ -12,17 +12,11 @@ defmodule Squeeze.PaymentMethodFactory do
 
         %PaymentMethod{
           owner_name: owner,
-          address_city: Address.city(),
-          address_country: Address.country(),
-          address_line1: Address.street_address(),
-          address_line2: Address.secondary_address(),
-          address_state: Address.state(),
           address_zip: Address.zip(),
 
-          name: "#{owner} #{company}",
           exp_month: Enum.random(1..12),
           exp_year: Timex.today.year + Enum.random(1..6),
-          last4: "1234",
+          last4: "#{Enum.random(1000..9999)}",
           stripe_id: "card_#{Lorem.characters(15)}",
           user: build(:user)
         }

@@ -5,7 +5,7 @@ defmodule SqueezeWeb.BillingController  do
 
   def index(conn, _params) do
     user = conn.assigns.current_user
-    payment_methods = Billing.list_payment_methods(user)
-    render(conn, "index.html", payment_methods: payment_methods)
+    payment_method = Billing.get_default_payment_method(user)
+    render(conn, "index.html", payment_method: payment_method)
   end
 end

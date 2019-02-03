@@ -11,39 +11,10 @@
   <span class="mask bg-gradient-default opacity-8"></span>
 </div>
 
-<!-- Page content -->
-<div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col-xl-8 order-xl-1">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">My Payment Methods</h3>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <%= for payment_method <- @payment_methods do %>
-                  <tr>
-                    <td><%= payment_method.name %></td>
-                    <td><%= payment_method.last4 %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%= if @payment_method do %>
+  <%= @payment_method.owner_name %>
+  <%= @payment_method.last4 %>
+  <%= link "Change Payment Method", to: payment_method_path(@conn, :new), class: "" %>
+<% else %>
+  <%= link "Add a Payment Method", to: payment_method_path(@conn, :new), class: "" %>
+<% end %>
