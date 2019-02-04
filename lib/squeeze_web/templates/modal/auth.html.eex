@@ -1,4 +1,4 @@
-<div class="modal fade" id="auth-modal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+<div class="modal fade" id="auth-modal" tabindex="-1" data-backdrop="static" data-show="true" role="dialog" aria-labelledby="auth-modal">
   <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
