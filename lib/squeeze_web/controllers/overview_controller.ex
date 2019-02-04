@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.OverviewController do
   use SqueezeWeb, :controller
 
+  alias Squeeze.Accounts
   alias Squeeze.Dashboard
   alias Squeeze.Stats
 
@@ -10,8 +11,11 @@ defmodule SqueezeWeb.OverviewController do
   end
 
   def index(conn, _params, user) do
+    changeset = Accounts.change_user(user)
+
     render(conn, "index.html",
       activities: Dashboard.recent_activities(user),
+      changeset: changeset,
       todays_activities: Dashboard.todays_activities(user),
       week_dataset: Stats.dataset_for_week_chart(user),
       year_dataset: Stats.dataset_for_year_chart(user)

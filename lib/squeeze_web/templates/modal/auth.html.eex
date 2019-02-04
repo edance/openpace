@@ -24,15 +24,28 @@
             <div class="text-center text-muted mb-4">
               <small>Or sign in with credentials</small>
             </div>
-            <form role="form">
+
+            <%= form_for @changeset, user_path(@conn, :register), fn f -> %>
               <div class="form-group mb-3">
                 <div class="input-group input-group-alternative">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="ni ni-email-83"></i>
+                      <i class="icon-user"></i>
                     </span>
                   </div>
-                  <input class="form-control" placeholder="Email" type="email">
+                  <%= text_input f, :full_name, placeholder: "Full Name", class: "form-control" %>
+                  <%= error_tag f, :full_name %>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="icon-envelope"></i>
+                    </span>
+                  </div>
+                  <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+                  <%= error_tag f, :email %>
                 </div>
               </div>
               <div class="form-group">
@@ -44,11 +57,9 @@
                 </div>
               </div>
               <div class="text-center">
-                <button type="button" class="btn btn-primary my-4">
-                  See Dashboard
-                </button>
+                <%= submit "See Dashboard", class: "btn btn-primary my-4" %>
               </div>
-            </form>
+            <% end %>
           </div>
         </div>
       </div>
