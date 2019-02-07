@@ -57,6 +57,8 @@ defmodule Squeeze.Mixfile do
       {:set_locale, "~> 0.2.4"},
       {:bamboo, "~> 1.2"},
       {:oauth2, "~> 0.9"},
+      {:comeonin, "~> 4.1"},
+      {:argon2_elixir, "~> 1.3"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
