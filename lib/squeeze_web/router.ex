@@ -33,6 +33,9 @@ defmodule SqueezeWeb.Router do
     put "/quiz/:step", WizardController, :update
 
     get "/login", AuthController, :login
+
+    get "/sign-up", UserController, :new
+    put "/sign-up", UserController, :register
   end
 
   scope "/auth", SqueezeWeb do

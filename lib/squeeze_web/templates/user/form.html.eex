@@ -1,0 +1,36 @@
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <div class="form-group mb-3">
+    <div class="input-group input-group-alternative">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="icon-user"></i>
+        </span>
+      </div>
+      <%= text_input f, :full_name, placeholder: "Full Name", class: "form-control" %>
+      <%= error_tag f, :full_name %>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <div class="input-group input-group-alternative">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="icon-envelope"></i>
+        </span>
+      </div>
+      <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+      <%= error_tag f, :email %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group input-group-alternative">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+      </div>
+      <%= text_input f, :password, placeholder: "Password", type: "password", class: "form-control" %>
+      <%= error_tag f, :password %>
+    </div>
+  </div>
+  <div class="text-center">
+    <%= submit "Sign Up", class: "btn btn-primary my-4" %>
+  </div>
+<% end %>

@@ -90,6 +90,10 @@ defmodule Squeeze.Accounts do
     |> Repo.insert()
   end
 
+  def register_user(%User{} = user, attrs) do
+    update_user(user, attrs)
+  end
+
   @doc """
   Updates a user.
 
