@@ -34,3 +34,5 @@ config :squeeze, :strava_client, Squeeze.Strava.MockClient
 config :squeeze, :strava_streams, Squeeze.Strava.MockStreams
 
 config :squeeze, :payment_processor, Squeeze.MockPaymentProcessor
+
+config :argon2_elixir, t_cost: 2, m_cost: 8
