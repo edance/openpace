@@ -17,6 +17,8 @@ defmodule Squeeze.Accounts.User do
     field :state, :string
     field :country, :string
 
+    field :encrypted_password, :string
+
     field :stripe_customer_id, :string
 
     has_one :credential, Credential
