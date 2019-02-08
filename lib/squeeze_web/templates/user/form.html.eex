@@ -26,8 +26,8 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
       </div>
-      <%= text_input f, :password, placeholder: "Password", type: "password", class: "form-control" %>
-      <%= error_tag f, :password %>
+      <%= text_input f, :encrypted_password, placeholder: "Password", type: "password", class: "form-control" %>
+      <%= error_tag f, :encrypted_password %>
     </div>
   </div>
   <div class="text-center">
