@@ -5,7 +5,11 @@ defmodule Squeeze.Accounts.User do
 
   use Ecto.Schema
   import Ecto.Changeset
+
+  alias Comeonin.Argon2
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
+
+  @registration_fields ~w(email encrypted_password)a
 
   schema "users" do
     field :first_name, :string
@@ -49,5 +53,18 @@ defmodule Squeeze.Accounts.User do
     user
     |> cast(attrs, fields)
     |> validate_format(:email, ~r/@/)
+  end
+
+  @doc false
+  def registration_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, @registration_fields)
+    |> validate_required(@registration_fields)
+    |> validate_format(:email, ~r/@/)
+    |> encrypt_password()
+  end
+
+  defp encrypt_password(changeset) do
+    update_change(changeset, :encrypted_password, &Argon2.hashpwsalt/1)
   end
 end

@@ -91,7 +91,9 @@ defmodule Squeeze.Accounts do
   end
 
   def register_user(%User{} = user, attrs) do
-    update_user(user, attrs)
+    user
+    |> User.registration_changeset(attrs)
+    |> Repo.update()
   end
 
   @doc """

@@ -22,7 +22,7 @@ defmodule SqueezeWeb.UserControllerTest do
 
   @tag :guest_user
   test "PUT /sign-up", %{conn: conn, user: user} do
-    attrs = %{email: "test@example.com"}
+    attrs = %{email: "test@example.com", encrypted_password: "abc"}
     conn
     |> put(user_path(conn, :register), user: attrs)
 
