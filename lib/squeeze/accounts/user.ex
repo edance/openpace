@@ -61,6 +61,7 @@ defmodule Squeeze.Accounts.User do
     |> cast(attrs, @registration_fields)
     |> validate_required(@registration_fields)
     |> validate_format(:email, ~r/@/)
+    |> validate_length(:encrypted_password, min: 8)
     |> encrypt_password()
   end
 
