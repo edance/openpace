@@ -2,17 +2,11 @@ defmodule SqueezeWeb.AuthControllerTest do
   use SqueezeWeb.ConnCase
   import Mox
 
-  alias Squeeze.Guardian.Plug
   alias Strava.DetailedAthlete
 
   # This makes us check whether our mocks have been properly called at the end
   # of each test.
   setup :verify_on_exit!
-
-  test "renders login page", %{conn: conn} do
-    conn = get(conn, auth_path(conn, :login))
-    assert html_response(conn, 200) =~ ~r/Welcome/
-  end
 
   test "request with strava redirects to strava url", %{conn: conn} do
     Squeeze.Strava.MockAuth
@@ -20,12 +14,6 @@ defmodule SqueezeWeb.AuthControllerTest do
 
     conn = get(conn, auth_path(conn, :request, "strava"))
     assert redirected_to(conn) =~ ~r/https:\/\/www.strava.com/
-  end
-
-  test "logs out user on delete", %{conn: conn} do
-    conn = delete conn, auth_path(conn, :delete)
-    user = Plug.current_resource(conn)
-    assert user == nil
   end
 
   describe "#callback" do
