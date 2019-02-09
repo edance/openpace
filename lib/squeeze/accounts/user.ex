@@ -21,6 +21,8 @@ defmodule Squeeze.Accounts.User do
     field :state, :string
     field :country, :string
 
+    field :registered, :boolean
+
     field :encrypted_password, :string
 
     field :stripe_customer_id, :string
@@ -62,6 +64,7 @@ defmodule Squeeze.Accounts.User do
     |> validate_required(@registration_fields)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:encrypted_password, min: 8)
+    |> put_change(:registered, true)
     |> encrypt_password()
   end
 
