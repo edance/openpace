@@ -13,5 +13,9 @@
       <%= render SqueezeWeb.SharedView, "flash.html", assigns %>
       <%= render @view_module, @view_template, assigns %>
     </div>
+
+    <%= unless @current_user.registered do %>
+      <%= render SqueezeWeb.ModalView, "auth.html", assigns %>
+    <% end %>
   </body>
 </html>
