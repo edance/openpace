@@ -10,7 +10,7 @@
 
   <div class="dropdown-divider"></div>
 
-  <%= link class: "dropdown-item", to: auth_path(@conn, :delete), method: :delete do %>
+  <%= link class: "dropdown-item", to: session_path(@conn, :delete), method: :delete do %>
     <i class="icon-logout"></i>
     <span>Logout</span>
   <% end %>

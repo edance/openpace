@@ -42,33 +42,7 @@
             <div class="text-center text-muted mb-4">
               <small>Or sign in with credentials</small>
             </div>
-            <form role="form">
-              <div class="form-group mb-3">
-                <div class="input-group input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-envelope"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Email" type="email" autocomplete="off">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-alternative">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-lock-open"></i></span>
-                  </div>
-                  <input class="form-control" placeholder="Password" type="password" autocomplete="off">
-                </div>
-              </div>
-              <div class="custom-control custom-control-alternative custom-checkbox">
-                <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                <label class="custom-control-label" for=" customCheckLogin">
-                  <span class="text-muted">Remember me</span>
-                </label>
-              </div>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary my-4">Sign in</button>
-              </div>
-            </form>
+            <%= render "form.html", Map.put(assigns, :action, session_path(@conn, :new)) %>
           </div>
         </div>
         <div class="row mt-3">
