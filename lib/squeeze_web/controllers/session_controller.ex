@@ -18,9 +18,9 @@ defmodule SqueezeWeb.SessionController do
         |> Plug.sign_in(user)
         |> put_flash(:info, "Signed in successfully.")
         |> redirect(to: dashboard_path(conn, :index))
-      {:error, _} ->
+      {:error, message} ->
         conn
-        |> put_flash(:error, "There was a problem with your email/password")
+        |> put_flash(:error, message)
         |> render("new.html")
     end
   end
