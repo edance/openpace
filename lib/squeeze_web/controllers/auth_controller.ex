@@ -8,19 +8,8 @@ defmodule SqueezeWeb.AuthController do
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
-  def login(conn, _params) do
-    render(conn, "login.html")
-  end
-
   def request(conn, %{"provider" => provider}) do
     redirect(conn, external: authorize_url!(provider))
-  end
-
-  def delete(conn, _params) do
-    conn
-    |> Plug.sign_out()
-    |> put_flash(:info, "You have been logged out!")
-    |> redirect(to: "/")
   end
 
   def callback(conn, %{"provider" => provider, "code" => code}) do

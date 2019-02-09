@@ -32,7 +32,9 @@ defmodule SqueezeWeb.Router do
     get "/quiz/:step", WizardController, :step
     put "/quiz/:step", WizardController, :update
 
-    get "/login", AuthController, :login
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
 
     get "/sign-up", UserController, :new
     put "/sign-up", UserController, :register
@@ -44,7 +46,6 @@ defmodule SqueezeWeb.Router do
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
     post "/:provider/callback", AuthController, :callback
-    delete "/logout", AuthController, :delete
   end
 
   scope "/dashboard", SqueezeWeb do
