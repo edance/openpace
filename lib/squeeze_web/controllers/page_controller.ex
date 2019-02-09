@@ -7,9 +7,10 @@ defmodule SqueezeWeb.PageController do
     user = conn.assigns.current_user
     changeset = Accounts.change_user_prefs(user.user_prefs)
 
-    case user.registered do
-      true -> redirect(conn, to: dashboard_path(conn, :index))
-      false -> render(conn, "index.html", changeset: changeset, step: "distance")
+    if user.registered do
+      redirect(conn, to: dashboard_path(conn, :index))
+    else
+      render(conn, "index.html", changeset: changeset, step: "distance")
     end
   end
 

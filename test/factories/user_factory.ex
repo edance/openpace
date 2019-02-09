@@ -14,6 +14,7 @@ defmodule Squeeze.UserFactory do
           city: Address.city(),
           state: Address.state_abbr(),
           country: Address.country_code(),
+          registered: true,
           user_prefs: build(:user_prefs)
         }
       end
@@ -23,6 +24,7 @@ defmodule Squeeze.UserFactory do
           user_factory(),
           %{
             credential: nil,
+            registered: false,
             user_prefs: %{}
           }
         )
