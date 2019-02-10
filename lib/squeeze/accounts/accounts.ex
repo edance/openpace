@@ -113,6 +113,12 @@ defmodule Squeeze.Accounts do
     |> Repo.update()
   end
 
+  def update_user_password(%User{} = user, attrs) do
+    user
+    |> User.password_changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Updates a user.
 

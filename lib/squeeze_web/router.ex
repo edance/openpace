@@ -38,6 +38,13 @@ defmodule SqueezeWeb.Router do
 
     get "/sign-up", UserController, :new
     put "/sign-up", UserController, :register
+
+    get "/forgot-password", ForgotPasswordController, :show
+    post "/forgot-password", ForgotPasswordController, :request
+
+    get "/reset-password", ResetPasswordController, :show
+    post "/reset-password", ResetPasswordController, :reset
+    put "/reset-password", ResetPasswordController, :reset
   end
 
   scope "/auth", SqueezeWeb do

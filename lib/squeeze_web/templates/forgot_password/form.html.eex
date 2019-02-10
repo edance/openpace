@@ -1,0 +1,16 @@
+<%= form_for @conn, @action, [class: "ui form"], fn f -> %>
+  <div class="form-group mb-3">
+    <div class="input-group input-group-alternative">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="icon-envelope"></i>
+        </span>
+      </div>
+      <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+      <%= error_tag f, :email %>
+    </div>
+  </div>
+  <div class="text-center">
+    <%= submit "Reset Password", class: "btn btn-primary my-4" %>
+  </div>
+<% end %>

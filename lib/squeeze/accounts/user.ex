@@ -68,6 +68,15 @@ defmodule Squeeze.Accounts.User do
     |> encrypt_password()
   end
 
+  @doc false
+  def password_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:encrypted_password])
+    |> validate_required([:encrypted_password])
+    |> validate_length(:encrypted_password, min: 8)
+    |> encrypt_password()
+  end
+
   defp encrypt_password(changeset) do
     update_change(changeset, :encrypted_password, &Argon2.hashpwsalt/1)
   end

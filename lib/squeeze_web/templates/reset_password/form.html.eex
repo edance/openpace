@@ -1,0 +1,12 @@
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+  <div class="form-group mb-3">
+    <div class="form-group">
+      <%= input f, :encrypted_password, type: "password", placeholder: "Password", value: "", class: "form-control form-control-alternative" %>
+      <%= error_tag f, :encrypted_password %>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <%= submit "Reset Password", class: "btn btn-primary my-4" %>
+  </div>
+<% end %>
