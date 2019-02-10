@@ -1,0 +1,31 @@
+<div class="main-content">
+  <!-- Navbar -->
+  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+
+  <!-- Header -->
+  <div class="header py-7 py-lg-8">
+    <div class="container">
+      <div class="header-body text-center mb-7">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-6">
+            <h1>Forgot Your Password?</h1>
+            <p class="text-lead text-light">No worries! We will help you reset it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container mt--8 pb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7">
+        <div class="card bg-secondary shadow border-0">
+          <div class="card-body px-lg-5 py-lg-5">
+            <%= render "form.html", Map.put(assigns, :action, forgot_password_path(@conn, :request)) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

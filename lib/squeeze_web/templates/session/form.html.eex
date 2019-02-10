@@ -15,7 +15,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="icon-lock-open"></i></span>
       </div>
-      <%= text_input f, :password, placeholder: "Password", type: "password", class: "form-control" %>
+      <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
       <%= error_tag f, :password %>
     </div>
   </div>
