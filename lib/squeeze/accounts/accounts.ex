@@ -21,32 +21,13 @@ defmodule Squeeze.Accounts do
     create_user()
   end
 
-  @doc """
-  Gets or creates a user based on their credentials.
-
-  ## Examples
-
-  iex> get_or_update_user_by_credential(%{field: field})
-  {:ok, %User{}}
-
-  iex> get_or_update_user_by_credential(%{field: bad_value})
-  {:error, %Ecto.Changeset{}}
-
-  """
-  def get_or_update_user_by_credential(%User{} = user, attrs \\ %{}) do
-    case get_user_by_credential(attrs.credential) do
-      nil -> update_user(user, attrs)
-      user -> {:ok, user}
-    end
-  end
-
   def get_user_by_credential(%{provider: provider, uid: uid}) do
     query = from u in User,
-      left_join: c in assoc(u, :credential),
+      left_join: c in assoc(u, :credentials),
       where: c.provider == ^provider and c.uid == ^uid
     query
     |> Repo.one()
-    |> Repo.preload([:credential, :user_prefs])
+    |> Repo.preload([:user_prefs])
   end
   def get_user_by_credential(_), do: nil
 
@@ -84,7 +65,7 @@ defmodule Squeeze.Accounts do
   def get_user!(id) do
     User
     |> Repo.get!(id)
-    |> Repo.preload([:credential, :user_prefs])
+    |> Repo.preload([:user_prefs])
   end
 
   @doc """
@@ -102,7 +83,6 @@ defmodule Squeeze.Accounts do
   def create_user(attrs \\ %{user_prefs: %{}}) do
     %User{}
     |> User.changeset(attrs)
-    |> Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.insert()
   end
@@ -134,7 +114,6 @@ defmodule Squeeze.Accounts do
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
-    |> Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.update()
   end
@@ -169,6 +148,21 @@ defmodule Squeeze.Accounts do
   end
 
   @doc """
+  Returns the list of credentials by user.
+
+  ## Examples
+
+  iex> list_credentials(user)
+  [%Credential{}, ...]
+
+  """
+  def list_credentials(%User{} = user) do
+    Credential
+    |> by_user(user)
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single credential by provider and uid.
 
   Returns nil if Credential does not exist.
@@ -186,6 +180,16 @@ defmodule Squeeze.Accounts do
     Credential
     |> Repo.get_by(provider: provider, uid: uid)
     |> Repo.preload(:user)
+  end
+
+  @doc """
+  Creates a credential
+  """
+  def create_credential(%User{} = user, attrs) do
+    %Credential{}
+    |> Credential.changeset(attrs)
+    |> Changeset.put_change(:user_id, user.id)
+    |> Repo.insert()
   end
 
   @doc """
@@ -226,5 +230,9 @@ defmodule Squeeze.Accounts do
   """
   def change_user_prefs(%UserPrefs{} = user_prefs) do
     UserPrefs.changeset(user_prefs, %{})
+  end
+
+  defp by_user(query, %User{} = user) do
+    from q in query, where: [user_id: ^user.id]
   end
 end

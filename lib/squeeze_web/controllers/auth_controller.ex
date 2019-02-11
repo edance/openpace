@@ -15,17 +15,31 @@ defmodule SqueezeWeb.AuthController do
   def callback(conn, %{"provider" => provider, "code" => code}) do
     client = get_token!(provider, code)
     user_params = get_user!(provider, client)
-    user = conn.assigns.current_user
-    case Accounts.get_or_update_user_by_credential(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> Plug.sign_in(user)
-        |> redirect(to: dashboard_path(conn, :index))
-      {:error, %Ecto.Changeset{}} ->
-        conn
-        |> put_flash(:info, "Didn't Work")
-        |> redirect(to: "/")
+    credential = user_params[:credential]
+    current_user = conn.assigns.current_user
+    cond do
+      user = Accounts.get_user_by_credential(credential) ->
+        sign_in_and_redirect(conn, user)
+      user = Accounts.get_user_by_email(user_params[:email]) ->
+        Accounts.create_credential(user, credential)
+        sign_in_and_redirect(conn, user)
+      true ->
+        case Accounts.update_user(current_user, user_params) do
+          {:ok, user} ->
+            Accounts.create_credential(user, credential)
+            sign_in_and_redirect(conn, user)
+          {:error, _} ->
+            conn
+            |> put_flash(:info, "Authentication Failed")
+            |> redirect(to: "/")
+        end
     end
+  end
+
+  defp sign_in_and_redirect(conn, user) do
+    conn
+    |> Plug.sign_in(user)
+    |> redirect(to: dashboard_path(conn, :index))
   end
 
   defp authorize_url!("strava") do
