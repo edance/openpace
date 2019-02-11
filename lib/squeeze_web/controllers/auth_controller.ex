@@ -3,6 +3,7 @@ defmodule SqueezeWeb.AuthController do
 
   alias OAuth2.Client
   alias Squeeze.Accounts
+  alias Squeeze.Billing
   alias Squeeze.Guardian.Plug
   alias Squeeze.OAuth2.{Facebook, Google}
 
@@ -27,6 +28,7 @@ defmodule SqueezeWeb.AuthController do
         case Accounts.update_user(current_user, user_params) do
           {:ok, user} ->
             Accounts.create_credential(user, credential)
+            Billing.start_free_trial(user)
             sign_in_and_redirect(conn, user)
           {:error, _} ->
             conn

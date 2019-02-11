@@ -25,7 +25,8 @@ defmodule Squeeze.Accounts.User do
 
     field :encrypted_password, :string
 
-    field :stripe_customer_id, :string
+    field :customer_id, :string
+    field :subscription_id, :string
 
     has_many :credentials, Credential
 
@@ -77,6 +78,12 @@ defmodule Squeeze.Accounts.User do
     |> validate_required([:encrypted_password])
     |> validate_length(:encrypted_password, min: 8)
     |> encrypt_password()
+  end
+
+  def payment_processor_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:customer_id, :subscription_id])
+    |> validate_required([:customer_id, :subscription_id])
   end
 
   defp put_registered(changeset) do

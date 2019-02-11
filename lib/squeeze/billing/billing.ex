@@ -8,6 +8,11 @@ defmodule Squeeze.Billing do
   alias Squeeze.Accounts.User
   alias Squeeze.Billing.PaymentMethod
   alias Squeeze.Repo
+  # alias Stripe.{Customer, Subscription}
+
+  @payment_processor Application.get_env(:squeeze, :payment_processor)
+  @plan_id "plan_EOxadIoXIhD2MO"
+  @trial_period_days 30
 
   @doc """
   Returns the list of payment_methods.
@@ -27,6 +32,19 @@ defmodule Squeeze.Billing do
     |> order_by([a], [desc: a.inserted_at])
     |> limit(1)
     |> Repo.one()
+  end
+
+  def start_free_trial(%User{subscription_id: nil} = user) do
+    {:ok, customer} = @payment_processor.create_customer(Map.from_struct(user))
+    {:ok, subscription} = @payment_processor.create_subscription(
+      customer.id,
+      @plan_id,
+      @trial_period_days
+    )
+    attrs = %{customer_id: customer.id, subscription_id: subscription.id}
+    user
+    |> User.payment_processor_changeset(attrs)
+    |> Repo.update()
   end
 
   @doc """
