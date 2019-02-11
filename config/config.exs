@@ -61,6 +61,11 @@ config :squeeze, Squeeze.OAuth2.Facebook,
   client_secret: System.get_env("FACEBOOK_CLIENT_SECRET"),
   redirect_uri: "http://localhost:4000/auth/facebook/callback"
 
+config :squeeze, Squeeze.OAuth2.Fitbit,
+  client_id: System.get_env("FITBIT_CLIENT_ID"),
+  client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
+  redirect_uri: "http://localhost:4000/auth/fitbit/callback"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
