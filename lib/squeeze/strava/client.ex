@@ -4,11 +4,11 @@ defmodule Squeeze.Strava.Client do
   """
 
   alias Squeeze.Accounts
-  alias Squeeze.Accounts.User
+  alias Squeeze.Accounts.Credential
 
   @strava_client Application.get_env(:squeeze, :strava_client)
 
-  def new(%User{credential: credential}) do
+  def new(%Credential{provider: "strava"} = credential) do
     @strava_client.new(credential.access_token,
       refresh_token: credential.refresh_token,
       token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))

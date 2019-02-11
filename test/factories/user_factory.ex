@@ -23,16 +23,10 @@ defmodule Squeeze.UserFactory do
         struct!(
           user_factory(),
           %{
-            credential: nil,
             registered: false,
             user_prefs: %{}
           }
         )
-      end
-
-      def with_credential(%User{} = user) do
-        credential = insert(:credential, user: user)
-        %{user | credential: credential}
       end
     end
   end

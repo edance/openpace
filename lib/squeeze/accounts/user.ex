@@ -27,7 +27,8 @@ defmodule Squeeze.Accounts.User do
 
     field :stripe_customer_id, :string
 
-    has_one :credential, Credential
+    has_many :credentials, Credential
+
     has_one :user_prefs, UserPrefs
 
     timestamps()
@@ -55,6 +56,7 @@ defmodule Squeeze.Accounts.User do
     user
     |> cast(attrs, fields)
     |> validate_format(:email, ~r/@/)
+    |> put_registered()
   end
 
   @doc false
@@ -64,7 +66,7 @@ defmodule Squeeze.Accounts.User do
     |> validate_required(@registration_fields)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:encrypted_password, min: 8)
-    |> put_change(:registered, true)
+    |> put_registered()
     |> encrypt_password()
   end
 
@@ -75,6 +77,11 @@ defmodule Squeeze.Accounts.User do
     |> validate_required([:encrypted_password])
     |> validate_length(:encrypted_password, min: 8)
     |> encrypt_password()
+  end
+
+  defp put_registered(changeset) do
+    email = get_field(changeset, :email)
+    put_change(changeset, :registered, !is_nil(email))
   end
 
   defp encrypt_password(changeset) do
