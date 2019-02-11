@@ -5,7 +5,7 @@ defmodule SqueezeWeb.AuthController do
   alias Squeeze.Accounts
   alias Squeeze.Billing
   alias Squeeze.Guardian.Plug
-  alias Squeeze.OAuth2.{Facebook, Google}
+  alias Squeeze.OAuth2.{Facebook, Fitbit, Google}
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
@@ -56,12 +56,17 @@ defmodule SqueezeWeb.AuthController do
     Facebook.authorize_url!(scope: "email,public_profile")
   end
 
+  defp authorize_url!("fitbit") do
+    Fitbit.authorize_url!(scope: "activity profile")
+  end
+
   defp get_token!("strava", code) do
     @strava_auth.get_token!(code: code, grant_type: "authorization_code")
   end
 
   defp get_token!("google", code), do: Google.get_token!(code: code)
   defp get_token!("facebook", code), do: Facebook.get_token!(code: code)
+  defp get_token!("fitbit", code), do: Fitbit.get_token!(code: code)
 
   defp get_user!("strava", client) do
     %{access_token: access_token, refresh_token: refresh_token} = client.token
@@ -102,6 +107,22 @@ defmodule SqueezeWeb.AuthController do
         access_token: client.token.access_token,
         provider: "facebook",
         uid: uid
+      }
+    }
+  end
+
+  defp get_user!("fitbit", client) do
+    %{body: body} = Client.get!(client, "/1/user/-/profile.json")
+    user = body["user"]
+    token = client.token
+    %{
+      first_name: user["firstName"],
+      last_name: user["lastName"],
+      credential: %{
+        access_token: token.access_token,
+        refresh_token: token.refresh_token,
+        provider: "fitbit",
+        uid: token.other_params["user_id"]
       }
     }
   end
