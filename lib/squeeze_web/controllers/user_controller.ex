@@ -3,6 +3,7 @@ defmodule SqueezeWeb.UserController do
 
   alias Squeeze.Accounts
   alias Squeeze.Accounts.User
+  alias Squeeze.Billing
 
   def new(conn, %{}) do
     user = conn.assigns.current_user
@@ -18,6 +19,7 @@ defmodule SqueezeWeb.UserController do
     user = conn.assigns.current_user
     case Accounts.register_user(user, user_params) do
       {:ok, _user} ->
+        Billing.start_free_trial(user)
         conn
         |> put_flash(:info, "Signed up successfully.")
         |> redirect(to: dashboard_path(conn, :index))

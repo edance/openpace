@@ -38,7 +38,7 @@ defmodule SqueezeWeb.PaymentMethodController do
   end
 
   defp create_stripe_card(user, params) do
-    customer = user.stripe_customer_id
+    customer = user.customer_id
     source = params["stripe_token"]
     case @payment_processor.create_card(%{customer: customer, source: source}) do
       {:ok, card} ->
