@@ -64,7 +64,8 @@ config :squeeze, Squeeze.OAuth2.Facebook,
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-  redirect_uri: "http://localhost:4000/auth/fitbit/callback"
+  redirect_uri: "http://localhost:4000/auth/fitbit/callback",
+  webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

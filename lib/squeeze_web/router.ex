@@ -81,6 +81,8 @@ defmodule SqueezeWeb.Router do
     get "/strava", StravaWebhookController, :challenge
     post "/strava", StravaWebhookController, :webhook
 
+    get "/fitbit", FitbitWebhookController, :webhook
+
     post "/stripe", StripeWebhookController, :webhook
   end
 end
