@@ -25,11 +25,11 @@ defmodule Squeeze.CalendarTest do
       assert range.last == end_date
     end
 
-    test "with day includes just today" do
+    test "with day includes yesterday and tomorrow" do
       date = Timex.today()
       range = Calendar.visible_dates(date, "day")
-      assert range.first == date
-      assert range.last == date
+      assert range.first == Date.add(date, -1)
+      assert range.last == Date.add(date, 1)
     end
   end
 end
