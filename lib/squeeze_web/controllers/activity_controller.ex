@@ -31,7 +31,7 @@ defmodule SqueezeWeb.ActivityController do
       distance: distance_stream,
       heartrate: stream_data(stream_set.heartrate),
       splits: Split.calculate_splits(user, stream_set),
-      velocity: velocity_stream(user, stream_data(stream_set.velocity_smooth)),
+      velocity: velocity_stream(user, stream_data(stream_set.velocity_smooth))
     )
   end
 
