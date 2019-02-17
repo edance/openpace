@@ -17,7 +17,22 @@ defmodule SqueezeWeb.FitbitWebhookController do
     end
   end
 
-  def webhook(conn, _params) do
+  @doc """
+  %{
+    "_json" => [
+      %{
+        "collectionType" => "activities",
+        "date" => "2019-02-17",
+        "ownerId" => "4V79Z9",
+        "ownerType" => "user",
+        "subscriptionId" => "1"
+      }
+    ]
+  }
+  """
+  def webhook(conn, %{"_json" => _events}) do
     render(conn, "success.json")
   end
+
+  def webhook(conn, _), do: render(conn, "success.json")
 end
