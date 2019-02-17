@@ -40,6 +40,22 @@ config :strava,
   redirect_uri: "#{System.get_env("HOST_URL")}/auth/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
+config :squeeze, Squeeze.OAuth2.Google,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+  redirect_uri: "#{System.get_env("HOST_URL")}/auth/google/callback"
+
+config :squeeze, Squeeze.OAuth2.Facebook,
+  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
+  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET"),
+  redirect_uri: "#{System.get_env("HOST_URL")}/auth/facebook/callback"
+
+config :squeeze, Squeeze.OAuth2.Fitbit,
+  client_id: System.get_env("FITBIT_CLIENT_ID"),
+  client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
+  redirect_uri: "#{System.get_env("HOST_URL")}/auth/fitbit/callback",
+  webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
