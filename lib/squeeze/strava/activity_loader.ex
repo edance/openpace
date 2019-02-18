@@ -3,7 +3,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   Loads data from strava and updates the activity
   """
 
-  alias Squeeze.Accounts.User
+  alias Squeeze.Accounts.{Credential, User}
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Strava.Client
@@ -11,7 +11,8 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
 
-  def update_or_create_activity(%User{} = user, %{type: type} = strava_activity) do
+  def update_or_create_activity(%Credential{} = credential, %{type: type} = strava_activity) do
+    user = credential.user
     if String.contains?(type, "Run") do
       case get_closest_activity(user, strava_activity) do
         nil -> Dashboard.create_activity(user, map_strava_activity(strava_activity))
@@ -23,9 +24,9 @@ defmodule Squeeze.Strava.ActivityLoader do
       {:ok, nil}
     end
   end
-  def update_or_create_activity(%User{} = user, strava_activity_id) do
-    {:ok, strava_activity} = fetch_strava_activity(user, strava_activity_id)
-    update_or_create_activity(user, strava_activity)
+  def update_or_create_activity(%Credential{} = credential, strava_activity_id) do
+    {:ok, strava_activity} = fetch_strava_activity(credential, strava_activity_id)
+    update_or_create_activity(credential, strava_activity)
   end
 
   def get_closest_activity(%User{} = user, strava_activity) do
@@ -40,8 +41,8 @@ defmodule Squeeze.Strava.ActivityLoader do
     end
   end
 
-  defp fetch_strava_activity(%User{} = user, activity_id) do
-    user
+  defp fetch_strava_activity(%Credential{} = credential, activity_id) do
+    credential
     |> Client.new
     |> @strava_activities.get_activity_by_id(activity_id)
   end

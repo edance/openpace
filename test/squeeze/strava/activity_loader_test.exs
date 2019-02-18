@@ -8,35 +8,37 @@ defmodule Squeeze.ActivityLoaderTest do
   alias Squeeze.TimeHelper
 
   describe "update_or_create_activity/2" do
-    setup [:build_strava_activity, :setup_mocks, :create_user]
+    setup [:build_strava_activity, :setup_mocks, :create_credential]
 
     test "creates an activity if none exist",
-      %{user: user, run_activity: strava_activity} do
-      {:ok, activity} = ActivityLoader.update_or_create_activity(user, strava_activity.id)
+      %{credential: credential, run_activity: strava_activity} do
+      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
       refute activity.id == nil
     end
 
     test "updates activity if matched activity exists and sets status to complete",
-      %{user: user, run_activity: strava_activity} do
+      %{credential: credential, run_activity: strava_activity} do
       distance = strava_activity.distance
+      user = credential.user
       existing_activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
-      {:ok, activity} = ActivityLoader.update_or_create_activity(user, strava_activity.id)
+      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
       assert activity.id == existing_activity.id
       assert activity.status == :complete
     end
 
     test "updates activity if matched activity exists and sets status to partial",
-      %{user: user, run_activity: strava_activity} do
+      %{credential: credential, run_activity: strava_activity} do
       distance = strava_activity.distance * 1.5
+      user = credential.user
       existing_activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
-      {:ok, activity} = ActivityLoader.update_or_create_activity(user, strava_activity.id)
+      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
       assert activity.id == existing_activity.id
       assert activity.status == :partial
     end
 
     test "does nothing if strava_activity is not a run",
-      %{user: user, swim_activity: strava_activity} do
-      assert ActivityLoader.update_or_create_activity(user, strava_activity) == {:ok, nil}
+      %{credential: credential, swim_activity: strava_activity} do
+      assert ActivityLoader.update_or_create_activity(credential, strava_activity) == {:ok, nil}
     end
   end
 
@@ -73,7 +75,12 @@ defmodule Squeeze.ActivityLoaderTest do
     {:ok, []}
   end
 
-  defp create_user(_) do
+  defp create_credential(_) do
+    credential = insert(:credential)
+    {:ok, credential: credential}
+  end
+
+  def create_user(_) do
     user = insert(:user)
     {:ok, user: user}
   end
