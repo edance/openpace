@@ -108,4 +108,28 @@ defmodule Squeeze.BillingTest do
     payment_method = insert(:payment_method)
     {:ok, payment_method: payment_method, user: payment_method.user}
   end
+
+  describe "billing_plans" do
+    alias Squeeze.Billing.Plan
+
+    test "list_billing_plans/0 returns all billing_plans" do
+      plan = insert(:billing_plan)
+      assert Billing.list_billing_plans() == [plan]
+    end
+
+    test "get_plan!/1 returns the plan with given id" do
+      plan = insert(:billing_plan)
+      assert Billing.get_plan!(plan.id) == plan
+    end
+
+    test "create_plan/1 with valid data creates a plan" do
+      attrs = params_for(:billing_plan, name: "some name")
+      assert {:ok, %Plan{} = plan} = Billing.create_plan(attrs)
+      assert plan.name == "some name"
+    end
+
+    test "create_plan/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Billing.create_plan(%{})
+    end
+  end
 end

@@ -3,17 +3,25 @@ defmodule Squeeze.Setup.StripeSetup do
   Creates the required stripe billing setup.
   """
 
+  alias Squeeze.Billing
+
   @payment_processor Application.get_env(:squeeze, :payment_processor)
 
   def setup do
     product = create_product()
     plan = create_plan(product)
-    {:ok, %{product: product, plan: plan}}
+    attrs = %{
+      name: product.name,
+      amount: plan.amount,
+      provider_id: plan.id,
+      interval: plan.interval
+    }
+    Billing.create_plan(attrs)
   end
 
   defp create_product do
     attrs = %{
-      name: "Monthly membership base fee",
+      name: "Base Monthly Fee",
       type: "service"
     }
     {:ok, product} = @payment_processor.create_product(attrs)

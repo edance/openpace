@@ -8,7 +8,6 @@ defmodule Squeeze.Billing do
   alias Squeeze.Accounts.User
   alias Squeeze.Billing.PaymentMethod
   alias Squeeze.Repo
-  # alias Stripe.{Customer, Subscription}
 
   @payment_processor Application.get_env(:squeeze, :payment_processor)
   @plan_id "plan_EOxadIoXIhD2MO"
@@ -135,5 +134,54 @@ defmodule Squeeze.Billing do
 
   defp by_user(query, %User{} = user) do
     from q in query, where: [user_id: ^user.id]
+  end
+
+  alias Squeeze.Billing.Plan
+
+  @doc """
+  Returns the list of billing_plans.
+
+  ## Examples
+
+      iex> list_billing_plans()
+      [%Plan{}, ...]
+
+  """
+  def list_billing_plans do
+    Repo.all(Plan)
+  end
+
+  @doc """
+  Gets a single plan.
+
+  Raises `Ecto.NoResultsError` if the Plan does not exist.
+
+  ## Examples
+
+      iex> get_plan!(123)
+      %Plan{}
+
+      iex> get_plan!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_plan!(id), do: Repo.get!(Plan, id)
+
+  @doc """
+  Creates a plan.
+
+  ## Examples
+
+      iex> create_plan(%{field: value})
+      {:ok, %Plan{}}
+
+      iex> create_plan(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_plan(attrs \\ %{}) do
+    %Plan{}
+    |> Plan.changeset(attrs)
+    |> Repo.insert()
   end
 end

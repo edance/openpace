@@ -18,7 +18,7 @@ defmodule SqueezeWeb.UserController do
   def register(conn, %{"user" => user_params}) do
     user = conn.assigns.current_user
     case Accounts.register_user(user, user_params) do
-      {:ok, _user} ->
+      {:ok, user} ->
         Billing.start_free_trial(user)
         conn
         |> put_flash(:info, "Signed up successfully.")
