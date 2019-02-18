@@ -13,8 +13,10 @@ defmodule SqueezeWeb.StravaWebhookController do
   plug :validate_token when action in [:challenge]
 
   def webhook(conn, %{"object_type" => "activity", "owner_id" => uid, "object_id" => object_id}) do
-    user = Accounts.get_user_by_credential(%{provider: "strava", uid: uid})
-    Task.start(fn -> ActivityLoader.update_or_create_activity(user, object_id) end)
+    credential = Accounts.get_credential("strava", uid)
+    Task.start(fn ->
+      ActivityLoader.update_or_create_activity(credential, object_id)
+    end)
     render(conn, "success.json")
   end
   def webhook(conn, _), do: render(conn, "success.json")
