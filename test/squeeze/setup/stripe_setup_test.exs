@@ -12,6 +12,9 @@ defmodule Squeeze.Setup.StripeSetupTest do
 
       assert {:ok, _} = StripeSetup.setup()
     end
+
+    test "creates a billing plan" do
+    end
   end
 
   defp setup_mocks(_) do
