@@ -6,4 +6,5 @@ import './form';
 import './imperial-hidden-input';
 import './modal';
 import './payment-form';
+import './sign-up-form';
 import './timezone-hidden-input';

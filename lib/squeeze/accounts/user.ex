@@ -57,17 +57,17 @@ defmodule Squeeze.Accounts.User do
     user
     |> cast(attrs, fields)
     |> validate_format(:email, ~r/@/)
+    |> unique_constraint(:email)
     |> put_registered()
   end
 
   @doc false
   def registration_changeset(%User{} = user, attrs) do
     user
+    |> changeset(attrs)
     |> cast(attrs, @registration_fields)
     |> validate_required(@registration_fields)
-    |> validate_format(:email, ~r/@/)
     |> validate_length(:encrypted_password, min: 8)
-    |> put_registered()
     |> encrypt_password()
   end
 

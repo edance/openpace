@@ -24,7 +24,9 @@ defmodule SqueezeWeb.UserController do
         |> put_flash(:info, "Signed up successfully.")
         |> redirect(to: dashboard_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("new.html", changeset: changeset)
     end
   end
 end
