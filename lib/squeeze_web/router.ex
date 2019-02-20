@@ -37,6 +37,7 @@ defmodule SqueezeWeb.Router do
     delete "/logout", SessionController, :delete
 
     get "/sign-up", UserController, :new
+    post "/sign-up", UserController, :register
     put "/sign-up", UserController, :register
 
     get "/forgot-password", ForgotPasswordController, :show

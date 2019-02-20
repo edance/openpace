@@ -1,34 +1,15 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form", as: :user, id: "sign-up-form"], fn f -> %>
   <div class="form-group mb-3">
-    <div class="input-group input-group-alternative">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="icon-user"></i>
-        </span>
-      </div>
-      <%= text_input f, :full_name, placeholder: "Full Name", class: "form-control" %>
-      <%= error_tag f, :full_name %>
-    </div>
+    <%= input f, :full_name, placeholder: gettext("Full Name"), class: "form-control" %>
+    <%= error_tag f, :full_name %>
   </div>
   <div class="form-group mb-3">
-    <div class="input-group input-group-alternative">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="icon-envelope"></i>
-        </span>
-      </div>
-      <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
-      <%= error_tag f, :email %>
-    </div>
+    <%= input f, :email, placeholder: gettext("Email"), class: "form-control" %>
+    <%= error_tag f, :email %>
   </div>
   <div class="form-group">
-    <div class="input-group input-group-alternative">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-      </div>
-      <%= text_input f, :encrypted_password, placeholder: "Password", type: "password", class: "form-control" %>
-      <%= error_tag f, :encrypted_password %>
-    </div>
+    <%= input f, :encrypted_password, placeholder: gettext("Password"), value: "", type: "password", class: "form-control" %>
+    <%= error_tag f, :encrypted_password %>
   </div>
   <div class="text-center">
     <%= submit "Sign Up", class: "btn btn-primary my-4" %>
