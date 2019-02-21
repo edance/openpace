@@ -12,6 +12,6 @@
     <%= error_tag f, :encrypted_password %>
   </div>
   <div class="text-center">
-    <%= submit "Sign Up", class: "btn btn-primary my-4" %>
+    <%= submit gettext("Sign Up"), class: "btn btn-primary my-4 btn-spinner" %>
   </div>
 <% end %>

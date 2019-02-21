@@ -1,4 +1,5 @@
 import './autocomplete-input';
+import './btn-spinner';
 import './calendar';
 import './date-picker';
 import './duration-select';
