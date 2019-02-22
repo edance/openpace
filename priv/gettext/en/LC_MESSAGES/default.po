@@ -46,6 +46,101 @@ msgstr ""
 msgid "You have set your goals high! Let's build your training program."
 msgstr ""
 
-#: lib/squeeze_web/templates/page/form.html.eex:14
+#: lib/squeeze_web/templates/page/form.html.eex:8
 msgid "Get Started"
+msgstr ""
+
+#: lib/squeeze_web/templates/billing/index.html.eex:4
+msgid "Billing Overview"
+msgstr ""
+
+#: lib/squeeze_web/templates/page/form.html.eex:4
+msgid "Choose a distance"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:62
+msgid "City"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:69
+msgid "Country"
+msgstr ""
+
+#: lib/squeeze_web/templates/session/new.html.eex:57
+msgid "Create new account"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/form.html.eex:7
+msgid "Email"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:45
+msgid "First name"
+msgstr ""
+
+#: lib/squeeze_web/templates/session/new.html.eex:52
+msgid "Forgot password?"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/form.html.eex:3
+msgid "Full Name"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:16
+msgid "Hello, %{name}!"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:52
+msgid "Last name"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/navbar.html.eex:32
+msgid "Log In"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:33
+msgid "My account"
+msgstr ""
+
+#: lib/squeeze_web/templates/modal/auth.html.eex:27
+#: lib/squeeze_web/templates/session/new.html.eex:44
+msgid "Or sign in with credentials"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/form.html.eex:11
+msgid "Password"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/footer.html.eex:16
+msgid "Privacy Policy"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:78
+msgid "Race information"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/navbar.html.eex:29
+#: lib/squeeze_web/templates/user/form.html.eex:15
+msgid "Sign Up"
+msgstr ""
+
+#: lib/squeeze_web/templates/modal/auth.html.eex:8
+#: lib/squeeze_web/templates/session/new.html.eex:25
+msgid "Sign in with"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/footer.html.eex:20
+msgid "Source Code"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/footer.html.eex:13
+msgid "Terms and Conditions"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:39
+msgid "User information"
+msgstr ""
+
+#: lib/squeeze_web/templates/session/new.html.eex:11
+msgid "Welcome Back!"
 msgstr ""

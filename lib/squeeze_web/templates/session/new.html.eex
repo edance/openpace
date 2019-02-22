@@ -8,8 +8,7 @@
       <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-6">
-            <h1>Welcome Back!</h1>
-            <p class="text-lead text-light">Use these awesome forms to login or create new account in your project for free.</p>
+            <h1><%= gettext("Welcome Back!") %></h1>
           </div>
         </div>
       </div>
@@ -22,7 +21,9 @@
       <div class="col-lg-5 col-md-7">
         <div class="card bg-secondary shadow border-0">
           <div class="card-header bg-transparent pb-5">
-            <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
+            <div class="text-muted text-center mt-2 mb-3">
+              <small><%= gettext("Sign in with") %></small>
+            </div>
             <div class="btn-wrapper text-center">
               <%= link to: auth_path(@conn, :request, "facebook"), class: "btn btn-neutral btn-icon" do %>
                 <span class="btn-inner--icon">
@@ -40,7 +41,7 @@
           </div>
           <div class="card-body px-lg-5 py-lg-5">
             <div class="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
+              <small><%= gettext("Or sign in with credentials") %></small>
             </div>
             <%= render "form.html", Map.put(assigns, :action, session_path(@conn, :new)) %>
           </div>
@@ -48,12 +49,12 @@
         <div class="row mt-3">
           <div class="col-6">
             <%= link(to: forgot_password_path(@conn, :show), class: "text-light") do %>
-              <small>Forgot password?</small>
+              <small><%= gettext("Forgot password?") %></small>
             <% end %>
           </div>
           <div class="col-6 text-right">
             <%= link(to: wizard_path(@conn, :index), class: "text-light") do %>
-              <small>Create new account</small>
+              <small><%= gettext("Create new account") %></small>
             <% end %>
           </div>
         </div>

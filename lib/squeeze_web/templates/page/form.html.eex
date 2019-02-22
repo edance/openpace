@@ -1,13 +1,7 @@
 <%= async_form @changeset, @action, [class: "ui form"] , fn f -> %>
 
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
   <div class="form-group">
-    <%= autocomplete(f, :distance, distances(), class: "form-control", placeholder: "Choose a distance") %>
+    <%= autocomplete(f, :distance, distances(), class: "form-control", placeholder: gettext("Choose a distance")) %>
     <%= error_tag f, :distance %>
   </div>
 
