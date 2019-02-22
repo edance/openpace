@@ -10,13 +10,15 @@
       <div class="col-xl-6">
         <ul class="nav nav-footer justify-content-center justify-content-xl-end">
           <li class="nav-item">
-            <%= link("Terms and Conditions", to: page_path(@conn, :terms), class: "nav-link", target: "_blank") %>
+            <%= link(gettext("Terms and Conditions"), to: page_path(@conn, :terms), class: "nav-link", target: "_blank") %>
           </li>
           <li class="nav-item">
-            <%= link("Privacy Policy", to: page_path(@conn, :privacy_policy), class: "nav-link", target: "_blank") %>
+            <%= link(gettext("Privacy Policy"), to: page_path(@conn, :privacy_policy), class: "nav-link", target: "_blank") %>
           </li>
           <li class="nav-item">
-            <a href="https://github.com/edance/squeeze" class="nav-link" target="_blank">Source Code</a>
+            <a href="https://github.com/edance/squeeze" class="nav-link" target="_blank">
+              <%= gettext("Source Code") %>
+            </a>
           </li>
         </ul>
       </div>
