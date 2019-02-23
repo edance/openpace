@@ -83,7 +83,7 @@ defmodule Squeeze.Accounts.User do
   def payment_processor_changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:customer_id, :subscription_id])
-    |> validate_required([:customer_id, :subscription_id])
+    |> validate_required([:customer_id])
   end
 
   defp put_registered(changeset) do

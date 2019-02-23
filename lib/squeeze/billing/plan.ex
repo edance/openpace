@@ -7,13 +7,14 @@ defmodule Squeeze.Billing.Plan do
   import Ecto.Changeset
 
   @required_fields ~w(name amount provider_id interval)a
-  @optional_fields ~w()a
+  @optional_fields ~w(default)a
 
   schema "billing_plans" do
     field :name, :string
     field :amount, :integer
     field :provider_id, :string
     field :interval, :string
+    field :default, :boolean
 
     timestamps()
   end

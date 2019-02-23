@@ -14,7 +14,8 @@ defmodule Squeeze.Setup.StripeSetup do
       name: product.name,
       amount: plan.amount,
       provider_id: plan.id,
-      interval: plan.interval
+      interval: plan.interval,
+      default: true
     }
     Billing.create_plan(attrs)
   end

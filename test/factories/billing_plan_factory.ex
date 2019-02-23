@@ -11,7 +11,8 @@ defmodule Squeeze.BillingPlanFactory do
           name: "Base Monthly Fee",
           amount: 1_000,
           provider_id: "plan_#{Lorem.characters(15)}",
-          interval: "month"
+          interval: "month",
+          default: false
         }
       end
     end
