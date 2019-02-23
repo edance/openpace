@@ -37,7 +37,6 @@ defmodule SqueezeWeb.UserControllerTest do
       register_user(conn)
       user = Accounts.get_user!(user.id)
       refute is_nil(user.customer_id)
-      refute is_nil(user.subscription_id)
     end
   end
 
@@ -51,15 +50,9 @@ defmodule SqueezeWeb.UserControllerTest do
     customer = %{
       id: "customer_123456789"
     }
-    subscription = %{
-      id: "sub_123456789"
-    }
 
     Squeeze.MockPaymentProcessor
     |> expect(:create_customer, fn(_) -> {:ok, customer} end)
-
-    Squeeze.MockPaymentProcessor
-    |> expect(:create_subscription, fn(_, _, _) -> {:ok, subscription} end)
 
     {:ok, []}
   end

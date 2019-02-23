@@ -10,7 +10,6 @@ defmodule Squeeze.Billing do
   alias Squeeze.Repo
 
   @payment_processor Application.get_env(:squeeze, :payment_processor)
-  @plan_id "plan_EOxadIoXIhD2MO"
   @trial_period_days 30
 
   @doc """
@@ -35,12 +34,16 @@ defmodule Squeeze.Billing do
 
   def start_free_trial(%User{subscription_id: nil} = user) do
     {:ok, customer} = @payment_processor.create_customer(Map.from_struct(user))
-    {:ok, subscription} = @payment_processor.create_subscription(
-      customer.id,
-      @plan_id,
-      @trial_period_days
-    )
-    attrs = %{customer_id: customer.id, subscription_id: subscription.id}
+    attrs = case get_default_plan() do
+      nil -> %{customer_id: customer.id}
+      plan ->
+        {:ok, subscription} = @payment_processor.create_subscription(
+          customer.id,
+          plan.provider_id,
+          @trial_period_days
+        )
+        %{customer_id: customer.id, subscription_id: subscription.id}
+    end
     user
     |> User.payment_processor_changeset(attrs)
     |> Repo.update()
@@ -149,6 +152,20 @@ defmodule Squeeze.Billing do
   """
   def list_billing_plans do
     Repo.all(Plan)
+  end
+
+  @doc """
+  Returns the default billing_plan.
+
+  ## Examples
+      iex> get_default_plan!(123)
+      %Plan{}
+  """
+  def get_default_plan do
+    Plan
+    |> where(default: true)
+    |> limit(1)
+    |> Repo.one()
   end
 
   @doc """
