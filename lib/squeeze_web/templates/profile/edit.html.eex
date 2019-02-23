@@ -12,10 +12,10 @@
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
-      <div class="col-lg-7 col-md-10">
+      <div class="col-lg-10 col-md-10">
         <h1 class="display-2 text-white"><%= gettext("Hello, %{name}!", name: @current_user.first_name) %></h1>
         <p class="text-white mt-0 mb-5">
-          This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks
+          <%= gettext("This is your profile page. You can update your preferences and manage your account here.") %>
         </p>
       </div>
     </div>
