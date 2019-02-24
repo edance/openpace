@@ -176,10 +176,13 @@ defmodule Squeeze.Accounts do
       nil
 
   """
+  def get_credential(provider, uid) when is_integer(uid) do
+    get_credential(provider, "#{uid}")
+  end
   def get_credential(provider, uid) do
     Credential
     |> Repo.get_by(provider: provider, uid: uid)
-    |> Repo.preload(:user)
+    |> Repo.preload(user: [:user_prefs])
   end
 
   @doc """
