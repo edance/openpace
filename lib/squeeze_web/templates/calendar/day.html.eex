@@ -1,5 +1,5 @@
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <%= link "Today", to: calendar_path(@conn, :show, "day"),
+  <%= link gettext("Today"), to: calendar_path(@conn, :show, "day"),
                     class: "navbar-item btn btn-sm btn-secondary mt--1 ml-3 ml-md-0 mr-4" %>
 
   <%= link to: calendar_path(@conn, :show, "day", date: prev(@date, "day")), class: "navbar-item navbar-link text-white mr-4" do %>

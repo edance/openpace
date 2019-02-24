@@ -6,7 +6,7 @@
           <i class="icon-envelope"></i>
         </span>
       </div>
-      <%= text_input f, :email, placeholder: "Email", class: "form-control" %>
+      <%= text_input f, :email, placeholder: gettext("Email"), class: "form-control" %>
       <%= error_tag f, :email %>
     </div>
   </div>
@@ -15,11 +15,11 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="icon-lock-open"></i></span>
       </div>
-      <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
+      <%= password_input f, :password, placeholder: gettext("Password"), class: "form-control" %>
       <%= error_tag f, :password %>
     </div>
   </div>
   <div class="text-center">
-    <%= submit "Sign In", class: "btn btn-primary my-4" %>
+    <%= submit gettext("Sign In"), class: "btn btn-primary my-4" %>
   </div>
 <% end %>

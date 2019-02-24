@@ -70,6 +70,7 @@ msgstr ""
 msgid "Create new account"
 msgstr ""
 
+#: lib/squeeze_web/templates/session/form.html.eex:9
 #: lib/squeeze_web/templates/user/form.html.eex:7
 msgid "Email"
 msgstr ""
@@ -107,6 +108,7 @@ msgstr ""
 msgid "Or sign in with credentials"
 msgstr ""
 
+#: lib/squeeze_web/templates/session/form.html.eex:18
 #: lib/squeeze_web/templates/user/form.html.eex:11
 msgid "Password"
 msgstr ""
@@ -143,4 +145,28 @@ msgstr ""
 
 #: lib/squeeze_web/templates/session/new.html.eex:11
 msgid "Welcome Back!"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/user-dropdown.html.eex:17
+msgid "Logout"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/user-dropdown.html.eex:10
+msgid "Profile"
+msgstr ""
+
+#: lib/squeeze_web/templates/session/form.html.eex:23
+msgid "Sign In"
+msgstr ""
+
+#: lib/squeeze_web/templates/profile/edit.html.eex:18
+msgid "This is your profile page. You can update your preferences and manage your account here."
+msgstr ""
+
+#: lib/squeeze_web/templates/calendar/day.html.eex:2
+msgid "Today"
+msgstr ""
+
+#: lib/squeeze_web/templates/menu/user-dropdown.html.eex:4
+msgid "Welcome"
 msgstr ""
