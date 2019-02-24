@@ -48,6 +48,12 @@ defmodule Squeeze.AccountsTest do
   describe "credentials" do
     alias Squeeze.Accounts.Credential
 
+    test "get_credential!/2 with an integer returns the credential" do
+      uid = 1234
+      credential = insert(:credential, uid: "#{uid}")
+      assert Accounts.get_credential(credential.provider, uid).id == credential.id
+    end
+
     test "get_credential!/2 returns the credential with given id" do
       credential = insert(:credential)
       assert Accounts.get_credential(credential.provider, credential.uid).id == credential.id
