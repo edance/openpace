@@ -34,7 +34,7 @@ defmodule Squeeze.Dashboard.Activity do
     field :duration, :integer
     field :start_at, :naive_datetime
     field :polyline, :string
-    field :external_id, :integer
+    field :external_id, :string
 
     field :status, ActivityStatusEnum
     field :complete, :boolean
