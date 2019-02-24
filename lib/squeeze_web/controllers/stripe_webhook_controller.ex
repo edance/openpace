@@ -6,9 +6,12 @@ defmodule SqueezeWeb.StripeWebhookController do
   """
 
   alias Plug.Conn
+  alias Squeeze.Logger
   alias Stripe.Webhook
 
   @secret Application.get_env(:stripity_stripe, :webhook_secret)
+
+  plug :log_webhook_event
 
   def webhook(conn, _params) do
     payload = conn.assigns[:raw_body]
@@ -40,5 +43,11 @@ defmodule SqueezeWeb.StripeWebhookController do
     conn
     |> put_status(:bad_request)
     |> render("400.json")
+  end
+
+  defp log_webhook_event(conn, _) do
+    body = Poison.encode!(conn.params)
+    Logger.log_webhook_event(%{provider: "stripe", body: body})
+    conn
   end
 end
