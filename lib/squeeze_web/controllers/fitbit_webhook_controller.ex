@@ -5,7 +5,11 @@ defmodule SqueezeWeb.FitbitWebhookController do
   Controller to handle the webhooks from Fitbit
   """
 
+  alias Squeeze.Logger
+
   @challenge Application.get_env(:squeeze, Squeeze.OAuth2.Fitbit)[:webhook_challenge]
+
+  plug :log_webhook_event
 
   def webhook(conn, %{"verify" => verify_token}) do
     if verify_token == @challenge do
@@ -35,4 +39,10 @@ defmodule SqueezeWeb.FitbitWebhookController do
   end
 
   def webhook(conn, _), do: render(conn, "success.json")
+
+  defp log_webhook_event(conn, _) do
+    body = Poison.encode!(conn.params)
+    Logger.log_webhook_event(%{provider: "fitbit", body: body})
+    conn
+  end
 end
