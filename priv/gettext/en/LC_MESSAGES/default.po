@@ -70,6 +70,7 @@ msgstr ""
 msgid "Create new account"
 msgstr ""
 
+#: lib/squeeze_web/templates/forgot_password/form.html.eex:9
 #: lib/squeeze_web/templates/session/form.html.eex:9
 #: lib/squeeze_web/templates/user/form.html.eex:7
 msgid "Email"
@@ -108,6 +109,7 @@ msgstr ""
 msgid "Or sign in with credentials"
 msgstr ""
 
+#: lib/squeeze_web/templates/reset_password/form.html.eex:4
 #: lib/squeeze_web/templates/session/form.html.eex:18
 #: lib/squeeze_web/templates/user/form.html.eex:11
 msgid "Password"
@@ -169,4 +171,25 @@ msgstr ""
 
 #: lib/squeeze_web/templates/menu/user-dropdown.html.eex:4
 msgid "Welcome"
+msgstr ""
+
+#: lib/squeeze_web/templates/forgot_password/show.html.eex:12
+msgid "Forgot Your Password?"
+msgstr ""
+
+#: lib/squeeze_web/templates/forgot_password/show.html.eex:15
+msgid "No worries! We will help you reset it."
+msgstr ""
+
+#: lib/squeeze_web/templates/reset_password/show.html.eex:15
+msgid "Please reset your password below."
+msgstr ""
+
+#: lib/squeeze_web/templates/forgot_password/form.html.eex:14
+#: lib/squeeze_web/templates/reset_password/form.html.eex:10
+msgid "Reset Password"
+msgstr ""
+
+#: lib/squeeze_web/templates/reset_password/show.html.eex:12
+msgid "Welcome Back, %{name}!"
 msgstr ""

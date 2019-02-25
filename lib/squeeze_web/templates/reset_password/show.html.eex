@@ -8,8 +8,12 @@
       <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-6">
-            <h1>Welcome Back, <%= @user.first_name %>!</h1>
-            <p class="text-lead text-light">Please reset your password below.</p>
+            <h1>
+              <%= gettext("Welcome Back, %{name}!", @user.first_name) %>
+            </h1>
+            <p class="text-lead text-light">
+              <%= gettext("Please reset your password below.") %>
+            </p>
           </div>
         </div>
       </div>
