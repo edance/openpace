@@ -25,7 +25,7 @@ defmodule Squeeze.PasswordLinkGenerator do
     cond do
       diff > @token_ttl -> {:error, "Token has expired"}
       sign(token) == signature -> {:ok, true}
-      true -> {:error, "Password reset token not valid."}
+      true -> {:error, "Token not valid"}
     end
   end
 
