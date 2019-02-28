@@ -14,9 +14,9 @@ defmodule Squeeze.PasswordLinkGenerator do
   @doc """
   """
   def create_link(%User{id: id}, time \\ :erlang.system_time(:seconds)) do
-    reset_string = Base.url_encode64("#{time},#{id}")
-    signature = sign(reset_string)
-    "#{@base_url}/reset-password?token=#{reset_string}&signature=#{signature}"
+    token = Base.url_encode64("#{time},#{id}")
+    signature = sign_token(token)
+    "#{@base_url}/reset-password?token=#{token}&signature=#{signature}"
   end
 
   def verify_link(token, signature) do
@@ -24,7 +24,7 @@ defmodule Squeeze.PasswordLinkGenerator do
     diff = :erlang.system_time(:seconds) - timestamp
     cond do
       diff > @token_ttl -> {:error, "Token has expired"}
-      sign(token) == signature -> {:ok, true}
+      sign_token(token) == signature -> {:ok, true}
       true -> {:error, "Token not valid"}
     end
   end
@@ -36,9 +36,9 @@ defmodule Squeeze.PasswordLinkGenerator do
     |> Enum.map(&String.to_integer/1)
   end
 
-  defp sign(plaintext) do
+  defp sign_token(token) do
     :sha512
-    |> :crypto.hmac(@secret_key, plaintext)
+    |> :crypto.hmac(@secret_key, token)
     |> Base.url_encode64
   end
 end
