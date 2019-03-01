@@ -8,12 +8,29 @@ defmodule SqueezeWeb.AuthControllerTest do
   # of each test.
   setup :verify_on_exit!
 
-  test "request with strava redirects to strava url", %{conn: conn} do
-    Squeeze.Strava.MockAuth
-    |> expect(:authorize_url!, fn(_) -> "https://www.strava.com" end)
+  describe "GET #request" do
+    test "with provider facebook", %{conn: conn} do
+      conn = get(conn, auth_path(conn, :request, "facebook"))
+      assert redirected_to(conn) =~ ~r/https:\/\/www.facebook.com/
+    end
 
-    conn = get(conn, auth_path(conn, :request, "strava"))
-    assert redirected_to(conn) =~ ~r/https:\/\/www.strava.com/
+    test "with provider fitbit", %{conn: conn} do
+      conn = get(conn, auth_path(conn, :request, "fitbit"))
+      assert redirected_to(conn) =~ ~r/https:\/\/www.fitbit.com/
+    end
+
+    test "with provider google", %{conn: conn} do
+      conn = get(conn, auth_path(conn, :request, "google"))
+      assert redirected_to(conn) =~ ~r/https:\/\/accounts.google.com/
+    end
+
+    test "with provider strava", %{conn: conn} do
+      Squeeze.Strava.MockAuth
+      |> expect(:authorize_url!, fn(_) -> "https://www.strava.com" end)
+
+      conn = get(conn, auth_path(conn, :request, "strava"))
+      assert redirected_to(conn) =~ ~r/https:\/\/www.strava.com/
+    end
   end
 
   describe "#callback" do

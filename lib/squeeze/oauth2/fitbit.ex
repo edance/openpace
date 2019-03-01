@@ -44,4 +44,20 @@ defmodule Squeeze.OAuth2.Fitbit do
     |> put_header("Authorization", "Basic " <> Base.encode64(client.client_id <> ":" <> client.client_secret))
     |> AuthCode.get_token(params, headers)
   end
+
+  def get_user!(client) do
+    %{body: body} = Client.get!(client, "/1/user/-/profile.json")
+    user = body["user"]
+    token = client.token
+    %{
+      first_name: user["firstName"],
+      last_name: user["lastName"],
+      credential: %{
+        access_token: token.access_token,
+        refresh_token: token.refresh_token,
+        provider: "fitbit",
+        uid: token.other_params["user_id"]
+      }
+    }
+  end
 end

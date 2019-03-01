@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
 
-  alias OAuth2.Client
   alias Squeeze.Accounts
   alias Squeeze.Guardian.Plug
   alias Squeeze.OAuth2.{Facebook, Fitbit, Google}
@@ -76,52 +75,7 @@ defmodule SqueezeWeb.AuthController do
     |> Map.merge(%{credential: credential})
   end
 
-  defp get_user!("google", client) do
-    %{body: user} =
-      Client.get!(client, "https://www.googleapis.com/userinfo/v2/me")
-    %{
-      avatar: user["picture"],
-      email: user["email"],
-      first_name: user["given_name"],
-      last_name: user["family_name"],
-      credential: %{
-        access_token: client.token.access_token,
-        provider: "google",
-        uid: user["id"]
-      }
-    }
-  end
-
-  defp get_user!("facebook", client) do
-    %{body: user} =
-      Client.get!(client, "/me?fields=email,id,first_name,last_name")
-    uid = user["id"]
-    %{
-      avatar: "https://graph.facebook.com/#{uid}/picture?type=square",
-      email: user["email"],
-      first_name: user["first_name"],
-      last_name: user["last_name"],
-      credential: %{
-        access_token: client.token.access_token,
-        provider: "facebook",
-        uid: uid
-      }
-    }
-  end
-
-  defp get_user!("fitbit", client) do
-    %{body: body} = Client.get!(client, "/1/user/-/profile.json")
-    user = body["user"]
-    token = client.token
-    %{
-      first_name: user["firstName"],
-      last_name: user["lastName"],
-      credential: %{
-        access_token: token.access_token,
-        refresh_token: token.refresh_token,
-        provider: "fitbit",
-        uid: token.other_params["user_id"]
-      }
-    }
-  end
+  defp get_user!("google", client), do: Google.get_user!(client)
+  defp get_user!("facebook", client), do: Facebook.get_user!(client)
+  defp get_user!("fitbit", client), do: Fitbit.get_user!(client)
 end
