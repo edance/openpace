@@ -49,4 +49,21 @@ defmodule Squeeze.OAuth2.Facebook do
     |> put_header("Accept", "application/json")
     |> AuthCode.get_token(params, headers)
   end
+
+  def get_user!(client) do
+    %{body: user} =
+      Client.get!(client, "/me?fields=email,id,first_name,last_name")
+    uid = user["id"]
+    %{
+      avatar: "https://graph.facebook.com/#{uid}/picture?type=square",
+      email: user["email"],
+      first_name: user["first_name"],
+      last_name: user["last_name"],
+      credential: %{
+        access_token: client.token.access_token,
+        provider: "facebook",
+        uid: uid
+      }
+    }
+  end
 end
