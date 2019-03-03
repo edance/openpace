@@ -8,5 +8,5 @@
     <%= error_tag f, :race_date, class: "d-block" %>
   </div>
 
-  <%= submit "Next", class: "btn btn-primary" %>
+  <%= submit gettext("Next"), class: "btn btn-primary" %>
 <% end %>

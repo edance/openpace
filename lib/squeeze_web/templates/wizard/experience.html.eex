@@ -1,5 +1,5 @@
 <h1 class="display-4 font-weight-normal">
-  <%= gettext "What is your level of experience?" %>
+  <%= gettext("What is your level of experience?") %>
 </h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
@@ -12,11 +12,11 @@
 
   <div class="form-group">
     <div class="btn-group d-flex btn-group-toggle" data-toggle="buttons">
-      <%= pill_button(f, :experience, "Beginner", 0) %>
-      <%= pill_button(f, :experience, "Intermediate", 1) %>
-      <%= pill_button(f, :experience, "Expert", 2) %>
+      <%= pill_button(f, :experience, gettext("Beginner"), 0) %>
+      <%= pill_button(f, :experience, gettext("Intermediate"), 1) %>
+      <%= pill_button(f, :experience, gettext("Expert"), 2) %>
       <%= error_tag f, :experience %>
     </div>
   </div>
-  <%= submit "Next", class: "btn btn-primary" %>
+  <%= submit gettext("Next"), class: "btn btn-primary" %>
 <% end %>

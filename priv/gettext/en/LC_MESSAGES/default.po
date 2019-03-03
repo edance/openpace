@@ -47,6 +47,7 @@ msgid "You have set your goals high! Let's build your training program."
 msgstr ""
 
 #: lib/squeeze_web/templates/page/form.html.eex:8
+#: lib/squeeze_web/templates/wizard/distance.html.eex:14
 msgid "Get Started"
 msgstr ""
 
@@ -55,6 +56,7 @@ msgid "Billing Overview"
 msgstr ""
 
 #: lib/squeeze_web/templates/page/form.html.eex:4
+#: lib/squeeze_web/templates/wizard/distance.html.eex:7
 msgid "Choose a distance"
 msgstr ""
 
@@ -145,6 +147,7 @@ msgstr ""
 msgid "User information"
 msgstr ""
 
+#: lib/squeeze_web/templates/reset_password/show.html.eex:12
 #: lib/squeeze_web/templates/session/new.html.eex:11
 msgid "Welcome Back!"
 msgstr ""
@@ -190,6 +193,30 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
-#: lib/squeeze_web/templates/reset_password/show.html.eex:12
-msgid "Welcome Back, %{name}!"
+#: lib/squeeze_web/templates/wizard/experience.html.eex:15
+msgid "Beginner"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/experience.html.eex:17
+msgid "Expert"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/experience.html.eex:16
+msgid "Intermediate"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/duration.html.eex:11
+#: lib/squeeze_web/templates/wizard/experience.html.eex:21
+#: lib/squeeze_web/templates/wizard/improvement.html.eex:10
+#: lib/squeeze_web/templates/wizard/personal-record.html.eex:11
+#: lib/squeeze_web/templates/wizard/race-date.html.eex:11
+msgid "Next"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/connect.html.eex:10
+msgid "Sign in with Strava"
+msgstr ""
+
+#: lib/squeeze_web/templates/wizard/connect.html.eex:14
+msgid "Skip"
 msgstr ""

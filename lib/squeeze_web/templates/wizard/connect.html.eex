@@ -7,9 +7,9 @@
 </p>
 
 <%= link to: auth_path(@conn, :request, "strava") do %>
-  <img alt="Sign in with Strava" class="shadow" src="/images/btn_strava.svg" />
+  <img alt="<%= gettext("Sign in with Strava") %>" class="shadow" src="/images/btn_strava.svg" />
 <% end %>
 
 <div>
-  <%= link("Skip", to: dashboard_path(@conn, :index), class: "btn btn-link") %>
+  <%= link(gettext("Skip"), to: dashboard_path(@conn, :index), class: "btn btn-link") %>
 </div>

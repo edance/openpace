@@ -1,5 +1,5 @@
 <h1 class="display-4 font-weight-normal">
-  <%= gettext "What is your current personal record?" %>
+  <%= gettext("What is your current personal record?") %>
 </h1>
 
 <%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
@@ -8,5 +8,5 @@
     <%= error_tag f, :personal_record %>
   </div>
 
-  <%= submit "Next", class: "btn btn-primary" %>
+  <%= submit gettext("Next"), class: "btn btn-primary" %>
 <% end %>
