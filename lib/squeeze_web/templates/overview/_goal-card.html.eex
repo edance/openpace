@@ -2,7 +2,9 @@
   <div class="card-body">
     <div class="row">
       <div class="col">
-        <h5 class="card-title text-uppercase text-muted mb-0">Current Goal</h5>
+        <h5 class="card-title text-uppercase text-muted mb-0">
+          <%= gettext("Current Goal") %>
+        </h5>
         <span class="h2 font-weight-bold mb-0">
           <%= format_goal(@current_user) %>
         </span>
@@ -20,7 +22,9 @@
           <i class="icon-arrow-up-circle"></i>
           <%= improvement_amount(@current_user) %>
         </span>
-        <span class="text-nowrap">faster than PR</span>
+        <span class="text-nowrap">
+          <%= gettext("faster than PR") %>
+        </span>
       <% else %>
         <span class="text-nowrap"></span>
       <% end %>

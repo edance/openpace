@@ -157,6 +157,7 @@ msgid "Logout"
 msgstr ""
 
 #: lib/squeeze_web/templates/menu/user-dropdown.html.eex:10
+#: lib/squeeze_web/views/profile_view.ex:8
 msgid "Profile"
 msgstr ""
 
@@ -219,4 +220,83 @@ msgstr ""
 
 #: lib/squeeze_web/templates/wizard/connect.html.eex:14
 msgid "Skip"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_workout-card.html.eex:25
+msgid "Create a Training Plan"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_goal-card.html.eex:6
+msgid "Current Goal"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:4
+#: lib/squeeze_web/views/overview_view.ex:8
+msgid "Dashboard"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:104
+msgid "Distance"
+msgstr ""
+
+#: lib/squeeze_web/views/page_view.ex:7
+msgid "Juice up your run"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:101
+msgid "Name"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:40
+msgid "Overview"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:63
+msgid "Performance"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_race-card.html.eex:6
+msgid "Race Date"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:66
+#: lib/squeeze_web/templates/overview/index.html.eex:88
+msgid "Recent Activites"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_workout-card.html.eex:10
+msgid "Rest"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:92
+msgid "See all"
+msgstr ""
+
+#: lib/squeeze_web/views/auth_view.ex:5
+msgid "Sign into your Account"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/index.html.eex:107
+msgid "Start at"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_workout-card.html.eex:6
+msgid "Today's Workout"
+msgstr ""
+
+#: lib/squeeze_web/views/user_view.ex:5
+msgid "User"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_milage-card.html.eex:6
+#: lib/squeeze_web/templates/overview/index.html.eex:43
+msgid "Weekly Distance"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_goal-card.html.eex:26
+msgid "faster than PR"
+msgstr ""
+
+#: lib/squeeze_web/templates/overview/_milage-card.html.eex:25
+msgid "than the previous week"
 msgstr ""

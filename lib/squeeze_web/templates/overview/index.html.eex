@@ -1,7 +1,7 @@
 <!-- Top navbar -->
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
   <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
-    Dashboard
+    <%= gettext("Dashboard") %>
   </span>
 <% end %>
 
@@ -36,8 +36,12 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-              <h2 class="text-white mb-0">Weekly Distance</h2>
+              <h6 class="text-uppercase text-light ls-1 mb-1">
+                <%= gettext("Overview") %>
+              </h6>
+              <h2 class="text-white mb-0">
+                <%= gettext("Weekly Distance") %>
+              </h2>
             </div>
           </div>
         </div>
@@ -55,8 +59,12 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-              <h2 class="mb-0">Recent Activites</h2>
+              <h6 class="text-uppercase text-muted ls-1 mb-1">
+                <%= gettext("Performance") %>
+              </h6>
+              <h2 class="mb-0">
+                <%= gettext("Recent Activites") %>
+              </h2>
             </div>
           </div>
         </div>
@@ -76,10 +84,12 @@
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Recent Activites</h3>
+              <h3 class="mb-0">
+                <%= gettext("Recent Activites") %>
+              </h3>
             </div>
             <div class="col text-right">
-              <%= link("See all", to: activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
+              <%= link(gettext("See all"), to: activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
             </div>
           </div>
         </div>
@@ -87,9 +97,15 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Distance</th>
-                <th scope="col">Start at</th>
+                <th scope="col">
+                  <%= gettext("Name") %>
+                </th>
+                <th scope="col">
+                  <%= gettext("Distance") %>
+                </th>
+                <th scope="col">
+                  <%= gettext("Start at") %>
+                </th>
               </tr>
             </thead>
             <tbody>

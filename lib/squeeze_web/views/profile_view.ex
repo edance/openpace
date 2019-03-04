@@ -5,7 +5,7 @@ defmodule SqueezeWeb.ProfileView do
   alias Squeeze.Distances
 
   def title(_page, _assigns) do
-    "Profile"
+    gettext("Profile")
   end
 
   def full_name(%User{} = user), do: User.full_name(user)

@@ -2,6 +2,6 @@ defmodule SqueezeWeb.UserView do
   use SqueezeWeb, :view
 
   def title(_page, _assigns) do
-    "User"
+    gettext("User")
   end
 end

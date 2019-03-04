@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <h5 class="card-title text-uppercase text-muted mb-0">
-          Weekly Distance
+          <%= gettext("Weekly Distance") %>
         </h5>
         <span class="h2 font-weight-bold mb-0">
           <%= weekly_distance(@current_user, @activities) %>
@@ -21,7 +21,9 @@
         <i class="icon-arrow-up-circle"></i>
         5%
       </span>
-      <span class="text-nowrap">than the previous week</span>
+      <span class="text-nowrap">
+        <%= gettext("than the previous week") %>
+      </span>
     </p>
   </div>
 </div>

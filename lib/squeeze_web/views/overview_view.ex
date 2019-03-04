@@ -5,7 +5,7 @@ defmodule SqueezeWeb.OverviewView do
   alias Squeeze.TimeHelper
 
   def title(_page, _assigns) do
-    "Dashboard"
+    gettext("Dashboard")
   end
 
   def full_name(%User{} = user), do: User.full_name(user)

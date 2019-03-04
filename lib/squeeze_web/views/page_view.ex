@@ -4,7 +4,7 @@ defmodule SqueezeWeb.PageView do
   alias Squeeze.Distances
 
   def title(_page, _assigns) do
-    "Juice up your run"
+    gettext("Juice up your run")
   end
 
   def distances do
