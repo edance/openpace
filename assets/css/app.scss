@@ -16,6 +16,12 @@
 
 */
 
+@font-face {
+  font-family: 'YoungSerif-Regular';
+  src: url('/fonts/youngserif/YoungSerif-Regular.woff2') format('woff2'),
+       url('/fonts/youngserif/YoungSerif-Regular.woff') format('woff');
+}
+
 // Core
 
 @import "node_modules/bootstrap/scss/functions";
