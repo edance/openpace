@@ -22,13 +22,13 @@ defmodule Mix.Tasks.Setup.Subscriptions do
 
   defp create_strava_subscription do
     url = "https://api.strava.com/api/v3/push_subscriptions"
-    form = %{
+    form = [
       client_id: Application.get_env(:strava, :client_id),
       client_secret: Application.get_env(:strava, :client_secret),
       callback_url: "#{System.get_env("HOST_URL")}/webhook/strava",
       verify_token: Application.get_env(:strava, :webhook_challenge)
-    }
-    {:ok, %Response{status_code: 200}} =
-      HTTPoison.post(url, Poison.encode!(form))
+    ]
+
+    {:ok, %Response{status_code: 201}} = HTTPoison.post(url, {:form, form})
   end
 end
