@@ -2,20 +2,22 @@ defmodule SqueezeWeb.HomeController do
   use SqueezeWeb, :controller
 
   alias Squeeze.MailingList
+  alias Squeeze.MailingList.Subscription
 
   plug :redirect_registered_user
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    changeset = MailingList.change_subscription(%Subscription{})
+    render(conn, "index.html", changeset: changeset)
   end
 
-  def subscribe(conn, %{"email" => email}) do
-    attrs = %{email: email, type: "homepage"}
+  def subscribe(conn, %{"subscription" => subscription_params}) do
+    attrs = Map.merge(subscription_params, %{"type" => "homepage"})
     case MailingList.create_subscription(attrs) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Thanks for signing up!")
-        |> render(conn, "index.html")
+        |> redirect(to: home_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "index.html", changeset: changeset)
     end
