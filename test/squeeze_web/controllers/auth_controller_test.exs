@@ -65,7 +65,7 @@ defmodule SqueezeWeb.AuthControllerTest do
       conn = conn
       |> post(auth_path(conn, :callback, "strava", code: "1234"))
 
-      assert redirected_to(conn) == page_path(conn, :index)
+      assert redirected_to(conn) == home_path(conn, :index)
     end
   end
 end

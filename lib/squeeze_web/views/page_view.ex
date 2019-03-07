@@ -1,16 +1,8 @@
 defmodule SqueezeWeb.PageView do
   use SqueezeWeb, :view
 
-  alias Squeeze.Distances
-
-  def title(_page, _assigns) do
-    gettext("Juice up your run")
-  end
-
-  def distances do
-    Distances.distances
-    |> Enum.map(fn(x) -> {x.name, x.distance} end)
-  end
+  def title("terms.html", _), do: gettext("Terms and Conditions")
+  def title("privacy_policy.html", _), do: gettext("Privacy Policy")
 
   def company_name, do: "Squeeze.Run"
   def website_name, do: "Squeeze.Run"
