@@ -25,4 +25,17 @@ defmodule Squeeze.MailingList do
     |> Subscription.changeset(attrs)
     |> Repo.insert()
   end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking subscription changes.
+
+  ## Examples
+
+      iex> change_subscription(subscription)
+      %Ecto.Changeset{source: %Subscription{}}
+
+  """
+  def change_subscription(%Subscription{} = subscription) do
+    Subscription.changeset(subscription, %{})
+  end
 end

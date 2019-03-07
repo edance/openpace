@@ -2,7 +2,7 @@
 
 <div class="container my-8">
   <div class="col-md-5 my-5 p-0">
-    Test
+    <%= render "form.html", Map.put(assigns, :action, home_path(@conn, :subscribe)) %>
   </div>
 </div>
 
