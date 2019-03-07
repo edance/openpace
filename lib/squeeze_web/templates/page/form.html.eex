@@ -1,9 +1,0 @@
-<%= async_form @changeset, @action, [class: "ui form"] , fn f -> %>
-
-  <div class="form-group">
-    <%= autocomplete(f, :distance, distances(), class: "form-control", placeholder: gettext("Choose a distance")) %>
-    <%= error_tag f, :distance %>
-  </div>
-
-  <%= submit gettext("Get Started"), class: "btn btn-primary" %>
-<% end %>

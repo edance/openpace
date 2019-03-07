@@ -17,7 +17,7 @@ defmodule SqueezeWeb.ForgotPasswordControllerTest do
       conn = conn
       |> post(forgot_password_path(conn, :request), %{email: user.email})
 
-      assert redirected_to(conn) == page_path(conn, :index)
+      assert redirected_to(conn) == home_path(conn, :index)
     end
   end
 end

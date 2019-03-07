@@ -19,7 +19,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       |> get(expired_link(user))
 
       assert get_flash(conn, :error) == "Token has expired"
-      assert redirected_to(conn) == page_path(conn, :index)
+      assert redirected_to(conn) == home_path(conn, :index)
     end
 
     test "with an invalid token", %{conn: conn, user: user} do
@@ -27,7 +27,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       |> get(invalid_link(user))
 
       assert get_flash(conn, :error) == "Token not valid"
-      assert redirected_to(conn) == page_path(conn, :index)
+      assert redirected_to(conn) == home_path(conn, :index)
     end
   end
 
@@ -56,7 +56,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       link = invalid_link(user)
       conn = post(conn, link, user: attrs)
       assert get_flash(conn, :error) == "Token not valid"
-      assert redirected_to(conn) == page_path(conn, :index)
+      assert redirected_to(conn) == home_path(conn, :index)
     end
   end
 

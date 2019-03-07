@@ -3,13 +3,12 @@ defmodule SqueezeWeb.PageViewTest do
 
   alias SqueezeWeb.PageView
 
-  describe "#distances" do
-    test "returns a list of tuples of names and distances" do
-      {option, value} = PageView.distances
-      |> List.first()
-      assert is_binary(option)
-      assert is_integer(value)
-    end
+  test "terms title" do
+    assert PageView.title("terms.html", %{}) == "Terms and Conditions"
+  end
+
+  test "privacy policy page title" do
+    assert PageView.title("privacy_policy.html", %{}) == "Privacy Policy"
   end
 
   test "terms helper methods" do

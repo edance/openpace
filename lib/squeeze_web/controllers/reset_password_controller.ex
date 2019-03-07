@@ -35,7 +35,7 @@ defmodule SqueezeWeb.ResetPasswordController do
       {:error, error_msg} ->
         conn
         |> put_flash(:error, error_msg)
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: home_path(conn, :index))
         |> halt()
     end
   end
