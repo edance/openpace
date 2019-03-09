@@ -38,6 +38,13 @@ defmodule SqueezeWeb.UserControllerTest do
       user = Accounts.get_user!(user.id)
       refute is_nil(user.customer_id)
     end
+
+    test "with invalid params responds 422", %{conn: conn} do
+      attrs = %{email: "test", encrypted_password: "password"}
+      conn = conn
+      |> put(user_path(conn, :register), user: attrs)
+      assert html_response(conn, 422) =~ "Sign Up"
+    end
   end
 
   defp register_user(conn) do
