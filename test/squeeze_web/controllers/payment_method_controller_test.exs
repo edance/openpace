@@ -4,6 +4,13 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
 
   alias Squeeze.Billing
 
+  describe "#index" do
+    test "redirects to billing#index", %{conn: conn} do
+      conn = get conn, payment_method_path(conn, :index)
+      assert redirected_to(conn) == billing_path(conn, :index)
+    end
+  end
+
   describe "#new" do
     test "renders form", %{conn: conn} do
       conn = get conn, payment_method_path(conn, :new)
