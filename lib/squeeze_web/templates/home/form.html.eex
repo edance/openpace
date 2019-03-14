@@ -1,9 +1,9 @@
 <%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
-  <div class="form-group mb-3">
-      <%= input f, :email, placeholder: gettext("Email"), class: "form-control" %>
-      <%= error_tag f, :email %>
-  </div>
-  <div class="text-center">
-    <%= submit gettext("Request Access"), class: "btn btn-primary my-4" %>
+  <div class="input-group mb-3">
+    <%= input f, :email, placeholder: gettext("Email"), class: "form-control" %>
+
+    <div class="input-group-append">
+      <%= submit gettext("Request Access"), class: "btn btn-secondary" %>
+    </div>
   </div>
 <% end %>
