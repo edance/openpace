@@ -46,7 +46,6 @@ msgstr ""
 msgid "You have set your goals high! Let's build your training program."
 msgstr ""
 
-#: lib/squeeze_web/templates/page/form.html.eex:8
 #: lib/squeeze_web/templates/wizard/distance.html.eex:14
 msgid "Get Started"
 msgstr ""
@@ -55,7 +54,6 @@ msgstr ""
 msgid "Billing Overview"
 msgstr ""
 
-#: lib/squeeze_web/templates/page/form.html.eex:4
 #: lib/squeeze_web/templates/wizard/distance.html.eex:7
 msgid "Choose a distance"
 msgstr ""
@@ -73,6 +71,7 @@ msgid "Create new account"
 msgstr ""
 
 #: lib/squeeze_web/templates/forgot_password/form.html.eex:9
+#: lib/squeeze_web/templates/home/form.html.eex:3
 #: lib/squeeze_web/templates/session/form.html.eex:9
 #: lib/squeeze_web/templates/user/form.html.eex:7
 msgid "Email"
@@ -118,6 +117,7 @@ msgid "Password"
 msgstr ""
 
 #: lib/squeeze_web/templates/menu/footer.html.eex:16
+#: lib/squeeze_web/views/page_view.ex:5
 msgid "Privacy Policy"
 msgstr ""
 
@@ -140,6 +140,7 @@ msgid "Source Code"
 msgstr ""
 
 #: lib/squeeze_web/templates/menu/footer.html.eex:13
+#: lib/squeeze_web/views/page_view.ex:4
 msgid "Terms and Conditions"
 msgstr ""
 
@@ -239,7 +240,7 @@ msgstr ""
 msgid "Distance"
 msgstr ""
 
-#: lib/squeeze_web/views/page_view.ex:7
+#: lib/squeeze_web/views/home_view.ex:4
 msgid "Juice up your run"
 msgstr ""
 
@@ -299,4 +300,8 @@ msgstr ""
 
 #: lib/squeeze_web/templates/overview/_milage-card.html.eex:25
 msgid "than the previous week"
+msgstr ""
+
+#: lib/squeeze_web/templates/home/form.html.eex:7
+msgid "Request Access"
 msgstr ""
