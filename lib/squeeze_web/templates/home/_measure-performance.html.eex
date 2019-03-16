@@ -13,7 +13,7 @@
             <%= gettext("Command Center for Your Race") %>
           </h2>
           <p>
-            <%= gettext("Build a training plan that is customized to you whether based on distance, duration, or effort. Measure your performace and see your progress all in one place.") %>
+            <%= gettext("Build a training plan that is customized to you whether based on distance, duration, or effort. Measure your performance and see your progress all in one place.") %>
           </p>
           <ul class="list-unstyled mt-5">
             <li class="py-2">
