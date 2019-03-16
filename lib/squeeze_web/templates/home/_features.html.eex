@@ -7,15 +7,17 @@
             <div class="card card-lift--hover shadow border-0">
               <div class="card-body py-5">
                 <div class="icon icon-shape icon-shape-primary rounded-circle mb-4">
-                  <i class="ni ni-check-bold"></i>
+                  <i class="icon-trophy"></i>
                 </div>
                 <h4 class="text-primary text-uppercase">
-                  Set Your Goal
+                  <%= gettext("Set Your Goal") %>
                 </h4>
                 <p class="description mt-3">
-                  Argon is a great free UI package based on Bootstrap 4 that includes the most important components and features.
+                  <%= gettext("Set your goal based on your experience and your current personal record. We will help you achieve it.") %>
                 </p>
-                <a href="#" class="btn btn-primary mt-4">Learn more</a>
+                <a href="#" class="btn btn-primary mt-4">
+                  <%= gettext("Learn more") %>
+                </a>
               </div>
             </div>
           </div>
@@ -23,15 +25,17 @@
             <div class="card card-lift--hover shadow border-0">
               <div class="card-body py-5">
                 <div class="icon icon-shape icon-shape-success rounded-circle mb-4">
-                  <i class="ni ni-istanbul"></i>
+                  <i class="icon-calendar"></i>
                 </div>
                 <h4 class="text-success text-uppercase">
-                  Create a Training Plan
+                  <%= gettext("Create a Training Plan") %>
                 </h4>
                 <p class="description mt-3">
-                  Argon is a great free UI package based on Bootstrap 4 that includes the most important components and features.
+                  <%= gettext("Choose from one of our custom-built training plans or build your own. Add everything from runs, to cross-training, and anything in between.") %>
                 </p>
-                <a href="#" class="btn btn-success mt-4">Learn more</a>
+                <a href="#" class="btn btn-success mt-4">
+                  <%= gettext("Learn more") %>
+                </a>
               </div>
             </div>
           </div>
@@ -39,13 +43,17 @@
             <div class="card card-lift--hover shadow border-0">
               <div class="card-body py-5">
                 <div class="icon icon-shape icon-shape-warning rounded-circle mb-4">
-                  <i class="ni ni-planet"></i>
+                  <i class="icon-chart"></i>
                 </div>
                 <h4 class="text-warning text-uppercase">
-                  Track Your Progress
+                  <%= gettext("Track Your Progress") %>
                 </h4>
-                <p class="description mt-3">Argon is a great free UI package based on Bootstrap 4 that includes the most important components and features.</p>
-                <a href="#" class="btn btn-warning mt-4">Learn more</a>
+                <p class="description mt-3">
+                  <%= gettext("Use our dashboards to see how each workout is getting you closer to your goal as you get closer to race date.") %>
+                </p>
+                <a href="#" class="btn btn-warning mt-4">
+                  <%= gettext("Learn more") %>
+                </a>
               </div>
             </div>
           </div>
