@@ -1,0 +1,72 @@
+<section class="pt-7 pb-0 bg-gradient-warning position-relative">
+  <div class="container pb-4">
+    <div class="row row-grid align-items-center">
+      <div class="col-md-6 ml-lg-auto">
+        <div class="position-relative pl-md-5">
+          <img alt="<%= gettext("Runner Finishing Race") %>" src="/images/home/runner.jpg" class="img-fluid img-center rounded">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="d-flex px-3">
+          <div>
+            <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
+              <i class="icon-social-github"></i>
+            </div>
+          </div>
+          <div class="pl-4">
+            <h4 class="display-3 text-white">
+              <%= gettext("Open Source Platform") %>
+            </h4>
+            <p class="text-white">
+              <%= gettext("Many runners are spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it.") %>
+            </p>
+          </div>
+        </div>
+        <div class="card shadow shadow-lg--hover mt-5">
+          <div class="card-body">
+            <div class="d-flex px-3">
+              <div>
+                <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+                  <i class="icon-support"></i>
+                </div>
+              </div>
+              <div class="pl-4">
+                <h5 class="title text-success">
+                  <%= gettext("Awesome Support") %>
+                </h5>
+                <p>
+                  <%= gettext("We want help you achieve your goals so let us know if anything isn't going as expected and we can make it better.") %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow shadow-lg--hover my-5">
+          <div class="card-body">
+            <div class="d-flex px-3">
+              <div>
+                <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
+                  <i class="icon-chemistry"></i>
+                </div>
+              </div>
+              <div class="pl-4">
+                <h5 class="title text-warning">
+                  <%= gettext("Public Roadmap") %>
+                </h5>
+                <p>
+                  <%= gettext("Curious what features are still in the lab and coming around the corner? Check out our public roadmap for updates.") %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SVG separator -->
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</section>

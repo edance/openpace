@@ -1,0 +1,67 @@
+<section class="py-8">
+  <div class="container">
+    <div class="row row-grid align-items-center">
+      <div class="col-md-6 order-md-2">
+        <img alt="<%= gettext("Dashboard Preview") %>" src="/images/home/dashboard.jpg" class="img-fluid floating shadow">
+      </div>
+      <div class="col-md-6 order-md-1">
+        <div class="pr-md-5">
+          <div class="icon icon-lg icon-shape icon-shape-success shadow rounded-circle mb-5">
+            <i class="icon-graph"></i>
+          </div>
+          <h2>
+            <%= gettext("Command Center for Your Race") %>
+          </h2>
+          <p>
+            <%= gettext("Build a training plan that is customized to you whether based on distance, duration, or effort. Measure your performace and see your progress all in one place.") %>
+          </p>
+          <ul class="list-unstyled mt-5">
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="badge badge-circle badge-success mr-3">
+                    <i class="icon-clock"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="mb-0">
+                    <%= gettext("See Upcoming Workouts") %>
+                  </h4>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="badge badge-circle badge-success mr-3">
+                    <i class="icon-energy"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="mb-0">
+                    <%= gettext("Track Weekly Milage") %>
+                  </h4>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="badge badge-circle badge-success mr-3">
+                    <i class="icon-exclamation"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="mb-0">
+                    <%= gettext("Warning for Overtraining or Injury") %>
+                  </h4>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

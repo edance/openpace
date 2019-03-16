@@ -1,0 +1,21 @@
+<section class="py-7">
+  <div class="container">
+    <div class="row row-grid justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="display-3">
+          <%= gettext("Do you want to") %>
+          <span class="text-success"><%= gettext("Run Your Best Race?") %></span>
+        </h2>
+        <p class="lead">
+          <%= gettext("Because if you do, we can help you get there! Try Squeeze today for free and accomplish your goals.") %>
+        </p>
+        <div class="btn-wrapper">
+          <a href="#top" class="btn btn-primary mb-3 mb-sm-0">
+            <%= gettext("Request Access") %>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
