@@ -1,0 +1,15 @@
+<h2>Show Race</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @race.name %>
+  </li>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @race.slug %>
+  </li>
+
+</ul>
