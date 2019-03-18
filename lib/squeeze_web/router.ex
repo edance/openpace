@@ -88,4 +88,10 @@ defmodule SqueezeWeb.Router do
 
     post "/stripe", StripeWebhookController, :webhook
   end
+
+  scope "/", SqueezeWeb do
+    pipe_through :browser # Use the default browser stack
+
+    get "/:slug", RaceController, :show
+  end
 end
