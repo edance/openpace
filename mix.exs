@@ -62,7 +62,7 @@ defmodule Squeeze.Mixfile do
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
-      {:faker, "~> 0.9", only: :test},
+      {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.9", only: :test},
       {:mox, "~> 0.4", only: :test}
     ]
