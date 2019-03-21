@@ -1,15 +1,25 @@
-<h2>Show Race</h2>
+<main>
+  <%= render "_hero.html", assigns %>
 
-<ul>
+  <div class="container mt--7">
+    <div class="row">
+      <div class="col-xl-8 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
 
-  <li>
-    <strong>Name:</strong>
-    <%= @race.name %>
-  </li>
+            <hr class="my-4">
 
-  <li>
-    <strong>Slug:</strong>
-    <%= @race.slug %>
-  </li>
-
-</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
