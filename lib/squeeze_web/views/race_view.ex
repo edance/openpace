@@ -9,6 +9,12 @@ defmodule SqueezeWeb.RaceView do
     "#{race.city}, #{race.state} #{race.country}"
   end
 
+  def date(%{race: race}) do
+    start_at = race.start_at
+    start_at
+    |> Timex.format!("%a %b #{Ordinal.ordinalize(start_at.day)}, %Y", :strftime)
+  end
+
   def distance_type(%{race: race}) do
     race.distance_type
     |> Atom.to_string()

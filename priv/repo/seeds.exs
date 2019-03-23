@@ -14,6 +14,8 @@ alias Faker.{Lorem}
 alias Squeeze.Repo
 alias Squeeze.Races.Race
 
+{:ok, datetime} = NaiveDateTime.new(2019, 5, 25, 7, 15, 0)
+
 race = %Race{
   name: "Bayshore Marathon",
   slug: "bayshore-marathon",
@@ -22,6 +24,8 @@ race = %Race{
   state: "MI",
   country: "US",
   postal_code: "49686",
+  start_at: datetime,
+  timezone: "America/New_York",
   overview: Lorem.paragraph(),
   description: Lorem.paragraph(3),
   distance: 42_195.0,
