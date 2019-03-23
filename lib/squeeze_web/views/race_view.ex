@@ -6,7 +6,7 @@ defmodule SqueezeWeb.RaceView do
   def h1(%{race: race}), do: race.name
 
   def location(%{race: race}) do
-    "#{race.city}, #{race.state}, #{race.country}"
+    "#{race.city}, #{race.state} #{race.country}"
   end
 
   def distance_type(%{race: race}) do

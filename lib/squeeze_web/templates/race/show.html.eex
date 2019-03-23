@@ -7,6 +7,11 @@
         <div class="card bg-secondary shadow mb-6">
           <%= render "_breadcrumb.html", assigns %>
           <div class="card-body">
+            <h2>Start:</h2>
+            <%= render "_address.html", assigns %>
+
+            <hr class="my-4">
+
             <h2>Overview</h2>
             <p><%= @race.overview %></p>
 
