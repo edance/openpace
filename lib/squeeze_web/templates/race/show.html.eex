@@ -12,6 +12,11 @@
 
             <hr class="my-4">
 
+            <h2>Date:</h2>
+            <%= date(assigns) %>
+
+            <hr class="my-4">
+
             <h2>Overview</h2>
             <p><%= @race.overview %></p>
 

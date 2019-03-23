@@ -22,6 +22,9 @@ defmodule Squeeze.Races.Race do
     field :country, :string
     field :postal_code, :string
 
+    field :start_at, :naive_datetime
+    field :timezone, :string
+
     field :distance, :float
     field :distance_type, DistanceTypeEnum
 
