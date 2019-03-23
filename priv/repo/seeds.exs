@@ -18,7 +18,10 @@ race = %Race{
   name: "Bayshore Marathon",
   slug: "bayshore-marathon",
   city: "Traverse City",
+  overview: Lorem.paragraph(),
   description: Lorem.paragraph(3),
+  distance: 42_195.0,
+  distance_type: :marathon,
   state: "MI",
   country: "USA",
   url: "https://www.bayshoremarathon.org"

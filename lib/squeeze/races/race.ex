@@ -12,11 +12,15 @@ defmodule Squeeze.Races.Race do
   schema "races" do
     field :name, :string
     field :slug, :string
+    field :overview, :string
     field :description, :string
 
     field :city, :string
     field :state, :string
     field :country, :string
+
+    field :distance, :float
+    field :distance_type, DistanceTypeEnum
 
     field :url, :string
 

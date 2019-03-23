@@ -3,19 +3,17 @@
 
   <div class="container mt--7">
     <div class="row">
-      <div class="col-xl-8 order-xl-1">
-        <div class="card bg-secondary shadow">
-          <div class="card-header bg-white border-0">
-            <div class="row align-items-center">
-              <div class="col-8">
-                <h3 class="mb-0">
-                </h3>
-              </div>
-            </div>
-          </div>
+      <div class="col">
+        <div class="card bg-secondary shadow mb-6">
+          <%= render "_breadcrumb.html", assigns %>
           <div class="card-body">
+            <h2>Overview</h2>
+            <p><%= @race.overview %></p>
 
             <hr class="my-4">
+
+            <h2>Description</h2>
+            <p><%= @race.description %></p>
 
           </div>
         </div>
