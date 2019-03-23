@@ -1,6 +1,7 @@
 import './autocomplete-input';
 import './btn-spinner';
 import './calendar';
+import './countdown-timer';
 import './date-picker';
 import './duration-select';
 import './form';

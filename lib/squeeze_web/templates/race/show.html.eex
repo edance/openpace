@@ -14,6 +14,7 @@
 
             <h2>Date:</h2>
             <%= date(assigns) %>
+            <%= render "_countdown.html", assigns %>
 
             <hr class="my-4">
 
