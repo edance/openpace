@@ -17,13 +17,15 @@ alias Squeeze.Races.Race
 race = %Race{
   name: "Bayshore Marathon",
   slug: "bayshore-marathon",
+  address_line1: "1150 Milliken Dr.",
   city: "Traverse City",
+  state: "MI",
+  country: "US",
+  postal_code: "49686",
   overview: Lorem.paragraph(),
   description: Lorem.paragraph(3),
   distance: 42_195.0,
   distance_type: :marathon,
-  state: "MI",
-  country: "USA",
   url: "https://www.bayshoremarathon.org"
 }
 Repo.insert!(race)

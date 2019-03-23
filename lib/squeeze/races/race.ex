@@ -15,9 +15,12 @@ defmodule Squeeze.Races.Race do
     field :overview, :string
     field :description, :string
 
+    field :address_line1, :string
+    field :address_line2, :string
     field :city, :string
     field :state, :string
     field :country, :string
+    field :postal_code, :string
 
     field :distance, :float
     field :distance_type, DistanceTypeEnum
