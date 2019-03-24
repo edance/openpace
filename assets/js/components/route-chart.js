@@ -28,6 +28,7 @@ document.addEventListener("turbolinks:load", function() {
     options: {
       legend: false,
       tooltips: false,
+      animation: { duration: 0 }, // Disable animation
       scales: {
         xAxes: [{
           // ticks: {
