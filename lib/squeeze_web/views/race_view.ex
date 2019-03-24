@@ -39,6 +39,12 @@ defmodule SqueezeWeb.RaceView do
     |> Enum.join(" ")
   end
 
+  def elevation_points(%{race: race}) do
+    race.trackpoints
+    |> Enum.map(fn(x) -> %{x: x.distance, y: x.altitude} end)
+    |> Poison.encode!()
+  end
+
   def coordinates(%{race: race}) do
     race.trackpoints
     |> Enum.map(fn(x) -> x.coordinates end)

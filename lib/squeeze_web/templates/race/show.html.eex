@@ -30,6 +30,7 @@
 
         <div class="card bg-secondary shadow mb-6">
           <div id="map-canvas" data-coordinates="<%= coordinates(assigns) %>" style="height: 600px;"></div>
+          <canvas id="route-chart" data-dataset="<%= elevation_points(assigns) %>" style="height: 200px;"></canvas>
         </div>
       </div>
     </div>

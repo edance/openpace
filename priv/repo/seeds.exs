@@ -48,4 +48,13 @@ trackpoints = file_stream
   end)
 |> Enum.to_list()
 
+first = trackpoints |> List.first() |> Map.put(:distance, 0.0)
+
+{trackpoints, _} = trackpoints
+|> Enum.map_reduce(first, fn(x, l) ->
+  distance = Distance.GreatCircle.distance({x.coordinates.lon, x.coordinates.lat}, {l.coordinates.lon, l.coordinates.lat})
+  trackpoint = Map.put(x, :distance, l.distance + distance)
+  {trackpoint, trackpoint}
+  end)
+
 Repo.insert_all(Trackpoint, trackpoints)
