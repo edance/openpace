@@ -59,6 +59,7 @@ defmodule Squeeze.Mixfile do
       {:oauth2, "~> 0.9"},
       {:comeonin, "~> 4.1"},
       {:argon2_elixir, "~> 1.3"},
+      {:sweet_xml, "~> 0.3", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
