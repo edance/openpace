@@ -11,3 +11,7 @@ main {
 main {
   overflow: hidden;
 }
+
+*:focus {
+  outline: none;
+}
