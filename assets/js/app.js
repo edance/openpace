@@ -9,6 +9,7 @@ import 'bootstrap';
 
 // Import base components
 import './components/base';
+import './components/route-map';
 
 // Turbolinks
 import './turbolinks';
