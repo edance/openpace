@@ -6,6 +6,8 @@ defmodule Squeeze.Races.Race do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Squeeze.Races.{Race, Trackpoint}
+
   @required_fields ~w(name slug city state country)a
   @optional_fields ~w(description url)a
 
@@ -30,11 +32,13 @@ defmodule Squeeze.Races.Race do
 
     field :url, :string
 
+    has_many :trackpoints, Trackpoint
+
     timestamps()
   end
 
   @doc false
-  def changeset(race, attrs) do
+  def changeset(%Race{} = race, attrs) do
     race
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
