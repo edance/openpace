@@ -25,8 +25,11 @@
 
             <h2>Description</h2>
             <p><%= @race.description %></p>
-
           </div>
+        </div>
+
+        <div class="card bg-secondary shadow mb-6">
+          <div id="map-canvas" data-coordinates="<%= coordinates(assigns) %>" style="height: 600px;"></div>
         </div>
       </div>
     </div>

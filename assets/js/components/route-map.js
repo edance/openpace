@@ -11,17 +11,19 @@ document.addEventListener("turbolinks:load", function() {
 
   let coordinates = JSON.parse($mapCanvas.data('coordinates'));
 
-  // reverse the array
-  coordinates = coordinates.map((x) => [x[1], x[0]]);
-
   const bounds = coordinates.reduce(function(bounds, coord) {
     return bounds.extend(coord);
   }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
 
   const map = new mapboxgl.Map({
-    bounds,
+    center: bounds.getCenter(),
     container: 'map-canvas',
     style: 'mapbox://styles/mapbox/light-v9',
+  });
+
+  map.fitBounds(bounds, {
+    easing: () => 1, // disable animation
+    padding: 20
   });
 
   map.scrollZoom.disable();

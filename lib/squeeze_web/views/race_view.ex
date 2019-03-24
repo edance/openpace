@@ -38,4 +38,11 @@ defmodule SqueezeWeb.RaceView do
     |> Enum.map(&String.capitalize/1)
     |> Enum.join(" ")
   end
+
+  def coordinates(%{race: race}) do
+    race.trackpoints
+    |> Enum.map(fn(x) -> x.coordinates end)
+    |> Enum.map(fn(c) -> [c["lon"], c["lat"]] end)
+    |> Poison.encode!()
+  end
 end
