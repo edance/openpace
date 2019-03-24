@@ -23,6 +23,8 @@ defmodule Squeeze.Races do
 
   """
   def get_race!(slug) do
-    Repo.get_by!(Race, slug: slug)
+    Race
+    |> Repo.get_by!(slug: slug)
+    |> Repo.preload(:trackpoints)
   end
 end
