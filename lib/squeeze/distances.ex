@@ -14,6 +14,9 @@ defmodule Squeeze.Distances do
 
   def mile_in_meters, do: @mile_in_meters
 
+  def to_feet(distance, [imperial: false]), do: distance
+  def to_feet(distance, [imperial: _]), do: round_distance(distance * 3.28)
+
   def to_float(distance, [imperial: true]), do: round_distance(distance / mile_in_meters())
   def to_float(distance, [imperial: _]), do: round_distance(distance / 1_000)
 

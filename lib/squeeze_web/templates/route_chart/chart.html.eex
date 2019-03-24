@@ -1,0 +1,4 @@
+<canvas id="route-chart"
+        data-dataset="<%= elevation_points(assigns) %>"
+        data-x-axis="<%= x_ticks(assigns) %>"
+        data-y-axis="<%= y_ticks(assigns) %>" />

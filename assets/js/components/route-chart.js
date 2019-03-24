@@ -9,6 +9,8 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   const dataset = JSON.parse($chart.data('dataset'));
+  const xAxis = JSON.parse($chart.data('x-axis'));
+  const yAxis = JSON.parse($chart.data('y-axis'));
 
   const ctx = $chart.first();
 
@@ -31,10 +33,13 @@ document.addEventListener("turbolinks:load", function() {
       animation: { duration: 0 }, // Disable animation
       scales: {
         xAxes: [{
-          // ticks: {
-          //    min: 0,
-          //    max: 10
-          // },
+          ticks: {
+            min: xAxis.min,
+            max: xAxis.max,
+            callback: function(value, index, values) {
+              return `${value} ${xAxis.label}`;
+            },
+          },
           gridLines: {
             color: '#888',
             drawOnChartArea: false
@@ -42,9 +47,11 @@ document.addEventListener("turbolinks:load", function() {
         }],
         yAxes: [{
           ticks: {
-            min: 0,
-            max: 1000,
-            padding: 10
+            min: yAxis.min,
+            max: yAxis.max,
+            callback: function(value, index, values) {
+              return `${value} ${yAxis.label}`;
+            },
           },
           gridLines: {
             color: '#888',
