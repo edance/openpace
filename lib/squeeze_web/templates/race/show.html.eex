@@ -28,12 +28,14 @@
           </div>
         </div>
 
-        <div class="card bg-secondary shadow mb-6">
-          <div id="map-canvas" data-coordinates="<%= coordinates(assigns) %>" style="height: 600px;"></div>
-          <div class="card-body">
-            <%= render SqueezeWeb.RouteChartView, "chart.html", assigns %>
+        <%= if length(@race.trackpoints) > 0 do %>
+          <div class="card bg-secondary shadow mb-6">
+            <div id="map-canvas" data-coordinates="<%= coordinates(assigns) %>" style="height: 600px;"></div>
+            <div class="card-body">
+              <%= render SqueezeWeb.RouteChartView, "chart.html", assigns %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
