@@ -8,7 +8,7 @@ defmodule Squeeze.RacesTest do
   describe "races" do
     test "get_race!/1 returns the race with given id" do
       race = insert(:race)
-      assert Races.get_race!(race.slug) == race
+      assert Races.get_race!(race.slug).id == race.id
     end
   end
 end
