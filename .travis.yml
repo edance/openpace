@@ -6,7 +6,7 @@ otp_release:
 services:
   - postgresql
 addons:
-  postgresql: "9.4"
+  postgresql: "10.1"
 before_script:
 - mix deps.get
 env:
