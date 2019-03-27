@@ -65,7 +65,16 @@ config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
   redirect_uri: "http://localhost:4000/auth/fitbit/callback",
-  webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
+  webhook_challenge: {:system, "FITBIT_WEBHOOK_TOKEN"}
+
+config :geolix,
+  databases: [
+    %{
+      id: :system_city,
+      adapter: Geolix.Adapter.MMDB2,
+      source: "#{File.cwd!}/GeoLite2-City.mmdb"
+    }
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

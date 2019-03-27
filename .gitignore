@@ -28,3 +28,6 @@ npm-debug.log
 
 # Environment variables
 /.env
+
+# Maxmind dBs for IP geolocation
+*.mmdb
