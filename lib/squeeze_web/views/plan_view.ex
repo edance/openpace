@@ -4,4 +4,6 @@ defmodule SqueezeWeb.PlanView do
   def title(_page, _assigns) do
     "Build your training plan"
   end
+
+  def brand_name, do: "OpenPace"
 end

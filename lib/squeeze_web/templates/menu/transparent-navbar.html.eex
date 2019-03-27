@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
   <div class="container">
-    <%= link("Squeeze", to: "/", class: "navbar-brand text-white pt-0") %>
+    <%= link(brand_name(), to: "/", class: "navbar-brand text-white pt-0") %>
 
     <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

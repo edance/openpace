@@ -6,7 +6,7 @@
     </button>
 
     <!-- Brand -->
-    <%= link("Squeeze", to: "/", class: "navbar-brand pt-0") %>
+    <%= link(brand_name(), to: "/", class: "navbar-brand pt-0") %>
 
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
