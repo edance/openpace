@@ -45,4 +45,8 @@ defmodule SqueezeWeb.RaceView do
     |> Enum.map(fn(c) -> [c["lon"], c["lat"]] end)
     |> Poison.encode!()
   end
+
+  def markdown(body) do
+    Earmark.as_html!(body)
+  end
 end
