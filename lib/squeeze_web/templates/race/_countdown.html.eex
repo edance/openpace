@@ -1,3 +1,0 @@
-<div class="countdown-timer" data-date="<%= start_at(assigns) %>">
-  <%= countdown_timer(assigns) %>
-</div>

@@ -1,0 +1,29 @@
+<div>
+  <h2>Course Information</h2>
+
+  <div class="d-flex mb-4">
+    <div class="mr-4">
+      <div class="display-4">
+        <%= distance(assigns) %>
+      </div>
+      <p class="text-muted">Distance</p>
+    </div>
+
+    <div class="mr-4">
+      <div class="display-4 countdown-timer" data-date="<%= start_at(assigns) %>">
+        <%= countdown_timer(assigns) %>
+      </div>
+      <p class="text-muted">
+        Countdown
+      </p>
+    </div>
+  </div>
+
+
+  <div class="mb-6">
+    <div id="map-canvas" class="mb-4" data-coordinates="<%= coordinates(assigns) %>" style="height: 500px;"></div>
+
+    <h2 class="mb-3">Course Elevation</h2>
+    <%= render SqueezeWeb.RouteChartView, "chart.html", assigns %>
+  </div>
+</div>

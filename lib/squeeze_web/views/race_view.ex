@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.RaceView do
   use SqueezeWeb, :view
 
+  alias Squeeze.Distances
+
   def title(_page, %{race: race}), do: race.name
 
   def h1(%{race: race}), do: race.name
@@ -13,6 +15,15 @@ defmodule SqueezeWeb.RaceView do
     start_at = race.start_at
     start_at
     |> Timex.format!("%a %b #{Ordinal.ordinalize(start_at.day)}, %Y", :strftime)
+  end
+
+  def time(%{race: race}) do
+    race.start_at
+    |> Timex.format!("%-I:%M %p ", :strftime)
+  end
+
+  def distance(%{race: %{distance: distance, country: country}}) do
+    Distances.format(distance, imperial: country == "US")
   end
 
   def start_at(%{race: race}) do
@@ -46,7 +57,9 @@ defmodule SqueezeWeb.RaceView do
     |> Poison.encode!()
   end
 
-  def markdown(body) do
-    Earmark.as_html!(body)
+  def content(%{race: %{content: content}}) do
+    content
+    |> Earmark.as_html!()
+    |> raw()
   end
 end

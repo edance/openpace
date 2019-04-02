@@ -28,8 +28,7 @@ race = %Race{
   postal_code: "49686",
   start_at: datetime,
   timezone: "America/New_York",
-  overview: Lorem.paragraph(),
-  description: Lorem.paragraph(3),
+  content: Lorem.paragraph(20),
   distance: 42_195.0,
   distance_type: :marathon,
   url: "https://www.bayshoremarathon.org"
