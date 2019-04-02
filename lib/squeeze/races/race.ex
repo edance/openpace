@@ -9,13 +9,12 @@ defmodule Squeeze.Races.Race do
   alias Squeeze.Races.{Race, Trackpoint}
 
   @required_fields ~w(name slug city state country)a
-  @optional_fields ~w(description url)a
+  @optional_fields ~w(content url)a
 
   schema "races" do
     field :name, :string
     field :slug, :string
-    field :overview, :string
-    field :description, :string
+    field :content, :string
 
     field :address_line1, :string
     field :address_line2, :string
