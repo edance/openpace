@@ -6,5 +6,5 @@ defmodule SqueezeWeb.PageView do
 
   def company_name, do: "OpenPace"
   def website_name, do: "OpenPace.co"
-  def website_url, do: "https://openpace.co"
+  def website_url, do: "https://www.openpace.co"
 end
