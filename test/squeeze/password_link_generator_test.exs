@@ -15,9 +15,10 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
       time = :erlang.system_time(:seconds)
       token = create_token(user, time)
       signature = sign_token(token)
-      link = "/reset-password?token=#{token}&signature=#{signature}"
+      link = PasswordLinkGenerator.create_link(user, time)
 
-      assert PasswordLinkGenerator.create_link(user, time) == link
+      assert link =~ URI.encode_query(%{token: token, signature: signature})
+      assert link =~ "/reset-password"
     end
   end
 

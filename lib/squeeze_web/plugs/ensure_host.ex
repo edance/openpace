@@ -4,24 +4,32 @@ defmodule SqueezeWeb.Plug.EnsureHost do
   """
 
   alias Phoenix.Controller
+  alias Plug.Conn
 
-  @host_url System.get_env("HOST_URL")
+  @config Application.get_env(:squeeze, SqueezeWeb.Endpoint)
 
   def init(_), do: nil
 
   def call(%{host: host, method: "GET"} = conn, _opts) do
-    if URI.parse(@host_url).host == host do
+    if @config[:url][:host] == host do
       conn
     else
       conn
       |> Controller.redirect(external: build_url(conn))
+      |> Conn.halt()
     end
   end
 
   def call(conn, _opts), do: conn
 
-  defp build_url(conn)  do
-    %{scheme: scheme, host: host, port: port} = URI.parse(@host_url)
-    "#{scheme}://#{host}:#{port}#{conn.request_path}"
+  defp build_url(%{request_path: path})  do
+    url = @config[:url]
+    %URI{
+      scheme: url[:scheme],
+      host: url[:host],
+      port: url[:port],
+      path: path
+    }
+    |> URI.to_string()
   end
 end

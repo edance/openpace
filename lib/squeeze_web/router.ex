@@ -5,7 +5,7 @@ defmodule SqueezeWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    # plug Plug.EnsureHost
+    plug Plug.EnsureHost
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
