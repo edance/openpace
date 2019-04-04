@@ -9,11 +9,6 @@ defmodule SqueezeWeb.AuthControllerTest do
   setup :verify_on_exit!
 
   describe "GET #request" do
-    test "with provider facebook", %{conn: conn} do
-      conn = get(conn, auth_path(conn, :request, "facebook"))
-      assert redirected_to(conn) =~ ~r/https:\/\/www.facebook.com/
-    end
-
     test "with provider fitbit", %{conn: conn} do
       conn = get(conn, auth_path(conn, :request, "fitbit"))
       assert redirected_to(conn) =~ ~r/https:\/\/www.fitbit.com/
