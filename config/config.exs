@@ -56,11 +56,6 @@ config :squeeze, Squeeze.OAuth2.Google,
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
   redirect_uri: "http://localhost:4000/auth/google/callback"
 
-config :squeeze, Squeeze.OAuth2.Facebook,
-  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
-  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET"),
-  redirect_uri: "http://localhost:4000/auth/facebook/callback"
-
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),

@@ -3,7 +3,7 @@ defmodule SqueezeWeb.AuthController do
 
   alias Squeeze.Accounts
   alias Squeeze.Guardian.Plug
-  alias Squeeze.OAuth2.{Facebook, Fitbit, Google}
+  alias Squeeze.OAuth2.{Fitbit, Google}
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
@@ -49,10 +49,6 @@ defmodule SqueezeWeb.AuthController do
     Google.authorize_url!(scope: "email")
   end
 
-  defp authorize_url!("facebook") do
-    Facebook.authorize_url!(scope: "email,public_profile")
-  end
-
   defp authorize_url!("fitbit") do
     Fitbit.authorize_url!(scope: "activity profile")
   end
@@ -62,7 +58,6 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp get_token!("google", code), do: Google.get_token!(code: code)
-  defp get_token!("facebook", code), do: Facebook.get_token!(code: code)
   defp get_token!("fitbit", code), do: Fitbit.get_token!(code: code)
 
   defp get_user!("strava", client) do
@@ -76,6 +71,5 @@ defmodule SqueezeWeb.AuthController do
   end
 
   defp get_user!("google", client), do: Google.get_user!(client)
-  defp get_user!("facebook", client), do: Facebook.get_user!(client)
   defp get_user!("fitbit", client), do: Fitbit.get_user!(client)
 end
