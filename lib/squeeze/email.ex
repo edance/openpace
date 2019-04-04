@@ -16,7 +16,7 @@ defmodule Squeeze.Email do
 
   defp base_email do
     new_email()
-    |> from("Squeeze Team <team@squeeze.run>")
+    |> from("OpenPace Team <team@openpace.co>")
     |> put_layout({SqueezeWeb.LayoutView, :email})
   end
 end
