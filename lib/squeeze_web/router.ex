@@ -22,6 +22,12 @@ defmodule SqueezeWeb.Router do
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
+  pipeline :xml do
+    plug :accepts, ["xml"]
+    plug :put_layout, {SqueezeWeb.LayoutView, :none}
+    plug :put_resp_content_type, "application/xml"
+  end
+
   scope "/", SqueezeWeb do
     pipe_through :browser # Use the default browser stack
 
@@ -88,6 +94,12 @@ defmodule SqueezeWeb.Router do
     post "/fitbit", FitbitWebhookController, :webhook
 
     post "/stripe", StripeWebhookController, :webhook
+  end
+
+  scope "/sitemap", SqueezeWeb do
+    pipe_through :xml
+
+    get "/index.xml", SitemapController, :index
   end
 
   scope "/", SqueezeWeb do
