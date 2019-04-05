@@ -22,6 +22,12 @@
        url('/fonts/youngserif/YoungSerif-Regular.woff') format('woff');
 }
 
+.wf-loading, .wf-materialicons-n4-inactive {
+  .material-icons {
+    display: none;
+  }
+}
+
 // Core
 
 @import "node_modules/bootstrap/scss/functions";
