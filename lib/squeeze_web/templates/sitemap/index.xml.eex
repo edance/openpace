@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc><%= home_url(@conn, :index) %></loc>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <%= for race <- @races do %>
+    <url>
+      <loc><%= race_url(@conn, :show, race.slug) %></loc>
+      <priority>0.8</priority>
+      <changefreq>daily</changefreq>
+    </url>
+  <% end %>
+</urlset>

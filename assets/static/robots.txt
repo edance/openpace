@@ -4,3 +4,5 @@
 # User-agent: *
 # Disallow: /
 Disallow: /dashboard
+
+Sitemap: https://www.openpace.co/sitemap/index.xml
