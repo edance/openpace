@@ -41,17 +41,20 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <%= active_link(@conn, to: overview_path(@conn, :index), class: "nav-link") do %>
-            <i class="material-icons text-primary">dashboard</i> Dashboard
+            <i class="material-icons text-primary">dashboard</i>
+            <%= gettext("Dashboard") %>
           <% end %>
         </li>
         <li class="nav-item">
           <%= active_link(@conn, to: calendar_path(@conn, :index), class: "nav-link") do %>
-            <i class="material-icons text-primary">calendar_today</i> Calendar
+            <i class="material-icons text-primary">calendar_today</i>
+            <%= gettext("Calendar") %>
           <% end %>
         </li>
         <li class="nav-item">
           <%= active_link(@conn, to: profile_path(@conn, :edit), class: "nav-link") do %>
-            <i class="material-icons text-primary">account_box</i> Profile
+            <i class="material-icons text-primary">account_box</i>
+            <%= gettext("Profile") %>
           <% end %>
         </li>
       </ul>
