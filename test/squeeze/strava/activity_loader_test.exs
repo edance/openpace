@@ -4,6 +4,7 @@ defmodule Squeeze.ActivityLoaderTest do
   import Mox
   import Squeeze.Factory
 
+  alias Squeeze.Dashboard.Activity
   alias Squeeze.Strava.ActivityLoader
   alias Squeeze.TimeHelper
 
@@ -36,9 +37,10 @@ defmodule Squeeze.ActivityLoaderTest do
       assert activity.status == :partial
     end
 
-    test "does nothing if strava_activity is not a run",
+    test "creates an activity if strava_activity is not a run",
       %{credential: credential, swim_activity: strava_activity} do
-      assert ActivityLoader.update_or_create_activity(credential, strava_activity) == {:ok, nil}
+      {:ok, %Activity{} = activity} = ActivityLoader.update_or_create_activity(credential, strava_activity)
+      refute activity.id == nil
     end
   end
 

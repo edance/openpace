@@ -9,7 +9,7 @@ defmodule Squeeze.Dashboard.Activity do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, Trackpoint}
 
-  @required_fields ~w(name)a
+  @required_fields ~w(name type)a
   @optional_fields ~w(
     planned_distance
     planned_duration
@@ -23,6 +23,7 @@ defmodule Squeeze.Dashboard.Activity do
 
   schema "activities" do
     field :name, :string
+    field :type, :string
 
     # Planning Fields
     field :planned_distance, :float
