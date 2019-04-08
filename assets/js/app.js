@@ -7,6 +7,9 @@ import '../css/app.scss';
 import 'phoenix_html';
 import 'bootstrap';
 
+// Connect to socket
+import './socket';
+
 // Import base components
 import './components/base';
 import './components/route-map';
