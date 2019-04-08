@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= @view_module.title(@view_template, assigns) %> | Squeeze</title>
+    <title><%= @view_module.title(@view_template, assigns) %> | OpenPace</title>
     <%= render SqueezeWeb.SharedView, "head.html", assigns %>
     <script src="<%= static_path(@conn, "/js/dashboard.js") %>" defer></script>
   </head>

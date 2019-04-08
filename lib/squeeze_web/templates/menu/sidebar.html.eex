@@ -6,7 +6,7 @@
     </button>
 
     <!-- Brand -->
-    <%= link(brand_name(), to: "/", class: "navbar-brand pt-0") %>
+    <%= link(company_name(), to: "/", class: "navbar-brand pt-0") %>
 
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
@@ -26,7 +26,7 @@
       <div class="navbar-collapse-header d-md-none">
         <div class="row">
           <div class="col-6 collapse-brand">
-            <%= brand_name() %>
+            <%= company_name() %>
           </div>
           <div class="col-6 collapse-close">
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">

@@ -6,7 +6,7 @@ defmodule SqueezeWeb.HomeControllerTest do
     test "as a guest user", %{conn: conn} do
       conn = conn
       |> get("/")
-      assert html_response(conn, 200) =~ "Squeeze"
+      assert html_response(conn, 200) =~ "OpenPace"
     end
 
     test "as a complete user", %{conn: conn} do

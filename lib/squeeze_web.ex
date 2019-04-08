@@ -38,6 +38,8 @@ defmodule SqueezeWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      import Squeeze.CompanyHelper
+
       import SqueezeWeb.Router.Helpers
       import SqueezeWeb.FormHelpers
       import SqueezeWeb.FormatHelpers

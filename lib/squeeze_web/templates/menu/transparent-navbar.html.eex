@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
   <div class="container">
-    <%= link(brand_name(), to: "/", class: "navbar-brand text-white pt-0") %>
+    <%= link(company_name(), to: "/", class: "navbar-brand text-white pt-0") %>
 
     <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,7 @@
       <div class="navbar-collapse-header d-md-none">
         <div class="row">
           <div class="col-6 collapse-brand">
-            Squeeze
+            <%= company_name() %>
           </div>
           <div class="col-6 collapse-close">
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle sidenav">

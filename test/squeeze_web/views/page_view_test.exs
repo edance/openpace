@@ -12,7 +12,6 @@ defmodule SqueezeWeb.PageViewTest do
   end
 
   test "terms helper methods" do
-    assert PageView.company_name == "OpenPace"
     assert PageView.website_name == "OpenPace.co"
     assert PageView.website_url == "https://www.openpace.co"
   end

@@ -5,6 +5,8 @@ defmodule Squeeze.Email do
   Module for building emails
   """
 
+  alias Squeeze.CompanyHelper
+
   def reset_password_email(user, link) do
     base_email()
     |> to(user.email)
@@ -16,7 +18,7 @@ defmodule Squeeze.Email do
 
   defp base_email do
     new_email()
-    |> from("OpenPace Team <team@openpace.co>")
+    |> from(CompanyHelper.team_email())
     |> put_layout({SqueezeWeb.LayoutView, :email})
   end
 end
