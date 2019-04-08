@@ -27,7 +27,7 @@ defmodule Squeeze.Accounts do
       where: c.provider == ^provider and c.uid == ^uid
     query
     |> Repo.one()
-    |> Repo.preload([:user_prefs])
+    |> Repo.preload([:credentials, :user_prefs])
   end
   def get_user_by_credential(_), do: nil
 
@@ -65,7 +65,7 @@ defmodule Squeeze.Accounts do
   def get_user!(id) do
     User
     |> Repo.get!(id)
-    |> Repo.preload([:user_prefs])
+    |> Repo.preload([:credentials, :user_prefs])
   end
 
   @doc """
