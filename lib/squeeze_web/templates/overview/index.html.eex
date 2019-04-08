@@ -63,7 +63,7 @@
                 <%= gettext("Performance") %>
               </h6>
               <h2 class="mb-0">
-                <%= gettext("Recent Activites") %>
+                <%= gettext("Recent Runs") %>
               </h2>
             </div>
           </div>
