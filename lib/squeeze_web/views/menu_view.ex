@@ -3,8 +3,6 @@ defmodule SqueezeWeb.MenuView do
 
   alias Squeeze.Accounts.User
 
-  def brand_name, do: "OpenPace"
-
   def authenticated?(user) do
     User.onboarded?(user)
   end

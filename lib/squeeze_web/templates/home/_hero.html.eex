@@ -22,7 +22,7 @@
               <span><%= gettext("Run your Best Race") %></span>
             </h1>
             <p class="lead text-white">
-              <%= gettext("If you have struggled to set a new personal record, you can track your training progress toward your goal with Squeeze, so that you can have a breakthrough race day.") %>
+              <%= gettext("If you have struggled to set a new personal record, you can track your training progress toward your goal so that you can have a breakthrough race day.") %>
             </p>
             <div class="mt-4">
               <%= render "form.html", Map.put(assigns, :action, home_path(@conn, :subscribe)) %>

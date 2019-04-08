@@ -2,7 +2,7 @@
 <nav class="navbar navbar-top navbar-expand-md navbar-light" id="navbar-main">
   <div class="container">
     <!-- Brand -->
-    <%= link(brand_name(), to: "/", class: "navbar-brand pt-0") %>
+    <%= link(company_name(), to: "/", class: "navbar-brand pt-0") %>
 
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
