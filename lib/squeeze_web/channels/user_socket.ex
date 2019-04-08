@@ -4,7 +4,7 @@ defmodule SqueezeWeb.UserSocket do
   alias Guardian.Phoenix.Socket
 
   ## Channels
-  # channel "room:*", SqueezeWeb.RoomChannel
+  channel "notification:*", SqueezeWeb.NotificationChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket, timeout: 45_000

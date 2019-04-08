@@ -3,6 +3,7 @@ import './btn-spinner';
 import './calendar';
 import './countdown-timer';
 import './date-picker';
+import './dashboard-loading';
 import './duration-select';
 import './form';
 import './imperial-hidden-input';

@@ -1,0 +1,12 @@
+<div class="container-fluid mt-6 text-center">
+  <div class="dashboard-loading">
+    <h1>Setting up your dashboard...</h1>
+
+    <div class="d-inline-flex py-4">
+      <div class="loading-bar py-4 px-1 m-2 rounded bg-success"></div>
+      <div class="loading-bar py-4 px-1 m-2 rounded bg-danger"></div>
+      <div class="loading-bar py-4 px-1 m-2 rounded bg-warning"></div>
+      <div class="loading-bar py-4 px-1 m-2 rounded bg-primary"></div>
+    </div>
+  </div>
+</div>

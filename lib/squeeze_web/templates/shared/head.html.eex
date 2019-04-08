@@ -10,9 +10,9 @@
 
 <%= render("_gtm.html", assigns) %>
 
-<script>window.userToken = "<%= Guardian.Plug.current_token(@conn) %>";</script>
 <script>
- window.STRIPE_PUBLISHABLE_KEY =
-   '<%= Application.get_env(:stripity_stripe, :publishable_key) %>';
- window.MAPBOX_ACCESS_TOKEN = '<%= Application.get_env(:squeeze, :mapbox_access_token) %>';
+  window.userId = "<%= @conn.assigns.current_user.id %>";
+  window.userToken = "<%= Guardian.Plug.current_token(@conn) %>";
+  window.STRIPE_PUBLISHABLE_KEY = '<%= Application.get_env(:stripity_stripe, :publishable_key) %>';
+  window.MAPBOX_ACCESS_TOKEN = '<%= Application.get_env(:squeeze, :mapbox_access_token) %>';
 </script>
