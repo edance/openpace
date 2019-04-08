@@ -56,6 +56,7 @@ defmodule Squeeze.Stats do
     range = Date.range(List.first(dates), today)
     user
     |> Dashboard.list_activities(range)
+    |> Enum.filter(&(String.contains?(&1.type, "Run")))
     |> Enum.filter(&(&1.status == :complete))
     |> Enum.map(&map_activity(&1, user))
   end
