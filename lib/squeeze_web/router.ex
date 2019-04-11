@@ -81,7 +81,7 @@ defmodule SqueezeWeb.Router do
     resources "/payment", PaymentMethodController,
       only: [:index, :new, :create, :delete]
 
-    resources "/activities", ActivityController, only: [:index, :show]
+    resources "/activities", ActivityController
 
     resources "/plans", PlanController
   end

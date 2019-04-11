@@ -123,6 +123,22 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
+  Deletes an Activity.
+
+  ## Examples
+
+  iex> delete_activity(activity)
+  {:ok, %Activity{}}
+
+  iex> delete_activity(activity)
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_activity(%Activity{} = activity) do
+    Repo.delete(activity)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking activity changes.
 
   ## Examples

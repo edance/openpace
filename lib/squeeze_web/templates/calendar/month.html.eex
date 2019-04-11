@@ -30,3 +30,6 @@
     </div>
   </div>
 </div>
+
+
+<%= render SqueezeWeb.ModalView, "activity.html", assigns %>
