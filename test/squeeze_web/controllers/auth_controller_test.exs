@@ -37,7 +37,7 @@ defmodule SqueezeWeb.AuthControllerTest do
 
       Squeeze.Strava.MockAuth
       |> expect(:get_athlete!, fn(_) ->
-        %DetailedAthlete{firstname: "Evan", lastname: "Dancer", id: 12, profile: ""}
+        %DetailedAthlete{firstname: "Alice", lastname: "Bob", id: 12, profile: ""}
       end)
 
       conn = conn
@@ -54,7 +54,7 @@ defmodule SqueezeWeb.AuthControllerTest do
 
       Squeeze.Strava.MockAuth
       |> expect(:get_athlete!, fn(_) ->
-        %DetailedAthlete{email: "evan", id: 12}
+        %DetailedAthlete{email: "email", id: 12}
       end)
 
       conn = conn
