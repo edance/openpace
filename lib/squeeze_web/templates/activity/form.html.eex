@@ -1,17 +1,48 @@
 <%= form_for @changeset, @action, [as: :activity], fn f -> %>
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :type, class: "control-label" %>
-    <%= text_input f, :type, class: "form-control" %>
-    <%= error_tag f, :type %>
-  </div>
 
   <%= hidden_input f, :planned_date, class: "date" %>
 
-  <%= submit "Submit", class: "btn btn-primary" %>
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <%= text_input f, :name, class: "form-control", placeholder: "Name" %>
+        <%= error_tag f, :name %>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <%= text_input f, :type, class: "form-control", placeholder: "Type" %>
+        <%= error_tag f, :type %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <%= text_input f, :planned_distance, class: "form-control", placeholder: "Planned Distance" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <%= text_input f, :distance, class: "form-control", placeholder: "Actual Distance" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <%= text_input f, :planned_duration, class: "form-control", placeholder: "Planned Duration" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <%= text_input f, :duration, class: "form-control", placeholder: "Actual Duration" %>
+      </div>
+    </div>
+  </div>
+
+  <%= submit gettext("Save"), class: "btn btn-primary" %>
 <% end %>
