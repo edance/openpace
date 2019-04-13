@@ -8,5 +8,7 @@
     <%= error_tag f, :personal_record %>
   </div>
 
+  <%= link(gettext("Skip"), to: wizard_path(@conn, :step, "connect"), class: "btn btn-link") %>
+
   <%= submit gettext("Next"), class: "btn btn-primary" %>
 <% end %>
