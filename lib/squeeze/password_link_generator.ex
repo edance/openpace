@@ -16,7 +16,7 @@ defmodule Squeeze.PasswordLinkGenerator do
   def create_link(%User{id: id}, time \\ :erlang.system_time(:seconds)) do
     token = Base.url_encode64("#{time},#{id}")
     signature = sign_token(token)
-    build_url(%{token: token, signature: signature})
+    "#{base_url()}/reset-password?token=#{token}&signature=#{signature}"
   end
 
   def verify_link(token, signature) do
@@ -42,14 +42,12 @@ defmodule Squeeze.PasswordLinkGenerator do
     |> Base.url_encode64
   end
 
-  defp build_url(query) do
+  defp base_url do
     url = @config[:url]
     %URI{
       scheme: url[:scheme],
       host: url[:host],
-      port: url[:port],
-      path: "/reset-password",
-      query: URI.encode_query(query)
+      port: url[:port]
     }
     |> URI.to_string()
   end
