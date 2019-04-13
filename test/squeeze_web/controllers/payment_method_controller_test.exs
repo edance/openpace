@@ -23,13 +23,13 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
 
     test "redirects to billing#index when data is valid",
       %{conn: conn, user: user} do
-      attrs = %{"owner_name" => "Evan Dancer", "stripe_token" => "123456789"}
+      attrs = %{"owner_name" => "Alice Bob", "stripe_token" => "123456789"}
       conn = conn
       |> post(payment_method_path(conn, :create), payment_method: attrs)
 
       assert redirected_to(conn) == billing_path(conn, :index)
       payment_method = Billing.get_default_payment_method(user)
-      assert payment_method.owner_name == "Evan Dancer"
+      assert payment_method.owner_name == "Alice Bob"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
