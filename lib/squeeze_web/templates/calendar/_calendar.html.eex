@@ -8,7 +8,7 @@
       <%= render("_activity.html", activity: activity, conn: @conn) %>
     <% end %>
 
-    <div class="btn-calendar-activity">
+    <div class="btn-calendar-activity" data-date="<%= date %>">
       <i class="material-icons">
         add_circle_outline
       </i>
