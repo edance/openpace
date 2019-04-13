@@ -7,5 +7,11 @@
     <%= for activity <- Enum.filter(@activities, &(on_date?(@current_user, date, &1))) do %>
       <%= render("_activity.html", activity: activity, conn: @conn) %>
     <% end %>
+
+    <div class="btn-calendar-activity">
+      <i class="material-icons">
+        add_circle_outline
+      </i>
+    </div>
   <% end %>
 <% end %>

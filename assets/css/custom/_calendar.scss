@@ -20,3 +20,21 @@
     width: $width/7;
   }
 }
+
+.btn-calendar-activity {
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  cursor: pointer;
+  color: $gray-500;
+  background-color: $gray-200;
+  border-radius: $border-radius;
+  line-height: 16px;
+  padding: 0.35rem 0.375rem;
+}
+
+.calendar-date:hover {
+  .btn-calendar-activity {
+    opacity: 1;
+  }
+}
