@@ -1,4 +1,5 @@
 import './autocomplete-input';
+import './btn-calendar-activity';
 import './btn-spinner';
 import './calendar';
 import './countdown-timer';

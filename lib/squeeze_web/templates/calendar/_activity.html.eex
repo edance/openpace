@@ -1,6 +1,6 @@
 <% color = activity_color(@activity) %>
 
-<%= link to: activity_path(@conn, :show, @activity), class: "d-block text-left badge badge-#{color}" do %>
+<%= link to: activity_path(@conn, :show, @activity), class: "d-block text-left badge badge-#{color} mb-1" do %>
   <span class="badge badge-dot mr-4">
     <i class="<%= "bg-#{color}" %>"></i> <%= @activity.name %>
   </span>
