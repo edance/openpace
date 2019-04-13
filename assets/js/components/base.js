@@ -1,3 +1,4 @@
+import './activity-modal';
 import './autocomplete-input';
 import './btn-calendar-activity';
 import './btn-spinner';
