@@ -17,7 +17,8 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
       signature = sign_token(token)
       link = PasswordLinkGenerator.create_link(user, time)
 
-      assert link =~ URI.encode_query(%{token: token, signature: signature})
+      assert link =~ "token=#{token}"
+      assert link =~ "signature=#{signature}"
       assert link =~ "/reset-password"
     end
   end
