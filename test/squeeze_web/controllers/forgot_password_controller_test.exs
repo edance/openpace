@@ -19,5 +19,12 @@ defmodule SqueezeWeb.ForgotPasswordControllerTest do
 
       assert redirected_to(conn) == home_path(conn, :index)
     end
+
+    test "with invalid email shows alert", %{conn: conn} do
+      conn = conn
+      |> post(forgot_password_path(conn, :request), email: "madeup@email.com")
+
+      assert html_response(conn, 200) =~ "Email not found in our systems"
+    end
   end
 end
