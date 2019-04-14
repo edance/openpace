@@ -2,7 +2,7 @@
 <% error_msg = get_flash(@conn, :error) %>
 
 <%= if info_msg do %>
-  <div class="alert alert-info alert-dismissible fixed-top container mt-4 fade show" role="alert">
+  <div class="alert alert-info alert-dismissible fixed-top container mt-4 fade show" data-auto-hide="true" role="alert">
     <%= info_msg %>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -11,7 +11,7 @@
 <% end %>
 
 <%= if error_msg do %>
-  <div class="alert alert-warning alert-dismissible fixed-top container mt-4 fade show" role="alert">
+  <div class="alert alert-warning alert-dismissible fixed-top container mt-4 fade show" data-auto-hide="true" role="alert">
     <%= error_msg %>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

@@ -4,6 +4,7 @@ import './autocomplete-input';
 import './btn-calendar-activity';
 import './btn-spinner';
 import './calendar';
+import './cookie-warning';
 import './countdown-timer';
 import './date-picker';
 import './duration-select';
