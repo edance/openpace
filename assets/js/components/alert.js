@@ -10,7 +10,7 @@ function removeElement(alert) {
 
 document.addEventListener('turbolinks:load', function() {
   const timeout = setTimeout(() => {
-    const alert = u('.alert');
+    const alert = u('.alert[data-auto-hide="true"]');
     fadeOut(alert);
     setTimeout(() => removeElement(alert), 150);
   }, 4000);
