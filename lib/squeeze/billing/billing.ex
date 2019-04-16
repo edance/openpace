@@ -42,11 +42,27 @@ defmodule Squeeze.Billing do
           plan.provider_id,
           @trial_period_days
         )
-        %{customer_id: customer.id, subscription_id: subscription.id}
+        {:ok, end_at} = DateTime.from_unix(subscription.trial_end)
+        %{trial_end: end_at, customer_id: customer.id, subscription_id: subscription.id}
     end
     user
     |> User.payment_processor_changeset(attrs)
     |> Repo.update()
+  end
+
+  def update_subscription_status(%{id: id, status: status}) do
+    attrs = %{subscription_status: status}
+    case get_user_by_subscription_id(id) do
+      nil -> {:error}
+      user ->
+        user
+        |> User.payment_processor_changeset(attrs)
+        |> Repo.update()
+    end
+  end
+
+  defp get_user_by_subscription_id(subscription_id) do
+    Repo.get_by(User, subscription_id: subscription_id)
   end
 
   @doc """

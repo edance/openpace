@@ -28,6 +28,17 @@ defmodule Squeeze.UserFactory do
           }
         )
       end
+
+      def paid_user_factory do
+        struct!(
+          user_factory(),
+          %{
+            customer_id: "cus_12345",
+            subscription_id: "sub_12345",
+            subscription_status: :active
+          }
+        )
+      end
     end
   end
 end
