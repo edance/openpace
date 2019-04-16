@@ -10,6 +10,7 @@ defmodule Squeeze.Accounts.User do
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
 
   @registration_fields ~w(email encrypted_password)a
+  @payment_processor_fields ~w(customer_id subscription_id subscription_status trial_end)a
 
   schema "users" do
     field :first_name, :string
@@ -27,6 +28,8 @@ defmodule Squeeze.Accounts.User do
 
     field :customer_id, :string
     field :subscription_id, :string
+    field :subscription_status, SubscriptionStatusEnum
+    field :trial_end, :utc_datetime
 
     has_many :credentials, Credential
 
@@ -82,7 +85,7 @@ defmodule Squeeze.Accounts.User do
 
   def payment_processor_changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:customer_id, :subscription_id])
+    |> cast(attrs, @payment_processor_fields)
     |> validate_required([:customer_id])
   end
 

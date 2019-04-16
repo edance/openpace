@@ -6,6 +6,7 @@ defmodule SqueezeWeb.StripeWebhookController do
   """
 
   alias Plug.Conn
+  alias Squeeze.Billing
   alias Squeeze.Logger
   alias Stripe.Webhook
 
@@ -17,12 +18,21 @@ defmodule SqueezeWeb.StripeWebhookController do
     payload = conn.assigns[:raw_body]
     signature = get_stripe_signature(conn)
     case construct_event(payload, signature) do
-      {:ok, %Stripe.Event{} = _event} ->
+      {:ok, %Stripe.Event{} = event} ->
+        Task.start(fn -> process_event(event) end)
         render(conn, "success.json")
       {:error, _reason} ->
         render_bad_request(conn)
     end
   end
+
+  defp process_event(%{type: "customer.subscription.created"} = event) do
+    Billing.update_subscription_status(event.data.object)
+  end
+  defp process_event(%{type: "customer.subscription.updated"} = event) do
+    Billing.update_subscription_status(event.data.object)
+  end
+  defp process_event(_), do: nil
 
   defp get_stripe_signature(conn) do
     case Conn.get_req_header(conn, "stripe-signature") do

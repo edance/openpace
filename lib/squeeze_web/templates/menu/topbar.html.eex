@@ -3,8 +3,17 @@
   <div class="container-fluid">
     <%= @yield %>
 
+
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
+      <li class="nav-item">
+        <%= if in_trial?(@current_user) do %>
+          <%= link(to: billing_path(@conn, :index), class: "mb-0 text-sm text-white font-weight-bold") do %>
+            Trial expires <%= relative_time(@current_user.trial_end) %>
+          <% end %>
+        <% end %>
+      </li>
+
       <li class="nav-item dropdown">
         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">

@@ -1,6 +1,7 @@
 defmodule Squeeze.BillingTest do
   use Squeeze.DataCase
 
+  alias Squeeze.Accounts
   alias Squeeze.Billing
   alias Squeeze.Billing.PaymentMethod
 
@@ -20,6 +21,20 @@ defmodule Squeeze.BillingTest do
       method_2 = insert(:payment_method, user: user)
       default_method = Billing.get_default_payment_method(user)
       assert default_method.id == method_2.id
+    end
+  end
+
+  describe "update_payment_method/1" do
+    test "with a user updates the subscription_status" do
+      user = insert(:paid_user)
+      attrs = %{id: user.subscription_id, status: "unpaid"}
+      assert {:ok, _} = Billing.update_subscription_status(attrs)
+      assert Accounts.get_user!(user.id).subscription_status == :unpaid
+    end
+
+    test "without a user returns error" do
+      attrs = %{id: "12345", status: "active"}
+      assert {:error} = Billing.update_subscription_status(attrs)
     end
   end
 
