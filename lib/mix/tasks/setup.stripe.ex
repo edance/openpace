@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Setup.Stripe do
   test and live stripe environment keys.
 
   * Creates a product
-  * Creates a plan for $10.00 a month
+  * Creates a plan for $5.95 a month
 
   ## Examples
 

@@ -30,12 +30,12 @@ defmodule Squeeze.Setup.StripeSetup do
   end
 
   defp create_plan(%{id: product_id}) do
-    cost_in_dollars = 10
+    cost_in_cents = 595
     attrs = %{
       currency: "usd",
       interval: "month",
       product: product_id,
-      amount: cost_in_dollars * 100
+      amount: cost_in_cents
     }
     {:ok, plan} = @payment_processor.create_plan(attrs)
     plan
