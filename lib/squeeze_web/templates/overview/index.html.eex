@@ -123,3 +123,7 @@
     </div>
   </div>
 </div>
+
+<%= unless Enum.member?(~w(trialing active)a, @current_user.subscription_status) do %>
+  <%= render SqueezeWeb.ModalView, "past-due.html", assigns %>
+<% end %>

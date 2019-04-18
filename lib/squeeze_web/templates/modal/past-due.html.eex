@@ -1,0 +1,15 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true" data-backdrop="static" data-show="true">
+  <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+    <div class="modal-content bg-gradient-danger">
+      <div class="modal-body">
+        <div class="py-3 text-center">
+          <h4 class="heading mt-4">Your trial has ended</h4>
+          <p>Please head over to billing and update your payment information.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= link("Take me to billing", to: billing_path(@conn, :index), class: "btn btn-white") %>
+      </div>
+    </div>
+  </div>
+</div>
