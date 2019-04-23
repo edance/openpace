@@ -30,4 +30,8 @@ defmodule Squeeze.StripePaymentProcessor do
     }
     Subscription.create(params)
   end
+
+  def cancel_subscription(subscription_id) do
+    Subscription.delete(subscription_id)
+  end
 end

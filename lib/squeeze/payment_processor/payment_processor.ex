@@ -9,4 +9,5 @@ defmodule Squeeze.PaymentProcessor do
   @callback create_product(map()) :: {:ok, struct()} | {:error, struct()}
   @callback create_subscription(String.t, String.t, integer) ::
   {:ok, struct()} | {:error, struct()}
+  @callback cancel_subscription(String.t) :: {:ok, struct()} | {:error, struct()}
 end
