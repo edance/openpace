@@ -217,4 +217,12 @@ defmodule Squeeze.Billing do
     |> Plan.changeset(attrs)
     |> Repo.insert()
   end
+
+  def cancel_subscription(%User{subscription_id: subscription_id} = user) do
+    @payment_processor.cancel_subscription(subscription_id)
+    attrs = %{subscription_status: :canceled, subscription_id: nil}
+    user
+    |> User.payment_processor_changeset(attrs)
+    |> Repo.update()
+  end
 end
