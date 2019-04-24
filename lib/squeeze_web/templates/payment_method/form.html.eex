@@ -22,6 +22,6 @@
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit gettext("Add Card"), class: "btn btn-primary" %>
   </div>
 <% end %>

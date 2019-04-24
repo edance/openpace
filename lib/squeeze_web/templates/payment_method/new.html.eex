@@ -1,3 +1,34 @@
-<h2>New Payment Method</h2>
+<!-- Top navbar -->
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+    <%= gettext "Payment Method" %>
+  </span>
+<% end %>
 
-<%= render "form.html", Map.put(assigns, :action, payment_method_path(@conn, :create)) %>
+<!-- Header -->
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">
+                <%= gettext("Add Card Information") %>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <%= render "form.html", Map.put(assigns, :action, payment_method_path(@conn, :create)) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

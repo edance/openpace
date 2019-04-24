@@ -14,7 +14,7 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
   describe "#new" do
     test "renders form", %{conn: conn} do
       conn = get conn, payment_method_path(conn, :new)
-      assert html_response(conn, 200) =~ "New Payment Method"
+      assert html_response(conn, 200) =~ "Add Card Information"
     end
   end
 
@@ -36,7 +36,7 @@ defmodule SqueezeWeb.PaymentMethodControllerTest do
       attrs = %{stripe_id: nil}
       conn = conn
       |> post(payment_method_path(conn, :create), payment_method: attrs)
-      assert html_response(conn, 200) =~ "New Payment Method"
+      assert html_response(conn, 200) =~ "Add Card Information"
     end
   end
 
