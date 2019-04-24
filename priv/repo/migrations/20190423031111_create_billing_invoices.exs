@@ -6,7 +6,7 @@ defmodule Squeeze.Repo.Migrations.CreateBillingInvoices do
       add :name, :string
       add :amount_due, :integer
       add :status, :string
-      add :date, :date
+      add :due_date, :utc_datetime
       add :provider_id, :string
       add :user_id, references(:users, on_delete: :nothing)
 

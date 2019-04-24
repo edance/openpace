@@ -61,6 +61,7 @@ defmodule Squeeze.Mixfile do
       {:argon2_elixir, "~> 1.3"},
       {:geolix, "~> 0.18"},
       {:earmark, "~> 1.2"},
+      {:number, "~> 1.0.0"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},

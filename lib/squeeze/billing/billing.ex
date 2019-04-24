@@ -6,7 +6,7 @@ defmodule Squeeze.Billing do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Billing.PaymentMethod
+  alias Squeeze.Billing.{Invoice, PaymentMethod}
   alias Squeeze.Repo
 
   @payment_processor Application.get_env(:squeeze, :payment_processor)
@@ -59,6 +59,10 @@ defmodule Squeeze.Billing do
         |> User.payment_processor_changeset(attrs)
         |> Repo.update()
     end
+  end
+
+  def get_user_by_customer_id(customer_id) do
+    Repo.get_by(User, customer_id: customer_id)
   end
 
   defp get_user_by_subscription_id(subscription_id) do
@@ -223,6 +227,66 @@ defmodule Squeeze.Billing do
     attrs = %{subscription_status: :canceled, subscription_id: nil}
     user
     |> User.payment_processor_changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Returns the list of invoices by user.
+
+  ## Examples
+
+  iex> list_invoices(user)
+  [%Invoice{}, ...]
+
+  """
+  def list_invoices(%User{} = user) do
+    Invoice
+    |> by_user(user)
+    |> order_by([a], [desc: a.due_date])
+    |> Repo.all()
+  end
+
+  def create_or_update_invoice(%User{} = user, attrs \\ %{}) do
+    case Repo.get_by(Invoice, user_id: user.id, provider_id: attrs.provider_id) do
+      nil -> create_invoice(user, attrs)
+      invoice -> update_invoice(invoice, attrs)
+    end
+  end
+
+  @doc """
+  Creates a invoice.
+
+  ## Examples
+
+  iex> create_invoice(%User{}, %{field: value})
+  {:ok, %Invoice{}}
+
+  iex> create_invoice(%User{}, %{field: bad_value})
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def create_invoice(%User{} = user, attrs \\ %{}) do
+    %Invoice{}
+    |> Invoice.changeset(attrs)
+    |> Changeset.put_change(:user_id, user.id)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a invoice.
+
+  ## Examples
+
+  iex> update_invoice(invoice, %{field: new_value})
+  {:ok, %Invoice{}}
+
+  iex> update_invoice(invoice, %{field: bad_value})
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def update_invoice(%Invoice{} = invoice, attrs) do
+    invoice
+    |> Invoice.changeset(attrs)
     |> Repo.update()
   end
 end
