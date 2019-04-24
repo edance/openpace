@@ -5,8 +5,8 @@
 <div class="pl-lg-4">
   <%= if @payment_method do %>
     <%= @payment_method.owner_name %> <br/>
-    •••• •••• •••• <%= @payment_method.last4 %> <br/>
-    <%= @payment_method.exp_month %> / <%= @payment_method.exp_year %> <br/>
+    <%= card_number(assigns) %> <br/>
+    <%= card_exp(assigns) %> <br/>
 
     <%= link gettext("Update Payment Method"), to: payment_method_path(@conn, :new), class: "mt-4 btn btn-sm btn-primary" %>
   <% else %>
