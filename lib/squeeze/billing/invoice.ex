@@ -7,14 +7,15 @@ defmodule Squeeze.Billing.Invoice do
   import Ecto.Changeset
   alias Squeeze.Accounts.User
 
-  @required_fields ~w(name amount_due provider_id status)a
+  @required_fields ~w(name amount_due due_date provider_id status)a
   @optional_fields ~w()
 
-  schema "billing_plans" do
+  schema "billing_invoices" do
     field :name, :string
     field :amount_due, :integer
     field :provider_id, :string
     field :status, :string
+    field :due_date, :utc_datetime
 
     belongs_to :user, User
 

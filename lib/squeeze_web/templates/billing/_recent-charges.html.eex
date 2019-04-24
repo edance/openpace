@@ -1,0 +1,38 @@
+<h6 class="heading-small text-muted mt-6 mb-4">
+  <%= gettext("Recent Charges") %>
+</h6>
+
+<%= if length(@invoices) == 0 do %>
+  <div class="pl-lg-4">
+    <%= gettext("You have no recent charges.") %>
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">
+            <%= gettext("Date") %>
+          </th>
+          <th scope="col">
+            <%= gettext("Name") %>
+          </th>
+          <th scope="col">
+            <%= gettext("Amount") %>
+          </th>
+          <th scope="col">
+            <%= gettext("Status") %>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for invoice <- @invoices do %>
+          <td><%= due_date(@current_user, invoice.due_date) %></td>
+          <td><%= invoice.name %></td>
+          <td><%= format_currency(invoice.amount_due) %></td>
+          <td><%= invoice.status %></td>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

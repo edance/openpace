@@ -28,22 +28,9 @@
         <div class="card-body">
           <%= render "_status.html", assigns %>
 
-          <h6 class="heading-small text-muted mb-4">
-            <%= gettext("Payment Method") %>
-          </h6>
+          <%= render "_payment-method.html", assigns %>
 
-          <div class="pl-lg-4">
-            <%= if @payment_method do %>
-              <%= @payment_method.owner_name %> <br/>
-              •••• •••• •••• <%= @payment_method.last4 %> <br/>
-              <%= @payment_method.exp_month %> / <%= @payment_method.exp_year %> <br/>
-
-              <%= link gettext("Update Payment Method"), to: payment_method_path(@conn, :new), class: "mt-4 btn btn-sm btn-primary" %>
-            <% else %>
-              <p><%= gettext("We currently do not have a payment method on file.") %></p>
-              <%= link gettext("Add a Payment Method"), to: payment_method_path(@conn, :new), class: "btn btn-sm btn-primary" %>
-            <% end %>
-          </div>
+          <%= render "_recent-charges.html", assigns %>
         </div>
       </div>
     </div>
