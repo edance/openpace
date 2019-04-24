@@ -22,7 +22,7 @@ defmodule Squeeze.Setup.StripeSetup do
 
   defp create_product do
     attrs = %{
-      name: "Base Monthly Fee",
+      name: "Membership",
       type: "service"
     }
     {:ok, product} = @payment_processor.create_product(attrs)
