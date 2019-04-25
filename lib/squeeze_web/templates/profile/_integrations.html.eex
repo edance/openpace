@@ -1,9 +1,19 @@
 <div class="mb-2">
-  <%= if integration?("strava", assigns) do %>
-    <%= gettext("Connected to Strava") %>
-  <% else %>
-    <%= link to: auth_path(@conn, :request, "strava") do %>
-      <img alt="<%= gettext("Sign in with Strava") %>" src="/images/btn_strava.svg" />
+  <div class="mb-2">
+    <%= if integration?("strava", assigns) do %>
+      <%= gettext("Connected to %{provider}", provider: "Strava") %>
+    <% else %>
+      <%= link to: auth_path(@conn, :request, "strava") do %>
+        <img alt="<%= gettext("Sign in with Strava") %>" src="/images/btn_strava.svg" />
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+
+  <div class="mb-2">
+    <%= if integration?("fitbit", assigns) do %>
+      <%= gettext("Connected to %{provider}", provider: "Fitbit") %>
+    <% else %>
+      <%= link gettext("Connect to %{provider}", provider: "Fitbit"), to: auth_path(@conn, :request, "fitbit") %>
+    <% end %>
+  </div>
 </div>
