@@ -45,22 +45,5 @@ defmodule SqueezeWeb.AuthControllerTest do
 
       assert redirected_to(conn) == dashboard_path(conn, :index)
     end
-
-    test "with an invalid user redirects to home", %{conn: conn} do
-      Squeeze.Strava.MockAuth
-      |> expect(:get_token!, fn(_) ->
-        %{token: %{access_token: "access_token", refresh_token: "refresh_token"}}
-      end)
-
-      Squeeze.Strava.MockAuth
-      |> expect(:get_athlete!, fn(_) ->
-        %DetailedAthlete{email: "email", id: 12}
-      end)
-
-      conn = conn
-      |> post(auth_path(conn, :callback, "strava", code: "1234"))
-
-      assert redirected_to(conn) == home_path(conn, :index)
-    end
   end
 end
