@@ -1,7 +1,7 @@
 defmodule SqueezeWeb.WizardController do
   use SqueezeWeb, :controller
 
-  @steps ~w(distance race-date duration experience personal-record improvement connect)
+  @steps ~w(distance race-date duration experience personal-record improvement)
 
   alias Squeeze.Accounts
 
