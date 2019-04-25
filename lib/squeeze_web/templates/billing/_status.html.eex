@@ -25,8 +25,13 @@
 <%= if @current_user.subscription_status == :active do %>
   <div class="pl-lg-4">
     <p class="font-weight-normal mb-5">
-      <%= gettext("You are currently on the monthly plan at %{price} per month.", price: format_currency(@plan.amount)) %>
+      <%= if @plan do %>
+        <%= gettext("You are currently on the monthly plan at %{price} per month.", price: format_currency(@plan.amount)) %>
+      <% else %>
+        You are on the free version. Congrats!
+      <% end %>
       <br/>
+
       <%= if @payment_method do %>
         <%= link(gettext("Cancel or take a break?"), to: billing_path(@conn, :cancel),
           method: :put, data: [confirm: gettext("Are you sure you want to cancel?")]) %>
