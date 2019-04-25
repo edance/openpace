@@ -10,7 +10,7 @@
 <!-- Page content -->
 <div class="container-fluid mt--7">
   <div class="row">
-    <div class="col-xl-8 order-xl-1">
+    <div class="col-xl-8">
       <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
@@ -21,6 +21,22 @@
         </div>
         <div class="card-body">
           <%= render "_user-form.html", assigns %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0"><%= gettext("Sync Integrations") %></h3>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <%= render "_integrations.html", assigns %>
+          </div>
         </div>
       </div>
     </div>
