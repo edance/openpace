@@ -7,4 +7,4 @@
   <%= gettext "You have set your goals high! Let's build your training program." %>
 </p>
 
-<%= link gettext("Next"), to: wizard_path(@conn, :step, "connect"), class: "btn btn-primary" %>
+<%= link gettext("Next"), to: dashboard_path(@conn, :index), class: "btn btn-primary" %>
