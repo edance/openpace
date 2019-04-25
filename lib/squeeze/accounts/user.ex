@@ -47,7 +47,7 @@ defmodule Squeeze.Accounts.User do
   def improvement_amount(%User{user_prefs: prefs}) do
     duration = prefs.duration
     percent = abs(prefs.personal_record - prefs.duration) / duration * 100
-    "#{Decimal.round(Decimal.new(percent), 1)}%"
+    "#{Float.round(percent, 1)}%"
   end
 
   def onboarded?(%User{} = user) do
