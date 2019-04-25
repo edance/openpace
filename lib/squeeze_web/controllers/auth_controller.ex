@@ -14,25 +14,32 @@ defmodule SqueezeWeb.AuthController do
   def callback(conn, %{"provider" => provider, "code" => code}) do
     client = get_token!(provider, code)
     user_params = get_user!(provider, client)
+    email = user_params[:email]
     credential = user_params[:credential]
     current_user = conn.assigns.current_user
     cond do
       user = Accounts.get_user_by_credential(credential) ->
         sign_in_and_redirect(conn, user)
-      user = Accounts.get_user_by_email(user_params[:email]) ->
+      user = email && Accounts.get_user_by_email(email) ->
         Accounts.create_credential(user, credential)
-        sign_in_and_redirect(conn, user)
+        redirect_current_user(conn, provider)
       true ->
         case Accounts.update_user(current_user, user_params) do
           {:ok, user} ->
             Accounts.create_credential(user, credential)
-            sign_in_and_redirect(conn, user)
+            redirect_current_user(conn, provider)
           {:error, _} ->
             conn
-            |> put_flash(:info, "Authentication Failed")
+            |> put_flash(:error, "Authentication Failed")
             |> redirect(to: "/")
         end
     end
+  end
+
+  defp redirect_current_user(conn, provider) do
+    conn
+    |> put_flash(:info, "Connected to #{provider}")
+    |> redirect(to: dashboard_path(conn, :index))
   end
 
   defp sign_in_and_redirect(conn, user) do
@@ -64,10 +71,7 @@ defmodule SqueezeWeb.AuthController do
     %{access_token: access_token, refresh_token: refresh_token} = client.token
     user = @strava_auth.get_athlete!(client)
     credential = %{provider: "strava", uid: "#{user.id}", access_token: access_token, refresh_token: refresh_token}
-    user
-    |> Map.from_struct
-    |> Map.merge(%{first_name: user.firstname, last_name: user.lastname, avatar: user.profile})
-    |> Map.merge(%{credential: credential})
+    %{credential: credential}
   end
 
   defp get_user!("google", client), do: Google.get_user!(client)
