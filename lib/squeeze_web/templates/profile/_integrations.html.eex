@@ -1,0 +1,5 @@
+<div class="mb-2">
+  <%= link to: auth_path(@conn, :request, "strava") do %>
+    <img alt="<%= gettext("Sign in with Strava") %>" src="/images/btn_strava.svg" />
+  <% end %>
+</div>
