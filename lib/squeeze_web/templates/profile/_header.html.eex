@@ -1,0 +1,22 @@
+<!-- Header -->
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-10 col-md-10">
+        <h1 class="display-2 text-white">
+          <%= if @current_user.first_name do %>
+            <%= gettext("Hello, %{name}!", name: @current_user.first_name) %>
+          <% else %>
+            <%= gettext("Hello!") %>
+          <% end %>
+        </h1>
+        <p class="text-white mt-0 mb-5">
+          <%= gettext("This is your profile page. You can update your preferences and manage your account here.") %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

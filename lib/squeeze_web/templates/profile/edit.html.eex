@@ -5,22 +5,7 @@
   </span>
 <% end %>
 
-<!-- Header -->
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center">
-  <!-- Mask -->
-  <span class="mask bg-gradient-default opacity-8"></span>
-  <!-- Header container -->
-  <div class="container-fluid d-flex align-items-center">
-    <div class="row">
-      <div class="col-lg-10 col-md-10">
-        <h1 class="display-2 text-white"><%= gettext("Hello, %{name}!", name: @current_user.first_name) %></h1>
-        <p class="text-white mt-0 mb-5">
-          <%= gettext("This is your profile page. You can update your preferences and manage your account here.") %>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render "_header.html", assigns %>
 
 <!-- Page content -->
 <div class="container-fluid mt--7">
@@ -35,111 +20,7 @@
           </div>
         </div>
         <div class="card-body">
-          <%= form_for @changeset, profile_path(@conn, :update), fn f -> %>
-            <h6 class="heading-small text-muted mb-4"><%= gettext("User information") %></h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group focused">
-                    <%= label(f, :first_name, class: "form-control-label") %>
-                    <%= input(f, :first_name, class: "form-control form-control-alternative", placeholder: gettext("First name")) %>
-                    <%= error_tag(f, :first_name) %>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group focused">
-                    <%= label(f, :last_name, class: "form-control-label") %>
-                    <%= input(f, :last_name, class: "form-control form-control-alternative", placeholder: gettext("Last name")) %>
-                    <%= error_tag(f, :first_name) %>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group focused">
-                    <%= label(f, :city, class: "form-control-label") %>
-                    <%= input(f, :city, class: "form-control form-control-alternative", placeholder: gettext("City")) %>
-                    <%= error_tag(f, :first_name) %>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group focused">
-                    <%= label(f, :country, class: "form-control-label") %>
-                    <%= input(f, :country, class: "form-control form-control-alternative", placeholder: gettext("Country")) %>
-                    <%= error_tag(f, :country) %>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr class="my-4">
-
-            <!-- Address -->
-            <h6 class="heading-small text-muted mb-4"><%= gettext("Race information") %></h6>
-
-            <%= inputs_for f, :user_prefs, fn p -> %>
-              <div class="pl-lg-4">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group focused">
-                      <%= label(f, :distance, class: "form-control-label") %>
-                      <%= autocomplete(p, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
-                      <%= error_tag(f, :distance) %>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group focused">
-                      <%= label(f, :race_date, class: "form-control-label") %>
-                      <%= input p, :race_date, class: "date-picker form-control form-control-alternative" %>
-                      <%= error_tag(f, :race_date) %>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group focused">
-                      <%= label(f, :duration, class: "form-control-label") %>
-                      <%= duration_select p, :duration, class: "form-control form-control-alternative" %>
-                      <%= error_tag(f, :duration) %>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group focused">
-                      <%= label(f, :personal_record, class: "form-control-label") %>
-                      <%= duration_select p, :personal_record, class: "form-control form-control-alternative" %>
-                      <%= error_tag(f, :personal_record) %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-
-            <hr class="my-4">
-
-            <%= inputs_for f, :user_prefs, fn p -> %>
-              <h6 class="heading-small text-muted mb-4">Account Settings</h6>
-              <div class="pl-lg-4">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group focused">
-                      <%= label(p, :timezone, class: "form-control-label") %>
-                      <%= select p, :timezone, Tzdata.zone_list(), class: "form-control form-control-alternative" %>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group focused">
-                      <%= label(p, :imperial, "Units & Measurements", class: "form-control-label") %>
-                      <%= select p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true], class: "form-control form-control-alternative" %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-
-            <button class="btn btn-primary" type="submit">Save</button>
-          <% end %>
+          <%= render "_user-form.html", assigns %>
         </div>
       </div>
     </div>
