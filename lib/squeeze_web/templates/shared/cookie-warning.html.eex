@@ -1,4 +1,4 @@
-<div class="cookie-warning alert alert-info alert-dismissible fixed-bottom container fade" role="alert">
+<div class="cookie-warning alert alert-info alert-dismissible fixed-bottom container fade d-none" role="alert">
   <%= gettext("We use cookies to help make %{name} better. By visiting this site, you agree to our", name: company_name()) %>
   <%= link(gettext("cookie policy."), to: page_path(@conn, :privacy_policy), class: "text-white", target: "_blank") %>
 
