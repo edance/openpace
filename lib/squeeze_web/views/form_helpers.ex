@@ -20,7 +20,7 @@ defmodule SqueezeWeb.FormHelpers do
     list_name = "autocomplete-#{:rand.uniform(1000)}"
     option_html = options
     |> Enum.map(fn({k, v}) -> "<option data-value='#{v}'>#{k}</option>" end)
-    class_list = "#{opts[:class]} autocomplete"
+    class_list = "#{opts[:class]} awesomplete autocomplete"
     opts = Keyword.merge(opts, [class: class_list])
 
     [

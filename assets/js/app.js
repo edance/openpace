@@ -6,6 +6,7 @@ import '../css/app.scss';
 // Import dependencies
 import 'phoenix_html';
 import 'bootstrap';
+import 'awesomplete';
 
 // Import base components
 import './components/base';
