@@ -45,19 +45,9 @@ defmodule Squeeze.OAuth2.Fitbit do
     |> AuthCode.get_token(params, headers)
   end
 
-  def get_user!(client) do
-    %{body: body} = Client.get!(client, "/1/user/-/profile.json")
-    user = body["user"]
-    token = client.token
-    %{
-      first_name: user["firstName"],
-      last_name: user["lastName"],
-      credential: %{
-        access_token: token.access_token,
-        refresh_token: token.refresh_token,
-        provider: "fitbit",
-        uid: token.other_params["user_id"]
-      }
-    }
+  def get_credential!(%{token: token}) do
+    token
+    |> Map.take([:access_token, :refresh_token])
+    |> Map.merge(%{provider: "fitbit", uid: token.other_params["user_id"]})
   end
 end

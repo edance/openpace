@@ -22,12 +22,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :strava,
-  client_id: System.get_env("STRAVA_CLIENT_ID"),
-  client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "http://localhost:4000/auth/strava/callback",
-  webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
-
 config :squeeze, Squeeze.Mailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: System.get_env("SENDGRID_API_KEY")
@@ -59,8 +53,14 @@ config :squeeze, Squeeze.OAuth2.Google,
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-  redirect_uri: "http://localhost:4000/auth/fitbit/callback",
+  redirect_uri: "http://localhost:4000/integration/fitbit/callback",
   webhook_challenge: {:system, "FITBIT_WEBHOOK_TOKEN"}
+
+config :strava,
+  client_id: System.get_env("STRAVA_CLIENT_ID"),
+  client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
+  redirect_uri: "http://localhost:4000/integration/strava/callback",
+  webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 config :geolix,
   databases: [
