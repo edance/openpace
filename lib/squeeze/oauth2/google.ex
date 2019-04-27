@@ -46,7 +46,7 @@ defmodule Squeeze.OAuth2.Google do
 
   def get_user!(client) do
     %{body: user} =
-      Client.get!(client, "https://www.googleapis.com/userinfo/v2/me")
+      Client.get!(client, "https://www.googleapis.com/oauth2/v3/userinfo")
     %{
       avatar: user["picture"],
       email: user["email"],
@@ -55,7 +55,7 @@ defmodule Squeeze.OAuth2.Google do
       credential: %{
         access_token: client.token.access_token,
         provider: "google",
-        uid: user["id"]
+        uid: user["sub"]
       }
     }
   end
