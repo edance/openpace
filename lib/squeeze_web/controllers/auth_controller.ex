@@ -12,31 +12,32 @@ defmodule SqueezeWeb.AuthController do
   def callback(conn, %{"provider" => provider, "code" => code}) do
     client = get_token!(provider, code)
     user_params = get_user!(provider, client)
-    email = user_params[:email]
     credential = user_params[:credential]
-    current_user = conn.assigns.current_user
     cond do
       user = Accounts.get_user_by_credential(credential) ->
         sign_in_and_redirect(conn, user)
-      user = email && Accounts.get_user_by_email(email) ->
-        Accounts.create_credential(user, credential)
-        redirect_current_user(conn, provider)
+      user = Accounts.get_user_by_email(user_params[:email]) ->
+        sign_in_and_redirect(conn, user)
       true ->
-        case Accounts.update_user(current_user, user_params) do
-          {:ok, user} ->
-            Accounts.create_credential(user, credential)
-            redirect_current_user(conn, provider)
-          {:error, _} ->
-            conn
-            |> put_flash(:error, "Authentication Failed")
-            |> redirect(to: "/")
-        end
+        update_current_user(conn, user_params)
     end
   end
 
-  defp redirect_current_user(conn, provider) do
+  defp update_current_user(conn, user_params) do
+    user = conn.assigns.current_user
+    with {:ok, user} <- Accounts.update_user(user, user_params),
+         {:ok, _} <- Accounts.create_credential(user, user_params[:credential]) do
+      redirect_current_user(conn)
+    else
+      _err ->
+        conn
+        |> put_flash(:error, "Could not be authenticated")
+        |> redirect(to: dashboard_path(conn, :index))
+    end
+  end
+
+  defp redirect_current_user(conn) do
     conn
-    |> put_flash(:info, "Connected to #{provider}")
     |> redirect(to: dashboard_path(conn, :index))
   end
 
@@ -46,7 +47,7 @@ defmodule SqueezeWeb.AuthController do
     |> redirect(to: dashboard_path(conn, :index))
   end
 
-  defp authorize_url!("google"), do: Google.authorize_url!(scope: "email")
+  defp authorize_url!("google"), do: Google.authorize_url!(scope: "profile openid email")
 
   defp get_token!("google", code), do: Google.get_token!(code: code)
 
