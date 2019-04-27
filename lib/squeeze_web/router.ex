@@ -56,6 +56,14 @@ defmodule SqueezeWeb.Router do
     put "/reset-password", ResetPasswordController, :reset
   end
 
+  scope "/integration", SqueezeWeb do
+    pipe_through :browser # Use the default browser stack
+
+    get "/:provider", IntegrationController, :request
+    get "/:provider/callback", IntegrationController, :callback
+    post "/:provider/callback", IntegrationController, :callback
+  end
+
   scope "/auth", SqueezeWeb do
     pipe_through :browser # Use the default browser stack
 

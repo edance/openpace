@@ -34,12 +34,6 @@ config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
-config :strava,
-  client_id: System.get_env("STRAVA_CLIENT_ID"),
-  client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/auth/strava/callback",
-  webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
-
 config :squeeze, Squeeze.OAuth2.Google,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
@@ -48,8 +42,14 @@ config :squeeze, Squeeze.OAuth2.Google,
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/auth/fitbit/callback",
+  redirect_uri: "#{System.get_env("HOST_URL")}/integration/fitbit/callback",
   webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
+
+config :strava,
+  client_id: System.get_env("STRAVA_CLIENT_ID"),
+  client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
+  redirect_uri: "#{System.get_env("HOST_URL")}/integration/strava/callback",
+  webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 # ## SSL Support
 #
