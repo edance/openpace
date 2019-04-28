@@ -35,18 +35,20 @@ defmodule Squeeze.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.4"},
+      {:phoenix, "~> 1.4.0"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:ecto_sql, "~> 3.0"},
+      {:phoenix_ecto, "~> 4.0"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:jason, "~> 1.0"},
       {:phoenix_active_link, "~> 0.2.1"},
       {:turbolinks, "~> 0.3.4"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
       {:ordinal, "~> 0.1.0"},
-      {:plug_cowboy, "~> 1.0"},
+      {:plug_cowboy, "~> 2.0"},
+      {:plug, "~> 1.7"},
       {:strava, git: "https://github.com/slashdotdash/strava.git", branch: "master"},
       {:timex, "~> 3.3"},
       {:guardian, "~> 1.0"},
@@ -66,7 +68,7 @@ defmodule Squeeze.Mixfile do
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.1", only: :test},
+      {:ex_machina, "~> 2.3"},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.9", only: :test},
       {:mox, "~> 0.4", only: :test}
