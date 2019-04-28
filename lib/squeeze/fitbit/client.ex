@@ -10,6 +10,7 @@ defmodule Squeeze.Fitbit.Client do
   adapter(Tesla.Adapter.Hackney)
 
   plug(Tesla.Middleware.BaseUrl, "https://api.fitbit.com")
+  plug Tesla.Middleware.JSON
 
   @spec new(String.t()) :: Tesla.Env.client()
   def new(access_token, opts \\ []) when is_binary(access_token) do
@@ -19,17 +20,14 @@ defmodule Squeeze.Fitbit.Client do
     ])
   end
 
+  def get_daily_activity_summary(client, date) do
+    url = "/1/user/-/activities/date/#{date}.json"
+    client
+    |> get(url)
+  end
+
   @doc false
   def set_authorization_header(%Tesla.Env{} = env, access_token) do
     %Tesla.Env{env | headers: [{"Authorization", "Bearer #{access_token}"}]}
   end
-
-  # defp request_opts do
-  #   [
-  #     adapter: [
-  #       connect_timeout: Strava.connect_timeout(),
-  #       recv_timeout: Strava.recv_timeout()
-  #     ]
-  #   ]
-  # end
 end
