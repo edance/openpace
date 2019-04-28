@@ -54,7 +54,7 @@ config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
   redirect_uri: "http://localhost:4000/integration/fitbit/callback",
-  webhook_challenge: {:system, "FITBIT_WEBHOOK_TOKEN"}
+  webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
 
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),

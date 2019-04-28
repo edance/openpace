@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.IntegrationController do
   use SqueezeWeb, :controller
 
+  alias OAuth2.Client
   alias Squeeze.Accounts
   alias Squeeze.OAuth2.{Fitbit}
 
@@ -14,7 +15,9 @@ defmodule SqueezeWeb.IntegrationController do
     client = get_token!(provider, code)
     credential_params = get_credential!(provider, client)
     case Accounts.create_credential(conn.assigns.current_user, credential_params) do
-      {:ok, _} -> redirect_current_user(conn, provider)
+      {:ok, _} ->
+        setup_integration(conn, client, provider)
+        redirect_current_user(conn, provider)
       {:error, _} ->
         conn
         |> put_flash(:error, "Authentication failed for #{provider}")
@@ -27,6 +30,13 @@ defmodule SqueezeWeb.IntegrationController do
     |> put_flash(:info, "Connected to #{provider}")
     |> redirect(to: dashboard_path(conn, :index))
   end
+
+  defp setup_integration(conn, client, "fitbit") do
+    user = conn.assigns.current_user
+    url = "/1/user/-/activities/apiSubscriptions/#{user.id}.json"
+    Client.post!(client, url)
+  end
+  defp setup_integration(_, _, _), do: nil
 
   defp authorize_url!("strava") do
     @strava_auth.authorize_url!(scope: "read,activity:read_all")
