@@ -6,6 +6,8 @@ defmodule Squeeze.Fitbit.Middleware.RefreshToken do
 
   @behaviour Tesla.Middleware
 
+  alias Squeeze.Fitbit.{Auth, Client}
+
   def call(env, next, opts) do
     refresh_token = Keyword.get(opts, :refresh_token)
 
@@ -21,13 +23,13 @@ defmodule Squeeze.Fitbit.Middleware.RefreshToken do
 
   # Attempt to refresh the access token using provided refresh token
   defp attempt_refresh_token(env, refresh_token, opts) when is_binary(refresh_token) do
-    case Squeeze.Fitbit.Auth.get_token(grant_type: "refresh_token", refresh_token: refresh_token) do
+    case Auth.get_token(grant_type: "refresh_token", refresh_token: refresh_token) do
       {:ok, %OAuth2.Client{} = client} ->
         %OAuth2.Client{token: %OAuth2.AccessToken{access_token: access_token}} = client
 
         token_refreshed(client, opts)
 
-        env = Squeeze.Fitbit.Client.set_authorization_header(env, access_token)
+        env = Client.set_authorization_header(env, access_token)
 
         {:ok, env}
 

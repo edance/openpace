@@ -12,7 +12,7 @@ before_script:
 env:
 - MIX_ENV=test
 script:
-- mix credo --strict
+- mix credo
 - mix coveralls.travis
 notifications:
   email: false
