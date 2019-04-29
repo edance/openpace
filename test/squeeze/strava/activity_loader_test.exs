@@ -44,22 +44,6 @@ defmodule Squeeze.ActivityLoaderTest do
     end
   end
 
-  describe "get_closest_activity/2" do
-    setup [:create_user, :build_strava_activity, :create_activity]
-
-    test "returns the first if only one activity planned for date",
-      %{user: user, run_activity: strava_activity, activity: activity} do
-      assert ActivityLoader.get_closest_activity(user, strava_activity).id == activity.id
-    end
-
-    test "returns the closest activity on that date",
-      %{user: user, activity: activity, run_activity: strava_activity} do
-      create_activity(%{user: user, planned_distance: 6000.0})
-      create_activity(%{user: user, planned_distance: 4000.0})
-      assert ActivityLoader.get_closest_activity(user, strava_activity).id == activity.id
-    end
-  end
-
   defp build_strava_activity(_) do
     {:ok,
      swim_activity: build(:detailed_activity, type: "Swim"),
@@ -85,11 +69,5 @@ defmodule Squeeze.ActivityLoaderTest do
   def create_user(_) do
     user = insert(:user)
     {:ok, user: user}
-  end
-
-  defp create_activity(%{user: user} = attrs) do
-    distance = attrs[:planned_distance] || 5000.0
-    activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
-    {:ok, activity: activity}
   end
 end

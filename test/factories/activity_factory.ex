@@ -28,6 +28,7 @@ defmodule Squeeze.ActivityFactory do
           planned_date: Date.forward(100),
           planned_distance: miles * 1609.0,
           planned_duration: pace * miles * 60,
+          status: :pending,
           name: "#{miles} mi",
           type: "Run",
           user: build(:user)

@@ -3,37 +3,27 @@ defmodule Squeeze.Strava.ActivityLoader do
   Loads data from strava and updates the activity
   """
 
-  alias Squeeze.Accounts.{Credential, User}
+  alias Squeeze.Accounts.{Credential}
+  alias Squeeze.ActivityMatcher
   alias Squeeze.Dashboard
-  alias Squeeze.Dashboard.Activity
   alias Squeeze.Strava.Client
-  alias Squeeze.TimeHelper
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
 
-  def update_or_create_activity(%Credential{} = credential, %{type: _type} = strava_activity) do
-    user = credential.user
-    case get_closest_activity(user, strava_activity) do
-      nil -> Dashboard.create_activity(user, map_strava_activity(strava_activity))
-      activity ->
-        activity
-        |> Dashboard.update_activity(map_strava_activity(activity, strava_activity))
-    end
-  end
-  def update_or_create_activity(%Credential{} = credential, strava_activity_id) do
+  def update_or_create_activity(%Credential{} = credential, strava_activity_id)
+  when is_binary(strava_activity_id) or is_integer(strava_activity_id) do
     {:ok, strava_activity} = fetch_strava_activity(credential, strava_activity_id)
     update_or_create_activity(credential, strava_activity)
   end
 
-  def get_closest_activity(%User{} = user, strava_activity) do
-    date = TimeHelper.to_date(user, strava_activity.start_date)
-    activities = Dashboard.get_pending_activities_by_date(user, date)
-    case length(activities) do
-      x when x <= 1 -> List.first(activities)
-      _ ->
-        activities
-        |> Enum.sort(fn(a, b) -> diff(a, strava_activity) < diff(b, strava_activity) end)
-        |> List.first()
+  def update_or_create_activity(%Credential{} = credential, strava_activity) do
+    user = credential.user
+    activity = map_strava_activity(strava_activity)
+    case ActivityMatcher.get_closest_activity(user, activity) do
+      nil -> Dashboard.create_activity(user, activity)
+      existing_activity ->
+        activity = %{activity | name: existing_activity.name}
+        Dashboard.update_activity(existing_activity, activity)
     end
   end
 
@@ -41,16 +31,6 @@ defmodule Squeeze.Strava.ActivityLoader do
     credential
     |> Client.new
     |> @strava_activities.get_activity_by_id(activity_id)
-  end
-
-  def diff(%Activity{planned_distance: planned_distance}, %{distance: distance})
-  when is_number(planned_distance) and planned_distance > 0 do
-    abs(planned_distance - distance) / planned_distance
-  end
-  def diff(_, _), do: 1
-
-  defp map_strava_activity(activity, strava_activity)  do
-    %{map_strava_activity(strava_activity) | name: activity.name}
   end
 
   defp map_strava_activity(strava_activity) do

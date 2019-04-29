@@ -4,11 +4,19 @@ defmodule Squeeze.Fitbit.ActivityLoader do
   """
 
   alias Squeeze.Accounts.Credential
+  alias Squeeze.ActivityMatcher
   alias Squeeze.Dashboard
 
-  def update_or_create_activity(%Credential{} = credential, activity) do
+  def update_or_create_activity(%Credential{} = credential, fitbit_activity) do
     user = credential.user
-    Dashboard.create_activity(user, map_activity(user, activity))
+    activity = map_activity(user, fitbit_activity)
+
+    case ActivityMatcher.get_closest_activity(user, activity) do
+      nil -> Dashboard.create_activity(user, activity)
+      existing_activity ->
+        activity = %{activity | name: existing_activity.name}
+        Dashboard.update_activity(existing_activity, activity)
+    end
   end
 
   defp map_activity(user, activity) do
