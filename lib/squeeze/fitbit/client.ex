@@ -26,6 +26,12 @@ defmodule Squeeze.Fitbit.Client do
     |> get(url)
   end
 
+  def get_activity_tcx(client, log_id) do
+    url = "/1/user/-/activities/#{log_id}.tcx"
+    client
+    |> get(url)
+  end
+
   @doc false
   def set_authorization_header(%Tesla.Env{} = env, access_token) do
     %Tesla.Env{env | headers: [{"Authorization", "Bearer #{access_token}"}]}
