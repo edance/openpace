@@ -6,6 +6,7 @@ defmodule SqueezeWeb.FitbitWebhookController do
   """
 
   alias Squeeze.Accounts
+  alias Squeeze.Fitbit.ActivityLoader
   alias Squeeze.Fitbit.Client
   alias Squeeze.Logger
 
@@ -37,18 +38,26 @@ defmodule SqueezeWeb.FitbitWebhookController do
   }
   """
   def webhook(conn, %{"_json" => events}) do
-    events
-    |> Enum.each(fn(event) -> process_event(event) end)
+    Task.start(fn -> process_events(events) end)
     render(conn, "success.json")
   end
 
   def webhook(conn, _), do: render(conn, "success.json")
+
+  defp process_events(events) do
+    Enum.each(events, &process_event(&1))
+  end
 
   defp process_event(event) do
     credential = Accounts.get_credential("fitbit", event["ownerId"])
     client = Client.new(credential)
     {:ok, response} = Client.get_daily_activity_summary(client, event["date"])
     response.body["activities"]
+    |> Enum.each(&create_activity(credential, &1))
+  end
+
+  defp create_activity(credential, activity) do
+    ActivityLoader.update_or_create_activity(credential, activity)
   end
 
   defp log_webhook_event(conn, _) do
