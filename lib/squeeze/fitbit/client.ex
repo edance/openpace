@@ -5,6 +5,8 @@ defmodule Squeeze.Fitbit.Client do
 
   use Tesla
 
+  alias Squeeze.Accounts
+  alias Squeeze.Accounts.Credential
   alias Squeeze.Fitbit.Middleware
 
   adapter(Tesla.Adapter.Hackney)
@@ -12,7 +14,14 @@ defmodule Squeeze.Fitbit.Client do
   plug(Tesla.Middleware.BaseUrl, "https://api.fitbit.com")
   plug Tesla.Middleware.JSON
 
-  @spec new(String.t()) :: Tesla.Env.client()
+  def new(%Credential{} = credential) do
+    new(credential.access_token,
+      refresh_token: credential.refresh_token,
+      token_refreshed: &Accounts.update_credential(credential,
+        Map.from_struct(&1.token))
+    )
+  end
+
   def new(access_token, opts \\ []) when is_binary(access_token) do
     Tesla.client([
       {Tesla.Middleware.Headers, [{"Authorization", "Bearer #{access_token}"}]},
