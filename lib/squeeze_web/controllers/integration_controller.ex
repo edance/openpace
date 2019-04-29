@@ -3,6 +3,7 @@ defmodule SqueezeWeb.IntegrationController do
 
   alias OAuth2.Client
   alias Squeeze.Accounts
+  alias Squeeze.Fitbit.Auth
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
@@ -42,7 +43,7 @@ defmodule SqueezeWeb.IntegrationController do
   end
 
   defp authorize_url!("fitbit") do
-    Squeeze.Fitbit.Auth.authorize_url!(scope: "activity location profile")
+    Auth.authorize_url!(scope: "activity location profile")
   end
 
   defp get_token!("strava", code) do
@@ -50,7 +51,7 @@ defmodule SqueezeWeb.IntegrationController do
   end
 
   defp get_token!("fitbit", code) do
-    Squeeze.Fitbit.Auth.get_token!(code: code, grant_type: "authorization_code")
+    Auth.get_token!(code: code, grant_type: "authorization_code")
   end
 
   defp get_credential!("strava", %{token: token} = client) do
@@ -60,5 +61,5 @@ defmodule SqueezeWeb.IntegrationController do
     |> Map.merge(%{provider: "strava", uid: "#{user.id}"})
   end
 
-  defp get_credential!("fitbit", client), do: Squeeze.Fitbit.Auth.get_credential!(client)
+  defp get_credential!("fitbit", client), do: Auth.get_credential!(client)
 end
