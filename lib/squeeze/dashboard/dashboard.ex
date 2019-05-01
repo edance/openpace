@@ -6,7 +6,7 @@ defmodule Squeeze.Dashboard do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, Trackpoint}
+  alias Squeeze.Dashboard.{Activity, Trackpoint, TrackpointSet}
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
 
@@ -82,7 +82,7 @@ defmodule Squeeze.Dashboard do
     Activity
     |> by_user(user)
     |> Repo.get!(id)
-    |> Repo.preload([:user, :trackpoints])
+    |> Repo.preload([:user])
   end
 
   @doc """
@@ -149,6 +149,16 @@ defmodule Squeeze.Dashboard do
   """
   def change_activity(%Activity{} = activity) do
     Activity.changeset(activity, %{})
+  end
+
+  def create_trackpoint_set(%Activity{} = activity, trackpoints) do
+    {:ok, trackpoint_set} = %TrackpointSet{}
+    |> Changeset.put_change(:activity_id, activity.id)
+    |> Repo.insert()
+    trackpoints = trackpoints
+    |> Enum.map(&Map.merge(&1, %{trackpoint_set_id: trackpoint_set.id}))
+
+    Repo.insert_all(Trackpoint, trackpoints)
   end
 
   def create_trackpoint(%Activity{} = activity, attrs) do

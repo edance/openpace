@@ -6,10 +6,10 @@ defmodule Squeeze.Dashboard.Trackpoint do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Squeeze.Dashboard.{Activity}
+  alias Squeeze.Dashboard.{TrackpointSet}
 
   @required_fields ~w()a
-  @optional_fields ~w()a
+  @optional_fields ~w(altitude cadence coordinates distance heartrate time velocity)a
 
   schema "trackpoints" do
     field :altitude, :float
@@ -20,7 +20,7 @@ defmodule Squeeze.Dashboard.Trackpoint do
     field :time, :integer
     field :velocity, :float
 
-    belongs_to :activity, Activity
+    belongs_to :trackpoint_set, TrackpointSet
   end
 
   @doc false
