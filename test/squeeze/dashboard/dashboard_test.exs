@@ -10,7 +10,9 @@ defmodule Squeeze.DashboardTest do
     test "includes only the users activities" do
       now = Timex.now
       [activity, _] = insert_pair(:activity, start_at: now)
-      today = Timex.to_date(now)
+      user = activity.user
+      today = TimeHelper.to_date(user, now)
+      insert_pair(:planned_activity, planned_date: today)
       range = Date.range(Timex.shift(today, days: -1), Timex.shift(today, days: 1))
       activities = Dashboard.list_activities(activity.user, range)
 
