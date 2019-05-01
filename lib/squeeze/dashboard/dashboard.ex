@@ -4,7 +4,7 @@ defmodule Squeeze.Dashboard do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.Changeset
+  alias Ecto.{Changeset, Multi}
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, Trackpoint, TrackpointSet}
   alias Squeeze.Repo
@@ -152,13 +152,15 @@ defmodule Squeeze.Dashboard do
   end
 
   def create_trackpoint_set(%Activity{} = activity, trackpoints) do
-    {:ok, trackpoint_set} = %TrackpointSet{}
-    |> Changeset.put_change(:activity_id, activity.id)
-    |> Repo.insert()
-    trackpoints = trackpoints
-    |> Enum.map(&Map.merge(&1, %{trackpoint_set_id: trackpoint_set.id}))
-
-    Repo.insert_all(Trackpoint, trackpoints)
+    changeset = Changeset.put_change(%TrackpointSet{}, :activity_id, activity.id)
+    Multi.new()
+    |> Multi.insert(:trackpoint_set, changeset)
+    |> Multi.run(:trackpoints, fn(%{trackpoint_set: trackpoint_set}) ->
+      trackpoints = trackpoints
+      |> Enum.map(&Map.merge(&1, %{trackpoint_set_id: trackpoint_set.id}))
+      Repo.insert_all(Trackpoint, trackpoints)
+    end)
+    |> Repo.transaction()
   end
 
   def create_trackpoint(%Activity{} = activity, attrs) do
