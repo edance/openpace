@@ -18,7 +18,7 @@ defmodule Squeeze.Dashboard.TrackpointSet do
   end
 
   @doc false
-  def changeset(trackpoint, attrs) do
+  def changeset(trackpoint, attrs \\ %{}) do
     trackpoint
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
