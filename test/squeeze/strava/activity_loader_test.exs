@@ -4,7 +4,6 @@ defmodule Squeeze.ActivityLoaderTest do
   import Mox
   import Squeeze.Factory
 
-  alias Squeeze.Dashboard.Activity
   alias Squeeze.Strava.ActivityLoader
   alias Squeeze.TimeHelper
 
@@ -12,52 +11,32 @@ defmodule Squeeze.ActivityLoaderTest do
     setup [:build_strava_activity, :setup_mocks, :create_credential]
 
     test "creates an activity if none exist",
-      %{credential: credential, run_activity: strava_activity} do
-      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
-      refute activity.id == nil
+      %{credential: credential, activity: strava_activity} do
+      assert {:ok, _} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
     end
 
-    test "updates activity if matched activity exists and sets status to complete",
-      %{credential: credential, run_activity: strava_activity} do
+    test "updates activity if matched activity exists",
+      %{credential: credential, activity: strava_activity} do
       distance = strava_activity.distance
       user = credential.user
-      existing_activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
-      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
-      assert activity.id == existing_activity.id
-      assert activity.status == :complete
-    end
-
-    test "updates activity if matched activity exists and sets status to partial",
-      %{credential: credential, run_activity: strava_activity} do
-      distance = strava_activity.distance * 1.5
-      user = credential.user
-      existing_activity = insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
-      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
-      assert activity.id == existing_activity.id
-      assert activity.status == :partial
-    end
-
-    test "creates an activity if strava_activity is not a run",
-      %{credential: credential, swim_activity: strava_activity} do
-      {:ok, %Activity{} = activity} = ActivityLoader.update_or_create_activity(credential, strava_activity)
-      refute activity.id == nil
+      insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
+      assert {:ok, _} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
     end
   end
 
   defp build_strava_activity(_) do
-    {:ok,
-     swim_activity: build(:detailed_activity, type: "Swim"),
-     run_activity: build(:detailed_activity)}
+    {:ok, activity: build(:detailed_activity)}
   end
 
-  defp setup_mocks(%{swim_activity: swim_activity, run_activity: run_activity}) do
-    activities = %{swim_activity.id => swim_activity, run_activity.id => run_activity}
-
+  defp setup_mocks(%{activity: activity}) do
     Squeeze.Strava.MockClient
-    |> expect(:new, fn(_, _) -> %Tesla.Client{} end)
+    |> expect(:new, 2, fn(_, _) -> %Tesla.Client{} end)
 
     Squeeze.Strava.MockActivities
-    |> expect(:get_activity_by_id, fn(_, id) -> {:ok, activities[id]} end)
+    |> expect(:get_activity_by_id, fn(_, _) -> {:ok, activity} end)
+
+    Squeeze.Strava.MockStreams
+    |> expect(:get_activity_streams, fn(_, _, _, _) -> {:ok, %Strava.StreamSet{}} end)
     {:ok, []}
   end
 

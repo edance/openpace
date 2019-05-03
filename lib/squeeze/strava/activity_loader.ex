@@ -7,8 +7,10 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.ActivityMatcher
   alias Squeeze.Dashboard
   alias Squeeze.Strava.Client
+  alias Squeeze.Strava.StreamSetConverter
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
+  @strava_streams Application.get_env(:squeeze, :strava_streams)
 
   def update_or_create_activity(%Credential{} = credential, strava_activity_id)
   when is_binary(strava_activity_id) or is_integer(strava_activity_id) do
@@ -20,10 +22,13 @@ defmodule Squeeze.Strava.ActivityLoader do
     user = credential.user
     activity = map_strava_activity(strava_activity)
     case ActivityMatcher.get_closest_activity(user, activity) do
-      nil -> Dashboard.create_activity(user, activity)
+      nil ->
+        {:ok, activity} = Dashboard.create_activity(user, activity)
+        save_trackpoints(credential, activity)
       existing_activity ->
         activity = %{activity | name: existing_activity.name}
-        Dashboard.update_activity(existing_activity, activity)
+        {:ok, activity} = Dashboard.update_activity(existing_activity, activity)
+        save_trackpoints(credential, activity)
     end
   end
 
@@ -43,5 +48,19 @@ defmodule Squeeze.Strava.ActivityLoader do
       external_id: "#{strava_activity.id}",
       polyline: strava_activity.map.summary_polyline
     }
+  end
+
+  defp save_trackpoints(credential, %{external_id: strava_activity_id} = activity) do
+    stream_set = fetch_streams(strava_activity_id, credential)
+    trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set)
+    Dashboard.create_trackpoint_set(activity, trackpoints)
+  end
+
+  defp fetch_streams(id, credential) do
+    client = Client.new(credential)
+    streams = "altitude,cadence,distance,time,moving,heartrate,latlng,velocity_smooth"
+    {:ok, stream_set} =
+      @strava_streams.get_activity_streams(client, id, streams, true)
+    stream_set
   end
 end
