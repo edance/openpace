@@ -166,13 +166,6 @@ defmodule Squeeze.Dashboard do
     |> Repo.transaction()
   end
 
-  def create_trackpoint(%Activity{} = activity, attrs) do
-    %Trackpoint{}
-    |> Trackpoint.changeset(attrs)
-    |> Changeset.put_change(:activity_id, activity.id)
-    |> Repo.insert()
-  end
-
   defp by_user(query, %User{} = user) do
     from q in query, where: [user_id: ^user.id]
   end
