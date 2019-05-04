@@ -46,6 +46,7 @@ defmodule SqueezeWeb do
       import SqueezeWeb.ErrorHelpers
       import SqueezeWeb.Gettext
       import PhoenixActiveLink
+      import ReactPhoenix.ClientSide
     end
   end
 

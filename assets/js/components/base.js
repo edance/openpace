@@ -14,3 +14,10 @@ import './modal';
 import './payment-form';
 import './sign-up-form';
 import './timezone-hidden-input';
+
+// React components
+// import MyComponent from './my_component';
+
+window.Components = {
+  // MyComponent
+};
