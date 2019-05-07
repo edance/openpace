@@ -43,7 +43,8 @@ defmodule SqueezeWeb.IntegrationController do
   end
 
   defp authorize_url!("fitbit") do
-    Auth.authorize_url!(scope: "activity location profile")
+    scope = "activity heartrate profile weight location"
+    Auth.authorize_url!(scope: scope, expires_in: 31_536_000)
   end
 
   defp get_token!("strava", code) do
