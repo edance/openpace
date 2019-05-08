@@ -32,7 +32,7 @@ defmodule SqueezeWeb.ActivityController do
 
   def show(conn, %{"id" => id}, user) do
     activity = Dashboard.get_detailed_activity!(user, id)
-    render(conn, "show.html", activity: activity)
+    render(conn, "show.html", activity: activity, trackpoints: trackpoints(activity))
   end
 
   def edit(conn, %{"id" => id}, user) do
@@ -62,4 +62,7 @@ defmodule SqueezeWeb.ActivityController do
     |> put_flash(:info, "Activity deleted successfully.")
     |> redirect(to: activity_path(conn, :index))
   end
+
+  defp trackpoints(%{trackpoint_set: nil}), do: []
+  defp trackpoints(%{trackpoint_set: set}), do: set.trackpoints
 end

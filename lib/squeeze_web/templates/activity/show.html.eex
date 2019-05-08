@@ -104,7 +104,7 @@
         Splits
       </div>
       <div class="col-8">
-        Map
+        <%= render SqueezeWeb.MapView, "activity-map.html", assigns %>
       </div>
     </div>
   </div>

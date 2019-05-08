@@ -1,0 +1,2 @@
+<div id="map-canvas" data-coordinates="<%= coordinates(assigns) %>" style="height: 600px;">
+</div>
