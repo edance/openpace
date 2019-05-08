@@ -6,13 +6,15 @@ defmodule Squeeze.Dashboard.TrackpointSet do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Squeeze.Dashboard.{Activity}
+  alias Squeeze.Dashboard.{Activity, Trackpoint}
 
   @required_fields ~w()a
   @optional_fields ~w()a
 
   schema "trackpoint_sets" do
     belongs_to :activity, Activity
+
+    has_many :trackpoints, Trackpoint
 
     timestamps()
   end

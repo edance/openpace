@@ -31,16 +31,8 @@ defmodule SqueezeWeb.ActivityController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    activity = Dashboard.get_activity!(user, id)
-    render(conn, "show.html",
-      activity: activity,
-      altitude: [],
-      coordinates: [],
-      distance: [],
-      heartrate: [],
-      splits: [],
-      velocity: []
-    )
+    activity = Dashboard.get_detailed_activity!(user, id)
+    render(conn, "show.html", activity: activity)
   end
 
   def edit(conn, %{"id" => id}, user) do

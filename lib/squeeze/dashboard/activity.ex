@@ -7,7 +7,7 @@ defmodule Squeeze.Dashboard.Activity do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity}
+  alias Squeeze.Dashboard.{Activity, TrackpointSet}
 
   @required_fields ~w(name type)a
   @optional_fields ~w(
@@ -41,6 +41,8 @@ defmodule Squeeze.Dashboard.Activity do
     field :complete, :boolean
 
     belongs_to :user, User
+
+    has_one :trackpoint_set, TrackpointSet
 
     timestamps()
   end
