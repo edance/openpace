@@ -86,6 +86,27 @@ defmodule Squeeze.Dashboard do
   end
 
   @doc """
+  Gets a single activity.
+
+  Raises `Ecto.NoResultsError` if the Activity does not exist.
+
+  ## Examples
+
+      iex> get_detailed_activity!(%User{}, 123)
+      %Activity{}
+
+      iex> get_detailed_activity!(%User{}, 456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_detailed_activity!(%User{} = user, id) do
+    Activity
+    |> by_user(user)
+    |> Repo.get!(id)
+    |> Repo.preload([:user, trackpoint_set: :trackpoints])
+  end
+
+  @doc """
   Creates a activity.
 
   ## Examples
