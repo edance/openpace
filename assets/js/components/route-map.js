@@ -9,7 +9,8 @@ document.addEventListener("turbolinks:load", function() {
     return;
   }
 
-  let coordinates = JSON.parse($mapCanvas.data('coordinates'));
+  const coordinates = JSON.parse($mapCanvas.data('coordinates'));
+  const markers = JSON.parse($mapCanvas.data('markers'));
 
   const bounds = coordinates.reduce(function(bounds, coord) {
     return bounds.extend(coord);
@@ -50,6 +51,39 @@ document.addEventListener("turbolinks:load", function() {
       "paint": {
         "line-color": "#BF93E4",
         "line-width": 5
+      }
+    });
+
+    const features = markers.map((latlng, idx) => {
+      return {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": latlng
+        },
+        "properties": {
+          "title": `${idx}`,
+          "icon": "volcano"
+        }
+      };
+    });
+
+    map.addLayer({
+      "id": "points",
+      "type": "symbol",
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": features
+        }
+      },
+      "layout": {
+        "icon-image": "{icon}-15",
+        "text-field": "{title}",
+        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+        "text-offset": [0, 0.6],
+        "text-anchor": "top"
       }
     });
   });
