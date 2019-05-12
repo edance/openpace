@@ -19,7 +19,7 @@ document.addEventListener("turbolinks:load", function() {
   const map = new mapboxgl.Map({
     center: bounds.getCenter(),
     container: 'map-canvas',
-    style: 'mapbox://styles/mapbox/light-v9',
+    style: 'mapbox://styles/mapbox/outdoors-v9',
   });
 
   map.fitBounds(bounds, {
