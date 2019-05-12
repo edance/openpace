@@ -1,5 +1,6 @@
 import { u } from 'umbrellajs';
 import mapboxgl from 'mapbox-gl';
+import { colors, fonts } from './../variables.js';
 
 mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
 
@@ -50,7 +51,7 @@ document.addEventListener("turbolinks:load", function() {
         "line-cap": "round"
       },
       "paint": {
-        "line-color": "#BF93E4",
+        "line-color": colors.theme['primary'],
         "line-width": 5
       }
     });
