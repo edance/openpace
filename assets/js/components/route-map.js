@@ -28,6 +28,7 @@ document.addEventListener("turbolinks:load", function() {
   });
 
   map.scrollZoom.disable();
+  map.addControl(new mapboxgl.NavigationControl());
 
   map.on('load', function () {
     map.addLayer({
