@@ -54,38 +54,5 @@ document.addEventListener("turbolinks:load", function() {
         "line-width": 5
       }
     });
-
-    const features = markers.map((latlng, idx) => {
-      return {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": latlng
-        },
-        "properties": {
-          "title": `${idx}`,
-          "icon": "volcano"
-        }
-      };
-    });
-
-    map.addLayer({
-      "id": "points",
-      "type": "symbol",
-      "source": {
-        "type": "geojson",
-        "data": {
-          "type": "FeatureCollection",
-          "features": features
-        }
-      },
-      "layout": {
-        "icon-image": "{icon}-15",
-        "text-field": "{title}",
-        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-        "text-offset": [0, 0.6],
-        "text-anchor": "top"
-      }
-    });
   });
 });
