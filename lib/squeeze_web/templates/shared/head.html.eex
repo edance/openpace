@@ -7,6 +7,7 @@
 <meta name="csrf-param" content="_csrf_token" />
 
 <link rel="stylesheet" type="text/css" href="<%= static_path(@conn, "/css/app.css") %>">
+<link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
 
 <%= render("_gtm.html", assigns) %>
 
