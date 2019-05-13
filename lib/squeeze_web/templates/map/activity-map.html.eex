@@ -1,5 +1,5 @@
 <div id="map-canvas"
+     data-geojson="<%= layer(assigns) %>"
      data-coordinates="<%= coordinates(assigns) %>"
-     data-markers="<%= markers(assigns) %>"
      style="height: 600px;">
 </div>

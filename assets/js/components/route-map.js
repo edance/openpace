@@ -11,7 +11,7 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   const coordinates = JSON.parse($mapCanvas.data('coordinates'));
-  const markers = JSON.parse($mapCanvas.data('markers'));
+  const geojson = JSON.parse($mapCanvas.data('geojson'));
 
   const bounds = coordinates.reduce(function(bounds, coord) {
     return bounds.extend(coord);
@@ -20,7 +20,7 @@ document.addEventListener("turbolinks:load", function() {
   const map = new mapboxgl.Map({
     center: bounds.getCenter(),
     container: 'map-canvas',
-    style: 'mapbox://styles/mapbox/outdoors-v9',
+    style: 'mapbox://styles/mapbox/light-v9',
   });
 
   map.fitBounds(bounds, {
@@ -32,28 +32,6 @@ document.addEventListener("turbolinks:load", function() {
   map.addControl(new mapboxgl.NavigationControl());
 
   map.on('load', function () {
-    map.addLayer({
-      "id": "LineString",
-      "type": "line",
-      "source": {
-        "type": "geojson",
-        "data": {
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": "LineString",
-            "coordinates": coordinates,
-          }
-        }
-      },
-      "layout": {
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": colors.theme['primary'],
-        "line-width": 5
-      }
-    });
+    map.addLayer(geojson);
   });
 });
