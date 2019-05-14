@@ -175,6 +175,16 @@ defmodule Squeeze.BillingTest do
     assert %Ecto.Changeset{} = Billing.change_payment_method(payment_method)
   end
 
+  describe "cancel_subscription/1" do
+    setup [:mock_cancel_subscription]
+
+    test "with a valid subscription_id" do
+      user = insert(:paid_user)
+      assert {:ok, user} = Billing.cancel_subscription(user)
+      assert user.subscription_status == :canceled
+    end
+  end
+
   defp create_user(_) do
     {:ok, user: insert(:user)}
   end
@@ -224,6 +234,15 @@ defmodule Squeeze.BillingTest do
 
     Squeeze.MockPaymentProcessor
     |> expect(:create_subscription, fn(_, _, _) -> {:ok, subscription} end)
+
+    {:ok, []}
+  end
+
+  defp mock_cancel_subscription(_) do
+    subscription = %{id: "sub_123456789"}
+
+    Squeeze.MockPaymentProcessor
+    |> expect(:cancel_subscription, fn(_) -> {:ok, subscription} end)
 
     {:ok, []}
   end
