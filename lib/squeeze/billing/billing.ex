@@ -59,6 +59,19 @@ defmodule Squeeze.Billing do
     |> Repo.update()
   end
 
+  @doc """
+  Updates a subscription based on the subscription id and a status.
+  A list of valid subscription statuses is defined with SubscriptionStatusEnum.
+
+  ## Examples
+
+    iex> update_subscription_status(%{id: subscription_id, status: :past_due})
+    {:ok, %User{}}
+
+    iex> update_subscription_status(%{id: invalid_id, status: :past_due})
+    {:error}
+
+  """
   def update_subscription_status(%{id: id, status: status}) do
     attrs = %{subscription_status: status}
     case get_user_by_subscription_id(id) do

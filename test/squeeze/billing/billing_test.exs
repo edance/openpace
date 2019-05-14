@@ -42,6 +42,26 @@ defmodule Squeeze.BillingTest do
     end
   end
 
+  describe "update_subscription_status/1" do
+    test "with a valid subscription and status" do
+      %{subscription_id: id} = insert(:paid_user)
+      attrs = %{id: id, status: :canceled}
+      {:ok, user} = Billing.update_subscription_status(attrs)
+      assert user.subscription_status == :canceled
+    end
+
+    test "with an invalid subscription" do
+      attrs = %{id: "sub_12345", status: :canceled}
+      assert {:error} = Billing.update_subscription_status(attrs)
+    end
+
+    test "with an invalid status" do
+      %{subscription_id: id} = insert(:paid_user)
+      attrs = %{id: id, status: :something}
+      assert {:error, _} = Billing.update_subscription_status(attrs)
+    end
+  end
+
   describe "update_payment_method/1" do
     test "with a user updates the subscription_status" do
       user = insert(:paid_user)
