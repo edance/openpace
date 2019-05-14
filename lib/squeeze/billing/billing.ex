@@ -99,7 +99,19 @@ defmodule Squeeze.Billing do
     Repo.get_by(User, customer_id: customer_id)
   end
 
-  defp get_user_by_subscription_id(subscription_id) do
+  @doc """
+  Get a user by their customer_id
+
+  ## Examples
+
+    iex> get_user_by_subscription_id("sub_1234")
+    %User{}
+
+    iex> get_user_by_subscription_id("sub_nil")
+    nil
+
+  """
+  def get_user_by_subscription_id(subscription_id) do
     Repo.get_by(User, subscription_id: subscription_id)
   end
 
