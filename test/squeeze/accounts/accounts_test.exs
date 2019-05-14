@@ -43,6 +43,16 @@ defmodule Squeeze.AccountsTest do
       user = insert(:user)
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
+
+    test "get_user_by_credential/1 returns a user" do
+      credential = insert(:credential)
+      user = credential.user
+      assert Accounts.get_user_by_credential(credential).id == user.id
+    end
+
+    test "get_user_by_credential/1 without provider and uid returns nil" do
+      assert Accounts.get_user_by_credential(%{}) == nil
+    end
   end
 
   describe "credentials" do
