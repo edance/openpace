@@ -32,6 +32,15 @@ defmodule Squeeze.Billing do
     |> Repo.one()
   end
 
+  @doc """
+  Creates a customer for the user and creates a subscription if a default billing plan exists.
+
+  ## Examples
+
+    iex> start_free_trial(%User{})
+    {:ok, %User{}}
+
+  """
   def start_free_trial(%User{subscription_id: nil} = user) do
     {:ok, customer} = @payment_processor.create_customer(Map.from_struct(user))
     attrs = case get_default_plan() do

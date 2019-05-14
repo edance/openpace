@@ -5,6 +5,7 @@ defmodule Squeeze.BillingTest do
   alias Squeeze.Billing
   alias Squeeze.Billing.PaymentMethod
 
+  import Mox
   import Squeeze.Factory
 
   describe "get_default_payment_method/1" do
@@ -21,6 +22,23 @@ defmodule Squeeze.BillingTest do
       method_2 = insert(:payment_method, user: user)
       default_method = Billing.get_default_payment_method(user)
       assert default_method.id == method_2.id
+    end
+  end
+
+  describe "start_free_trial/1" do
+    setup [:create_user, :mock_create_customer, :mock_create_subscription]
+
+    test "with a default billing plan", %{user: user} do
+      insert(:billing_plan, default: true)
+      {:ok, user} = Billing.start_free_trial(user)
+      refute is_nil(user.customer_id)
+      refute is_nil(user.subscription_id)
+    end
+
+    test "without a default billing plan", %{user: user} do
+      {:ok, user} = Billing.start_free_trial(user)
+      refute is_nil(user.customer_id)
+      assert is_nil(user.subscription_id)
     end
   end
 
@@ -146,5 +164,25 @@ defmodule Squeeze.BillingTest do
     test "create_plan/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Billing.create_plan(%{})
     end
+  end
+
+  defp mock_create_customer(_) do
+    customer = %{id: "customer_123456789"}
+    Squeeze.MockPaymentProcessor
+    |> expect(:create_customer, fn(_) -> {:ok, customer} end)
+
+    {:ok, []}
+  end
+
+  defp mock_create_subscription(_) do
+    subscription = %{
+      id: "sub_123456789",
+      trial_end: Timex.now() |> Timex.shift(days: 30) |> DateTime.to_unix()
+    }
+
+    Squeeze.MockPaymentProcessor
+    |> expect(:create_subscription, fn(_, _, _) -> {:ok, subscription} end)
+
+    {:ok, []}
   end
 end
