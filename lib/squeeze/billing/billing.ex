@@ -268,6 +268,15 @@ defmodule Squeeze.Billing do
     |> Repo.insert()
   end
 
+  @doc """
+  Cancels a billing plan subscription.
+
+  ## Examples
+
+    iex> cancel_subscription(%User{})
+    {:ok, %User{}}
+
+  """
   def cancel_subscription(%User{subscription_id: subscription_id} = user) do
     @payment_processor.cancel_subscription(subscription_id)
     attrs = %{subscription_status: :canceled, subscription_id: nil}
