@@ -301,6 +301,18 @@ defmodule Squeeze.Billing do
     |> Repo.all()
   end
 
+  @doc """
+  Creates a invoice.
+
+  ## Examples
+
+    iex> create_or_update_invoice(%User{}, %{field: value})
+    {:ok, %Invoice{}}
+
+    iex> create_or_update_invoice(%User{}, %{field: bad_value})
+    {:error, %Ecto.Changeset{}}
+
+  """
   def create_or_update_invoice(%User{} = user, attrs \\ %{}) do
     case Repo.get_by(Invoice, user_id: user.id, provider_id: attrs.provider_id) do
       nil -> create_invoice(user, attrs)
@@ -308,38 +320,14 @@ defmodule Squeeze.Billing do
     end
   end
 
-  @doc """
-  Creates a invoice.
-
-  ## Examples
-
-  iex> create_invoice(%User{}, %{field: value})
-  {:ok, %Invoice{}}
-
-  iex> create_invoice(%User{}, %{field: bad_value})
-  {:error, %Ecto.Changeset{}}
-
-  """
-  def create_invoice(%User{} = user, attrs \\ %{}) do
+  defp create_invoice(%User{} = user, attrs) do
     %Invoice{}
     |> Invoice.changeset(attrs)
     |> Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a invoice.
-
-  ## Examples
-
-  iex> update_invoice(invoice, %{field: new_value})
-  {:ok, %Invoice{}}
-
-  iex> update_invoice(invoice, %{field: bad_value})
-  {:error, %Ecto.Changeset{}}
-
-  """
-  def update_invoice(%Invoice{} = invoice, attrs) do
+  defp update_invoice(%Invoice{} = invoice, attrs) do
     invoice
     |> Invoice.changeset(attrs)
     |> Repo.update()
