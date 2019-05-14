@@ -76,6 +76,17 @@ defmodule Squeeze.BillingTest do
     end
   end
 
+  describe "get_user_by_customer_id/1" do
+    test "with a valid customer_id" do
+      %{customer_id: id} = insert(:paid_user)
+      refute is_nil(Billing.get_user_by_customer_id(id))
+    end
+
+    test "with an invalid customer_id" do
+      assert is_nil(Billing.get_user_by_customer_id("customer_1234"))
+    end
+  end
+
   describe "get_payment_method!/2" do
     setup [:create_payment_method]
 
