@@ -4,6 +4,8 @@
   </h1>
   <p class="mt-0 ">
     <%= date(assigns) %> | <%= time(assigns) %> | <%= location(assigns) %> |
-    <a href="<%= @race.url %>">Official Race Website</a>
+    <%= if @race.url do %>
+      <a href="<%= @race.url %>">Official Race Website</a>
+    <% end %>
   </p>
 </div>
