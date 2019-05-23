@@ -19,7 +19,9 @@ defmodule SqueezeWeb.HomeController do
         |> put_flash(:info, "Thanks for signing up!")
         |> redirect(to: home_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "index.html", changeset: changeset)
+        conn
+        |> put_flash(:error, "Invalid email address")
+        |> render("index.html", changeset: changeset)
     end
   end
 
