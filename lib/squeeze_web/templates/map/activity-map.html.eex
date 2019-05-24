@@ -1,4 +1,4 @@
-<div id="map-canvas"
+<div class="activity-map"
      data-geojson="<%= layer(assigns) %>"
      data-coordinates="<%= coordinates(assigns) %>"
      style="height: 600px;">

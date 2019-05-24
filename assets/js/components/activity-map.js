@@ -31,7 +31,7 @@ function addLineString(map, coordinates) {
 }
 
 document.addEventListener("turbolinks:load", function() {
-  const $mapCanvas = u('.route-map');
+  const $mapCanvas = u('.activity-map');
   if ($mapCanvas.length === 0) {
     return;
   }
@@ -58,6 +58,6 @@ document.addEventListener("turbolinks:load", function() {
   map.addControl(new mapboxgl.NavigationControl());
 
   map.on('load', function () {
-    addLineString(map, coordinates);
+    map.addLayer(geojson);
   });
 });

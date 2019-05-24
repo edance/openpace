@@ -21,7 +21,7 @@
 
 
   <div class="mb-6">
-    <div id="map-canvas" class="mb-4" data-coordinates="<%= coordinates(assigns) %>" style="height: 500px;"></div>
+    <%= render SqueezeWeb.MapView, "route-map.html", assigns %>
 
     <h2 class="mb-3">Course Elevation</h2>
     <%= render SqueezeWeb.RouteChartView, "chart.html", assigns %>
