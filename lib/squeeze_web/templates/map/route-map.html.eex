@@ -1,0 +1,4 @@
+<div class="route-map mb-4"
+     data-coordinates="<%= coordinates(assigns) %>"
+     style="height: 500px;">
+</div>

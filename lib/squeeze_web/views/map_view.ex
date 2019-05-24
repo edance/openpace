@@ -9,6 +9,8 @@ defmodule SqueezeWeb.MapView do
     |> Poison.encode!()
   end
 
+  def coordinates(%{race: race}), do: coordinates(race)
+
   def layer(%{trackpoints: trackpoints}) do
     %{
       id: "trackpoints",
