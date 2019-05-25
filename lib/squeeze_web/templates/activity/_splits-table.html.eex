@@ -17,11 +17,11 @@
       </tr>
     </thead>
     <tbody>
-      <%= for split <- @splits do %>
+      <%= for split <- splits(assigns) do %>
         <tr>
-          <td><%= split.distance %></td>
+          <td><%= format_distance(split.distance, @current_user.user_prefs) %></td>
           <td><%= format_duration(split.pace) %></td>
-          <td><%= format_duration(split.total_time) %></td>
+          <td><%= format_duration(split.time) %></td>
         </tr>
       <% end %>
     </tbody>
