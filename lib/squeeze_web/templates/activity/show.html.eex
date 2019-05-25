@@ -100,10 +100,12 @@
 <div class="container-fluid mt--7">
   <div class="card shadow">
     <div class="row no-gutters">
+      <%= if String.contains?(@activity.type, "Run") do %>
+        <div class="col-4">
+          <%= render("_splits-table.html", assigns) %>
+        </div>
+      <% end %>
       <div class="col">
-        Splits
-      </div>
-      <div class="col-8">
         <%= render SqueezeWeb.MapView, "activity-map.html", assigns %>
       </div>
     </div>
