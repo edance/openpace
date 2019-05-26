@@ -6,7 +6,9 @@
     </button>
 
     <!-- Brand -->
-    <%= link(company_name(), to: "/", class: "navbar-brand pt-0") %>
+    <%= link(to: "/", class: "navbar-brand") do %>
+      <img src="/images/logo@1x.png" srcset="/images/logo@1x.png 1x, /images/logo@2x.png 2x" />
+    <% end %>
 
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
