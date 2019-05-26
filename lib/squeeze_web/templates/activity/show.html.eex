@@ -77,7 +77,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0">
-                    Fitness Increase
+                    Fitness
                   </h5>
                   <span class="h2 font-weight-bold mb-0">
                     N/A
@@ -98,7 +98,7 @@
 </div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="card shadow">
+  <div class="card shadow mb-4">
     <div class="row no-gutters">
       <%= if String.contains?(@activity.type, "Run") do %>
         <div class="col-4">
