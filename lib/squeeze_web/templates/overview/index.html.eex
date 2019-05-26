@@ -1,12 +1,14 @@
 <!-- Top navbar -->
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
     <%= gettext("Dashboard") %>
   </span>
 <% end %>
 
 <!-- Header -->
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header pt-5 pt-md-8 overflow-hidden">
+  <img class="waves" src="/images/waves.svg" />
+
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
@@ -29,7 +31,7 @@
 </div>
 
 <!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="position-relative container-fluid pt-5 bg-waves">
   <div class="row">
     <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card bg-gradient-default shadow">

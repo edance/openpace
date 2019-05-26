@@ -1,7 +1,11 @@
 //
 // Header
 //
-
 .header {
-    position: relative;
+  position: relative;
+
+  .waves {
+    position: absolute;
+    top: -50px;
+  }
 }
