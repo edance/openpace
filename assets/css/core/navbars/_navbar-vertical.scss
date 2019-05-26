@@ -48,7 +48,7 @@
 
 
 
-  // Navbar navigaton
+  // Navbar navigation
 
   .navbar-nav {
     margin-left: -$navbar-padding-x;
@@ -78,7 +78,7 @@
 
       // Icon
 
-      > i {
+      > i, > svg {
         min-width: $navbar-icon-min-width;
         font-size: .9375rem;
         line-height: ($font-size-base * $line-height-base);
