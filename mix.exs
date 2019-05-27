@@ -42,7 +42,7 @@ defmodule Squeeze.Mixfile do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_active_link, "~> 0.2.1"},
-      {:turbolinks, "~> 0.3.4"},
+      {:turbolinks, "~> 1.0.1"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:ordinal, "~> 0.1.0"},
