@@ -61,7 +61,7 @@ defmodule SqueezeWeb.FitbitWebhookController do
   end
 
   defp log_webhook_event(conn, _) do
-    body = Poison.encode!(conn.params)
+    body = Jason.encode!(conn.params)
     Logger.log_webhook_event(%{provider: "fitbit", body: body})
     conn
   end

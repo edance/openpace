@@ -6,7 +6,7 @@ defmodule SqueezeWeb.RouteChartView do
   def elevation_points(assigns) do
     assigns
     |> elevation_list()
-    |> Poison.encode!()
+    |> Jason.encode!()
   end
 
   def x_ticks(%{current_user: current_user} = assigns) do
@@ -17,7 +17,7 @@ defmodule SqueezeWeb.RouteChartView do
     |> List.last()
 
     %{label: label, min: 0, max: trunc(point.x) }
-    |> Poison.encode!()
+    |> Jason.encode!()
   end
 
   def y_ticks(%{current_user: current_user} = assigns) do
@@ -35,7 +35,7 @@ defmodule SqueezeWeb.RouteChartView do
       min: min_tick,
       max: Enum.max([min_tick + spread, max_tick])
     }
-    Poison.encode!(ticks)
+    Jason.encode!(ticks)
   end
 
   defp elevation_list(%{current_user: current_user, race: race}) do

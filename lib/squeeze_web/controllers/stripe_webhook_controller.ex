@@ -71,7 +71,7 @@ defmodule SqueezeWeb.StripeWebhookController do
   end
 
   defp log_webhook_event(conn, _) do
-    body = Poison.encode!(conn.params)
+    body = Jason.encode!(conn.params)
     Logger.log_webhook_event(%{provider: "stripe", body: body})
     conn
   end
