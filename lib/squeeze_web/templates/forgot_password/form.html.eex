@@ -3,7 +3,7 @@
     <div class="input-group input-group-alternative">
       <div class="input-group-prepend">
         <span class="input-group-text">
-          <i class="icon-envelope"></i>
+          <span class="iconify" data-icon="uil:envelope-alt" data-inline="false"></span>
         </span>
       </div>
       <%= text_input f, :email, placeholder: gettext("Email"), class: "form-control" %>

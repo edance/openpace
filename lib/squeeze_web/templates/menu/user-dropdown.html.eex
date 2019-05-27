@@ -6,14 +6,14 @@
   </div>
 
   <%= link(to: Routes.profile_path(@conn, :edit), class: "dropdown-item") do %>
-    <i class="icon-user"></i>
+    <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
     <span><%= gettext("Profile") %></span>
   <% end %>
 
   <div class="dropdown-divider"></div>
 
   <%= link class: "dropdown-item", to: Routes.session_path(@conn, :delete), method: :delete do %>
-    <i class="icon-logout"></i>
+    <span class="iconify" data-icon="websymbol:logout" data-inline="false"></span>
     <span><%= gettext("Logout") %></span>
   <% end %>
 </div>

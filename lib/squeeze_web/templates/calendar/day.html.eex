@@ -3,7 +3,7 @@
                     class: "navbar-item btn btn-sm btn-secondary mt--1 ml-3 ml-md-0 mr-4" %>
 
   <%= link to: Routes.calendar_path(@conn, :show, "day", date: prev(@date, "day")), class: "navbar-item navbar-link text-white mr-4" do %>
-    <i class="icon-arrow-left-circle"></i>
+    <span class="iconify" data-icon="ant-design:left-circle-outline" data-inline="false"></span>
   <% end %>
 
   <div class="navbar-item navbar-text">
@@ -12,7 +12,7 @@
 
   <%= link to: Routes.calendar_path(@conn, :show, "day", date: next(@date, "day")),
            class: "navbar-item navbar-link text-white ml-4 mr-3 mr-md-0" do %>
-    <i class="icon-arrow-right-circle"></i>
+    <span class="iconify" data-icon="ant-design:right-circle-outline" data-inline="false"></span>
   <% end %>
 <% end %>
 
