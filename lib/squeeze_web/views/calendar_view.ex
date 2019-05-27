@@ -17,19 +17,6 @@ defmodule SqueezeWeb.CalendarView do
 
   defp shift(date, opts), do: date |> Timex.shift(opts) |> format_date()
 
-  def date_label(date, idx) when idx < 7 do
-    content_tag(:div) do
-      [
-        Timex.format!(date, "%a", :strftime),
-        date_label(date)
-      ]
-    end
-  end
-
-  def date_label(date, _idx) do
-    date_label(date)
-  end
-
   def date_label(date) do
     content_tag(:div, class: "date-label", data: [date: format_date(date)]) do
       date_label_content(date)
