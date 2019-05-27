@@ -262,7 +262,7 @@ msgstr ""
 
 #: lib/squeeze_web/templates/overview/index.html.eex:66
 #: lib/squeeze_web/templates/overview/index.html.eex:88
-msgid "Recent Activites"
+msgid "Recent Activities"
 msgstr ""
 
 #: lib/squeeze_web/templates/overview/_workout-card.html.eex:10
