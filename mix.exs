@@ -56,7 +56,7 @@ defmodule Squeeze.Mixfile do
       {:httpoison, "~> 1.5"},
       {:set_locale, "~> 0.2.4"},
       {:bamboo, "~> 1.2"},
-      {:oauth2, "~> 0.9"},
+      {:oauth2, "~> 1.0"},
       {:comeonin, "~> 4.1"},
       {:argon2_elixir, "~> 1.3"},
       {:geolix, "~> 0.18"},
