@@ -4,13 +4,6 @@
       <%= date_label(date) %>
     </div>
 
-    <% activities_for_date = Enum.filter(@activities, &(on_date?(@current_user, date, &1))) %>
-    <%= for activity <- activities_for_date do %>
-      <%= render("_activity.html", activity: activity, conn: @conn) %>
-    <% end %>
-
-    <button class="btn-calendar-activity badge badge-circle bg-red text-white" data-date="<%= date %>">
-      <span class="iconify" data-icon="foundation:plus" data-inline="false"></span>
-    </button>
+    <%= render SqueezeWeb.CalendarActivityView, "summary.html", Map.put(assigns, :date, date) %>
   <% end %>
 <% end %>

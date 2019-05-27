@@ -1,0 +1,27 @@
+<% activities_for_date = Enum.filter(@activities, &(on_date?(@current_user, @date, &1))) %>
+<%= for activity <- activities_for_date do %>
+  <% color = activity_color(activity) %>
+
+  <%= link to: Routes.activity_path(@conn, :show, activity), class: "badge badge-circle bg-#{color} text-white mb-1" do %>
+    <span class="iconify" data-icon="<%= activity_icon(activity) %>" data-inline="false"></span>
+  <% end %>
+<% end %>
+
+<button class="btn-calendar-activity badge badge-circle bg-red text-white" data-date="<%= @date %>">
+  <span class="iconify" data-icon="foundation:plus" data-inline="false"></span>
+</button>
+
+<%= if length(activities_for_date) > 0 do %>
+  <%= if in_past?(assigns) do %>
+    <div class="small">
+      <div class="font-weight-bold">
+        <%= distance_for_activities(activities_for_date, @current_user.user_prefs) %>
+      </div>
+      <span>
+        <%= duration_for_activities(activities_for_date) %>
+        ·
+        <%= pace_for_activities(activities_for_date, @current_user.user_prefs) %>
+      </span>
+    </div>
+  <% end %>
+<% end %>
