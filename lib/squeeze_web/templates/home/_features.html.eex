@@ -1,13 +1,13 @@
-<section class="section section-lg pt-lg-0">
+<section class="section section-lg pt-lg-0 bg-waves pb-8">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-12">
         <div class="row row-grid">
           <div class="col-lg-4">
-            <div class="card card-lift--hover shadow border-0">
+            <div class="card card-lift--hover h-100 shadow border-0">
               <div class="card-body py-5">
                 <div class="icon icon-shape icon-shape-primary rounded-circle mb-4">
-                  <i class="icon-trophy"></i>
+                  <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
                 </div>
                 <h4 class="text-primary text-uppercase">
                   <%= gettext("Set Your Goal") %>
@@ -15,17 +15,14 @@
                 <p class="description mt-3">
                   <%= gettext("Set your goal based on your experience and your current personal record. We will help you achieve it.") %>
                 </p>
-                <a href="#" class="btn btn-primary mt-4">
-                  <%= gettext("Learn more") %>
-                </a>
               </div>
             </div>
           </div>
           <div class="col-lg-4">
-            <div class="card card-lift--hover shadow border-0">
+            <div class="card card-lift--hover h-100 shadow border-0">
               <div class="card-body py-5">
                 <div class="icon icon-shape icon-shape-success rounded-circle mb-4">
-                  <i class="icon-calendar"></i>
+                  <span class="iconify" data-icon="gridicons:scheduled" data-inline="false"></span>
                 </div>
                 <h4 class="text-success text-uppercase">
                   <%= gettext("Create a Training Plan") %>
@@ -33,17 +30,14 @@
                 <p class="description mt-3">
                   <%= gettext("Choose from one of our custom-built training plans or build your own. Add everything from runs, to cross-training, and anything in between.") %>
                 </p>
-                <a href="#" class="btn btn-success mt-4">
-                  <%= gettext("Learn more") %>
-                </a>
               </div>
             </div>
           </div>
           <div class="col-lg-4">
-            <div class="card card-lift--hover shadow border-0">
+            <div class="card card-lift--hover h-100 shadow border-0">
               <div class="card-body py-5">
                 <div class="icon icon-shape icon-shape-warning rounded-circle mb-4">
-                  <i class="icon-chart"></i>
+                  <span class="iconify" data-icon="ant-design:area-chart-outline" data-inline="false"></span>
                 </div>
                 <h4 class="text-warning text-uppercase">
                   <%= gettext("Track Your Progress") %>
@@ -51,9 +45,6 @@
                 <p class="description mt-3">
                   <%= gettext("Use our dashboards to see how each workout is getting you closer to your goal as you get closer to race date.") %>
                 </p>
-                <a href="#" class="btn btn-warning mt-4">
-                  <%= gettext("Learn more") %>
-                </a>
               </div>
             </div>
           </div>
