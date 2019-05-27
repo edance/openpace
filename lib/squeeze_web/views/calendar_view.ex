@@ -1,8 +1,6 @@
 defmodule SqueezeWeb.CalendarView do
   use SqueezeWeb, :view
 
-  alias Squeeze.TimeHelper
-
   def title(_page, _assigns) do
     "Calendar"
   end
@@ -20,28 +18,6 @@ defmodule SqueezeWeb.CalendarView do
   def date_label(date) do
     content_tag(:div, class: "date-label", data: [date: format_date(date)]) do
       date_label_content(date)
-    end
-  end
-
-  def activity_color(%{status: :pending}), do: "info"
-  def activity_color(%{status: :complete}), do: "success"
-  def activity_color(%{status: :incomplete}), do: "danger"
-  def activity_color(%{status: :partial}), do: "warning"
-
-  def on_date?(user, date, activity) do
-    activity.planned_date == date ||
-      TimeHelper.to_date(user, activity.start_at)  == date
-  end
-
-  def activity_icon(activity) do
-    cond do
-      String.contains?(activity.type, "Run") ->
-        "ic:baseline-directions-run"
-      String.contains?(activity.type, "Ride") ->
-        "ic:baseline-directions-bike"
-      String.contains?(activity.type, "Swim") ->
-        "map:swimming"
-      true -> "map:gym"
     end
   end
 

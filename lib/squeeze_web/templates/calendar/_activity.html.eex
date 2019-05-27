@@ -1,5 +1,0 @@
-<% color = activity_color(@activity) %>
-
-<%= link to: Routes.activity_path(@conn, :show, @activity), class: "badge badge-circle bg-#{color} text-white mb-1" do %>
-  <span class="iconify" data-icon="<%= activity_icon(@activity) %>" data-inline="false"></span>
-<% end %>
