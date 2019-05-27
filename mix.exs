@@ -50,7 +50,7 @@ defmodule Squeeze.Mixfile do
       {:strava, git: "https://github.com/slashdotdash/strava.git", branch: "master"},
       {:timex, "~> 3.3"},
       {:guardian, "~> 1.0"},
-      {:browser, "~> 0.1.0"},
+      {:browser, "~> 0.4.4"},
       {:ecto_enum, "~> 1.1"},
       {:stripity_stripe, "~> 2.2.2"},
       {:httpoison, "~> 1.5"},
