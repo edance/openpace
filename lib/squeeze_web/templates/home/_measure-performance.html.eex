@@ -7,9 +7,9 @@
       <div class="col-md-6 order-md-1">
         <div class="pr-md-5">
           <div class="icon icon-lg icon-shape icon-shape-success shadow rounded-circle mb-5">
-            <i class="icon-graph"></i>
+            <span class="iconify" data-icon="mdi:monitor-dashboard" data-inline="false"></span>
           </div>
-          <h2>
+          <h2 class="display-3">
             <%= gettext("Command Center for Your Race") %>
           </h2>
           <p>
@@ -19,12 +19,12 @@
             <li class="py-2">
               <div class="d-flex align-items-center">
                 <div>
-                  <div class="badge badge-circle badge-success mr-3">
-                    <i class="icon-clock"></i>
+                  <div class="badge badge-circle badge-info mr-3">
+                    <span class="iconify" data-icon="mdi:map-clock-outline" data-inline="false"></span>
                   </div>
                 </div>
                 <div>
-                  <h4 class="mb-0">
+                  <h4 class="mb-0 font-weight-normal">
                     <%= gettext("See Upcoming Workouts") %>
                   </h4>
                 </div>
@@ -33,12 +33,12 @@
             <li class="py-2">
               <div class="d-flex align-items-center">
                 <div>
-                  <div class="badge badge-circle badge-success mr-3">
-                    <i class="icon-energy"></i>
+                  <div class="badge badge-circle badge-warning mr-3">
+                    <span class="iconify" data-icon="mdi:map-marker-distance" data-inline="false"></span>
                   </div>
                 </div>
                 <div>
-                  <h4 class="mb-0">
+                  <h4 class="mb-0 font-weight-normal">
                     <%= gettext("Track Weekly Milage") %>
                   </h4>
                 </div>
@@ -47,12 +47,12 @@
             <li class="py-2">
               <div class="d-flex align-items-center">
                 <div>
-                  <div class="badge badge-circle badge-success mr-3">
-                    <i class="icon-exclamation"></i>
+                  <div class="badge badge-circle badge-danger mr-3">
+                    <span class="iconify" data-icon="subway:hurt-3" data-inline="false"></span>
                   </div>
                 </div>
                 <div>
-                  <h4 class="mb-0">
+                  <h4 class="mb-0 font-weight-normal">
                     <%= gettext("Warning for Overtraining or Injury") %>
                   </h4>
                 </div>
