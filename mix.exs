@@ -47,7 +47,7 @@ defmodule Squeeze.Mixfile do
       {:cowboy, "~> 1.0"},
       {:ordinal, "~> 0.1.0"},
       {:plug_cowboy, "~> 1.0"},
-      {:strava, git: "https://github.com/slashdotdash/strava.git", branch: "master"},
+      {:strava, "~> 1.0"},
       {:timex, "~> 3.3"},
       {:guardian, "~> 1.0"},
       {:browser, "~> 0.4.4"},
