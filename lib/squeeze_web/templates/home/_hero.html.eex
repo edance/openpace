@@ -1,7 +1,7 @@
 <div id="top" class="position-relative">
   <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
 
-  <section class="section section-lg section-shaped pb-250">
+  <section class="section section-lg position-relative overflow-hidden pb-250">
     <div class="container pt-6 d-flex">
       <div class="col px-0">
         <div class="row">
