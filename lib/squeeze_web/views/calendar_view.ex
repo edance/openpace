@@ -33,6 +33,18 @@ defmodule SqueezeWeb.CalendarView do
       TimeHelper.to_date(user, activity.start_at)  == date
   end
 
+  def activity_icon(activity) do
+    cond do
+      String.contains?(activity.type, "Run") ->
+        "ic:baseline-directions-run"
+      String.contains?(activity.type, "Ride") ->
+        "ic:baseline-directions-bike"
+      String.contains?(activity.type, "Swim") ->
+        "map:swimming"
+      true -> "map:gym"
+    end
+  end
+
   defp date_label_content(date) do
     if date.day == 1 do
       Timex.format!(date, "%b %-d", :strftime)

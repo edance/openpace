@@ -24,7 +24,7 @@
 <% end %>
 
 <div class="header bg-waves pb-5 pt-5 pt-md-6">
-  <div class="container container-fluid">
+  <div class="container-fluid">
     <div class="row no-gutters">
       <div class="col heading ml-1"><%= gettext("Mon") %></div>
       <div class="col heading ml-1"><%= gettext("Tue") %></div>
