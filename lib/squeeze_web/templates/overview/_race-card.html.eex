@@ -11,7 +11,7 @@
       </div>
       <div class="col-auto">
         <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-          <i class="icon-calendar"></i>
+          <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
         </div>
       </div>
     </div>

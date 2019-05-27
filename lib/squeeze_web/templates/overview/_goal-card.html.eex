@@ -11,7 +11,7 @@
       </div>
       <div class="col-auto">
         <div class="icon icon-shape bg-red text-white rounded-circle shadow">
-          <i class="icon-trophy"></i>
+          <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <p class="mt-3 mb-0 text-muted text-sm">
       <%= if @current_user.user_prefs.personal_record do %>
         <span class="text-success mr-2">
-          <i class="icon-arrow-up-circle"></i>
+          <span class="iconify" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
           <%= improvement_amount(@current_user) %>
         </span>
         <span class="text-nowrap">
