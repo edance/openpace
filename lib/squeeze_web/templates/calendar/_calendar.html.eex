@@ -9,9 +9,7 @@
     <% end %>
 
     <div class="btn-calendar-activity" data-date="<%= date %>">
-      <i class="material-icons">
-        add_circle_outline
-      </i>
+      <span class="iconify" data-icon="ic:outline-add-circle-outline" data-inline="false"></span>
     </div>
   <% end %>
 <% end %>

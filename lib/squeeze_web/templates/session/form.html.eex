@@ -3,7 +3,7 @@
     <div class="input-group input-group-alternative">
       <div class="input-group-prepend">
         <span class="input-group-text">
-          <i class="icon-envelope"></i>
+          <span class="iconify" data-icon="uil:envelope-alt" data-inline="false"></span>
         </span>
       </div>
       <%= text_input f, :email, placeholder: gettext("Email"), class: "form-control" %>
@@ -13,7 +13,7 @@
   <div class="form-group">
     <div class="input-group input-group-alternative">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="icon-lock-open"></i></span>
+        <span class="input-group-text"><span class="iconify" data-icon="gridicons:lock" data-inline="false"></span></span>
       </div>
       <%= password_input f, :password, placeholder: gettext("Password"), class: "form-control" %>
       <%= error_tag f, :password %>
