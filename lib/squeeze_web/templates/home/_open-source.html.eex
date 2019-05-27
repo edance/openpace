@@ -10,7 +10,7 @@
         <div class="d-flex px-3">
           <div>
             <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-              <i class="icon-social-github"></i>
+              <span class="iconify" data-icon="brandico:github-text" data-inline="false"></span>
             </div>
           </div>
           <div class="pl-4">
@@ -22,31 +22,12 @@
             </p>
           </div>
         </div>
-        <div class="card shadow shadow-lg--hover mt-5">
-          <div class="card-body">
-            <div class="d-flex px-3">
-              <div>
-                <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
-                  <i class="icon-support"></i>
-                </div>
-              </div>
-              <div class="pl-4">
-                <h5 class="title text-success">
-                  <%= gettext("Awesome Support") %>
-                </h5>
-                <p>
-                  <%= gettext("We want help you achieve your goals so let us know if anything isn't going as expected and we can make it better.") %>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="card shadow shadow-lg--hover my-5">
           <div class="card-body">
             <div class="d-flex px-3">
               <div>
                 <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
-                  <i class="icon-chemistry"></i>
+                  <span class="iconify" data-icon="oi:beaker" data-inline="false"></span>
                 </div>
               </div>
               <div class="pl-4">

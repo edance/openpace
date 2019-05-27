@@ -10,9 +10,7 @@
           <%= gettext("Because if you do, we can help you get there! Try today for free and accomplish your goals.") %>
         </p>
         <div class="btn-wrapper">
-          <a href="#top" class="btn btn-primary mb-3 mb-sm-0">
-            <%= gettext("Request Access") %>
-          </a>
+          <%= link(gettext("Get Started"), to: wizard_path(@conn, :index), class: "btn btn-primary mb-3 mb-sm-0") %>
         </div>
       </div>
     </div>
