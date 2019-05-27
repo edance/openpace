@@ -45,7 +45,7 @@ defmodule SqueezeWeb.StravaWebhookController do
   end
 
   defp log_event(conn, _)  do
-    body = Poison.encode!(conn.params)
+    body = Jason.encode!(conn.params)
     Logger.log_webhook_event(%{provider: "strava", body: body})
     conn
   end

@@ -6,7 +6,7 @@ defmodule SqueezeWeb.MapView do
   def coordinates(%{trackpoints: trackpoints}) do
     trackpoints
     |> Enum.map(&map_coordinate/1)
-    |> Poison.encode!()
+    |> Jason.encode!()
   end
 
   def coordinates(%{race: race}), do: coordinates(race)
@@ -33,7 +33,7 @@ defmodule SqueezeWeb.MapView do
     |> Enum.group_by(&Distances.to_int(&1.distance, imperial: imperial))
     |> Enum.map(fn({_, v}) -> List.first(v) end)
     |> Enum.map(&map_coordinate/1)
-    |> Poison.encode!()
+    |> Jason.encode!()
   end
 
   def map_coordinate(%{coordinates: nil}), do: nil
