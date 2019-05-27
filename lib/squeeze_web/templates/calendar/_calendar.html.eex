@@ -4,12 +4,13 @@
       <%= date_label(date) %>
     </div>
 
-    <%= for activity <- Enum.filter(@activities, &(on_date?(@current_user, date, &1))) do %>
+    <% activities_for_date = Enum.filter(@activities, &(on_date?(@current_user, date, &1))) %>
+    <%= for activity <- activities_for_date do %>
       <%= render("_activity.html", activity: activity, conn: @conn) %>
     <% end %>
 
-    <div class="btn-calendar-activity" data-date="<%= date %>">
-      <span class="iconify" data-icon="ic:outline-add-circle-outline" data-inline="false"></span>
-    </div>
+    <button class="btn-calendar-activity badge badge-circle bg-red text-white" data-date="<%= date %>">
+      <span class="iconify" data-icon="foundation:plus" data-inline="false"></span>
+    </button>
   <% end %>
 <% end %>
