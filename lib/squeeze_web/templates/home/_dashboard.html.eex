@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row row-grid align-items-center">
       <div class="col-md-6 order-md-2">
-        <img alt="<%= gettext("Dashboard Preview") %>" src="/images/home/dashboard.jpg" class="img-fluid floating shadow">
+        <img alt="<%= gettext("Dashboard Preview") %>" src="<%= static_path(@conn, "/images/home/dashboard.jpg") %>" class="img-fluid floating shadow">
       </div>
       <div class="col-md-6 order-md-1">
         <div class="pr-md-5">
