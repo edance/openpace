@@ -7,7 +7,7 @@
 
 <!-- Header -->
 <div class="header pt-5 pt-md-8 overflow-hidden">
-  <img class="waves" src="/images/waves.svg" />
+  <img class="waves" src="<%= static_path(@conn, "/images/waves.svg") %>" />
 
   <div class="container-fluid">
     <div class="header-body">

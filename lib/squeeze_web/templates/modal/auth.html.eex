@@ -10,7 +10,7 @@
             <div class="btn-wrapper text-center">
               <%= link to: auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon" do %>
                 <span class="btn-inner--icon">
-                  <img src="/images/google.svg" />
+                  <img src="<%= static_path(@conn, "/images/google.svg") %>" />
                 </span>
                 <span class="btn-inner--text">Google</span>
               <% end %>

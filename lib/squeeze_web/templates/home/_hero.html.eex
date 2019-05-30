@@ -19,6 +19,6 @@
       </div>
     </div>
 
-    <img class="waves position-absolute" src="/images/waves.svg" />
+    <img class="waves position-absolute" src="<%= static_path(@conn, "/images/waves.svg") %>" />
   </section>
 </div>
