@@ -100,10 +100,16 @@ defmodule Squeeze.Dashboard do
 
   """
   def get_detailed_activity!(%User{} = user, id) do
+    trackpoint_query = from t in Trackpoint, order_by: t.time
+    trackpoint_set_query = from ts in TrackpointSet,
+      order_by: ts.inserted_at,
+      limit: 1,
+      preload: [trackpoints: ^trackpoint_query]
+
     Activity
     |> by_user(user)
     |> Repo.get!(id)
-    |> Repo.preload([:user, trackpoint_set: :trackpoints])
+    |> Repo.preload([:user, trackpoint_set: trackpoint_set_query])
   end
 
   @doc """
