@@ -45,6 +45,7 @@ defmodule SqueezeWeb do
       import SqueezeWeb.FormatHelpers
       import SqueezeWeb.ErrorHelpers
       import SqueezeWeb.Gettext
+      import SqueezeWeb.ImageHelpers
       import PhoenixActiveLink
       import ReactPhoenix.ClientSide
     end
