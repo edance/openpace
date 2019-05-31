@@ -3,7 +3,8 @@
     <div class="row row-grid align-items-center">
       <div class="col-md-6 ml-lg-auto">
         <div class="position-relative pl-md-5">
-          <img alt="<%= gettext("Runner Finishing Race") %>" src="<%= static_path(@conn, "/images/home/runner.jpg") %>" class="img-fluid img-center rounded">
+          <%= responsive_picture(@conn, "/images/home/runner.jpg",
+            alt: gettext("Runner Finishing Race"), class: "img-fluid img-center rounded") %>
         </div>
       </div>
       <div class="col-lg-6">
