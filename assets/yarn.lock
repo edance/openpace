@@ -4000,10 +4000,10 @@ first-chunk-stream@^2.0.0:
   dependencies:
     readable-stream "^2.0.2"
 
-flatpickr@^4.5.1:
-  version "4.5.6"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.5.6.tgz#9afdcccf5ffd30445e047a605eb175cb8e00a115"
-  integrity sha512-PYeKKH+5Zm5iGu00SsQPJmXtivolF0goXl00Ced5pEGV6//mxG0pA9Z0aas+X3X4NWqnVNMQuHE8m/fTY86iAQ==
+flatpickr@^4.5.7:
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.5.7.tgz#6efc0d93c65547aa77294205c67830ebabe3565c"
+  integrity sha512-JqPfihUc9A/j9QAsh6otoARmMyUauPE17vRBEG+ThJwbl8zAq4ssGpxlPK3wWM/i8EFxkHg9UuVo0ds7XluKxw==
 
 flatten@^1.0.2:
   version "1.0.2"
