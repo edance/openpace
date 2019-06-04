@@ -35,18 +35,19 @@ defmodule Squeeze.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.4"},
+      {:phoenix, "~> 1.4.6"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix_ecto, "~> 4.0"},
+      {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_active_link, "~> 0.2.1"},
       {:turbolinks, "~> 1.0.1"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
       {:ordinal, "~> 0.1.0"},
-      {:plug_cowboy, "~> 1.0"},
+      {:plug_cowboy, "~> 2.0"},
+      {:plug, "~> 1.7"},
       {:strava, "~> 1.0"},
       {:timex, "~> 3.3"},
       {:guardian, "~> 1.0"},
