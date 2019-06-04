@@ -1,8 +1,6 @@
 defmodule SqueezeWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :squeeze
 
-  socket "/socket", SqueezeWeb.UserSocket
-
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
@@ -27,12 +25,12 @@ defmodule SqueezeWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json],
     pass: ["text/*"],
     body_reader: {CacheBodyReader, :read_body, []},
-    json_decoder: Poison
+    json_decoder: Jason
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Jason
 
   plug Plug.MethodOverride
   plug Plug.Head
