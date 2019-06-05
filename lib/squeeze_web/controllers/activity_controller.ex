@@ -24,7 +24,7 @@ defmodule SqueezeWeb.ActivityController do
       {:ok, activity} ->
         conn
         |> put_flash(:info, "Activity created successfully.")
-        |> redirect(to: activity_path(conn, :show, activity))
+        |> redirect(to: Routes.activity_path(conn, :show, activity))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -48,7 +48,7 @@ defmodule SqueezeWeb.ActivityController do
       {:ok, activity} ->
         conn
         |> put_flash(:info, "Activity updated successfully.")
-        |> redirect(to: activity_path(conn, :show, activity))
+        |> redirect(to: Routes.activity_path(conn, :show, activity))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", activity: activity, changeset: changeset)
     end
@@ -60,7 +60,7 @@ defmodule SqueezeWeb.ActivityController do
 
     conn
     |> put_flash(:info, "Activity deleted successfully.")
-    |> redirect(to: activity_path(conn, :index))
+    |> redirect(to: Routes.activity_path(conn, :index))
   end
 
   defp trackpoints(%{trackpoint_set: nil}), do: []

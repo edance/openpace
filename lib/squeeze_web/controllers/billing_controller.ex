@@ -17,6 +17,6 @@ defmodule SqueezeWeb.BillingController  do
     Billing.cancel_subscription(user)
     conn
     |> put_flash(:info, "Your membership has been canceled")
-    |> redirect(to: billing_path(conn, :index))
+    |> redirect(to: Routes.billing_path(conn, :index))
   end
 end

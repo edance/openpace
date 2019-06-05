@@ -22,8 +22,9 @@ defmodule SqueezeWeb do
       use Phoenix.Controller, namespace: SqueezeWeb
       use Turbolinks
       import Plug.Conn
-      import SqueezeWeb.Router.Helpers
       import SqueezeWeb.Gettext
+
+      alias SqueezeWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -40,7 +41,6 @@ defmodule SqueezeWeb do
 
       import Squeeze.CompanyHelper
 
-      import SqueezeWeb.Router.Helpers
       import SqueezeWeb.FormHelpers
       import SqueezeWeb.FormatHelpers
       import SqueezeWeb.ErrorHelpers
@@ -48,6 +48,8 @@ defmodule SqueezeWeb do
       import SqueezeWeb.ImageHelpers
       import PhoenixActiveLink
       import ReactPhoenix.ClientSide
+
+      alias SqueezeWeb.Router.Helpers, as: Routes
     end
   end
 

@@ -24,7 +24,7 @@ defmodule SqueezeWeb.PlanController do
       {:ok, plan} ->
         conn
         |> put_flash(:info, "Plan created successfully.")
-        |> redirect(to: plan_path(conn, :show, plan))
+        |> redirect(to: Routes.plan_path(conn, :show, plan))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -48,7 +48,7 @@ defmodule SqueezeWeb.PlanController do
       {:ok, plan} ->
         conn
         |> put_flash(:info, "Plan updated successfully.")
-        |> redirect(to: plan_path(conn, :show, plan))
+        |> redirect(to: Routes.plan_path(conn, :show, plan))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", plan: plan, changeset: changeset)
     end
@@ -60,6 +60,6 @@ defmodule SqueezeWeb.PlanController do
 
     conn
     |> put_flash(:info, "Plan deleted successfully.")
-    |> redirect(to: plan_path(conn, :index))
+    |> redirect(to: Routes.plan_path(conn, :index))
   end
 end

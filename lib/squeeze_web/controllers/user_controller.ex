@@ -8,7 +8,7 @@ defmodule SqueezeWeb.UserController do
   def new(conn, %{}) do
     user = conn.assigns.current_user
     if User.onboarded?(user) do
-      redirect(conn, to: dashboard_path(conn, :index))
+      redirect(conn, to: Routes.dashboard_path(conn, :index))
     else
       changeset = Accounts.change_user(user)
       render(conn, "new.html", changeset: changeset)
@@ -22,7 +22,7 @@ defmodule SqueezeWeb.UserController do
         Billing.start_free_trial(user)
         conn
         |> put_flash(:info, "Signed up successfully.")
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_status(:unprocessable_entity)

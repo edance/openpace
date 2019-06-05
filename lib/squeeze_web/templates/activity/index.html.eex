@@ -20,7 +20,7 @@
             <tbody>
               <%= for activity <- @activities do %>
                 <tr scope="row">
-                  <td><%= link activity.name, to: activity_path(@conn, :show, activity) %></td>
+                  <td><%= link activity.name, to: Routes.activity_path(@conn, :show, activity) %></td>
                   <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
                   <td><%= format_duration(activity.duration) %></td>
                   <td><%= relative_time(activity.start_at) %></td>

@@ -20,7 +20,7 @@ defmodule SqueezeWeb.ResetPasswordController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Password was reset")
-        |> redirect(to: session_path(conn, :new))
+        |> redirect(to: Routes.session_path(conn, :new))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "show.html", changeset: changeset,
           signature: signature, token: token, user: user)
@@ -35,7 +35,7 @@ defmodule SqueezeWeb.ResetPasswordController do
       {:error, error_msg} ->
         conn
         |> put_flash(:error, error_msg)
-        |> redirect(to: home_path(conn, :index))
+        |> redirect(to: Routes.home_path(conn, :index))
         |> halt()
     end
   end

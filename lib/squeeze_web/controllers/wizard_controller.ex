@@ -9,8 +9,8 @@ defmodule SqueezeWeb.WizardController do
 
   def index(conn, _params) do
     case get_session(conn, :current_step) do
-      nil -> redirect(conn, to: wizard_path(conn, :step, List.first(@steps)))
-      step -> redirect(conn, to: wizard_path(conn, :step, step))
+      nil -> redirect(conn, to: Routes.wizard_path(conn, :step, List.first(@steps)))
+      step -> redirect(conn, to: Routes.wizard_path(conn, :step, step))
     end
   end
 
@@ -27,7 +27,7 @@ defmodule SqueezeWeb.WizardController do
     case Accounts.update_user_prefs(user.user_prefs, pref_params) do
       {:ok, _} ->
         conn
-        |> redirect(to: wizard_path(conn, :step, next_step))
+        |> redirect(to: Routes.wizard_path(conn, :step, next_step))
       {:error, %Ecto.Changeset{} = changeset} ->
         render_error(conn, changeset, step)
     end

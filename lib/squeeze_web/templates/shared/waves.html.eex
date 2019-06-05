@@ -1,1 +1,1 @@
-<img class="waves" src="<%= static_path(@conn, "/images/waves.svg") %>" />
+<img class="waves" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />

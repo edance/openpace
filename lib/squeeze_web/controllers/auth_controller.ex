@@ -32,19 +32,19 @@ defmodule SqueezeWeb.AuthController do
       _err ->
         conn
         |> put_flash(:error, "Could not be authenticated")
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
     end
   end
 
   defp redirect_current_user(conn) do
     conn
-    |> redirect(to: dashboard_path(conn, :index))
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp sign_in_and_redirect(conn, user) do
     conn
     |> Plug.sign_in(user)
-    |> redirect(to: dashboard_path(conn, :index))
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp authorize_url!("google"), do: Google.authorize_url!(scope: "profile openid email")

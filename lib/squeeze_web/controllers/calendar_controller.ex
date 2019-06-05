@@ -14,8 +14,8 @@ defmodule SqueezeWeb.CalendarController do
   def index(conn, _) do
     [ua | _] = Conn.get_req_header(conn, "user-agent")
     case Browser.mobile?(ua) do
-      true -> redirect(conn, to: calendar_path(conn, :show, "day"))
-      _ -> redirect(conn, to: calendar_path(conn, :show, "month"))
+      true -> redirect(conn, to: Routes.calendar_path(conn, :show, "day"))
+      _ -> redirect(conn, to: Routes.calendar_path(conn, :show, "month"))
     end
   end
 

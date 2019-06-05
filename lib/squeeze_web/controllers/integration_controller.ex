@@ -21,14 +21,14 @@ defmodule SqueezeWeb.IntegrationController do
       {:error, _} ->
         conn
         |> put_flash(:error, "Authentication failed for #{provider}")
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
     end
   end
 
   defp redirect_current_user(conn, provider) do
     conn
     |> put_flash(:info, "Connected to #{provider}")
-    |> redirect(to: dashboard_path(conn, :index))
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp setup_integration(conn, client, "fitbit") do
