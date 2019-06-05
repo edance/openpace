@@ -26,7 +26,7 @@
       <div class="col-lg-5 col-md-7">
         <div class="card bg-secondary shadow border-0">
           <div class="card-body px-lg-5 py-lg-5">
-            <%= render "form.html", Map.put(assigns, :action, reset_password_path(@conn, :reset, signature: @signature, token: @token)) %>
+            <%= render "form.html", Map.put(assigns, :action, Routes.reset_password_path(@conn, :reset, signature: @signature, token: @token)) %>
           </div>
         </div>
       </div>

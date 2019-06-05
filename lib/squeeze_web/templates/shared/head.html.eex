@@ -6,7 +6,7 @@
 <meta name="csrf-token" content="<%= get_csrf_token() %>" />
 <meta name="csrf-param" content="_csrf_token" />
 
-<link rel="stylesheet" type="text/css" href="<%= static_path(@conn, "/css/app.css") %>">
+<link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
 <link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
 <script src="https://code.iconify.design/1/1.0.2/iconify.min.js"></script>
 

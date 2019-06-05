@@ -17,7 +17,7 @@ defmodule SqueezeWeb.HomeController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Thanks for signing up!")
-        |> redirect(to: home_path(conn, :index))
+        |> redirect(to: Routes.home_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_flash(:error, "Invalid email address")
@@ -29,7 +29,7 @@ defmodule SqueezeWeb.HomeController do
     user = conn.assigns.current_user
     if user.registered do
       conn
-      |> redirect(to: dashboard_path(conn, :index))
+      |> redirect(to: Routes.dashboard_path(conn, :index))
       |> halt()
     else
       conn

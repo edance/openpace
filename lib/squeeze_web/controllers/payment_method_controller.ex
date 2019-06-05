@@ -7,7 +7,7 @@ defmodule SqueezeWeb.PaymentMethodController do
   @payment_processor Application.get_env(:squeeze, :payment_processor)
 
   def index(conn, _params) do
-    redirect(conn, to: billing_path(conn, :index))
+    redirect(conn, to: Routes.billing_path(conn, :index))
   end
 
   def new(conn, _params) do
@@ -21,7 +21,7 @@ defmodule SqueezeWeb.PaymentMethodController do
       {:ok, _payment_method} ->
         conn
         |> put_flash(:info, "Payment method created successfully.")
-        |> redirect(to: billing_path(conn, :index))
+        |> redirect(to: Routes.billing_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -34,7 +34,7 @@ defmodule SqueezeWeb.PaymentMethodController do
 
     conn
     |> put_flash(:info, "Payment method deleted successfully.")
-    |> redirect(to: billing_path(conn, :index))
+    |> redirect(to: Routes.billing_path(conn, :index))
   end
 
   defp create_stripe_card(user, params) do

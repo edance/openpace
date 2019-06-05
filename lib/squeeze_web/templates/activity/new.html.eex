@@ -1,5 +1,5 @@
 <h2>New Activity</h2>
 
-<%= render "form.html", Map.put(assigns, :action, activity_path(@conn, :create)) %>
+<%= render "form.html", Map.put(assigns, :action, Routes.activity_path(@conn, :create)) %>
 
-<span><%= link "Back", to: activity_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.activity_path(@conn, :index) %></span>

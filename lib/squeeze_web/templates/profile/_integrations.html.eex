@@ -3,7 +3,7 @@
     <%= if integration?("strava", assigns) do %>
       <%= gettext("Connected to %{provider}", provider: "Strava") %>
     <% else %>
-      <%= link to: integration_path(@conn, :request, "strava") do %>
+      <%= link to: Routes.integration_path(@conn, :request, "strava") do %>
         <%= gettext("Connect to %{provider}", provider: "Strava") %>
       <% end %>
     <% end %>
@@ -13,7 +13,7 @@
     <%= if integration?("fitbit", assigns) do %>
       <%= gettext("Connected to %{provider}", provider: "Fitbit") %>
     <% else %>
-      <%= link to: integration_path(@conn, :request, "fitbit") do %>
+      <%= link to: Routes.integration_path(@conn, :request, "fitbit") do %>
         <%= gettext("Connect to %{provider}", provider: "Fitbit") %>
       <% end %>
     <% end %>

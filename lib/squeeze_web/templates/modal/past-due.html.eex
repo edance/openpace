@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <%= link("Take me to billing", to: billing_path(@conn, :index), class: "btn btn-white") %>
+        <%= link("Take me to billing", to: Routes.billing_path(@conn, :index), class: "btn btn-white") %>
       </div>
     </div>
   </div>

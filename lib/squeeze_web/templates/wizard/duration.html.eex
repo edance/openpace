@@ -2,7 +2,7 @@
   <%= gettext("What is your goal time?") %>
 </h1>
 
-<%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
+<%= async_form @changeset, Routes.wizard_path(@conn, :update, @step), fn f -> %>
   <div class="form-group">
     <%= duration_select f, :duration, class: "form-control" %>
     <%= error_tag f, :duration, class: "d-block" %>

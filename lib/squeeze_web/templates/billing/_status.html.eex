@@ -16,7 +16,7 @@
       <%= gettext("You are currently on a free trial which ends %{date}.", date: formatted_trial_end(assigns)) %>
 
       <%= unless @payment_method do %>
-        <%= link gettext("Add your payment method."), to: payment_method_path(@conn, :new) %>
+        <%= link gettext("Add your payment method."), to: Routes.payment_method_path(@conn, :new) %>
       <% end %>
     </p>
   </div>
@@ -33,10 +33,10 @@
       <br/>
 
       <%= if @payment_method do %>
-        <%= link(gettext("Cancel or take a break?"), to: billing_path(@conn, :cancel),
+        <%= link(gettext("Cancel or take a break?"), to: Routes.billing_path(@conn, :cancel),
           method: :put, data: [confirm: gettext("Are you sure you want to cancel?")]) %>
       <% else %>
-        <%= link gettext("Add your payment method."), to: payment_method_path(@conn, :new) %>
+        <%= link gettext("Add your payment method."), to: Routes.payment_method_path(@conn, :new) %>
       <% end %>
     </p>
   </div>

@@ -2,7 +2,7 @@
   <%= gettext "I am training to run a" %>
 </h1>
 
-<%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
+<%= async_form @changeset, Routes.wizard_path(@conn, :update, @step), fn f -> %>
   <div class="form-group">
     <%= autocomplete(f, :distance, distances(), class: "form-control", placeholder: gettext("Choose a distance")) %>
     <%= error_tag f, :distance %>

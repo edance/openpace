@@ -19,7 +19,7 @@ defmodule SqueezeWeb.ForgotPasswordController do
         |> Mailer.deliver_now()
         conn
         |> put_flash(:info, "Link sent to email")
-        |> redirect(to: home_path(conn, :index))
+        |> redirect(to: Routes.home_path(conn, :index))
     end
   end
 end

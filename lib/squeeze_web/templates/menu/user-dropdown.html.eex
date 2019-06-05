@@ -5,14 +5,14 @@
     </h6>
   </div>
 
-  <%= link(to: profile_path(@conn, :edit), class: "dropdown-item") do %>
+  <%= link(to: Routes.profile_path(@conn, :edit), class: "dropdown-item") do %>
     <i class="icon-user"></i>
     <span><%= gettext("Profile") %></span>
   <% end %>
 
   <div class="dropdown-divider"></div>
 
-  <%= link class: "dropdown-item", to: session_path(@conn, :delete), method: :delete do %>
+  <%= link class: "dropdown-item", to: Routes.session_path(@conn, :delete), method: :delete do %>
     <i class="icon-logout"></i>
     <span><%= gettext("Logout") %></span>
   <% end %>

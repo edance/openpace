@@ -2,7 +2,7 @@
   <%= gettext("What is your level of experience?") %>
 </h1>
 
-<%= async_form @changeset, wizard_path(@conn, :update, @step), fn f -> %>
+<%= async_form @changeset, Routes.wizard_path(@conn, :update, @step), fn f -> %>
 
   <%= if @changeset.action do %>
     <div class="alert alert-danger">

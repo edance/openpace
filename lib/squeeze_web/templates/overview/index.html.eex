@@ -7,7 +7,7 @@
 
 <!-- Header -->
 <div class="header pt-5 pt-md-8 overflow-hidden">
-  <img class="waves" src="<%= static_path(@conn, "/images/waves.svg") %>" />
+  <img class="waves" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
 
   <div class="container-fluid">
     <div class="header-body">
@@ -91,7 +91,7 @@
               </h3>
             </div>
             <div class="col text-right">
-              <%= link(gettext("See all"), to: activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
+              <%= link(gettext("See all"), to: Routes.activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
             <tbody>
               <%= for activity <- @activities do %>
                 <tr scope="row">
-                  <td><%= link activity.name, to: activity_path(@conn, :show, activity) %></td>
+                  <td><%= link activity.name, to: Routes.activity_path(@conn, :show, activity) %></td>
                   <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
                   <td><%= relative_time(activity.start_at) %></td>
                 </tr>

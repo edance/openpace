@@ -26,7 +26,7 @@
         </div>
 
         <div class="card-body">
-          <%= render "form.html", Map.put(assigns, :action, payment_method_path(@conn, :create)) %>
+          <%= render "form.html", Map.put(assigns, :action, Routes.payment_method_path(@conn, :create)) %>
         </div>
       </div>
     </div>

@@ -13,12 +13,12 @@
               <%= gettext("If you have struggled to set a new personal record, you can track your training progress toward your goal so that you can have a breakthrough race day.") %>
             </p>
 
-            <%= link(gettext("Get Started"), to: wizard_path(@conn, :index), class: "btn btn-primary") %>
+            <%= link(gettext("Get Started"), to: Routes.wizard_path(@conn, :index), class: "btn btn-primary") %>
           </div>
         </div>
       </div>
     </div>
 
-    <img class="waves position-absolute" src="<%= static_path(@conn, "/images/waves.svg") %>" />
+    <img class="waves position-absolute" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
   </section>
 </div>

@@ -8,9 +8,9 @@
     <%= card_number(assigns) %> <br/>
     <%= card_exp(assigns) %> <br/>
 
-    <%= link gettext("Update Payment Method"), to: payment_method_path(@conn, :new), class: "mt-4 btn btn-sm btn-primary" %>
+    <%= link gettext("Update Payment Method"), to: Routes.payment_method_path(@conn, :new), class: "mt-4 btn btn-sm btn-primary" %>
   <% else %>
     <p><%= gettext("We currently do not have a payment method on file.") %></p>
-    <%= link gettext("Add a Payment Method"), to: payment_method_path(@conn, :new), class: "btn btn-sm btn-primary" %>
+    <%= link gettext("Add a Payment Method"), to: Routes.payment_method_path(@conn, :new), class: "btn btn-sm btn-primary" %>
   <% end %>
 </div>
