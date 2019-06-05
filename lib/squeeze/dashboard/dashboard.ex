@@ -184,10 +184,10 @@ defmodule Squeeze.Dashboard do
     |> Changeset.put_change(:activity_id, activity.id)
     Multi.new()
     |> Multi.insert(:trackpoint_set, changeset)
-    |> Multi.run(:trackpoint_count, fn(%{trackpoint_set: trackpoint_set}) ->
+    |> Multi.run(:trackpoint_count, fn(repo, %{trackpoint_set: trackpoint_set}) ->
       trackpoints = trackpoints
       |> Enum.map(&Map.merge(&1, %{trackpoint_set_id: trackpoint_set.id}))
-      {count, _} = Repo.insert_all(Trackpoint, trackpoints)
+      {count, _} = repo.insert_all(Trackpoint, trackpoints)
       {:ok, count}
     end)
     |> Repo.transaction()
