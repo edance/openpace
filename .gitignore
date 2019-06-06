@@ -31,3 +31,6 @@ npm-debug.log
 
 # Maxmind dBs for IP geolocation
 *.mmdb
+
+# Add coveralls folder
+/cover
