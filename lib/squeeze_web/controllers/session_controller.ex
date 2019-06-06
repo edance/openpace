@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.SessionController do
   use SqueezeWeb, :controller
 
-  alias Comeonin.Argon2
   alias Squeeze.Accounts
   alias Squeeze.Accounts.User
   alias Squeeze.Guardian.Plug

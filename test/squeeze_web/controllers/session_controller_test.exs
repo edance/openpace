@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.SessionControllerTest do
   use SqueezeWeb.ConnCase
 
-  alias Comeonin.Argon2
   alias Squeeze.Guardian.Plug
 
   test "renders login page", %{conn: conn} do
@@ -21,7 +20,7 @@ defmodule SqueezeWeb.SessionControllerTest do
     end
 
     test "with a user and valid password", %{conn: conn} do
-      encrypted_password = Argon2.hashpwsalt("password")
+      encrypted_password = Argon2.hash_pwd_salt("password")
       user = insert(:user, encrypted_password: encrypted_password)
       session_params = %{email: user.email, password: "password"}
       conn = conn
@@ -31,7 +30,7 @@ defmodule SqueezeWeb.SessionControllerTest do
     end
 
     test "with a user and invalid password", %{conn: conn} do
-      encrypted_password = Argon2.hashpwsalt("password")
+      encrypted_password = Argon2.hash_pwd_salt("password")
       user = insert(:user, encrypted_password: encrypted_password)
       session_params = %{email: user.email, password: "abc"}
       conn = conn
