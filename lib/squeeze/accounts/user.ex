@@ -6,7 +6,6 @@ defmodule Squeeze.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Comeonin.Argon2
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
 
   @registration_fields ~w(email encrypted_password)a
@@ -95,6 +94,6 @@ defmodule Squeeze.Accounts.User do
   end
 
   defp encrypt_password(changeset) do
-    update_change(changeset, :encrypted_password, &Argon2.hashpwsalt/1)
+    update_change(changeset, :encrypted_password, &Argon2.hash_pwd_salt/1)
   end
 end
