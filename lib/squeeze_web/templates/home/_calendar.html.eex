@@ -2,7 +2,8 @@
   <div class="container">
     <div class="row row-grid align-items-center">
       <div class="col-md-6">
-        <img alt="<%= gettext("Dashboard Preview") %>" src="<%= Routes.static_path(@conn, "/images/home/dashboard.jpg") %>" class="img-fluid floating shadow">
+        <%= responsive_picture(@conn, "/images/home/calendar.jpg",
+          alt: gettext("Calendar Preview"), class: "img-fluid floating shadow") %>
       </div>
       <div class="col-md-6">
         <div class="pr-md-5">
