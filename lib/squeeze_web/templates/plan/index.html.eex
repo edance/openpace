@@ -1,26 +1,11 @@
-<h2>Listing Training plans</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for plan <- @training_plans do %>
-    <tr>
-      <td><%= plan.name %></td>
-
-      <td class="text-right">
-        <span><%= link "Show", to: Routes.plan_path(@conn, :show, plan), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: Routes.plan_path(@conn, :edit, plan), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: Routes.plan_path(@conn, :delete, plan), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
+    <%= gettext("Training Plans") %>
+  </span>
 <% end %>
-  </tbody>
-</table>
 
-<span><%= link "New Plan", to: Routes.plan_path(@conn, :new) %></span>
+<div class="header bg-waves pb-5 pt-5 pt-md-6">
+  <div class="container-fluid">
+    <h1>Coming Soon.</h1>
+  </div>
+</div>
