@@ -17,9 +17,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">
-            <span class="avatar avatar-sm rounded-circle">
-              <img src="<%= @current_user.avatar %>"/>
-            </span>
+            <%= render "_avatar.html", assigns %>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
             </div>

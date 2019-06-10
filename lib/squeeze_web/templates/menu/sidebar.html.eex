@@ -15,7 +15,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">
-            <img class="avatar avatar-sm rounded-circle" src="<%= @current_user.avatar %>"/>
+            <%= render "_avatar.html", assigns %>
           </div>
         </a>
         <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
