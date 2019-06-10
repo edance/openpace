@@ -1,0 +1,6 @@
+Hi <%= @user.first_name %>,
+
+Welcome to the <%= company_name() %> family! You're the newest member to our growing community of runners. We are happy to be part of your training plan.
+
+Happy Running,
+The <%= company_name() %> Team
