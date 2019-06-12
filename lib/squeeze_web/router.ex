@@ -111,6 +111,10 @@ defmodule SqueezeWeb.Router do
     get "/index.xml", SitemapController, :index
   end
 
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
   scope "/", SqueezeWeb do
     pipe_through :browser # Use the default browser stack
 
