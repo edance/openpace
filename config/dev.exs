@@ -63,3 +63,6 @@ config :squeeze, Squeeze.Repo,
   database: "squeeze_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :squeeze, Squeeze.Mailer,
+  adapter: Bamboo.LocalAdapter
