@@ -37,4 +37,22 @@ defmodule SqueezeWeb.OverviewView do
     |> Enum.sum()
     |> format_distance(user.user_prefs)
   end
+
+  def streak(%{activities: activities, current_user: user}) do
+    today = TimeHelper.today(user)
+    yesterday = Timex.shift(today, days: -1)
+    dates = activities
+    |> Enum.filter(&(String.contains?(&1.type, "Run")))
+    |> Enum.map(&(TimeHelper.to_date(user, &1.start_at)))
+    |> Enum.uniq()
+    most_recent_date = List.first(dates)
+    if today == most_recent_date || yesterday == most_recent_date do
+      streak = dates
+      |> Enum.with_index()
+      |> Enum.filter(fn({x, idx}) -> x == Timex.shift(most_recent_date, days: -idx) end)
+      "#{length(streak)} day streak"
+    else
+      "0 day streak"
+    end
+  end
 end
