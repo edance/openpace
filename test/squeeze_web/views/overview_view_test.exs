@@ -45,11 +45,50 @@ defmodule SqueezeWeb.OverviewViewTest do
       assert OverviewView.weeks_until_race(user) == nil
     end
 
-    test "with valid date" do
-      user = build(:user)
+    test "with valid date", %{user: user} do
       date = user.user_prefs.race_date
       weeks_until = OverviewView.weeks_until_race(user)
       assert weeks_until == FormatHelpers.relative_date(user, date)
     end
   end
+
+  describe "#streak" do
+    test "without an activity today or yesterday", %{user: user} do
+      activity = build(:activity, start_at: days_ago(3))
+      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      assert streak == "0 day streak"
+    end
+
+    test "with non-run activities", %{user: user} do
+      activity = build(:activity, type: "Yoga")
+      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      assert streak == "0 day streak"
+    end
+
+    test "with an activity yesterday", %{user: user} do
+      activity = build(:activity, start_at: days_ago(1))
+      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      assert streak == "1 day streak"
+    end
+
+    test "with an activity today", %{user: user} do
+      activity = build(:activity)
+      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      assert streak == "1 day streak"
+    end
+
+    test "with multiple activities in a row", %{user: user} do
+      activities = [build(:activity), build(:activity, start_at: days_ago(1))]
+      streak = OverviewView.streak(%{activities: activities, current_user: user})
+      assert streak == "2 day streak"
+    end
+
+    test "with multiple activities on the same day", %{user: user} do
+      activities = build_pair(:activity)
+      streak = OverviewView.streak(%{activities: activities, current_user: user})
+      assert streak == "1 day streak"
+    end
+  end
+
+  defp days_ago(count), do: Timex.shift(Timex.now, days: -count)
 end
