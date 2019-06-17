@@ -2,7 +2,7 @@
   <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
 
   <section class="section section-lg position-relative overflow-hidden pb-250">
-    <div class="container pt-6 d-flex">
+    <div class="container py-6 py-md-8 d-flex">
       <div class="col px-0">
         <div class="row">
           <div class="col-lg-8">
@@ -19,6 +19,6 @@
       </div>
     </div>
 
-    <img class="waves position-absolute" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
+    <img class="waves d-none d-md-block position-absolute" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
   </section>
 </div>
