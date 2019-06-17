@@ -28,14 +28,25 @@ defmodule SqueezeWeb.OverviewView do
     relative_date(user, date)
   end
 
-  def weekly_distance(%User{} = user, activities) do
-    today = TimeHelper.today(user)
-    date = Timex.shift(today, days: -Timex.days_to_beginning_of_week(today))
-    activities
-    |> Enum.filter(fn(x) -> Timex.after?(x.start_at, date) end)
+  def weekly_distance(%{year_dataset: dataset}) do
+    dataset
+    |> List.last()
+    |> Map.get(:distance)
+  end
+
+  def weekly_diff(%{year_dataset: dataset}) do
+    distances = dataset
+    |> Enum.reverse()
     |> Enum.map(&(&1.distance))
-    |> Enum.sum()
-    |> format_distance(user.user_prefs)
+
+    curr_distance = Enum.at(distances, 0)
+    prev_distance = Enum.at(distances, 1)
+    if prev_distance == 0 do
+      nil
+    else
+      percent = (curr_distance - prev_distance) / prev_distance * 100
+      trunc(percent)
+    end
   end
 
   def streak(%{activities: activities, current_user: user}) do
