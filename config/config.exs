@@ -9,6 +9,8 @@ use Mix.Config
 config :squeeze,
   ecto_repos: [Squeeze.Repo]
 
+config :phoenix, :json_library, Jason
+
 # Configures the endpoint
 config :squeeze, SqueezeWeb.Endpoint,
   url: [scheme: "http", host: "localhost", port: 4000],
