@@ -64,7 +64,7 @@ defmodule Squeeze.Mixfile do
       {:number, "~> 1.0.0"},
       {:tesla, "~> 1.2.1"},
       {:hackney, "~> 1.15.0"},
-      {:jason, ">= 1.0.0"},
+      {:jason, "~> 1.1"},
       {:react_phoenix, "~> 1.0.0"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
