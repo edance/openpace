@@ -41,6 +41,14 @@ defmodule Squeeze.Fitbit.Client do
     |> get(url)
   end
 
+  def get_activities(client, opts \\ []) do
+    today = Timex.format!(Timex.today, "{YYYY}-{0M}-{0D}")
+    opts = Keyword.merge(opts, [limit: 20, beforeDate: today, offset: 0, sort: "desc"])
+    url = "/1/user/-/activities/list.json"
+    client
+    |> get(url, query: opts)
+  end
+
   @doc false
   def set_authorization_header(%Tesla.Env{} = env, access_token) do
     %Tesla.Env{env | headers: [{"Authorization", "Bearer #{access_token}"}]}
