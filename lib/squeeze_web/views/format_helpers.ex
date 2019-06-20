@@ -9,7 +9,6 @@ defmodule SqueezeWeb.FormatHelpers do
   alias Squeeze.Accounts.{User, UserPrefs}
   alias Squeeze.Distances
   alias Squeeze.TimeHelper
-  alias Timex.Duration
 
   @doc """
   Formats a duration like a stopwatch
@@ -20,11 +19,15 @@ defmodule SqueezeWeb.FormatHelpers do
     "3:00:00"
   """
   def format_duration(nil), do: nil
-  def format_duration(seconds) do
-    duration = Duration.from_seconds(seconds)
-    duration
-    |> Duration.to_time!()
-    |> Timex.format!(format(duration), :strftime)
+  def format_duration(t) do
+    seconds = rem(t, 60)
+    minutes = trunc(rem(t, (60 * 60)) / 60)
+    hours = trunc(t / (60 * 60))
+    if hours > 0 do
+      "#{hours}:#{pad_num(minutes)}:#{pad_num(seconds)}"
+    else
+      "#{minutes}:#{pad_num(seconds)}"
+    end
   end
 
   def format_distance(distance, %UserPrefs{} = user_prefs) do
@@ -53,21 +56,10 @@ defmodule SqueezeWeb.FormatHelpers do
   def format_pace(%{distance: distance, duration: duration}, %UserPrefs{} = user_prefs) do
     miles = Distances.to_float(distance, imperial: user_prefs.imperial)
     label = Distances.label(imperial: user_prefs.imperial)
-    pace = duration / miles
-    {:ok, time} = duration_to_time(pace)
-    "#{Timex.format!(time, "%-M:%S", :strftime)}/#{label}"
+    pace = trunc(duration / miles)
+    "#{format_duration(pace)}/#{label}"
   end
 
-  defp duration_to_time(duration) do
-    duration
-    |> Duration.from_seconds()
-    |> Duration.to_time()
-  end
-
-  defp format(duration) do
-    case Duration.to_hours(duration) do
-      x when x < 1 -> "%-M:%S"
-      _ -> "%-H:%M:%S"
-    end
-  end
+  defp pad_num(x) when x < 10, do: "0#{x}"
+  defp pad_num(x), do: "#{x}"
 end

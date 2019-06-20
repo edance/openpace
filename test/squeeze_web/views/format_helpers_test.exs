@@ -30,6 +30,11 @@ defmodule SqueezeWeb.FormatHelpersTest do
       duration = 9 * 60
       assert FormatHelpers.format_duration(duration) == "9:00"
     end
+
+    test "with a duration over a day" do
+      duration = 27 * 3600 + 20 * 60
+      assert FormatHelpers.format_duration(duration) == "27:20:00"
+    end
   end
 
   describe "#format_distance" do
