@@ -52,6 +52,7 @@ defmodule Squeeze.Dashboard.Activity do
     activity
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint(:unique_activity, name: :activities_user_id_external_id_index)
     |> set_status()
   end
 
