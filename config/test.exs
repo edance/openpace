@@ -19,13 +19,6 @@ config :squeeze, Squeeze.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-# Test configuration for strava
-config :strava,
-  client_id: "1",
-  client_secret: "123456789",
-  redirect_uri: "http://localhost:4000/auth/strava/callback",
-  webhook_challenge: "STRAVA"
-
 config :squeeze, Squeeze.Mailer,
   adapter: Bamboo.TestAdapter
 
@@ -36,10 +29,20 @@ config :squeeze, :strava_streams, Squeeze.Strava.MockStreams
 
 config :squeeze, :payment_processor, Squeeze.MockPaymentProcessor
 
-config :argon2_elixir, t_cost: 2, m_cost: 8
-
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: "1",
   client_secret: "123456789",
   redirect_uri: "http://localhost:4000/auth/strava/callback",
   webhook_challenge: "FITBIT"
+
+### Additional config
+
+config :argon2_elixir, t_cost: 2, m_cost: 8
+
+config :strava,
+  client_id: "1",
+  client_secret: "123456789",
+  redirect_uri: "http://localhost:4000/auth/strava/callback",
+  webhook_challenge: "STRAVA"
+
+config :tesla, adapter: Tesla.Mock

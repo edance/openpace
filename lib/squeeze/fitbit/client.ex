@@ -9,8 +9,6 @@ defmodule Squeeze.Fitbit.Client do
   alias Squeeze.Accounts.Credential
   alias Squeeze.Fitbit.Middleware
 
-  adapter(Tesla.Adapter.Hackney)
-
   plug(Tesla.Middleware.BaseUrl, "https://api.fitbit.com")
   plug Tesla.Middleware.JSON
 
