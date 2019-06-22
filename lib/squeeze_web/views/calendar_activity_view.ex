@@ -3,10 +3,9 @@ defmodule SqueezeWeb.CalendarActivityView do
 
   alias Squeeze.TimeHelper
 
-  def in_past?(%{current_user: user, date: date}) do
-    TimeHelper.to_date(user, Timex.now)  >= date
+  def on_date?(user, %NaiveDateTime{} = datetime, activity) do
+    on_date?(user, NaiveDateTime.to_date(datetime), activity)
   end
-
   def on_date?(user, date, activity) do
     activity.planned_date == date ||
       TimeHelper.to_date(user, activity.start_at)  == date
