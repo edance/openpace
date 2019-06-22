@@ -12,16 +12,14 @@
 </button>
 
 <%= if length(activities_for_date) > 0 do %>
-  <%= if in_past?(assigns) do %>
-    <div class="small">
-      <div class="font-weight-bold">
-        <%= distance_for_activities(activities_for_date, @current_user.user_prefs) %>
-      </div>
-      <span>
-        <%= duration_for_activities(activities_for_date) %>
-        ·
-        <%= pace_for_activities(activities_for_date, @current_user.user_prefs) %>
-      </span>
+  <div class="small">
+    <div class="font-weight-bold">
+      <%= distance_for_activities(activities_for_date, @current_user.user_prefs) %>
     </div>
-  <% end %>
+    <span>
+      <%= duration_for_activities(activities_for_date) %>
+      ·
+      <%= pace_for_activities(activities_for_date, @current_user.user_prefs) %>
+    </span>
+  </div>
 <% end %>
