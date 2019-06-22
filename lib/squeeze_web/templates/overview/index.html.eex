@@ -31,7 +31,7 @@
 </div>
 
 <!-- Page content -->
-<div class="position-relative container-fluid p-5 bg-waves">
+<div class="position-relative container-fluid py-5 bg-waves">
   <div class="row">
     <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card bg-gradient-default shadow">
