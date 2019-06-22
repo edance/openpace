@@ -28,7 +28,7 @@
       <%= if @plan do %>
         <%= gettext("You are currently on the monthly plan at %{price} per month.", price: format_currency(@plan.amount)) %>
       <% else %>
-        You are on the free version. Congrats!
+        <%= gettext("You are currently on the free version.") %>
       <% end %>
       <br/>
 
