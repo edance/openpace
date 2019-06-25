@@ -1,7 +1,7 @@
 <!-- Top navbar -->
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
   <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
-    <%= @activity.name %>
+    <%= @activity.name %> · <%= relative_time(@activity.start_at) %>
   </span>
 <% end %>
 
