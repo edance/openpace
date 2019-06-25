@@ -1,11 +1,11 @@
 <!-- Top navbar -->
 <%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
+  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
     <%= @activity.name %>
   </span>
 <% end %>
 
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-waves pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                    <i class="fas fa-chart-bar"></i>
+                    <span class="iconify" data-icon="mdi:map-marker-distance" data-inline="false"></span>
                   </div>
                 </div>
               </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                    <i class="fas fa-chart-pie"></i>
+                    <span class="iconify" data-icon="zmdi:timer" data-inline="false"></span>
                   </div>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                    <i class="fas fa-users"></i>
+                    <span class="iconify" data-icon="mdi:run-fast" data-inline="false"></span>
                   </div>
                 </div>
               </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <i class="fas fa-percent"></i>
+                    <span class="iconify" data-icon="el:graph" data-inline="false"></span>
                   </div>
                 </div>
               </div>
@@ -100,14 +100,15 @@
 <div class="container-fluid mt--7">
   <div class="card shadow mb-4">
     <div class="row no-gutters">
+      <div class="col-md-8">
+        <%= render SqueezeWeb.MapView, "activity-map.html", assigns %>
+      </div>
+
       <%= if String.contains?(@activity.type, "Run") do %>
-        <div class="col-4">
+        <div class="col-md-4">
           <%= render("_splits-table.html", assigns) %>
         </div>
       <% end %>
-      <div class="col">
-        <%= render SqueezeWeb.MapView, "activity-map.html", assigns %>
-      </div>
     </div>
   </div>
 
