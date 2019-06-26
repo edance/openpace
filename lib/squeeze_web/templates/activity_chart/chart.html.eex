@@ -1,0 +1,5 @@
+<div class="activity-chart">
+  <canvas id="chart2"></canvas>
+  <canvas id="chart3"></canvas>
+  <canvas id="chart4"></canvas>
+</div>
