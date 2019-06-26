@@ -1,5 +1,11 @@
 <div class="activity-chart">
-  <canvas id="chart2"></canvas>
-  <canvas id="chart3"></canvas>
-  <canvas id="chart4"></canvas>
+  <canvas id="chart2"
+          data-dataset="<%= pace(assigns) %>">
+  </canvas>
+  <canvas id="chart3"
+          data-dataset="<%= heartrate(assigns) %>">
+  </canvas>
+  <canvas id="chart4"
+          data-dataset="<%= elevation(assigns) %>">
+  </canvas>
 </div>
