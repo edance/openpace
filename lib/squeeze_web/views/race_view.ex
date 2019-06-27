@@ -1,8 +1,6 @@
 defmodule SqueezeWeb.RaceView do
   use SqueezeWeb, :view
 
-  alias Squeeze.Distances
-
   def title(_page, %{race: race}), do: race.name
 
   def h1(%{race: race}), do: race.name
@@ -11,50 +9,22 @@ defmodule SqueezeWeb.RaceView do
     "#{race.city}, #{race.state} #{race.country}"
   end
 
-  def date(%{race: race}) do
-    start_at = race.start_at
+  def date(assigns) do
+    start_at = start_at(assigns)
     start_at
     |> Timex.format!("%a %b #{Ordinal.ordinalize(start_at.day)}, %Y", :strftime)
   end
 
-  def time(%{race: race}) do
-    race.start_at
+  def time(assigns) do
+    assigns
+    |> start_at
     |> Timex.format!("%-I:%M %p ", :strftime)
   end
 
-  def distance(%{race: %{distance: distance, country: country}}) do
-    Distances.format(distance, imperial: country == "US")
-  end
-
   def start_at(%{race: race}) do
-    race.start_at
-    |> Timex.to_datetime(race.timezone)
-    |> DateTime.to_iso8601()
-  end
-
-  def countdown_timer(%{race: race}) do
-    date = Timex.to_datetime(race.start_at, race.timezone)
-    distance = Timex.diff(date, Timex.now, :seconds)
-    days = trunc(distance / (60 * 60 * 24))
-    hours = trunc(rem(distance, (60 * 60 * 24)) / (60 * 60))
-    minutes = trunc(rem(distance, (60 * 60)) / 60)
-    seconds = rem(distance, 60)
-    "#{days}d #{hours}h #{minutes}m #{seconds}s"
-  end
-
-  def distance_type(%{race: race}) do
-    race.distance_type
-    |> Atom.to_string()
-    |> String.split("_")
-    |> Enum.map(&String.capitalize/1)
-    |> Enum.join(" ")
-  end
-
-  def coordinates(%{race: race}) do
-    race.trackpoints
-    |> Enum.map(fn(x) -> x.coordinates end)
-    |> Enum.map(fn(c) -> [c["lon"], c["lat"]] end)
-    |> Jason.encode!()
+    race.events
+    |> Enum.map(&(&1.start_at))
+    |> Enum.min(fn -> nil end)
   end
 
   def content(%{race: %{content: content}}) do

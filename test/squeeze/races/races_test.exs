@@ -6,9 +6,10 @@ defmodule Squeeze.RacesTest do
   alias Squeeze.Races
 
   describe "races" do
-    test "get_race!/1 returns the race with given id" do
+    test "get_race!/1 returns the race with given slug" do
       race = insert(:race)
-      assert Races.get_race!(race.slug).id == race.id
+      slug = race.slug
+      assert Races.get_race!(slug).slug == slug
     end
   end
 end

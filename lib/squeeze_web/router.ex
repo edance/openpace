@@ -54,6 +54,8 @@ defmodule SqueezeWeb.Router do
     get "/reset-password", ResetPasswordController, :show
     post "/reset-password", ResetPasswordController, :reset
     put "/reset-password", ResetPasswordController, :reset
+
+    get "/races/:state/:city/:name", RaceController, :show
   end
 
   scope "/integration", SqueezeWeb do
@@ -113,11 +115,5 @@ defmodule SqueezeWeb.Router do
 
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
-  end
-
-  scope "/", SqueezeWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/:slug", RaceController, :show
   end
 end
