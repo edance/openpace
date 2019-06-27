@@ -1,16 +1,13 @@
-<%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
-
 <%= render "_schema.html", assigns %>
 
 <main>
+  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
   <div class="container mt-6">
     <div class="row">
       <div class="col-md-8">
         <%= render "_hero.html", assigns %>
 
-        <%= if length(@race.trackpoints) > 0 do %>
-          <%= render "_course-info.html", assigns %>
-        <% end %>
+        <%= render "_events.html", assigns %>
 
         <div class="mb-6">
           <%= content(assigns) %>

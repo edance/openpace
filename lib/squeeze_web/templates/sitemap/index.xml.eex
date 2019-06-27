@@ -5,12 +5,4 @@
     <priority>1.0</priority>
     <changefreq>daily</changefreq>
   </url>
-
-  <%= for race <- @races do %>
-    <url>
-      <loc><%= Routes.race_url(@conn, :show, race.slug) %></loc>
-      <priority>0.8</priority>
-      <changefreq>daily</changefreq>
-    </url>
-  <% end %>
 </urlset>

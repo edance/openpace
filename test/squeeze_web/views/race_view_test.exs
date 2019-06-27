@@ -3,33 +3,58 @@ defmodule SqueezeWeb.RaceViewTest do
 
   alias SqueezeWeb.RaceView
 
-  describe "distance/1" do
-    test "with a race in the US" do
-      opts = %{race: %{distance: 42_195.0, country: "US"}}
-      assert RaceView.distance(opts) == "26.22 mi"
-    end
-
-    test "with a race outside the US" do
-      opts = %{race: %{distance: 42_195.0, country: "CA"}}
-      assert RaceView.distance(opts) == "42.2 km"
+  describe "title/2" do
+    test "includes race name" do
+      race = build(:race)
+      assert RaceView.title(%{}, %{race: race}) =~ race.name
     end
   end
 
-  test "start_at/1" do
-    {:ok, datetime} = NaiveDateTime.new(2019, 5, 25, 7, 15, 0)
-    opts = %{race: %{start_at: datetime, timezone: "America/New_York"}}
-    assert RaceView.start_at(opts) =~ ~r/^2019-05-25T07:15:00-0[4-5]:00$/
+  describe "h1/1" do
+    test "includes race name" do
+      race = build(:race)
+      assert RaceView.h1(%{race: race}) =~ race.name
+    end
   end
 
-  test "countdown_timer/1" do
-    datetime = Timex.now
-    |> Timex.shift(days: 2, hours: 3, minutes: 1, seconds: 49)
-    opts = %{race: %{start_at: datetime, timezone: "America/New_York"}}
-    assert RaceView.countdown_timer(opts) =~ ~r/^2d 3h 1m 4[0-9]s$/
+  test "location/1" do
+    race = build(:race)
+    assert RaceView.location(%{race: race}) == "#{race.city}, #{race.state} #{race.country}"
   end
 
-  test "distance_type/1" do
-    opts = %{race: %{distance_type: :half_marathon}}
-    assert RaceView.distance_type(opts) == "Half Marathon"
+  test "date/1" do
+    race = build(:race) |> with_events()
+    datetime = first_datetime(race)
+    date = Ordinal.ordinalize(datetime.day)
+    assert RaceView.date(%{race: race}) =~
+      Timex.format!(datetime, "%a %b #{date}, %Y", :strftime)
+  end
+
+  test "time/1" do
+    race = build(:race) |> with_events()
+    datetime = first_datetime(race)
+    assert RaceView.time(%{race: race}) ==
+      Timex.format!(datetime, "%-I:%M %p ", :strftime)
+  end
+
+  describe "start_at/1" do
+    test "without any events" do
+      race = build(:race, events: [])
+      assert RaceView.start_at(%{race: race}) == nil
+    end
+
+    test "with multiple events returns the first" do
+      race = build(:race) |> with_events()
+      assert RaceView.start_at(%{race: race}) == first_datetime(race)
+    end
+  end
+
+  test "content/1" do
+    race = build(:race, content: "## Test Heading")
+    assert RaceView.content(%{race: race}) == {:safe, "<h2>Test Heading</h2>\n"}
+  end
+
+  defp first_datetime(race) do
+    race.events |> Enum.map(&(&1.start_at)) |> Enum.min()
   end
 end

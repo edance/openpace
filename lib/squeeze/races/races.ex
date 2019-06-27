@@ -9,20 +9,6 @@ defmodule Squeeze.Races do
   alias Squeeze.Races.Race
 
   @doc """
-  Returns the list of races.
-
-  ## Examples
-
-  iex> list_races()
-  [%Race{}, ...]
-
-  """
-  def list_races do
-    Race
-    |> Repo.all()
-  end
-
-  @doc """
   Gets a single race.
 
   Raises `Ecto.NoResultsError` if the Race does not exist.
@@ -39,6 +25,6 @@ defmodule Squeeze.Races do
   def get_race!(slug) do
     Race
     |> Repo.get_by!(slug: slug)
-    |> Repo.preload(:trackpoints)
+    |> Repo.preload([:events])
   end
 end

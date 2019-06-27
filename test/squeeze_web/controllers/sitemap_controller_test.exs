@@ -2,11 +2,10 @@ defmodule SqueezeWeb.SitemapControllerTest do
   use SqueezeWeb.ConnCase
 
   describe "#index.xml" do
-    test "renders urls for the races", %{conn: conn} do
-      race = insert(:race)
+    test "renders url for the homepage", %{conn: conn} do
       conn = get(conn, sitemap_path(conn, :index))
 
-      assert conn.resp_body =~ race.slug
+      assert conn.resp_body =~ "http://www.example.com/"
       assert conn.status == 200
     end
   end
