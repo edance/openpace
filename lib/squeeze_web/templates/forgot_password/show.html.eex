@@ -1,4 +1,4 @@
-<div class="main-content">
+<main>
   <!-- Navbar -->
   <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
 
@@ -32,4 +32,4 @@
       </div>
     </div>
   </div>
-</div>
+</main>

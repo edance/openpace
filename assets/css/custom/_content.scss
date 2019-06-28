@@ -1,25 +1,25 @@
 .main-content {
-    position: relative;
+  position: relative;
 
-    // Navbar
-    .navbar-top {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        z-index: 1;
-        background-color: transparent;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
+  // Navbar
+  .navbar-top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: transparent;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 
-    // Container
-    .container-fluid {
-        @include media-breakpoint-up(md) {
-            padding-left: ($main-content-padding-x + $grid-gutter-width / 2) !important;
-            padding-right: ($main-content-padding-x + $grid-gutter-width / 2) !important;
-        }
+  // Container
+  .container-fluid {
+    @include media-breakpoint-up(md) {
+      padding-left: ($main-content-padding-x + $grid-gutter-width / 2) !important;
+      padding-right: ($main-content-padding-x + $grid-gutter-width / 2) !important;
     }
+  }
 }
 
 
@@ -27,21 +27,21 @@
 
 .navbar-vertical.navbar-expand {
 
-    @each $breakpoint,
-    $dimension in $grid-breakpoints {
+  @each $breakpoint,
+  $dimension in $grid-breakpoints {
 
-        &-#{$breakpoint} {
+    &-#{$breakpoint} {
 
-            @include media-breakpoint-up(#{$breakpoint}) {
+      @include media-breakpoint-up(#{$breakpoint}) {
 
-                // Left
-                &.fixed-left + .main-content {
-                    margin-left: $navbar-vertical-width;
-                } // Right
-                &.fixed-right + .main-content {
-                    margin-right: $navbar-vertical-width;
-                }
-            }
+        // Left
+        &.fixed-left + .main-content {
+          margin-left: $navbar-vertical-width;
+        } // Right
+        &.fixed-right + .main-content {
+          margin-right: $navbar-vertical-width;
         }
+      }
     }
+  }
 }

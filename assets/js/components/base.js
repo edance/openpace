@@ -13,6 +13,7 @@ import './imperial-hidden-input';
 import './modal';
 import './payment-form';
 import './sign-up-form';
+import './site-nav';
 import './timezone-hidden-input';
 
 // React components
