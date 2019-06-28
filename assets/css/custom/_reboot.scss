@@ -9,7 +9,9 @@ main {
 }
 
 main {
+  background: $white;
   overflow: hidden;
+  position: relative;
 }
 
 *:focus {
