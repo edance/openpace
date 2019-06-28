@@ -1,3 +1,5 @@
+<%= render "_schema.html", assigns %>
+
 <main>
   <%= render "_hero.html", assigns %>
   <%= render "_features.html", assigns %>

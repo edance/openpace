@@ -1,5 +1,7 @@
 <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
 
+<%= render "_schema.html", assigns %>
+
 <main>
   <div class="container mt-6">
     <div class="row">
