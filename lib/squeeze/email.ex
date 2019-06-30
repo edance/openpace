@@ -27,6 +27,7 @@ defmodule Squeeze.Email do
   defp base_email do
     new_email()
     |> from(CompanyHelper.team_email())
+    |> bcc(CompanyHelper.team_email())
     |> put_layout({SqueezeWeb.LayoutView, :email})
   end
 end
