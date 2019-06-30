@@ -5,8 +5,7 @@ defmodule Squeeze.Fitbit.HistoryLoader do
 
   alias Squeeze.Accounts
   alias Squeeze.Accounts.{Credential}
-  alias Squeeze.Fitbit.Client
-  alias Squeeze.Fitbit.ActivityLoader
+  alias Squeeze.Fitbit.{ActivityLoader, Client}
 
   def load_recent(%Credential{} = credential) do
     case fetch_activities(credential) do

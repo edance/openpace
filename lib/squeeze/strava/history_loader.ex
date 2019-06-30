@@ -10,7 +10,6 @@ defmodule Squeeze.Strava.HistoryLoader do
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
 
-
   def load_recent(%Credential{} = credential) do
     {:ok, activities} = fetch_activities(credential)
     activities
