@@ -19,7 +19,7 @@ defmodule SqueezeWeb.ImageHelpers do
     urls = image_urls(conn, image_path)
     content_tag(:picture) do
       [
-        tag(:source, srcset: "#{urls.webp1x} 1x, #{urls.webp2x} 2x"),
+        tag(:source, srcset: "#{urls.webp1x} 1x, #{urls.webp2x} 2x", type: "image/webp"),
         responsive_img(conn, image_path, opts)
       ]
     end
