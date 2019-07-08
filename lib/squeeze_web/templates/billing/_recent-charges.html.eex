@@ -27,10 +27,12 @@
       </thead>
       <tbody>
         <%= for invoice <- @invoices do %>
-          <td><%= due_date(@current_user, invoice.due_date) %></td>
-          <td><%= invoice.name %></td>
-          <td><%= format_currency(invoice.amount_due) %></td>
-          <td><%= invoice.status %></td>
+          <tr>
+            <td><%= due_date(@current_user, invoice.due_date) %></td>
+            <td><%= invoice.name %></td>
+            <td><%= format_currency(invoice.amount_due) %></td>
+            <td><%= invoice.status %></td>
+          </tr>
         <% end %>
       </tbody>
     </table>
