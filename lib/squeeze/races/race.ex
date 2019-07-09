@@ -26,6 +26,7 @@ defmodule Squeeze.Races.Race do
 
     field :timezone, :string
 
+    field :registration_url, :string
     field :url, :string
 
     field :external_id, :string
