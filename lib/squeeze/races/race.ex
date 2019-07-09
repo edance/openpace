@@ -22,6 +22,8 @@ defmodule Squeeze.Races.Race do
     field :country, :string
     field :postal_code, :string
 
+    field :logo_url, :string
+
     field :timezone, :string
 
     field :url, :string
