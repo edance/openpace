@@ -7,7 +7,7 @@
 
     <!-- Brand -->
     <%= link(to: "/", class: "navbar-brand") do %>
-      <img src="<%= Routes.static_path(@conn, "/images/logo@1x.png") %>" srcset="/images/logo@1x.png 1x, /images/logo@2x.png 2x" />
+      <%= responsive_picture(@conn, "/images/logo.png") %>
     <% end %>
 
     <!-- User -->
