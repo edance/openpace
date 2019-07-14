@@ -1,5 +1,5 @@
 <!-- Top navbar -->
-<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+<%= SqueezeWeb.MenuView.topbar(Map.merge(assigns, %{class_list: "navbar-dark"})) do %>
   <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
     <%= gettext "Membership Details" %>
   </span>

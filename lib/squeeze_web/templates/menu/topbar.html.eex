@@ -1,8 +1,7 @@
 <!-- Top navbar -->
-<nav class="navbar navbar-top navbar-expand-md" id="navbar-main">
+<nav class="navbar navbar-top navbar-expand-md <%= assigns[:class_list] %>" id="navbar-main">
   <div class="container-fluid">
     <%= @yield %>
-
 
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
