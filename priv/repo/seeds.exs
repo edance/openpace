@@ -38,3 +38,29 @@ event = %Event{
   race_id: race_id
 }
 Repo.insert!(event)
+
+alias Squeeze.Accounts
+alias Squeeze.TrainingPlans.{Plan, Event}
+
+{:ok, %{id: user_id}} = Accounts.create_guest_user()
+
+plan = %Plan{
+  name: "Advanced Marathon Training Plan",
+  experience_level: :advanced,
+  week_count: 18,
+  description: "",
+  user_id: user_id
+}
+%{id: plan_id} = Repo.insert!(plan)
+
+event = %Event{
+  name: "6 miles easy",
+  distance: 6 * 1_609.0,
+  duration: nil,
+  warmup: false,
+  cooldown: false,
+  plan_position: 0,
+  day_position: 0,
+  training_plan_id: plan_id
+}
+Repo.insert!(event)
