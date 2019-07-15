@@ -24,7 +24,7 @@ defmodule SqueezeWeb.PlanController do
       {:ok, plan} ->
         conn
         |> put_flash(:info, "Plan created successfully.")
-        |> redirect(to: Routes.plan_path(conn, :show, plan))
+        |> redirect(to: Routes.plan_path(conn, :edit, plan))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
