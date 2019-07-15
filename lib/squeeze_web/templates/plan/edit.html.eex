@@ -1,24 +1,45 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Week</th>
-      <th><%= gettext("Mon") %></th>
-      <th><%= gettext("Tue") %></th>
-      <th><%= gettext("Wed") %></th>
-      <th><%= gettext("Thu") %></th>
-      <th><%= gettext("Fri") %></th>
-      <th><%= gettext("Sat") %></th>
-      <th><%= gettext("Sun") %></th>
-    </tr>
-  </thead>
-  <tbody>
+<!-- Top navbar -->
+<%= SqueezeWeb.MenuView.topbar(assigns) do %>
+  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
+    <%= @plan.name %> - <%= @plan.week_count %> Weeks
+  </span>
+<% end %>
+
+<div class="header bg-waves pb-5 pt-5 pt-md-6">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col heading ml-1">Week</div>
+      <div class="col heading ml-1"><%= gettext("Mon") %></div>
+      <div class="col heading ml-1"><%= gettext("Tue") %></div>
+      <div class="col heading ml-1"><%= gettext("Wed") %></div>
+      <div class="col heading ml-1"><%= gettext("Thu") %></div>
+      <div class="col heading ml-1"><%= gettext("Fri") %></div>
+      <div class="col heading ml-1"><%= gettext("Sat") %></div>
+      <div class="col heading ml-1"><%= gettext("Sun") %></div>
+    </div>
+
+    <div class="card">
     <%= for week <- 1..@plan.week_count do %>
-      <tr>
-        <td>Week <%= week %></td>
-        <%= for _day <- 1..7 do %>
-          <td></td>
+      <div class="row border-bottom">
+        <div class="col border-right">
+          <div class="p-1">
+          Week <%= week %>
+          </div>
+        </div>
+
+        <%= for _day <- 1..6 do %>
+          <div class="col border-right">
+            <div class="calendar-date p-1">
+            </div>
+          </div>
         <% end %>
-      </tr>
+
+        <div class="col">
+          <div class="calendar-date p-1">
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+    </div>
+  </div>
+</div>
