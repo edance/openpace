@@ -5,7 +5,9 @@ defmodule Squeeze.TrainingPlans.Plan do
 
   use Ecto.Schema
   import Ecto.Changeset
+
   alias Squeeze.Accounts.User
+  alias Squeeze.TrainingPlans.{Event}
 
   @required_fields ~w(name week_count)a
   @optional_fields ~w(experience_level description)a
@@ -17,6 +19,8 @@ defmodule Squeeze.TrainingPlans.Plan do
     field :description, :string
 
     belongs_to :user, User
+
+    has_many :events, Event, foreign_key: :training_plan_id
 
     timestamps()
   end
