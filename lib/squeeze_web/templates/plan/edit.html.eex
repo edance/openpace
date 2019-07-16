@@ -27,9 +27,12 @@
           </div>
         </div>
 
-        <%= for _day <- 1..6 do %>
+        <%= for day <- 1..6 do %>
           <div class="col border-right">
             <div class="calendar-date p-1">
+              <%= for event <- events_for_date(@plan.events, week, day) do %>
+                <%= event.name %>
+              <% end %>
             </div>
           </div>
         <% end %>
