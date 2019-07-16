@@ -44,6 +44,7 @@ defmodule Squeeze.TrainingPlans do
     Plan
     |> by_user(user)
     |> Repo.get!(id)
+    |> Repo.preload(:events)
   end
 
   @doc """
