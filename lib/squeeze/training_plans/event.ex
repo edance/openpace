@@ -11,6 +11,7 @@ defmodule Squeeze.TrainingPlans.Event do
     field :name, :string
     field :distance, :float
     field :duration, :integer
+    field :type, :string
 
     field :warmup, :boolean
     field :cooldown, :boolean

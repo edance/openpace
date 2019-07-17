@@ -55,6 +55,7 @@ plan = %Plan{
 
 event = %Event{
   name: "6 miles easy",
+  type: "Run",
   distance: 6 * 1_609.0,
   duration: nil,
   warmup: false,
