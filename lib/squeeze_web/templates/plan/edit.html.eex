@@ -20,25 +20,28 @@
 
     <div class="card">
     <%= for week <- 1..@plan.week_count do %>
-      <div class="row border-bottom">
+      <div class="row border-bottom no-gutters">
         <div class="col border-right">
-          <div class="p-1">
+          <div class="p-2">
           Week <%= week %>
           </div>
         </div>
 
         <%= for day <- 1..6 do %>
           <div class="col border-right">
-            <div class="calendar-date p-1">
+            <div class="calendar-date p-2">
               <%= for event <- events_for_date(@plan.events, week, day) do %>
-                <%= event.name %>
+                <%= render("_event.html", Map.merge(assigns, %{event: event})) %>
               <% end %>
             </div>
           </div>
         <% end %>
 
         <div class="col">
-          <div class="calendar-date p-1">
+          <div class="calendar-date p-2">
+            <%= for event <- events_for_date(@plan.events, week, 7) do %>
+              <%= render("_event.html", Map.merge(assigns, %{event: event})) %>
+            <% end %>
           </div>
         </div>
       </div>
