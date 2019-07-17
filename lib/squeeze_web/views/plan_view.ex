@@ -12,4 +12,16 @@ defmodule SqueezeWeb.PlanView do
     |> Enum.filter(&(&1.plan_position == position))
     |> Enum.sort_by(&(&1.day_position))
   end
+
+  def event_icon(event) do
+    cond do
+      String.contains?(event.type, "Run") ->
+        "ic:baseline-directions-run"
+      String.contains?(event.type, "Ride") ->
+        "ic:baseline-directions-bike"
+      String.contains?(event.type, "Swim") ->
+        "map:swimming"
+      true -> "map:gym"
+    end
+  end
 end
