@@ -53,15 +53,20 @@ plan = %Plan{
 }
 %{id: plan_id} = Repo.insert!(plan)
 
-event = %Event{
-  name: "6 miles easy",
-  type: "Run",
-  distance: 6 * 1_609.0,
-  duration: nil,
-  warmup: false,
-  cooldown: false,
-  plan_position: 0,
-  day_position: 0,
-  training_plan_id: plan_id
-}
-Repo.insert!(event)
+Enum.map(0..(18 * 7 - 1), fn(x) ->
+  dist = Enum.random(4..16)
+  pace = Enum.random(["easy", "tempo", "long run"])
+
+  event = %Event{
+    name: "#{dist} miles #{pace}",
+    type: "Run",
+    distance: dist * 1_609.0,
+    duration: nil,
+    warmup: false,
+    cooldown: false,
+    plan_position: x,
+    day_position: 0,
+    training_plan_id: plan_id
+  }
+  Repo.insert!(event)
+end)
