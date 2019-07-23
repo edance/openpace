@@ -49,3 +49,5 @@
     </div>
   </div>
 </div>
+
+<%= render SqueezeWeb.ModalView, "event.html", assigns %>
