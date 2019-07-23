@@ -29,20 +29,20 @@
 
         <%= for day <- 1..6 do %>
           <div class="col border-right">
-            <div class="calendar-date p-2">
+            <ul class="plan-date p-2" data-week="<%= week %>" data-day="<%= day %>">
               <%= for event <- events_for_date(@plan.events, week, day) do %>
                 <%= render("_event.html", Map.merge(assigns, %{event: event})) %>
               <% end %>
-            </div>
+            </ul>
           </div>
         <% end %>
 
         <div class="col">
-          <div class="calendar-date p-2">
+          <ul class="plan-date p-2" data-week="<%= week %>" data-day="7">
             <%= for event <- events_for_date(@plan.events, week, 7) do %>
               <%= render("_event.html", Map.merge(assigns, %{event: event})) %>
             <% end %>
-          </div>
+          </ul>
         </div>
       </div>
     <% end %>
