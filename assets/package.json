@@ -18,6 +18,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-phoenix": "file:../deps/react_phoenix",
+    "sortablejs": "^1.10.0-rc3",
     "turbolinks": "^5.0.0",
     "umbrellajs": "^3.1.0",
     "webfontloader": "^1.6.28",

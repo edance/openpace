@@ -8,6 +8,7 @@ import './components/base';
 // Dashboard only components
 import './components/activity-chart';
 import './components/activity-map';
+import './components/plan';
 import './components/week-chart';
 import './components/year-chart';
 

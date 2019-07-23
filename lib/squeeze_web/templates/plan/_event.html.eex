@@ -1,4 +1,4 @@
-<div class="d-flex flex-row align-items-center" draggable="true">
+<li class="d-flex flex-row align-items-center" data-id="<%= @event.id %>">
   <div class="badge badge-circle text-white bg-gray mr-2">
     <span class="iconify" data-icon="<%= event_icon(@event) %>" data-inline="false"></span>
   </div>
@@ -22,4 +22,4 @@
       <% end %>
     </span>
   </div>
-</div>
+</li>
