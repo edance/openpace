@@ -22,7 +22,7 @@ msgstr ""
 msgid "What is your level of experience?"
 msgstr ""
 
-#: lib/squeeze_web/templates/wizard/race-date.html.eex:2
+#: date.html.eex:2
 msgid "When is your next race?"
 msgstr ""
 
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Connect your Strava Account?"
 msgstr ""
 
-#: lib/squeeze_web/templates/wizard/personal-record.html.eex:2
+#: record.html.eex:2
 msgid "What is your current personal record?"
 msgstr ""
 
@@ -46,6 +46,7 @@ msgstr ""
 msgid "You have set your goals high! Let's build your training program."
 msgstr ""
 
+#: cta.html.eex:13 lib/squeeze_web/templates/home/_hero.html.eex:16
 #: lib/squeeze_web/templates/wizard/distance.html.eex:14
 msgid "Get Started"
 msgstr ""
@@ -58,15 +59,15 @@ msgstr ""
 msgid "Choose a distance"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:62
+#: form.html.eex:25
 msgid "City"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:69
+#: form.html.eex:32
 msgid "Country"
 msgstr ""
 
-#: lib/squeeze_web/templates/session/new.html.eex:57
+#: lib/squeeze_web/templates/session/new.html.eex:51
 msgid "Create new account"
 msgstr ""
 
@@ -77,11 +78,11 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:45
+#: form.html.eex:8
 msgid "First name"
 msgstr ""
 
-#: lib/squeeze_web/templates/session/new.html.eex:52
+#: lib/squeeze_web/templates/session/new.html.eex:46
 msgid "Forgot password?"
 msgstr ""
 
@@ -89,24 +90,24 @@ msgstr ""
 msgid "Full Name"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:16
+#: lib/squeeze_web/templates/profile/_header.html.eex:11
 msgid "Hello, %{name}!"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:52
+#: form.html.eex:15
 msgid "Last name"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/navbar.html.eex:32
+#: lib/squeeze_web/templates/menu/navbar.html.eex:18 nav.html.eex:14
 msgid "Log In"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:33
+#: lib/squeeze_web/templates/profile/edit.html.eex:18
 msgid "My account"
 msgstr ""
 
-#: lib/squeeze_web/templates/modal/auth.html.eex:27
-#: lib/squeeze_web/templates/session/new.html.eex:44
+#: lib/squeeze_web/templates/modal/auth.html.eex:21
+#: lib/squeeze_web/templates/session/new.html.eex:38
 msgid "Or sign in with credentials"
 msgstr ""
 
@@ -121,11 +122,11 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:78
+#: form.html.eex:41
 msgid "Race information"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/navbar.html.eex:29
+#: lib/squeeze_web/templates/menu/navbar.html.eex:15 nav.html.eex:11
 #: lib/squeeze_web/templates/user/form.html.eex:15
 msgid "Sign Up"
 msgstr ""
@@ -144,7 +145,7 @@ msgstr ""
 msgid "Terms and Conditions"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:39
+#: form.html.eex:2
 msgid "User information"
 msgstr ""
 
@@ -153,12 +154,11 @@ msgstr ""
 msgid "Welcome Back!"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/user-dropdown.html.eex:17
+#: dropdown.html.eex:17
 msgid "Logout"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/user-dropdown.html.eex:10
-#: lib/squeeze_web/views/profile_view.ex:8
+#: dropdown.html.eex:10 lib/squeeze_web/views/profile_view.ex:8
 msgid "Profile"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Sign In"
 msgstr ""
 
-#: lib/squeeze_web/templates/profile/edit.html.eex:18
+#: lib/squeeze_web/templates/profile/_header.html.eex:17
 msgid "This is your profile page. You can update your preferences and manage your account here."
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/user-dropdown.html.eex:4
+#: dropdown.html.eex:4
 msgid "Welcome"
 msgstr ""
 
@@ -209,9 +209,8 @@ msgstr ""
 
 #: lib/squeeze_web/templates/wizard/duration.html.eex:11
 #: lib/squeeze_web/templates/wizard/experience.html.eex:21
-#: lib/squeeze_web/templates/wizard/improvement.html.eex:10
-#: lib/squeeze_web/templates/wizard/personal-record.html.eex:11
-#: lib/squeeze_web/templates/wizard/race-date.html.eex:11
+#: lib/squeeze_web/templates/wizard/improvement.html.eex:10 record.html.eex:13
+#: date.html.eex:11
 msgid "Next"
 msgstr ""
 
@@ -219,24 +218,25 @@ msgstr ""
 msgid "Sign in with Strava"
 msgstr ""
 
-#: lib/squeeze_web/templates/wizard/connect.html.eex:14
+#: record.html.eex:11
 msgid "Skip"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_workout-card.html.eex:25
+#: lib/squeeze_web/templates/home/_features.html.eex:28
 msgid "Create a Training Plan"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_goal-card.html.eex:6
+#: card.html.eex:6
 msgid "Current Goal"
 msgstr ""
 
+#: lib/squeeze_web/templates/menu/sidebar.html.eex:47
 #: lib/squeeze_web/templates/overview/index.html.eex:4
 #: lib/squeeze_web/views/overview_view.ex:8
 msgid "Dashboard"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:104
+#: lib/squeeze_web/templates/overview/index.html.eex:106
 msgid "Distance"
 msgstr ""
 
@@ -244,32 +244,32 @@ msgstr ""
 msgid "Juice up your run"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:101
+#: charges.html.eex:18 lib/squeeze_web/templates/overview/index.html.eex:103
+#: lib/squeeze_web/templates/plan/index.html.eex:37
 msgid "Name"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:40
+#: lib/squeeze_web/templates/overview/index.html.eex:42
 msgid "Overview"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:63
+#: lib/squeeze_web/templates/overview/index.html.eex:65
 msgid "Performance"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_race-card.html.eex:6
+#: card.html.eex:6
 msgid "Race Date"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:66
-#: lib/squeeze_web/templates/overview/index.html.eex:88
+#: lib/squeeze_web/templates/overview/index.html.eex:90
 msgid "Recent Activities"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_workout-card.html.eex:10
+#: card.html.eex:10
 msgid "Rest"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:92
+#: lib/squeeze_web/templates/overview/index.html.eex:94
 msgid "See all"
 msgstr ""
 
@@ -277,11 +277,11 @@ msgstr ""
 msgid "Sign into your Account"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:107
+#: lib/squeeze_web/templates/overview/index.html.eex:109
 msgid "Start at"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_workout-card.html.eex:6
+#: card.html.eex:6
 msgid "Today's Workout"
 msgstr ""
 
@@ -289,19 +289,380 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_milage-card.html.eex:6
-#: lib/squeeze_web/templates/overview/index.html.eex:43
+#: card.html.eex:6 lib/squeeze_web/templates/overview/index.html.eex:45
 msgid "Weekly Distance"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_goal-card.html.eex:26
+#: card.html.eex:26
 msgid "faster than PR"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/_milage-card.html.eex:25
+#: card.html.eex:25
 msgid "than the previous week"
 msgstr ""
 
-#: lib/squeeze_web/templates/home/form.html.eex:7
+#: lib/squeeze_web/templates/home/form.html.eex:6
 msgid "Request Access"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/payment_method/form.html.eex:25
+msgid "Add Card"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/payment_method/new.html.eex:22
+msgid "Add Card Information"
+msgstr ""
+
+#, elixir-format
+#: method.html.eex:14
+msgid "Add a Payment Method"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:19
+#: lib/squeeze_web/templates/billing/_status.html.eex:39
+msgid "Add your payment method."
+msgstr ""
+
+#, elixir-format
+#: charges.html.eex:21
+msgid "Amount"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_activity.html.eex:14
+msgid "Analyze Your Effort"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:37
+msgid "Are you sure you want to cancel?"
+msgstr ""
+
+#, elixir-format
+#: cta.html.eex:10
+msgid "Because if you do, we can help you get there! Try today for free and accomplish your goals."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/index.html.eex:22
+msgid "Billing Information"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:17
+msgid "Build a training plan that is customized to you whether based on distance, duration, or effort. Measure your performance and see your progress all in one place."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/menu/sidebar.html.eex:53
+msgid "Calendar"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_calendar.html.eex:6
+msgid "Calendar Preview"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:36
+msgid "Cancel or take a break?"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_activity.html.eex:17
+msgid "Check out your route, distance, duration, and fitness level toward your goal on one screen."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_features.html.eex:31
+msgid "Choose from one of our custom-built training plans or build your own. Add everything from runs, to cross-training, and anything in between."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:14
+msgid "Command Center for Your Race"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/profile/_integrations.html.eex:7
+#: lib/squeeze_web/templates/profile/_integrations.html.eex:17
+msgid "Connect to %{provider}"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/profile/_integrations.html.eex:4
+#: lib/squeeze_web/templates/profile/_integrations.html.eex:14
+msgid "Connected to %{provider}"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/plan/index.html.eex:27
+msgid "Create New Plan"
+msgstr ""
+
+#, elixir-format
+#: source.html.eex:39
+msgid "Curious what features are still in the lab and coming around the corner? Check out our public roadmap for updates."
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/squeeze_web/templates/home/_activity.html.eex:5
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:6
+msgid "Dashboard Preview"
+msgstr ""
+
+#, elixir-format
+#: charges.html.eex:15
+msgid "Date"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/plan/index.html.eex:56
+msgid "Delete"
+msgstr ""
+
+#, elixir-format
+#: cta.html.eex:6
+msgid "Do you want to"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:33
+#: lib/squeeze_web/templates/plan/edit.html.eex:16
+msgid "Fri"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/profile/_header.html.eex:13
+msgid "Hello!"
+msgstr ""
+
+#, elixir-format
+#: nav.html.eex:8
+msgid "Home"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_hero.html.eex:13
+msgid "If you have struggled to set a new personal record, you can track your training progress toward your goal so that you can have a breakthrough race day."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/profile/edit.html.eex:33
+msgid "Integrations"
+msgstr ""
+
+#, elixir-format
+#: source.html.eex:22
+msgid "Many runners are spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/index.html.eex:4
+msgid "Membership Details"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:29
+#: lib/squeeze_web/templates/plan/edit.html.eex:12
+msgid "Mon"
+msgstr ""
+
+#, elixir-format
+#: source.html.eex:19
+msgid "Open Source Platform"
+msgstr ""
+
+#, elixir-format
+#: method.html.eex:2 lib/squeeze_web/templates/payment_method/new.html.eex:4
+msgid "Payment Method"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_calendar.html.eex:14
+msgid "Plan Your Run"
+msgstr ""
+
+#, elixir-format
+#: source.html.eex:36
+msgid "Public Roadmap"
+msgstr ""
+
+#, elixir-format
+#: charges.html.eex:2
+msgid "Recent Charges"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/overview/index.html.eex:68
+msgid "Recent Runs"
+msgstr ""
+
+#, elixir-format
+#: cta.html.eex:7
+msgid "Run Your Best Race?"
+msgstr ""
+
+#, elixir-format
+#: source.html.eex:7
+msgid "Runner Finishing Race"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:34
+#: lib/squeeze_web/templates/plan/edit.html.eex:17
+msgid "Sat"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/activity/form.html.eex:47
+msgid "Save"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:29
+msgid "See Upcoming Workouts"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_features.html.eex:13
+msgid "Set Your Goal"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_features.html.eex:16
+msgid "Set your goal based on your experience and your current personal record. We will help you achieve it."
+msgstr ""
+
+#, elixir-format
+#: charges.html.eex:24
+msgid "Status"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:2
+msgid "Subscription Status"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:35
+#: lib/squeeze_web/templates/plan/edit.html.eex:18
+msgid "Sun"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:32
+#: lib/squeeze_web/templates/plan/edit.html.eex:15
+msgid "Thu"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:43
+msgid "Track Weekly Milage"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_features.html.eex:43
+msgid "Track Your Progress"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_hero.html.eex:10
+msgid "Train. Race. Improve."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/menu/sidebar.html.eex:59
+#: lib/squeeze_web/templates/plan/index.html.eex:23
+msgid "Training Plans"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:30
+#: lib/squeeze_web/templates/plan/edit.html.eex:13
+msgid "Tue"
+msgstr ""
+
+#, elixir-format
+#: method.html.eex:11
+msgid "Update Payment Method"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_features.html.eex:46
+msgid "Use our dashboards to see how each workout is getting you closer to your goal as you get closer to race date."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_calendar.html.eex:17
+msgid "View your daily and monthly progress and upcoming workouts with the calendar workout summary."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:57
+msgid "Warning for Overtraining or Injury"
+msgstr ""
+
+#, elixir-format
+#: method.html.eex:13
+msgid "We currently do not have a payment method on file."
+msgstr ""
+
+#, elixir-format
+#: warning.html.eex:2
+msgid "We use cookies to help make %{name} better. By visiting this site, you agree to our"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/calendar/month.html.eex:31
+#: lib/squeeze_web/templates/plan/edit.html.eex:14
+msgid "Wed"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/plan/index.html.eex:40
+msgid "Weeks"
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:16
+msgid "You are currently on a free trial which ends %{date}."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:31
+msgid "You are currently on the free version."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:29
+msgid "You are currently on the monthly plan at %{price} per month."
+msgstr ""
+
+#, elixir-format
+#: charges.html.eex:7
+msgid "You have no recent charges."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/templates/billing/_status.html.eex:8
+msgid "Your account is currently canceled."
+msgstr ""
+
+#, elixir-format
+#: lib/squeeze_web/controllers/profile_controller.ex:21
+msgid "Your preferences have been updated"
+msgstr ""
+
+#, elixir-format
+#: warning.html.eex:3
+msgid "cookie policy."
+msgstr ""
+
+#, elixir-format
+#: card.html.eex:32
+msgid "vs the last week"
 msgstr ""
