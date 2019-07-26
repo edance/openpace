@@ -15,5 +15,8 @@ import './components/year-chart';
 // Turbolinks
 import './turbolinks';
 
+// Run react
+import './react-boot';
+
 // Fonts
 import './fonts';
