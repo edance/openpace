@@ -18,6 +18,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-phoenix": "file:../deps/react_phoenix",
+    "react-select": "^3.0.4",
     "sortablejs": "^1.10.0-rc3",
     "turbolinks": "^5.0.0",
     "umbrellajs": "^3.1.0",

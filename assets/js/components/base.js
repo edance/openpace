@@ -17,8 +17,8 @@ import './site-nav';
 import './timezone-hidden-input';
 
 // React components
-// import MyComponent from './my_component';
+import Select from './select';
 
 window.Components = {
-  // MyComponent
+  Select
 };
