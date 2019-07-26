@@ -1,4 +1,4 @@
-<div class="modal fade" id="event-modal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="event-modal">
+<div class="modal fade" id="event-modal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="event-modal" data-show="true">
   <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,7 +13,7 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <input class="form-control" type="text" placeholder="Select activity type"/>
+            <%= react_component("Components.Select", %{options: run_types()}) %>
           </div>
 
           <div class="form-group">
