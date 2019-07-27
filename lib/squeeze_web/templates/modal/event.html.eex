@@ -29,6 +29,20 @@
               <div class="form-group">
                 <input class="form-control" placeholder="Distance" type="text"/>
               </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Distance">
+
+                <div class="input-group-append">
+                  <select id="" name="" class="custom-select px-1 rounded-right">
+                    <option value="">mi</option>
+                    <option value="">m</option>
+                    <option value="">km</option>
+                    <option value="">km</option>
+                  </select>
+                </div>
+              </div>
+
             </div>
 
             <div class="col">
