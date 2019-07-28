@@ -26,10 +26,6 @@
 
           <div class="form-row">
             <div class="col">
-              <div class="form-group">
-                <input class="form-control" placeholder="Distance" type="text"/>
-              </div>
-
               <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Distance">
 
@@ -47,7 +43,7 @@
 
             <div class="col">
               <div class="form-group">
-                <input class="form-control" placeholder="hh:mm:ss" type="text"/>
+                <input class="form-control time-input" placeholder="hh:mm:ss" type="text"/>
               </div>
             </div>
           </div>
