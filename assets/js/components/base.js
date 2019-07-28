@@ -15,10 +15,11 @@ import './payment-form';
 import './sign-up-form';
 import './site-nav';
 import './timezone-hidden-input';
+import './time-input';
 
 // React components
 import Select from './select';
 
 window.Components = {
-  Select
+  Select,
 };
