@@ -1,48 +1,91 @@
 <%= form_for @changeset, @action, [as: :activity], fn f -> %>
+  <div class="form-group">
+      <%= select f, :type, activity_types(), class: "form-control custom-select", prompt: "Select activity type" %>
+      <%= error_tag f, :type %>
+  </div>
 
-  <%= hidden_input f, :planned_date, class: "date" %>
+  <div class="form-group">
+      <%= text_input f, :name, class: "form-control", placeholder: "Workout Name" %>
+      <%= error_tag f, :name %>
+  </div>
 
-  <div class="form-row">
-    <div class="col">
+  <div class="form-group">
+    <%= input f, :planned_date, class: "date-picker form-control", placeholder: "Date" %>
+  </div>
+
+  <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="planned-tab" data-toggle="tab" href="#planned" role="tab" aria-controls="planned" aria-selected="true">
+        Planned
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="completed-tab" data-toggle="tab" href="#completed" role="tab" aria-controls="completed" aria-selected="false">
+        Completed
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="planned" role="tabpanel" aria-labelledby="planned-tab">
+      <div class="form-row">
+        <div class="col">
+          <div class="input-group mb-3">
+            <%= text_input f, :planned_distance, class: "form-control", placeholder: "Distance" %>
+
+            <div class="input-group-append">
+              <select id="" name="" class="custom-select px-1 rounded-right">
+                <option value="">mi</option>
+                <option value="">m</option>
+                <option value="">km</option>
+                <option value="">km</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+            <%= text_input f, :planned_duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
-        <%= text_input f, :name, class: "form-control", placeholder: "Name" %>
-        <%= error_tag f, :name %>
+        <textarea class="form-control" rows="3" placeholder="Description"></textarea>
       </div>
     </div>
+    <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+      <div class="form-row">
+        <div class="col">
+          <div class="input-group mb-3">
+            <%= text_input f, :distance, class: "form-control", placeholder: "Distance" %>
 
-    <div class="col">
-      <div class="form-group">
-        <%= text_input f, :type, class: "form-control", placeholder: "Type" %>
-        <%= error_tag f, :type %>
+            <div class="input-group-append">
+              <select id="" name="" class="custom-select px-1 rounded-right">
+                <option value="">mi</option>
+                <option value="">m</option>
+                <option value="">km</option>
+                <option value="">km</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+            <%= text_input f, :duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-row">
-    <div class="col">
-      <div class="form-group">
-        <%= text_input f, :planned_distance, class: "form-control", placeholder: "Planned Distance" %>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-group">
-        <%= text_input f, :distance, class: "form-control", placeholder: "Actual Distance" %>
-      </div>
-    </div>
-  </div>
 
-  <div class="form-row">
-    <div class="col">
-      <div class="form-group">
-        <%= text_input f, :planned_duration, class: "form-control", placeholder: "Planned Duration" %>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-group">
-        <%= text_input f, :duration, class: "form-control", placeholder: "Actual Duration" %>
-      </div>
-    </div>
-  </div>
 
-  <%= submit gettext("Save"), class: "btn btn-primary" %>
+  <div class="text-right">
+    <button class="btn btn-link" data-dismiss="modal">Cancel</button>
+    <%= submit gettext("Add Workout"), class: "btn btn-primary" %>
+  </div>
 <% end %>

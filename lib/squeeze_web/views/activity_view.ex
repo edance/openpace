@@ -7,6 +7,18 @@ defmodule SqueezeWeb.ActivityView do
     "Activities"
   end
 
+  def activity_types do
+    [
+      "Run",
+      "Bike",
+      "Swim",
+      "Cross Training",
+      "Walk",
+      "Strength Training",
+      "Workout"
+    ]
+  end
+
   def splits(assigns) do
     trackpoints = split_trackpoints(assigns)
     trackpoints
