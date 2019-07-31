@@ -30,16 +30,7 @@
       <div class="form-row">
         <div class="col">
           <div class="input-group mb-3">
-            <%= text_input f, :planned_distance, class: "form-control", placeholder: "Distance" %>
-
-            <div class="input-group-append">
-              <select id="" name="" class="custom-select px-1 rounded-right">
-                <option value="">mi</option>
-                <option value="">m</option>
-                <option value="">km</option>
-                <option value="">km</option>
-              </select>
-            </div>
+            <%= distance_input f, :planned_distance, class: "form-control", placeholder: "Distance" %>
           </div>
 
         </div>
@@ -59,18 +50,8 @@
       <div class="form-row">
         <div class="col">
           <div class="input-group mb-3">
-            <%= text_input f, :distance, class: "form-control", placeholder: "Distance" %>
-
-            <div class="input-group-append">
-              <select id="" name="" class="custom-select px-1 rounded-right">
-                <option value="">mi</option>
-                <option value="">m</option>
-                <option value="">km</option>
-                <option value="">km</option>
-              </select>
-            </div>
+            <%= distance_input f, :distance, class: "form-control", placeholder: "Distance" %>
           </div>
-
         </div>
 
         <div class="col">

@@ -1,0 +1,13 @@
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearence: none;
+}
+
+.input-group-append {
+  .custom-select {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 1px;
+  }
+}

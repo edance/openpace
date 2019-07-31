@@ -63,6 +63,33 @@ defmodule SqueezeWeb.FormHelpers do
     end
   end
 
+  def distance_input(form, field, opts \\ []) do
+    [
+      text_input(form, field, opts),
+      distance_input_select(form, field)
+    ]
+  end
+
+  defp distance_input_select(form, field) when is_atom(field) do
+    distance_input_select(form, Atom.to_string(field))
+  end
+  defp distance_input_select(form, field) do
+    field = "#{field}_type" |> String.to_atom()
+    content_tag(:div, class: "input-group-append") do
+      [
+        select(form, field, distance_types(), class: "form-control custom-select")
+      ]
+    end
+  end
+
+  defp distance_types do
+    [
+      "mi",
+      "km",
+      "m"
+    ]
+  end
+
   defp select_tag(form, parent, field, opts) do
     opts = opts
     |> Keyword.put(:name, field)
