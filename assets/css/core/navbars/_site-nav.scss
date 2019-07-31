@@ -1,0 +1,9 @@
+.site-nav {
+  background: $white;
+  transition: 200ms ease-out;
+  transform: translateX(-250px);
+
+  &.active {
+    transform: translateX(0);
+  }
+}
