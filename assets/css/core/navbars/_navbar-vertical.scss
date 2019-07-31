@@ -7,7 +7,9 @@
 //
 // Creates a vertically aligned version of the navbar
 .navbar-vertical {
+  // z-index required to show shadow
   box-shadow: $navbar-vertical-box-shadow;
+  z-index: 1;
 
   .navbar {
     border-width: 0 0 1px 0;
