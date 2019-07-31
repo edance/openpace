@@ -72,11 +72,3 @@
 // Vendor (Plugins)
 
 @import "custom/vendors";
-
-main {
-  transition: 200ms ease-out;
-
-  &.menu-open {
-    transform: translateX(250px);
-  }
-}
