@@ -10,12 +10,10 @@ defmodule SqueezeWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Guardian.Plug.Pipeline, module: Squeeze.Guardian, error_handler: Squeeze.AuthErrorHandler
-    plug Guardian.Plug.VerifySession
-    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug Squeeze.AuthPipeline
     plug Plug.Auth
-    plug Plug.Locale
-    plug Turbolinks
+    # plug Plug.Locale
+    # plug Turbolinks
   end
 
   pipeline :dashboard_layout do

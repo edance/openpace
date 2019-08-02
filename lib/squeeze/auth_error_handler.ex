@@ -9,7 +9,7 @@ defmodule Squeeze.AuthErrorHandler do
 
   def auth_error(conn, _, _opts) do
     conn
-    |> Controller.put_flash(:error, "Login required")
+    |> clear_session()
     |> Controller.redirect(to: "/")
     |> halt()
   end
