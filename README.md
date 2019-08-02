@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/edance/squeeze/badge.svg?branch=master)](https://coveralls.io/github/edance/squeeze?branch=master)
 [![license](https://img.shields.io/github/license/edance/squeeze.svg)](https://github.com/edance/squeeze/blob/master/LICENSE.md)
 
-Try it yourself: [https://squeeze.run](https://squeeze.run)
+Try it yourself: [https://www.openpace.co](https://www.openpace.co)
 
 ## Scenarios
 
@@ -68,7 +68,7 @@ Locale is set in the locale plug which first checks the `locale` query param, th
 
 ## FAQ/Contact
 
-  * Official website: https://squeeze.run
+  * Official website: https://www.openpace.co
   * Guides: WIP
   * Docs: WIP
   * Source: https://github.com/edance/squeeze
