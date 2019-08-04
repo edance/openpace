@@ -36,7 +36,7 @@ defmodule SqueezeWeb.ActivityControllerTest do
     test "renders errors when data is invalid", %{conn: conn} do
       attrs = %{name: nil}
       conn = post conn, activity_path(conn, :create), activity: attrs
-      assert html_response(conn, 200) =~ "New Activity"
+      assert html_response(conn, 422) =~ "New Activity"
     end
   end
 end

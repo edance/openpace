@@ -26,7 +26,9 @@ defmodule SqueezeWeb.ActivityController do
         |> put_flash(:info, "Activity created successfully.")
         |> redirect(to: Routes.activity_path(conn, :show, activity))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render("new.html", changeset: changeset)
     end
   end
 
