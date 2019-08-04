@@ -4,9 +4,7 @@ import { u } from 'umbrellajs';
 document.addEventListener("turbolinks:load", function() {
   const $form = u('#sign-up-form');
 
-  $form.on('submit', (e) => {
-    e.preventDefault();
-
+  $form.handle('submit', (e) => {
     const action = $form.attr('action');
     const method = $form.attr('method');
     const options = {method: method, body: new FormData($form.first())};
