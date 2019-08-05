@@ -13,12 +13,12 @@ document.addEventListener("turbolinks:load", function() {
 
     fetch(action, options)
       .then(resp => Promise.all([resp, resp.text()]))
-      .then(([resp, body]) => {
+      .then(([resp, responseBody]) => {
         if (resp.status === 200 || resp.status === 201) {
           $('#activity-modal').modal('hide');
           Turbolinks.visit(url, {action: 'replace'});
         } else {
-          const html = u(body).filter('form').html();
+          const html = u(responseBody).find('form').html();
           $form.html(html);
         }
       });
