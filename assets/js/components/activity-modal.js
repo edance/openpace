@@ -1,6 +1,11 @@
 import 'whatwg-fetch';
+import flatpickr from 'flatpickr';
 import Turbolinks from 'turbolinks';
 import { u } from 'umbrellajs';
+
+function initializeDatepickers() {
+  flatpickr('.date-picker');
+}
 
 document.addEventListener("turbolinks:load", function() {
   const $form = u('#activity-modal form');
@@ -20,6 +25,8 @@ document.addEventListener("turbolinks:load", function() {
         } else {
           const html = u(responseBody).find('form').html();
           $form.html(html);
+
+          initializeDatepickers();
         }
       });
   });
