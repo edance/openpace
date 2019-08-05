@@ -37,7 +37,7 @@ defmodule Squeeze.Dashboard.Activity do
     field :distance, :float
     field :distance_unit, DistanceUnitEnum
     field :duration, :integer
-    field :start_at, :naive_datetime
+    field :start_at, :utc_datetime
     field :polyline, :string
     field :external_id, :string
 
