@@ -1,0 +1,22 @@
+<% color = activity_color(@activity) %>
+
+<div class="d-flex mb-2">
+  <%= link to: Routes.activity_path(@conn, :show, @activity), class: "badge badge-circle bg-#{color} text-white mb-1" do %>
+    <span class="iconify" data-icon="<%= activity_icon(@activity) %>" data-inline="false"></span>
+  <% end %>
+
+  <div class="small ml-2">
+    <div class="font-weight-bold">
+      <%= @activity.name || @activity.type %>
+    </div>
+    <span>
+      <%= format_distance(@activity.distance, @current_user.user_prefs) %>
+      ·
+      <%= format_duration(@activity.duration) %>
+      ·
+      <%= format_pace(@activity, @current_user.user_prefs) %>
+      ·
+      <%= formatted_start_at(assigns) %>
+    </span>
+  </div>
+</div>
