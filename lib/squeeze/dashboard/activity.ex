@@ -12,9 +12,11 @@ defmodule Squeeze.Dashboard.Activity do
   @required_fields ~w(name type)a
   @optional_fields ~w(
     planned_distance
+    planned_distance_unit
     planned_duration
     planned_date
     distance
+    distance_unit
     start_at
     duration
     external_id
@@ -27,11 +29,13 @@ defmodule Squeeze.Dashboard.Activity do
 
     # Planning Fields
     field :planned_distance, :float
+    field :planned_distance_unit, DistanceUnitEnum
     field :planned_duration, :integer
     field :planned_date, :date
 
     # Fields for after activity is completed
     field :distance, :float
+    field :distance_unit, DistanceUnitEnum
     field :duration, :integer
     field :start_at, :naive_datetime
     field :polyline, :string
