@@ -1,12 +1,12 @@
 <%= form_for @changeset, @action, [as: :activity], fn f -> %>
   <div class="form-group">
-      <%= select f, :type, activity_types(), class: "form-control custom-select", prompt: "Select activity type" %>
-      <%= error_tag f, :type %>
+    <%= select f, :type, activity_types(), class: input_class_list(f, :type, "form-control custom-select"), prompt: "Select activity type" %>
+    <%= error_tag f, :type %>
   </div>
 
   <div class="form-group">
-      <%= text_input f, :name, class: "form-control", placeholder: "Workout Name" %>
-      <%= error_tag f, :name %>
+    <%= input f, :name, class: "form-control", placeholder: "Workout Name" %>
+    <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
@@ -37,7 +37,7 @@
 
         <div class="col">
           <div class="form-group">
-            <%= text_input f, :planned_duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
+            <%= input f, :planned_duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
 
         <div class="col">
           <div class="form-group">
-            <%= text_input f, :duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
+            <%= input f, :duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
           </div>
         </div>
       </div>
@@ -67,6 +67,6 @@
 
   <div class="text-right">
     <button class="btn btn-link" data-dismiss="modal">Cancel</button>
-    <%= submit gettext("Add Workout"), class: "btn btn-primary" %>
+    <%= submit gettext("Add Workout"), class: "btn btn-primary btn-spinner" %>
   </div>
 <% end %>
