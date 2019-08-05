@@ -34,13 +34,21 @@ defmodule SqueezeWeb.FormHelpers do
     form_for(form_data, action, options ++ [data: [remote: "true"]], fun)
   end
 
-  def input(form, field, opts \\ []) do
-    case Keyword.get_values(form.errors, field) do
-      [] -> text_input(form, field, opts)
-      _ ->
-        class_list = "#{opts[:class]} is-invalid"
-        text_input(form, field, Keyword.merge(opts, [class: class_list]))
+  def invalid_field?(form, field) do
+    Keyword.get_values(form.errors, field) != []
+  end
+
+  def input_class_list(form, field, class_list \\ "") do
+    if invalid_field?(form, field) do
+      "#{class_list} is-invalid"
+    else
+      class_list
     end
+  end
+
+  def input(form, field, opts \\ []) do
+    class_list = input_class_list(form, field, opts[:class])
+    text_input(form, field, Keyword.merge(opts, [class: class_list]))
   end
 
   def pill_button(form, field, label, value, opts \\ []) do
@@ -65,7 +73,7 @@ defmodule SqueezeWeb.FormHelpers do
 
   def distance_input(form, field, opts \\ []) do
     [
-      text_input(form, field, opts),
+      input(form, field, opts),
       distance_input_select(form, field)
     ]
   end
