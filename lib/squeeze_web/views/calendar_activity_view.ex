@@ -28,19 +28,17 @@ defmodule SqueezeWeb.CalendarActivityView do
     end
   end
 
-  def distance_for_activities(activities, user_prefs) do
-    distance = activities |> Enum.map(&(&1.distance)) |> Enum.sum()
-    format_distance(distance, user_prefs)
+  def ordered_activities(%{activities: activities, current_user: user, date: date}) do
+    activities
+    |> Enum.filter(&(on_date?(user, date, &1)))
+    |> Enum.sort_by(&(&1.start_at))
   end
 
-  def duration_for_activities(activities) do
-    duration = activities |> Enum.map(&(&1.duration)) |> Enum.sum()
-    format_duration(duration)
-  end
+  def formatted_start_at(%{activity: activity, current_user: user}) do
+    timezone = user.user_prefs.timezone
 
-  def pace_for_activities(activities, user_prefs) do
-    distance = activities |> Enum.map(&(&1.distance)) |> Enum.sum()
-    duration = activities |> Enum.map(&(&1.duration)) |> Enum.sum()
-    format_pace(%{distance: distance, duration: duration}, user_prefs)
+    activity.start_at
+    |> Timex.to_datetime(timezone)
+    |> Timex.format!("%-I:%M %p ", :strftime)
   end
 end

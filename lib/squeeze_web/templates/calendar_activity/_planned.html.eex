@@ -1,0 +1,25 @@
+<% color = activity_color(@activity) %>
+
+<div class="d-flex mb-2">
+  <%= link to: Routes.activity_path(@conn, :show, @activity), class: "badge badge-circle bg-#{color} text-white mb-1" do %>
+    <span class="iconify" data-icon="<%= activity_icon(@activity) %>" data-inline="false"></span>
+  <% end %>
+
+  <div class="small ml-2">
+    <div class="font-weight-bold">
+      <%= @activity.name || @activity.type %>
+    </div>
+    <span>
+      <%= if @activity.planned_distance do %>
+        <%= @activity.planned_distance %> <%= @activity.planned_distance_unit %>
+        ·
+      <% end %>
+
+      <%= if @activity.duration > 0 do %>
+        <%= format_duration(@activity.duration) %>
+        ·
+      <% end %>
+      Planned
+    </span>
+  </div>
+</div>
