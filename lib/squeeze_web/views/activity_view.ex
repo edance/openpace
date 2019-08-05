@@ -15,7 +15,8 @@ defmodule SqueezeWeb.ActivityView do
       "Cross Training",
       "Walk",
       "Strength Training",
-      "Workout"
+      "Workout",
+      "Yoga"
     ]
   end
 
