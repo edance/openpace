@@ -1,8 +1,8 @@
-<%= for {date, idx} <- Enum.with_index(@dates) do %>
-  <%= content_tag(:div, class: class_list(idx, @dates)) do %>
-    <div class="pb-1">
+<%= for date <- @dates do %>
+  <%= content_tag(:div, class: "calendar-date p-1") do %>
+    <small class="pb-1">
       <%= date_label(date) %>
-    </div>
+    </small>
 
     <%= render SqueezeWeb.CalendarActivityView, "summary.html", Map.put(assigns, :date, date) %>
   <% end %>
