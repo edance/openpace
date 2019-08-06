@@ -1,8 +1,8 @@
 <%= for date <- @dates do %>
   <%= content_tag(:div, class: "calendar-date p-1") do %>
-    <small class="pb-1">
+    <div class="pb-1 small">
       <%= date_label(date) %>
-    </small>
+    </div>
 
     <%= render SqueezeWeb.CalendarActivityView, "summary.html", Map.put(assigns, :date, date) %>
   <% end %>
