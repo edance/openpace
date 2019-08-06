@@ -28,6 +28,32 @@ defmodule SqueezeWeb.CalendarActivityView do
     end
   end
 
+  def distance(%{distance: distance}, _) when distance == 0, do: nil
+  def distance(%{distance: distance}, user) do
+    format_distance(distance, user.user_prefs)
+  end
+
+  def pace(%{distance: distance}, _) when distance == 0, do: nil
+  def pace(activity, user) do
+    format_pace(activity, user.user_prefs)
+  end
+
+  def duration(%{duration: duration}) when duration == 0, do: nil
+  def duration(%{duration: duration}) do
+    format_duration(duration)
+  end
+
+  def description(%{activity: activity, current_user: user}) do
+    [
+      distance(activity, user),
+      duration(activity),
+      pace(activity, user),
+      formatted_start_at(%{activity: activity, current_user: user})
+    ]
+    |> Enum.reject(&(is_nil(&1) || &1 <= 0))
+    |> Enum.join(" · ")
+  end
+
   def ordered_activities(%{activities: activities, current_user: user, date: date}) do
     activities
     |> Enum.filter(&(on_date?(user, date, &1)))
