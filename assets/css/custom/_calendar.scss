@@ -4,10 +4,7 @@
 
 .date-label {
   &.active {
-    background: $primary;
-    border-radius: 50%;
-    color: $white;
-    height: $font-size-xl;
+    border-left: $primary 4px solid;
     text-align: center;
     width: $font-size-xl;
   }
