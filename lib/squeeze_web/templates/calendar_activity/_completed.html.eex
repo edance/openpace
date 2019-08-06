@@ -10,13 +10,7 @@
       <%= @activity.name || @activity.type %>
     </div>
     <span>
-      <%= format_distance(@activity.distance, @current_user.user_prefs) %>
-      ·
-      <%= format_duration(@activity.duration) %>
-      ·
-      <%= format_pace(@activity, @current_user.user_prefs) %>
-      ·
-      <%= formatted_start_at(assigns) %>
+      <%= description(assigns) %>
     </span>
   </div>
 </div>
