@@ -28,22 +28,4 @@ defmodule SqueezeWeb.CalendarView do
       date.day
     end
   end
-
-  def class_list(idx, dates) do
-    class_list = ["calendar-date p-1"]
-    class_list =
-      case last_column?(idx) do
-        true ->  class_list
-        false -> class_list ++ ["border-right"]
-      end
-    class_list =
-      case last_row?(idx, dates) do
-        true -> class_list
-        false -> class_list ++ ["border-bottom"]
-      end
-    Enum.join(class_list, " ")
-  end
-
-  defp last_column?(idx), do: rem(idx, 7) == 6
-  defp last_row?(idx, dates), do: (Enum.count(dates) - idx) <= 7
 end

@@ -24,19 +24,19 @@
 <% end %>
 
 <div class="header bg-waves pb-5 pt-5 pt-md-6">
-  <div class="container-fluid">
+  <div>
     <div class="row no-gutters">
-      <div class="col heading ml-1"><%= gettext("Mon") %></div>
-      <div class="col heading ml-1"><%= gettext("Tue") %></div>
-      <div class="col heading ml-1"><%= gettext("Wed") %></div>
-      <div class="col heading ml-1"><%= gettext("Thu") %></div>
-      <div class="col heading ml-1"><%= gettext("Fri") %></div>
-      <div class="col heading ml-1"><%= gettext("Sat") %></div>
-      <div class="col heading ml-1"><%= gettext("Sun") %></div>
+      <div class="col small text-center"><%= gettext("Mon") %></div>
+      <div class="col small text-center"><%= gettext("Tue") %></div>
+      <div class="col small text-center"><%= gettext("Wed") %></div>
+      <div class="col small text-center"><%= gettext("Thu") %></div>
+      <div class="col small text-center"><%= gettext("Fri") %></div>
+      <div class="col small text-center"><%= gettext("Sat") %></div>
+      <div class="col small text-center"><%= gettext("Sun") %></div>
     </div>
 
 
-    <div class="card d-flex flex-wrap flex-row month calendar">
+    <div class="d-flex flex-wrap flex-row bg-white month calendar">
       <%= render("_calendar.html", assigns) %>
     </div>
   </div>

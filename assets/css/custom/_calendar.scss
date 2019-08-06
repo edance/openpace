@@ -1,5 +1,5 @@
 .calendar {
-  min-height: calc(100vh - #{map_get($spacers, 8)});
+  /* min-height: calc(100vh - #{map_get($spacers, 8)}); */
 }
 
 .date-label {
@@ -18,7 +18,7 @@
 
   .calendar-date {
     width: $width/7;
-    min-height: 120px;
+    min-height: 10rem;
   }
 }
 
