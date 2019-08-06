@@ -1,4 +1,4 @@
-<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidenav-main">
+<nav class="navbar navbar-vertical fixed-left navbar-expand-xl navbar-light" id="sidenav-main">
   <div class="container-fluid">
     <!-- Toggler -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,11 +11,14 @@
     <% end %>
 
     <!-- User -->
-    <ul class="nav align-items-center d-md-none">
+    <ul class="nav align-items-center d-xl-none">
       <li class="nav-item dropdown">
         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="media align-items-center">
             <%= render "_avatar.html", assigns %>
+            <div class="media-body ml-2 d-none d-md-block">
+              <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
+            </div>
           </div>
         </a>
         <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
@@ -25,7 +28,7 @@
     <!-- Collapse -->
     <div class="collapse navbar-collapse" id="sidenav-collapse-main">
       <!-- Collapse header -->
-      <div class="navbar-collapse-header d-md-none">
+      <div class="navbar-collapse-header d-xl-none">
         <div class="row">
           <div class="col-6 collapse-brand">
             <%= company_name() %>
