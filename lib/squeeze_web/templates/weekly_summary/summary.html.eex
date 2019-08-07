@@ -1,0 +1,31 @@
+<div class="col-md p-1 bg-white">
+  <div class="small mb-2">
+    Summary
+
+    <% weeks_left = weeks_until_race(assigns) %>
+
+    <%= if weeks_left == 0 do %>
+      <div class="text-muted">Race Week</div>
+    <% end %>
+
+    <%= if weeks_left > 0 do %>
+      <div class="text-muted"><%= weeks_left %> weeks until race</div>
+    <% end %>
+  </div>
+
+  <%= if planned_distance(assigns) > 0 do %>
+    <div class="h2">
+      <span class="text-green">
+        <%= distance(assigns) %>
+      </span>
+      <span class="text-muted">
+        / <%= planned_distance(assigns) %>
+      </span>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar bg-success" role="progressbar" style="<%= progress_bar_style(assigns) %>"
+           aria-valuenow="<%= progress(assigns) %>" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  <% end %>
+</div>
