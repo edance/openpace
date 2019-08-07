@@ -1,7 +1,3 @@
-.calendar {
-  /* min-height: calc(100vh - #{map_get($spacers, 8)}); */
-}
-
 .date-label {
   &.active {
     border-left: $primary 4px solid;
@@ -10,13 +6,9 @@
   }
 }
 
-.month.calendar {
-  $width: 100%;
-
-  .calendar-date {
-    width: $width/7;
-    min-height: 10rem;
-  }
+.calendar-date {
+  background: $white;
+  min-height: 10rem;
 }
 
 .btn-calendar-activity {
@@ -28,8 +20,4 @@
   .btn-calendar-activity {
     opacity: 1;
   }
-}
-
-.plan-date {
-  min-height: 120px;
 }

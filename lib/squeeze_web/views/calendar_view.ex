@@ -11,6 +11,12 @@ defmodule SqueezeWeb.CalendarView do
   def next(base, "day"), do: shift(base, days: 1)
   def next(base, "month"), do: shift(base, months: 1)
 
+  def weeks(%{dates: dates}) do
+    dates
+    |> Enum.with_index()
+    |> Enum.group_by(fn({_, idx}) -> div(idx, 7) end, fn({v, _}) -> v end)
+  end
+
   defp format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")
 
   defp shift(date, opts), do: date |> Timex.shift(opts) |> format_date()

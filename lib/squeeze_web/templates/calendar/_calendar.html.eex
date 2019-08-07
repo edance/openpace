@@ -1,9 +1,19 @@
-<%= for date <- @dates do %>
-  <%= content_tag(:div, class: "calendar-date p-1") do %>
-    <div class="pb-1 small">
-      <%= date_label(date) %>
+<%= for {week, dates} <- weeks(assigns) do %>
+  <div class="row no-gutters">
+    <div class="col-md p-1 bg-white">
+      <small>
+      <%= "Week #{week}" %>
+      </small>
     </div>
 
-    <%= render SqueezeWeb.CalendarActivityView, "summary.html", Map.put(assigns, :date, date) %>
-  <% end %>
+    <%= for date <- dates do %>
+      <div class="col-md p-1 calendar-date">
+        <div class="pb-1 small">
+          <%= date_label(date) %>
+        </div>
+
+        <%= render SqueezeWeb.CalendarActivityView, "summary.html", Map.put(assigns, :date, date) %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
