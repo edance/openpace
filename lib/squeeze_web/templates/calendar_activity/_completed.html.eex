@@ -1,13 +1,13 @@
 <% color = activity_color(@activity) %>
 
 <div class="d-flex flex-wrap flex-lg-nowrap mb-2">
-  <%= link to: Routes.activity_path(@conn, :show, @activity), class: "flex-shrink-0 badge badge-circle bg-#{color} text-white mb-1" do %>
+  <div class="flex-shrink-0 badge badge-circle bg-<%= color %> text-white mb-1">
     <span class="iconify" data-icon="<%= activity_icon(@activity) %>" data-inline="false"></span>
-  <% end %>
+  </div>
 
   <div class="small ml-2">
     <div class="font-weight-bold">
-      <%= @activity.name || @activity.type %>
+      <%= link @activity.name || @activity.type, to: Routes.activity_path(@conn, :show, @activity), class: "text-reset" %>
     </div>
     <span>
       <%= description(assigns) %>
