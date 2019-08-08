@@ -28,6 +28,11 @@ defmodule Squeeze.Distances do
 
   def distances, do: @distances
 
+  def to_meters(nil, _), do: 0
+  def to_meters(distance, :mi), do: distance * @mile_in_meters
+  def to_meters(distance, :km), do: distance * 1000
+  def to_meters(distance, _), do: distance
+
   def parse({distance, "mi"}), do: {:ok, distance * @mile_in_meters}
   def parse({distance, "mile"}), do: {:ok, distance * @mile_in_meters}
   def parse({distance, "miles"}), do: {:ok, distance * @mile_in_meters}
