@@ -1,4 +1,4 @@
-<div class="col-md p-1 bg-white">
+<div class="col-md p-2 bg-white">
   <div class="small mb-2">
     Summary
 
@@ -16,16 +16,24 @@
   <%= if planned_distance(assigns) > 0 do %>
     <div class="h2">
       <span class="text-green">
-        <%= distance(assigns) %>
+        <%= completed_distance(assigns) %>
       </span>
       <span class="text-muted">
-        / <%= planned_distance(assigns) %>
+        / <%= planned_distance(assigns) %><%= distance_label(assigns) %>
       </span>
     </div>
 
     <div class="progress">
       <div class="progress-bar bg-success" role="progressbar" style="<%= progress_bar_style(assigns) %>"
            aria-valuenow="<%= progress(assigns) %>" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  <% end %>
+
+  <%= if planned_distance(assigns) == 0 && length(@activities) > 0 do %>
+    <div class="h2">
+      <span class="text-green">
+        <%= completed_distance(assigns) %><%= distance_label(assigns) %>
+      </span>
     </div>
   <% end %>
 </div>

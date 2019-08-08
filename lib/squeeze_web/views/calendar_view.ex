@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.CalendarView do
   use SqueezeWeb, :view
 
+  alias Squeeze.TimeHelper
+
   def title(_page, _assigns) do
     "Calendar"
   end
@@ -15,6 +17,11 @@ defmodule SqueezeWeb.CalendarView do
     dates
     |> Enum.with_index()
     |> Enum.group_by(fn({_, idx}) -> div(idx, 7) end, fn({v, _}) -> v end)
+  end
+
+  def activities_in_dates(user, activities, dates) do
+    activities
+    |> Enum.filter(&(Enum.member?(dates, activity_date(user, &1))))
   end
 
   defp format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")
@@ -33,5 +40,9 @@ defmodule SqueezeWeb.CalendarView do
     else
       date.day
     end
+  end
+
+  defp activity_date(user, activity) do
+    activity.planned_date || TimeHelper.to_date(user, activity.start_at)
   end
 end

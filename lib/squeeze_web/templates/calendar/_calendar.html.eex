@@ -1,9 +1,10 @@
 <%= for {_week, dates} <- weeks(assigns) do %>
   <div class="row no-gutters">
-    <%= render SqueezeWeb.WeeklySummaryView, "summary.html", Map.put(assigns, :dates, dates) %>
+    <% activities = activities_in_dates(@current_user, @activities, dates) %>
+    <%= render SqueezeWeb.WeeklySummaryView, "summary.html", Map.merge(assigns, %{activities: activities, dates: dates}) %>
 
     <%= for date <- dates do %>
-      <div class="col-md p-1 calendar-date">
+      <div class="col-md p-2 calendar-date">
         <div class="pb-1 small">
           <%= date_label(date) %>
         </div>
