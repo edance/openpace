@@ -5,15 +5,15 @@ defmodule SqueezeWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug Plug.EnsureHost
+    # plug Plug.EnsureHost
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Squeeze.AuthPipeline
     plug Plug.Auth
-    # plug Plug.Locale
-    # plug Turbolinks
+    plug Plug.Locale
+    plug Turbolinks
   end
 
   pipeline :dashboard_layout do

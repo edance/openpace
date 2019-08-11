@@ -17,7 +17,7 @@ defmodule Squeeze.Application do
       # Start the endpoint when the application starts
       supervisor(Endpoint, []),
       # Start your own worker by calling: Squeeze.Worker.start_link(arg1, arg2, arg3)
-      # worker(Squeeze.Worker, [arg1, arg2, arg3]),
+      worker(Task, [&Squeeze.PostStart.run/0], restart: :temporary)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
