@@ -32,7 +32,13 @@ http {
 
     server {
         listen <%= ENV["PORT"] %>;
-        server_name _;
+        server_name openpace.co;
+        return 301 https://www.$server_name$request_uri;
+    }
+
+    server {
+        listen <%= ENV["PORT"] %>;
+        server_name www.openpace.co;
         keepalive_timeout 5;
 
         location / {
