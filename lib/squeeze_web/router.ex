@@ -34,9 +34,19 @@ defmodule SqueezeWeb.Router do
     get "/privacy", PageController, :privacy_policy
     get "/terms", PageController, :terms
 
-    get "/quiz", WizardController, :index
-    get "/quiz/:step", WizardController, :step
-    put "/quiz/:step", WizardController, :update
+    get "/races/:state/:city/:name", RaceController, :show
+  end
+
+  scope "/onboard", SqueezeWeb do
+    pipe_through :browser # Use the default browser stack
+
+    get "/onboard", WizardController, :index
+    get "/onboard/:step", WizardController, :step
+    put "/onboard/:step", WizardController, :update
+  end
+
+  scope "/users", SqueezeWeb do
+    pipe_through :browser # Use the default browser stack
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
@@ -52,8 +62,6 @@ defmodule SqueezeWeb.Router do
     get "/reset-password", ResetPasswordController, :show
     post "/reset-password", ResetPasswordController, :reset
     put "/reset-password", ResetPasswordController, :reset
-
-    get "/races/:state/:city/:name", RaceController, :show
   end
 
   scope "/integration", SqueezeWeb do
