@@ -16,7 +16,7 @@ defmodule Squeeze.PasswordLinkGenerator do
   def create_link(%User{id: id}, time \\ :erlang.system_time(:seconds)) do
     token = Base.url_encode64("#{time},#{id}")
     signature = sign_token(token)
-    "#{base_url()}/reset-password?token=#{token}&signature=#{signature}"
+    "#{base_url()}/users/reset-password?token=#{token}&signature=#{signature}"
   end
 
   def verify_link(token, signature) do

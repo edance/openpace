@@ -19,12 +19,12 @@ defmodule SqueezeWeb.WizardControllerTest do
 
   describe "#step" do
     test "valid step name", %{conn: conn} do
-      conn = get(conn, "/quiz/duration")
+      conn = get(conn, "/onboard/duration")
       assert html_response(conn, 200) =~ "time"
     end
 
     test "invalid step name", %{conn: conn} do
-      conn = get(conn, "/quiz/abcd")
+      conn = get(conn, "/onboard/abcd")
       assert html_response(conn, 404) =~ "not found"
     end
   end

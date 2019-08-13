@@ -40,9 +40,9 @@ defmodule SqueezeWeb.Router do
   scope "/onboard", SqueezeWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/onboard", WizardController, :index
-    get "/onboard/:step", WizardController, :step
-    put "/onboard/:step", WizardController, :update
+    get "/", WizardController, :index
+    get "/:step", WizardController, :step
+    put "/:step", WizardController, :update
   end
 
   scope "/users", SqueezeWeb do
