@@ -59,7 +59,6 @@ defmodule Squeeze.Mixfile do
       {:bamboo, "~> 1.2"},
       {:oauth2, "~> 0.9"},
       {:argon2_elixir, "~> 2.0"},
-      {:geolix, "~> 0.18"},
       {:earmark, "~> 1.2"},
       {:number, "~> 1.0.0"},
       {:tesla, "~> 1.2.1"},
