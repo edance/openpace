@@ -64,15 +64,6 @@ config :strava,
   redirect_uri: "http://localhost:4000/integration/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
-config :geolix,
-  databases: [
-    %{
-      id: :system_city,
-      adapter: Geolix.Adapter.MMDB2,
-      source: "#{File.cwd!}/GeoLite2-City.mmdb"
-    }
-  ]
-
 config :tesla, adapter: Tesla.Adapter.Hackney
 
 # Import environment specific config. This must remain at the bottom
