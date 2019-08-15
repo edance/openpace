@@ -19,6 +19,7 @@ defmodule Squeeze.Dashboard.Activity do
     distance_unit
     start_at
     duration
+    description
     external_id
     polyline
   )a
@@ -40,6 +41,8 @@ defmodule Squeeze.Dashboard.Activity do
     field :start_at, :utc_datetime
     field :polyline, :string
     field :external_id, :string
+
+    field :description, :string
 
     field :status, ActivityStatusEnum
     field :complete, :boolean
