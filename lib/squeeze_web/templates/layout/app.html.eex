@@ -11,6 +11,5 @@
     <%= render SqueezeWeb.MenuView, "site-nav.html", assigns %>
     <%= render @view_module, @view_template, assigns %>
     <%= render SqueezeWeb.MenuView, "footer.html", assigns %>
-    <%= render SqueezeWeb.SharedView, "cookie-warning.html", assigns %>
   </body>
 </html>
