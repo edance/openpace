@@ -30,7 +30,6 @@ defmodule SqueezeWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", HomeController, :index
-    post "/", HomeController, :subscribe
     get "/privacy", PageController, :privacy_policy
     get "/terms", PageController, :terms
 
