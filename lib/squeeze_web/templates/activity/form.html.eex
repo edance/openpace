@@ -59,7 +59,7 @@
   </div>
 
   <div class="form-group">
-    <textarea class="form-control" rows="3" placeholder="Description"></textarea>
+    <%= textarea f, :description, class: "form-control", rows: "3", placeholder: "Description" %>
   </div>
 
   <div class="text-right">
