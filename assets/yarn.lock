@@ -5236,10 +5236,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-mapbox-gl@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-1.2.0.tgz#2bb281dfe20cf8fcf66486d46fb6a8607355633a"
-  integrity sha512-RDo0kMuo9gs6HFX2Maj+tYO5bUT6WFTQkFbJoKdfe2pK8SY/RgyG3SNJRgZypdBR8loxGCG9geeOwc+JJqblHQ==
+mapbox-gl@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-1.2.1.tgz#a91acb48e5ee57d40a09fa6b4c297e92690c5909"
+  integrity sha512-CO7uhTYtcreDokGr3W2LifIdCtHz0TO/BqnRtO5rQ4Rvm8P7ndUM5ZWwZvJJmNnlkMpVwNKSESsKYX32GXHXoQ==
   dependencies:
     "@mapbox/geojson-rewind" "^0.4.0"
     "@mapbox/geojson-types" "^1.0.2"
