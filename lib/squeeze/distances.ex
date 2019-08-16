@@ -3,14 +3,25 @@ defmodule Squeeze.Distances do
   This module defines the distances used in forms.
   """
 
+  @mile_in_meters 1_609 # 1 mile == 1609 meters
+
   @distances [
     %{name: "5k", distance: 5_000},
+    %{name: "8k", distance: 8_000},
     %{name: "10k", distance: 10_000},
+    %{name: "12k", distance: 12_000},
+    %{name: "15k", distance: 15_000},
+    %{name: "10 Mile", distance: @mile_in_meters * 10},
     %{name: "Half Marathon", distance: 21_097},
     %{name: "Marathon", distance: 42_195},
+    %{name: "20k", distance: 20_000},
+    %{name: "25k", distance: 25_000},
+    %{name: "30k", distance: 30_000},
+    %{name: "50k", distance: 50_000},
+    %{name: "50 Mile", distance: @mile_in_meters * 50},
+    %{name: "100k", distance: 100_000},
+    %{name: "100 Mile", distance: @mile_in_meters * 10}
   ]
-
-  @mile_in_meters 1_609 # 1 mile == 1609 meters
 
   def mile_in_meters, do: @mile_in_meters
 
