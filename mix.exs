@@ -65,6 +65,7 @@ defmodule Squeeze.Mixfile do
       {:hackney, "~> 1.15.0"},
       {:jason, "~> 1.1"},
       {:react_phoenix, "~> 1.0.0"},
+      {:new_relic_agent, "~> 1.10"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},

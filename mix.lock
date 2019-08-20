@@ -40,6 +40,7 @@
   "mimerl": {:hex, :mimerl, "1.2.0", "67e2d3f571088d5cfd3e550c383094b47159f3eee8ffa08e64106cdf5e981be3", [:rebar3], [], "hexpm"},
   "mmdb2_decoder": {:hex, :mmdb2_decoder, "1.0.0", "48929cdadae9dd5a9705133dff024763774a2615f35354912832b98e72261110", [:mix], [], "hexpm"},
   "mox": {:hex, :mox, "0.5.1", "f86bb36026aac1e6f924a4b6d024b05e9adbed5c63e8daa069bd66fb3292165b", [:mix], [], "hexpm"},
+  "new_relic_agent": {:hex, :new_relic_agent, "1.10.0", "008a074ac02027d0995144ad67e4a2a1b225bbc959fa6bf9606e8693cf315051", [:mix], [{:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}, {:plug_cowboy, "~> 2.0", [hex: :plug_cowboy, repo: "hexpm", optional: false]}, {:ssl_verify_fun, "~> 1.1", [hex: :ssl_verify_fun, repo: "hexpm", optional: false]}], "hexpm"},
   "nimble_parsec": {:hex, :nimble_parsec, "0.5.0", "90e2eca3d0266e5c53f8fbe0079694740b9c91b6747f2b7e3c5d21966bba8300", [:mix], [], "hexpm"},
   "number": {:hex, :number, "1.0.0", "b88229d83830147186e8e3f133395fa9faf4f17126cdfeb3e2d19cc538d35ed5", [:mix], [{:decimal, "~> 1.5", [hex: :decimal, repo: "hexpm", optional: false]}], "hexpm"},
   "oauth2": {:hex, :oauth2, "0.9.4", "632e8e8826a45e33ac2ea5ac66dcc019ba6bb5a0d2ba77e342d33e3b7b252c6e", [:mix], [{:hackney, "~> 1.7", [hex: :hackney, repo: "hexpm", optional: false]}], "hexpm"},
