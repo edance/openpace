@@ -8,7 +8,7 @@ defmodule Squeeze.Accounts.User do
 
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
 
-  @registration_fields ~w(email encrypted_password)a
+  @registration_fields ~w(first_name last_name email encrypted_password)a
   @payment_processor_fields ~w(customer_id subscription_id subscription_status trial_end)a
 
   schema "users" do
