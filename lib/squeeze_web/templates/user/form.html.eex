@@ -1,7 +1,14 @@
 <%= form_for @changeset, @action, [class: "ui form", as: :user, id: "sign-up-form"], fn f -> %>
-  <div class="form-group mb-3">
-    <%= input f, :full_name, placeholder: gettext("Full Name"), class: "form-control" %>
-    <%= error_tag f, :full_name %>
+
+  <div class="form-row mb-3">
+    <div class="col">
+      <%= input f, :first_name, placeholder: gettext("First Name"), class: "form-control" %>
+      <%= error_tag f, :first_name %>
+    </div>
+    <div class="col">
+      <%= input f, :last_name, placeholder: gettext("Last Name"), class: "form-control" %>
+      <%= error_tag f, :last_name %>
+    </div>
   </div>
   <div class="form-group mb-3">
     <%= input f, :email, placeholder: gettext("Email"), class: "form-control" %>
