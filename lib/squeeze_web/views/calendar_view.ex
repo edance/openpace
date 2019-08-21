@@ -36,9 +36,9 @@ defmodule SqueezeWeb.CalendarView do
 
   defp date_label_content(date) do
     if date.day == 1 do
-      Timex.format!(date, "%b %-d", :strftime)
+      Timex.format!(date, "%a, %b %-d", :strftime)
     else
-      date.day
+      Timex.format!(date, "%a, %b %-d", :strftime)
     end
   end
 

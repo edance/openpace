@@ -1,8 +1,7 @@
 .date-label {
   &.active {
     border-left: $primary 4px solid;
-    text-align: center;
-    width: $font-size-xl;
+    padding-left: 1px;
   }
 }
 
