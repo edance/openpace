@@ -1,15 +1,13 @@
-
 <div class="header bg-waves pb-5 pt-5 pt-md-6">
   <div>
-    <div class="d-none row no-gutters">
+    <div class="d-none d-md-flex row no-gutters">
       <div class="col small text-center"><%= gettext("Week") %></div>
-      <div class="col small text-center"><%= gettext("Mon") %></div>
-      <div class="col small text-center"><%= gettext("Tue") %></div>
-      <div class="col small text-center"><%= gettext("Wed") %></div>
-      <div class="col small text-center"><%= gettext("Thu") %></div>
-      <div class="col small text-center"><%= gettext("Fri") %></div>
-      <div class="col small text-center"><%= gettext("Sat") %></div>
-      <div class="col small text-center"><%= gettext("Sun") %></div>
+
+      <%= for date <- Enum.take(@dates, 7) do %>
+        <div class="col small text-center">
+          <%= Timex.format!(date, "%a", :strftime) %>
+        </div>
+      <% end %>
     </div>
 
     <%= render("_calendar.html", assigns) %>
