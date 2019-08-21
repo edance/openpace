@@ -36,10 +36,20 @@ defmodule SqueezeWeb.CalendarView do
 
   defp date_label_content(date) do
     if date.day == 1 do
-      Timex.format!(date, "%a, %b %-d", :strftime)
+      [
+        mobile_only_span(Timex.format!(date, "%a, ", :strftime)),
+        Timex.format!(date, "%b %-d", :strftime),
+      ]
     else
-      Timex.format!(date, "%a, %b %-d", :strftime)
+      [
+        mobile_only_span(Timex.format!(date, "%a, %b ", :strftime)),
+        Timex.format!(date, "%-d", :strftime)
+      ]
     end
+  end
+
+  def mobile_only_span(content) do
+    content_tag(:span, content, class: "d-md-none")
   end
 
   defp activity_date(user, activity) do
