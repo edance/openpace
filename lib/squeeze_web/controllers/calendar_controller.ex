@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.CalendarController do
   use SqueezeWeb, :controller
 
-  alias Plug.Conn
   alias Squeeze.Accounts.User
   alias Squeeze.Calendar
   alias Squeeze.Dashboard
@@ -12,11 +11,7 @@ defmodule SqueezeWeb.CalendarController do
   plug :validate_type when action in [:show]
 
   def index(conn, _) do
-    [ua | _] = Conn.get_req_header(conn, "user-agent")
-    case Browser.mobile?(ua) do
-      true -> redirect(conn, to: Routes.calendar_path(conn, :show, "day"))
-      _ -> redirect(conn, to: Routes.calendar_path(conn, :show, "month"))
-    end
+    redirect(conn, to: Routes.calendar_path(conn, :show, "month"))
   end
 
   def show(conn, %{"type" => type} = params) do
