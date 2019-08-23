@@ -11,6 +11,10 @@ defmodule SqueezeWeb.CalendarActivityView do
       TimeHelper.to_date(user, activity.start_at)  == date
   end
 
+  def race_date?(%{current_user: user, date: date}) do
+    user.user_prefs.race_date == date
+  end
+
   def activity_color(%{status: :pending}), do: "info"
   def activity_color(%{status: :complete}), do: "success"
   def activity_color(%{status: :incomplete}), do: "danger"
