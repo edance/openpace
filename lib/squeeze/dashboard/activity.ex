@@ -9,8 +9,9 @@ defmodule Squeeze.Dashboard.Activity do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, TrackpointSet}
 
-  @required_fields ~w(name type)a
+  @required_fields ~w(type)a
   @optional_fields ~w(
+    name
     planned_distance
     planned_distance_unit
     planned_duration
