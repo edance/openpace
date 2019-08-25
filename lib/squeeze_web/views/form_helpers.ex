@@ -71,16 +71,17 @@ defmodule SqueezeWeb.FormHelpers do
     end
   end
 
+  def distance_input(form, field) when is_atom(field) do
+    distance_input(form, Atom.to_string(field))
+  end
   def distance_input(form, field, opts \\ []) do
+    input_field = "#{field}_amount" |> String.to_atom()
     [
-      input(form, field, opts),
+      input(form, input_field, opts),
       distance_input_select(form, field)
     ]
   end
 
-  defp distance_input_select(form, field) when is_atom(field) do
-    distance_input_select(form, Atom.to_string(field))
-  end
   defp distance_input_select(form, field) do
     field = "#{field}_unit" |> String.to_atom()
     content_tag(:div, class: "input-group-append") do

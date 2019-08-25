@@ -10,8 +10,8 @@
       <%= @activity.name || @activity.type %>
     </div>
     <span>
-      <%= if @activity.planned_distance do %>
-        <%= @activity.planned_distance %> <%= @activity.planned_distance_unit %>
+      <%= if @activity.planned_distance_amount do %>
+        <%= @activity.planned_distance_amount %> <%= @activity.planned_distance_unit %>
         ·
       <% end %>
 
