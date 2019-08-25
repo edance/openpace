@@ -8,6 +8,7 @@ defmodule Squeeze.Dashboard.Activity do
   import Ecto.Changeset
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, TrackpointSet}
+  alias Squeeze.Distances
 
   @required_fields ~w(type)a
   @optional_fields ~w(
@@ -65,6 +66,7 @@ defmodule Squeeze.Dashboard.Activity do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> unique_constraint(:unique_activity, name: :activities_user_id_external_id_index)
+    |> calculate_distances()
     |> set_status()
   end
 
@@ -84,9 +86,25 @@ defmodule Squeeze.Dashboard.Activity do
     end
   end
 
+  defp calculate_distances(changeset) do
+    distance_amount = get_field(changeset, :distance_amount)
+    distance_unit = get_field(changeset, :distance_unit)
+    distance = distance_to_meters(distance_amount, distance_unit)
+    planned_amount = get_field(changeset, :planned_distance_amount)
+    planned_unit = get_field(changeset, :planned_distance_unit)
+    planned_distance = distance_to_meters(planned_amount, planned_unit)
+
+    changeset
+    |> put_change(:distance, distance)
+    |> put_change(:planned_distance, planned_distance)
+  end
+
   defp percent_complete(planned_distance, distance) do
     distance / planned_distance
   end
+
+  defp distance_to_meters(nil, _), do: nil
+  defp distance_to_meters(amount, unit), do: Distances.to_meters(amount, unit)
 
   def cast_status(changeset, status) do
     cast(changeset, %{status: status}, [:status])
