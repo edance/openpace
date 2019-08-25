@@ -38,6 +38,7 @@ defmodule SqueezeWeb.CalendarActivityView do
   end
 
   def pace(%{distance: distance}, _) when distance == 0, do: nil
+  def pace(%{duration: duration}, _) when duration == 0, do: nil
   def pace(activity, user) do
     format_pace(activity, user.user_prefs)
   end
@@ -64,6 +65,7 @@ defmodule SqueezeWeb.CalendarActivityView do
     |> Enum.sort_by(&(&1.start_at))
   end
 
+  def formatted_start_at(%{activity: %{start_at: nil}}), do: nil
   def formatted_start_at(%{activity: activity, current_user: user}) do
     timezone = user.user_prefs.timezone
 
