@@ -33,8 +33,12 @@ defmodule SqueezeWeb.CalendarActivityView do
   end
 
   def distance(%{distance: distance}, _) when distance == 0, do: nil
-  def distance(%{distance: distance}, user) do
-    format_distance(distance, user.user_prefs)
+  def distance(activity, user) do
+    if activity.distance_amount && activity.distance_unit do
+      "#{activity.distance_amount} #{activity.distance_unit}"
+    else
+      format_distance(activity.distance, user.user_prefs)
+    end
   end
 
   def pace(%{distance: distance}, _) when distance == 0, do: nil

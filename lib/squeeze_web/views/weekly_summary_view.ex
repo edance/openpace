@@ -17,14 +17,14 @@ defmodule SqueezeWeb.WeeklySummaryView do
 
   def planned_distance(%{activities: activities, current_user: user}) do
     activities
-    |> Enum.map(&(Distances.to_meters(&1.planned_distance, &1.planned_distance_unit)))
+    |> Enum.map(&(&1.planned_distance || 0))
     |> Enum.sum()
     |> Distances.to_float(imperial: user.user_prefs.imperial)
   end
 
   def completed_distance(%{activities: activities, current_user: user}) do
     activities
-    |> Enum.map(&(Distances.to_meters(&1.distance, &1.distance_unit)))
+    |> Enum.map(&(&1.distance || 0))
     |> Enum.sum()
     |> Distances.to_float(imperial: user.user_prefs.imperial)
   end
