@@ -66,7 +66,8 @@ defmodule Squeeze.Dashboard.Activity do
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> unique_constraint(:unique_activity, name: :activities_user_id_external_id_index)
-    |> calculate_distances()
+    |> calculate_planned_distance()
+    |> calculate_distance()
     |> set_status()
   end
 
@@ -86,17 +87,28 @@ defmodule Squeeze.Dashboard.Activity do
     end
   end
 
-  defp calculate_distances(changeset) do
-    distance_amount = get_field(changeset, :distance_amount)
-    distance_unit = get_field(changeset, :distance_unit)
-    distance = distance_to_meters(distance_amount, distance_unit)
-    planned_amount = get_field(changeset, :planned_distance_amount)
-    planned_unit = get_field(changeset, :planned_distance_unit)
-    planned_distance = distance_to_meters(planned_amount, planned_unit)
+  defp calculate_planned_distance(changeset) do
+    amount = get_change(changeset, :planned_distance_amount)
+    unit = get_change(changeset, :planned_distance_unit)
+    distance = distance_to_meters(amount, unit)
 
-    changeset
-    |> put_change(:distance, distance)
-    |> put_change(:planned_distance, planned_distance)
+    if amount && unit do
+      put_change(changeset, :planned_distance, distance)
+    else
+      changeset
+    end
+  end
+
+  defp calculate_distance(changeset) do
+    amount = get_change(changeset, :distance_amount)
+    unit = get_change(changeset, :distance_unit)
+    distance = distance_to_meters(amount, unit)
+
+    if amount && unit do
+      put_change(changeset, :distance, distance)
+    else
+      changeset
+    end
   end
 
   defp percent_complete(planned_distance, distance) do
