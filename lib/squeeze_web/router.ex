@@ -16,6 +16,7 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :dashboard_layout do
+    plug Plug.RequireRegistered
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
