@@ -11,6 +11,7 @@ defmodule Squeeze.ActivityMatcher do
     date = TimeHelper.to_date(user, activity.start_at)
     user
     |> Dashboard.get_activities_by_date(date)
+    |> Enum.filter(&(&1.type == activity.type))
     |> Enum.sort(fn(a, b) -> match_score(a, activity) > match_score(b, activity) end)
     |> List.first()
   end
