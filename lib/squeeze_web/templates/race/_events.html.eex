@@ -1,5 +1,0 @@
-<%= for event <- @race.events do %>
-  <%= event.name %> -
-  <%= format_distance(event.distance, @current_user.user_prefs) %>
-  <br/>
-<% end %>
