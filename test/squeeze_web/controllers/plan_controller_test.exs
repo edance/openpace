@@ -47,18 +47,6 @@ defmodule SqueezeWeb.PlanControllerTest do
     end
   end
 
-  describe "delete plan" do
-    setup [:create_plan]
-
-    test "deletes chosen plan", %{conn: conn, plan: plan} do
-      conn = delete conn, plan_path(conn, :delete, plan)
-      assert redirected_to(conn) == plan_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get conn, plan_path(conn, :show, plan)
-      end
-    end
-  end
-
   defp create_plan(%{user: user}) do
     plan = insert(:training_plan, user: user)
     {:ok, plan: plan}
