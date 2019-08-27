@@ -23,7 +23,7 @@
   </ul>
 <% end %>
 
-<div class="header bg-waves pb-5 pt-5 pt-md-6">
+<div class="header bg-waves pb-5 pt-5 pt-xl-6">
   <div>
     <div class="row no-gutters">
       <div class="col small text-center"><%= gettext("Week") %></div>

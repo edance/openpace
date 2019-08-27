@@ -6,7 +6,7 @@
 <% end %>
 
 <!-- Header -->
-<div class="header pt-5 pt-md-8 overflow-hidden">
+<div class="header pt-5 pt-xl-8 overflow-hidden">
   <img class="waves" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
 
   <div class="container-fluid">
