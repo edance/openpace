@@ -8,8 +8,6 @@ defmodule Squeeze.Factory do
   use Squeeze.InvoiceFactory
   use Squeeze.PaymentMethodFactory
   use Squeeze.TrainingPlanFactory
-  use Squeeze.RaceFactory
-  use Squeeze.RaceEventFactory
   use Squeeze.UserFactory
   use Squeeze.UserPrefsFactory
 
