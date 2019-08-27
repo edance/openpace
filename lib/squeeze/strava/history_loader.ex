@@ -37,6 +37,7 @@ defmodule Squeeze.Strava.HistoryLoader do
       distance: strava_activity.distance,
       duration: strava_activity.moving_time,
       start_at: strava_activity.start_date,
+      elevation_gain: strava_activity.total_elevation_gain,
       external_id: "#{strava_activity.id}",
       polyline: strava_activity.map.summary_polyline
     }
