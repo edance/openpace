@@ -8,6 +8,7 @@ defmodule SqueezeWeb.FormatHelpers do
 
   alias Squeeze.Accounts.{User, UserPrefs}
   alias Squeeze.Distances
+  alias Squeeze.Duration
   alias Squeeze.TimeHelper
 
   @doc """
@@ -18,17 +19,7 @@ defmodule SqueezeWeb.FormatHelpers do
     iex> format_duration(duration)
     "3:00:00"
   """
-  def format_duration(nil), do: nil
-  def format_duration(t) do
-    seconds = rem(t, 60)
-    minutes = trunc(rem(t, (60 * 60)) / 60)
-    hours = trunc(t / (60 * 60))
-    if hours > 0 do
-      "#{hours}:#{pad_num(minutes)}:#{pad_num(seconds)}"
-    else
-      "#{minutes}:#{pad_num(seconds)}"
-    end
-  end
+  def format_duration(t), do: Duration.format(t)
 
   def format_distance(distance, %UserPrefs{} = user_prefs) do
     Distances.format(distance, imperial: user_prefs.imperial)
@@ -59,7 +50,4 @@ defmodule SqueezeWeb.FormatHelpers do
     pace = trunc(duration / miles)
     "#{format_duration(pace)}/#{label}"
   end
-
-  defp pad_num(x) when x < 10, do: "0#{x}"
-  defp pad_num(x), do: "#{x}"
 end

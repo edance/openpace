@@ -7,6 +7,7 @@ defmodule Squeeze.Accounts.UserPrefs do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.{User, UserPrefs}
+  alias Squeeze.Duration
 
   @required_fields ~w()a
   @non_empty_fields ~w(distance duration race_date)a
@@ -14,8 +15,8 @@ defmodule Squeeze.Accounts.UserPrefs do
 
   schema "user_prefs" do
     field :distance, :integer
-    field :duration, :integer
-    field :personal_record, :integer
+    field :duration, Duration
+    field :personal_record, Duration
     field :race_date, :date
     field :experience, :integer
     field :timezone, :string

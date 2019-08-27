@@ -22,6 +22,18 @@ defmodule Squeeze.Duration do
     Ecto.Type.cast(:integer, number)
   end
 
+  def format(nil), do: nil
+  def format(t) do
+    seconds = rem(t, 60)
+    minutes = trunc(rem(t, (60 * 60)) / 60)
+    hours = trunc(t / (60 * 60))
+    if hours > 0 do
+      "#{hours}:#{pad_num(minutes)}:#{pad_num(seconds)}"
+    else
+      "#{minutes}:#{pad_num(seconds)}"
+    end
+  end
+
   def dump(number) do
     Ecto.Type.dump(:integer, number)
   end
@@ -46,4 +58,7 @@ defmodule Squeeze.Duration do
   defp cast_to_secs(hours, minutes, seconds) do
     {:ok, (hours * 3600) + (minutes * 60) + seconds}
   end
+
+  defp pad_num(x) when x < 10, do: "0#{x}"
+  defp pad_num(x), do: "#{x}"
 end
