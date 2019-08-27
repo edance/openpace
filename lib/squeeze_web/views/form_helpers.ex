@@ -8,6 +8,8 @@ defmodule SqueezeWeb.FormHelpers do
 
   import Phoenix.HTML
 
+  alias Squeeze.Duration
+
   map =
     &Enum.map(&1, fn i ->
       pre = if i < 10, do: "0"
@@ -58,6 +60,17 @@ defmodule SqueezeWeb.FormHelpers do
         radio_button(form, field, value, opts)
       ]
     end
+  end
+
+  def duration_input(form, field, opts \\ []) do
+    default_opts = [
+      autocomplete: "off",
+      class: "time-input #{opts[:class]}",
+      placeholder: opts[:placeholder] || "hh:mm:ss",
+      value: Map.get(form.data, field) |> Duration.format()
+    ]
+    opts = Keyword.merge(opts, default_opts)
+    input(form, field, opts)
   end
 
   def duration_select(form, field, opts \\ []) do
