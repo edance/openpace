@@ -35,4 +35,13 @@
       <%= render "_splits-table.html", assigns %>
     </div>
   <% end %>
+
+  <%= if @activity.description do %>
+    <div class="card mt-4">
+      <div class="card-header">Description</div>
+      <div class="card-body">
+        <%= @activity.description %>
+      </div>
+    </div>
+  <% end %>
 </div>
