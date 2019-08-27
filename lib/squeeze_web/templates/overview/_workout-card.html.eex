@@ -10,7 +10,7 @@
             <%= gettext("Rest") %>
           <% end %>
           <%= for activity <- @todays_activities do %>
-            <%= activity.name %>
+            <%= link(activity.name || activity.type, to: Routes.activity_path(@conn, :show, activity), class: "text-default") %>
           <% end %>
         </span>
       </div>
