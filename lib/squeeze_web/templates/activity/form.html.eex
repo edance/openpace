@@ -30,13 +30,13 @@
       <div class="form-row">
         <div class="col">
           <div class="input-group mb-3">
-            <%= distance_input f, :planned_distance, class: "form-control", placeholder: "Distance" %>
+            <%= distance_input f, :planned_distance, class: "form-control", placeholder: "Distance", autocomplete: "off" %>
           </div>
         </div>
 
         <div class="col">
           <div class="form-group">
-            <%= input f, :planned_duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
+            <%= input f, :planned_duration, class: "form-control time-input", placeholder: "hh:mm:ss", autocomplete: "off" %>
           </div>
         </div>
       </div>
@@ -45,13 +45,13 @@
       <div class="form-row">
         <div class="col">
           <div class="input-group mb-3">
-            <%= distance_input f, :distance, class: "form-control", placeholder: "Distance" %>
+            <%= distance_input f, :distance, class: "form-control", placeholder: "Distance", autocomplete: "off" %>
           </div>
         </div>
 
         <div class="col">
           <div class="form-group">
-            <%= input f, :duration, class: "form-control time-input", placeholder: "hh:mm:ss" %>
+            <%= input f, :duration, class: "form-control time-input", placeholder: "hh:mm:ss", autocomplete: "off" %>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
   </div>
 
   <div class="form-group">
-    <%= textarea f, :description, class: "form-control", rows: "3", placeholder: "Description" %>
+    <%= textarea f, :description, class: "form-control", rows: "3", placeholder: "Description", autocomplete: "off" %>
   </div>
 
   <div class="text-right">
