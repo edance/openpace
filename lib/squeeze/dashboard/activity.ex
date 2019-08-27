@@ -25,6 +25,7 @@ defmodule Squeeze.Dashboard.Activity do
     start_at
     duration
     description
+    elevation_gain
     external_id
     polyline
   )a
@@ -47,6 +48,7 @@ defmodule Squeeze.Dashboard.Activity do
     field :duration, Duration
     field :start_at, :utc_datetime
     field :polyline, :string
+    field :elevation_gain, :float
     field :external_id, :string
 
     field :description, :string
