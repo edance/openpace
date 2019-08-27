@@ -16,6 +16,7 @@
       <h1><%= name(assigns) %></h1>
       <p class="text-muted">
         <%= date(assigns) %>
+        · <%= @activity.type %>
         <%= if @activity.status == :pending do %>
           · Planned
         <% end %>
