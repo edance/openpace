@@ -48,6 +48,17 @@ defmodule SqueezeWeb.ActivityView do
     end
   end
 
+  def elevation(%{activity: %{elevation_gain: nil}}), do: "N/A"
+  def elevation(%{activity: activity, current_user: user}) do
+    imperial = user.user_prefs.imperial
+    value = Distances.to_feet(activity.elevation_gain, imperial: imperial)
+    if imperial do
+      "#{value} ft"
+    else
+      "#{value} m"
+    end
+  end
+
   def date(%{activity: %{start_at: nil, planned_date: date}}) do
     Timex.format!(date, "%b %-d, %Y ", :strftime)
   end

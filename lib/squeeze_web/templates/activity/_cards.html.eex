@@ -66,15 +66,15 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0">
-              Fitness
+              Elevation Gain
             </h5>
             <span class="h2 font-weight-bold mb-0">
-              N/A
+              <%= elevation(assigns) %>
             </span>
           </div>
           <div class="col-auto">
             <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-              <span class="iconify" data-icon="el:graph" data-inline="false"></span>
+              <span class="iconify" data-icon="maki:mountain-11" data-inline="false"></span>
             </div>
           </div>
         </div>
