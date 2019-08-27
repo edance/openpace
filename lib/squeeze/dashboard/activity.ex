@@ -9,6 +9,7 @@ defmodule Squeeze.Dashboard.Activity do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, TrackpointSet}
   alias Squeeze.Distances
+  alias Squeeze.Duration
 
   @required_fields ~w(type)a
   @optional_fields ~w(
@@ -36,14 +37,14 @@ defmodule Squeeze.Dashboard.Activity do
     field :planned_distance, :float # in meters
     field :planned_distance_amount, :float
     field :planned_distance_unit, DistanceUnitEnum
-    field :planned_duration, :integer
+    field :planned_duration, Duration
     field :planned_date, :date
 
     # Fields for after activity is completed
     field :distance, :float # in meters
     field :distance_amount, :float
     field :distance_unit, DistanceUnitEnum
-    field :duration, :integer
+    field :duration, Duration
     field :start_at, :utc_datetime
     field :polyline, :string
     field :external_id, :string

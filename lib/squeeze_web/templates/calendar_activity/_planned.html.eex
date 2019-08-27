@@ -15,8 +15,8 @@
         ·
       <% end %>
 
-      <%= if @activity.duration > 0 do %>
-        <%= format_duration(@activity.duration) %>
+      <%= if @activity.planned_duration && @activity.planned_duration > 0 do %>
+        <%= format_duration(@activity.planned_duration) %>
         ·
       <% end %>
       Planned
