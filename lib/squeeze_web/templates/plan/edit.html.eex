@@ -5,7 +5,7 @@
   </span>
 <% end %>
 
-<div class="header bg-waves pb-5 pt-5 pt-md-6">
+<div class="header bg-waves pb-5 pt-5 pt-xl-6">
   <div class="container-fluid">
     <div class="row">
       <div class="col heading ml-1">Week</div>
