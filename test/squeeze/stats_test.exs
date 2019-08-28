@@ -9,9 +9,9 @@ defmodule Squeeze.StatsTest do
   describe "dataset_for_year_chart/1" do
     setup [:build_user]
 
-    test "returns the last 30 weeks", %{user: user} do
+    test "returns the last 14 weeks", %{user: user} do
       data = Stats.dataset_for_year_chart(user)
-      assert length(data) == 30
+      assert length(data) == 14
     end
   end
 
@@ -36,9 +36,9 @@ defmodule Squeeze.StatsTest do
   describe "yearly_dateset/1" do
     setup [:build_user]
 
-    test "returns the last 30 weeks", %{user: user} do
+    test "returns the last 14 weeks", %{user: user} do
       dates = Stats.yearly_dateset(user)
-      assert length(dates) == 30
+      assert length(dates) == 14
     end
   end
 
