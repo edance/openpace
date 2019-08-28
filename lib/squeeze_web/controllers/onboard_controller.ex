@@ -15,7 +15,7 @@ defmodule SqueezeWeb.OnboardController do
     case Accounts.update_user_prefs(user.user_prefs, pref_params) do
       {:ok, _} ->
         conn
-        |> redirect(to: Routes.overview_path(conn, :index))
+        |> redirect(to: Routes.overview_path(conn, :index, welcome: true))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "index.html", changeset: changeset)
     end

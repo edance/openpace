@@ -3,7 +3,7 @@
 
   <%= async_form @changeset, Routes.onboard_path(@conn, :update), fn f -> %>
   <div class="container">
-    <div class="row">
+    <div id="1" class="row position-relative">
       <div class="onboard-question col-12 col-md-6 pt-8">
         <div class="text-uppercase text-primary font-weight-bold">
           Question 1/5
@@ -21,9 +21,13 @@
           <%= error_tag f, :distance %>
         </div>
       </div>
+
+      <a class="onboard-down-btn" href="#2">
+        <span class="iconify" data-icon="feather:arrow-down-circle" data-inline="false"></span>
+      </a>
     </div>
 
-    <div class="row">
+    <div id="2" class="row position-relative">
       <div class="onboard-question col-12 col-md-6 pt-8">
         <div class="text-uppercase text-primary font-weight-bold">
           Question 2/5
@@ -39,9 +43,13 @@
           <%= error_tag f, :race_date, class: "d-block" %>
         </div>
       </div>
+
+      <a class="onboard-down-btn" href="#3">
+        <span class="iconify" data-icon="feather:arrow-down-circle" data-inline="false"></span>
+      </a>
     </div>
 
-    <div class="row">
+    <div id="3" class="row position-relative">
       <div class="onboard-question col-12 col-md-6 pt-8">
         <div class="text-uppercase text-primary font-weight-bold">
           Question 3/5
@@ -59,9 +67,13 @@
           <%= error_tag(f, :duration) %>
         </div>
       </div>
+
+      <a class="onboard-down-btn" href="#4">
+        <span class="iconify" data-icon="feather:arrow-down-circle" data-inline="false"></span>
+      </a>
     </div>
 
-    <div class="row">
+    <div id="4" class="row position-relative">
       <div class="onboard-question col-12 col-md-6 pt-8">
         <div class="text-uppercase text-primary font-weight-bold">
           Question 4/5
@@ -90,9 +102,13 @@
           </label>
         </div>
       </div>
+
+      <a class="onboard-down-btn" href="#5">
+        <span class="iconify" data-icon="feather:arrow-down-circle" data-inline="false"></span>
+      </a>
     </div>
 
-    <div class="row">
+    <div id="5" class="row">
       <div class="onboard-question col-12 col-md-6 pt-8">
         <div class="text-uppercase text-primary font-weight-bold">
           Question 5/5
@@ -108,7 +124,7 @@
           <%= error_tag(f, :personal_record) %>
         </div>
 
-        <button class="btn btn-lg btn-primary mt-2 mb-8" type="submit">Finish</button>
+        <button class="btn btn-spinner btn-lg btn-primary mt-2 mb-8" type="submit">Finish</button>
       </div>
     </div>
   </div>
