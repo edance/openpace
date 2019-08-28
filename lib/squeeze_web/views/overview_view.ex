@@ -2,6 +2,7 @@ defmodule SqueezeWeb.OverviewView do
   use SqueezeWeb, :view
 
   alias Squeeze.Accounts.User
+  alias Squeeze.Distances
   alias Squeeze.TimeHelper
 
   def title(_page, _assigns) do
@@ -28,10 +29,11 @@ defmodule SqueezeWeb.OverviewView do
     relative_date(user, date)
   end
 
-  def weekly_distance(%{year_dataset: dataset}) do
-    dataset
+  def weekly_distance(%{year_dataset: dataset, current_user: user}) do
+    distance = dataset
     |> List.last()
     |> Map.get(:distance)
+    "#{distance} #{Distances.label(imperial: user.user_prefs.imperial)}"
   end
 
   def weekly_diff(%{year_dataset: dataset}) do

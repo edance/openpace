@@ -29,7 +29,7 @@
       </span>
 
       <span class="text-nowrap">
-        <%= gettext("vs the last week") %>
+        <%= gettext("vs last week") %>
       </span>
     </p>
   </div>
