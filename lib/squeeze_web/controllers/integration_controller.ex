@@ -15,9 +15,9 @@ defmodule SqueezeWeb.IntegrationController do
     client = get_token!(provider, code)
     credential_params = get_credential!(provider, client)
     case Accounts.create_credential(conn.assigns.current_user, credential_params) do
-      {:ok, _} ->
+      {:ok, credential} ->
         setup_integration(conn, client, provider)
-        redirect_current_user(conn, provider)
+        redirect_current_user(conn, credential)
       {:error, _} ->
         conn
         |> put_flash(:error, "Authentication failed for #{provider}")
@@ -25,10 +25,19 @@ defmodule SqueezeWeb.IntegrationController do
     end
   end
 
-  defp redirect_current_user(conn, provider) do
-    conn
-    |> put_flash(:info, "Connected to #{provider}")
-    |> redirect(to: Routes.dashboard_path(conn, :index))
+  defp redirect_current_user(conn, credential) do
+    user = conn.assigns.current_user
+
+    if user.registered do
+      conn
+      |> put_flash(:info, "Connected to #{credential.provider}")
+      |> redirect(to: Routes.dashboard_path(conn, :index))
+    else
+      load_history(credential)
+      conn
+      |> put_flash(:info, "Connected to #{credential.provider}")
+      |> redirect(to: Routes.onboard_path(conn, :index))
+    end
   end
 
   defp setup_integration(conn, client, "fitbit") do
@@ -63,4 +72,14 @@ defmodule SqueezeWeb.IntegrationController do
   end
 
   defp get_credential!("fitbit", client), do: Auth.get_credential!(client)
+
+  def load_history(%{provider: "strava", uid: id}) do
+    credential = Accounts.get_credential("strava", id)
+    Task.start(fn -> Squeeze.Strava.HistoryLoader.load_recent(credential) end)
+  end
+
+  def load_history(%{provider: "fitbit", uid: id}) do
+    credential = Accounts.get_credential("fitbit", id)
+    Task.start(fn -> Squeeze.Fitbit.HistoryLoader.load_recent(credential) end)
+  end
 end
