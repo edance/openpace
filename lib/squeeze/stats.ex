@@ -61,12 +61,17 @@ defmodule Squeeze.Stats do
     |> Enum.map(&map_activity(&1, user))
   end
 
-  defp map_activity(%Activity{distance: distance, start_at: start_at}, user) do
+  defp map_activity(%Activity{distance: distance} = activity, user) do
     opts = [imperial: user.user_prefs.imperial]
     %{
       distance: Distances.to_float(distance, opts),
-      date: TimeHelper.to_date(user, start_at)
+      date: date(activity, user)
     }
+  end
+
+  defp date(%Activity{start_at: nil, planned_date: date}, _), do: date
+  defp date(%Activity{start_at: start_at}, user) do
+    TimeHelper.to_date(user, start_at)
   end
 
   defp round_distance(nil), do: 0.0
