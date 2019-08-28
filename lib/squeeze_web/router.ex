@@ -31,6 +31,9 @@ defmodule SqueezeWeb.Router do
 
     get "/", HomeController, :index
 
+    get "/onboard", OnboardController, :index
+    put "/onboard", OnboardController, :update
+
     get "/quiz", WizardController, :index
     get "/quiz/:step", WizardController, :step
     put "/quiz/:step", WizardController, :update

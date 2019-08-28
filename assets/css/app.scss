@@ -72,3 +72,25 @@
 // Vendor (Plugins)
 
 @import "custom/vendors";
+
+.onboard-question {
+  @include media-breakpoint-up(md) {
+    border-right: 1px solid $card-border-color;
+    height: 100vh;
+  }
+}
+
+.custom-radio-lg {
+  .custom-control-label {
+    font-size: 1.5em !important;
+
+    &::before,
+    &::after {
+      margin-top: 6px;
+    }
+  }
+}
+
+input.form-control {
+  max-width: 400px;
+}
