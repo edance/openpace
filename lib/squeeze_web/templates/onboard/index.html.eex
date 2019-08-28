@@ -1,0 +1,116 @@
+<main>
+  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+
+  <%= async_form @changeset, Routes.onboard_path(@conn, :update), fn f -> %>
+  <div class="container">
+    <div class="row">
+      <div class="onboard-question col-12 col-md-6 pt-8">
+        <div class="text-uppercase text-primary font-weight-bold">
+          Question 1/5
+        </div>
+        <div class="display-2">
+          What race are you training for?
+        </div>
+      </div>
+      <div class="col pt-md-8">
+        <div class="form-group mt-4">
+          <%= label f, :distance do %>
+            Race Distance
+          <% end %>
+          <%= autocomplete(f, :distance, distances(), class: "form-control form-control-lg", placeholder: gettext("Choose a distance")) %>
+          <%= error_tag f, :distance %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="onboard-question col-12 col-md-6 pt-8">
+        <div class="text-uppercase text-primary font-weight-bold">
+          Question 2/5
+        </div>
+        <div class="display-2">
+          When is your next race?
+        </div>
+      </div>
+      <div class="col pt-md-8">
+        <div class="form-group mt-4">
+          <%= label f, :race_date %>
+          <%= input f, :race_date, placeholder: "Pick a date", class: "date-picker form-control form-control-lg" %>
+          <%= error_tag f, :race_date, class: "d-block" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="onboard-question col-12 col-md-6 pt-8">
+        <div class="text-uppercase text-primary font-weight-bold">
+          Question 3/5
+        </div>
+        <div class="display-2">
+          What goal time are you trying to hit?
+        </div>
+      </div>
+      <div class="col pt-md-8">
+        <div class="form-group mt-4">
+          <%= label f, :distance do %>
+            Goal Time
+          <% end %>
+          <%= duration_input f, :duration, class: "form-control form-control-lg" %>
+          <%= error_tag(f, :duration) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="onboard-question col-12 col-md-6 pt-8">
+        <div class="text-uppercase text-primary font-weight-bold">
+          Question 4/5
+        </div>
+        <div class="display-2">
+          What is your level of experience?
+        </div>
+      </div>
+      <div class="col pt-md-8">
+        <div class="custom-control custom-radio custom-radio-lg mt-4 mb-1">
+          <%= radio_button f, :experience, 1, id: "experience1", class: "custom-control-input" %>
+          <label class="custom-control-label" for="experience1">
+            I am new to running
+          </label>
+        </div>
+        <div class="custom-control custom-radio custom-radio-lg mb-1">
+          <%= radio_button f, :experience, 2, id: "experience2", class: "custom-control-input" %>
+          <label class="custom-control-label" for="experience2">
+            I have ran a few races
+          </label>
+        </div>
+        <div class="custom-control custom-radio custom-radio-lg mb-1">
+          <%= radio_button f, :experience, 3, id: "experience3", class: "custom-control-input" %>
+          <label class="custom-control-label" for="experience3">
+            I run all the time
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="onboard-question col-12 col-md-6 pt-8">
+        <div class="text-uppercase text-primary font-weight-bold">
+          Question 5/5
+        </div>
+        <div class="display-2">
+          What is your personal record for this race?
+        </div>
+      </div>
+      <div class="col pt-md-8">
+        <div class="form-group mt-4">
+          <%= label f, :personal_record %>
+          <%= duration_input f, :personal_record, class: "form-control form-control-lg" %>
+          <%= error_tag(f, :personal_record) %>
+        </div>
+
+        <button class="btn btn-lg btn-primary mt-2 mb-8" type="submit">Finish</button>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</main>

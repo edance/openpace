@@ -10,7 +10,7 @@ defmodule Squeeze.Accounts.UserPrefs do
   alias Squeeze.Duration
 
   @required_fields ~w()a
-  @non_empty_fields ~w(distance duration race_date)a
+  @non_empty_fields ~w(distance)a
   @optional_fields ~w(distance duration personal_record race_date experience timezone imperial)a
 
   schema "user_prefs" do
