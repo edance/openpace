@@ -91,6 +91,22 @@
   }
 }
 
+.onboard-down-btn {
+  background: white;
+  bottom: 100px;
+  display: none;
+  font-size: 2em;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  width: 1em;
+
+  @include media-breakpoint-up(md) {
+    display: block;
+  }
+}
+
 input.form-control {
   max-width: 400px;
 }
