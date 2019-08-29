@@ -42,7 +42,7 @@ defmodule Squeeze.Duration do
     Ecto.Type.load(:integer, number)
   end
 
-  def type() do
+  def type do
     Ecto.Type.type(:integer)
   end
 
