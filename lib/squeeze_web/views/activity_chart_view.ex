@@ -1,18 +1,21 @@
 defmodule SqueezeWeb.ActivityChartView do
   use SqueezeWeb, :view
 
-  def json(%{trackpoints: trackpoints}) do
+  alias Squeeze.{Distances, Velocity}
+
+  def json(%{trackpoints: trackpoints, current_user: user}) do
+    imperial = user.user_prefs.imperial
     trackpoints
-    |> Enum.map(&(trackpoint(&1)))
+    |> Enum.map(&(trackpoint(&1, imperial)))
   end
 
-  def trackpoint(t) do
+  def trackpoint(t, imperial) do
     %{
-      altitude: t.altitude,
-      cadence: t.cadence,
-      distance: t.distance,
+      altitude: Distances.to_feet(t.altitude, imperial: imperial),
+      cadence: t.cadence * 2,
+      distance: Distances.to_float(t.distance, imperial: imperial),
       heartrate: t.heartrate,
-      velocity: t.velocity
+      velocity: Velocity.to_float(t.velocity, imperial: imperial)
     }
   end
 end
