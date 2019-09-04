@@ -30,6 +30,12 @@
 
   <%= render "_cards.html", assigns %>
 
+  <div class="card mt-4">
+    <div class="card-body">
+      <%= render SqueezeWeb.ActivityChartView, "chart.html", assigns %>
+    </div>
+  </div>
+
   <%= if trackpoints?(assigns) do %>
     <div class="card mt-4">
       <%= render "_splits-table.html", assigns %>

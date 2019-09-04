@@ -1,0 +1,2 @@
+<div id="activity-chart" data-trackpoints="<%= Jason.encode!(json(assigns)) %>">
+</div>
