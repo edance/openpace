@@ -5,18 +5,18 @@
 // General styles
 
 .avatar-group {
-	.avatar {
-		position: relative;
-		z-index: 2;
-		border: 2px solid $card-bg;
+  .avatar {
+    position: relative;
+    z-index: 2;
+    border: 2px solid $card-bg;
 
-		&:hover {
-			z-index: 3;
-		}
-	}
+    &:hover {
+      z-index: 3;
+    }
+  }
 
-	.avatar + .avatar {
-		margin-left: -1rem;
+  .avatar + .avatar {
+    margin-left: -1rem;
 
-	}
+  }
 }
