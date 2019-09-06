@@ -61,7 +61,7 @@ defmodule Squeeze.Mixfile do
       {:argon2_elixir, "~> 2.0"},
       {:earmark, "~> 1.2"},
       {:number, "~> 1.0.0"},
-      {:tesla, "~> 1.2.1"},
+      {:tesla, "~> 1.3.0"},
       {:hackney, "~> 1.15.0"},
       {:jason, "~> 1.1"},
       {:react_phoenix, "~> 1.0.0"},
