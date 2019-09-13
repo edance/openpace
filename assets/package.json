@@ -43,7 +43,7 @@
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.1.0",
-    "webpack": "4.39.3",
+    "webpack": "4.40.2",
     "webpack-cli": "^3.3.7"
   }
 }
