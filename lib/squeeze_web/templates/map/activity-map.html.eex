@@ -3,3 +3,14 @@
      data-coordinates="<%= coordinates(assigns) %>"
      style="height: 600px;">
 </div>
+
+<div class="fluid-container">
+  <div class="row mx-0">
+    <% pace = pace(assigns) %>
+    <%= for color <- gradient() do %>
+      <div class="col text-white small" style="background-color: <%= color.color %>">
+        <%= format_duration(pace / color.factor) %>
+      </div>
+    <% end %>
+  </div>
+</div>
