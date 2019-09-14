@@ -1,7 +1,7 @@
 defmodule SqueezeWeb.ActivityView do
   use SqueezeWeb, :view
 
-  alias Squeeze.Distances
+  alias Squeeze.{Distances, Velocity}
 
   def title(_page, _assigns) do
     "Activities"
@@ -73,6 +73,13 @@ defmodule SqueezeWeb.ActivityView do
     length(trackpoints) > 0
   end
 
+  def trackpoint_json(%{trackpoints: trackpoints, current_user: user}) do
+    imperial = user.user_prefs.imperial
+    trackpoints
+    |> Enum.map(&(trackpoint(&1, imperial)))
+    |> Jason.encode!()
+  end
+
   def splits(assigns) do
     trackpoints = split_trackpoints(assigns)
     trackpoints
@@ -103,4 +110,14 @@ defmodule SqueezeWeb.ActivityView do
     |> Enum.concat([List.last(trackpoints)]) # add the end trackpoint
   end
   defp split_trackpoints(_), do: []
+
+  defp trackpoint(t, imperial) do
+    %{
+      altitude: Distances.to_feet(t.altitude, imperial: imperial),
+      cadence: t.cadence * 2,
+      distance: Distances.to_float(t.distance, imperial: imperial),
+      heartrate: t.heartrate,
+      velocity: Velocity.to_float(t.velocity, imperial: imperial)
+    }
+  end
 end
