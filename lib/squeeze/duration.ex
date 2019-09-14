@@ -23,6 +23,7 @@ defmodule Squeeze.Duration do
   end
 
   def format(nil), do: nil
+  def format(t) when is_float(t), do: format(trunc(t))
   def format(t) do
     seconds = rem(t, 60)
     minutes = trunc(rem(t, (60 * 60)) / 60)

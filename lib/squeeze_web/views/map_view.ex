@@ -11,7 +11,7 @@ defmodule SqueezeWeb.MapView do
 
   def coordinates(%{race: race}), do: coordinates(race)
 
-  def layer(%{trackpoints: trackpoints}) do
+  def layer(%{trackpoints: trackpoints, activity: activity}) do
     %{
       id: "trackpoints",
       type: "circle",
@@ -19,7 +19,7 @@ defmodule SqueezeWeb.MapView do
         type: "geojson",
         data: %{
           type: "FeatureCollection",
-          features: trackpoints |> Enum.map(&feature/1)
+          features: Enum.map(trackpoints, &(feature(&1, average_velocity(activity))))
         }
       },
       paint: paint()
@@ -41,11 +41,33 @@ defmodule SqueezeWeb.MapView do
     [coordinates["lon"], coordinates["lat"]]
   end
 
-  defp feature(trackpoint) do
+  def gradient do
+    [
+      %{factor: 0.88, color: "#9E1A00"},
+      %{factor: 0.91, color: "#FF2A00"},
+      %{factor: 0.94, color: "#E86F0C"},
+      %{factor: 0.97, color: "#FF9C0D"},
+      %{factor: 1.00, color: "#FFCA00"},
+      %{factor: 1.03, color: "#FFD600"},
+      %{factor: 1.06, color: "#C4E800"},
+      %{factor: 1.09, color: "#9DE80C"},
+      %{factor: 1.12, color: "#7EFF00"},
+      %{factor: 1.15, color: "#32AB00"},
+      %{factor: 1.18, color: "#1E8400"}
+    ]
+  end
+
+  def pace(%{activity: activity, current_user: user}) do
+    imperial = user.user_prefs.imperial
+    distance = Distances.to_float(activity.distance, imperial: imperial)
+    trunc(activity.duration / distance)
+  end
+
+  defp feature(trackpoint, avg_velocity) do
     %{
       type: "Feature",
       properties: %{
-        color: color(trackpoint.velocity)
+        color: color(trackpoint.velocity, avg_velocity)
       },
       geometry: %{
         type: "Point",
@@ -54,26 +76,11 @@ defmodule SqueezeWeb.MapView do
     }
   end
 
-  defp color(velocity) do
-    gradient = gradient()
-    idx = Enum.min([trunc((velocity / 5.0) * 10), length(gradient) - 1])
-    Enum.at(gradient, idx)
-  end
-
-  defp gradient do
-    [
-      "#BF0900",
-      "#C23200",
-      "#C65C00",
-      "#CA8800",
-      "#CEB500",
-      "#BFD200",
-      "#96D500",
-      "#6CD900",
-      "#40DD00",
-      "#13E100",
-      "#00E51C"
-    ]
+  defp color(velocity, avg_velocity) do
+    case Enum.find(gradient(), &(velocity < avg_velocity * &1.factor)) do
+      %{color: color} -> color
+      _ -> "#1E8400"
+    end
   end
 
   defp paint do
@@ -84,5 +91,9 @@ defmodule SqueezeWeb.MapView do
       },
       "circle-color": ["get", "color"]
     }
+  end
+
+  defp average_velocity(activity) do
+    activity.distance / activity.duration
   end
 end
