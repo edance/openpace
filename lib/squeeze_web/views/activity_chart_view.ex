@@ -9,7 +9,7 @@ defmodule SqueezeWeb.ActivityChartView do
     |> Enum.map(&(trackpoint(&1, imperial)))
   end
 
-  def trackpoint(t, imperial) do
+  defp trackpoint(t, imperial) do
     %{
       altitude: Distances.to_feet(t.altitude, imperial: imperial),
       cadence: t.cadence * 2,

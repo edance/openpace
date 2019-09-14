@@ -17,21 +17,39 @@ document.addEventListener("turbolinks:load", function() {
     "data": [
       {
         "name": "table",
-        "values": JSON.parse($chart.data('trackpoints'))
-      }
-    ],
-
-    "signals": [
-      {
-        "name": "tooltip",
-        "value": {},
-        "on": [
-          {"events": "rect:mouseover", "update": "datum"},
-          {"events": "rect:mouseout",  "update": "{}"}
+        "values": JSON.parse($chart.data('trackpoints')),
+        "transform": [
+          {
+            "type": "window",
+            "as": ["altitude"],
+            "ops": ["average"],
+            "fields": ["altitude"],
+            "frame": [-5, 5]
+          },
+          {
+            "type": "window",
+            "as": ["cadence"],
+            "ops": ["average"],
+            "fields": ["cadence"],
+            "frame": [-5, 5]
+          },
+          {
+            "type": "window",
+            "as": ["heartrate"],
+            "ops": ["average"],
+            "fields": ["heartrate"],
+            "frame": [-5, 5]
+          },
+          {
+            "type": "window",
+            "as": ["velocity"],
+            "ops": ["average"],
+            "fields": ["velocity"],
+            "frame": [-5, 5]
+          },
         ]
       }
     ],
-
     "scales": [
       {
         "name": "xscale",
@@ -68,8 +86,6 @@ document.addEventListener("turbolinks:load", function() {
     "axes": [
       { "orient": "bottom", "scale": "xscale" },
       { "orient": "left", "scale": "yscale" },
-      { "orient": "right", "scale": "yscale2" },
-      { "orient": "right", "scale": "yscale-hr", "offset": 50 }
     ],
 
     "marks": [
@@ -78,9 +94,11 @@ document.addEventListener("turbolinks:load", function() {
         "from": {"data":"table"},
         "encode": {
           "enter": {
+            "stroke": {"value": colors.gray['400'] },
             "x": {"scale": "xscale", "field": "distance"},
-            "y": {"scale": "yscale", "field": "altitude"}
-          }
+            "y": {"scale": "yscale", "field": "altitude"},
+            interpolate: "basis",
+          },
         }
       },
       {
@@ -90,8 +108,9 @@ document.addEventListener("turbolinks:load", function() {
           "enter": {
             "stroke": {"value": colors.theme['info']},
             "x": {"scale": "xscale", "field": "distance"},
-            "y": {"scale": "yscale2", "field": "cadence"}
-          }
+            "y": {"scale": "yscale2", "field": "cadence"},
+            interpolate: "basis",
+          },
         }
       },
       {
@@ -101,8 +120,9 @@ document.addEventListener("turbolinks:load", function() {
           "enter": {
             "stroke": {"value": colors.theme['danger'] },
             "x": {"scale": "xscale", "field": "distance"},
-            "y": {"scale": "yscale-hr", "field": "heartrate"}
-          }
+            "y": {"scale": "yscale-hr", "field": "heartrate"},
+            interpolate: "basis",
+          },
         }
       },
       {
@@ -113,7 +133,8 @@ document.addEventListener("turbolinks:load", function() {
             "stroke": {"value": colors.theme['yellow']},
             "x": {"scale": "xscale", "field": "distance"},
             "y": {"scale": "yscale-velocity", "field": "velocity"},
-          }
+            interpolate: "basis",
+          },
         }
       },
     ]
