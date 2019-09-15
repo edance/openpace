@@ -10,14 +10,9 @@ import 'bootstrap';
 
 // Import base components
 import './components/base';
-import './components/route-map';
-import './components/route-chart';
 
 // Turbolinks
 import './turbolinks';
-
-// Run react
-import './react-boot';
 
 // Fonts
 import './fonts';
