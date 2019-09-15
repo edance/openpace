@@ -1,0 +1,52 @@
+<div class="card-header border-0">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="mb-0">
+        Splits
+      </h3>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">
+          Split
+        </th>
+        <th scope="col">
+          Pace
+          <div class="small">min/mi</div>
+        </th>
+        <th scope="col">
+          Time
+        </th>
+        <th scope="col">
+          HR
+          <div class="small">bpm</div>
+        </th>
+        <th scope="col">
+          Cad
+          <div class="small">steps/min</div>
+        </th>
+        <th scope="col">
+          Net Elevation
+          <div class="small">feet</div>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= for split <- splits(assigns) do %>
+        <tr>
+          <td><%= split.split %></td>
+          <td></td>
+          <td><%= format_duration(split.time) %></td>
+          <td><%= split.heartrate %></td>
+          <td><%= split.cadence %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
