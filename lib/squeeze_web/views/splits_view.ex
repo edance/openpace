@@ -3,15 +3,24 @@ defmodule SqueezeWeb.SplitsView do
 
   alias Squeeze.Distances
 
-  def splits(%{trackpoints: trackpoints} = assigns) do
-    trackpoints
-    |> Enum.chunk_by(&(trunc(&1.distance / split_distance(assigns))))
+  def splits(%{trackpoints: trackpoints, current_user: user} = assigns) do
+    imperial = user.user_prefs.imperial
+
+    {splits, _} = trackpoints
+    |> Enum.chunk_by(&(trunc(&1.distance / split_distance(imperial))))
     |> Enum.with_index()
     |> Enum.map(&calc_split/1)
+    |> Enum.map_reduce(List.first(trackpoints), fn(x, acc) ->
+      time = x.time - acc.time
+      distance = Distances.to_float(x.distance - acc.distance, imperial: imperial)
+      pace = time / distance
+      {Map.merge(x, %{pace: pace, split_time: time}), x}
+    end)
+
+    splits
   end
 
-  def split_distance(%{current_user: user}) do
-    imperial = user.user_prefs.imperial
+  def split_distance(imperial) do
     if imperial do
       Distances.mile_in_meters
     else

@@ -43,8 +43,8 @@
       <%= for split <- splits(assigns) do %>
         <tr>
           <td><%= split.split %></td>
-          <td></td>
-          <td></td>
+          <td><%= format_duration(split.pace) %></td>
+          <td><%= format_duration(split.split_time) %></td>
           <td><%= format_duration(split.time) %></td>
           <td><%= split.heartrate %></td>
           <td><%= split.cadence %></td>
