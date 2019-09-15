@@ -3,13 +3,13 @@ defmodule SqueezeWeb.SplitsView do
 
   alias Squeeze.Distances
 
-  def splits(%{trackpoints: trackpoints, current_user: user} = assigns) do
+  def splits(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
 
     {splits, _} = trackpoints
     |> Enum.chunk_by(&(trunc(&1.distance / split_distance(imperial))))
     |> Enum.with_index()
-    |> Enum.map(&calc_split/1)
+    |> Enum.map(&(calc_split(&1, imperial)))
     |> Enum.map_reduce(List.first(trackpoints), fn(x, acc) ->
       time = x.time - acc.time
       distance = Distances.to_float(x.distance - acc.distance, imperial: imperial)
@@ -28,7 +28,7 @@ defmodule SqueezeWeb.SplitsView do
     end
   end
 
-  def calc_split({trackpoints, idx}) do
+  def calc_split({trackpoints, idx}, imperial) do
     last = List.last(trackpoints)
     altitude_deltas = calc_up_and_downs(trackpoints)
     %{
@@ -37,8 +37,8 @@ defmodule SqueezeWeb.SplitsView do
       time: last.time,
       heartrate: round(avg_by(trackpoints, :heartrate)),
       cadence: round(avg_by(trackpoints, :cadence) * 2),
-      up: altitude_deltas.up,
-      down: altitude_deltas.down
+      up: Distances.to_feet(altitude_deltas.up, imperial: imperial),
+      down: Distances.to_feet(altitude_deltas.down, imperial: imperial)
     }
   end
 

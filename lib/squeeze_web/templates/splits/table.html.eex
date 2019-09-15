@@ -16,7 +16,11 @@
         </th>
         <th scope="col">
           Pace
-          <div class="small">min/mi</div>
+          <%= if @current_user.user_prefs.imperial do %>
+            <div class="small">min/mi</div>
+          <% else %>
+            <div class="small">min/km</div>
+          <% end %>
         </th>
         <th scope="col">
           Split Time
@@ -34,7 +38,11 @@
         </th>
         <th scope="col">
           Elevation
-          <div class="small">feet</div>
+          <%= if @current_user.user_prefs.imperial do %>
+            <div class="small">feet</div>
+          <% else %>
+            <div class="small">meters</div>
+          <% end %>
         </th>
       </tr>
     </thead>
@@ -49,9 +57,9 @@
           <td><%= split.heartrate %></td>
           <td><%= split.cadence %></td>
           <td>
-            <%= round(split.up * 3.28) %>
+            <%= round(split.up) %>
             <span class="iconify mr-1" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
-            <%= round(split.down * 3.28) %>
+            <%= round(split.down) %>
             <span class="iconify mr-1" data-icon="ant-design:caret-down-fill" data-inline="false"></span>
           </td>
         </tr>
