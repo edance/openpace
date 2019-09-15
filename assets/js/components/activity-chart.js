@@ -10,10 +10,10 @@ document.addEventListener("turbolinks:load", function() {
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega/v5.json",
-    "width": 800,
-    "height": 400,
-    "padding": 5,
-
+    "autosize": {
+      "type": "fit",
+      "contains": "padding"
+    },
     "data": [
       {
         "name": "table",
@@ -146,5 +146,19 @@ document.addEventListener("turbolinks:load", function() {
     container: '#activity-chart',   // parent DOM container
     hover:     true       // enable hover processing
   });
-  view.runAsync();
+
+  const resize = () => {
+    const width = $chart.size().width;
+    const height = $chart.size().height;
+
+    // debugger;
+    view
+      .height(height)
+      .width(width)
+      .runAsync();
+  };
+
+  window.addEventListener('resize', resize);
+
+  resize();
 });

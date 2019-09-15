@@ -1,7 +1,6 @@
 <div class="activity-map"
      data-geojson="<%= layer(assigns) %>"
-     data-coordinates="<%= coordinates(assigns) %>"
-     style="height: 600px;">
+     data-coordinates="<%= coordinates(assigns) %>">
 </div>
 
 <div class="fluid-container">
