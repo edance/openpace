@@ -19,6 +19,9 @@
           <div class="small">min/mi</div>
         </th>
         <th scope="col">
+          Split Time
+        </th>
+        <th scope="col">
           Time
         </th>
         <th scope="col">
@@ -26,11 +29,11 @@
           <div class="small">bpm</div>
         </th>
         <th scope="col">
-          Cad
+          Cadence
           <div class="small">steps/min</div>
         </th>
         <th scope="col">
-          Net Elevation
+          Elevation
           <div class="small">feet</div>
         </th>
       </tr>
@@ -41,10 +44,16 @@
         <tr>
           <td><%= split.split %></td>
           <td></td>
+          <td></td>
           <td><%= format_duration(split.time) %></td>
           <td><%= split.heartrate %></td>
           <td><%= split.cadence %></td>
-          <td></td>
+          <td>
+            <%= round(split.up * 3.28) %>
+            <span class="iconify mr-1" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
+            <%= round(split.down * 3.28) %>
+            <span class="iconify mr-1" data-icon="ant-design:caret-down-fill" data-inline="false"></span>
+          </td>
         </tr>
       <% end %>
     </tbody>
