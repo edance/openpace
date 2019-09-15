@@ -14,6 +14,17 @@ document.addEventListener("turbolinks:load", function() {
       "type": "fit",
       "contains": "padding"
     },
+    "signals": [
+      {
+        "name": "x_scale_move",
+        "on": [
+          {
+            "events": "mousemove",
+            "update": "invert('xscale', x())"
+          }
+        ]
+      },
+    ],
     "data": [
       {
         "name": "table",
@@ -89,6 +100,24 @@ document.addEventListener("turbolinks:load", function() {
     ],
 
     "marks": [
+      {
+        type: "rule",
+        encode: {
+          update: {
+            x: {
+              scale: "xscale",
+              signal: "x_scale_move",
+              offset: 0.5
+            },
+            y: { value: 0 },
+            y2: { signal: "height" },
+            stroke: { value: colors.gray['600'] },
+            strokeWidth: { value: 2 },
+            strokeDash: { value: [8, 4] },
+            opacity: { value: 1 },
+          }
+        }
+      },
       {
         "type": "line",
         "from": {"data":"table"},
