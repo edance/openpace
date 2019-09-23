@@ -47,7 +47,6 @@ defmodule SqueezeWeb do
       import SqueezeWeb.Gettext
       import SqueezeWeb.ImageHelpers
       import PhoenixActiveLink
-      import ReactPhoenix.ClientSide
 
       alias SqueezeWeb.Router.Helpers, as: Routes
     end
