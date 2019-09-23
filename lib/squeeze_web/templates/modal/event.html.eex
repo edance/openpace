@@ -13,7 +13,6 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <%= react_component("Components.Select", %{options: run_types()}) %>
           </div>
 
           <div class="form-group">

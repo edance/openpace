@@ -17,8 +17,5 @@ import './timezone-hidden-input';
 import './time-input';
 
 // React components
-import Select from './select';
-
 window.Components = {
-  Select,
 };
