@@ -4,7 +4,6 @@
 import '../css/app.scss';
 
 // Import dependencies
-import 'react-phoenix';
 import 'phoenix_html';
 import 'bootstrap';
 

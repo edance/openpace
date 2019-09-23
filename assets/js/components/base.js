@@ -15,7 +15,3 @@ import './payment-form';
 import './sign-up-form';
 import './timezone-hidden-input';
 import './time-input';
-
-// React components
-window.Components = {
-};
