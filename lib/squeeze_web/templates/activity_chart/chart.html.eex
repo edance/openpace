@@ -1,2 +1,9 @@
-<div id="activity-chart" data-trackpoints="<%= Jason.encode!(json(assigns)) %>">
+<div id="activity-chart"
+     data-altitude="<%= altitude(assigns) %>"
+     data-cadence="<%= cadence(assigns) %>"
+     data-distance="<%= distance(assigns) %>"
+     data-heartrate="<%= heartrate(assigns) %>"
+     data-velocity="<%= velocity(assigns) %>"
+     data-imperial="<%= @current_user.user_prefs.imperial %>"
+>
 </div>
