@@ -49,9 +49,10 @@
         </div>
         <div class="card-body">
           <!-- Chart -->
-          <div class="chart">
-            <!-- Chart wrapper -->
-            <canvas id="chart-year" data-dataset="<%= Jason.encode!(@year_dataset) %>"></canvas>
+          <div id="overview-chart" class="chart"
+               data-distance="<%= Jason.encode!(@year_dataset) %>"
+               data-imperial="<%= @current_user.user_prefs.imperial %>"
+          >
           </div>
         </div>
       </div>
