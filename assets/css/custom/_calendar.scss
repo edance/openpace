@@ -8,6 +8,8 @@
 
 .calendar-date {
   background: $white;
+  border-bottom: $gray-200 1px solid;
+  border-left: $gray-200 1px solid;
   min-height: 10rem;
 }
 
