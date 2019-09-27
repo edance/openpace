@@ -12,4 +12,17 @@ defmodule SqueezeWeb.ModalView do
       %{value: "Workout", label: "Workout"}
     ]
   end
+
+  def activity_types do
+    [
+      "Run",
+      "Bike",
+      "Swim",
+      "Cross Training",
+      "Walk",
+      "Strength Training",
+      "Workout",
+      "Yoga"
+    ]
+  end
 end

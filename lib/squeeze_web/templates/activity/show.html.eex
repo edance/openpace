@@ -46,7 +46,7 @@
     </div>
   <% end %>
 
-    <div class="card mt-4">
+    <div class="card mt-4 mb-8">
       <div class="card-header border-0">
         <div class="row align-items-center">
           <div class="col">
