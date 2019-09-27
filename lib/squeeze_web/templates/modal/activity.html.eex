@@ -11,8 +11,7 @@
       </div>
 
       <div class="modal-body">
-        <%= render SqueezeWeb.ActivityView, "form.html",
-            Map.merge(assigns, %{action: Routes.activity_path(@conn, :create), changeset: @conn}) %>
+        <%= render "_activity-form.html", Map.merge(assigns, %{action: Routes.activity_path(@conn, :create), changeset: @conn}) %>
       </div>
     </div>
   </div>
