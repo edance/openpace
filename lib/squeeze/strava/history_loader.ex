@@ -7,27 +7,36 @@ defmodule Squeeze.Strava.HistoryLoader do
   alias Squeeze.Accounts.{Credential}
   alias Squeeze.Dashboard
   alias Squeeze.Strava.Client
+  alias Strava.Paginator
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
 
   def load_recent(%Credential{} = credential) do
-    {:ok, activities} = fetch_activities(credential)
-    activities
-    |> Enum.map(&map_strava_activity/1)
-    |> Enum.each(fn(a) -> Dashboard.create_activity(credential.user, a) end)
+    create_activities(credential)
     Accounts.update_credential(credential, %{sync_at: Timex.now})
   end
 
-  defp query(%{sync_at: nil}), do: [page: 1, per_page: 100]
-  defp query(%{sync_at: sync_at}) do
-    [after: DateTime.to_unix(sync_at), per_page: 100]
+  defp create_activities(credential) do
+    credential
+    |> activity_stream
+    |> Stream.map(&map_strava_activity/1)
+    |> Stream.each(fn(a) -> Dashboard.create_activity(credential.user, a) end)
+    |> Enum.to_list()
   end
 
-  defp fetch_activities(credential) do
-    query = query(credential)
-    credential
-    |> Client.new
-    |> @strava_activities.get_logged_in_athlete_activities(query)
+  defp activity_stream(credential) do
+    client = Client.new(credential)
+    Paginator.stream(
+      fn pagination ->
+        @strava_activities.get_logged_in_athlete_activities(client, pagination)
+      end,
+      query(credential)
+    )
+  end
+
+  defp query(%{sync_at: nil}), do: [per_page: 100]
+  defp query(%{sync_at: sync_at}) do
+    [after: DateTime.to_unix(sync_at), per_page: 100]
   end
 
   defp map_strava_activity(strava_activity) do
