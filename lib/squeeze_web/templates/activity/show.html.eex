@@ -46,12 +46,24 @@
     </div>
   <% end %>
 
-  <%= if @activity.description do %>
     <div class="card mt-4">
-      <div class="card-header">Description</div>
+      <div class="card-header border-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="mb-0">
+              Description
+            </h3>
+          </div>
+        </div>
+      </div>
+
       <div class="card-body">
-        <%= @activity.description %>
+        <%= if @activity.description do %>
+          <%= @activity.description %>
+        <% else %>
+          No description added. How were you feeling? What was the weather? Add details about your <%= @activity.type %>
+          <%= link(gettext("here"), to: Routes.activity_path(@conn, :edit, @activity)) %>.
+        <% end %>
       </div>
     </div>
-  <% end %>
 </div>
