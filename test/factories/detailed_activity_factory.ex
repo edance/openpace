@@ -12,6 +12,7 @@ defmodule Squeeze.DetailedActivityFactory do
           distance: 5000.0,
           moving_time: 1_200, # 20 minutes
           start_date: Timex.now(),
+          start_date_local: Timex.now(),
           map: %{summary_polyline: "ABCDEF"},
           type: "Run"
         }
