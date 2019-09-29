@@ -51,13 +51,25 @@ defmodule SqueezeWeb.OverviewView do
     end
   end
 
-  def streak(%{activities: activities, current_user: user}) do
+  def dates(assigns) do
+    today = today(assigns)
+    end_date = Timex.end_of_week(today)
+    start_date = today |> Timex.shift(weeks: -4) |> Timex.beginning_of_week()
+    Date.range(start_date, end_date)
+  end
+
+  def today(%{current_user: user}) do
+    TimeHelper.today(user)
+  end
+
+  def active_on_date?(%{run_dates: dates}, date) do
+    dates
+    |> Enum.member?(date)
+  end
+
+  def streak(%{run_dates: dates, current_user: user}) do
     today = TimeHelper.today(user)
     yesterday = Timex.shift(today, days: -1)
-    dates = activities
-    |> Enum.filter(&(String.contains?(&1.type, "Run")))
-    |> Enum.map(&(TimeHelper.to_date(user, &1.start_at)))
-    |> Enum.uniq()
     most_recent_date = List.first(dates)
     if today == most_recent_date || yesterday == most_recent_date do
       streak = dates

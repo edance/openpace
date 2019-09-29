@@ -4,6 +4,7 @@ defmodule SqueezeWeb.OverviewViewTest do
   @moduletag :overview_view_case
 
   alias Squeeze.Accounts.User
+  alias Squeeze.TimeHelper
   alias SqueezeWeb.FormatHelpers
   alias SqueezeWeb.OverviewView
 
@@ -54,41 +55,31 @@ defmodule SqueezeWeb.OverviewViewTest do
 
   describe "#streak" do
     test "without an activity today or yesterday", %{user: user} do
-      activity = build(:activity, start_at: days_ago(3))
-      streak = OverviewView.streak(%{activities: [activity], current_user: user})
-      assert streak == "0 day streak"
-    end
-
-    test "with non-run activities", %{user: user} do
-      activity = build(:activity, type: "Yoga")
-      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      streak = OverviewView.streak(%{run_dates: [days_ago(3, user)], current_user: user})
       assert streak == "0 day streak"
     end
 
     test "with an activity yesterday", %{user: user} do
-      activity = build(:activity, start_at: days_ago(1))
-      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      streak = OverviewView.streak(%{run_dates: [days_ago(1, user)], current_user: user})
       assert streak == "1 day streak"
     end
 
     test "with an activity today", %{user: user} do
-      activity = build(:activity)
-      streak = OverviewView.streak(%{activities: [activity], current_user: user})
+      streak = OverviewView.streak(%{run_dates: [days_ago(0, user)], current_user: user})
       assert streak == "1 day streak"
     end
 
     test "with multiple activities in a row", %{user: user} do
-      activities = [build(:activity), build(:activity, start_at: days_ago(1))]
-      streak = OverviewView.streak(%{activities: activities, current_user: user})
-      assert streak == "2 day streak"
-    end
-
-    test "with multiple activities on the same day", %{user: user} do
-      activities = build_pair(:activity)
-      streak = OverviewView.streak(%{activities: activities, current_user: user})
-      assert streak == "1 day streak"
+      run_dates = 0..2 |> Enum.map(&(days_ago(&1, user)))
+      streak = OverviewView.streak(%{run_dates: run_dates, current_user: user})
+      assert streak == "3 day streak"
     end
   end
 
-  defp days_ago(count), do: Timex.shift(Timex.now, days: -count)
+  defp days_ago(count, user) do
+    user
+    |> TimeHelper.today()
+    |> Timex.shift(days: -count)
+    |> Timex.to_date()
+  end
 end

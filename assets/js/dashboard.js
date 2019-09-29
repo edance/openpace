@@ -9,7 +9,6 @@ import './components/base';
 import './components/activity-chart';
 import './components/activity-map';
 import './components/overview-chart';
-import './components/week-chart';
 import './components/year-chart';
 
 // Turbolinks

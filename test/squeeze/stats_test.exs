@@ -15,24 +15,6 @@ defmodule Squeeze.StatsTest do
     end
   end
 
-  describe "dataset_for_week_chart/1" do
-    setup [:build_user]
-
-    test "returns the last seven days", %{user: user} do
-      data = Stats.dataset_for_week_chart(user)
-      assert length(data) == 7
-    end
-  end
-
-  describe "weekly_dateset/1" do
-    setup [:build_user]
-
-    test "returns seven days of the week", %{user: user} do
-      dates = Stats.weekly_dateset(user)
-      assert length(dates) == 7
-    end
-  end
-
   describe "yearly_dateset/1" do
     setup [:build_user]
 

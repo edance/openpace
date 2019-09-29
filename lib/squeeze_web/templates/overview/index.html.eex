@@ -73,10 +73,7 @@
         </div>
 
         <div class="card-body">
-          <!-- Chart -->
-          <div class="chart">
-            <canvas id="chart-week" data-dataset="<%= Jason.encode!(@week_dataset) %>"></canvas>
-          </div>
+          <%= render "_mini-calendar.html", assigns %>
         </div>
       </div>
     </div>
