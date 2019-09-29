@@ -10,11 +10,26 @@ defmodule SqueezeWeb.OverviewController do
   end
 
   def index(conn, _params, user) do
+    activities = Dashboard.recent_activities(user)
+    run_activities = run_activities(activities)
     render(conn, "index.html",
-      activities: Dashboard.recent_activities(user),
+      activities: activities,
+      run_activities: run_activities,
+      run_dates: run_dates(run_activities),
       todays_activities: Dashboard.todays_activities(user),
-      week_dataset: Stats.dataset_for_week_chart(user),
       year_dataset: Stats.dataset_for_year_chart(user)
     )
+  end
+
+  defp run_activities(activities) do
+    activities
+    |> Enum.filter(&(String.contains?(&1.type, "Run")))
+  end
+
+  defp run_dates(activities) do
+    activities
+    |> Enum.map(&(&1.planned_date))
+    |> Enum.uniq()
+    |> Enum.reject(&is_nil/1)
   end
 end

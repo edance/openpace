@@ -23,25 +23,6 @@ defmodule Squeeze.Stats do
     |> Enum.map(&(%{date: &1, distance: round_distance(map[&1])}))
   end
 
-  def dataset_for_week_chart(%User{} = user) do
-    dates = weekly_dateset(user)
-    map = user
-    |> fetch_activities(dates)
-    |> Enum.reduce(%{}, fn(x, acc) ->
-      value = Map.get(acc, x.date, 0)
-      Map.put(acc, x.date, value + x.distance)
-    end)
-
-    dates
-    |> Enum.map(&(%{date: &1, distance: round_distance(map[&1])}))
-  end
-
-  def weekly_dateset(user) do
-    today = TimeHelper.today(user)
-    range = Date.range(Timex.beginning_of_week(today), Timex.end_of_week(today))
-    Enum.to_list(range)
-  end
-
   def yearly_dateset(user) do
     date = user
     |> TimeHelper.today()
