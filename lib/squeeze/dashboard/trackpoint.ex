@@ -9,7 +9,16 @@ defmodule Squeeze.Dashboard.Trackpoint do
   alias Squeeze.Dashboard.{TrackpointSet}
 
   @required_fields ~w()a
-  @optional_fields ~w(altitude cadence coordinates distance heartrate time velocity)a
+  @optional_fields ~w(
+    altitude
+    cadence
+    coordinates
+    distance
+    heartrate
+    moving
+    time
+    velocity
+  )a
 
   schema "trackpoints" do
     field :altitude, :float
@@ -17,6 +26,7 @@ defmodule Squeeze.Dashboard.Trackpoint do
     field :coordinates, :map
     field :distance, :float
     field :heartrate, :integer
+    field :moving, :boolean
     field :time, :integer
     field :velocity, :float
 

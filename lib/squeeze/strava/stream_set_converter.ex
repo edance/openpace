@@ -63,6 +63,7 @@ defmodule Squeeze.Strava.StreamSetConverter do
       cadence: trackpoint[:cadence],
       distance: trackpoint[:distance],
       heartrate: trackpoint[:heartrate],
+      moving: trackpoint[:moving],
       time: trackpoint[:time],
       velocity: trackpoint[:velocity_smooth]
     }
