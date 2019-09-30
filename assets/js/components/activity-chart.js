@@ -43,6 +43,8 @@ document.addEventListener("turbolinks:load", function() {
 
   const imperial = parseData($chart, 'imperial');
   const altitude = parseData($chart, 'altitude');
+  const minAltitude = Math.min(...altitude);
+  const maxAltitude = Math.max(...altitude);
   const cadence = parseData($chart, 'cadence');
   const distance = parseData($chart, 'distance');
   const heartrate = parseData($chart, 'heartrate');
@@ -56,6 +58,11 @@ document.addEventListener("turbolinks:load", function() {
     },
     credits: false,
     title: false,
+    plotOptions: {
+      area: {
+        threshold: -9999
+      }
+    },
     xAxis: {
       data: [],
       minRange: 0.25,
@@ -87,14 +94,22 @@ document.addEventListener("turbolinks:load", function() {
         title: {
           text: imperial ? 'Elevation (ft)' : 'Elevation (m)',
         },
+        offset: 0,
+        floor: minAltitude,
+        min: minAltitude,
+        max: maxAltitude * 5,
       },
       {
         id: 'cadence',
         visible: false,
+        min: 0,
+        max: 200,
       },
       {
         id: 'heartrate',
         visible: false,
+        min: 0,
+        max: 220,
       },
       {
         id: 'pace',
@@ -103,13 +118,19 @@ document.addEventListener("turbolinks:load", function() {
         min: 3,
       },
     ],
-
     series: [
       {
         name: 'Elevation',
         type: 'area',
         data: altitude.map((x, idx) => [distance[idx], x]),
-        color: colors.gray['300'],
+        lineWidth: 0,
+        color: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, colors.gray[300]], // start
+            [1, colors.gray[200]] // end
+          ]
+        },
         marker: {
           enabled: false,
           symbol: 'circle',
