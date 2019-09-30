@@ -2,6 +2,10 @@ export const fonts = {
   base: 'Open Sans'
 };
 
+const red = '#f5365c';
+const orange = '#fb6340';
+const yellow = '#ffd600';
+
 export const colors = {
   gray: {
     100: '#f6f9fc',
@@ -26,5 +30,8 @@ export const colors = {
   },
   black: '#12263F',
   white: '#FFFFFF',
+  red: red,
+  orange: orange,
+  yellow: yellow,
   transparent: 'transparent',
 };

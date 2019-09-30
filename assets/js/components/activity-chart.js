@@ -131,7 +131,14 @@ document.addEventListener("turbolinks:load", function() {
         name: 'Heart Rate',
         type: 'line',
         data: heartrate.map((x, idx) => [distance[idx], x]),
-        color: colors.theme['danger'],
+        color: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, colors.red], // start
+            [0.5, colors.orange], // middle
+            [1, colors.yellow] // end
+          ]
+        },
         marker: {
           enabled: false,
           symbol: 'circle',
