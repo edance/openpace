@@ -161,7 +161,6 @@ document.addEventListener("turbolinks:load", function() {
           ]
         },
         marker: {
-          enabled: false,
           symbol: 'circle',
         },
         yAxis: 'heartrate',
@@ -172,7 +171,6 @@ document.addEventListener("turbolinks:load", function() {
         data: pace.map((x, idx) => [distance[idx], x]),
         color: colors.theme['success'],
         marker: {
-          enabled: false,
           symbol: 'circle',
         },
         yAxis: 'pace',
