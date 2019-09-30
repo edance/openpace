@@ -5,6 +5,8 @@ defmodule SqueezeWeb.OverviewView do
   alias Squeeze.Distances
   alias Squeeze.TimeHelper
 
+  @mapbox_token Application.get_env(:squeeze, :mapbox_access_token)
+
   def title(_page, _assigns) do
     gettext("Dashboard")
   end
@@ -65,6 +67,17 @@ defmodule SqueezeWeb.OverviewView do
   def active_on_date?(%{run_dates: dates}, date) do
     dates
     |> Enum.member?(date)
+  end
+
+  def activity_img_src(%{polyline: polyline}) do
+    base_url = "https://api.mapbox.com/styles/v1/mapbox/light-v9/static/"
+    stroke_color = "5e72e4"
+    stroke_width = "5"
+    stroke_opacity = "0.7"
+    size = "300x200"
+    polyline = URI.encode_www_form(polyline)
+    path = "path-#{stroke_width}+#{stroke_color}-#{stroke_opacity}(#{polyline})"
+    "#{base_url}#{path}/auto/#{size}?access_token=#{@mapbox_token}"
   end
 
   def streak(%{run_dates: dates, current_user: user}) do
