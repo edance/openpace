@@ -6,6 +6,7 @@ defmodule SqueezeWeb.ActivityChartView do
   def altitude(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
+    |> moving_only()
     |> Enum.map(&(Distances.to_feet(&1.altitude, imperial: imperial)))
     |> smooth()
     |> Jason.encode!()
@@ -13,6 +14,7 @@ defmodule SqueezeWeb.ActivityChartView do
 
   def cadence(%{trackpoints: trackpoints}) do
     trackpoints
+    |> moving_only()
     |> Enum.map(&(&1.cadence * 2))
     |> smooth()
     |> Jason.encode!()
@@ -21,6 +23,7 @@ defmodule SqueezeWeb.ActivityChartView do
   def distance(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
+    |> moving_only()
     |> Enum.map(&(Distances.to_float(&1.distance, imperial: imperial)))
     |> smooth()
     |> Jason.encode!()
@@ -28,6 +31,7 @@ defmodule SqueezeWeb.ActivityChartView do
 
   def heartrate(%{trackpoints: trackpoints}) do
     trackpoints
+    |> moving_only()
     |> Enum.map(&(&1.heartrate))
     |> smooth()
     |> Jason.encode!()
@@ -36,9 +40,15 @@ defmodule SqueezeWeb.ActivityChartView do
   def velocity(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
+    |> moving_only()
     |> Enum.map(&(Velocity.to_float(&1.velocity, imperial: imperial)))
     |> smooth()
     |> Jason.encode!()
+  end
+
+  def moving_only(trackpoints) do
+    trackpoints
+    |> Enum.filter(&(&1.moving))
   end
 
   defp smooth(points) do
