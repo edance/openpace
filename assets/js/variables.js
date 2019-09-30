@@ -5,8 +5,16 @@ export const fonts = {
 const red = '#f5365c';
 const orange = '#fb6340';
 const yellow = '#ffd600';
+const blue = '#11cdef';
+const green = '#2dce89';
 
 export const colors = {
+  red,
+  orange,
+  yellow,
+  blue,
+  green,
+
   gray: {
     100: '#f6f9fc',
     200: '#e9ecef',
@@ -22,16 +30,13 @@ export const colors = {
     'default': '#172b4d',
     'primary': '#5e72e4',
     'secondary': '#f4f5f7',
-    'info': '#11cdef',
-    'success': '#2dce89',
-    'danger': '#f5365c',
-    'warning': '#fb6340',
-    'yellow': '#ffd600',
+    'info': blue,
+    'success': green,
+    'danger': red,
+    'warning': orange,
+    'yellow': yellow,
   },
   black: '#12263F',
   white: '#FFFFFF',
-  red: red,
-  orange: orange,
-  yellow: yellow,
   transparent: 'transparent',
 };
