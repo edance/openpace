@@ -19,7 +19,7 @@
     "sortablejs": "^1.10.0",
     "turbolinks": "^5.0.0",
     "umbrellajs": "^3.1.0",
-    "vega": "^5.6.0",
+    "vega": "^5.7.0",
     "webfontloader": "^1.6.28",
     "whatwg-fetch": "^3.0.0"
   },
