@@ -93,31 +93,33 @@
             </div>
           </div>
         </div>
-        <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">
-                  <%= gettext("Name") %>
-                </th>
-                <th scope="col">
-                  <%= gettext("Distance") %>
-                </th>
-                <th scope="col">
-                  <%= gettext("Start at") %>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= for activity <- @activities do %>
-                <tr scope="row">
-                  <td><%= link activity.name, to: Routes.activity_path(@conn, :show, activity) %></td>
-                  <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
-                  <td><%= relative_time(activity.start_at) %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <%= for activity <- Enum.take(@activities, 10) do %>
+              <li class="media mb-4">
+                <div class="media-body">
+                  <%= link to: Routes.activity_path(@conn, :show, activity), class: "flex-shrink-0 badge badge-circle bg-primary text-white mb-1" do %>
+                    <span class="iconify" data-icon="ic:baseline-directions-run" data-inline="false"></span>
+                  <% end %>
+
+                  <h4 class="mt-0 mb-1"><%= activity.name %></h4>
+
+                  <%= format_distance(activity.distance, @current_user.user_prefs) %>
+                  ·
+                  <%= format_duration(activity.duration) %>
+                  ·
+                  <%= format_pace(activity, @current_user.user_prefs) %>
+                  ·
+                  <%= format_pace(activity, @current_user.user_prefs) %>
+                </div>
+
+                <%= if activity.polyline do %>
+                  <img src="<%= activity_img_src(activity) %>" class="rounded mr-3" alt="<%= activity.name %> Route">
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
