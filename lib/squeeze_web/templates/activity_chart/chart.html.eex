@@ -3,6 +3,7 @@
      data-cadence="<%= cadence(assigns) %>"
      data-distance="<%= distance(assigns) %>"
      data-heartrate="<%= heartrate(assigns) %>"
+     data-time="<%= time(assigns) %>"
      data-velocity="<%= velocity(assigns) %>"
      data-imperial="<%= @current_user.user_prefs.imperial %>"
 >

@@ -73,6 +73,20 @@ defmodule SqueezeWeb.ActivityView do
     length(trackpoints) > 0
   end
 
+  def distance?(%{trackpoints: trackpoints}) do
+    trackpoints
+    |> Enum.take(5)
+    |> Enum.map(&(&1.distance))
+    |> Enum.any?(&(!is_nil(&1)))
+  end
+
+  def coordinates?(%{trackpoints: trackpoints}) do
+    trackpoints
+    |> Enum.take(5)
+    |> Enum.map(&(&1.coordinates))
+    |> Enum.any?(&(!is_nil(&1)))
+  end
+
   def trackpoint_json(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
