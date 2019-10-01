@@ -6,6 +6,13 @@ function parseData($element, name) {
   return JSON.parse($element.data(name));
 }
 
+function formatSecs(seconds) {
+  const sec = Math.round(seconds % 60);
+  const min = Math.round(seconds / 60);
+  const secStr = sec < 10 ? `0${sec}` : sec;
+  return `${min}:${secStr}`;
+}
+
 function toMMSS(time) {
   const min = Math.floor(time);
   const sec = Math.round((time - min) * 60);
@@ -29,7 +36,7 @@ function formatPoint(point, imperial) {
   }
 
   if (name === 'Pace') {
-    return `${name}: ${toMMSS(point.y)} min/${imperial ? 'mile' : 'km'}`;
+    return `${name}: ${toMMSS(point.y)} min/${imperial ? 'mi' : 'km'}`;
   }
 
   return '';
@@ -48,7 +55,33 @@ document.addEventListener("turbolinks:load", function() {
   const cadence = parseData($chart, 'cadence');
   const distance = parseData($chart, 'distance');
   const heartrate = parseData($chart, 'heartrate');
+  const time = parseData($chart, 'time');
   const pace = parseData($chart, 'velocity');
+
+  const xData = distance.length == 0 ? time : distance;
+  const distanceLabel = imperial ? 'mi' : 'km';
+
+  const distanceAxis = {
+    data: [],
+    minRange: 0.25,
+    visible: false,
+    name: 'Distance',
+    title: {
+      text: `Distance (min/${distanceLabel})`,
+    },
+  };
+
+  const timeAxis = {
+    tickInterval: 5 * 60, // 15 min
+    labels: {
+      formatter: function() {
+        return formatSecs(this.value);
+      },
+    },
+    title: {
+      text: 'Time'
+    }
+  };
 
   const chart = Highcharts.chart('activity-chart', {
     chart: {
@@ -63,14 +96,7 @@ document.addEventListener("turbolinks:load", function() {
         threshold: -9999
       }
     },
-    xAxis: {
-      data: [],
-      minRange: 0.25,
-      name: 'Distance',
-      title: {
-        text: imperial ? 'Distance (min/mile)' : 'Distance (min/km)',
-      },
-    },
+    xAxis: distance.length ? distanceAxis : timeAxis,
     tooltip: {
       crosshairs: true,
       shared: true,
@@ -78,8 +104,9 @@ document.addEventListener("turbolinks:load", function() {
       backgroundColor: 'white',
       formatter: function() {
         const fields = this.points.map((point) => formatPoint(point, imperial));
+        const x = distance.length ? `${this.x} ${distanceLabel}` : formatSecs(this.x);
         return `
-          <strong>${this.x} ${imperial ? 'miles' : 'km'}</strong>
+          <strong>${x}</strong>
           <br />
           ${fields.join('<br />')}
         `;
@@ -107,7 +134,10 @@ document.addEventListener("turbolinks:load", function() {
       },
       {
         id: 'heartrate',
-        visible: false,
+        visible: distance.length == 0,
+        title: {
+          text: 'Heartrate (bpm)',
+        },
         min: 0,
         max: 220,
       },
@@ -122,7 +152,7 @@ document.addEventListener("turbolinks:load", function() {
       {
         name: 'Elevation',
         type: 'area',
-        data: altitude.map((x, idx) => [distance[idx], x]),
+        data: altitude.map((x, idx) => [xData[idx], x]),
         lineWidth: 0,
         color: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
@@ -140,8 +170,9 @@ document.addEventListener("turbolinks:load", function() {
       {
         name: 'Cadence',
         type: 'line',
-        data: cadence.map((x, idx) => [distance[idx], x]),
+        data: cadence.map((x, idx) => [xData[idx], x]),
         color: colors.theme['info'],
+        hidden: true,
         marker: {
           enabled: false,
           symbol: 'circle',
@@ -151,7 +182,7 @@ document.addEventListener("turbolinks:load", function() {
       {
         name: 'Heart Rate',
         type: 'line',
-        data: heartrate.map((x, idx) => [distance[idx], x]),
+        data: heartrate.map((x, idx) => [xData[idx], x]),
         color: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
@@ -168,7 +199,7 @@ document.addEventListener("turbolinks:load", function() {
       {
         name: 'Pace',
         type: 'line',
-        data: pace.map((x, idx) => [distance[idx], x]),
+        data: pace.map((x, idx) => [xData[idx], x]),
         color: colors.theme['success'],
         marker: {
           symbol: 'circle',

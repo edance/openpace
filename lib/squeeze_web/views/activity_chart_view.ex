@@ -6,16 +6,16 @@ defmodule SqueezeWeb.ActivityChartView do
   def altitude(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
-    |> moving_only()
-    |> Enum.map(&(Distances.to_feet(&1.altitude, imperial: imperial)))
+    |> filter_by_field(:altitude)
+    |> Enum.map(&(Distances.to_feet(&1, imperial: imperial)))
     |> smooth()
     |> Jason.encode!()
   end
 
   def cadence(%{trackpoints: trackpoints}) do
     trackpoints
-    |> moving_only()
-    |> Enum.map(&(&1.cadence * 2))
+    |> filter_by_field(:cadence)
+    |> Enum.map(&(&1 * 2))
     |> smooth()
     |> Jason.encode!()
   end
@@ -23,16 +23,22 @@ defmodule SqueezeWeb.ActivityChartView do
   def distance(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
-    |> moving_only()
-    |> Enum.map(&(Distances.to_float(&1.distance, imperial: imperial)))
+    |> filter_by_field(:distance)
+    |> Enum.map(&(Distances.to_float(&1, imperial: imperial)))
     |> smooth()
     |> Jason.encode!()
   end
 
   def heartrate(%{trackpoints: trackpoints}) do
     trackpoints
-    |> moving_only()
-    |> Enum.map(&(&1.heartrate))
+    |> filter_by_field(:heartrate)
+    |> smooth()
+    |> Jason.encode!()
+  end
+
+  def time(%{trackpoints: trackpoints}) do
+    trackpoints
+    |> filter_by_field(:time)
     |> smooth()
     |> Jason.encode!()
   end
@@ -40,15 +46,17 @@ defmodule SqueezeWeb.ActivityChartView do
   def velocity(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
     trackpoints
-    |> moving_only()
-    |> Enum.map(&(Velocity.to_float(&1.velocity, imperial: imperial)))
+    |> filter_by_field(:velocity)
+    |> Enum.map(&(Velocity.to_float(&1, imperial: imperial)))
     |> smooth()
     |> Jason.encode!()
   end
 
-  def moving_only(trackpoints) do
+  def filter_by_field(trackpoints, field) do
     trackpoints
     |> Enum.filter(&(&1.moving))
+    |> Enum.map(&(Map.get(&1, field)))
+    |> Enum.reject(&is_nil/1)
   end
 
   defp smooth(points) do

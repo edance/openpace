@@ -5,12 +5,11 @@
   </span>
 <% end %>
 
-<%= if trackpoints?(assigns) do %>
+<%= if coordinates?(assigns) do %>
   <%= render SqueezeWeb.MapView, "activity-map.html", assigns %>
 <% end %>
 
 <div class="container-fluid pt-7 pb-8 bg-secondary">
-
   <div class="row">
     <div class="col">
       <h1><%= name(assigns) %></h1>
@@ -32,38 +31,37 @@
   <%= render "_cards.html", assigns %>
 
   <%= if trackpoints?(assigns) do %>
-    <div id="trackpoint-data" data-trackpoints="<%= trackpoint_json(assigns) %>">
-    </div>
-
     <div class="card mt-4">
       <div class="card-body">
         <%= render SqueezeWeb.ActivityChartView, "chart.html", assigns %>
       </div>
     </div>
+  <% end %>
 
+  <%= if distance?(assigns) do %>
     <div class="card mt-4">
       <%= render SqueezeWeb.SplitsView, "table.html", assigns %>
     </div>
   <% end %>
 
-    <div class="card mt-4 mb-8">
-      <div class="card-header border-0">
-        <div class="row align-items-center">
-          <div class="col">
-            <h3 class="mb-0">
-              Description
-            </h3>
-          </div>
+  <div class="card mt-4 mb-8">
+    <div class="card-header border-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="mb-0">
+            Description
+          </h3>
         </div>
       </div>
-
-      <div class="card-body">
-        <%= if @activity.description do %>
-          <%= @activity.description %>
-        <% else %>
-          No description added. How were you feeling? What was the weather? Add details about your <%= @activity.type %>
-          <%= link(gettext("here"), to: Routes.activity_path(@conn, :edit, @activity)) %>.
-        <% end %>
-      </div>
     </div>
+
+    <div class="card-body">
+      <%= if @activity.description do %>
+        <%= @activity.description %>
+      <% else %>
+        No description added. How were you feeling? What was the weather? Add details about your <%= @activity.type %>
+        <%= link(gettext("here"), to: Routes.activity_path(@conn, :edit, @activity)) %>.
+      <% end %>
+    </div>
+  </div>
 </div>
