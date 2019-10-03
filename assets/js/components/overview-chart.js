@@ -53,6 +53,8 @@ document.addEventListener("turbolinks:load", function() {
         allowDecimals: false,
         lineColor: colors.gray['700'],
         gridLineColor: colors.gray['800'],
+        softMin: 0,
+        softMax: 100,
         labels: {
           style: {
             color: colors.gray['200'],
