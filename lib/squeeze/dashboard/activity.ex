@@ -14,6 +14,7 @@ defmodule Squeeze.Dashboard.Activity do
   @required_fields ~w(type)a
   @optional_fields ~w(
     name
+    workout_type
     planned_distance
     planned_distance_amount
     planned_distance_unit
@@ -33,6 +34,7 @@ defmodule Squeeze.Dashboard.Activity do
   schema "activities" do
     field :name, :string
     field :type, :string
+    field :workout_type, WorkoutTypeEnum
 
     # Planning Fields
     field :planned_distance, :float # in meters
