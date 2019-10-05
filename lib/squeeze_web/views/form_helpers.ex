@@ -20,10 +20,13 @@ defmodule SqueezeWeb.FormHelpers do
 
   def autocomplete(form, field, options, opts \\ []) do
     list_name = "autocomplete-#{:rand.uniform(1000)}"
-    option_html = options
-    |> Enum.map(fn({k, v}) -> "<option data-value='#{v}'>#{k}</option>" end)
+
+    option_html =
+      options
+      |> Enum.map(fn {k, v} -> "<option data-value='#{v}'>#{k}</option>" end)
+
     class_list = "#{opts[:class]} autocomplete"
-    opts = Keyword.merge(opts, [class: class_list])
+    opts = Keyword.merge(opts, class: class_list)
 
     [
       input(form, field, opts ++ [class: class_list, list: list_name]),
@@ -50,11 +53,16 @@ defmodule SqueezeWeb.FormHelpers do
 
   def input(form, field, opts \\ []) do
     class_list = input_class_list(form, field, opts[:class])
-    text_input(form, field, Keyword.merge(opts, [class: class_list]))
+    text_input(form, field, Keyword.merge(opts, class: class_list))
   end
 
   def pill_button(form, field, label, value, opts \\ []) do
-    content_tag(:label, class: "btn btn-secondary w-100") do
+    base_class_list = "btn btn-secondary w-100"
+
+    class_list =
+      base_class_list <> if Keyword.get(opts, :checked) == true, do: " active", else: ""
+
+    content_tag(:label, class: class_list) do
       [
         label,
         radio_button(form, field, value, opts)
@@ -69,6 +77,7 @@ defmodule SqueezeWeb.FormHelpers do
       placeholder: opts[:placeholder] || "hh:mm:ss",
       value: Map.get(form.data, field) |> Duration.format()
     ]
+
     opts = Keyword.merge(opts, default_opts)
     input(form, field, opts)
   end
@@ -87,8 +96,10 @@ defmodule SqueezeWeb.FormHelpers do
   def distance_input(form, field) when is_atom(field) do
     distance_input(form, Atom.to_string(field))
   end
+
   def distance_input(form, field, opts \\ []) do
     input_field = "#{field}_amount" |> String.to_atom()
+
     [
       input(form, input_field, opts),
       distance_input_select(form, field)
@@ -97,6 +108,7 @@ defmodule SqueezeWeb.FormHelpers do
 
   defp distance_input_select(form, field) do
     field = "#{field}_unit" |> String.to_atom()
+
     content_tag(:div, class: "input-group-append") do
       [
         select(form, field, distance_types(), class: "form-control custom-select")
@@ -113,9 +125,10 @@ defmodule SqueezeWeb.FormHelpers do
   end
 
   defp select_tag(form, parent, field, opts) do
-    opts = opts
-    |> Keyword.put(:name, field)
-    |> Keyword.put(:prompt, field)
+    opts =
+      opts
+      |> Keyword.put(:name, field)
+      |> Keyword.put(:prompt, field)
 
     content_tag(:div, class: "col") do
       select(form, parent, @minsec, opts)

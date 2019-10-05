@@ -12,9 +12,10 @@
 
   <div class="form-group">
     <div class="btn-group d-flex btn-group-toggle" data-toggle="buttons">
-      <%= pill_button(f, :experience, gettext("Beginner"), 0) %>
-      <%= pill_button(f, :experience, gettext("Intermediate"), 1) %>
-      <%= pill_button(f, :experience, gettext("Expert"), 2) %>
+      <%= hidden_input(f, :experience) %>
+      <%= pill_button(f, :experience, gettext("Beginner"), 0, [checked: @changeset.data.experience == 0]) %>
+      <%= pill_button(f, :experience, gettext("Intermediate"), 1, [checked: @changeset.data.experience == 1]) %>
+      <%= pill_button(f, :experience, gettext("Expert"), 2, [checked: @changeset.data.experience == 2]) %>
       <%= error_tag f, :experience %>
     </div>
   </div>
