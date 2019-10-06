@@ -14,7 +14,7 @@ defmodule SqueezeWeb.WizardController do
     end
   end
 
-  def step(conn, %{"step"=> step}) do
+  def step(conn, %{"step" => step}) do
     user = conn.assigns.current_user
     changeset = Accounts.change_user_prefs(user.user_prefs)
     render(conn, "step.html", changeset: changeset, step: step)
@@ -28,17 +28,18 @@ defmodule SqueezeWeb.WizardController do
       {:ok, _} ->
         conn
         |> redirect(to: Routes.wizard_path(conn, :step, next_step))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render_error(conn, changeset, step)
     end
   end
 
-  defp render_error(conn, changeset, step)  do
+  defp render_error(conn, changeset, step) do
     render(conn, "step.html", changeset: changeset, step: step)
   end
 
   defp step_index(step) do
-    Enum.find_index(@steps, fn(x) -> x == step end)
+    Enum.find_index(@steps, fn x -> x == step end)
   end
 
   defp next_step(step) do
@@ -47,8 +48,11 @@ defmodule SqueezeWeb.WizardController do
 
   defp validate_step(conn, _) do
     %{"step" => step} = conn.params
+
     case Enum.member?(@steps, step) do
-      true -> put_session(conn, :current_step, step)
+      true ->
+        put_session(conn, :current_step, step)
+
       false ->
         conn
         |> put_status(:not_found)
