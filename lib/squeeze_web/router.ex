@@ -27,7 +27,8 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/", SqueezeWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through :browser
 
     get "/", HomeController, :index
 
@@ -55,7 +56,8 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/integration", SqueezeWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through :browser
 
     get "/:provider", IntegrationController, :request
     get "/:provider/callback", IntegrationController, :callback
@@ -63,7 +65,8 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/auth", SqueezeWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through :browser
 
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
@@ -85,10 +88,11 @@ defmodule SqueezeWeb.Router do
     get "/billing", BillingController, :index
     put "/billing/cancel", BillingController, :cancel
 
-    resources "/payment", PaymentMethodController,
-      only: [:index, :new, :create, :delete]
+    resources "/payment", PaymentMethodController, only: [:index, :new, :create, :delete]
 
-    resources "/activities", ActivityController
+    resources "/activities", ActivityController do
+      patch "/mark-complete", ActivityController, :mark_complete, as: :mark_complete
+    end
 
     resources "/plans", PlanController
   end
@@ -103,7 +107,7 @@ defmodule SqueezeWeb.Router do
     post "/stripe", StripeWebhookController, :webhook
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 end

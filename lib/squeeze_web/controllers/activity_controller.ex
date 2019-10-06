@@ -25,6 +25,7 @@ defmodule SqueezeWeb.ActivityController do
         conn
         |> put_flash(:info, "Activity created successfully.")
         |> redirect(to: Routes.activity_path(conn, :show, activity))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -51,6 +52,7 @@ defmodule SqueezeWeb.ActivityController do
         conn
         |> put_flash(:info, "Activity updated successfully.")
         |> redirect(to: Routes.activity_path(conn, :show, activity))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", activity: activity, changeset: changeset)
     end
@@ -63,6 +65,22 @@ defmodule SqueezeWeb.ActivityController do
     conn
     |> put_flash(:info, "Activity deleted successfully.")
     |> redirect(to: Routes.activity_path(conn, :index))
+  end
+
+  def mark_complete(conn, %{"activity_id" => id}, user) do
+    activity = Dashboard.get_activity!(user, id)
+
+    case Dashboard.update_activity(activity, %{"complete" => true}) do
+      {:ok, activity} ->
+        conn
+        |> put_flash(:info, "Activity completed!")
+        |> redirect(to: Routes.activity_path(conn, :show, activity))
+
+      {:error, %Ecto.Changeset{} = _changeset} ->
+        conn
+        |> put_flash(:info, "Could not mark activity as completed.")
+        |> redirect(to: Routes.activity_path(conn, :show, activity))
+    end
   end
 
   defp trackpoints(%{trackpoint_set: nil}), do: []
