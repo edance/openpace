@@ -38,15 +38,25 @@ defmodule Squeeze.Accounts.User do
   end
 
   def full_name(%User{first_name: first_name, last_name: nil}), do: first_name
+
   def full_name(%User{first_name: first_name, last_name: last_name}) do
     "#{first_name} #{last_name}"
   end
 
   def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
-  def improvement_amount(%User{user_prefs: prefs}) do
-    duration = prefs.duration
-    percent = abs(prefs.personal_record - prefs.duration) / duration * 100
+
+  def improvement_amount(%User{
+        user_prefs: %{duration: duration, personal_record: personal_record}
+      })
+      when duration > 0 do
+    percent = abs(personal_record - duration) / duration * 100
     "#{Float.round(percent, 1)}%"
+  end
+
+  def improvement_amount(%User{
+        user_prefs: %{duration: _duration, personal_record: _personal_record}
+      }) do
+    "0%"
   end
 
   def onboarded?(%User{} = user) do
@@ -56,6 +66,7 @@ defmodule Squeeze.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     fields = ~w(first_name last_name email description avatar city state country)a
+
     user
     |> cast(attrs, fields)
     |> validate_format(:email, ~r/@/)

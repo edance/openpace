@@ -9,12 +9,14 @@ defmodule Squeeze.Duration do
 
   def cast(str) when is_binary(str) do
     case Regex.named_captures(@match, str) do
-      nil -> :error
+      nil ->
+        parse_integer(str)
+
       %{"hour" => hour_str, "min" => min_str, "sec" => sec_str} ->
-        with {:ok, hours}   <- parse_integer(hour_str),
+        with {:ok, hours} <- parse_integer(hour_str),
              {:ok, minutes} <- parse_integer(min_str),
              {:ok, seconds} <- parse_integer(sec_str),
-          do: cast_to_secs(hours, minutes, seconds)
+             do: cast_to_secs(hours, minutes, seconds)
     end
   end
 
@@ -24,10 +26,12 @@ defmodule Squeeze.Duration do
 
   def format(nil), do: nil
   def format(t) when is_float(t), do: format(trunc(t))
+
   def format(t) do
     seconds = rem(t, 60)
-    minutes = trunc(rem(t, (60 * 60)) / 60)
+    minutes = trunc(rem(t, 60 * 60) / 60)
     hours = trunc(t / (60 * 60))
+
     if hours > 0 do
       "#{hours}:#{pad_num(minutes)}:#{pad_num(seconds)}"
     else
@@ -48,6 +52,7 @@ defmodule Squeeze.Duration do
   end
 
   defp parse_integer(""), do: {:ok, nil}
+
   defp parse_integer(str) when is_binary(str) do
     case Integer.parse(str) do
       {value, _} -> {:ok, value}
@@ -55,9 +60,10 @@ defmodule Squeeze.Duration do
     end
   end
 
-  defp cast_to_secs(minutes, seconds, nil), do: {:ok, (minutes * 60) + seconds}
+  defp cast_to_secs(minutes, seconds, nil), do: {:ok, minutes * 60 + seconds}
+
   defp cast_to_secs(hours, minutes, seconds) do
-    {:ok, (hours * 3600) + (minutes * 60) + seconds}
+    {:ok, hours * 3600 + minutes * 60 + seconds}
   end
 
   defp pad_num(x) when x < 10, do: "0#{x}"
