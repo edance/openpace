@@ -20,7 +20,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="https://github.com/edance/squeeze" class="nav-link" target="_blank">
+            <a href="https://github.com/edance/openpace" class="nav-link" target="_blank">
               <%= gettext("Source Code") %>
             </a>
           </li>
