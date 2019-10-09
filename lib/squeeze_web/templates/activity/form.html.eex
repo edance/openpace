@@ -19,6 +19,12 @@
       <%= select f, :type, activity_types(), class: input_class_list(f, :type, "form-control custom-select"), prompt: "Select activity type" %>
       <%= error_tag f, :type %>
     </div>
+
+    <div class="form-group">
+      <%= label f, :workout_type, class: "form-control-label" %>
+      <%= select f, :workout_type, workout_types(), class: input_class_list(f, :workout_type, "form-control custom-select"), prompt: "Select workout type" %>
+      <%= error_tag f, :workout_type %>
+    </div>
   </div>
 </div>
 

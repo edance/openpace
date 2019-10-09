@@ -20,6 +20,14 @@ defmodule SqueezeWeb.ActivityView do
     ]
   end
 
+  def workout_types do
+    [
+      "Race": "race",
+      "Long Run": "long_run",
+      "Workout": "workout"
+    ]
+  end
+
   def name(%{activity: activity}) do
     activity.name || activity.type
   end
