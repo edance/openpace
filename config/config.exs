@@ -64,6 +64,11 @@ config :strava,
   redirect_uri: "http://localhost:4000/integration/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
+config :squeeze, Squeeze.Garmin,
+  consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
+  consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
+  redirect_uri: "http://localhost:4000/integration/garmin/callback"
+
 config :tesla, adapter: Tesla.Adapter.Hackney
 
 # Import environment specific config. This must remain at the bottom

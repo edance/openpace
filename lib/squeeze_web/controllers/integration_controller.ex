@@ -4,11 +4,36 @@ defmodule SqueezeWeb.IntegrationController do
   alias OAuth2.Client
   alias Squeeze.Accounts
   alias Squeeze.Fitbit.Auth
+  alias Squeeze.Garmin
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
+  def request(conn, %{"provider" => "garmin"}) do
+    params = Garmin.Auth.request_token!()
+    conn
+    |> put_session(:garmin_token_secret, params["oauth_token_secret"])
+    |> redirect(external: Garmin.Auth.authorize_url!(params))
+  end
+
   def request(conn, %{"provider" => provider}) do
     redirect(conn, external: authorize_url!(provider))
+  end
+
+  def callback(conn, %{"provider" => "garmin", "oauth_token" => token, "oauth_verifier" => verifier}) do
+    token_secret = get_session(conn, :garmin_token_secret)
+    opts = [verifier: verifier, token: token, token_secret: token_secret]
+    %{"oauth_token" => token, "oauth_token_secret" => token_secret} = Garmin.Auth.get_token!(opts)
+    %{"userId" => uid} = Garmin.Auth.get_user!([token: token, token_secret: token_secret])
+    credential_params = %{provider: "garmin", token: token, token_secret: token_secret, uid: uid}
+
+    case Accounts.create_credential(conn.assigns.current_user, credential_params) do
+      {:ok, credential} ->
+        redirect_current_user(conn, credential)
+      {:error, _} ->
+        conn
+        |> put_flash(:error, "Authentication failed for garmin")
+        |> redirect(to: Routes.dashboard_path(conn, :index))
+    end
   end
 
   def callback(conn, %{"provider" => provider, "code" => code}) do
@@ -82,4 +107,6 @@ defmodule SqueezeWeb.IntegrationController do
     credential = Accounts.get_credential("fitbit", id)
     Task.start(fn -> Squeeze.Fitbit.HistoryLoader.load_recent(credential) end)
   end
+
+  def load_history(_), do: nil
 end

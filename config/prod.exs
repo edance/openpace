@@ -45,6 +45,11 @@ config :squeeze, Squeeze.OAuth2.Fitbit,
   redirect_uri: "#{System.get_env("HOST_URL")}/integration/fitbit/callback",
   webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
 
+config :squeeze, Squeeze.Garmin,
+  consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
+  consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
+  redirect_uri: "#{System.get_env("HOST_URL")}/integration/garmin/callback"
+
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
