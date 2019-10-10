@@ -43,7 +43,7 @@ defmodule Squeeze.OAuth1 do
     params = protocol_params(params, creds)
     signature = signature(verb, url, params, creds)
 
-    [{"oauth_signature", signature} | params]
+    params ++ [oauth_signature: signature]
   end
 
   @spec header(params) :: {header, params}
@@ -56,11 +56,11 @@ defmodule Squeeze.OAuth1 do
   @spec protocol_params(params, Credentials.t()) :: params
   def protocol_params(params, %Credentials{} = creds) do
     [
-      {"oauth_consumer_key", creds.consumer_key},
-      {"oauth_nonce", nonce()},
-      {"oauth_signature_method", signature_method(creds.method)},
-      {"oauth_timestamp", timestamp()},
-      {"oauth_version", "1.0"}
+      oauth_consumer_key: creds.consumer_key,
+      oauth_nonce: nonce(),
+      oauth_signature_method: signature_method(creds.method),
+      oauth_timestamp: timestamp(),
+      oauth_version: "1.0"
     ] ++ maybe_put_token(params, creds.token)
     ++ maybe_put_verifier(params, creds.verifier)
   end
@@ -80,6 +80,10 @@ defmodule Squeeze.OAuth1 do
     base_string(verb, url, params)
     |> :public_key.sign(:sha, decode_private_key(creds.consumer_secret))
     |> Base.encode64()
+  end
+
+  defp protocol_param?({key, value}) when is_atom(key) do
+    protocol_param?({Atom.to_string(key), value})
   end
 
   defp protocol_param?({key, _value}) do
@@ -172,7 +176,7 @@ defmodule Squeeze.OAuth1 do
     if is_nil(value) do
       params
     else
-      [{"oauth_verifier", value} | params]
+      [oauth_verifier: value]
     end
   end
 
@@ -180,7 +184,7 @@ defmodule Squeeze.OAuth1 do
     if is_nil(value) do
       params
     else
-      [{"oauth_token", value} | params]
+      [oauth_token: value]
     end
   end
 
