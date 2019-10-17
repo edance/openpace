@@ -34,3 +34,6 @@ npm-debug.log
 
 # Add coveralls folder
 /cover
+
+# ElixirLS Dialyzer
+.elixir_ls/
