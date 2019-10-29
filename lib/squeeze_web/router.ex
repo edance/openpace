@@ -105,6 +105,9 @@ defmodule SqueezeWeb.Router do
     post "/fitbit", FitbitWebhookController, :webhook
 
     post "/stripe", StripeWebhookController, :webhook
+
+    get "/garmin", GarminWebhookController, :webhook
+    post "/garmin", GarminWebhookController, :webhook
   end
 
   if Mix.env() == :dev do
