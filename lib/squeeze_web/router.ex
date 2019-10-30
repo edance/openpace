@@ -35,10 +35,6 @@ defmodule SqueezeWeb.Router do
     get "/onboard", OnboardController, :index
     put "/onboard", OnboardController, :update
 
-    get "/quiz", WizardController, :index
-    get "/quiz/:step", WizardController, :step
-    put "/quiz/:step", WizardController, :update
-
     get "/login", SessionController, :new
     post "/login", SessionController, :create
     delete "/logout", SessionController, :delete
