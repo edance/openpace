@@ -47,7 +47,7 @@
             <% end %>
           </div>
           <div class="col-6 text-right">
-            <%= link(to: Routes.wizard_path(@conn, :index), class: "text-light") do %>
+            <%= link(to: Routes.onboard_path(@conn, :index), class: "text-light") do %>
               <small><%= gettext("Create new account") %></small>
             <% end %>
           </div>
