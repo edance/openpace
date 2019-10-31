@@ -14,6 +14,19 @@ defmodule Squeeze.CredentialFactory do
           user: build(:user)
         }
       end
+
+      def garmin_credential_factory do
+        struct!(
+          credential_factory(),
+          %{
+            provider: "garmin",
+            access_token: nil,
+            refresh_token: nil,
+            token: "abcdefg",
+            token_secret: "abcdefg"
+          }
+        )
+      end
     end
   end
 end
