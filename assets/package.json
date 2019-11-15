@@ -28,7 +28,7 @@
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "expose-loader": "^0.7.5",
-    "imagemin": "^7.0.0",
+    "imagemin": "^7.0.1",
     "imagemin-webp": "^5.1.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.13.0",
