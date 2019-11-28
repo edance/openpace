@@ -6,7 +6,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "datalist-polyfill": "^1.22.1",
     "flatpickr": "^4.6.3",
     "highcharts": "^7.2.0",
