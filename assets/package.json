@@ -15,7 +15,7 @@
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "popper.js": "^1.16.0",
-    "sortablejs": "^1.10.0",
+    "sortablejs": "^1.10.2",
     "turbolinks": "^5.0.0",
     "umbrellajs": "^3.1.0",
     "webfontloader": "^1.6.28",
