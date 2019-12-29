@@ -1,3 +1,12 @@
+const securityHeaders = {
+	"Content-Security-Policy" : "upgrade-insecure-requests",
+	"Strict-Transport-Security" : "max-age=1000",
+	"X-Xss-Protection" : "1; mode=block",
+	"X-Frame-Options" : "DENY",
+	"X-Content-Type-Options" : "nosniff",
+	"Referrer-Policy" : "strict-origin-when-cross-origin",
+};
+
 const SITEMAP_CONTENT = `
 # Reference: https://developers.google.com/search/reference/robots_txt
 User-agent: *
@@ -12,6 +21,11 @@ addEventListener('fetch', event => {
 });
 
 async function handleResponse(request) {
+  let response = await fetchResponse(request);
+  return addHeaders(response);
+}
+
+async function fetchResponse(request) {
   let url = new URL(request.url);
   const pathname = url.pathname;
 
@@ -45,4 +59,30 @@ async function handleResponse(request) {
   }
 
   return fetch(new Request(url, request));
+}
+
+async function addHeaders(response) {
+	let newHdrs = new Headers(response.headers);
+
+  if (!isHTML(newHdrs)) {
+    return new Response(response.body , {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHdrs
+    });
+  }
+
+  Object.keys(securityHeaders).map((name, index) => {
+		newHdrs.set(name, securityHeaders[name]);
+	});
+
+	return new Response(response.body , {
+		status: response.status,
+		statusText: response.statusText,
+		headers: newHdrs,
+	});
+}
+
+function isHTML(headers) {
+	return headers.has("Content-Type") && headers.get("Content-Type").includes("text/html");
 }
