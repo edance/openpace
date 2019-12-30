@@ -1,6 +1,6 @@
 <main>
   <!-- Navbar -->
-  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+  <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
   <!-- Header -->
   <div class="header py-7 py-lg-8">

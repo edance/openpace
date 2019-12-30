@@ -1,10 +1,3 @@
-<!-- Top navbar -->
-<%= SqueezeWeb.MenuView.topbar(Map.merge(assigns, %{class_list: "navbar-dark"})) do %>
-  <span class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
-    Profile
-  </span>
-<% end %>
-
 <%= render "_header.html", assigns %>
 
 <!-- Page content -->

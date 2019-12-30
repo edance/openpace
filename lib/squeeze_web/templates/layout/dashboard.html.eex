@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <%= render SqueezeWeb.MenuView, "sidebar.html", assigns %>
+    <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
 
     <div class="main-content">
       <%= render SqueezeWeb.SharedView, "flash.html", assigns %>

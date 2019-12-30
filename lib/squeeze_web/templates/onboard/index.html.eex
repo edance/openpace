@@ -1,5 +1,5 @@
 <main>
-  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+  <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
   <%= async_form @changeset, Routes.onboard_path(@conn, :update), fn f -> %>
   <div class="container">

@@ -1,12 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <%= link(to: "/", class: "navbar-brand pt-2") do %>
-      <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
-    <% end %>
-
+  <div class="container-fluid">
     <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <%= link(to: Routes.dashboard_path(@conn, :index), class: "navbar-brand") do %>
+      <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
+    <% end %>
 
     <!-- Collapse -->
     <div class="collapse navbar-collapse" id="nav-collapse">
@@ -26,14 +26,38 @@
       </div>
 
       <!-- Navigation -->
-      <ul class="navbar-nav mt-2 mt-lg-0 ml-auto">
+      <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
         <li class="nav-item">
-          <%= active_link(@conn, gettext("Sign Up"), to: Routes.onboard_path(@conn, :index), class: "nav-link") %>
+          <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link text-sm") do %>
+            <%= gettext("Dashboard") %>
+          <% end %>
         </li>
+
         <li class="nav-item">
-          <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
+          <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link text-sm") do %>
+            <%= gettext("Calendar") %>
+          <% end %>
+        </li>
+
+        <li class="nav-item">
+          <%= if in_trial?(@current_user) do %>
+            <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 text-sm font-weight-bold") do %>
+              Trial expires <%= relative_time(@current_user.trial_end) %>
+            <% end %>
+          <% end %>
         </li>
       </ul>
     </div>
+
+    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="media align-items-center">
+        <%= render "_avatar.html", assigns %>
+        <div class="media-body ml-2 d-none d-lg-block">
+          <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
+        </div>
+      </div>
+    </a>
+
+    <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
   </div>
 </nav>

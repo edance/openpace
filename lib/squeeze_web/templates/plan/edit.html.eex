@@ -1,10 +1,3 @@
-<!-- Top navbar -->
-<%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
-    <%= @plan.name %> - <%= @plan.week_count %> Weeks
-  </span>
-<% end %>
-
 <div class="header bg-waves pb-5 pt-5 pt-xl-6">
   <div class="container-fluid">
     <div class="row">
