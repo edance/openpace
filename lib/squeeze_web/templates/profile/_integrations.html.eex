@@ -10,6 +10,16 @@
   </div>
 
   <div class="mb-2">
+    <%= if integration?("garmin", assigns) do %>
+      <%= gettext("Connected to %{provider}", provider: "Garmin") %>
+    <% else %>
+      <%= link to: Routes.integration_path(@conn, :request, "garmin") do %>
+        <%= gettext("Connect to %{provider}", provider: "Garmin") %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mb-2">
     <%= if integration?("fitbit", assigns) do %>
       <%= gettext("Connected to %{provider}", provider: "Fitbit") %>
     <% else %>
