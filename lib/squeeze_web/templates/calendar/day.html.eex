@@ -1,22 +1,4 @@
-<%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <%= link gettext("Today"), to: Routes.calendar_path(@conn, :show, "day"),
-                    class: "navbar-item btn btn-sm btn-secondary mt--1 ml-3 ml-md-0 mr-4" %>
-
-  <%= link to: Routes.calendar_path(@conn, :show, "day", date: prev(@date, "day")), class: "navbar-item navbar-link mr-4" do %>
-    <span class="iconify" data-icon="ant-design:left-circle-outline" data-inline="false"></span>
-  <% end %>
-
-  <div class="navbar-item navbar-text">
-    <%= Timex.format!(@date, "%a, %b %-d", :strftime) %>
-  </div>
-
-  <%= link to: Routes.calendar_path(@conn, :show, "day", date: next(@date, "day")),
-           class: "navbar-item navbar-link ml-4 mr-3 mr-md-0" do %>
-    <span class="iconify" data-icon="ant-design:right-circle-outline" data-inline="false"></span>
-  <% end %>
-<% end %>
-
-<div class="header bg-waves pb-5 pt-6">
+<div class="header bg-waves pb-5 pt-5">
   <div class="container-fluid">
     <div class="card d-flex flex-wrap flex-row calendar">
       <%= content_tag(:div, class: "p-1") do %>

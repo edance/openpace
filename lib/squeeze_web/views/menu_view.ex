@@ -16,9 +16,4 @@ defmodule SqueezeWeb.MenuView do
   def copyright_year do
     Date.utc_today.year
   end
-
-  def topbar(assigns, do: contents) do
-    assigns = Map.merge(assigns, %{yield: contents})
-    render("topbar.html", assigns)
-  end
 end

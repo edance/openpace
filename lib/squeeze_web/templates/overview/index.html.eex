@@ -1,12 +1,5 @@
-<!-- Top navbar -->
-<%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
-    <%= gettext("Dashboard") %>
-  </span>
-<% end %>
-
 <!-- Header -->
-<div class="header pt-5 pt-xl-8 overflow-hidden">
+<div class="header pt-5 pt-xl-6 overflow-hidden">
   <img class="waves" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
 
   <div class="container-fluid">

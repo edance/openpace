@@ -10,6 +10,11 @@
     <span><%= gettext("Profile") %></span>
   <% end %>
 
+  <%= link(to: Routes.billing_path(@conn, :index), class: "dropdown-item") do %>
+    <span class="iconify" data-icon="fa-regular:credit-card" data-inline="false"></span>
+    <span><%= gettext("Billing") %></span>
+  <% end %>
+
   <div class="dropdown-divider"></div>
 
   <%= link class: "dropdown-item", to: Routes.session_path(@conn, :delete), method: :delete do %>

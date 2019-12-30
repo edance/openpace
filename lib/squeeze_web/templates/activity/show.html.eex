@@ -1,15 +1,8 @@
-<!-- Top navbar -->
-<%= SqueezeWeb.MenuView.topbar(assigns) do %>
-  <span class="h4 mb-0 text-uppercase d-none d-lg-inline-block">
-    <%= relative_time(@activity.start_at) %>
-  </span>
-<% end %>
-
 <%= if coordinates?(assigns) do %>
   <%= render SqueezeWeb.MapView, "activity-map.html", assigns %>
 <% end %>
 
-<div class="container-fluid pt-7 pb-8 bg-secondary">
+<div class="container-fluid pt-5 pb-8 bg-secondary">
   <div class="row">
     <div class="col">
       <h1><%= name(assigns) %></h1>
