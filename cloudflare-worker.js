@@ -38,13 +38,13 @@ async function fetchResponse(request) {
   // default to webflow for most pages
   url.hostname = 'openpace.webflow.io';
 
-  // Handle anything that is under the /app/ path
-  if (/^\/app\/.+$/.test(pathname)) {
+  // Handle anything that is under the /app/ path (including /app)
+  if (/^\/app\/?.*$/.test(pathname)) {
     url.pathname = url.pathname.replace('/app', '');
     url.hostname = 'squeeze-run.herokuapp.com';
   }
 
-  // Handle anything that is under the /namer/ path
+  // Handle anything that is under the /namer/ path (excluding /namer)
   if (/^\/namer\/.+$/.test(pathname)) {
     url.pathname = url.pathname.replace('/namer', '');
     url.hostname = 'activity-namer.herokuapp.com';
