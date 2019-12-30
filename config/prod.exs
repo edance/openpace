@@ -37,23 +37,23 @@ config :squeeze, Squeeze.Guardian,
 config :squeeze, Squeeze.OAuth2.Google,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/auth/google/callback"
+  redirect_uri: "https://www.openpace.co/app/auth/google/callback"
 
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/integration/fitbit/callback",
+  redirect_uri: "https://www.openpace.co/app/integration/fitbit/callback",
   webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
 
 config :squeeze, Squeeze.Garmin,
   consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
   consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/integration/garmin/callback"
+  redirect_uri: "https://www.openpace.co/app/integration/garmin/callback"
 
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "#{System.get_env("HOST_URL")}/integration/strava/callback",
+  redirect_uri: "https://www.openpace.co/app/integration/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 # ## SSL Support
