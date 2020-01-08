@@ -25,7 +25,7 @@ defmodule Mix.Tasks.Setup.Subscriptions do
     form = [
       client_id: Application.get_env(:strava, :client_id),
       client_secret: Application.get_env(:strava, :client_secret),
-      callback_url: "#{System.get_env("HOST_URL")}/webhook/strava",
+      callback_url: Application.get_env(:strava, :webhook_callback_url),
       verify_token: Application.get_env(:strava, :webhook_challenge)
     ]
 
