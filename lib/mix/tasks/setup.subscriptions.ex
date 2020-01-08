@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Setup.Subscriptions do
   end
 
   defp create_strava_subscription do
-    url = "https://api.strava.com/api/v3/push_subscriptions"
+    url = "https://www.strava.com/api/v3/push_subscriptions"
     form = [
       client_id: Application.get_env(:strava, :client_id),
       client_secret: Application.get_env(:strava, :client_secret),
