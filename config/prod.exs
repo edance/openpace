@@ -54,6 +54,7 @@ config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
   redirect_uri: "https://www.openpace.co/app/integration/strava/callback",
+  webhook_callback_url: "https://www.openpace.co/app/webhook/strava",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 # ## SSL Support
