@@ -68,7 +68,7 @@ defmodule Squeeze.Mixfile do
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.3.1", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.1", only: :test},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.9", only: :test},
