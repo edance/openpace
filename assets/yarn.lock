@@ -2217,10 +2217,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-datalist-polyfill@^1.22.1:
-  version "1.23.3"
-  resolved "https://registry.yarnpkg.com/datalist-polyfill/-/datalist-polyfill-1.23.3.tgz#6b34c8684c9e52c9506ba8550272fad5ca13d79f"
-  integrity sha512-kE11GGSQ1y2JtbwAe8h7yV/lvyhCplnAQ3R7iWmJ+/1mWbjZ9c0eeN0YlUIRkHOUu0XMKqdMklgYnM3cPSQsIA==
+datalist-polyfill@^1.24.2:
+  version "1.24.2"
+  resolved "https://registry.yarnpkg.com/datalist-polyfill/-/datalist-polyfill-1.24.2.tgz#b6a818220bc90b6df84662c11cbd860faf2a65e9"
+  integrity sha512-3g7YhxUaAuRK4gqJgyGPIwGgZaRDoZTNPXUKGzN1ZbHsJkHR3rdfmQMFzdqwCIDONXW9rAZ5GIfb+cyHCrUvRg==
 
 date-now@^0.1.4:
   version "0.1.4"
