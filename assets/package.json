@@ -31,7 +31,7 @@
     "imagemin": "^7.0.1",
     "imagemin-webp": "^5.1.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.14.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
