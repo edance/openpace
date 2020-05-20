@@ -51,6 +51,10 @@ defmodule Squeeze.Duration do
     Ecto.Type.type(:integer)
   end
 
+  def embed_as(_), do: :self
+
+  def equal?(left, right), do: left == right
+
   defp parse_integer(""), do: {:ok, nil}
 
   defp parse_integer(str) when is_binary(str) do
