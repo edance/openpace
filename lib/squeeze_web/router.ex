@@ -49,6 +49,8 @@ defmodule SqueezeWeb.Router do
     get "/reset-password", ResetPasswordController, :show
     post "/reset-password", ResetPasswordController, :reset
     put "/reset-password", ResetPasswordController, :reset
+
+    get "/races/:slug", RaceController, :show
   end
 
   scope "/integration", SqueezeWeb do
