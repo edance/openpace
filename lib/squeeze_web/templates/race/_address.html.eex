@@ -1,0 +1,10 @@
+<address>
+  <%= @race.address_line1 %>
+  <br/>
+  <%= if @race.address_line2 do %>
+    <%= @race.address_line2 %>
+    <br/>
+  <% end %>
+
+  <%= location(assigns) %>
+</address>

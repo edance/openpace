@@ -1,0 +1,23 @@
+<script type="application/ld+json">
+ {
+   "@context": "http://schema.org",
+   "@type": "SportsEvent",
+   "name": "<%= @race.name %>",
+   "location": {
+     "@type": "Place",
+     "name": "<%= @race.city %>",
+     "address": {
+       "@type": "PostalAddress",
+       "streetAddress": "<%= @race.address_line1 %>",
+       "addressLocality": "<%= @race.state %>",
+       "postalCode": "<%= @race.postal_code %>",
+       "addressRegion": "<%= @race.state %>",
+       "addressCountry": "<%= @race.country %>"
+     }
+   },
+   "startDate": "<%= start_at(assigns) %>",
+   "description": "",
+   "url": "<%= @race.url %>",
+   "image": ""
+ }
+</script>
