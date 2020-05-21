@@ -38,18 +38,6 @@ defmodule Squeeze.TimeHelperTest do
     end
   end
 
-  describe "end_of_day/2" do
-    test "returns the utc datetime for the end of the day", %{user: user} do
-      now = Timex.now()
-      date = Timex.to_date(now)
-      end_of_day = Timex.end_of_day(now)
-      datetime = TimeHelper.end_of_day(user, date)
-      diff = Timex.diff(datetime, end_of_day, :hours)
-      # New York is either 4 or 5 hours behind depending on Daylight Savings
-      assert diff == 4 || diff == 5
-    end
-  end
-
   # Default timezone for a user is New York
   defp create_user(_) do
     {:ok, user: build(:user)}
