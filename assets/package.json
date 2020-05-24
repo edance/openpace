@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.0",
-    "datalist-polyfill": "^1.22.1",
+    "datalist-polyfill": "^1.24.4",
     "flatpickr": "^4.6.3",
     "highcharts": "^7.2.0",
     "jquery": "^3.4.0",
