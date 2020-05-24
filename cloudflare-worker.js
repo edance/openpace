@@ -1,3 +1,8 @@
+/* Upload this file to cloudflare.
+ * Handles the reverse proxy between heroku and webflow
+ *
+ */
+
 const securityHeaders = {
 	"Content-Security-Policy" : "upgrade-insecure-requests",
 	"Strict-Transport-Security" : "max-age=1000",
@@ -65,11 +70,7 @@ async function addHeaders(response) {
 	let newHdrs = new Headers(response.headers);
 
   if (!isHTML(newHdrs)) {
-    return new Response(response.body , {
-      status: response.status,
-      statusText: response.statusText,
-      headers: newHdrs
-    });
+    return response;
   }
 
   Object.keys(securityHeaders).map((name, index) => {
