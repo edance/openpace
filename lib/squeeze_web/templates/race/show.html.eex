@@ -1,18 +1,71 @@
 <%= render "_schema.html", assigns %>
 
-<main>
+<main role="main">
   <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
-  <div class="container mt-6">
+
+  <%= render "_hero.html", assigns %>
+
+  <div class="container">
     <div class="row">
-      <div class="col-md-8">
-        <%= render "_hero.html", assigns %>
+      <div class="col">
+        <ol class="breadcrumb bg-transparent px-0">
+          <li class="breadcrumb-item">
+            <a href="#">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="#">Marathons</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= @race.name %>
+          </li>
+        </ol>
 
-        <%= render "_events.html", assigns %>
+        <ul class="nav mb-4">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Route</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Reviews</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Results</a>
+          </li>
+        </ul>
 
-        <div class="mb-6">
-          <%= content(assigns) %>
+        <h2>Overview</h2>
+
+        <%= content(assigns) %>
+
+        <div class="badges">
+          <span class="badge badge-primary">Primary</span>
+          <span class="badge badge-secondary">Secondary</span>
+          <span class="badge badge-success">Success</span>
+          <span class="badge badge-danger">Danger</span>
+          <span class="badge badge-warning">Warning</span>
+          <span class="badge badge-info">Info</span>
+          <span class="badge badge-light">Light</span>
+          <span class="badge badge-dark">Dark</span>
         </div>
+
+        <hr>
+
+
+      </div>
+      <div class="col-md-4">
+        <div class="display-4 mb-4">Get alerts for this race</div>
+        <form>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email Address" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
-  </div>
+
+  </div> <!-- /container -->
 </main>
