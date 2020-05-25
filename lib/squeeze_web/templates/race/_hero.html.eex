@@ -1,14 +1,20 @@
-<div class="mb-4">
-  <h1 class="display-2">
-    <%= h1(assigns) %>
-  </h1>
-  <p class="mt-0 ">
-    <%= if start_at(assigns) do %>
-      <%= date(assigns) %> | <%= time(assigns) %> |
-    <% end %>
-    <%= location(assigns) %>
-    <%= if @race.url do %>
-      | <a href="<%= @race.url %>">Official Race Website</a>
-    <% end %>
-  </p>
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">
+      <%= @race.name %>
+    </h1>
+    <p class="mt-0">
+      <%= if start_at(assigns) do %>
+        <%= date(assigns) %> | <%= time(assigns) %> |
+      <% end %>
+      <%= location(assigns) %>
+      <%= if @race.url do %>
+        | <a href="<%= @race.url %>">Official Race Website</a>
+      <% end %>
+    </p>
+
+    <p>
+      <a class="btn btn-primary" href="#" role="button">Learn more »</a>
+    </p>
+  </div>
 </div>

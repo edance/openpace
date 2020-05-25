@@ -3,8 +3,6 @@ defmodule SqueezeWeb.RaceView do
 
   def title(_page, %{race: race}), do: race.name
 
-  def h1(%{race: race}), do: race.name
-
   def location(%{race: race}) do
     "#{race.city}, #{race.state} #{race.country}"
   end
