@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :squeeze, SqueezeWeb.Endpoint,
   load_from_system_env: true,
-  url: [scheme: "https", host: URI.parse(System.get_env("HOST_URL")).host, path: "/app", port: 443],
+  url: [scheme: "https", host: URI.parse(System.get_env("HOST_URL")).host, port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
@@ -37,24 +37,24 @@ config :squeeze, Squeeze.Guardian,
 config :squeeze, Squeeze.OAuth2.Google,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
-  redirect_uri: "https://www.openpace.co/app/auth/google/callback"
+  redirect_uri: "https://www.openpace.co/auth/google/callback"
 
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: System.get_env("FITBIT_CLIENT_ID"),
   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-  redirect_uri: "https://www.openpace.co/app/integration/fitbit/callback",
+  redirect_uri: "https://www.openpace.co/integration/fitbit/callback",
   webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
 
 config :squeeze, Squeeze.Garmin,
   consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
   consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
-  redirect_uri: "https://www.openpace.co/app/integration/garmin/callback"
+  redirect_uri: "https://www.openpace.co/integration/garmin/callback"
 
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "https://www.openpace.co/app/integration/strava/callback",
-  webhook_callback_url: "https://www.openpace.co/app/webhook/strava",
+  redirect_uri: "https://www.openpace.co/integration/strava/callback",
+  webhook_callback_url: "https://www.openpace.co/webhook/strava",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 # ## SSL Support
