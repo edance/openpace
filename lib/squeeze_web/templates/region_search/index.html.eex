@@ -1,0 +1,11 @@
+<main role="main">
+  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">
+        <%= h1(assigns) %>
+      </h1>
+    </div>
+  </div>
+
+</main>
