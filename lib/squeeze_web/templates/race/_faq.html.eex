@@ -1,0 +1,7 @@
+<h3>When is the <%= @race.name %>?</h3>
+<p>The race is today.</p>
+
+<h3>Where is the <%= @race.name %>?</h3>
+<p>The race is today.</p>
+
+<h3>Is the <%= @race.name %> a Boston Qualifier?</h3>

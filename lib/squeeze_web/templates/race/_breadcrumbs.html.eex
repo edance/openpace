@@ -1,0 +1,14 @@
+<ol class="breadcrumb bg-transparent px-0">
+  <li class="breadcrumb-item">
+    <a href="#">Home</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="#">Marathons</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="#">Michigan</a>
+  </li>
+  <li class="breadcrumb-item active" aria-current="page">
+    <%= @race.name %>
+  </li>
+</ol>

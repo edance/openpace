@@ -8,34 +8,22 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <ol class="breadcrumb bg-transparent px-0">
-          <li class="breadcrumb-item">
-            <a href="#">Home</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="#">Marathons</a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            <%= @race.name %>
-          </li>
-        </ol>
+
+        <%= render "_breadcrumbs.html", assigns %>
 
         <ul class="nav mb-4">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Overview</a>
+            <a class="nav-link active" href="#overview">Overview</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Route</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Reviews</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Results</a>
+            <a class="nav-link" href="#">FAQ</a>
           </li>
         </ul>
 
-        <h2>Overview</h2>
+        <h2 id="overview">Overview</h2>
 
         <%= content(assigns) %>
 
@@ -50,19 +38,30 @@
           <span class="badge badge-dark">Dark</span>
         </div>
 
-        <hr>
+        <hr />
 
 
+        <h2 id="route">Route</h2>
+
+        <p class="mb-4">Add an image here?</p>
+
+        <hr />
+
+        <h2 id="faq" class="mb-4">Frequently Asked Questions</h2>
+        <%= render "_faq.html", assigns %>
+
+        <div class="mb-8"></div>
       </div>
       <div class="col-md-4">
-        <div class="display-4 mb-4">Get alerts for this race</div>
-        <form>
+        <form class="border rounded p-4">
+          <h2>Get alerts for this race</h2>
+
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Email Address" id="exampleInputEmail1" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
       </div>
     </div>

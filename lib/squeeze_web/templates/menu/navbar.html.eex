@@ -27,37 +27,41 @@
 
       <!-- Navigation -->
       <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
-        <li class="nav-item">
-          <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link text-sm") do %>
-            <%= gettext("Dashboard") %>
-          <% end %>
-        </li>
-
-        <li class="nav-item">
-          <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link text-sm") do %>
-            <%= gettext("Calendar") %>
-          <% end %>
-        </li>
-
-        <li class="nav-item">
-          <%= if in_trial?(@current_user) do %>
-            <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 text-sm font-weight-bold") do %>
-              Trial expires <%= relative_time(@current_user.trial_end) %>
+        <%= if authenticated?(@current_user) do %>
+          <li class="nav-item">
+            <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= gettext("Dashboard") %>
             <% end %>
-          <% end %>
-        </li>
+          </li>
+
+          <li class="nav-item">
+            <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= gettext("Calendar") %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= if in_trial?(@current_user) do %>
+              <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 text-sm font-weight-bold") do %>
+                Trial expires <%= relative_time(@current_user.trial_end) %>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
 
-    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <div class="media align-items-center">
-        <%= render "_avatar.html", assigns %>
-        <div class="media-body ml-2 d-none d-lg-block">
-          <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
+    <%= if authenticated?(@current_user) do %>
+      <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="media align-items-center">
+          <%= render "_avatar.html", assigns %>
+          <div class="media-body ml-2 d-none d-lg-block">
+            <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
+      <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
+    <% end %>
   </div>
 </nav>

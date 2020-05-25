@@ -26,33 +26,6 @@ defmodule SqueezeWeb.Router do
     plug :put_resp_content_type, "application/xml"
   end
 
-  scope "/", SqueezeWeb do
-    # Use the default browser stack
-    pipe_through :browser
-
-    get "/", HomeController, :index
-
-    get "/onboard", OnboardController, :index
-    put "/onboard", OnboardController, :update
-
-    get "/login", SessionController, :new
-    post "/login", SessionController, :create
-    delete "/logout", SessionController, :delete
-
-    get "/sign-up", UserController, :new
-    post "/sign-up", UserController, :register
-    put "/sign-up", UserController, :register
-
-    get "/forgot-password", ForgotPasswordController, :show
-    post "/forgot-password", ForgotPasswordController, :request
-
-    get "/reset-password", ResetPasswordController, :show
-    post "/reset-password", ResetPasswordController, :reset
-    put "/reset-password", ResetPasswordController, :reset
-
-    get "/races/:slug", RaceController, :show
-  end
-
   scope "/integration", SqueezeWeb do
     # Use the default browser stack
     pipe_through :browser
@@ -106,6 +79,36 @@ defmodule SqueezeWeb.Router do
 
     get "/garmin", GarminWebhookController, :webhook
     post "/garmin", GarminWebhookController, :webhook
+  end
+
+  scope "/", SqueezeWeb do
+    # Use the default browser stack
+    pipe_through :browser
+
+    get "/", HomeController, :index
+
+    get "/onboard", OnboardController, :index
+    put "/onboard", OnboardController, :update
+
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
+
+    get "/sign-up", UserController, :new
+    post "/sign-up", UserController, :register
+    put "/sign-up", UserController, :register
+
+    get "/forgot-password", ForgotPasswordController, :show
+    post "/forgot-password", ForgotPasswordController, :request
+
+    get "/reset-password", ResetPasswordController, :show
+    post "/reset-password", ResetPasswordController, :reset
+    put "/reset-password", ResetPasswordController, :reset
+
+    get "/search", SearchController, :index
+    get "/:distance_type/:region/:slug", RaceController, :show
+    get "/:distance_type", DistanceSearchController, :index
+    get "/:distance_type/:region", RegionSearchController, :index
   end
 
   if Mix.env() == :dev do
