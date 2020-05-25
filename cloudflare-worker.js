@@ -16,7 +16,7 @@ const SITEMAP_CONTENT = `
 # Reference: https://developers.google.com/search/reference/robots_txt
 User-agent: *
 Allow: /
-Disallow: /app
+Disallow: /dashboard
 
 Sitemap: https://www.openpace.co/sitemap.xml
 `;
@@ -40,13 +40,11 @@ async function fetchResponse(request) {
     return Response.redirect(url, 301);
   }
 
-  // default to webflow for most pages
-  url.hostname = 'openpace.webflow.io';
+  url.hostname = 'squeeze-run.herokuapp.com';
 
-  // Handle anything that is under the /app/ path (including /app)
-  if (/^\/app\/?.*$/.test(pathname)) {
-    url.pathname = url.pathname.replace('/app', '');
-    url.hostname = 'squeeze-run.herokuapp.com';
+  // Allow webflow to handle homepage, namer, blog, and about
+  if (pathname === '/' || /^\/namer$/.test(pathname) || /^\/blog\/?.*$/.test(pathname) || /^\/about\/?.*$/.test(pathname)) {
+    url.hostname = 'openpace.webflow.io';
   }
 
   // Handle anything that is under the /namer/ path (excluding /namer)
