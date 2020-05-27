@@ -27,7 +27,7 @@ defmodule SqueezeWeb.RaceView do
 
   def content(%{race: %{content: content}}) do
     content
-    |> Earmark.as_html!()
+    |> HtmlSanitizeEx.basic_html()
     |> raw()
   end
 end
