@@ -42,9 +42,11 @@ defmodule SqueezeWeb.RaceViewTest do
     end
   end
 
-  test "content/1" do
-    race = build(:race, content: "## Test Heading")
-    assert RaceView.content(%{race: race}) == {:safe, "<h2>Test Heading</h2>\n"}
+  describe "content/1" do
+    test 'sanitizes the html' do
+      race = build(:race, content: "<h2>Test Heading</h2><script>alert('hi')</script>")
+      assert RaceView.content(%{race: race}) == {:safe, "<h2>Test Heading</h2>alert('hi')"}
+    end
   end
 
   defp first_datetime(race) do
