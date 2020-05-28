@@ -26,6 +26,9 @@ defmodule Squeeze.Races.Race do
 
     field :timezone, :string
 
+    field :active, :boolean
+    field :boston_qualifier, :boolean
+
     field :registration_url, :string
     field :url, :string
 
