@@ -10,13 +10,6 @@ defmodule SqueezeWeb.RaceViewTest do
     end
   end
 
-  describe "h1/1" do
-    test "includes race name" do
-      race = build(:race)
-      assert RaceView.h1(%{race: race}) =~ race.name
-    end
-  end
-
   test "location/1" do
     race = build(:race)
     assert RaceView.location(%{race: race}) == "#{race.city}, #{race.state} #{race.country}"
