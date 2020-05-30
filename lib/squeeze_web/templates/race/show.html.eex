@@ -11,18 +11,6 @@
 
         <%= render "_breadcrumbs.html", assigns %>
 
-        <ul class="nav mb-4">
-          <li class="nav-item">
-            <a class="nav-link active" href="#overview">Overview</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Route</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">FAQ</a>
-          </li>
-        </ul>
-
         <h2 id="overview">Overview</h2>
 
         <%= content(assigns) %>
@@ -37,13 +25,6 @@
           <span class="badge badge-light">Light</span>
           <span class="badge badge-dark">Dark</span>
         </div>
-
-        <hr />
-
-
-        <h2 id="route">Route</h2>
-
-        <p class="mb-4">Add an image here?</p>
 
         <hr />
 
