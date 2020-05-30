@@ -28,9 +28,14 @@ defmodule Squeeze.Races.Race do
 
     field :active, :boolean
     field :boston_qualifier, :boolean
+    field :certified, :boolean
 
     field :registration_url, :string
     field :url, :string
+
+    field :course_profile, CourseProfileEnum
+    field :course_terrain, CourseTerrainEnum
+    field :course_type, CourseTypeEnum
 
     field :external_id, :string
 
