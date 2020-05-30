@@ -17,6 +17,8 @@
 
         <%= render "_badges.html", assigns %>
 
+        <%= render "_events.html", assigns %>
+
         <hr />
 
         <h2 id="faq" class="mb-4">Frequently Asked Questions</h2>

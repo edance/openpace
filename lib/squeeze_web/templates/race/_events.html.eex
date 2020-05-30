@@ -1,5 +1,27 @@
-<%= for event <- @race.events do %>
-  <%= event.name %> -
-  <%= format_distance(event.distance, @current_user.user_prefs) %>
-  <br/>
+<%= if length(@race.events) > 0 do %>
+  <table class="table mt-6">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">
+          Event
+        </th>
+        <th scope="col">
+          Distance
+        </th>
+        <th scope="col">
+          Start Time
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= for event <- @race.events do %>
+        <tr>
+          <td><%= event.name %></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
