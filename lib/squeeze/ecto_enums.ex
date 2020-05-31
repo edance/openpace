@@ -11,3 +11,5 @@ defenum WorkoutTypeEnum, race: 0, long_run: 1, workout: 2
 defenum CourseProfileEnum, downhill: 0, flat: 1, rolling_hills: 2, hilly: 3
 defenum CourseTerrainEnum, road: 0, trail: 1
 defenum CourseTypeEnum, loop: 0, out_and_back: 1, point_to_point: 2
+
+defenum DistanceTypeEnum, marathon: 0, half_marathon: 1, ultra_marathon: 2

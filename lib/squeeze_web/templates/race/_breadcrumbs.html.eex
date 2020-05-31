@@ -3,10 +3,10 @@
     <a href="#">Home</a>
   </li>
   <li class="breadcrumb-item">
-    <a href="#">Marathons</a>
+    <%= link(region(assigns), to: Routes.region_search_path(@conn, :index, @race.state)) %>
   </li>
   <li class="breadcrumb-item">
-    <a href="#">Michigan</a>
+    <a href="#"><%= distance_type(assigns) %></a>
   </li>
   <li class="breadcrumb-item active" aria-current="page">
     <%= @race.name %>
