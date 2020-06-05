@@ -3,7 +3,7 @@ defmodule SqueezeWeb.RegionSearchView do
 
   def title(_page, _), do: "Region Search"
 
-  def h1(%{distance: distance, region: region}) do
-    "Best #{String.capitalize(distance)} in #{String.capitalize(region)}"
+  def h1(%{region: region}) do
+    "Best races in #{String.capitalize(region)}"
   end
 end
