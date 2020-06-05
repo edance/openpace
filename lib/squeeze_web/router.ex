@@ -104,11 +104,15 @@ defmodule SqueezeWeb.Router do
     get "/reset-password", ResetPasswordController, :show
     post "/reset-password", ResetPasswordController, :reset
     put "/reset-password", ResetPasswordController, :reset
+  end
+
+  scope "/races", SqueezeWeb do
+    pipe_through :browser
 
     get "/search", SearchController, :index
-    get "/:region/:distance_type/:slug", RaceController, :show
-    get "/:region/:distance_type", DistanceSearchController, :index
     get "/:region", RegionSearchController, :index
+    get "/:region/:distance_type", DistanceSearchController, :index
+    get "/:region/:distance_type/:slug", RaceController, :show
   end
 
   if Mix.env() == :dev do

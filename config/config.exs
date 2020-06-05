@@ -69,6 +69,10 @@ config :squeeze, Squeeze.Garmin,
   consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
   redirect_uri: "http://localhost:4000/integration/garmin/callback"
 
+config :algolia,
+  application_id: System.get_env("ALGOLIA_APPLICATION_ID"),
+  api_key: System.get_env("ALGOLIA_API_KEY")
+
 config :tesla, adapter: Tesla.Adapter.Hackney
 
 # Import environment specific config. This must remain at the bottom
