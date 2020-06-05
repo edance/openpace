@@ -24,7 +24,7 @@ defmodule Squeeze.Races.Race do
 
     field :logo_url, :string
 
-    field :timezone, :string
+    field :start_date, :date
 
     field :distance_type, DistanceTypeEnum
 
