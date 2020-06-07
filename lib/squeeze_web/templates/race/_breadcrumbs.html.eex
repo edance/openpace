@@ -1,6 +1,9 @@
 <ol class="breadcrumb bg-transparent px-0">
   <li class="breadcrumb-item">
-    <a href="#">Home</a>
+    <%= link("Home", to: Routes.home_path(@conn, :index)) %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link("Races", to: Routes.search_path(@conn, :index)) %>
   </li>
   <li class="breadcrumb-item">
     <%= link(region(assigns), to: Routes.region_search_path(@conn, :index, @race.state)) %>

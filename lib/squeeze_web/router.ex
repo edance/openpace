@@ -109,10 +109,10 @@ defmodule SqueezeWeb.Router do
   scope "/races", SqueezeWeb do
     pipe_through :browser
 
-    get "/search", SearchController, :index
+    get "/", SearchController, :index
     get "/:region", RegionSearchController, :index
-    get "/:region/:distance_type", DistanceSearchController, :index
-    get "/:region/:distance_type/:slug", RaceController, :show
+    get "/:region/:distance", DistanceSearchController, :index
+    get "/:region/:distance/:slug", RaceController, :show
   end
 
   if Mix.env() == :dev do
