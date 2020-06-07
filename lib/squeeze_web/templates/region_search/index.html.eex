@@ -4,7 +4,19 @@
   <div class="container">
     <div class="row">
       <div class="col-8">
-        <h1 class="display-3 mt-5 mb-4">
+        <ol class="breadcrumb bg-transparent px-0">
+          <li class="breadcrumb-item">
+            <%= link("Home", to: Routes.home_path(@conn, :index)) %>
+          </li>
+          <li class="breadcrumb-item">
+            <%= link("Races", to: Routes.search_path(@conn, :index)) %>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= region_name(assigns) %>
+          </li>
+        </ol>
+
+        <h1 class="display-3 mb-4">
           <%= h1(assigns) %>
         </h1>
         <p>Looking for a great trail near Traverse City, Michigan? AllTrails has 23 great hiking trails, running trails, mountain biking trails and more, with hand-curated trail maps and driving directions as well as detailed reviews and photos from hikers, campers, and nature lovers like you. If you're looking for the best trails around Keith J. Charters Traverse City State Park or Leelanau State Park, we've got you covered. You'll also find some great local park options, like Green Point Dunes Nature Preserve or Clay Cliffs Natural Area. Just looking to take a quick stroll? We've got 13 easy trails in Traverse City ranging from 0.6 to 11.7 miles and from 600 to 1,020 feet above sea level. Start checking them out and you'll be out on the trail in no time!</p>

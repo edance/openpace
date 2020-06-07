@@ -1,1 +1,35 @@
-Distance Search
+<main role="main">
+  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <ol class="breadcrumb bg-transparent px-0">
+          <li class="breadcrumb-item">
+            <%= link("Home", to: Routes.home_path(@conn, :index)) %>
+          </li>
+          <li class="breadcrumb-item">
+            <%= link("Races", to: Routes.search_path(@conn, :index)) %>
+          </li>
+          <li class="breadcrumb-item">
+            <%= link(region_name(assigns), to: Routes.region_search_path(@conn, :index, @region)) %>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= distance_name(assigns) %>
+          </li>
+        </ol>
+
+        <h1 class="display-3 mb-4">
+          <%= h1(assigns) %>
+        </h1>
+
+        <h2>Top Races (<%= @results["nbHits"] %>)</h2>
+
+        <div id="searchbox"></div>
+        <div id="hits"></div>
+      </div>
+      <div class="col-4">
+      </div>
+    </div>
+  </div>
+</main>
