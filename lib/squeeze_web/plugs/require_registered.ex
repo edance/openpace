@@ -17,7 +17,7 @@ defmodule SqueezeWeb.Plug.RequireRegistered do
   def call(conn, _x) do
     user = conn.assigns.current_user
 
-    if user.registered || !is_nil(conn.query_params["welcome"]) do
+    if user || !is_nil(conn.query_params["welcome"]) do
       conn
     else
       conn

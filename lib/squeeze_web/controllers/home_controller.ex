@@ -1,16 +1,19 @@
 defmodule SqueezeWeb.HomeController do
   use SqueezeWeb, :controller
 
+  plug :redirect_registered_user
+
   def index(conn, _params) do
-    user = conn.assigns.current_user
-    if user.registered do
-      conn
-      |> redirect(to: Routes.dashboard_path(conn, :index))
-      |> halt()
-    else
-      conn
-      |> redirect(to: Routes.session_path(conn, :new))
-      |> halt()
+    render(conn, "index.html")
+  end
+
+  defp redirect_registered_user(conn, _) do
+    case conn.assigns.current_user do
+      nil -> conn
+      _ ->
+        conn
+        |> redirect(to: Routes.dashboard_path(conn, :index))
+        |> halt()
     end
   end
 end

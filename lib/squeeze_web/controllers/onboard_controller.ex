@@ -24,13 +24,12 @@ defmodule SqueezeWeb.OnboardController do
   end
 
   defp redirect_registered_user(conn, _) do
-    user = conn.assigns.current_user
-    if user.registered do
-      conn
-      |> redirect(to: Routes.dashboard_path(conn, :index))
-      |> halt()
-    else
-      conn
+    case conn.assigns.current_user do
+      nil -> conn
+      _ ->
+        conn
+        |> redirect(to: Routes.dashboard_path(conn, :index))
+        |> halt()
     end
   end
 end
