@@ -8,19 +8,6 @@ defmodule Squeeze.Accounts do
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
   alias Squeeze.Repo
 
-  @doc """
-  Creates a guest user account. All visitors are assigned an account to help
-  with onboarding and preferences.
-
-  ## Examples
-
-  iex> create_guest_user()
-  {:ok, %User{}}
-  """
-  def create_guest_user do
-    create_user()
-  end
-
   def get_user_by_credential(%{provider: provider, uid: uid}) do
     query = from u in User,
       left_join: c in assoc(u, :credentials),

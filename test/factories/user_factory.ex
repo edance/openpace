@@ -19,16 +19,6 @@ defmodule Squeeze.UserFactory do
         }
       end
 
-      def guest_user_factory do
-        struct!(
-          user_factory(),
-          %{
-            registered: false,
-            user_prefs: %{}
-          }
-        )
-      end
-
       def paid_user_factory do
         struct!(
           user_factory(),

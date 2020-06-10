@@ -2,8 +2,8 @@ defmodule SqueezeWeb.HomeControllerTest do
   use SqueezeWeb.ConnCase
 
   describe "GET /" do
-    @tag :guest_user
-    test "as a guest user", %{conn: conn} do
+    @tag :no_user
+    test "as a visitor", %{conn: conn} do
       conn = conn
       |> get("/")
       assert redirected_to(conn) == session_path(conn, :new)

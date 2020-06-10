@@ -6,8 +6,8 @@ defmodule SqueezeWeb.UserControllerTest do
   alias Squeeze.Accounts
 
   describe "GET /sign-up" do
-    @tag :guest_user
-    test "as a guest user", %{conn: conn} do
+    @tag :no_user
+    test "as a visitor", %{conn: conn} do
       conn = conn
       |> get(user_path(conn, :new))
 
@@ -22,7 +22,7 @@ defmodule SqueezeWeb.UserControllerTest do
     end
   end
 
-  @tag :guest_user
+  @tag :no_user
   describe "PUT /sign-up" do
     setup [:setup_mocks]
 

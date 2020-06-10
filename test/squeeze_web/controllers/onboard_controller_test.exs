@@ -2,8 +2,8 @@ defmodule SqueezeWeb.OnboardControllerTest do
   use SqueezeWeb.ConnCase
 
   describe "GET /" do
-    @tag :guest_user
-    test "as a guest user", %{conn: conn} do
+    @tag :no_user
+    test "as a visitor", %{conn: conn} do
       conn = conn
       |> get("/onboard")
       assert html_response(conn, 200) =~ "What race are you training for"

@@ -21,7 +21,6 @@ defmodule Squeeze.RaceFactory do
           name: name,
           slug: slug,
           city: city,
-          timezone: "America/New_York",
           content: Lorem.paragraph(6),
           state: state,
           external_id: sequence(:external_id, &"#{&1}")
