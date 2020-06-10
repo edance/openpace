@@ -11,11 +11,6 @@ defmodule Squeeze.AccountsTest do
     @valid_attrs params_for(:user)
     @update_attrs %{first_name: "Brian"}
 
-    test "create_guest_user/0 creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_guest_user()
-      assert user.id != nil
-    end
-
     test "get_user!/1 returns the user with given id" do
       user = insert(:user)
       assert Accounts.get_user!(user.id).id == user.id
