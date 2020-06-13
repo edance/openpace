@@ -1,32 +1,71 @@
-<main role="main">
-  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+<div class="section section-hero section-shaped overflow-hidden">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container text-container">
+      <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
+        <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo-white@2x.png") %>" />
+      <% end %>
+    </div>
+  </nav>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <ol class="breadcrumb bg-transparent px-0">
-          <li class="breadcrumb-item">
-            <%= link("Home", to: Routes.home_path(@conn, :index)) %>
-          </li>
-          <li class="breadcrumb-item">
-            <%= link("Races", to: Routes.search_path(@conn, :index)) %>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            <%= region_name(assigns) %>
-          </li>
-        </ol>
+  <div class="shape shape-style-3 shape-dark">
+    <span class="span-150"></span>
+    <span class="span-50"></span>
+    <span class="span-50"></span>
+    <span class="span-75"></span>
+    <span class="span-100"></span>
+    <span class="span-75"></span>
+    <span class="span-50"></span>
+    <span class="span-100"></span>
+    <span class="span-50"></span>
+    <span class="span-100"></span>
+  </div>
 
-        <h1 class="display-3 mb-4">
-          <%= h1(assigns) %>
-        </h1>
-        <p>Looking for a great trail near Traverse City, Michigan? AllTrails has 23 great hiking trails, running trails, mountain biking trails and more, with hand-curated trail maps and driving directions as well as detailed reviews and photos from hikers, campers, and nature lovers like you. If you're looking for the best trails around Keith J. Charters Traverse City State Park or Leelanau State Park, we've got you covered. You'll also find some great local park options, like Green Point Dunes Nature Preserve or Clay Cliffs Natural Area. Just looking to take a quick stroll? We've got 13 easy trails in Traverse City ranging from 0.6 to 11.7 miles and from 600 to 1,020 feet above sea level. Start checking them out and you'll be out on the trail in no time!</p>
+  <div class="page-header">
+    <div class="container text-container shape-container d-flex align-items-center pt-6 pb-8">
+      <div class="row w-100">
+        <div class="col-8">
+          <h1 class="text-white display-1 mb-4">
+            <%= h1(assigns) %>
+          </h1>
 
-        <h2 class="mb-4">Top Races (<%= @results["nbHits"] %>)</h2>
-
-        <%= render "_race-cards.html", assigns %>
-      </div>
-      <div class="col-4">
+          <div class="input-group input-group-lg">
+            <input placeholder="Find a race in <%= region_name(assigns) %>" type="text" class="form-control" />
+            <div class="input-group-append">
+              <button class="btn btn-secondary" type="button">Search</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</main>
+
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</div>
+
+<div class="container text-container">
+  <div class="row">
+    <div class="col-8">
+      <ol class="breadcrumb bg-transparent px-0">
+        <li class="breadcrumb-item">
+          <%= link("Home", to: Routes.home_path(@conn, :index)) %>
+        </li>
+        <li class="breadcrumb-item">
+          <%= link("Races", to: Routes.search_path(@conn, :index)) %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <%= region_name(assigns) %>
+        </li>
+      </ol>
+
+      <h2 class="mb-4">Top Races (<%= @results["nbHits"] %>)</h2>
+
+      <%= render "_race-cards.html", assigns %>
+    </div>
+    <div class="col-4">
+    </div>
+  </div>
+</div>
