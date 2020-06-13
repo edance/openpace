@@ -60,5 +60,9 @@
         </div>
       <% end %>
     </div>
+
+    <div class="row">
+      <%= render SqueezeWeb.SharedView, "race-cards.html", assigns %>
+    </div>
   </div>
 </div>

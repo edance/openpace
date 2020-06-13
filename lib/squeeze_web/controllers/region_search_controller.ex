@@ -8,7 +8,7 @@ defmodule SqueezeWeb.RegionSearchController do
       {:ok, results} ->
         render(conn, "index.html", region: region, results: results)
       _ ->
-        render(conn, "index.html", region: region)
+        render(conn, "index.html", region: region, results: [])
     end
   end
 end
