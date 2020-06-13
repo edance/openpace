@@ -63,7 +63,7 @@
 
       <h2 class="mb-4">Top Races (<%= @results["nbHits"] %>)</h2>
 
-      <%= render "_race-cards.html", assigns %>
+      <%= render SqueezeWeb.SharedView, "race-cards.html", assigns %>
     </div>
     <div class="col-4">
     </div>

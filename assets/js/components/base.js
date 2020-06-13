@@ -9,7 +9,7 @@ import './date-picker';
 import './duration-select';
 import './form';
 import './imperial-hidden-input';
-// import './instant-search';
+import './instant-search';
 import './modal';
 import './onboard-down-btn';
 import './payment-form';
