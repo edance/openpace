@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-light mt-2">
+  <div class="container text-container">
+    <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
+      <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
+    <% end %>
+
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="nav-collapse">
+      <!-- Collapse header -->
+      <div class="navbar-collapse-header d-md-none">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <%= company_name() %>
+          </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle sidenav">
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link text-sm" href="#open-source">
+            Open Source
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

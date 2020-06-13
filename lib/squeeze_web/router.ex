@@ -86,6 +86,7 @@ defmodule SqueezeWeb.Router do
     pipe_through :browser
 
     get "/", HomeController, :index
+    post "/", HomeController, :subscribe
 
     get "/onboard", OnboardController, :index
     put "/onboard", OnboardController, :update

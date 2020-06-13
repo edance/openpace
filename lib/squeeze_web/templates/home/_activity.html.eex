@@ -1,0 +1,23 @@
+<section class="py-6 py-md-8">
+  <div class="container">
+    <div class="row row-grid align-items-center">
+      <div class="col-md-6 order-md-2">
+        <img alt="<%= gettext("Dashboard Preview") %>" src="<%= Routes.static_path(@conn, "/images/home/dashboard.jpg") %>" class="img-fluid floating shadow">
+      </div>
+
+      <div class="col-md-6 order-md-1">
+        <div class="pr-md-5">
+          <div class="icon icon-lg icon-shape icon-shape-info shadow rounded-circle mb-5">
+            <span class="iconify" data-icon="entypo:area-graph" data-inline="false"></span>
+          </div>
+          <h2 class="display-3">
+            <%= gettext("Analyze Your Effort") %>
+          </h2>
+          <p>
+            <%= gettext("Check out your route, distance, duration, and fitness level toward your goal on one screen.") %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

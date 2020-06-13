@@ -1,0 +1,22 @@
+<section class="py-7">
+  <div class="container">
+    <div class="row row-grid justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="display-3">
+          <%= gettext("Do you want to") %>
+          <span class="text-success"><%= gettext("Run Your Best Race?") %></span>
+        </h2>
+        <p class="lead">
+          <%= gettext("Because if you do, we can help you get there! Try today for free and accomplish your goals.") %>
+        </p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6 mt-4">
+        <%= render "form.html", Map.put(assigns, :action, Routes.home_path(@conn, :subscribe)) %>
+      </div>
+    </div>
+  </div>
+</section>
+
