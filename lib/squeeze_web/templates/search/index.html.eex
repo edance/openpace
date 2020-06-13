@@ -1,4 +1,4 @@
-<div class="section section-hero section-shaped">
+<div class="section section-hero section-shaped overflow-hidden">
   <nav class="navbar navbar-expand-lg">
     <div class="container text-container">
       <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
@@ -49,7 +49,7 @@
   </div>
 </div>
 
-<div class="section p-4">
+<div class="section pt-4 pb-8">
   <div class="container text-container">
     <h2 class="display-4 mb-4">Find Races in the US</h2>
 
@@ -62,34 +62,3 @@
     </div>
   </div>
 </div>
-
-<div class="section p-4">
-  <div class="container text-container">
-    <h2 class="display-4 mb-4">Upcoming Races</h2>
-
-    <div class="card-deck">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
