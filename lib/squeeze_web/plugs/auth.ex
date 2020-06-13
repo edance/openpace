@@ -16,7 +16,7 @@ defmodule SqueezeWeb.Plug.Auth do
       user = Guardian.Plug.current_resource(conn) ->
         assign(conn, :current_user, user)
       true ->
-        conn
+        assign(conn, :current_user, nil)
     end
   end
 end

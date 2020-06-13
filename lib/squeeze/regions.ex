@@ -7,12 +7,10 @@ defmodule Squeeze.Regions do
     %{short_name: "AK", long_name: "Alaska"},
     %{short_name: "AL", long_name: "Alabama"},
     %{short_name: "AR", long_name: "Arkansas"},
-    %{short_name: "AS", long_name: "American Samoa"},
     %{short_name: "AZ", long_name: "Arizona"},
     %{short_name: "CA", long_name: "California"},
     %{short_name: "CO", long_name: "Colorado"},
     %{short_name: "CT", long_name: "Connecticut"},
-    %{short_name: "DC", long_name: "District of Columbia"},
     %{short_name: "DE", long_name: "Delaware"},
     %{short_name: "FL", long_name: "Florida"},
     %{short_name: "GA", long_name: "Georgia"},
@@ -45,7 +43,6 @@ defmodule Squeeze.Regions do
     %{short_name: "OK", long_name: "Oklahoma"},
     %{short_name: "OR", long_name: "Oregon"},
     %{short_name: "PA", long_name: "Pennsylvania"},
-    %{short_name: "PR", long_name: "Puerto Rico"},
     %{short_name: "RI", long_name: "Rhode Island"},
     %{short_name: "SC", long_name: "South Carolina"},
     %{short_name: "SD", long_name: "South Dakota"},
@@ -53,13 +50,17 @@ defmodule Squeeze.Regions do
     %{short_name: "TX", long_name: "Texas"},
     %{short_name: "UT", long_name: "Utah"},
     %{short_name: "VA", long_name: "Virginia"},
-    %{short_name: "VI", long_name: "Virgin Islands"},
     %{short_name: "VT", long_name: "Vermont"},
     %{short_name: "WA", long_name: "Washington"},
+    %{short_name: "DC", long_name: "Washington DC"},
     %{short_name: "WI", long_name: "Wisconsin"},
     %{short_name: "WV", long_name: "West Virginia"},
     %{short_name: "WY", long_name: "Wyoming"}
   ]
+
+  def states do
+    @regions
+  end
 
   def from_short_name(short_name) do
     Enum.find(@regions, &(&1.short_name == short_name))

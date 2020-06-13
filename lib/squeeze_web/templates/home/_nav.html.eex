@@ -24,6 +24,10 @@
       <!-- Navigation -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
+          <%= link("Find a Race", to: Routes.search_path(@conn, :index), class: "nav-link text-sm") %>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link text-sm" href="#open-source">
             Open Source
           </a>

@@ -27,7 +27,7 @@
 
       <!-- Navigation -->
       <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
-        <%= if authenticated?(@current_user) do %>
+        <%= if @current_user do %>
           <li class="nav-item">
             <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link text-sm") do %>
               <%= gettext("Dashboard") %>
@@ -51,7 +51,7 @@
       </ul>
     </div>
 
-    <%= if authenticated?(@current_user) do %>
+    <%= if @current_user do %>
       <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="media align-items-center">
           <%= render "_avatar.html", assigns %>
