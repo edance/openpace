@@ -19,7 +19,7 @@ $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default;
 $gray-600: #8898aa !default;   // Line footer color
 $gray-700: #525f7f !default;   // Line p color
-$gray-800: #32325d !default;   // Line heading color
+$gray-800: #4a4a4a !default;   // Line heading color
 $gray-900: #212529 !default;
 $black:    #000 !default;
 
@@ -371,10 +371,10 @@ $display2-size:               2.75rem !default;
 $display3-size:               2.1875rem !default;
 $display4-size:               1.6275rem !default;
 
-$display1-weight:             $font-weight-bold !default;
-$display2-weight:             $font-weight-bold !default;
-$display3-weight:             $font-weight-bold !default;
-$display4-weight:             $font-weight-bold !default;
+$display1-weight:             $font-weight-normal !default;
+$display2-weight:             $font-weight-normal !default;
+$display3-weight:             $font-weight-normal !default;
+$display4-weight:             $font-weight-normal !default;
 $display-line-height:         $headings-line-height !default;
 
 $paragraph-font-size:         1rem !default;

@@ -1,0 +1,45 @@
+<%= render "_nav.html", assigns %>
+
+<div id="top" class="position-relative">
+  <section class="section section-lg position-relative overflow-hidden">
+    <div class="container text-container py-4 py-md-6">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="display-1 mb-4">
+            <%= gettext("Train. Race. Improve.") %>
+          </h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-md-4 text-center">
+          <%= img_tag(Routes.static_path(@conn, "/images/home/goal-shape.png"), class: "mb-2", width: 80) %>
+
+          <p>
+            Set your goal based on your experience and your current personal&nbsp;record.
+          </p>
+        </div>
+        <div class="col col-md-4 text-center">
+          <%= img_tag(Routes.static_path(@conn, "/images/home/track-shape.png"), class: "mb-2", width: 80) %>
+
+          <p>
+            Track your fitness level and build confidence toward your next race&nbsp;goal.
+          </p>
+        </div>
+        <div class="col col-md-4 text-center">
+          <%= img_tag(Routes.static_path(@conn, "/images/home/heart-shape.png"), class: "mb-2", width: 80) %>
+
+          <p>
+            Know when you are pushing too hard with injury tracking and an injury&nbsp;score.
+          </p>
+        </div>
+      </div>
+
+      <div class="row justify-content-md-center">
+        <div class="col-12 col-md-6 mt-4">
+          <%= render "form.html", Map.put(assigns, :action, Routes.home_path(@conn, :subscribe)) %>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

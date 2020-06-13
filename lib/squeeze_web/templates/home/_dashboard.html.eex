@@ -1,0 +1,67 @@
+<section class="py-6 py-md-8">
+  <div class="container">
+    <div class="row row-grid align-items-center">
+      <div class="col-lg-6 order-lg-2">
+        <img alt="<%= gettext("Dashboard Preview") %>" src="<%= Routes.static_path(@conn, "/images/home/dashboard.jpg") %>" class="img-fluid floating shadow">
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <div class="pr-md-5">
+          <div class="icon icon-lg icon-shape icon-shape-success shadow rounded-circle mb-5">
+            <span class="iconify" data-icon="mdi:monitor-dashboard" data-inline="false"></span>
+          </div>
+          <h2 class="display-3">
+            <%= gettext("Command Center for Your Race") %>
+          </h2>
+          <p>
+            <%= gettext("Build a training plan that is customized to you whether based on distance, duration, or effort. Measure your performance and see your progress all in one place.") %>
+          </p>
+          <ul class="list-unstyled mt-5">
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="badge badge-circle badge-info mr-3">
+                    <span class="iconify" data-icon="mdi:map-clock-outline" data-inline="false"></span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="mb-0 font-weight-normal">
+                    <%= gettext("See Upcoming Workouts") %>
+                  </h4>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="badge badge-circle badge-warning mr-3">
+                    <span class="iconify" data-icon="mdi:map-marker-distance" data-inline="false"></span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="mb-0 font-weight-normal">
+                    <%= gettext("Track Weekly Milage") %>
+                  </h4>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div>
+                  <div class="badge badge-circle badge-danger mr-3">
+                    <span class="iconify" data-icon="subway:hurt-3" data-inline="false"></span>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="mb-0 font-weight-normal">
+                    <%= gettext("Warning for Overtraining or Injury") %>
+                  </h4>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
