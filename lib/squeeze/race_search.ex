@@ -6,7 +6,7 @@ defmodule Squeeze.RaceSearch do
   @index_name "Race"
   @facets ~w(full_state weekday month course_profile course_terrain course_type boston_qualifier)
 
-  def search() do
+  def search do
     Algolia.search(@index_name, "", [facets: @facets])
   end
 

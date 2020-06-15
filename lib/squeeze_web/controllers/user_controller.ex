@@ -7,12 +7,11 @@ defmodule SqueezeWeb.UserController do
   alias Squeeze.{Email, Mailer}
 
   def new(conn, %{}) do
-    user = conn.assigns.current_user
-    if User.onboarded?(user) do
-      redirect(conn, to: Routes.dashboard_path(conn, :index))
-    else
-      changeset = Accounts.change_user(user)
-      render(conn, "new.html", changeset: changeset)
+    case conn.assigns[:current_user] do
+      nil ->
+        changeset = Accounts.change_user(%User{})
+        render(conn, "new.html", changeset: changeset)
+      _ -> redirect(conn, to: Routes.dashboard_path(conn, :index))
     end
   end
 

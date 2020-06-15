@@ -3,8 +3,6 @@ defmodule SqueezeWeb.OnboardController do
 
   alias Squeeze.Accounts
 
-  plug :redirect_registered_user when action in [:index]
-
   def index(conn, _params) do
     user = conn.assigns.current_user
     changeset = Accounts.change_user_prefs(user.user_prefs)
@@ -20,16 +18,6 @@ defmodule SqueezeWeb.OnboardController do
         |> redirect(to: Routes.overview_path(conn, :index, welcome: true))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "index.html", changeset: changeset)
-    end
-  end
-
-  defp redirect_registered_user(conn, _) do
-    case conn.assigns.current_user do
-      nil -> conn
-      _ ->
-        conn
-        |> redirect(to: Routes.dashboard_path(conn, :index))
-        |> halt()
     end
   end
 end
