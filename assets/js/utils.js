@@ -29,3 +29,20 @@ export function loadScript(url) {
   document.body && document.body.appendChild(script);
   return promise;
 }
+
+export function getFullMonths() {
+  return [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+}

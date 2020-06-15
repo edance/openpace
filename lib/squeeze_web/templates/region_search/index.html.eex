@@ -48,7 +48,7 @@
 
 <div class="container text-container">
   <div class="row">
-    <div class="col-8">
+    <div class="col-12">
       <ol class="breadcrumb bg-transparent px-0">
         <li class="breadcrumb-item">
           <%= link("Home", to: Routes.home_path(@conn, :index)) %>
@@ -62,10 +62,8 @@
       </ol>
 
       <h2 class="mb-4">Top Races (<%= @results["nbHits"] %>)</h2>
-
-      <%= render SqueezeWeb.SharedView, "race-cards.html", assigns %>
-    </div>
-    <div class="col-4">
     </div>
   </div>
+
+  <%= render SqueezeWeb.SharedView, "race-cards.html", assigns %>
 </div>
