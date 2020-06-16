@@ -3,23 +3,6 @@ import instantsearch from 'instantsearch.js';
 import { configure, currentRefinements, infiniteHits, toggleRefinement, refinementList } from 'instantsearch.js/es/widgets';
 import { getFullMonths } from '../utils';
 
-const template = `
-    <div class="card mb-3">
-      <div class="row no-gutters">
-        <div class="col">
-          <div class="card-body">
-            <h4 class="card-title">
-              {{name}}
-            </h4>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-
 function removeUnderscores(items) {
   return items.map(item => ({
     ...item,
@@ -27,29 +10,75 @@ function removeUnderscores(items) {
   }));
 }
 
+function renderBadges(item) {
+  const badges = [];
+
+  if (item["boston_qualifier"]) {
+    badges.push(`<span class="badge badge-success">Boston Qualifier</span>`);
+  }
+
+  if (item["course_profile"] == "downhill") {
+    badges.push(`<span class="badge badge-success">Downhill Course</span>`);
+  }
+
+  if (item["course_profile"] == "flat") {
+    badges.push(`<span class="badge badge-info">Flat Course</span>`);
+  }
+
+  if (item["course_profile"] == "rolling_hills") {
+    badges.push(`<span class="badge badge-warning">Rolling Hills</span>`);
+  }
+
+  if (item["course_profile"] == "hilly") {
+    badges.push(`<span class="badge badge-danger">Hilly Course</span>`);
+  }
+
+  if (item["course_terrain"] == "road") {
+    badges.push(`<span class="badge badge-dark">Road</span>`);
+  }
+
+  if (item["course_terrain"] == "trail") {
+    badges.push(`<span class="badge badge-dark">Trail</span>`);
+  }
+
+  if (item["course_type"] == "loop") {
+    badges.push(`<span class="badge badge-primary">Loop Course</span>`);
+  }
+
+  if (item["course_type"] == "out_and_back") {
+    badges.push(`<span class="badge badge-info">Out & Back Course</span>`);
+  }
+
+  if (item["course_type"] == "point_to_point") {
+    badges.push(`<span class="badge badge-success">Point-to-Point Course</span>`);
+  }
+
+  return badges.join(' ');
+}
+
 function renderRaceCard(item) {
-  const { name, state, start_date, city } = item;
+  const { name, state, formatted_start_date, city, url } = item;
 
   return `
-      <div class="card mb-3">
-        <div class="row no-gutters">
-          <div class="col">
-            <div class="card-body">
-              <a href="#">
-                <h3 class="card-title">
-                  ${name}
-                </h3>
-              </a>
+    <div class="card mb-3">
+      <div class="card-body">
+        <a href="${url}">
+          <h3 class="card-title">
+            ${name}
+          </h3>
+        </a>
 
-              <p class="card-text">
-                <span class="text-muted">
-                  ${start_date} | ${city}, ${state}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
+        <p class="card-text">
+          <span class="text-muted">
+            ${formatted_start_date} | ${city}, ${state}
+          </span>
+        </p>
+
+        <p class="card-text">
+          ${renderBadges(item)}
+        </p>
       </div>
+    </div>
   `;
 }
 
@@ -150,6 +179,9 @@ document.addEventListener('turbolinks:load', function() {
       container: '#hits',
       templates: {
         item: renderRaceCard,
+      },
+      cssClasses: {
+        loadMore: 'btn btn-outline-primary w-100',
       },
     })
   ]);

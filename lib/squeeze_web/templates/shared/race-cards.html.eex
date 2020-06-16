@@ -12,9 +12,6 @@
     <h3 class="mt-4">Course Type</h3>
     <div id="course-type-refinement"></div>
 
-    <h3 class="mt-4">Region</h3>
-    <div id="state-refinement"></div>
-
     <h3 class="mt-4">Month</h3>
     <div id="month-refinement"></div>
 
@@ -23,25 +20,63 @@
   </div>
 
   <div class="col-8">
-    <div id="hits">
+    <div id="hits" class="mb-6">
       <%= for race <- @results["hits"] do %>
         <div class="card mb-3">
-          <div class="row no-gutters">
-            <div class="col">
-              <div class="card-body">
-                <a href="#">
-                  <h3 class="card-title">
-                    <%= race["name"] %>
-                  </h3>
-                </a>
+          <div class="card-body">
+            <a href="<%= race["url"] %>">
+              <h3 class="card-title">
+                <%= race["name"] %>
+              </h3>
+            </a>
 
-                <p class="card-text">
-                  <span class="text-muted">
-                    <%= race["start_date"] %> | <%= race["city"] %>, <%= race["state"] %>
-                  </span>
-                </p>
-              </div>
-            </div>
+            <p class="card-text">
+              <span class="text-muted">
+                <%= race["formatted_start_date"] %> | <%= race["city"] %>, <%= race["state"] %>
+              </span>
+            </p>
+
+            <p class="card-text">
+              <%= if race["boston_qualifier"] do %>
+                <span class="badge badge-success">Boston Qualifier</span>
+              <% end %>
+
+              <%= if race["course_profile"] == "downhill" do %>
+                <span class="badge badge-success">Downhill Course</span>
+              <% end %>
+
+              <%= if race["course_profile"] == "flat" do %>
+                <span class="badge badge-info">Flat Course</span>
+              <% end %>
+
+              <%= if race["course_profile"] == "rolling_hills" do %>
+                <span class="badge badge-warning">Rolling Hills</span>
+              <% end %>
+
+              <%= if race["course_profile"] == "hilly" do %>
+                <span class="badge badge-danger">Hilly Course</span>
+              <% end %>
+
+              <%= if race["course_terrain"] == "road" do %>
+                <span class="badge badge-dark">Road</span>
+              <% end %>
+
+              <%= if race["course_terrain"] == "trail" do %>
+                <span class="badge badge-dark">Trail</span>
+              <% end %>
+
+              <%= if race["course_type"] == "loop" do %>
+                <span class="badge badge-primary">Loop Course</span>
+              <% end %>
+
+              <%= if race["course_type"] == "out_and_back" do %>
+                <span class="badge badge-info">Out & Back Course</span>
+              <% end %>
+
+              <%= if race["course_type"] == "point_to_point" do %>
+                <span class="badge badge-success">Point-to-Point Course</span>
+              <% end %>
+            </p>
           </div>
         </div>
       <% end %>
