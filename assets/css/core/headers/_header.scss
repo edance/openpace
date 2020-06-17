@@ -3,4 +3,9 @@
 //
 .header {
   position: relative;
+
+  .waves {
+    position: absolute;
+    top: -70px;
+  }
 }

@@ -41,3 +41,9 @@
 .fill-opacity-8 {
   fill-opacity: .8;
 }
+
+@each $color, $value in $colors {
+  .bg-#{$color} {
+    background-color: $value;
+  }
+}
