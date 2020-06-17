@@ -74,10 +74,10 @@ defmodule Squeeze.Accounts do
     |> Repo.insert()
   end
 
-  def register_user(%User{} = user, attrs) do
-    user
+  def register_user(attrs) do
+    %User{}
     |> User.registration_changeset(attrs)
-    |> Repo.update()
+    |> Repo.insert()
   end
 
   def update_user_password(%User{} = user, attrs) do
