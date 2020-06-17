@@ -17,6 +17,6 @@ defmodule SqueezeWeb.DistanceSearchView do
   end
 
   def h1(assigns) do
-    "Best races in #{region_name(assigns)}"
+    "#{distance_name(assigns)} races in #{region_name(assigns)}"
   end
 end
