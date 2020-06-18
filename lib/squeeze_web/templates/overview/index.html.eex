@@ -2,7 +2,7 @@
 <div class="header pt-5 pt-xl-6 overflow-hidden">
   <img class="waves" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
 
-  <div class="container-fluid">
+  <div class="container container-dashboard">
     <div class="header-body">
       <!-- Card stats -->
       <div class="row">
@@ -24,93 +24,95 @@
 </div>
 
 <!-- Page content -->
-<div class="position-relative container-fluid py-5 bg-waves">
-  <div class="row">
-    <div class="col-xl-8 mb-5 mb-xl-0">
-      <div class="card bg-gradient-default shadow">
-        <div class="card-header bg-transparent">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-uppercase text-light ls-1 mb-1">
-                <%= gettext("Overview") %>
-              </h6>
-              <h2 class="text-white mb-0">
-                <%= gettext("Weekly Distance") %>
-              </h2>
+<div class="position-relative py-5 bg-waves">
+  <div class="container container-dashboard">
+    <div class="row">
+      <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="card bg-gradient-default shadow">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-uppercase text-light ls-1 mb-1">
+                  <%= gettext("Overview") %>
+                </h6>
+                <h2 class="text-white mb-0">
+                  <%= gettext("Weekly Distance") %>
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <!-- Chart -->
-          <div id="overview-chart" class="chart"
-               data-distance="<%= Jason.encode!(@year_dataset) %>"
-               data-imperial="<%= @current_user.user_prefs.imperial %>"
-          >
+          <div class="card-body">
+            <!-- Chart -->
+            <div id="overview-chart" class="chart"
+                 data-distance="<%= Jason.encode!(@year_dataset) %>"
+                 data-imperial="<%= @current_user.user_prefs.imperial %>"
+            >
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-xl-4">
-      <div class="card shadow">
-        <div class="card-header bg-transparent">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-uppercase text-muted ls-1 mb-1">
-                <%= gettext("Performance") %>
-              </h6>
-              <h2 class="mb-0">
-                <%= gettext("Recent Runs") %>
-              </h2>
+      <div class="col-xl-4">
+        <div class="card shadow">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="text-uppercase text-muted ls-1 mb-1">
+                  <%= gettext("Performance") %>
+                </h6>
+                <h2 class="mb-0">
+                  <%= gettext("Recent Runs") %>
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="card-body">
-          <%= render "_mini-calendar.html", assigns %>
+          <div class="card-body">
+            <%= render "_mini-calendar.html", assigns %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row mt-5">
-    <div class="col-xl-8 mb-5 mb-xl-0">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
-            <div class="col">
-              <h3 class="mb-0">
-                <%= gettext("Recent Activities") %>
-              </h3>
-            </div>
-            <div class="col text-right">
-              <%= link(gettext("See all"), to: Routes.activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
+    <div class="row mt-5">
+      <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">
+                  <%= gettext("Recent Activities") %>
+                </h3>
+              </div>
+              <div class="col text-right">
+                <%= link(gettext("See all"), to: Routes.activity_path(@conn, :index), class: "btn btn-sm btn-primary") %>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">
-                  <%= gettext("Name") %>
-                </th>
-                <th scope="col">
-                  <%= gettext("Distance") %>
-                </th>
-                <th scope="col">
-                  <%= gettext("Start at") %>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= for activity <- @activities do %>
-                <tr scope="row">
-                  <td><%= link activity.name, to: Routes.activity_path(@conn, :show, activity) %></td>
-                  <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
-                  <td><%= relative_time(activity.start_at) %></td>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">
+                    <%= gettext("Name") %>
+                  </th>
+                  <th scope="col">
+                    <%= gettext("Distance") %>
+                  </th>
+                  <th scope="col">
+                    <%= gettext("Start at") %>
+                  </th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <%= for activity <- @activities do %>
+                  <tr scope="row">
+                    <td><%= link activity.name, to: Routes.activity_path(@conn, :show, activity) %></td>
+                    <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
+                    <td><%= relative_time(activity.start_at) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
