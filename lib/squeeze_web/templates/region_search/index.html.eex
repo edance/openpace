@@ -27,13 +27,6 @@
           <h1 class="text-white display-1 mb-4">
             <%= h1(assigns) %>
           </h1>
-
-          <div class="input-group input-group-lg">
-            <input placeholder="Find a race in <%= region_name(assigns) %>" type="text" class="form-control" />
-            <div class="input-group-append">
-              <button class="btn btn-secondary" type="button">Search</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

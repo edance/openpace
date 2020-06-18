@@ -14,7 +14,6 @@ defmodule Squeeze.Regions do
     %{short_name: "DE", long_name: "Delaware"},
     %{short_name: "FL", long_name: "Florida"},
     %{short_name: "GA", long_name: "Georgia"},
-    %{short_name: "GU", long_name: "Guam"},
     %{short_name: "HI", long_name: "Hawaii"},
     %{short_name: "IA", long_name: "Iowa"},
     %{short_name: "ID", long_name: "Idaho"},
