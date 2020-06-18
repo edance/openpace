@@ -57,12 +57,12 @@ function renderBadges(item) {
 }
 
 function renderRaceCard(item) {
-  const { name, state, formatted_start_date, city, url } = item;
+  const { name, city, state, formatted_start_date, full_slug } = item;
 
   return `
     <div class="card mb-3">
       <div class="card-body">
-        <a href="${url}">
+        <a href="${full_slug}">
           <h3 class="card-title">
             ${name}
           </h3>

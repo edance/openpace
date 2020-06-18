@@ -24,7 +24,7 @@
       <%= for race <- @results["hits"] do %>
         <div class="card mb-3">
           <div class="card-body">
-            <a href="<%= race["url"] %>">
+            <a href="<%= race["full_slug"] %>">
               <h3 class="card-title">
                 <%= race["name"] %>
               </h3>
