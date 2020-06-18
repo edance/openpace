@@ -1,1 +1,47 @@
-<%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :register)) %>
+<section class="section section-shaped section-lg">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container text-container">
+      <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
+        <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo-white@2x.png") %>" />
+      <% end %>
+    </div>
+  </nav>
+
+  <div class="shape shape-style-1 bg-gradient-default">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="container pt-lg-7">
+    <div class="row justify-content-center">
+      <div class="col-lg-4">
+        <div class="card bg-secondary shadow border-0 mb-8">
+          <div class="card-header bg-white pb-5">
+            <div class="text-muted text-center mt-2 mb-3">
+              <small><%= gettext("Sign in with") %></small>
+            </div>
+            <div class="text-center">
+              <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon" do %>
+                <span class="btn-inner--icon">
+                  <img src="<%= Routes.static_path(@conn, "/images/google.svg") %>" />
+                </span>
+                <span class="btn-inner--text">Google</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="text-center text-muted mb-4">
+              <small><%= gettext("Or sign up with credentials") %></small>
+            </div>
+            <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :register)) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

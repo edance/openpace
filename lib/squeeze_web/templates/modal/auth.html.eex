@@ -20,7 +20,7 @@
             <div class="text-center text-muted mb-4">
               <small><%= gettext("Or sign in with credentials") %></small>
             </div>
-            <%= render SqueezeWeb.UserView, "new.html",
+            <%= render SqueezeWeb.UserView, "form.html",
               Map.merge(assigns, %{action: Routes.user_path(@conn, :register), changeset: @conn}) %>
 
           </div>
