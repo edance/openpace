@@ -1,6 +1,7 @@
 import algoliasearch from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
-import { configure, currentRefinements, infiniteHits, toggleRefinement, refinementList } from 'instantsearch.js/es/widgets';
+import { configure, currentRefinements, hits, pagination, toggleRefinement, refinementList } from 'instantsearch.js/es/widgets';
+import { history as historyRouter } from 'instantsearch.js/es/lib/routers';
 import { getFullMonths } from '../utils';
 
 function removeUnderscores(items) {
@@ -97,6 +98,21 @@ document.addEventListener('turbolinks:load', function() {
   const search = instantsearch({
     indexName: 'Race',
     searchClient,
+    routing: {
+      router: historyRouter({
+        createURL({ qsModule, location, routeState }) {
+          const { origin, pathname, hash } = location;
+          const indexState = routeState['Race'] || {};
+          const page = indexState.page;
+
+          if (!page || page === 1) {
+            return `${origin}${pathname}${hash}`;
+          }
+
+          return `${origin}${pathname}?page=${page}${hash}`;
+        },
+      }),
+    },
   });
 
   const refinementCss =  {
@@ -109,8 +125,8 @@ document.addEventListener('turbolinks:load', function() {
   const refinements = {};
 
   // Clear out the existing hits
-  const hits = document.querySelector('#hits');
-  hits.innerHTML = '';
+  const $hits = document.querySelector('#hits');
+  $hits.innerHTML = '';
 
   if (region && region.trim()) {
     refinements.full_state = [region];
@@ -174,9 +190,17 @@ document.addEventListener('turbolinks:load', function() {
       sortBy: ['name:asc'],
       transformItems: removeUnderscores,
     }),
-
-    infiniteHits({
+    pagination({
+      container: '#pagination',
+      cssClasses: {
+        list: 'pagination',
+        item: 'page-item',
+        link: 'page-link',
+      },
+    }),
+    hits({
       container: '#hits',
+
       templates: {
         item: renderRaceCard,
       },
