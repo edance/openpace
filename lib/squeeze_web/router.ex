@@ -116,6 +116,12 @@ defmodule SqueezeWeb.Router do
     get "/:region/:distance/:slug", RaceController, :show
   end
 
+  scope "/sitemap", SqueezeWeb do
+    pipe_through :xml
+
+    get "/index.xml", SitemapController, :index
+  end
+
   if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
