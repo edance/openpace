@@ -19,7 +19,7 @@
     "popper.js": "^1.16.0",
     "sortablejs": "^1.10.2",
     "turbolinks": "^5.0.0",
-    "umbrellajs": "^3.1.0",
+    "umbrellajs": "^3.2.2",
     "webfontloader": "^1.6.28",
     "whatwg-fetch": "^3.0.0"
   },
