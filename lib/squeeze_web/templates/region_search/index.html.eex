@@ -53,8 +53,6 @@
           <%= region_name(assigns) %>
         </li>
       </ol>
-
-      <h2 class="mb-4">Top Races (<%= @results["nbHits"] %>)</h2>
     </div>
   </div>
 
