@@ -12,15 +12,6 @@ const securityHeaders = {
 	"Referrer-Policy" : "strict-origin-when-cross-origin",
 };
 
-const SITEMAP_CONTENT = `
-# Reference: https://developers.google.com/search/reference/robots_txt
-User-agent: *
-Allow: /
-Disallow: /dashboard
-
-Sitemap: https://www.openpace.co/sitemap.xml
-`;
-
 addEventListener('fetch', event => {
   event.respondWith(handleResponse(event.request));
 });
@@ -51,14 +42,6 @@ async function fetchResponse(request) {
   if (/^\/namer\/.+$/.test(pathname)) {
     url.pathname = url.pathname.replace('/namer', '');
     url.hostname = 'activity-namer.herokuapp.com';
-  }
-
-  // Synthetic response for robots.txt
-  if (url.pathname === '/robots.txt') {
-    return new Response(SITEMAP_CONTENT, {
-      headers: { "Content-Type": "text/plain" },
-      status: 200,
-    });
   }
 
   return fetch(new Request(url, request));
