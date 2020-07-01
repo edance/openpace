@@ -27,16 +27,16 @@
         <div class="mb-8"></div>
       </div>
       <div class="col-md-4">
-        <form class="border rounded p-4">
+        <%= form_for @changeset, Routes.home_path(@conn, :subscribe), [class: "ui form border rounded p-4"], fn f -> %>
           <h2>Get alerts for this race</h2>
 
           <div class="form-group">
-            <input type="email" class="form-control" placeholder="Email Address" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <%= input f, :email, placeholder: gettext("Email Address"), class: "form-control" %>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100">Submit</button>
-        </form>
+          <%= submit gettext("Submit"), class: "btn btn-primary w-100" %>
+        <% end %>
       </div>
     </div>
 
