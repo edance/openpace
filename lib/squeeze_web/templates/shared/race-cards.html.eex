@@ -1,4 +1,4 @@
-<div class="row race-cards" data-region="<%= assigns[:region] %>" data-distance="">
+<div class="row race-cards" data-region="<%= assigns[:region_name] %>">
   <div class="col-12 col-md-4">
     <div class="d-flex">
       <h2 class="mb-4">Top Races (<%= @results["nbHits"] %>)</h2>

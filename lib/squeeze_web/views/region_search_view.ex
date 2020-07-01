@@ -6,7 +6,7 @@ defmodule SqueezeWeb.RegionSearchView do
   end
 
   def region_name(%{region: region}) do
-    String.capitalize(region)
+    region.long_name
   end
 
   def h1(assigns) do
