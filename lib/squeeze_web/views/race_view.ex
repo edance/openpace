@@ -9,12 +9,6 @@ defmodule SqueezeWeb.RaceView do
     "#{race.city}, #{race.state} #{race.country}"
   end
 
-  def distance_type(%{race: race}) do
-    race.distance_type
-    |> Atom.to_string()
-    |> String.capitalize()
-  end
-
   def region(%{race: race}) do
     region = Regions.from_short_name(race.state)
     region.long_name

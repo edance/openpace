@@ -26,8 +26,6 @@ defmodule Squeeze.Races.Race do
 
     field :start_date, :date
 
-    field :distance_type, DistanceTypeEnum
-
     field :active, :boolean
     field :boston_qualifier, :boolean
     field :certified, :boolean

@@ -112,8 +112,7 @@ defmodule SqueezeWeb.Router do
 
     get "/", SearchController, :index
     get "/:region", RegionSearchController, :index
-    get "/:region/:distance", DistanceSearchController, :index
-    get "/:region/:distance/:slug", RaceController, :show
+    get "/:region/:slug", RaceController, :show
   end
 
   scope "/sitemap", SqueezeWeb do
