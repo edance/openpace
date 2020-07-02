@@ -34,7 +34,7 @@ async function fetchResponse(request) {
   url.hostname = 'squeeze-run.herokuapp.com';
 
   // Allow webflow to handle homepage, namer, blog, and about
-  if (pathname === '/' || /^\/namer$/.test(pathname) || /^\/blog\/?.*$/.test(pathname) || /^\/about\/?.*$/.test(pathname)) {
+  if (/^\/namer$/.test(pathname) || /^\/blog\/?.*$/.test(pathname) || /^\/about\/?.*$/.test(pathname)) {
     url.hostname = 'openpace.webflow.io';
   }
 
