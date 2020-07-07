@@ -1,4 +1,4 @@
-<div class="section section-hero section-shaped overflow-hidden">
+<div class="section section-hero section-shaped">
   <nav class="navbar navbar-expand-lg">
     <div class="container text-container">
       <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
@@ -7,7 +7,7 @@
     </div>
   </nav>
 
-  <div class="shape shape-style-3 shape-default">
+  <div class="shape shape-style-3 shape-default w-100 overflow-hidden">
     <span class="span-150"></span>
     <span class="span-50"></span>
     <span class="span-50"></span>
@@ -31,10 +31,7 @@
             <p class="display-4 font-weight-normal text-white">The time is right now!</p>
 
             <div class="input-group input-group-lg">
-              <input placeholder="Enter a city or race" type="text" class="form-control" />
-              <div class="input-group-append">
-                <button class="btn btn-secondary" type="button">Search</button>
-              </div>
+              <input id="race-autocomplete" placeholder="Enter a city or race" type="text" class="form-control" autofocus />
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import './instant-search';
 import './modal';
 import './onboard-down-btn';
 import './payment-form';
+import './race-autocomplete';
 import './sign-up-form';
 import './timezone-hidden-input';
 import './time-input';
