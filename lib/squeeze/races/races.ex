@@ -25,6 +25,6 @@ defmodule Squeeze.Races do
   def get_race!(slug) do
     Race
     |> Repo.get_by!(slug: slug)
-    |> Repo.preload([:events])
+    |> Repo.preload([:events, :result_summaries])
   end
 end
