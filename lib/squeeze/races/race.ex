@@ -5,7 +5,7 @@ defmodule Squeeze.Races.Race do
 
   use Ecto.Schema
 
-  alias Squeeze.Races.{Event}
+  alias Squeeze.Races.{Event, ResultSummary}
 
   # @required_fields ~w(name slug city state country)a
   # @optional_fields ~w(content url)a
@@ -40,6 +40,7 @@ defmodule Squeeze.Races.Race do
     field :external_id, :string
 
     has_many :events, Event
+    has_many :result_summaries, ResultSummary
 
     timestamps()
   end
