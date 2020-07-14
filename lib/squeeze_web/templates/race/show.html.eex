@@ -1,7 +1,8 @@
 <%= render "_schema.html", assigns %>
 
 <main role="main">
-  <%= render SqueezeWeb.MenuView, "navbar.html", assigns %>
+  <!-- Navbar -->
+  <%= render SqueezeWeb.MenuView, "nav.html", assigns %>
 
   <%= render "_hero.html", assigns %>
 
@@ -17,9 +18,7 @@
 
         <%= render "_badges.html", assigns %>
 
-        <%= render "_events.html", assigns %>
-
-        <hr />
+        <%= render "_results.html", assigns %>
 
         <h2 id="faq" class="mb-4">Frequently Asked Questions</h2>
         <%= render "_faq.html", assigns %>
