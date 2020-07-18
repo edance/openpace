@@ -14,6 +14,12 @@ defmodule SqueezeWeb.RaceView do
     region.long_name
   end
 
+  def dates(%{race: race}) do
+    race.result_summaries
+    |> Enum.map(&(&1.start_date))
+    |> Enum.uniq()
+  end
+
   def date(assigns) do
     start_at = start_at(assigns)
     start_at
