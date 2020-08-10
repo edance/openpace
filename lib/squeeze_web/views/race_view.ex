@@ -22,7 +22,7 @@ defmodule SqueezeWeb.RaceView do
   end
 
   def grouped_results(%{race: race}) do
-    @race.result_summaries
+    race.result_summaries
     |> Enum.group_by(&(&1.distance_name))
   end
 
