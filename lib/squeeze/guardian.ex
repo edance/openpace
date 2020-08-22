@@ -6,6 +6,7 @@ defmodule Squeeze.Guardian do
   use Guardian, otp_app: :squeeze
 
   alias Squeeze.Accounts
+  alias Squeeze.Accounts.User
 
   def subject_for_token(resource, _claims) do
     # You can use any value for the subject of your token but
@@ -24,5 +25,27 @@ defmodule Squeeze.Guardian do
     id = claims["sub"]
     resource = Accounts.get_user!(id)
     {:ok,  resource}
+  end
+
+  def authenticate(email, password) do
+    with {:ok, user} <- Accounts.get_by_email(email),
+         {:ok, user} <- check_password(user, password) do
+      create_token(user)
+    end
+  end
+
+  defp check_password(%User{encrypted_password: nil}, _) do
+    {:error, :unauthorized}
+  end
+  defp check_password(%User{} = user, password) do
+    case Argon2.check_pass(user, password) do
+      {:ok, user} -> {:ok, user}
+      _ -> {:error, :unauthorized}
+    end
+  end
+
+  defp create_token(user) do
+    {:ok, token, _claims} = encode_and_sign(user)
+    {:ok, user, token}
   end
 end

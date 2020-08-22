@@ -15,6 +15,12 @@ defmodule SqueezeWeb.Router do
     plug Turbolinks
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+    plug :put_layout, {SqueezeWeb.LayoutView, :none}
+    plug :put_resp_content_type, "application/json"
+  end
+
   pipeline :dashboard_layout do
     plug Plug.RequireRegistered
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
@@ -120,6 +126,12 @@ defmodule SqueezeWeb.Router do
     pipe_through :xml
 
     get "/index.xml", SitemapController, :index
+  end
+
+  scope "/api", SqueezeWeb do
+    pipe_through :api
+    post "/users/signup", Api.UserController, :create
+    post "/users/signin", Api.UserController, :signin
   end
 
   if Mix.env() == :dev do

@@ -36,6 +36,27 @@ defmodule Squeeze.Accounts do
   end
 
   @doc """
+  Get user by email address.
+
+  ## Examples
+
+  iex> get_by_email(email)
+  {:ok, %User{}}
+
+  iex> get_by_email(bad_email)
+  {:error, :not_found}
+
+  """
+  def get_by_email(email) do
+    case Repo.get_by(User, email: email) do
+      nil ->
+        {:error, :not_found}
+      user ->
+        {:ok, user}
+    end
+  end
+
+  @doc """
   Gets a single user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.
