@@ -43,6 +43,8 @@ defmodule SqueezeWeb.Endpoint do
     key: "_squeeze_key",
     signing_salt: "LZ5JFA0S"
 
+  plug CORSPlug, origin: ["http://localhost:19006"]
+
   plug SqueezeWeb.Router
 
   @doc """
