@@ -21,6 +21,10 @@ defmodule SqueezeWeb.Router do
     plug :put_resp_content_type, "application/json"
   end
 
+  pipeline :api_auth do
+    plug MyAppWeb.Guardian.AuthPipeline
+  end
+
   pipeline :dashboard_layout do
     plug Plug.RequireRegistered
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
@@ -128,10 +132,18 @@ defmodule SqueezeWeb.Router do
     get "/index.xml", SitemapController, :index
   end
 
-  scope "/api", SqueezeWeb do
+  scope "/api", SqueezeWeb.Api do
     pipe_through :api
-    post "/users/signup", Api.UserController, :create
-    post "/users/signin", Api.UserController, :signin
+
+    post "/users/signup", UserController, :create
+    post "/users/signin", UserController, :signin
+
+  end
+
+  scope "/api", SqueezeWeb.Api do
+    pipe_through [:api, :api_auth]
+
+    resources "/challenges", ChallengeController
   end
 
   if Mix.env() == :dev do
