@@ -10,47 +10,18 @@ defmodule Squeeze.Challenges do
 
   alias Squeeze.Challenges.Challenge
 
-  @doc """
-  Returns the list of challenges.
-
-  ## Examples
-
-      iex> list_challenges()
-      [%Challenge{}, ...]
-
-  """
-  def list_challenges do
-    Repo.all(Challenge)
+  def list_challenges(%User{} = user) do
+    Challenge
+    |> by_user(user)
+    |> Repo.all()
   end
 
-  @doc """
-  Gets a single challenge.
+  def get_challenge!(%User{} = user, id) do
+    Challenge
+    |> by_user(user)
+    |> Repo.get!(id)
+  end
 
-  Raises `Ecto.NoResultsError` if the Challenge does not exist.
-
-  ## Examples
-
-      iex> get_challenge!(123)
-      %Challenge{}
-
-      iex> get_challenge!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_challenge!(id), do: Repo.get!(Challenge, id)
-
-  @doc """
-  Creates a challenge.
-
-  ## Examples
-
-      iex> create_challenge(%{field: value})
-      {:ok, %Challenge{}}
-
-      iex> create_challenge(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_challenge(%User{} = user, attrs \\ %{}) do
     %Challenge{}
     |> Challenge.changeset(attrs)
@@ -58,50 +29,11 @@ defmodule Squeeze.Challenges do
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a challenge.
-
-  ## Examples
-
-      iex> update_challenge(challenge, %{field: new_value})
-      {:ok, %Challenge{}}
-
-      iex> update_challenge(challenge, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_challenge(%Challenge{} = challenge, attrs) do
-    challenge
-    |> Challenge.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a challenge.
-
-  ## Examples
-
-      iex> delete_challenge(challenge)
-      {:ok, %Challenge{}}
-
-      iex> delete_challenge(challenge)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_challenge(%Challenge{} = challenge) do
-    Repo.delete(challenge)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking challenge changes.
-
-  ## Examples
-
-      iex> change_challenge(challenge)
-      %Ecto.Changeset{source: %Challenge{}}
-
-  """
   def change_challenge(%Challenge{} = challenge) do
     Challenge.changeset(challenge, %{})
+  end
+
+  defp by_user(query, %User{} = user) do
+    from q in query, where: [user_id: ^user.id]
   end
 end
