@@ -13,3 +13,8 @@ defenum CourseTerrainEnum, unknown: 0, road: 1, trail: 2
 defenum CourseTypeEnum, unknown: 0, loop: 1, out_and_back: 2, point_to_point: 3
 
 defenum DistanceTypeEnum, other: 0, marathon: 1, half_marathon: 2, ultra_marathon: 3
+
+# Challenges Enums
+defenum ActivityTypeEnum, run: 0, bike: 1, swim: 2
+defenum ChallengeTypeEnum, distance: 0, time: 1, altitude: 2, segment: 3
+defenum TimelineEnum, day: 0, week: 1, weekend: 2, month: 3, custom: 4
