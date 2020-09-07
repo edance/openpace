@@ -23,6 +23,7 @@ defmodule SqueezeWeb.Router do
 
   pipeline :api_auth do
     plug Squeeze.Api.AuthPipeline
+    plug Plug.Auth
   end
 
   pipeline :dashboard_layout do
