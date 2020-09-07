@@ -4,14 +4,14 @@ defmodule Squeeze.Challenges.Challenge do
   alias Squeeze.Accounts.{User}
 
   @required_fields ~w(
-    :start_at
-    :activity_type
-    :challenge_type
-    :timeline
+    activity_type
+    challenge_type
+    timeline
   )a
   @optional_fields ~w(
-    :name
-    :end_at
+    name
+    start_at
+    end_at
   )a
 
   schema "challenges" do

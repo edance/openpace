@@ -4,6 +4,8 @@ defmodule Squeeze.Challenges do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
+  alias Squeeze.Accounts.User
   alias Squeeze.Repo
 
   alias Squeeze.Challenges.Challenge
@@ -49,9 +51,10 @@ defmodule Squeeze.Challenges do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_challenge(attrs \\ %{}) do
+  def create_challenge(%User{} = user, attrs \\ %{}) do
     %Challenge{}
     |> Challenge.changeset(attrs)
+    |> Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
 
