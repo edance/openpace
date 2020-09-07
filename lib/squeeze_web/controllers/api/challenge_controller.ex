@@ -5,7 +5,9 @@ defmodule SqueezeWeb.Api.ChallengeController do
     render(conn, %{})
   end
 
-  def create(conn, _) do
+  def create(conn, _params) do
+    require IEx; IEx.pry
+
     conn
     |> put_status(:not_implemented)
     |> render(conn, %{})

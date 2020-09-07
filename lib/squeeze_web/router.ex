@@ -22,7 +22,7 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :api_auth do
-    plug MyAppWeb.Guardian.AuthPipeline
+    plug Squeeze.Api.AuthPipeline
   end
 
   pipeline :dashboard_layout do
@@ -132,7 +132,7 @@ defmodule SqueezeWeb.Router do
     get "/index.xml", SitemapController, :index
   end
 
-  scope "/api", SqueezeWeb.Api do
+  scope "/api", SqueezeWeb.Api, as: :api do
     pipe_through :api
 
     post "/users/signup", UserController, :create
@@ -140,7 +140,7 @@ defmodule SqueezeWeb.Router do
 
   end
 
-  scope "/api", SqueezeWeb.Api do
+  scope "/api", SqueezeWeb.Api, as: :api do
     pipe_through [:api, :api_auth]
 
     resources "/challenges", ChallengeController
