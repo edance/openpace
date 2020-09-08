@@ -22,7 +22,7 @@
     "turbolinks": "^5.0.0",
     "umbrellajs": "^3.1.0",
     "webfontloader": "^1.6.28",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
