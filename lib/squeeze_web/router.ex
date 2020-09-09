@@ -145,6 +145,8 @@ defmodule SqueezeWeb.Router do
     pipe_through [:api, :api_auth]
 
     resources "/challenges", ChallengeController
+
+    post "/strava/exchange", StravaController, :exchange_code
   end
 
   if Mix.env() == :dev do
