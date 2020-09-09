@@ -1,4 +1,6 @@
 defmodule SqueezeWeb.Api.ChallengeView do
+  use SqueezeWeb, :view
+
   def render("index.json", %{challenges: challenges}) do
     %{challenges: render_many(challenges, SqueezeWeb.Api.ChallengeView, "challenge.json")}
   end
