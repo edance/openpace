@@ -1,4 +1,8 @@
 defmodule Squeeze.Challenges.Challenge do
+  @moduledoc """
+  This module is the schema for challenges in the database.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.{User}
@@ -23,6 +27,7 @@ defmodule Squeeze.Challenges.Challenge do
     field :timeline, TimelineEnum
 
     belongs_to :user, User
+    many_to_many :users, User, join_through: "user_challenge", on_replace: :delete
 
     timestamps()
   end
