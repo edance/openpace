@@ -25,6 +25,7 @@ defmodule Squeeze.Challenges do
   def create_challenge(%User{} = user, attrs \\ %{}) do
     %Challenge{}
     |> Challenge.changeset(attrs)
+    |> Changeset.put_assoc(:users, [user])
     |> Changeset.put_change(:user_id, user.id)
     |> Repo.insert()
   end
@@ -34,6 +35,8 @@ defmodule Squeeze.Challenges do
   end
 
   defp by_user(query, %User{} = user) do
-    from q in query, where: [user_id: ^user.id]
+    from q in query,
+      join: u in assoc(q, :users),
+      where: u.id == ^user.id
   end
 end
