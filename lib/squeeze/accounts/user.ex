@@ -7,6 +7,7 @@ defmodule Squeeze.Accounts.User do
   import Ecto.Changeset
 
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
+  alias Squeeze.Challenges.Challenge
 
   @registration_fields ~w(first_name last_name email encrypted_password)a
   @payment_processor_fields ~w(customer_id subscription_id subscription_status trial_end)a
@@ -31,6 +32,7 @@ defmodule Squeeze.Accounts.User do
     field :trial_end, :utc_datetime
 
     has_many :credentials, Credential
+    many_to_many :challenges, Challenge, join_through: "user_challenges", on_replace: :delete
 
     has_one :user_prefs, UserPrefs
 
