@@ -8,12 +8,26 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Accounts.User
   alias Squeeze.Repo
 
-  alias Squeeze.Challenges.Challenge
+  alias Squeeze.Challenges.{Challenge, Score}
 
   def list_challenges(%User{} = user) do
-    Challenge
-    |> by_user(user)
-    |> Repo.all()
+    ranking_query =
+      from c in Score,
+      select: %{id: c.id, row_number: row_number() |> over(:challenges_partition)},
+      windows: [challenges_partition: [partition_by: :challenge_id, order_by: :score]]
+
+    scores_query =
+      from c in Score,
+      join: r in subquery(ranking_query),
+      on: c.id == r.id and r.row_number <= 5,
+      preload: :user
+
+    query = from p in Challenge,
+      join: s in assoc(p, :scores),
+      where: s.user_id == ^user.id,
+      preload: [scores: ^scores_query]
+
+    Repo.all(query)
   end
 
   def get_challenge!(%User{} = user, id) do
@@ -25,8 +39,15 @@ defmodule Squeeze.Challenges do
   def create_challenge(%User{} = user, attrs \\ %{}) do
     %Challenge{}
     |> Challenge.changeset(attrs)
-    |> Changeset.put_assoc(:users, [user])
     |> Changeset.put_change(:user_id, user.id)
+    |> Repo.insert()
+  end
+
+  def add_user_to_challenge(%User{} = user, %Challenge{} = challenge) do
+    %Score{}
+    |> Score.changeset()
+    |> Changeset.put_assoc(:user, user)
+    |> Changeset.put_assoc(:challenge, challenge)
     |> Repo.insert()
   end
 

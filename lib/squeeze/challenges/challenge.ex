@@ -6,6 +6,7 @@ defmodule Squeeze.Challenges.Challenge do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.{User}
+  alias Squeeze.Challenges.{Score}
 
   @required_fields ~w(
     activity_type
@@ -27,7 +28,8 @@ defmodule Squeeze.Challenges.Challenge do
     field :timeline, TimelineEnum
 
     belongs_to :user, User
-    many_to_many :users, User, join_through: "user_challenge", on_replace: :delete
+    has_many :scores, Score
+    many_to_many :users, User, join_through: "scores", on_replace: :delete
 
     timestamps()
   end
@@ -37,5 +39,10 @@ defmodule Squeeze.Challenges.Challenge do
     challenge
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+  end
+
+  def add_user_changeset(challenge, %User{} = user) do
+    challenge
+    |> put_assoc(:users, [user])
   end
 end
