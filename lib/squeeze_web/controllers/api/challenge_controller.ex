@@ -18,8 +18,13 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   def show(conn, %{"id" => id}, user) do
     challenge = Challenges.get_challenge!(user, id)
-    require IEx; IEx.pry
     render(conn, "show.json", %{challenge: challenge})
+  end
+
+  def leaderboard(conn, %{"id" => id}, user) do
+    challenge = Challenges.get_challenge!(user, id)
+    scores = Challenges.list_scores(challenge)
+    render(conn, "leaderboard.json", %{challenge: challenge, scores: scores})
   end
 
   def create(conn, %{"challenge" => params}, user) do
