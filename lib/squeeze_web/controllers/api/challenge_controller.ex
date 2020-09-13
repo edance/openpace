@@ -18,6 +18,7 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   def show(conn, %{"id" => id}, user) do
     challenge = Challenges.get_challenge!(user, id)
+    require IEx; IEx.pry
     render(conn, "show.json", %{challenge: challenge})
   end
 

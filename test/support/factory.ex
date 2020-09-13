@@ -3,6 +3,7 @@ defmodule Squeeze.Factory do
 
   use Squeeze.ActivityFactory
   use Squeeze.BillingPlanFactory
+  use Squeeze.ChallengeFactory
   use Squeeze.CredentialFactory
   use Squeeze.DetailedActivityFactory
   use Squeeze.InvoiceFactory
@@ -10,6 +11,7 @@ defmodule Squeeze.Factory do
   use Squeeze.TrainingPlanFactory
   use Squeeze.RaceFactory
   use Squeeze.RaceEventFactory
+  use Squeeze.ScoreFactory
   use Squeeze.UserFactory
   use Squeeze.UserPrefsFactory
 

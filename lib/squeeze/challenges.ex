@@ -14,7 +14,7 @@ defmodule Squeeze.Challenges do
     ranking_query =
       from c in Score,
       select: %{id: c.id, row_number: row_number() |> over(:challenges_partition)},
-      windows: [challenges_partition: [partition_by: :challenge_id, order_by: :score]]
+      windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score]]]
 
     scores_query =
       from c in Score,
@@ -34,6 +34,15 @@ defmodule Squeeze.Challenges do
     Challenge
     |> by_user(user)
     |> Repo.get!(id)
+  end
+
+  def list_scores(%Challenge{} = challenge) do
+    query = from s in Score,
+      where: s.challenge_id == ^challenge.id,
+      order_by: [desc: s.score],
+      preload: [:user]
+
+    Repo.all(query)
   end
 
   def create_challenge(%User{} = user, attrs \\ %{}) do

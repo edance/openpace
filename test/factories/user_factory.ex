@@ -13,6 +13,7 @@ defmodule Squeeze.UserFactory do
           email: Internet.email(),
           city: Address.city(),
           state: Address.state_abbr(),
+          avatar: "https://placekitten.com/300/300",
           country: Address.country_code(),
           registered: true,
           user_prefs: build(:user_prefs)
