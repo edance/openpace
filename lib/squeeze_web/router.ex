@@ -145,6 +145,7 @@ defmodule SqueezeWeb.Router do
     pipe_through [:api, :api_auth]
 
     resources "/challenges", ChallengeController
+    get "/challenges/:id/leaderboard", ChallengeController, :leaderboard
 
     post "/strava/exchange", StravaController, :exchange_code
   end
