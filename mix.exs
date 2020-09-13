@@ -28,6 +28,7 @@ defmodule Squeeze.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support", "test/factories"]
+  defp elixirc_paths(:dev), do: ["lib", "test/support/factory.ex", "test/factories"]
   defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
@@ -68,11 +69,11 @@ defmodule Squeeze.Mixfile do
       {:html_sanitize_ex, "~> 1.4.0"},
       {:algolia, "~> 0.8.0"},
       {:cors_plug, "~> 2.0"},
+      {:ex_machina, "~> 2.1"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.1", only: :test},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.9", only: :test},
       {:mox, "~> 0.4", only: :test}
