@@ -10,6 +10,10 @@ defmodule Squeeze.Challenges do
 
   alias Squeeze.Challenges.{Challenge, Score}
 
+  def list_current_challenges(%User{} = user) do
+    list_challenges(user)
+  end
+
   def list_challenges(%User{} = user) do
     ranking_query =
       from c in Score,
@@ -45,6 +49,14 @@ defmodule Squeeze.Challenges do
     Repo.all(query)
   end
 
+  def get_score!(%User{} = user, %Challenge{} = challenge) do
+    query = from s in Score,
+      where: s.challenge_id == ^challenge.id,
+      where: s.user_id == ^user.id
+
+    Repo.one!(query)
+  end
+
   def create_challenge(%User{} = user, attrs \\ %{}) do
     %Challenge{}
     |> Challenge.changeset(attrs)
@@ -58,6 +70,12 @@ defmodule Squeeze.Challenges do
     |> Changeset.put_assoc(:user, user)
     |> Changeset.put_assoc(:challenge, challenge)
     |> Repo.insert()
+  end
+
+  def update_score!(%Score{} = score, attrs) do
+    score
+    |> Score.changeset(attrs)
+    |> Repo.update!()
   end
 
   def change_challenge(%Challenge{} = challenge) do
