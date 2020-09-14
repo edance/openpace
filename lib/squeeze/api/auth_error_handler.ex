@@ -1,4 +1,8 @@
 defmodule Squeeze.Api.AuthErrorHandler do
+  @moduledoc """
+  This module handles redirection if the user is not authenticated.
+  """
+
   import Plug.Conn
 
   def auth_error(conn, {type, _reason}, _opts) do

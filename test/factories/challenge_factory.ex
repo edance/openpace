@@ -1,8 +1,8 @@
 defmodule Squeeze.ChallengeFactory do
   @moduledoc false
 
-  alias Squeeze.Challenges.Challenge
   alias Faker.NaiveDateTime
+  alias Squeeze.Challenges.Challenge
 
   defmacro __using__(_opts) do
     quote do
@@ -16,13 +16,15 @@ defmodule Squeeze.ChallengeFactory do
         |> Enum.map(&String.capitalize/1)
         |> Enum.join(" ")
 
+        user = build(:user)
+
         %Challenge{
           activity_type: activity,
           challenge_type: type,
           timeline: timeline,
           name: name,
           start_at: NaiveDateTime.forward(1),
-          user: build(:user)
+          user: user
         }
       end
 
