@@ -7,10 +7,14 @@ defmodule Squeeze.UserFactory do
   defmacro __using__(_opts) do
     quote do
       def user_factory do
+        # Set all passwords to "password"
+        encrypted_password = Argon2.hash_pwd_salt("password")
+
         %User{
           first_name: Name.first_name(),
           last_name: Name.last_name(),
           email: Internet.email(),
+          encrypted_password: encrypted_password,
           city: Address.city(),
           state: Address.state_abbr(),
           avatar: "https://placekitten.com/300/300",
