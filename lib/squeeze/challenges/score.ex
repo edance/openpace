@@ -10,7 +10,7 @@ defmodule Squeeze.Challenges.Score do
   alias Squeeze.Challenges.Challenge
 
   schema "scores" do
-    field :score, :integer
+    field :score, :float
 
     belongs_to :user, User
     belongs_to :challenge, Challenge
