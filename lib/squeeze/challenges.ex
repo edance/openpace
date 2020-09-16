@@ -41,6 +41,10 @@ defmodule Squeeze.Challenges do
     |> Repo.get!(id)
   end
 
+  def get_challenge_by_slug!(slug) do
+    Repo.get_by!(Challenge, slug: slug)
+  end
+
   def list_scores(%Challenge{} = challenge) do
     query = from s in Score,
       where: s.challenge_id == ^challenge.id,

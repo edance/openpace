@@ -12,6 +12,7 @@ defmodule SqueezeWeb.Api.ChallengeView do
   def render("challenge.json", %{challenge: challenge}) do
     %{
       id: challenge.id,
+      slug: challenge.slug,
       name: challenge.name,
       start_at: challenge.start_at,
       end_at: challenge.end_at,
