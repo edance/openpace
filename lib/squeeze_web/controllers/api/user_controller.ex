@@ -12,7 +12,7 @@ defmodule SqueezeWeb.Api.UserController do
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
-      |> render("user.json", %{user: user, token: token})
+      |> render("auth.json", %{user: user, token: token})
     end
   end
 
@@ -20,7 +20,12 @@ defmodule SqueezeWeb.Api.UserController do
     with {:ok, user, token} <- Guardian.authenticate(email, password) do
       conn
       |> put_status(:created)
-      |> render("user.json", %{user: user, token: token})
+      |> render("auth.json", %{user: user, token: token})
     end
+  end
+
+  def me(conn, _) do
+    user = conn.assigns.current_user
+    render(conn, "user.json", %{user: user})
   end
 end

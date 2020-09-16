@@ -148,6 +148,8 @@ defmodule SqueezeWeb.Router do
     get "/challenges/:id/leaderboard", ChallengeController, :leaderboard
 
     post "/strava/exchange", StravaController, :exchange_code
+
+    get "/users/me", UserController, :me
   end
 
   if Mix.env() == :dev do
