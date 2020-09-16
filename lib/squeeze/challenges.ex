@@ -7,6 +7,7 @@ defmodule Squeeze.Challenges do
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
   alias Squeeze.Repo
+  alias Squeeze.SlugGenerator
 
   alias Squeeze.Challenges.{Challenge, Score}
 
@@ -58,10 +59,17 @@ defmodule Squeeze.Challenges do
   end
 
   def create_challenge(%User{} = user, attrs \\ %{}) do
-    %Challenge{}
-    |> Challenge.changeset(attrs)
-    |> Changeset.put_change(:user_id, user.id)
-    |> Repo.insert()
+    slug = SlugGenerator.gen_slug()
+
+    case Repo.get_by(Challenge, slug: slug) do
+      %Challenge{} -> create_challenge(user, attrs) # Try again if a challenge exists with slug
+      nil ->
+        %Challenge{}
+        |> Challenge.changeset(attrs)
+        |> Changeset.put_change(:user_id, user.id)
+        |> Changeset.put_change(:slug, slug)
+        |> Repo.insert()
+    end
   end
 
   def add_user_to_challenge(%User{} = user, %Challenge{} = challenge) do

@@ -26,6 +26,8 @@ defmodule Squeeze.Challenges.Challenge do
     field :name, :string
     field :start_at, :naive_datetime
     field :timeline, TimelineEnum
+    field :private, :boolean
+    field :slug, :string
 
     belongs_to :user, User
     has_many :scores, Score
@@ -39,6 +41,7 @@ defmodule Squeeze.Challenges.Challenge do
     challenge
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint(:slug)
   end
 
   def add_user_changeset(challenge, %User{} = user) do
