@@ -14,7 +14,7 @@ defmodule Squeeze.Accounts do
       where: c.provider == ^provider and c.uid == ^uid
     query
     |> Repo.one()
-    |> Repo.preload([:user_prefs])
+    |> Repo.preload([:credentials, :user_prefs])
   end
   def get_user_by_credential(_), do: nil
 
@@ -32,7 +32,9 @@ defmodule Squeeze.Accounts do
   """
   def get_user_by_email(email) when is_nil(email), do: nil
   def get_user_by_email(email) do
-    Repo.get_by(User, email: email)
+    User
+    |> Repo.get_by(email: email)
+    |> Repo.preload([:credentials, :user_prefs])
   end
 
   @doc """
@@ -48,7 +50,11 @@ defmodule Squeeze.Accounts do
 
   """
   def get_by_email(email) do
-    case Repo.get_by(User, email: email) do
+    user = User
+    |> Repo.get_by(email: email)
+    |> Repo.preload([:credentials, :user_prefs])
+
+    case user do
       nil ->
         {:error, :not_found}
       user ->
@@ -74,6 +80,7 @@ defmodule Squeeze.Accounts do
     User
     |> Repo.get!(id)
     |> Repo.preload([:user_prefs])
+    |> Repo.preload([:credentials, :user_prefs])
   end
 
   @doc """
