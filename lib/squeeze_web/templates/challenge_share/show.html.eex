@@ -1,0 +1,2 @@
+Test
+<%= @challenge.id %>
