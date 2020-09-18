@@ -1,2 +1,8 @@
-Test
-<%= @challenge.id %>
+<main role="main">
+  <!-- Navbar -->
+  <%= render SqueezeWeb.MenuView, "nav.html", assigns %>
+
+  <div class="container">
+    <%= @challenge.id %>
+  </div>
+</main>
