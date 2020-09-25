@@ -43,7 +43,7 @@
   "mimerl": {:hex, :mimerl, "1.2.0", "67e2d3f571088d5cfd3e550c383094b47159f3eee8ffa08e64106cdf5e981be3", [:rebar3], [], "hexpm", "f278585650aa581986264638ebf698f8bb19df297f66ad91b18910dfc6e19323"},
   "mmdb2_decoder": {:hex, :mmdb2_decoder, "1.0.0", "48929cdadae9dd5a9705133dff024763774a2615f35354912832b98e72261110", [:mix], [], "hexpm"},
   "mochiweb": {:hex, :mochiweb, "2.20.1", "e4dbd0ed716f076366ecf62ada5755a844e1d95c781e8c77df1d4114be868cdf", [:rebar3], [], "hexpm", "d1aeee7870470d2fa9eae0b3d5ab6c33801aa2d82b10e9dade885c5c921b36aa"},
-  "mox": {:hex, :mox, "0.5.2", "55a0a5ba9ccc671518d068c8dddd20eeb436909ea79d1799e2209df7eaa98b6c", [:mix], [], "hexpm", "df4310628cd628ee181df93f50ddfd07be3e5ecc30232d3b6aadf30bdfe6092b"},
+  "mox": {:hex, :mox, "1.0.0", "4b3c7005173f47ff30641ba044eb0fe67287743eec9bd9545e37f3002b0a9f8b", [:mix], [], "hexpm", "201b0a20b7abdaaab083e9cf97884950f8a30a1350a1da403b3145e213c6f4df"},
   "nimble_parsec": {:hex, :nimble_parsec, "0.5.3", "def21c10a9ed70ce22754fdeea0810dafd53c2db3219a0cd54cf5526377af1c6", [:mix], [], "hexpm", "589b5af56f4afca65217a1f3eb3fee7e79b09c40c742fddc1c312b3ac0b3399f"},
   "number": {:hex, :number, "1.0.1", "a1017dc867a9860b0c261bf9f3ac4990f64589dbbe50260724190c78a0b92104", [:mix], [{:decimal, "~> 1.5", [hex: :decimal, repo: "hexpm", optional: false]}], "hexpm", "149c62771306451198b2a044b4f077520c9acf6e69304723b17385257c683b52"},
   "oauth2": {:hex, :oauth2, "0.9.4", "632e8e8826a45e33ac2ea5ac66dcc019ba6bb5a0d2ba77e342d33e3b7b252c6e", [:mix], [{:hackney, "~> 1.7", [hex: :hackney, repo: "hexpm", optional: false]}], "hexpm", "407c6b9f60aa0d01b915e2347dc6be78adca706a37f0c530808942da3b62e7af"},

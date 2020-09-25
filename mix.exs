@@ -76,7 +76,7 @@ defmodule Squeeze.Mixfile do
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.9", only: :test},
-      {:mox, "~> 0.4", only: :test}
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 
