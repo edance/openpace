@@ -16,33 +16,32 @@ defmodule Squeeze.Challenges do
   end
 
   def list_challenges(%User{} = user) do
+    query = from p in Challenge,
+      join: s in assoc(p, :scores),
+      where: s.user_id == ^user.id,
+      preload: [scores: ^five_scores_query()]
+
+    Repo.all(query)
+  end
+
+  def get_challenge_by_slug!(slug) do
+    query = from p in Challenge,
+      where: p.slug == ^slug,
+      preload: [scores: ^five_scores_query()]
+
+    Repo.one!(query)
+  end
+
+  defp five_scores_query do
     ranking_query =
       from c in Score,
       select: %{id: c.id, row_number: row_number() |> over(:challenges_partition)},
       windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score]]]
 
-    scores_query =
-      from c in Score,
+    from c in Score,
       join: r in subquery(ranking_query),
       on: c.id == r.id and r.row_number <= 5,
       preload: :user
-
-    query = from p in Challenge,
-      join: s in assoc(p, :scores),
-      where: s.user_id == ^user.id,
-      preload: [scores: ^scores_query]
-
-    Repo.all(query)
-  end
-
-  def get_challenge!(%User{} = user, id) do
-    Challenge
-    |> by_user(user)
-    |> Repo.get!(id)
-  end
-
-  def get_challenge_by_slug!(slug) do
-    Repo.get_by!(Challenge, slug: slug)
   end
 
   def list_scores(%Challenge{} = challenge) do
@@ -92,11 +91,5 @@ defmodule Squeeze.Challenges do
 
   def change_challenge(%Challenge{} = challenge) do
     Challenge.changeset(challenge, %{})
-  end
-
-  defp by_user(query, %User{} = user) do
-    from q in query,
-      join: u in assoc(q, :users),
-      where: u.id == ^user.id
   end
 end

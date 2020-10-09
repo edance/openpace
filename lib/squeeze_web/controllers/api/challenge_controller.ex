@@ -16,13 +16,13 @@ defmodule SqueezeWeb.Api.ChallengeController do
     render(conn, "index.json", %{challenges: challenges})
   end
 
-  def show(conn, %{"id" => id}, user) do
-    challenge = Challenges.get_challenge!(user, id)
+  def show(conn, %{"id" => slug}, _user) do
+    challenge = Challenges.get_challenge_by_slug!(slug)
     render(conn, "show.json", %{challenge: challenge})
   end
 
-  def leaderboard(conn, %{"id" => id}, user) do
-    challenge = Challenges.get_challenge!(user, id)
+  def leaderboard(conn, %{"id" => slug}, _user) do
+    challenge = Challenges.get_challenge_by_slug!(slug)
     scores = Challenges.list_scores(challenge)
     render(conn, "leaderboard.json", %{challenge: challenge, scores: scores})
   end
