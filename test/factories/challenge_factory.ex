@@ -3,6 +3,7 @@ defmodule Squeeze.ChallengeFactory do
 
   alias Faker.NaiveDateTime
   alias Squeeze.Challenges.Challenge
+  alias Squeeze.SlugGenerator
 
   defmacro __using__(_opts) do
     quote do
@@ -20,6 +21,7 @@ defmodule Squeeze.ChallengeFactory do
 
         %Challenge{
           activity_type: activity,
+          slug: SlugGenerator.gen_slug(),
           challenge_type: type,
           timeline: timeline,
           name: name,
