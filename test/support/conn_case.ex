@@ -18,7 +18,7 @@ defmodule SqueezeWeb.ConnCase do
   alias Ecto.Adapters.SQL.Sandbox
   alias Phoenix.ConnTest
   alias Plug.Conn
-  alias Squeeze.{Factory, Repo}
+  alias Squeeze.{Guardian, Factory, Repo}
 
   using do
     quote do
@@ -44,8 +44,16 @@ defmodule SqueezeWeb.ConnCase do
     conn =
       ConnTest.build_conn()
       |> Conn.assign(:current_user, user)
+      |> put_auth_header(user)
 
     {:ok, conn: conn, user: user}
+  end
+
+  defp put_auth_header(conn, nil), do: conn
+  defp put_auth_header(conn, user) do
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+    conn
+    |> Conn.put_req_header("authorization", "Bearer #{token}")
   end
 
   defp create_user(%{no_user: true}), do: nil
