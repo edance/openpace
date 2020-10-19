@@ -9,6 +9,8 @@ defmodule SqueezeWeb.Api.UserView do
   end
 
   def render("user.json", %{user: user}) do
+    prefs = user.user_prefs
+
     %{
       id: user.id,
       first_name: user.first_name,
@@ -19,6 +21,10 @@ defmodule SqueezeWeb.Api.UserView do
       city: user.city,
       state: user.state,
       country: user.country,
+      timezone: prefs.timezone,
+      imperial: prefs.imperial,
+      gender: prefs.gender,
+      birthdate: prefs.birthdate,
       credentials: render_many(user.credentials, SqueezeWeb.Api.UserView, "credential.json", as: :credential)
     }
   end
