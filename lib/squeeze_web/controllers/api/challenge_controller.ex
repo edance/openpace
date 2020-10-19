@@ -30,6 +30,9 @@ defmodule SqueezeWeb.Api.ChallengeController do
   def create(conn, %{"challenge" => params}, user) do
     with {:ok, challenge} <- Challenges.create_challenge(user, params),
          {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
+
+      challenge = Challenges.get_challenge_by_slug!(challenge.slug)
+
       conn
       |> put_status(:created)
       |> render("challenge.json", %{challenge: challenge})
