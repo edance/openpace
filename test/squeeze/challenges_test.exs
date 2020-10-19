@@ -14,18 +14,15 @@ defmodule Squeeze.ChallengesTest do
     end
   end
 
-  describe "#get_challenge!/2" do
+  describe "#get_challenge_by_slug!/1" do
     test "returns the challenge if found" do
-      score = insert(:score)
-      user = score.user
-      assert score.challenge_id == Challenges.get_challenge!(user, score.challenge_id).id
+      challenge = insert(:challenge)
+      assert challenge.slug == Challenges.get_challenge_by_slug!(challenge.slug).slug
     end
 
-    test "raises error if challenge does not belong to user" do
-      challenge = insert(:challenge)
-      user = insert(:user)
+    test "raises error if challenge not found" do
       assert_raise Ecto.NoResultsError, fn ->
-        Challenges.get_challenge!(user, challenge.id) end
+        Challenges.get_challenge_by_slug!("abc") end
     end
   end
 
