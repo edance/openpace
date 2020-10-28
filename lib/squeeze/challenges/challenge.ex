@@ -9,22 +9,21 @@ defmodule Squeeze.Challenges.Challenge do
   alias Squeeze.Challenges.{Score}
 
   @required_fields ~w(
+    name
     activity_type
     challenge_type
     timeline
-  )a
-  @optional_fields ~w(
-    name
     start_at
     end_at
   )a
+  @optional_fields ~w()a
 
   schema "challenges" do
     field :activity_type, ActivityTypeEnum
     field :challenge_type, ChallengeTypeEnum
-    field :end_at, :naive_datetime
+    field :end_at, :utc_datetime
     field :name, :string
-    field :start_at, :naive_datetime
+    field :start_at, :utc_datetime
     field :timeline, TimelineEnum
     field :private, :boolean
     field :slug, :string
