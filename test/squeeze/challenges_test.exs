@@ -3,8 +3,9 @@ defmodule Squeeze.ChallengesTest do
 
   import Squeeze.Factory
 
+  alias Ecto.Changeset
   alias Squeeze.Challenges
-  alias Squeeze.Challenges.Challenge
+  alias Squeeze.Challenges.{Challenge, Score}
 
   describe "#list_challenges/1" do
     test "includes only the users challenge" do
@@ -31,6 +32,21 @@ defmodule Squeeze.ChallengesTest do
       user = insert(:user)
       params = params_for(:challenge)
       assert {:ok, %Challenge{}} = Challenges.create_challenge(user, params)
+    end
+  end
+
+  describe "#add_user_to_challenge/2" do
+    test "creates a score for the user" do
+      user = insert(:user)
+      challenge = insert(:challenge)
+      assert {:ok, %Score{}} = Challenges.add_user_to_challenge(user, challenge)
+    end
+
+    test "returns error if user already added" do
+      score = insert(:score)
+      user = score.user
+      challenge = score.challenge
+      assert {:error, %Changeset{}} = Challenges.add_user_to_challenge(user, challenge)
     end
   end
 end

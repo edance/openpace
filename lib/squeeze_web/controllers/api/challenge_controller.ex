@@ -5,29 +5,34 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   action_fallback SqueezeWeb.Api.FallbackController
 
-  def action(conn, _) do
-    args = [conn, conn.params, conn.assigns.current_user]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def index(conn, _, user) do
+  def index(conn, _) do
+    user = conn.assigns.current_user
     challenges = Challenges.list_challenges(user)
 
     render(conn, "index.json", %{challenges: challenges})
   end
 
-  def show(conn, %{"id" => slug}, _user) do
+  def show(conn, %{"id" => slug}) do
     challenge = Challenges.get_challenge_by_slug!(slug)
     render(conn, "show.json", %{challenge: challenge})
   end
 
-  def leaderboard(conn, %{"id" => slug}, _user) do
+  def join(conn, %{"id" => slug}) do
+    user = conn.assigns.current_user
+    challenge = Challenges.get_challenge_by_slug!(slug)
+    with {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
+      send_resp(conn, :no_content, "")
+    end
+  end
+
+  def leaderboard(conn, %{"id" => slug}) do
     challenge = Challenges.get_challenge_by_slug!(slug)
     scores = Challenges.list_scores(challenge)
     render(conn, "leaderboard.json", %{challenge: challenge, scores: scores})
   end
 
-  def create(conn, %{"challenge" => params}, user) do
+  def create(conn, %{"challenge" => params}) do
+    user = conn.assigns.current_user
     with {:ok, challenge} <- Challenges.create_challenge(user, params),
          {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
 
