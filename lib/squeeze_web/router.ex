@@ -141,18 +141,22 @@ defmodule SqueezeWeb.Router do
     post "/users/signup", UserController, :create
     post "/users/signin", UserController, :signin
 
+    resources "/challenges", ChallengeController, only: [:show]
   end
 
   scope "/api", SqueezeWeb.Api, as: :api do
     pipe_through [:api, :api_auth]
 
-    resources "/challenges", ChallengeController
+    resources "/challenges", ChallengeController, only: [:index, :create]
     get "/challenges/:id/leaderboard", ChallengeController, :leaderboard
+    put "/challenges/:id/join", ChallengeController, :join
 
     post "/strava/exchange", StravaController, :exchange_code
 
     put "/users/me", UserController, :update
     get "/users/me", UserController, :me
+
+    put "/user_prefs/me", UserPrefsController, :update
   end
 
   if Mix.env() == :dev do
