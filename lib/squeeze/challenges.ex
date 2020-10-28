@@ -9,6 +9,7 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Repo
   alias Squeeze.SlugGenerator
 
+  alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Challenges.{Challenge, Score}
 
   def list_current_challenges(%User{} = user) do
@@ -76,10 +77,13 @@ defmodule Squeeze.Challenges do
   end
 
   def add_user_to_challenge(%User{} = user, %Challenge{} = challenge) do
+    amount = ScoreUpdater.total_amount(user, challenge)
+
     %Score{}
     |> Score.changeset()
     |> Changeset.put_assoc(:user, user)
     |> Changeset.put_assoc(:challenge, challenge)
+    |> Changeset.put_change(:score, amount)
     |> Repo.insert()
   end
 
