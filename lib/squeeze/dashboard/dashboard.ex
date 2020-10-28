@@ -27,6 +27,16 @@ defmodule Squeeze.Dashboard do
     |> Repo.preload(:user)
   end
 
+  def list_activities(%User{} = user, start_at, end_at) do
+    query = from a in Activity,
+      where: (a.start_at >= ^start_at and a.start_at <= ^end_at)
+
+    query
+    |> by_user(user)
+    |> Repo.all
+    |> Repo.preload(:user)
+  end
+
   @doc """
   Returns the list of recent activities by user.
 

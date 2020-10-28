@@ -3,8 +3,10 @@ defmodule Squeeze.Challenges.ScoreUpdater do
   This module takes an activity and updates the score for that user
   """
 
+  alias Squeeze.Accounts.User
   alias Squeeze.Challenges
   alias Squeeze.Challenges.Challenge
+  alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Activity
 
   def update_score(%Activity{user: user} = activity) do
@@ -20,6 +22,19 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     Challenges.update_score!(score, %{score: score.score + amount})
   end
 
+  def total_amount(%User{} = user, %Challenge{} = challenge) do
+    sum = Dashboard.list_activities(user, challenge.start_at, challenge.end_at)
+    |> Enum.map(fn(x) -> amount(x, challenge) end)
+    |> Enum.sum()
+
+    sum / 1 # always cast to float
+  end
+
+  def sync_score(%User{} = user, %Challenge{} = challenge) do
+    score = Challenges.get_score!(user, challenge)
+    Challenges.update_score!(score, %{score: total_amount(user, challenge)})
+  end
+
   defp amount(%Activity{distance: amount}, %Challenge{challenge_type: :distance}) do
     amount
   end
@@ -33,7 +48,7 @@ defmodule Squeeze.Challenges.ScoreUpdater do
   end
 
   defp amount(%Activity{}, %Challenge{}) do
-    0
+    0.0
   end
 
   defp match_activity?(activity, challenge) do

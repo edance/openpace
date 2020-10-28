@@ -8,6 +8,7 @@ defmodule SqueezeWeb.StravaWebhookController do
   alias Squeeze.Accounts
   alias Squeeze.Logger
   alias Squeeze.Strava.ActivityLoader
+  alias Squeeze.Challenges.ScoreUpdater
 
   @challenge_token Application.get_env(:strava, :webhook_challenge)
 
@@ -17,7 +18,8 @@ defmodule SqueezeWeb.StravaWebhookController do
   def webhook(conn, %{"aspect_type" => "create", "object_type" => "activity"} = params) do
     credential = Accounts.get_credential("strava", params["owner_id"])
     Task.start(fn ->
-      ActivityLoader.update_or_create_activity(credential, params["object_id"])
+      {:ok, activity} = ActivityLoader.update_or_create_activity(credential, params["object_id"])
+      ScoreUpdater.update_score(activity)
     end)
     render(conn, "success.json")
   end

@@ -23,12 +23,16 @@ defmodule Squeeze.Strava.ActivityLoader do
     activity = map_strava_activity(strava_activity)
     case ActivityMatcher.get_closest_activity(user, activity) do
       nil ->
-        {:ok, activity} = Dashboard.create_activity(user, activity)
-        save_trackpoints(credential, activity)
+        with {:ok, activity} <- Dashboard.create_activity(user, activity),
+             {:ok, _} <- save_trackpoints(credential, activity) do
+          {:ok, activity}
+        end
       existing_activity ->
         activity = %{activity | name: existing_activity.name}
-        {:ok, activity} = Dashboard.update_activity(existing_activity, activity)
-        save_trackpoints(credential, activity)
+        with {:ok, activity} <- Dashboard.update_activity(existing_activity, activity),
+             {:ok, _} <- save_trackpoints(credential, activity) do
+          {:ok, activity}
+        end
     end
   end
 
