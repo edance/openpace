@@ -26,6 +26,7 @@ defmodule Squeeze.ChallengeFactory do
           timeline: timeline,
           name: name,
           start_at: NaiveDateTime.forward(1),
+          end_at: NaiveDateTime.forward(10),
           user: user
         }
       end

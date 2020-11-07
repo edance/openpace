@@ -3,7 +3,6 @@ defmodule Squeeze.SlugGenerator do
   Generates unique slugs for object urls
   """
 
-
   @doc """
   Generates a six character long alphanumeric string
 

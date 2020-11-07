@@ -6,9 +6,9 @@ defmodule SqueezeWeb.StravaWebhookController do
   """
 
   alias Squeeze.Accounts
+  alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Logger
   alias Squeeze.Strava.ActivityLoader
-  alias Squeeze.Challenges.ScoreUpdater
 
   @challenge_token Application.get_env(:strava, :webhook_challenge)
 

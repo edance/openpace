@@ -18,7 +18,7 @@ defmodule SqueezeWeb.ConnCase do
   alias Ecto.Adapters.SQL.Sandbox
   alias Phoenix.ConnTest
   alias Plug.Conn
-  alias Squeeze.{Guardian, Factory, Repo}
+  alias Squeeze.{Factory, Guardian, Repo}
 
   using do
     quote do
