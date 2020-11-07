@@ -12,8 +12,4 @@ defmodule SqueezeWeb.MenuView do
   end
 
   def full_name(%User{} = user), do: User.full_name(user)
-
-  def copyright_year do
-    Date.utc_today.year
-  end
 end
