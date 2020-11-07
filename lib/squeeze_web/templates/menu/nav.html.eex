@@ -28,15 +28,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <%= link("Find a Race", to: Routes.search_path(@conn, :index), class: "nav-link") %>
-        </li>
-
-        <li class="nav-item">
           <%= link("Namer", to: "/namer", class: "nav-link") %>
-        </li>
-
-        <li class="nav-item">
-          <%= link("Blog", to: "/blog", class: "nav-link") %>
         </li>
       </ul>
     </div>
