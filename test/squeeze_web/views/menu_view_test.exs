@@ -15,8 +15,4 @@ defmodule SqueezeWeb.MenuViewTest do
     user = build(:user)
     assert MenuView.authenticated?(user) == User.onboarded?(user)
   end
-
-  test "#copyright_year is the current year" do
-    assert MenuView.copyright_year == Date.utc_today.year
-  end
 end
