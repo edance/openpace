@@ -1,5 +1,5 @@
 /* Upload this file to cloudflare.
- * Handles the reverse proxy between heroku and webflow
+ * Handles the reverse proxy between different heroku apps
  *
  */
 
@@ -33,13 +33,8 @@ async function fetchResponse(request) {
 
   url.hostname = 'squeeze-run.herokuapp.com';
 
-  // Allow webflow to handle homepage, namer, blog, and about
-  if (/^\/namer$/.test(pathname) || /^\/blog\/?.*$/.test(pathname) || /^\/about\/?.*$/.test(pathname)) {
-    url.hostname = 'openpace.webflow.io';
-  }
-
-  // Handle anything that is under the /namer/ path (excluding /namer)
-  if (/^\/namer\/.+$/.test(pathname)) {
+  // Handle anything that is under the /namer/ path (including /namer)
+  if (/^\/namer$/.test(pathname) || /^\/namer\/.+$/.test(pathname)) {
     url.pathname = url.pathname.replace('/namer', '');
     url.hostname = 'activity-namer.herokuapp.com';
   }
