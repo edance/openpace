@@ -2,6 +2,7 @@ defmodule SqueezeWeb.Api.StravaController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Accounts
+  alias Squeeze.Strava.HistoryLoader
 
   @strava_auth Application.get_env(:squeeze, :strava_auth)
 
@@ -40,7 +41,7 @@ defmodule SqueezeWeb.Api.StravaController do
 
   defp load_activity_history(%{provider: "strava", uid: id}) do
     credential = Accounts.get_credential("strava", id)
-    Task.start(fn -> Squeeze.Strava.HistoryLoader.load_recent(credential) end)
+    Task.start(fn -> HistoryLoader.load_recent(credential) end)
   end
 
   defp credential_params(%{token: token}, athlete) do
