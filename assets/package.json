@@ -6,7 +6,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
-    "algoliasearch": "^4.3.0",
+    "algoliasearch": "^4.8.0",
     "autocomplete.js": "^0.37.1",
     "bootstrap": "^4.5.0",
     "datalist-polyfill": "^1.22.1",
