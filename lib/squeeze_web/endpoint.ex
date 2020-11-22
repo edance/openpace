@@ -7,7 +7,7 @@ defmodule SqueezeWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :squeeze, gzip: true,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt .well-known)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

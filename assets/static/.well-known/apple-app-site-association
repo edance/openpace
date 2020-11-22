@@ -1,0 +1,9 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [{
+      "appID": "LKWJEF.com.openpace.challenges",
+      "paths": ["/invite/*"]
+    }]
+  }
+}
