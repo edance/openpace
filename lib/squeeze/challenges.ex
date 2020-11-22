@@ -13,7 +13,15 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Challenges.{Challenge, Score}
 
   def list_current_challenges(%User{} = user) do
-    list_challenges(user)
+    end_at = Timex.now
+
+    query = from p in Challenge,
+      join: s in assoc(p, :scores),
+      where: p.end_at >= ^end_at,
+      where: s.user_id == ^user.id,
+      preload: [scores: ^five_scores_query()]
+
+    Repo.all(query)
   end
 
   def list_challenges(%User{} = user) do
