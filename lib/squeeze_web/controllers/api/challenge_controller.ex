@@ -7,7 +7,7 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   def index(conn, _) do
     user = conn.assigns.current_user
-    challenges = Challenges.list_challenges(user)
+    challenges = Challenges.list_current_challenges(user)
 
     render(conn, "index.json", %{challenges: challenges})
   end
