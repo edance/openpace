@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.openpace.challenges",
+      "sha256_cert_fingerprints": [
+        "28:55:2A:6E:7C:C0:6A:99:E5:F8:A0:CA:29:6D:75:DD:99:9C:1C:A1:E7:9F:72:32:FD:F8:48:C9:11:3B:AC:BF"
+      ]
+    }
+  }
+]
