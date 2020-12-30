@@ -8,15 +8,20 @@ defmodule Squeeze.Challenges.ScoreUpdater do
   alias Squeeze.Challenges.Challenge
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Activity
+  alias Squeeze.Repo
 
-  def update_score(%Activity{user: user} = activity) do
+  def update_score(%Activity{} = activity) do
+    activity = Repo.preload(activity, :user)
+    user = activity.user
     challenges = Challenges.list_current_challenges(user)
     challenges
     |> Enum.filter(&(match_activity?(activity, &1)))
     |> Enum.map(fn (challenge) -> update_score(activity, challenge) end)
   end
 
-  defp update_score(%Activity{user: user} = activity, %Challenge{} = challenge) do
+  defp update_score(%Activity{} = activity, %Challenge{} = challenge) do
+    activity = Repo.preload(activity, :user)
+    user = activity.user
     score = Challenges.get_score!(user, challenge)
     amount = amount(activity, challenge)
     Challenges.update_score!(score, %{score: score.score + amount})
