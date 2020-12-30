@@ -1,0 +1,11 @@
+<% user = assigns[:user] %>
+
+<%= if user.avatar do %>
+  <div class="avatar avatar-sm rounded-circle">
+    <img alt="<%= user.first_name %>" src="<%= user.avatar %>" />
+  </div>
+<% else %>
+  <div class="avatar avatar-sm rounded-circle bg-gradient-warning text-bold">
+    <%= initials(assigns) %>
+  </div>
+<% end %>

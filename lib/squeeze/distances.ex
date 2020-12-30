@@ -36,7 +36,7 @@ defmodule Squeeze.Distances do
   def to_int(distance, [imperial: _]), do: trunc(distance / 1_000)
 
   def format(distance, opts), do: "#{to_float(distance, opts)} #{label(opts)}"
-  def format(distance), do: format(distance, imperial: false)
+  def format(distance), do: format(distance, imperial: true)
 
   def distances, do: @distances
 
