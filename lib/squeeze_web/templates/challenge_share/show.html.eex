@@ -27,7 +27,7 @@
           </div>
 
           <p>
-            <a class="btn btn-primary" href="<%= "openpace://invite/#{@challenge.slug}" %>" role="button">Join Challenge »</a>
+            <a class="btn btn-primary" href="<%= "openpace:///invite/#{@challenge.slug}" %>" role="button">Join Challenge »</a>
           </p>
         </div>
 
