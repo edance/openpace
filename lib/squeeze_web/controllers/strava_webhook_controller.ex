@@ -6,8 +6,8 @@ defmodule SqueezeWeb.StravaWebhookController do
   """
 
   alias Squeeze.Accounts
-  alias Squeeze.Dashboard
   alias Squeeze.Challenges.ScoreUpdater
+  alias Squeeze.Dashboard
   alias Squeeze.Logger
   alias Squeeze.Strava.ActivityLoader
 

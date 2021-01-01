@@ -24,7 +24,7 @@ defmodule Squeeze.ActivityMatcher do
   end
 
   defp external_score(planned_activity, activity) do
-    if planned_distance.external_id == activity.external_id do
+    if planned_activity.external_id == activity.external_id do
       100
     else
       0
