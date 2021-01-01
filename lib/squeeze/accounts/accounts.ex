@@ -223,6 +223,22 @@ defmodule Squeeze.Accounts do
   end
 
   @doc """
+  Deletes a Credential.
+
+  ## Examples
+
+  iex> delete_credential(credential)
+  {:ok, %Credential{}}
+
+  iex> delete_credential(credential)
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_credential(%Credential{} = credential) do
+    Repo.delete(credential)
+  end
+
+  @doc """
   Updates a user_prefs.
 
   ## Examples

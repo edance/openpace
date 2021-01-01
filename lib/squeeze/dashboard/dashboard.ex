@@ -95,6 +95,13 @@ defmodule Squeeze.Dashboard do
     |> Repo.preload([:user])
   end
 
+  def get_activity_by_external_id!(%User{}, external_id) do
+    Activity
+    |> by_user(user)
+    |> Repo.get_by!(external_id: external_id)
+    |> Repo.preload([:user])
+  end
+
   @doc """
   Gets a single activity.
 
