@@ -34,9 +34,9 @@ defmodule Squeeze.Strava.HistoryLoader do
     )
   end
 
-  defp query(%{sync_at: nil}), do: [per_page: 100]
+  defp query(%{sync_at: nil}), do: [per_page: 50]
   defp query(%{sync_at: sync_at}) do
-    [after: DateTime.to_unix(sync_at), per_page: 100]
+    [after: DateTime.to_unix(sync_at), per_page: 50]
   end
 
   defp map_strava_activity(strava_activity) do
