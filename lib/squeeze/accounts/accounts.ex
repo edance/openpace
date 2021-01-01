@@ -180,6 +180,12 @@ defmodule Squeeze.Accounts do
     |> Repo.all()
   end
 
+  def get_credential_by_provider(%User{} = user, provider) do
+    Credential
+    |> Repo.get_by(provider: provider, user_id: user.id)
+    |> Repo.preload(user: [:user_prefs])
+  end
+
   @doc """
   Gets a single credential by provider and uid.
 

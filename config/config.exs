@@ -34,6 +34,7 @@ config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
 config :squeeze, :strava_activities, Strava.Activities
 config :squeeze, :strava_auth, Strava.Auth
 config :squeeze, :strava_client, Strava.Client
+config :squeeze, :strava_segments, Strava.Segments
 config :squeeze, :strava_streams, Strava.Streams
 
 config :squeeze, :payment_processor, Squeeze.StripePaymentProcessor
