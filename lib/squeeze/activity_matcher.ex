@@ -18,8 +18,17 @@ defmodule Squeeze.ActivityMatcher do
 
   defp match_score(planned_activity, activity) do
     pending_score(planned_activity) +
+      external_score(planned_activity, activity) +
       distance_match(planned_activity, activity) +
       duration_match(planned_activity, activity)
+  end
+
+  defp external_score(planned_activity, activity) do
+    if planned_distance.external_id == activity.external_id do
+      100
+    else
+      0
+    end
   end
 
   defp pending_score(%{status: status}) when status == :pending, do: 1
