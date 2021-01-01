@@ -47,6 +47,14 @@ defmodule Squeeze.ActivityMatcherTest do
 
       assert ActivityMatcher.get_closest_activity(user, attrs) == nil
     end
+
+    test "with an activity with the same external_id", %{user: user: today} do
+      now = Timex.now
+      [_, activity] = insert_pair(:activity, user: user, start_at: now)
+      attrs = %Activity{start_at: now, external_id: activity.external_id, type: "Run"}
+
+      assert ActivityMatcher.get_closest_activity(user, attrs).id == activity.id
+    end
   end
 
   defp create_user(_) do
