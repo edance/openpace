@@ -70,6 +70,14 @@ defmodule Squeeze.Challenges do
     Repo.one!(query)
   end
 
+  def in_challenge?(%User{} = user, %Challenge{} = challenge) do
+    query = from s in Score,
+      where: s.challenge_id == ^challenge.id,
+      where: s.user_id == ^user.id
+
+    Repo.exists?(query)
+  end
+
   def create_challenge(%User{} = user, attrs \\ %{}) do
     slug = SlugGenerator.gen_slug()
 

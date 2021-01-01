@@ -9,6 +9,12 @@ defmodule SqueezeWeb.Api.ChallengeView do
     render_one(challenge, SqueezeWeb.Api.ChallengeView, "challenge.json")
   end
 
+  def render("status.json", %{joined: joined}) do
+    %{
+      joined: joined
+    }
+  end
+
   def render("challenge.json", %{challenge: challenge}) do
     %{
       slug: challenge.slug,

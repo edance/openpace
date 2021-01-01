@@ -152,6 +152,7 @@ defmodule SqueezeWeb.Router do
 
     resources "/challenges", ChallengeController, only: [:index, :create]
     get "/challenges/:id/leaderboard", ChallengeController, :leaderboard
+    get "/challenges/:id/status", ChallengeController, :status
     put "/challenges/:id/join", ChallengeController, :join
 
     post "/strava/exchange", StravaController, :exchange_code
