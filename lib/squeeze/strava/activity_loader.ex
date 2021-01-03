@@ -5,6 +5,7 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   alias Squeeze.Accounts.{Credential}
   alias Squeeze.ActivityMatcher
+  alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Dashboard
   alias Squeeze.Strava.Client
   alias Squeeze.Strava.StreamSetConverter
@@ -25,6 +26,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       nil ->
         with {:ok, activity} <- Dashboard.create_activity(user, activity),
              {:ok, _} <- save_trackpoints(credential, activity) do
+          ScoreUpdater.add_to_score(activity)
           {:ok, activity}
         end
       existing_activity ->
@@ -46,6 +48,7 @@ defmodule Squeeze.Strava.ActivityLoader do
     %{
       name: strava_activity.name,
       type: strava_activity.type,
+      activity_type: activity_type(strava_activity),
       distance: strava_activity.distance,
       duration: strava_activity.moving_time,
       start_at: strava_activity.start_date,
@@ -55,6 +58,15 @@ defmodule Squeeze.Strava.ActivityLoader do
       polyline: strava_activity.map.summary_polyline,
       workout_type: strava_activity.workout_type
     }
+  end
+
+  defp activity_type(strava_activity) do
+    cond do
+      String.contains?(strava_activity.type, "Run") -> :run
+      String.contains?(strava_activity.type, "Ride") -> :bike
+      String.contains?(strava_activity.type, "Swim") -> :swim
+      true -> nil
+    end
   end
 
   defp save_trackpoints(credential, %{external_id: strava_activity_id} = activity) do

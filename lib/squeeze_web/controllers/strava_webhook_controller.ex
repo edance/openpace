@@ -6,7 +6,6 @@ defmodule SqueezeWeb.StravaWebhookController do
   """
 
   alias Squeeze.Accounts
-  alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Dashboard
   alias Squeeze.Logger
   alias Squeeze.Strava.ActivityLoader
@@ -30,8 +29,7 @@ defmodule SqueezeWeb.StravaWebhookController do
   # User creates or updates an activity on strava
   def webhook(conn, %{"object_type" => "activity"} = params) do
     with {:ok, credential} <- Accounts.fetch_credential("strava", params["owner_id"]),
-         {:ok, activity} <- ActivityLoader.update_or_create_activity(credential, params["object_id"]) do
-      ScoreUpdater.update_score(activity)
+         {:ok, _} <- ActivityLoader.update_or_create_activity(credential, params["object_id"]) do
       render(conn, "success.json")
     end
   end

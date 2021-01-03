@@ -6,6 +6,7 @@ defmodule Squeeze.Challenges do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
+  alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
   alias Squeeze.SlugGenerator
 
@@ -19,6 +20,16 @@ defmodule Squeeze.Challenges do
       join: s in assoc(p, :scores),
       where: p.end_at >= ^end_at,
       where: s.user_id == ^user.id,
+      preload: [scores: ^five_scores_query()]
+
+    Repo.all(query)
+  end
+
+  def list_matched_challenges(%Activity{} = activity) do
+    query = from c in Challenge,
+      where: c.start_at <= ^activity.start_at,
+      where: c.end_at >= ^activity.start_at,
+      where: c.activity_type == ^activity.activity_type,
       preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
