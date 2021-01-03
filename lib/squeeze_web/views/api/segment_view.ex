@@ -2,27 +2,28 @@ defmodule SqueezeWeb.Api.SegmentView do
   use SqueezeWeb, :view
 
   def render("starred.json", %{segments: segments}) do
-    render_many(segments, SqueezeWeb.Api.SegmentView, "segment.json", as: :segment)
+    %{
+      segments: render_many(segments, SqueezeWeb.Api.SegmentView, "segment.json", as: :segment)
+    }
   end
 
   def render("segment.json", %{segment: segment}) do
     %{
-      activity_type: nil,
-      athlete_pr_effort: nil,
-      average_grade: nil,
-      city: nil,
-      climb_category: nil,
-      country: nil,
+      activity_type: segment.activity_type,
+      average_grade: segment.average_grade,
+      city: segment.city,
+      climb_category: segment.climb_category,
+      country: segment.country,
       distance: segment.distance,
-      elevation_high: nil,
-      elevation_low: nil,
-      end_latlng: nil,
+      elevation_high: segment.elevation_high,
+      elevation_low: segment.elevation_low,
+      end_latlng: segment.end_latlng,
       id: segment.id,
-      maximum_grade: nil,
+      maximum_grade: segment.maximum_grade,
       name: segment.name,
-      private: nil,
-      start_latlng: nil,
-      state: nil
+      private: segment.private,
+      start_latlng: segment.start_latlng,
+      state: segment.state
     }
   end
 end

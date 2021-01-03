@@ -180,10 +180,23 @@ defmodule Squeeze.Accounts do
     |> Repo.all()
   end
 
-  def get_credential_by_provider(%User{} = user, provider) do
-    Credential
+  def fetch_credential_by_provider(%User{} = user, provider) do
+    credential = Credential
     |> Repo.get_by(provider: provider, user_id: user.id)
     |> Repo.preload(user: [:user_prefs])
+
+    if credential do
+      {:ok, credential}
+    else
+      {:error, :not_found}
+    end
+  end
+
+  def fetch_credential(provider, uid) do
+    case get_credential(provider, uid) do
+      nil -> {:error, :not_found}
+      credential -> {:ok, credential}
+    end
   end
 
   @doc """
