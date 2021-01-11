@@ -144,6 +144,8 @@ defmodule SqueezeWeb.Router do
     post "/users/signup", UserController, :create
     post "/users/signin", UserController, :signin
 
+    post "/google/auth", GoogleAuthController, :auth
+
     resources "/challenges", ChallengeController, only: [:show]
   end
 
