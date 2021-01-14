@@ -26,8 +26,8 @@ defmodule Squeeze.DistancesTest do
     end
   end
 
-  test "#format/1 returns km" do
-    assert Distances.format(10_000) == "10.0 km"
+  test "#format/1 returns mi" do
+    assert Distances.format(10_000) == "6.22 mi"
   end
 
   describe "#parse" do

@@ -50,8 +50,8 @@ defmodule Squeeze.DashboardTest do
     test "returns only activities for today" do
       user = insert(:user)
       date = TimeHelper.today(user)
-      activity1 = insert(:activity, %{user: user, planned_date: date})
-      activity2 = insert(:activity, %{user: user, planned_date: Date.add(date, 1)})
+      activity1 = insert(:planned_activity, %{user: user, planned_date: date})
+      activity2 = insert(:planned_activity, %{user: user, planned_date: Date.add(date, 1)})
       activities = Dashboard.todays_activities(user)
       assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
       refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
