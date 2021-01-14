@@ -62,14 +62,14 @@ defmodule Squeeze.Dashboard do
   def get_activities_by_date(%User{} = user, date) do
     Activity
     |> by_user(user)
-    |> by_date(date)
+    |> by_date(user, date)
     |> Repo.all()
   end
 
   def get_pending_activities_by_date(%User{} = user, date) do
     Activity
     |> by_user(user)
-    |> by_date(date)
+    |> by_date(user, date)
     |> status(:pending)
     |> Repo.all()
   end
@@ -214,8 +214,11 @@ defmodule Squeeze.Dashboard do
     from q in query, where: [user_id: ^user.id]
   end
 
-  defp by_date(query, date) do
-    from q in query, where: [planned_date: ^date]
+  defp by_date(query, %User{} = user, date) do
+    start_at = TimeHelper.beginning_of_day(user, date)
+    end_at = TimeHelper.end_of_day(user, date)
+    from q in query,
+      where: (q.start_at >= ^start_at and q.start_at <= ^end_at) or (q.planned_date == ^date)
   end
 
   defp by_date_range(query, %User{} = user, date_range) do
