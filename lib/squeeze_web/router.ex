@@ -101,6 +101,7 @@ defmodule SqueezeWeb.Router do
 
     get "/privacy", PageController, :privacy_policy
     get "/terms", PageController, :terms
+    get "/support", PageController, :support
 
     get "/onboard", OnboardController, :index
     put "/onboard", OnboardController, :update

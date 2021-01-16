@@ -5,6 +5,10 @@ defmodule SqueezeWeb.PageController do
     render(conn, "privacy_policy.html")
   end
 
+  def support(conn, _params) do
+    render(conn, "support.html")
+  end
+
   def terms(conn, _params) do
     render(conn, "terms.html")
   end
