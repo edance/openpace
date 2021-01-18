@@ -166,6 +166,8 @@ defmodule SqueezeWeb.Router do
     get "/users/me", UserController, :me
 
     put "/user_prefs/me", UserPrefsController, :update
+
+    get "/users/me/activities", ActivityController, :index
   end
 
   if Mix.env() == :dev do
