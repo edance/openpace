@@ -110,17 +110,23 @@ defmodule Squeeze.Challenges do
     |> Score.changeset()
     |> Changeset.put_assoc(:user, user)
     |> Changeset.put_assoc(:challenge, challenge)
-    |> Changeset.put_change(:score, amount)
+    |> Changeset.put_change(:amount, amount)
+    |> Changeset.put_change(:score, ranking_score(challenge, amount))
     |> Repo.insert()
   end
 
-  def update_score!(%Score{} = score, attrs) do
+  def update_score!(%Challenge{} = challenge, %Score{} = score, amount) do
     score
-    |> Score.changeset(attrs)
+    |> Score.changeset()
+    |> Changeset.put_change(:amount, amount)
+    |> Changeset.put_change(:score, ranking_score(challenge, amount))
     |> Repo.update!()
   end
 
   def change_challenge(%Challenge{} = challenge) do
     Challenge.changeset(challenge, %{})
   end
+
+  defp ranking_score(%Challenge{challenge_type: :segment}, amount), do: amount * -1.0
+  defp ranking_score(%Challenge{}, amount), do: amount
 end

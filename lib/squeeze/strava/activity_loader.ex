@@ -26,7 +26,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       nil ->
         with {:ok, activity} <- Dashboard.create_activity(user, activity),
              {:ok, _} <- save_trackpoints(credential, activity) do
-          ScoreUpdater.add_to_score(activity)
+          ScoreUpdater.update_score(activity)
           {:ok, activity}
         end
       existing_activity ->
@@ -65,7 +65,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       String.contains?(strava_activity.type, "Run") -> :run
       String.contains?(strava_activity.type, "Ride") -> :bike
       String.contains?(strava_activity.type, "Swim") -> :swim
-      true -> nil
+      true -> :other
     end
   end
 

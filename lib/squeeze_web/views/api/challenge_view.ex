@@ -24,6 +24,7 @@ defmodule SqueezeWeb.Api.ChallengeView do
       activity_type: challenge.activity_type,
       challenge_type: challenge.challenge_type,
       timeline: challenge.timeline,
+      segment_id: challenge.segment_id,
       scores: render_many(challenge.scores, SqueezeWeb.Api.ChallengeView, "score.json", as: :score)
     }
   end
@@ -37,7 +38,7 @@ defmodule SqueezeWeb.Api.ChallengeView do
 
   def render("score.json", %{score: score}) do
     %{
-      score: score.score,
+      amount: score.amount,
       user_id: score.user_id,
       first_name: score.user.first_name,
       last_name: score.user.last_name,

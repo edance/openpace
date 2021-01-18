@@ -53,7 +53,7 @@ defmodule Squeeze.Dashboard.Activity do
     field :start_at, :utc_datetime
     field :polyline, :string
     field :elevation_gain, :float
-    field :external_id, :string
+    field :external_id, Squeeze.Stringable
 
     field :description, :string
 

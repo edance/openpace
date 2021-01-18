@@ -10,6 +10,9 @@ defmodule Squeeze.Challenges.Score do
   alias Squeeze.Challenges.Challenge
 
   schema "scores" do
+    field :amount, :float
+
+    # Used for ranking only and not visible to the user
     field :score, :float
 
     belongs_to :user, User
@@ -21,7 +24,7 @@ defmodule Squeeze.Challenges.Score do
   @doc false
   def changeset(score, attrs \\ %{}) do
     score
-    |> cast(attrs, [:score])
+    |> cast(attrs, [:amount])
     |> unique_constraint(:user, name: :scores_user_id_challenge_id_index, message: "already joined")
   end
 end

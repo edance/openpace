@@ -42,6 +42,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   defp map_strava_activity(strava_activity) do
     %{
       name: strava_activity.name,
+      activity_type: activity_type(strava_activity),
       type: strava_activity.type,
       distance: strava_activity.distance,
       duration: strava_activity.moving_time,
@@ -52,5 +53,14 @@ defmodule Squeeze.Strava.HistoryLoader do
       polyline: strava_activity.map.summary_polyline,
       workout_type: strava_activity.workout_type
     }
+  end
+
+  defp activity_type(strava_activity) do
+    cond do
+      String.contains?(strava_activity.type, "Run") -> :run
+      String.contains?(strava_activity.type, "Ride") -> :bike
+      String.contains?(strava_activity.type, "Swim") -> :swim
+      true -> :other
+    end
   end
 end
