@@ -70,6 +70,7 @@ defmodule Squeeze.Mixfile do
       {:algolia, "~> 0.8.0"},
       {:cors_plug, "~> 2.0"},
       {:ex_machina, "~> 2.1"},
+      {:assent, "~> 0.1.21"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
