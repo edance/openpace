@@ -21,7 +21,7 @@ defmodule Squeeze.Accounts.Credential do
 
   schema "credentials" do
     field :provider, :string
-    field :uid, :string
+    field :uid, Squeeze.Stringable
     field :sync_at, :utc_datetime
 
     # OAuth 1.0

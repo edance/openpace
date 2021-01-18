@@ -16,7 +16,9 @@ defmodule Squeeze.Challenges.Challenge do
     start_at
     end_at
   )a
-  @optional_fields ~w()a
+  @optional_fields ~w(
+    segment_id
+  )a
 
   schema "challenges" do
     field :activity_type, ActivityTypeEnum
@@ -27,6 +29,7 @@ defmodule Squeeze.Challenges.Challenge do
     field :timeline, TimelineEnum
     field :private, :boolean
     field :slug, :string
+    field :segment_id, Squeeze.Stringable
 
     belongs_to :user, User
     has_many :scores, Score
