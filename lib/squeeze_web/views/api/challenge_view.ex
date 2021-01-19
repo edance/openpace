@@ -25,6 +25,7 @@ defmodule SqueezeWeb.Api.ChallengeView do
       challenge_type: challenge.challenge_type,
       timeline: challenge.timeline,
       segment_id: challenge.segment_id,
+      polyline: challenge.polyline,
       scores: render_many(challenge.scores, SqueezeWeb.Api.ChallengeView, "score.json", as: :score)
     }
   end

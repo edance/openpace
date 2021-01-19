@@ -18,6 +18,7 @@ defmodule Squeeze.Challenges.Challenge do
   )a
   @optional_fields ~w(
     segment_id
+    polyline
   )a
 
   schema "challenges" do
@@ -30,6 +31,7 @@ defmodule Squeeze.Challenges.Challenge do
     field :private, :boolean
     field :slug, :string
     field :segment_id, Squeeze.Stringable
+    field :polyline, :string
 
     belongs_to :user, User
     has_many :scores, Score
