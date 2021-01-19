@@ -55,7 +55,7 @@ defmodule Squeeze.Mixfile do
       {:guardian, "~> 2.0"},
       {:browser, "~> 0.4.4"},
       {:ecto_enum, "~> 1.1"},
-      {:stripity_stripe, "~> 2.7.0"},
+      {:stripity_stripe, "~> 2.9.0"},
       {:httpoison, "~> 1.5"},
       {:set_locale, "~> 0.2.4"},
       {:bamboo, "~> 1.2"},
