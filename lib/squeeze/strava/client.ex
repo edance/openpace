@@ -5,7 +5,6 @@ defmodule Squeeze.Strava.Client do
 
   alias Squeeze.Accounts
   alias Squeeze.Accounts.{Credential, User}
-  alias Squeeze.Repo
 
   @strava_client Application.get_env(:squeeze, :strava_client)
 
