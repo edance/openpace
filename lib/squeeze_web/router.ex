@@ -160,6 +160,8 @@ defmodule SqueezeWeb.Router do
 
     post "/strava/exchange", StravaController, :exchange_code
 
+    resources "/push_tokens", PushTokenController, only: [:create]
+
     get "/segments/starred", SegmentController, :starred
     get "/segments/:id", SegmentController, :show
 
