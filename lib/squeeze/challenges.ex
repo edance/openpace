@@ -61,6 +61,7 @@ defmodule Squeeze.Challenges do
     from c in Score,
       join: r in subquery(ranking_query),
       on: c.id == r.id and r.row_number <= 5,
+      order_by: [desc: :score],
       preload: :user
   end
 
