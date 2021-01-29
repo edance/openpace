@@ -30,7 +30,6 @@ defmodule Squeeze.Strava.ActivityLoader do
           {:ok, activity}
         end
       existing_activity ->
-        activity = %{activity | name: existing_activity.name}
         with {:ok, activity} <- Dashboard.update_activity(existing_activity, activity),
              {:ok, _} <- save_trackpoints(credential, activity) do
           {:ok, activity}
