@@ -27,6 +27,16 @@ defmodule Squeeze.ChallengesTest do
     end
   end
 
+  describe "#list_matched_challenges/1" do
+    test "returns challenges for user" do
+      [score, _] = insert_pair(:score)
+      activity = insert(:activity, user: score.user)
+      challenges = Challenges.list_matched_challenges(activity)
+      assert length(challenges) == 1
+      assert List.first(challenges).id == score.challenge_id
+    end
+  end
+
   describe "#create_challenge/2" do
     test "with valid data creates a challenge" do
       user = insert(:user)

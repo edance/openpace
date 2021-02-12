@@ -3,16 +3,14 @@ defmodule Squeeze.ChallengeFactory do
 
   alias Faker.NaiveDateTime
   alias Squeeze.Challenges.Challenge
-  alias Squeeze.SlugGenerator
 
   defmacro __using__(_opts) do
     quote do
       def challenge_factory do
-        {activity, _} = Enum.random(ActivityTypeEnum.__enum_map__())
         {type, _} = Enum.random(ChallengeTypeEnum.__enum_map__())
         {timeline, _} = Enum.random(TimelineEnum.__enum_map__())
 
-        name = [timeline, activity, type, :challenge]
+        name = [timeline, type, :challenge]
         |> Enum.map(&Atom.to_string/1)
         |> Enum.map(&String.capitalize/1)
         |> Enum.join(" ")
@@ -20,15 +18,26 @@ defmodule Squeeze.ChallengeFactory do
         user = build(:user)
 
         %Challenge{
-          activity_type: activity,
-          slug: SlugGenerator.gen_slug(),
+          activity_type: :run,
+          slug: sequence(:slug, &("#{&1}")),
           challenge_type: type,
           timeline: timeline,
           name: name,
-          start_at: NaiveDateTime.forward(1),
+          segment_id: "12345",
+          start_at: NaiveDateTime.backward(1),
           end_at: NaiveDateTime.forward(10),
           user: user
         }
+      end
+
+      def future_challenge_factory do
+        struct!(
+          challenge_factory(),
+          %{
+            start_at: NaiveDateTime.forward(1),
+            end_at: NaiveDateTime.forward(10),
+          }
+        )
       end
 
       def with_scores(%Challenge{} = challenge, count \\ 5) do

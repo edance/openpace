@@ -5,6 +5,16 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   action_fallback SqueezeWeb.Api.FallbackController
 
+  def index(conn, %{"start_date" => start_date, "end_date" => end_date}) do
+    user = conn.assigns.current_user
+    with {:ok, start_date} <- parse_date(start_date),
+         {:ok, end_date} <- parse_date(end_date) do
+      challenges = Challenges.list_challenges(user, start_date, end_date)
+
+      render(conn, "index.json", %{challenges: challenges})
+    end
+  end
+
   def index(conn, _) do
     user = conn.assigns.current_user
     challenges = Challenges.list_current_challenges(user)
@@ -50,5 +60,9 @@ defmodule SqueezeWeb.Api.ChallengeController do
       |> put_status(:created)
       |> render("challenge.json", %{challenge: challenge})
     end
+  end
+
+  defp parse_date(date) do
+    Timex.parse(date, "{YYYY}-{0M}-{0D}")
   end
 end

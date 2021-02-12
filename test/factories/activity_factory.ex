@@ -14,6 +14,7 @@ defmodule Squeeze.ActivityFactory do
           duration: pace * miles * 60,
           name: Enum.random(["Morning Run", "Afternoon Run", "Evening Run"]),
           type: "Run",
+          activity_type: :run,
           start_at: DateTime.utc_now,
           external_id: sequence(:external_id, &("#{&1}")),
           polyline: "abc",
@@ -31,6 +32,7 @@ defmodule Squeeze.ActivityFactory do
           status: :pending,
           name: "#{miles} mi",
           type: "Run",
+          activity_type: :run,
           user: build(:user)
         }
       end

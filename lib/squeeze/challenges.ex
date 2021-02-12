@@ -9,6 +9,7 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
   alias Squeeze.SlugGenerator
+  alias Squeeze.TimeHelper
 
   alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Challenges.{Challenge, Score}
@@ -25,8 +26,24 @@ defmodule Squeeze.Challenges do
     Repo.all(query)
   end
 
+  def list_challenges(%User{} = user, start_date, end_date) do
+    start_date = TimeHelper.beginning_of_day(user, start_date)
+    end_date = TimeHelper.beginning_of_day(user, end_date)
+
+    query = from p in Challenge,
+      join: s in assoc(p, :scores),
+      where: p.start_at >= ^start_date,
+      where: p.end_at <= ^end_date,
+      where: s.user_id == ^user.id,
+      preload: [scores: ^five_scores_query()]
+
+    Repo.all(query)
+  end
+
   def list_matched_challenges(%Activity{} = activity) do
     query = from c in Challenge,
+      join: s in assoc(c, :scores),
+      where: s.user_id == ^activity.user_id,
       where: c.start_at <= ^activity.start_at,
       where: c.end_at >= ^activity.start_at,
       where: c.activity_type == ^activity.activity_type,
