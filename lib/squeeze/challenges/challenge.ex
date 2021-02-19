@@ -13,8 +13,8 @@ defmodule Squeeze.Challenges.Challenge do
     activity_type
     challenge_type
     timeline
-    start_at
-    end_at
+    start_date
+    end_date
   )a
   @optional_fields ~w(
     segment_id
@@ -25,6 +25,8 @@ defmodule Squeeze.Challenges.Challenge do
     field :activity_type, ActivityTypeEnum
     field :challenge_type, ChallengeTypeEnum
     field :end_at, :utc_datetime
+    field :start_date, :date
+    field :end_date, :date
     field :name, :string
     field :start_at, :utc_datetime
     field :timeline, TimelineEnum

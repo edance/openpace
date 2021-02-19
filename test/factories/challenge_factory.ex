@@ -1,7 +1,7 @@
 defmodule Squeeze.ChallengeFactory do
   @moduledoc false
 
-  alias Faker.NaiveDateTime
+  alias Faker.Date
   alias Squeeze.Challenges.Challenge
 
   defmacro __using__(_opts) do
@@ -24,8 +24,8 @@ defmodule Squeeze.ChallengeFactory do
           timeline: timeline,
           name: name,
           segment_id: "12345",
-          start_at: NaiveDateTime.backward(1),
-          end_at: NaiveDateTime.forward(10),
+          start_date: Date.backward(1),
+          end_date: Date.forward(10),
           user: user
         }
       end
@@ -34,8 +34,8 @@ defmodule Squeeze.ChallengeFactory do
         struct!(
           challenge_factory(),
           %{
-            start_at: NaiveDateTime.forward(1),
-            end_at: NaiveDateTime.forward(10),
+            start_date: Date.forward(1),
+            end_date: Date.forward(10),
           }
         )
       end

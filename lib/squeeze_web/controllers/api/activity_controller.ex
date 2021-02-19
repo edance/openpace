@@ -2,7 +2,6 @@ defmodule SqueezeWeb.Api.ActivityController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Dashboard
-  alias Squeeze.TimeHelper
 
   action_fallback SqueezeWeb.Api.FallbackController
 
@@ -10,14 +9,16 @@ defmodule SqueezeWeb.Api.ActivityController do
     user = conn.assigns.current_user
     with {:ok, start_date} <- parse_date(start_date),
          {:ok, end_date} <- parse_date(end_date) do
-      start_at = TimeHelper.beginning_of_day(user, start_date)
-      end_at = TimeHelper.end_of_day(user, end_date)
-      activities = Dashboard.list_activities(user, start_at, end_at)
+      range = Date.range(start_date, end_date)
+      activities = Dashboard.list_activities(user, range)
       render(conn, "activities.json", %{activities: activities})
     end
   end
 
   defp parse_date(date) do
-    Timex.parse(date, "{YYYY}-{0M}-{0D}")
+    case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
+      {:ok, date} -> {:ok, Timex.to_date(date)}
+      err -> err
+    end
   end
 end

@@ -37,7 +37,8 @@ defmodule Squeeze.Challenges.ScoreUpdater do
 
   def total_amount(%User{}, %Challenge{challenge_type: :segment}), do: nil
   def total_amount(%User{} = user, %Challenge{} = challenge) do
-    sum = Dashboard.list_activities(user, challenge.start_at, challenge.end_at)
+    range = Date.range(challenge.start_date, challenge.end_date)
+    sum = Dashboard.list_activities(user, range)
     |> Enum.map(fn(x) -> amount(x, challenge) end)
     |> Enum.sum()
 

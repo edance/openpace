@@ -21,6 +21,8 @@ defmodule SqueezeWeb.Api.ChallengeView do
       name: challenge.name,
       start_at: challenge.start_at,
       end_at: challenge.end_at,
+      start_date: challenge.start_date,
+      end_date: challenge.end_date,
       activity_type: challenge.activity_type,
       challenge_type: challenge.challenge_type,
       timeline: challenge.timeline,

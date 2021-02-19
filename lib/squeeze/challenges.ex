@@ -15,11 +15,11 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Challenges.{Challenge, Score}
 
   def list_current_challenges(%User{} = user) do
-    end_at = Timex.now
+    today = TimeHelper.today(user)
 
     query = from p in Challenge,
       join: s in assoc(p, :scores),
-      where: p.end_at >= ^end_at,
+      where: p.end_date >= ^today,
       where: s.user_id == ^user.id,
       preload: [scores: ^five_scores_query()]
 
@@ -32,8 +32,8 @@ defmodule Squeeze.Challenges do
 
     query = from p in Challenge,
       join: s in assoc(p, :scores),
-      where: p.start_at >= ^start_date,
-      where: p.end_at <= ^end_date,
+      where: p.start_date >= ^start_date,
+      where: p.end_date <= ^end_date,
       where: s.user_id == ^user.id,
       preload: [scores: ^five_scores_query()]
 
@@ -44,8 +44,8 @@ defmodule Squeeze.Challenges do
     query = from c in Challenge,
       join: s in assoc(c, :scores),
       where: s.user_id == ^activity.user_id,
-      where: c.start_at <= ^activity.start_at,
-      where: c.end_at >= ^activity.start_at,
+      where: c.start_date <= ^activity.start_at,
+      where: c.end_date >= ^activity.start_at,
       where: c.activity_type == ^activity.activity_type,
       preload: [scores: ^five_scores_query()]
 
