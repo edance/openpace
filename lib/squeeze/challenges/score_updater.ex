@@ -17,14 +17,14 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     |> Enum.map(fn (challenge) -> update_score(activity, challenge) end)
   end
 
-  defp update_score(%Activity{} = activity, %Challenge{} = challenge) do
+  def update_score(%Activity{} = activity, %Challenge{} = challenge) do
     activity = Repo.preload(activity, :user)
     user = activity.user
     score = Challenges.get_score!(user, challenge)
     amount = amount(activity, challenge)
 
     if challenge.challenge_type == :segment do
-      if amount && (is_nil(score.amount) || amount < score.amount) do
+      if amount && (score.amount == 0.0 || amount < score.amount) do
         Challenges.update_score!(challenge, score, amount / 1) # cast to float
 
       else
@@ -45,7 +45,7 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     sum / 1 # always cast to float
   end
 
-  defp amount(%Activity{external_id: external_id, user: user}, %Challenge{challenge_type: :segment, segment_id: segment_id}) do
+  def amount(%Activity{external_id: external_id, user: user}, %Challenge{challenge_type: :segment, segment_id: segment_id}) do
     {:ok, strava_activity} = Activities.get_activity_by_id(user, external_id)
 
     best_effort = strava_activity.segment_efforts
@@ -60,19 +60,19 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     end
   end
 
-  defp amount(%Activity{distance: amount}, %Challenge{challenge_type: :distance}) do
+  def amount(%Activity{distance: amount}, %Challenge{challenge_type: :distance}) do
     amount
   end
 
-  defp amount(%Activity{duration: amount}, %Challenge{challenge_type: :time}) do
+  def amount(%Activity{duration: amount}, %Challenge{challenge_type: :time}) do
     amount
   end
 
-  defp amount(%Activity{elevation_gain: amount}, %Challenge{challenge_type: :altitude}) do
+  def amount(%Activity{elevation_gain: amount}, %Challenge{challenge_type: :altitude}) do
     amount
   end
 
-  defp amount(%Activity{}, %Challenge{}) do
+  def amount(%Activity{}, %Challenge{}) do
     0.0
   end
 end
