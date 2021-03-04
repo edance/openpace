@@ -21,6 +21,7 @@ defmodule Squeeze.Accounts.User do
     field :city, :string
     field :state, :string
     field :country, :string
+    field :slug, :string
 
     field :registered, :boolean
 
@@ -73,6 +74,7 @@ defmodule Squeeze.Accounts.User do
     |> cast(attrs, fields)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
+    |> unique_constraint(:slug)
     |> put_registered()
   end
 

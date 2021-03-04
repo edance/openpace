@@ -8,7 +8,6 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
-  alias Squeeze.SlugGenerator
   alias Squeeze.TimeHelper
 
   alias Squeeze.Challenges.ScoreUpdater
@@ -108,26 +107,10 @@ defmodule Squeeze.Challenges do
   end
 
   def create_challenge(%User{} = user, attrs \\ %{}) do
-    case insert_challenge(user, attrs) do
-      {:error, %Ecto.Changeset{} = changeset} ->
-        # try again if the slug has a collision
-        if changeset.errors[:slug] do
-          insert_challenge(user, attrs)
-        else
-          {:error, changeset}
-        end
-      resp -> resp
-    end
-  end
-
-  defp insert_challenge(%User{} = user, attrs) do
-    slug = SlugGenerator.gen_slug()
-
     %Challenge{}
     |> Challenge.changeset(attrs)
     |> Changeset.put_change(:user_id, user.id)
-    |> Changeset.put_change(:slug, slug)
-    |> Repo.insert()
+    |> Repo.insert_with_slug()
   end
 
   def add_user_to_challenge(%User{} = user, %Challenge{} = challenge) do

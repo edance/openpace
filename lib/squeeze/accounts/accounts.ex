@@ -8,6 +8,13 @@ defmodule Squeeze.Accounts do
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
   alias Squeeze.Repo
 
+  def get_user_by_slug!(slug) do
+    query = from u in User,
+      where: u.slug == ^slug
+
+    Repo.one!(query)
+  end
+
   def get_user_by_credential(%{provider: provider, uid: uid}) do
     query = from u in User,
       left_join: c in assoc(u, :credentials),
@@ -99,7 +106,7 @@ defmodule Squeeze.Accounts do
     %User{}
     |> User.changeset(attrs)
     |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
-    |> Repo.insert()
+    |> Repo.insert_with_slug()
   end
 
   def register_user(attrs \\ %{user_prefs: %{}}) do
@@ -108,7 +115,7 @@ defmodule Squeeze.Accounts do
     %User{}
     |> User.registration_changeset(attrs)
     |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
-    |> Repo.insert()
+    |> Repo.insert_with_slug()
   end
 
   def update_user_password(%User{} = user, attrs) do
