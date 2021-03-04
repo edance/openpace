@@ -167,6 +167,7 @@ defmodule SqueezeWeb.Router do
 
     put "/users/me", UserController, :update
     get "/users/me", UserController, :me
+    get "/users/:slug", UserController, :show
 
     put "/user_prefs/me", UserPrefsController, :update
 

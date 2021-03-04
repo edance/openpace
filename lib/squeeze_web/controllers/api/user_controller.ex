@@ -8,6 +8,11 @@ defmodule SqueezeWeb.Api.UserController do
 
   action_fallback SqueezeWeb.Api.FallbackController
 
+  def show(conn, %{"slug" => slug}) do
+    user = Accounts.get_user_by_slug!(slug)
+    render(conn, "user.json", %{user: user})
+  end
+
   def create(conn, user_params) do
     with {:ok, %User{} = user} <- Accounts.register_user(user_params),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
@@ -37,6 +42,6 @@ defmodule SqueezeWeb.Api.UserController do
 
   def me(conn, _) do
     user = Repo.preload(conn.assigns.current_user, [:credentials, :user_prefs])
-    render(conn, "user.json", %{user: user})
+    render(conn, "me.json", %{user: user})
   end
 end

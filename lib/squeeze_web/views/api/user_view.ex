@@ -10,7 +10,22 @@ defmodule SqueezeWeb.Api.UserView do
 
   def render("user.json", %{user: user}) do
     %{
+      slug: user.slug,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      description: user.description,
+      avatar: user.avatar,
+      city: user.city,
+      state: user.state,
+      country: user.country
+    }
+  end
+
+  def render("me.json", %{user: user}) do
+    %{
       id: user.id,
+      slug: user.slug,
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
