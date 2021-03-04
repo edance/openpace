@@ -51,6 +51,7 @@ defmodule Squeeze.Dashboard.Activity do
     field :distance_unit, DistanceUnitEnum
     field :duration, Duration
     field :start_at, :utc_datetime
+    field :start_at_local, :naive_datetime
     field :polyline, :string
     field :elevation_gain, :float
     field :external_id, Squeeze.Stringable

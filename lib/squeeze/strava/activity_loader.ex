@@ -51,6 +51,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       distance: strava_activity.distance,
       duration: strava_activity.moving_time,
       start_at: strava_activity.start_date,
+      start_at_local: strava_activity.start_date_local,
       elevation_gain: strava_activity.total_elevation_gain,
       external_id: "#{strava_activity.id}",
       planned_date: Timex.to_date(strava_activity.start_date_local),
