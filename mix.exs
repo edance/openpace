@@ -58,7 +58,7 @@ defmodule Squeeze.Mixfile do
       {:stripity_stripe, "~> 2.7.0"},
       {:httpoison, "~> 1.5"},
       {:set_locale, "~> 0.2.4"},
-      {:bamboo, "~> 1.2"},
+      {:bamboo, "~> 2.0"},
       {:oauth2, "~> 0.9"},
       {:argon2_elixir, "~> 2.0"},
       {:number, "~> 1.0.0"},
