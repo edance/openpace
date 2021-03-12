@@ -27,6 +27,8 @@ defmodule SqueezeWeb.Api.UserController do
 
   def signin(conn, %{"email" => email, "password" => password}) do
     with {:ok, user, token} <- Guardian.authenticate(email, password) do
+      user = Repo.preload(user, [:credentials, :user_prefs])
+
       conn
       |> put_status(:created)
       |> render("auth.json", %{user: user, token: token})

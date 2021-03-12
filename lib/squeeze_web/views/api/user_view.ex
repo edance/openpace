@@ -3,7 +3,7 @@ defmodule SqueezeWeb.Api.UserView do
 
   def render("auth.json", %{user: user, token: token}) do
     %{
-      user: render_one(user, SqueezeWeb.Api.UserView, "user.json"),
+      user: render_one(user, SqueezeWeb.Api.UserView, "me.json"),
       token: token
     }
   end
