@@ -6,7 +6,7 @@ defmodule Squeeze.Challenges.Challenge do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.{User}
-  alias Squeeze.Challenges.{Score}
+  alias Squeeze.Challenges.{ChallengeActivity, Score}
 
   @required_fields ~w(
     name
@@ -37,6 +37,7 @@ defmodule Squeeze.Challenges.Challenge do
 
     belongs_to :user, User
     has_many :scores, Score
+    has_many :challenge_activities, ChallengeActivity, on_replace: :delete
     many_to_many :users, User, join_through: "scores", on_replace: :delete
 
     timestamps()

@@ -23,6 +23,8 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     score = Challenges.get_score!(user, challenge)
     amount = amount(activity, challenge)
 
+    Challenges.create_challenge_activity(challenge, activity, %{amount: amount})
+
     if challenge.challenge_type == :segment do
       if amount && (score.amount == 0.0 || amount < score.amount) do
         Challenges.update_score!(challenge, score, amount / 1) # cast to float

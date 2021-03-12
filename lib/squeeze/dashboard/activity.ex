@@ -25,6 +25,7 @@ defmodule Squeeze.Dashboard.Activity do
     distance_amount
     distance_unit
     start_at
+    start_at_local
     duration
     description
     elevation_gain

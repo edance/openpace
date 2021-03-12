@@ -11,7 +11,7 @@ defmodule Squeeze.Challenges do
   alias Squeeze.TimeHelper
 
   alias Squeeze.Challenges.ScoreUpdater
-  alias Squeeze.Challenges.{Challenge, Score}
+  alias Squeeze.Challenges.{Challenge, ChallengeActivity, Score}
 
   def list_current_challenges(%User{} = user) do
     today = TimeHelper.today(user)
@@ -43,6 +43,7 @@ defmodule Squeeze.Challenges do
     query = from c in Challenge,
       join: s in assoc(c, :scores),
       where: s.user_id == ^activity.user_id,
+      # Bug here
       where: c.start_date <= ^activity.start_at,
       where: c.end_date >= ^activity.start_at,
       where: c.activity_type == ^activity.activity_type,
@@ -122,6 +123,22 @@ defmodule Squeeze.Challenges do
     |> Changeset.put_assoc(:challenge, challenge)
     |> Changeset.put_change(:amount, amount)
     |> Changeset.put_change(:score, ranking_score(challenge, amount))
+    |> Repo.insert()
+  end
+
+  def list_challenge_activities(%Challenge{} = challenge) do
+    query = from a in ChallengeActivity,
+      where: a.challenge_id == ^challenge.id,
+      preload: [activity: :user]
+
+    Repo.all(query)
+  end
+
+  def create_challenge_activity(%Challenge{} = challenge, %Activity{} = activity, attrs \\ %{}) do
+    %ChallengeActivity{}
+    |> ChallengeActivity.changeset(attrs)
+    |> Changeset.put_assoc(:activity, activity)
+    |> Changeset.put_assoc(:challenge, challenge)
     |> Repo.insert()
   end
 

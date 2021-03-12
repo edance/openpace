@@ -158,6 +158,8 @@ defmodule SqueezeWeb.Router do
     get "/challenges/:id/status", ChallengeController, :status
     put "/challenges/:id/join", ChallengeController, :join
 
+    get "/challenges/:id/activities", ChallengeActivityController, :index
+
     post "/strava/exchange", StravaController, :exchange_code
 
     resources "/push_tokens", PushTokenController, only: [:create]
