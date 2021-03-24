@@ -129,7 +129,9 @@ defmodule Squeeze.Challenges do
   def list_challenge_activities(%Challenge{} = challenge) do
     query = from a in ChallengeActivity,
       where: a.challenge_id == ^challenge.id,
-      preload: [activity: :user]
+      order_by: [desc: :inserted_at],
+      preload: [activity: :user],
+      limit: 50
 
     Repo.all(query)
   end
