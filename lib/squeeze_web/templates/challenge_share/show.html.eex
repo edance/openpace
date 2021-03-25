@@ -10,9 +10,9 @@
             <%= @challenge.name %>
           </h1>
           <p class="mt-0">
-            <strong>Starts:</strong> <%= relative_time(@challenge.start_at) %>
+            <strong>Starts:</strong> <%= relative_time(@challenge.start_date) %>
             <br />
-            Ends: <%= relative_time(@challenge.end_at) %>
+            Ends: <%= relative_time(@challenge.end_date) %>
           </p>
 
           <div class="avatar-group d-flex mb-4">
@@ -68,7 +68,7 @@
                         </div>
                       </td>
                       <td class="budget text-right">
-                        <%= format_score(@challenge, score.score) %>
+                        <%= format_score(@challenge, score.amount) %>
                       </td>
                     </tr>
                   <% end %>
