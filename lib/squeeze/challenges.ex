@@ -73,19 +73,19 @@ defmodule Squeeze.Challenges do
     ranking_query =
       from c in Score,
       select: %{id: c.id, row_number: row_number() |> over(:challenges_partition)},
-      windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score]]]
+      windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score, asc: :inserted_at]]]
 
     from c in Score,
       join: r in subquery(ranking_query),
       on: c.id == r.id and r.row_number <= 5,
-      order_by: [desc: :score],
+      order_by: [desc: :score, asc: :inserted_at],
       preload: :user
   end
 
   def list_scores(%Challenge{} = challenge) do
     query = from s in Score,
       where: s.challenge_id == ^challenge.id,
-      order_by: [desc: s.score],
+      order_by: [desc: :score, asc: :inserted_at],
       preload: [:user]
 
     Repo.all(query)
@@ -156,7 +156,7 @@ defmodule Squeeze.Challenges do
     Challenge.changeset(challenge, %{})
   end
 
-  defp ranking_score(%Challenge{challenge_type: :segment}, nil), do: 31622400.0 # default to 1 year
+  defp ranking_score(%Challenge{challenge_type: :segment}, nil), do: -31622400.0 # default to 1 year
   defp ranking_score(%Challenge{challenge_type: :segment}, amount), do: amount * -1.0
   defp ranking_score(%Challenge{}, amount), do: amount
 end
