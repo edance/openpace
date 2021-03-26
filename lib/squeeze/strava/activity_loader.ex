@@ -7,8 +7,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.ActivityMatcher
   alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Dashboard
-  alias Squeeze.Strava.Client
-  alias Squeeze.Strava.StreamSetConverter
+  alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
   @strava_streams Application.get_env(:squeeze, :strava_streams)
@@ -21,7 +20,7 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   def update_or_create_activity(%Credential{} = credential, strava_activity) do
     user = credential.user
-    activity = map_strava_activity(strava_activity)
+    activity = ActivityFormatter.format(strava_activity)
     case ActivityMatcher.get_closest_activity(user, activity) do
       nil ->
         with {:ok, activity} <- Dashboard.create_activity(user, activity),
@@ -41,32 +40,6 @@ defmodule Squeeze.Strava.ActivityLoader do
     credential
     |> Client.new
     |> @strava_activities.get_activity_by_id(activity_id)
-  end
-
-  defp map_strava_activity(strava_activity) do
-    %{
-      name: strava_activity.name,
-      type: strava_activity.type,
-      activity_type: activity_type(strava_activity),
-      distance: strava_activity.distance,
-      duration: strava_activity.moving_time,
-      start_at: strava_activity.start_date,
-      start_at_local: strava_activity.start_date_local,
-      elevation_gain: strava_activity.total_elevation_gain,
-      external_id: "#{strava_activity.id}",
-      planned_date: Timex.to_date(strava_activity.start_date_local),
-      polyline: strava_activity.map.summary_polyline,
-      workout_type: strava_activity.workout_type
-    }
-  end
-
-  defp activity_type(strava_activity) do
-    cond do
-      String.contains?(strava_activity.type, "Run") -> :run
-      String.contains?(strava_activity.type, "Ride") -> :bike
-      String.contains?(strava_activity.type, "Swim") -> :swim
-      true -> :other
-    end
   end
 
   defp save_trackpoints(credential, %{external_id: strava_activity_id} = activity) do

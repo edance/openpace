@@ -6,7 +6,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   alias Squeeze.Accounts
   alias Squeeze.Accounts.{Credential}
   alias Squeeze.Dashboard
-  alias Squeeze.Strava.Client
+  alias Squeeze.Strava.{ActivityFormatter, Client}
   alias Strava.Paginator
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
@@ -19,7 +19,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   defp create_activities(credential) do
     credential
     |> activity_stream
-    |> Stream.map(&map_strava_activity/1)
+    |> Stream.map(&ActivityFormatter.format/1)
     |> Stream.each(fn(a) -> Dashboard.create_activity(credential.user, a) end)
     |> Enum.to_list()
   end
@@ -37,31 +37,5 @@ defmodule Squeeze.Strava.HistoryLoader do
   defp query(%{sync_at: nil}), do: [per_page: 50]
   defp query(%{sync_at: sync_at}) do
     [after: DateTime.to_unix(sync_at), per_page: 50]
-  end
-
-  defp map_strava_activity(strava_activity) do
-    %{
-      name: strava_activity.name,
-      activity_type: activity_type(strava_activity),
-      type: strava_activity.type,
-      distance: strava_activity.distance,
-      duration: strava_activity.moving_time,
-      start_at: strava_activity.start_date,
-      start_at_local: strava_activity.start_date_local,
-      elevation_gain: strava_activity.total_elevation_gain,
-      external_id: "#{strava_activity.id}",
-      planned_date: Timex.to_date(strava_activity.start_date_local),
-      polyline: strava_activity.map.summary_polyline,
-      workout_type: strava_activity.workout_type
-    }
-  end
-
-  defp activity_type(strava_activity) do
-    cond do
-      String.contains?(strava_activity.type, "Run") -> :run
-      String.contains?(strava_activity.type, "Ride") -> :bike
-      String.contains?(strava_activity.type, "Swim") -> :swim
-      true -> :other
-    end
   end
 end
