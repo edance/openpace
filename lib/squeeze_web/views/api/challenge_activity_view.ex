@@ -9,6 +9,7 @@ defmodule SqueezeWeb.Api.ChallengeActivityView do
     activity = challenge_activity.activity
 
     %{
+      id: challenge_activity.id,
       amount: challenge_activity.amount,
       activity: render_one(activity, SqueezeWeb.Api.ActivityView, "activity.json", as: :activity),
       user: render_one(activity.user, SqueezeWeb.Api.UserView, "user.json", as: :user)
