@@ -73,7 +73,8 @@ defmodule SqueezeWeb.IntegrationController do
   defp setup_integration(_, _, _), do: nil
 
   defp authorize_url!("strava") do
-    @strava_auth.authorize_url!(scope: "read,activity:read_all")
+    scope = "read,activity:read_all,activity:write"
+    @strava_auth.authorize_url!(scope: scope)
   end
 
   defp authorize_url!("fitbit") do
