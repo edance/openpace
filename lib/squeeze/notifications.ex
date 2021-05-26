@@ -8,10 +8,25 @@ defmodule Squeeze.Notifications do
   alias Squeeze.Accounts.User
   alias Squeeze.Challenges
   alias Squeeze.Challenges.{Challenge, Score}
+  alias Squeeze.Dashboard.Activity
   alias Squeeze.ExpoNotifications
   alias Squeeze.Repo
 
   alias Squeeze.Notifications.{PushToken}
+
+  def notify_new_activity(%Activity{user: user} = activity) do
+    messages = user
+    |> list_push_tokens()
+    |> Enum.map(fn (token) ->
+      %{
+        to: token.token,
+        title: "New #{activity.type} Uploaded",
+        body: "Check out your challenges!"
+       }
+    end)
+
+    ExpoNotifications.push_list(messages)
+  end
 
   def notify_user_joined(%Challenge{} = challenge, %User{} = user) do
     # Notify everyone if 20 or fewer users in challenge
