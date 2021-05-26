@@ -2,6 +2,7 @@ defmodule SqueezeWeb.Api.ChallengeController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Challenges
+  alias Squeeze.Notifications
 
   action_fallback SqueezeWeb.Api.FallbackController
 
@@ -39,6 +40,7 @@ defmodule SqueezeWeb.Api.ChallengeController do
     user = conn.assigns.current_user
     challenge = Challenges.get_challenge_by_slug!(slug)
     with {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
+      Notifications.notify_user_joined(challenge, user)
       send_resp(conn, :no_content, "")
     end
   end

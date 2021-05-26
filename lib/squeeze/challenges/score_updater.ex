@@ -5,9 +5,10 @@ defmodule Squeeze.Challenges.ScoreUpdater do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Challenges
-  alias Squeeze.Challenges.Challenge
+  alias Squeeze.Challenges.{Challenge, Score}
   alias Squeeze.Dashboard
   alias Squeeze.Dashboard.Activity
+  alias Squeeze.Notifications
   alias Squeeze.Repo
   alias Squeeze.Strava.Activities
 
@@ -21,19 +22,31 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     activity = Repo.preload(activity, :user)
     user = activity.user
     score = Challenges.get_score!(user, challenge)
-    amount = amount(activity, challenge)
+    amount = best_or_total_amount(activity, score)
+    existing_leader = Challenges.current_leader(challenge)
 
-    Challenges.create_challenge_activity(challenge, activity, %{amount: amount})
+    with {:ok, _} <- Challenges.create_challenge_activity(challenge, activity, %{amount: amount}) do
+      Challenges.update_score!(challenge, score, amount)
+
+      new_leader = Challenges.current_leader(challenge)
+      if new_leader.id == user.id && existing_leader.id != user.id do
+        Notifications.notify_leader_change(challenge)
+      end
+    end
+  end
+
+  def best_or_total_amount(%Activity{} = activity, %Score{} = score) do
+    challenge = score.challenge
+    amount = amount(activity, challenge)
 
     if challenge.challenge_type == :segment do
       if amount && (score.amount == 0.0 || amount < score.amount) do
-        Challenges.update_score!(challenge, score, amount / 1) # cast to float
-
+        amount
       else
-        {:ok, score}
+        score.amount
       end
     else
-      Challenges.update_score!(challenge, score, score.amount + amount)
+      score.amount + amount
     end
   end
 
