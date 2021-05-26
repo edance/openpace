@@ -7,6 +7,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.ActivityMatcher
   alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Dashboard
+  alias Squeeze.Notifications
   alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
@@ -25,6 +26,7 @@ defmodule Squeeze.Strava.ActivityLoader do
       nil ->
         with {:ok, activity} <- Dashboard.create_activity(user, activity),
              {:ok, _} <- save_trackpoints(credential, activity) do
+          Notifications.notify_new_activity(activity)
           ScoreUpdater.update_score(activity)
           {:ok, activity}
         end

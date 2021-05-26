@@ -32,6 +32,7 @@ defmodule Squeeze.Notifications do
     # Notify everyone if 20 or fewer users in challenge
     if user_count_in_challenge(challenge) <= 20 do
       messages = push_tokens_in_challenge(challenge)
+      |> Enum.reject(fn (token) -> token.user_id == user.id end)
       |> Enum.map(fn (token) ->
         %{
           to: token.token,

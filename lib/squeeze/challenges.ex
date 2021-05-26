@@ -82,6 +82,15 @@ defmodule Squeeze.Challenges do
       preload: :user
   end
 
+  def current_leader(%Challenge{} = challenge) do
+    query = from u in User,
+      join: s in assoc(u, :scores),
+      where: s.challenge_id == ^challenge.id,
+      order_by: [desc: :score, asc: :inserted_at]
+
+    Repo.one(query)
+  end
+
   def list_scores(%Challenge{} = challenge, opts \\ [limit: 100]) do
     query = from s in Score,
       where: s.challenge_id == ^challenge.id,
