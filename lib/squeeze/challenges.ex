@@ -39,6 +39,16 @@ defmodule Squeeze.Challenges do
     Repo.all(query)
   end
 
+  def list_challenges(start_date, end_date) do
+    query = from p in Challenge,
+      join: s in assoc(p, :scores),
+      where: p.start_date >= ^start_date,
+      where: p.end_date <= ^end_date,
+      preload: [scores: ^five_scores_query()]
+
+    Repo.all(query)
+  end
+
   def list_matched_challenges(%Activity{} = activity) do
     query = from c in Challenge,
       join: s in assoc(c, :scores),
@@ -86,9 +96,19 @@ defmodule Squeeze.Challenges do
     query = from u in User,
       join: s in assoc(u, :scores),
       where: s.challenge_id == ^challenge.id,
-      order_by: [desc: :score, asc: :inserted_at]
+      order_by: [desc: s.score, asc: s.inserted_at]
 
     Repo.one(query)
+  end
+
+  def list_users(%Challenge{} = challenge, opts \\ [limit: 100]) do
+    query = from u in User,
+      join: s in assoc(u, :scores),
+      where: s.challenge_id == ^challenge.id,
+      limit: ^opts[:limit],
+      preload: [:user_prefs]
+
+    Repo.all(query)
   end
 
   def list_scores(%Challenge{} = challenge, opts \\ [limit: 100]) do
