@@ -22,7 +22,11 @@ defmodule Squeeze.ExpoNotifications do
   plug Tesla.Middleware.JSON
 
   def push_list(messages) when is_list(messages) do
-    post("send", messages)
+    if Enum.empty?(messages) do
+      {:ok, []}
+    else
+      post("send", messages)
+    end
   end
 
   def push(message) do

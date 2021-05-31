@@ -70,6 +70,13 @@ config :squeeze, Squeeze.Garmin,
   consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
   redirect_uri: "http://localhost:4000/integration/garmin/callback"
 
+config :squeeze, Squeeze.Scheduler,
+  jobs: [
+    {"0 * * * *",      {Squeeze.Notifications, :batch_notify_challenge_start, []}}, # Run every hour
+    {"0 * * * *",      {Squeeze.Notifications, :batch_notify_challenge_ending, []}}, # Run every hour
+    {"0 * * * *",      {Squeeze.Notifications, :batch_notify_challenge_ended, []}}, # Run every hour
+  ]
+
 config :algolia,
   application_id: System.get_env("ALGOLIA_APPLICATION_ID"),
   api_key: System.get_env("ALGOLIA_API_KEY")

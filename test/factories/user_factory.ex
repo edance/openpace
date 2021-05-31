@@ -34,6 +34,11 @@ defmodule Squeeze.UserFactory do
           }
         )
       end
+
+      def with_push_token(%User{} = user) do
+        insert(:push_token, user: user)
+        user
+      end
     end
   end
 end

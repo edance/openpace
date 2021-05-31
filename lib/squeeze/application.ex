@@ -18,6 +18,7 @@ defmodule Squeeze.Application do
       supervisor(Endpoint, []),
       # Start your own worker by calling: Squeeze.Worker.start_link(arg1, arg2, arg3)
       # worker(Squeeze.Worker, [arg1, arg2, arg3]),
+      worker(Squeeze.Scheduler, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
