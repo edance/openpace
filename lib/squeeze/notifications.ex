@@ -16,26 +16,17 @@ defmodule Squeeze.Notifications do
   alias Squeeze.Notifications.{PushToken}
 
   def batch_notify_challenge_start do
-    today = Timex.today()
-    yesterday = Timex.shift(today, days: -1)
-    tomorrow = Timex.shift(today, days: 1)
-    challenges = Challenges.list_challenges(yesterday, tomorrow)
-    challenges
+    list_challenges_starting_soon()
     |> Enum.each(&notify_challenge_started/1)
   end
 
   def batch_notify_challenge_ending do
-    today = Timex.today()
-    yesterday = Timex.shift(today, days: -1)
-    tomorrow = Timex.shift(today, days: 1)
-    challenges = Challenges.list_challenges(yesterday, tomorrow)
-    challenges
+    list_challenges_ending_soon()
     |> Enum.each(&notify_challenge_ending/1)
   end
 
   def batch_notify_challenge_ended do
-    today = Timex.today()
-    Challenges.list_challenges(Timex.shift(today, days: -2), today)
+    list_challenges_recently_ended()
     |> Enum.each(&notify_challenge_ending/1)
   end
 
@@ -232,5 +223,29 @@ defmodule Squeeze.Notifications do
   def time_to_send?(date, user) do
     datetime = TimeHelper.current_datetime(user)
     datetime.hour == 9 && Timex.equal?(Timex.to_date(datetime), date)
+  end
+
+  def list_challenges_starting_soon() do
+    query = from p in Challenge,
+      where: p.start_date >= ^Timex.shift(Timex.today(), days: -1),
+      where: p.start_date <= ^Timex.shift(Timex.today(), days: 1)
+
+    Repo.all(query)
+  end
+
+  def list_challenges_ending_soon() do
+    query = from p in Challenge,
+      where: p.end_date >= ^Timex.shift(Timex.today(), days: -1),
+      where: p.end_date <= ^Timex.shift(Timex.today(), days: 1)
+
+    Repo.all(query)
+  end
+
+  def list_challenges_recently_ended() do
+    query = from p in Challenge,
+      where: p.end_date >= ^Timex.shift(Timex.today(), days: -2),
+      where: p.end_date <= ^Timex.today()
+
+    Repo.all(query)
   end
 end
