@@ -43,9 +43,8 @@ defmodule Squeeze.Challenges do
     query = from c in Challenge,
       join: s in assoc(c, :scores),
       where: s.user_id == ^activity.user_id,
-      # Bug here
-      where: c.start_date <= ^activity.start_at,
-      where: c.end_date >= ^activity.start_at,
+      where: c.start_date <= ^activity.start_at_local,
+      where: c.end_date >= ^activity.start_at_local,
       where: c.activity_type == ^activity.activity_type,
       preload: [scores: ^five_scores_query()]
 
