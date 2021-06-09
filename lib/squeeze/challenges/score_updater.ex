@@ -22,7 +22,7 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     activity = Repo.preload(activity, :user)
     user = activity.user
     score = Challenges.get_score!(user, challenge)
-    amount = best_or_total_amount(activity, score)
+    amount = best_or_total_amount(activity, challenge, score)
     existing_leader = Challenges.current_leader(challenge)
 
     with {:ok, _} <- Challenges.create_challenge_activity(challenge, activity, %{amount: amount}) do
@@ -35,8 +35,7 @@ defmodule Squeeze.Challenges.ScoreUpdater do
     end
   end
 
-  def best_or_total_amount(%Activity{} = activity, %Score{} = score) do
-    challenge = score.challenge
+  def best_or_total_amount(%Activity{} = activity, %Challenge{} = challenge, %Score{} = score) do
     amount = amount(activity, challenge)
 
     if challenge.challenge_type == :segment do
