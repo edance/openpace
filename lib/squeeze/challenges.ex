@@ -96,7 +96,8 @@ defmodule Squeeze.Challenges do
     query = from u in User,
       join: s in assoc(u, :scores),
       where: s.challenge_id == ^challenge.id,
-      order_by: [desc: s.score, asc: s.inserted_at]
+      order_by: [desc: s.score, asc: s.inserted_at],
+      limit: 1
 
     Repo.one(query)
   end
