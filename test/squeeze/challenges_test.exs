@@ -28,6 +28,50 @@ defmodule Squeeze.ChallengesTest do
   end
 
   describe "#list_matched_challenges/1" do
+    test "filters by activity type" do
+      # [score, _] = insert_pair(:score)
+    end
+
+    test "includes challenges that start at the end of the day" do
+      today = Timex.today()
+      challenge = insert(:challenge, start_date: today, end_date: today)
+      |> with_scores(1)
+      [score] = challenge.scores
+
+      end_of_day = Timex.now("America/New_York") |> Timex.end_of_day()
+      activity = insert(:activity, user: score.user) |> at_datetime(end_of_day)
+
+      challenges = Challenges.list_matched_challenges(activity)
+      assert length(challenges) == 1
+      assert List.first(challenges).id == score.challenge_id
+    end
+
+    test "excludes challenges that start at after end_date" do
+      today = Timex.today()
+      challenge = insert(:challenge, start_date: today, end_date: today)
+      |> with_scores(1)
+      [score] = challenge.scores
+
+      start_of_tomorrow = Timex.now("America/New_York") |> Timex.shift(days: 1) |> Timex.beginning_of_day()
+      activity = insert(:activity, user: score.user) |> at_datetime(start_of_tomorrow)
+
+      challenges = Challenges.list_matched_challenges(activity)
+      assert Enum.empty?(challenges)
+    end
+
+    test "excludes challenges that start at before start_date" do
+      today = Timex.today()
+      challenge = insert(:challenge, start_date: today, end_date: today)
+      |> with_scores(1)
+      [score] = challenge.scores
+
+      start_of_yesterday = Timex.now("America/New_York") |> Timex.shift(days: -11) |> Timex.beginning_of_day()
+      activity = insert(:activity, user: score.user) |> at_datetime(start_of_yesterday)
+
+      challenges = Challenges.list_matched_challenges(activity)
+      assert Enum.empty?(challenges)
+    end
+
     test "returns challenges for user" do
       [score, _] = insert_pair(:score)
       activity = insert(:activity, user: score.user)

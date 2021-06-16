@@ -24,11 +24,9 @@ defmodule Squeeze.Challenges.Challenge do
   schema "challenges" do
     field :activity_type, ActivityTypeEnum
     field :challenge_type, ChallengeTypeEnum
-    field :end_at, :utc_datetime
-    field :start_date, :date
-    field :end_date, :date
+    field :start_date, :date # starts at 00:00 on start_date
+    field :end_date, :date # ends at 11:59 on end_date
     field :name, :string
-    field :start_at, :utc_datetime
     field :timeline, TimelineEnum
     field :private, :boolean
     field :slug, :string
