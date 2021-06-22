@@ -16,8 +16,8 @@ defmodule Squeeze.TimeHelper do
     |> Timex.to_date()
   end
 
-  def current_datetime(%User{user_prefs: %{timezone: timezone}}) do
-    Timex.now()
+  def current_datetime(%User{user_prefs: %{timezone: timezone}}, datetime \\ Timex.now()) do
+    datetime
     |> Timex.to_datetime(timezone)
   end
 

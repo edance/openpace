@@ -15,9 +15,9 @@ defmodule Squeeze.Notifications do
 
   alias Squeeze.Notifications.{PushToken}
 
-  def batch_notify_challenge_start do
-    list_challenges_starting_soon()
-    |> Enum.each(&notify_challenge_started/1)
+  def batch_notify_challenge_start(datetime \\ Timex.now) do
+    list_challenges_starting_soon(datetime)
+    |> Enum.each(fn(c) -> notify_challenge_started(c, datetime) end)
   end
 
   def batch_notify_challenge_ending do
@@ -83,10 +83,10 @@ defmodule Squeeze.Notifications do
     end
   end
 
-  def notify_challenge_started(%Challenge{} = challenge) do
+  def notify_challenge_started(%Challenge{} = challenge, datetime \\ Timex.now) do
     users = challenge
     |> Challenges.list_users()
-    |> Enum.filter(fn (user) -> time_to_send?(challenge.start_date, user) end)
+    |> Enum.filter(fn (user) -> time_to_send?(challenge.start_date, user, datetime) end)
 
     messages = users
     |> Enum.flat_map(fn user ->
@@ -220,15 +220,16 @@ defmodule Squeeze.Notifications do
   @doc """
   Checks to see if it is 9am in the user's timezone on the date
   """
-  def time_to_send?(date, user) do
-    datetime = TimeHelper.current_datetime(user)
+  def time_to_send?(date, user, datetime \\ Timex.now) do
+    datetime = TimeHelper.current_datetime(user, datetime)
     datetime.hour == 9 && Timex.equal?(Timex.to_date(datetime), date)
   end
 
-  def list_challenges_starting_soon() do
+  def list_challenges_starting_soon(datetime \\ Timex.now) do
+    today = datetime |> Timex.to_date()
     query = from p in Challenge,
-      where: p.start_date >= ^Timex.shift(Timex.today(), days: -1),
-      where: p.start_date <= ^Timex.shift(Timex.today(), days: 1)
+      where: p.start_date >= ^Timex.shift(today, days: -1),
+      where: p.start_date <= ^Timex.shift(today, days: 1)
 
     Repo.all(query)
   end

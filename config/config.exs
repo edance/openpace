@@ -31,6 +31,8 @@ config :squeeze, Squeeze.Mailer,
 config :squeeze, gtm_id: System.get_env("GTM_ID")
 config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
 
+config :squeeze, :notification_provider, Squeeze.ExpoNotifications.DefaultNotificationProvider
+
 config :squeeze, :strava_activities, Strava.Activities
 config :squeeze, :strava_auth, Strava.Auth
 config :squeeze, :strava_client, Strava.Client

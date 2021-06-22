@@ -69,7 +69,7 @@ defmodule Squeeze.Mixfile do
       {:html_sanitize_ex, "~> 1.4.0"},
       {:algolia, "~> 0.8.0"},
       {:cors_plug, "~> 2.0"},
-      {:ex_machina, "~> 2.1"},
+      {:ex_machina, "~> 2.7"},
       {:quantum, "~> 3.0"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},

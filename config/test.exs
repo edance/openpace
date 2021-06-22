@@ -22,6 +22,8 @@ config :squeeze, Squeeze.Repo,
 config :squeeze, Squeeze.Mailer,
   adapter: Bamboo.TestAdapter
 
+config :squeeze, :notification_provider, Squeeze.ExpoNotifications.MockNotificationProvider
+
 config :squeeze, :strava_activities, Squeeze.Strava.MockActivities
 config :squeeze, :strava_auth, Squeeze.Strava.MockAuth
 config :squeeze, :strava_client, Squeeze.Strava.MockClient
