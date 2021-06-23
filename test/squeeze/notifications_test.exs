@@ -57,6 +57,27 @@ defmodule Squeeze.NotificationsTest do
     end
   end
 
+  describe "#batch_notify_challenge_ended" do
+    setup do
+      now = Timex.now("America/New_York") |> Timex.shift(days: -1)
+      challenge = insert(:challenge, end_date: now) |> with_scores(1)
+      [score] = challenge.scores
+      insert(:push_token, token: "ABC", user: score.user)
+
+      {:ok, []}
+    end
+
+    test "only notifies for challenges ended yesterday" do
+      now = Timex.now("America/New_York") |> Timex.set(hour: 9) # Today at 9 am
+      insert(:challenge, end_date: now) |> with_scores(1)
+
+      Squeeze.ExpoNotifications.MockNotificationProvider
+      |> expect(:push_list, fn([%{to: "ABC"}]) -> {:ok, []} end)
+
+      Notifications.batch_notify_challenge_start(now)
+    end
+  end
+
   describe "#notify_new_activity/1" do
   end
 
