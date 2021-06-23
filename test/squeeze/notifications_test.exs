@@ -12,23 +12,46 @@ defmodule Squeeze.NotificationsTest do
       now = Timex.now("America/New_York")
       challenge = insert(:challenge, start_date: now) |> with_scores(1)
       [score] = challenge.scores
-      insert(:push_token, user: score.user)
+      push_token = insert(:push_token, token: "ABC", user: score.user)
 
-      {:ok, []}
+      {:ok, challenge: challenge, push_token: push_token}
     end
 
     test "only notifies for challenges starting today" do
       now = Timex.now("America/New_York") |> Timex.set(hour: 9) # Today at 9 am
-      insert(:challenge, start_date: Timex.shift(now, days: -1)) |> with_scores(1)
+      challenge = insert(:challenge, start_date: Timex.shift(now, days: -1)) |> with_scores(1)
+      [score] = challenge.scores
+      insert(:push_token, user: score.user)
 
       Squeeze.ExpoNotifications.MockNotificationProvider
-      |> expect(:push_list, fn(_) -> {:ok, []} end)
+      |> expect(:push_list, fn([%{to: "ABC"}]) -> {:ok, []} end)
 
       Notifications.batch_notify_challenge_start(now)
     end
 
     test "only notifies at 9am" do
       now = Timex.now("America/New_York") |> Timex.set(hour: 8) # Today at 8 am
+
+      Notifications.batch_notify_challenge_start(now)
+    end
+  end
+
+  describe "#batch_notify_challenge_ending" do
+    setup do
+      now = Timex.now("America/New_York")
+      challenge = insert(:challenge, end_date: now) |> with_scores(1)
+      [score] = challenge.scores
+      insert(:push_token, token: "ABC", user: score.user)
+
+      {:ok, []}
+    end
+
+    test "only notifies for challenges ending today" do
+      now = Timex.now("America/New_York") |> Timex.set(hour: 9) # Today at 9 am
+      insert(:challenge, end_date: Timex.shift(now, days: 1)) |> with_scores(1)
+
+      Squeeze.ExpoNotifications.MockNotificationProvider
+      |> expect(:push_list, fn([%{to: "ABC"}]) -> {:ok, []} end)
 
       Notifications.batch_notify_challenge_start(now)
     end
