@@ -8,6 +8,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Dashboard
   alias Squeeze.Notifications
+  alias Squeeze.Repo
   alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}
 
   @strava_activities Application.get_env(:squeeze, :strava_activities)
@@ -20,6 +21,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   end
 
   def update_or_create_activity(%Credential{} = credential, strava_activity) do
+    credential = Repo.preload(credential, [user: :user_prefs])
     user = credential.user
     activity = ActivityFormatter.format(strava_activity)
     case ActivityMatcher.get_closest_activity(user, activity) do
