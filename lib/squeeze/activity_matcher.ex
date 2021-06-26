@@ -5,10 +5,9 @@ defmodule Squeeze.ActivityMatcher do
 
   alias Squeeze.Accounts.{User}
   alias Squeeze.Dashboard
-  alias Squeeze.TimeHelper
 
   def get_closest_activity(%User{} = user, %{} = activity) do
-    date = TimeHelper.to_date(user, activity.start_at)
+    date = Timex.to_date(activity.start_at_local)
     user
     |> Dashboard.get_activities_by_date(date)
     |> Enum.filter(&(&1.type == activity.type))
