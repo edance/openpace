@@ -20,14 +20,15 @@ defmodule Squeeze.Notifications do
     |> Enum.each(fn(c) -> notify_challenge_started(c, datetime) end)
   end
 
-  def batch_notify_challenge_ending do
-    list_challenges_ending_soon()
-    |> Enum.each(&notify_challenge_ending/1)
+  def batch_notify_challenge_ending(datetime \\ Timex.now) do
+    list_challenges_ending_soon(datetime)
+    |> Enum.reject(&(&1.start_date == &1.end_date))
+    |> Enum.each(&(notify_challenge_ending(&1, datetime)))
   end
 
-  def batch_notify_challenge_ended do
-    list_challenges_recently_ended()
-    |> Enum.each(&notify_challenge_ending/1)
+  def batch_notify_challenge_ended(datetime \\ Timex.now) do
+    list_challenges_recently_ended(datetime)
+    |> Enum.each(&(notify_challenge_ended(&1, datetime)))
   end
 
   def notify_new_activity(%Activity{} = activity) do
@@ -86,7 +87,7 @@ defmodule Squeeze.Notifications do
   def notify_challenge_started(%Challenge{} = challenge, datetime \\ Timex.now) do
     users = challenge
     |> Challenges.list_users()
-    |> Enum.filter(fn (user) -> time_to_send?(challenge.start_date, user, datetime) end)
+    |> Enum.filter(&(time_to_send?(challenge.start_date, &1, datetime)))
 
     messages = users
     |> Enum.flat_map(fn user ->
@@ -103,10 +104,10 @@ defmodule Squeeze.Notifications do
     ExpoNotifications.push_list(messages)
   end
 
-  def notify_challenge_ended(%Challenge{} = challenge) do
+  def notify_challenge_ended(%Challenge{} = challenge, datetime \\ Timex.now) do
     users = challenge
     |> Challenges.list_users()
-    |> Enum.filter(fn (user) -> time_to_send?(Timex.shift(challenge.end_date, days: 1), user) end)
+    |> Enum.filter(&(time_to_send?(Timex.shift(challenge.end_date, days: 1), &1, datetime)))
 
     messages = users
     |> Enum.flat_map(fn user ->
@@ -123,11 +124,10 @@ defmodule Squeeze.Notifications do
     ExpoNotifications.push_list(messages)
   end
 
-  def notify_challenge_ending(%Challenge{} = challenge) do
+  def notify_challenge_ending(%Challenge{} = challenge, datetime \\ Timex.now) do
     users = challenge
     |> Challenges.list_users()
-    |> Enum.reject(fn (challenge) -> challenge.start_date == challenge.end_date end)
-    |> Enum.filter(fn (user) -> time_to_send?(challenge.end_date, user) end)
+    |> Enum.filter(&(time_to_send?(challenge.end_date, &1, datetime)))
 
     messages = users
     |> Enum.flat_map(fn user ->
@@ -234,18 +234,20 @@ defmodule Squeeze.Notifications do
     Repo.all(query)
   end
 
-  def list_challenges_ending_soon() do
+  def list_challenges_ending_soon(datetime \\ Timex.now) do
+    today = datetime |> Timex.to_date()
     query = from p in Challenge,
-      where: p.end_date >= ^Timex.shift(Timex.today(), days: -1),
-      where: p.end_date <= ^Timex.shift(Timex.today(), days: 1)
+      where: p.end_date >= ^Timex.shift(today, days: -1),
+      where: p.end_date <= ^Timex.shift(today, days: 1)
 
     Repo.all(query)
   end
 
-  def list_challenges_recently_ended() do
+  def list_challenges_recently_ended(datetime \\ Timex.now) do
+    today = datetime |> Timex.to_date()
     query = from p in Challenge,
-      where: p.end_date >= ^Timex.shift(Timex.today(), days: -2),
-      where: p.end_date <= ^Timex.today()
+      where: p.end_date >= ^Timex.shift(today, days: -2),
+      where: p.end_date <= ^today
 
     Repo.all(query)
   end
