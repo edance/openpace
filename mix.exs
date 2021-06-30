@@ -48,7 +48,7 @@ defmodule Squeeze.Mixfile do
       {:gettext, "~> 0.11"},
       {:ordinal, "~> 0.1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:cowboy, "< 2.8.0", override: true},
+      {:cowboy, "< 2.10.0", override: true},
       {:plug, "~> 1.7"},
       {:strava, "~> 1.0"},
       {:timex, "~> 3.3"},
