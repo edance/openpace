@@ -43,7 +43,7 @@ defmodule Squeeze.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:phoenix_active_link, "~> 0.2.1"},
+      {:phoenix_active_link, "~> 0.3.1"},
       {:turbolinks, "~> 1.0.1"},
       {:gettext, "~> 0.11"},
       {:ordinal, "~> 0.1.0"},
