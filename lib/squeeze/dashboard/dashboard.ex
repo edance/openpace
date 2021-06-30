@@ -207,15 +207,15 @@ defmodule Squeeze.Dashboard do
   end
 
   defp by_date(query, date) do
-    start_at = Timex.beginning_of_day(date)
-    end_at = Timex.end_of_day(date)
+    start_at = Timex.beginning_of_day(date) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date) |> Timex.to_datetime()
     from q in query,
       where: (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or (q.planned_date == ^date)
   end
 
   defp by_date_range(query, date_range) do
-    start_at = Timex.beginning_of_day(date_range.first)
-    end_at = Timex.end_of_day(date_range.last)
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
     from q in query,
       where: (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or
              (q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last)

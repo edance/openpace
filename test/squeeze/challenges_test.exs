@@ -33,12 +33,12 @@ defmodule Squeeze.ChallengesTest do
     end
 
     test "includes challenges that start at the end of the day" do
-      today = Timex.today()
+      today = today()
       challenge = insert(:challenge, start_date: today, end_date: today)
       |> with_scores(1)
       [score] = challenge.scores
 
-      end_of_day = Timex.now("America/New_York") |> Timex.end_of_day()
+      end_of_day = today |> Timex.end_of_day()
       activity = insert(:activity, user: score.user) |> at_datetime(end_of_day)
 
       challenges = Challenges.list_matched_challenges(activity)
@@ -47,12 +47,12 @@ defmodule Squeeze.ChallengesTest do
     end
 
     test "excludes challenges that start at after end_date" do
-      today = Timex.today()
+      today = today()
       challenge = insert(:challenge, start_date: today, end_date: today)
       |> with_scores(1)
       [score] = challenge.scores
 
-      start_of_tomorrow = Timex.now("America/New_York") |> Timex.shift(days: 1) |> Timex.beginning_of_day()
+      start_of_tomorrow = today |> Timex.shift(days: 1) |> Timex.beginning_of_day()
       activity = insert(:activity, user: score.user) |> at_datetime(start_of_tomorrow)
 
       challenges = Challenges.list_matched_challenges(activity)
@@ -65,7 +65,7 @@ defmodule Squeeze.ChallengesTest do
       |> with_scores(1)
       [score] = challenge.scores
 
-      start_of_yesterday = Timex.now("America/New_York") |> Timex.shift(days: -11) |> Timex.beginning_of_day()
+      start_of_yesterday = today |> Timex.shift(days: -1) |> Timex.beginning_of_day()
       activity = insert(:activity, user: score.user) |> at_datetime(start_of_yesterday)
 
       challenges = Challenges.list_matched_challenges(activity)
@@ -102,5 +102,9 @@ defmodule Squeeze.ChallengesTest do
       challenge = score.challenge
       assert {:error, %Changeset{}} = Challenges.add_user_to_challenge(user, challenge)
     end
+  end
+
+  defp today() do
+    Timex.today("America/New_York")
   end
 end

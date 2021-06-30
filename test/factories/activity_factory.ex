@@ -6,12 +6,12 @@ defmodule Squeeze.ActivityFactory do
 
   defmacro __using__(_opts) do
     quote do
-      def activity_factory do
+      def activity_factory(attrs) do
         miles = Enum.random(2..16) # 2-16 miles
         pace = Enum.random(5..8) # 5-9 min/miles
         elevation_gain = Float.round(Enum.random(600..2000) / 3.28, 2)
-        now = DateTime.utc_now()
         timezone = "America/New_York"
+        start_at = Map.get(attrs, :start_at, Timex.now())
 
         %Activity{
           distance: miles * 1609.0,
@@ -19,15 +19,17 @@ defmodule Squeeze.ActivityFactory do
           name: Enum.random(["Morning Run", "Afternoon Run", "Evening Run"]),
           type: "Run",
           activity_type: :run,
-          start_at: now,
-          start_at_local: Timex.to_datetime(now, timezone),
-          planned_date: Timex.to_datetime(now, timezone) |> Timex.to_date(),
+          start_at: start_at,
+          start_at_local: Timex.to_datetime(start_at, timezone),
+          planned_date: Timex.to_datetime(start_at, timezone) |> Timex.to_date(),
           external_id: sequence(:external_id, &("#{&1}")),
           polyline: "abc",
           elevation_gain: elevation_gain,
           workout_type: nil,
           user: build(:user),
         }
+        |> merge_attributes(attrs)
+        |> evaluate_lazy_attributes()
       end
 
       def planned_activity_factory do
