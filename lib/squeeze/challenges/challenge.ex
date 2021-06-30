@@ -19,6 +19,8 @@ defmodule Squeeze.Challenges.Challenge do
   @optional_fields ~w(
     segment_id
     polyline
+    private
+    recurring
   )a
 
   schema "challenges" do
@@ -29,6 +31,7 @@ defmodule Squeeze.Challenges.Challenge do
     field :name, :string
     field :timeline, TimelineEnum
     field :private, :boolean
+    field :recurring, :boolean
     field :slug, :string
     field :segment_id, Squeeze.Stringable
     field :polyline, :string
