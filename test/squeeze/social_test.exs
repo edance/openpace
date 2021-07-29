@@ -3,60 +3,60 @@ defmodule Squeeze.SocialTest do
 
   alias Squeeze.Social
 
-  describe "followers" do
-    alias Squeeze.Social.Follower
+  describe "follows" do
+    alias Squeeze.Social.Follow
 
     @valid_attrs %{}
     @update_attrs %{}
     @invalid_attrs %{}
 
-    def follower_fixture(attrs \\ %{}) do
-      {:ok, follower} =
+    def follow_fixture(attrs \\ %{}) do
+      {:ok, follow} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Social.create_follower()
+        |> Social.create_follow()
 
-      follower
+      follow
     end
 
-    test "list_followers/0 returns all followers" do
-      follower = follower_fixture()
-      assert Social.list_followers() == [follower]
+    test "list_follows/0 returns all follows" do
+      follow = follow_fixture()
+      assert Social.list_follows() == [follow]
     end
 
-    test "get_follower!/1 returns the follower with given id" do
-      follower = follower_fixture()
-      assert Social.get_follower!(follower.id) == follower
+    test "get_follow!/1 returns the follow with given id" do
+      follow = follow_fixture()
+      assert Social.get_follow!(follow.id) == follow
     end
 
-    test "create_follower/1 with valid data creates a follower" do
-      assert {:ok, %Follower{} = follower} = Social.create_follower(@valid_attrs)
+    test "create_follow/1 with valid data creates a follow" do
+      assert {:ok, %Follow{} = follow} = Social.create_follow(@valid_attrs)
     end
 
-    test "create_follower/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Social.create_follower(@invalid_attrs)
+    test "create_follow/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Social.create_follow(@invalid_attrs)
     end
 
-    test "update_follower/2 with valid data updates the follower" do
-      follower = follower_fixture()
-      assert {:ok, %Follower{} = follower} = Social.update_follower(follower, @update_attrs)
+    test "update_follow/2 with valid data updates the follow" do
+      follow = follow_fixture()
+      assert {:ok, %Follow{} = follow} = Social.update_follow(follow, @update_attrs)
     end
 
-    test "update_follower/2 with invalid data returns error changeset" do
-      follower = follower_fixture()
-      assert {:error, %Ecto.Changeset{}} = Social.update_follower(follower, @invalid_attrs)
-      assert follower == Social.get_follower!(follower.id)
+    test "update_follow/2 with invalid data returns error changeset" do
+      follow = follow_fixture()
+      assert {:error, %Ecto.Changeset{}} = Social.update_follow(follow, @invalid_attrs)
+      assert follow == Social.get_follow!(follow.id)
     end
 
-    test "delete_follower/1 deletes the follower" do
-      follower = follower_fixture()
-      assert {:ok, %Follower{}} = Social.delete_follower(follower)
-      assert_raise Ecto.NoResultsError, fn -> Social.get_follower!(follower.id) end
+    test "delete_follow/1 deletes the follow" do
+      follow = follow_fixture()
+      assert {:ok, %Follow{}} = Social.delete_follow(follow)
+      assert_raise Ecto.NoResultsError, fn -> Social.get_follow!(follow.id) end
     end
 
-    test "change_follower/1 returns a follower changeset" do
-      follower = follower_fixture()
-      assert %Ecto.Changeset{} = Social.change_follower(follower)
+    test "change_follow/1 returns a follow changeset" do
+      follow = follow_fixture()
+      assert %Ecto.Changeset{} = Social.change_follow(follow)
     end
   end
 end
