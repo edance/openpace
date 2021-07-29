@@ -174,6 +174,10 @@ defmodule SqueezeWeb.Router do
     put "/user_prefs/me", UserPrefsController, :update
 
     get "/users/me/activities", ActivityController, :index
+
+    get "/users/:id/followers", FollowerController, :index
+    post "/follow/:id", FollowerController, :create
+    delete "/unfollow/:id", FollowerController, :delete
   end
 
   if Mix.env() == :dev do
