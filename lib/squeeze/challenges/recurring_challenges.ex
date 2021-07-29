@@ -4,9 +4,11 @@ defmodule Squeeze.Challenges.RecurringChallenges do
   """
 
   import Ecto.Query, warn: false
-  # alias Ecto.{Changeset}
-  alias Squeeze.Challenges.Challenge
+  alias Ecto.{Changeset, Multi}
+  alias Squeeze.Challenges
+  alias Squeeze.Challenges.{Challenge, Score}
   alias Squeeze.Repo
+  alias Squeeze.SlugGenerator
 
   @fields_to_clone ~w(
     name
@@ -26,15 +28,41 @@ defmodule Squeeze.Challenges.RecurringChallenges do
   end
 
   def create_new_challenge(challenge) do
-    %Challenge{}
+    slug = SlugGenerator.gen_slug()
+
+    changeset = %Challenge{}
     |> Challenge.changeset(challenge_attrs(challenge))
-    |> Repo.insert_with_slug()
+    |> Changeset.put_change(:slug, slug)
+
+    Multi.new()
+    |> Multi.insert(:challenge, changeset)
+    |> Multi.run(:scores, fn(repo, %{challenge: new_challenge}) ->
+      Challenges.list_users(challenge)
+      |> Enum.map(&(score_attrs(new_challenge, &1)))
+      |> Enum.chunk_every(100)
+      |> Enum.each(&(repo.insert_all(Score, &1)))
+      end)
+    |> Repo.transaction()
   end
 
   def challenge_attrs(challenge) do
     challenge
     |> Map.take(@fields_to_clone)
     |> Map.merge(challenge_dates(challenge))
+  end
+
+  def score_attrs(%Challenge{} = challenge, user) do
+    amount = case challenge.challenge_type do
+               :segment -> nil
+               _ -> 0.0
+             end
+
+    %{
+      user_id: user.id,
+      challenge_id: challenge.id,
+      amount: amount,
+      score: Challenges.ranking_score(challenge, amount)
+    }
   end
 
   def challenge_dates(%{timeline: :day, start_date: date}) do
