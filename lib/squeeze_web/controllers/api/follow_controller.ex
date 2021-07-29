@@ -19,22 +19,22 @@ defmodule SqueezeWeb.Api.FollowController do
     render(conn, "following.json", users: following)
   end
 
-  def create(conn, %{"slug" => slug}) do
+  def follow(conn, %{"slug" => slug}) do
     user = conn.assigns.current_user
-    following_user = Accounts.get_user_by_slug!(slug)
+    followee = Accounts.get_user_by_slug!(slug)
 
-    with {:ok, %Follow{} = follow} <- Social.create_follow(user, following_user) do
+    with {:ok, _} <- Social.follow(user, followee) do
       conn
       |> put_status(:created)
-      |> render("show.json", follow: follow)
+      |> render("follow.json")
     end
   end
 
-  def delete(conn, %{"slug" => slug}) do
+  def unfollow(conn, %{"slug" => slug}) do
     user = conn.assigns.current_user
-    following_user = Accounts.get_user_by_slug!(slug)
+    followee = Accounts.get_user_by_slug!(slug)
 
-    with {:ok, %Follow{}} <- Social.delete_follow(user, following_user) do
+    with {:ok, %Follow{}} <- Social.unfollow(user, followee) do
       send_resp(conn, :no_content, "")
     end
   end

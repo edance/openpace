@@ -4,7 +4,7 @@ defmodule Squeeze.Social do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.Changeset
+  alias Ecto.{Changeset, Multi}
   alias Squeeze.Accounts.User
   alias Squeeze.Social.Follow
   alias Squeeze.Repo
@@ -44,54 +44,61 @@ defmodule Squeeze.Social do
   end
 
   @doc """
-  Creates a follow.
+  Follows a user.
+
+  follow_user(Alice, Bob) # Alice follows Bob
+  - Create a follow with follower == Alice and followee == Bob
+  - Increment Bob's follower_count
+  - Increment Alice's following_count
 
   ## Examples
 
-      iex> create_follow(%{field: value})
-      {:ok, %Follow{}}
-
-      iex> create_follow(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+      iex> follow_user(user1, user2)
+      {:ok, %User{}}
 
   """
-  def create_follow(%User{} = follower, %User{} = followee) do
-    %Follow{}
+
+  def follow_user(%User{} = follower, %User{} = followee) do
+    changeset = %Follow{}
+    |> Follow.changeset()
     |> Changeset.put_change(:follower_id, follower.id)
     |> Changeset.put_change(:followee_id, followee.id)
-    |> Repo.insert()
+
+    follower_query = from(u in User, where: u.id == ^follower.id)
+    followee_query = from(u in User, where: u.id == ^followee.id)
+
+    Multi.new()
+    |> Multi.insert(:follow, changeset)
+    |> Multi.update_all(:followers_count, followee_query, [inc: [followers_count: 1]])
+    |> Multi.update_all(:following_count, follower_query, [inc: [following_count: 1]])
+    |> Repo.transaction()
   end
 
   @doc """
-  Deletes a follow.
+  Unfollows a user.
+
+  unfollow_user(Alice, Bob) # Alice unfollows Bob
+  - Delete the follow with follower == Alice and followee == Bob
+  - Decrement Bob's follower_count
+  - Decrement Alice's following_count
 
   ## Examples
 
-      iex> delete_follow(follow)
+      iex> unfollow_user(user1, user2)
       {:ok, %Follow{}}
 
-      iex> delete_follow(follow)
-      {:error, %Ecto.Changeset{}}
-
   """
-  def delete_follow(%User{id: id}, user_id) do
-    query = from f in Follow,
-      where: [user_id: ^id],
-      where: [follows_id: ^user_id]
+  def unfollow_user(%User{} = follower, %User{} = followee) do
+    follow_query = from f in Follow,
+      where: [follower_id: ^follower.id],
+      where: [followee_id: ^followee.id]
+    follower_query = from(u in User, where: u.id == ^follower.id)
+    followee_query = from(u in User, where: u.id == ^followee.id)
 
-    Repo.delete(query)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking follow changes.
-
-  ## Examples
-
-      iex> change_follow(follow)
-      %Ecto.Changeset{source: %Follow{}}
-
-  """
-  def change_follow(%Follow{} = follow) do
-    Follow.changeset(follow, %{})
+    Multi.new()
+    |> Multi.delete_all(:follow, follow_query)
+    |> Multi.update_all(:followers_count, followee_query, [inc: [followers_count: -1]])
+    |> Multi.update_all(:following_count, follower_query, [inc: [following_count: -1]])
+    |> Repo.transaction()
   end
 end

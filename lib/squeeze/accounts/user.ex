@@ -22,6 +22,8 @@ defmodule Squeeze.Accounts.User do
     field :state, :string
     field :country, :string
     field :slug, :string
+    field :follower_count, :integer
+    field :following_count, :integer
 
     field :registered, :boolean
 
