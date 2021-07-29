@@ -22,8 +22,8 @@ defmodule Squeeze.Challenges.RecurringChallenges do
     recurring
   )a
 
-  def find_and_create do
-    list_recurring_challenges_ending_today()
+  def find_and_create(datetime \\ Timex.now) do
+    list_recurring_challenges_ending_today(datetime)
     |> Enum.each(&create_new_challenge/1)
   end
 
@@ -94,7 +94,7 @@ defmodule Squeeze.Challenges.RecurringChallenges do
     }
   end
 
-  defp list_recurring_challenges_ending_today(datetime \\ Timex.now) do
+  defp list_recurring_challenges_ending_today(datetime) do
     today = datetime |> Timex.to_date()
     query = from p in Challenge,
       where: p.end_date == ^today,
