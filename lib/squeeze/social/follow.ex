@@ -1,6 +1,6 @@
-defmodule Squeeze.Social.Follower do
+defmodule Squeeze.Social.Follow do
   @moduledoc """
-  This module is a schema for followers
+  This module is a schema for follows
   """
 
   use Ecto.Schema
@@ -8,7 +8,7 @@ defmodule Squeeze.Social.Follower do
 
   alias Squeeze.Accounts.{User}
 
-  schema "followers" do
+  schema "follows" do
     field :pending, :boolean
 
     belongs_to :user, User
@@ -18,8 +18,8 @@ defmodule Squeeze.Social.Follower do
   end
 
   @doc false
-  def changeset(follower, attrs) do
-    follower
+  def changeset(follow, attrs) do
+    follow
     |> cast(attrs, [])
     |> validate_required([])
   end

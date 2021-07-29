@@ -6,20 +6,20 @@ defmodule Squeeze.Social do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Social.Follower
+  alias Squeeze.Social.Follow
   alias Squeeze.Repo
 
   @doc """
-  Returns the list of followers.
+  Returns the list of follows.
 
   ## Examples
 
-      iex> list_followers(user_id)
-      [%Follower{}, ...]
+      iex> list_follows(user_id)
+      [%Follow{}, ...]
 
   """
-  def list_followers(user_id) do
-    query = from f in Follower,
+  def list_follows(user_id) do
+    query = from f in Follow,
       where: [user_id: ^user_id],
       preload: :user
 
@@ -27,38 +27,38 @@ defmodule Squeeze.Social do
   end
 
   @doc """
-  Creates a follower.
+  Creates a follow.
 
   ## Examples
 
-      iex> create_follower(%{field: value})
-      {:ok, %Follower{}}
+      iex> create_follow(%{field: value})
+      {:ok, %Follow{}}
 
-      iex> create_follower(%{field: bad_value})
+      iex> create_follow(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_follower(%User{} = user, user_id) do
-    %Follower{}
+  def create_follow(%User{} = user, user_id) do
+    %Follow{}
     |> Changeset.put_change(:user_id, user.id)
     |> Changeset.put_change(:follows_id, user_id)
     |> Repo.insert()
   end
 
   @doc """
-  Deletes a follower.
+  Deletes a follow.
 
   ## Examples
 
-      iex> delete_follower(follower)
-      {:ok, %Follower{}}
+      iex> delete_follow(follow)
+      {:ok, %Follow{}}
 
-      iex> delete_follower(follower)
+      iex> delete_follow(follow)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_follower(%User{id: id}, user_id) do
-    query = from f in Follower,
+  def delete_follow(%User{id: id}, user_id) do
+    query = from f in Follow,
       where: [user_id: ^id],
       where: [follows_id: ^user_id]
 
@@ -66,15 +66,15 @@ defmodule Squeeze.Social do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking follower changes.
+  Returns an `%Ecto.Changeset{}` for tracking follow changes.
 
   ## Examples
 
-      iex> change_follower(follower)
-      %Ecto.Changeset{source: %Follower{}}
+      iex> change_follow(follow)
+      %Ecto.Changeset{source: %Follow{}}
 
   """
-  def change_follower(%Follower{} = follower) do
-    Follower.changeset(follower, %{})
+  def change_follow(%Follow{} = follow) do
+    Follow.changeset(follow, %{})
   end
 end
