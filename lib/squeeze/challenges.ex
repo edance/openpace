@@ -176,7 +176,7 @@ defmodule Squeeze.Challenges do
     Challenge.changeset(challenge, %{})
   end
 
-  defp ranking_score(%Challenge{challenge_type: :segment}, nil), do: -31622400.0 # default to 1 year
-  defp ranking_score(%Challenge{challenge_type: :segment}, amount), do: amount * -1.0
-  defp ranking_score(%Challenge{}, amount), do: amount
+  def ranking_score(%Challenge{challenge_type: :segment}, nil), do: -31622400.0 # default to 1 year
+  def ranking_score(%Challenge{challenge_type: :segment}, amount), do: amount * -1.0
+  def ranking_score(%Challenge{}, amount), do: amount
 end
