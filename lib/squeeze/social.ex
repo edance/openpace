@@ -14,14 +14,31 @@ defmodule Squeeze.Social do
 
   ## Examples
 
-      iex> list_follows(user_id)
-      [%Follow{}, ...]
+  iex> list_following(user)
+  [%User{}, ...]
 
   """
-  def list_follows(user_id) do
-    query = from f in Follow,
-      where: [user_id: ^user_id],
-      preload: :user
+  def list_following(%User{} = user) do
+    query = from u in User,
+      join: f in Follow, on: u.id == f.follower_id,
+      where: f.follower_id == ^user.id
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Returns the list of follows.
+
+  ## Examples
+
+      iex> list_followers(user)
+      [%User{}, ...]
+
+  """
+  def list_followers(%User{} = user) do
+    query = from u in User,
+      join: f in Follow, on: u.id == f.followee_id,
+      where: f.followee_id == ^user.id
 
     Repo.all(query)
   end
@@ -38,10 +55,10 @@ defmodule Squeeze.Social do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_follow(%User{} = user, user_id) do
+  def create_follow(%User{} = follower, %User{} = followee) do
     %Follow{}
-    |> Changeset.put_change(:user_id, user.id)
-    |> Changeset.put_change(:follows_id, user_id)
+    |> Changeset.put_change(:follower_id, follower.id)
+    |> Changeset.put_change(:followee_id, followee.id)
     |> Repo.insert()
   end
 
