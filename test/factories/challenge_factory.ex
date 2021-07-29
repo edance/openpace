@@ -26,6 +26,7 @@ defmodule Squeeze.ChallengeFactory do
           segment_id: "12345",
           start_date: Date.backward(1),
           end_date: Date.forward(10),
+          recurring: false,
           user: user
         }
       end
