@@ -1,30 +1,40 @@
 defmodule SqueezeWeb.Api.FollowController do
   use SqueezeWeb, :controller
 
+  alias Squeeze.Accounts
   alias Squeeze.Social
   alias Squeeze.Social.Follow
 
   action_fallback SqueezeWeb.Api.FallbackController
 
-  def index(conn, %{"id" => user_id}) do
-    follows = Social.list_follows(user_id)
-    render(conn, "index.json", follows: follows)
+  def followers(conn, %{"slug" => slug}) do
+    user = Accounts.get_user_by_slug!(slug)
+    followers = Social.list_followers(user)
+    render(conn, "followers.json", users: followers)
   end
 
-  def create(conn, %{"id" => user_id}) do
-    user = conn.assigns.current_user
+  def following(conn, %{"slug" => slug}) do
+    user = Accounts.get_user_by_slug!(slug)
+    following = Social.list_following(user)
+    render(conn, "following.json", users: following)
+  end
 
-    with {:ok, %Follow{} = follow} <- Social.create_follow(user, user_id) do
+  def create(conn, %{"slug" => slug}) do
+    user = conn.assigns.current_user
+    following_user = Accounts.get_user_by_slug!(slug)
+
+    with {:ok, %Follow{} = follow} <- Social.create_follow(user, following_user) do
       conn
       |> put_status(:created)
       |> render("show.json", follow: follow)
     end
   end
 
-  def delete(conn, %{"id" => user_id}) do
+  def delete(conn, %{"slug" => slug}) do
     user = conn.assigns.current_user
+    following_user = Accounts.get_user_by_slug!(slug)
 
-    with {:ok, %Follow{}} <- Social.delete_follow(user, user_id) do
+    with {:ok, %Follow{}} <- Social.delete_follow(user, following_user) do
       send_resp(conn, :no_content, "")
     end
   end

@@ -11,8 +11,8 @@ defmodule Squeeze.Social.Follow do
   schema "follows" do
     field :pending, :boolean
 
-    belongs_to :user, User
-    belongs_to :follows, User
+    belongs_to :follower, User
+    belongs_to :followee, User
 
     timestamps()
   end
