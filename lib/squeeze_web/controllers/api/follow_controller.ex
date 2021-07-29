@@ -3,7 +3,6 @@ defmodule SqueezeWeb.Api.FollowController do
 
   alias Squeeze.Accounts
   alias Squeeze.Social
-  alias Squeeze.Social.Follow
 
   action_fallback SqueezeWeb.Api.FallbackController
 
@@ -23,7 +22,7 @@ defmodule SqueezeWeb.Api.FollowController do
     user = conn.assigns.current_user
     followee = Accounts.get_user_by_slug!(slug)
 
-    with {:ok, _} <- Social.follow(user, followee) do
+    with {:ok, _} <- Social.follow_user(user, followee) do
       conn
       |> put_status(:created)
       |> render("follow.json")
@@ -34,7 +33,7 @@ defmodule SqueezeWeb.Api.FollowController do
     user = conn.assigns.current_user
     followee = Accounts.get_user_by_slug!(slug)
 
-    with {:ok, %Follow{}} <- Social.unfollow(user, followee) do
+    with {:ok, _} <- Social.unfollow_user(user, followee) do
       send_resp(conn, :no_content, "")
     end
   end

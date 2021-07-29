@@ -8,6 +8,9 @@ defmodule Squeeze.Social.Follow do
 
   alias Squeeze.Accounts.{User}
 
+  @required_fields ~w()a
+  @optional_fields ~w(pending)a
+
   schema "follows" do
     field :pending, :boolean
 
@@ -18,9 +21,10 @@ defmodule Squeeze.Social.Follow do
   end
 
   @doc false
-  def changeset(follow, attrs) do
+  def changeset(follow, attrs \\ %{}) do
     follow
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
+    |> unique_constraint(:unique_follow, name: :follows_follower_id_followee_id_index)
   end
 end

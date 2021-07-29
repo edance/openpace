@@ -4,83 +4,63 @@ defmodule SqueezeWeb.Api.FollowControllerTest do
   alias Squeeze.Social
   alias Squeeze.Social.Follow
 
-  @create_attrs %{
+  describe "#followers" do
+    test "returns the followers for the given user", %{conn: conn} do
+      %{follower: user1, followee: user2} = insert(:follow)
+      insert(:user) # Additional unfollowed user
 
-  }
-  @update_attrs %{
-
-  }
-  @invalid_attrs %{}
-
-  def fixture(:follow) do
-    {:ok, follow} = Social.create_follow(@create_attrs)
-    follow
-  end
-
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  end
-
-  describe "index" do
-    test "lists all follows", %{conn: conn} do
-      conn = get(conn, Routes.follow_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      conn = get(conn, "/api/users/#{user2.slug}/followers")
+      assert [follower] = json_response(conn, 200)["followers"]
+      assert follower.id == user1.id
     end
   end
 
-  describe "create follow" do
-    test "renders follow when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.follow_path(conn, :create), follow: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+  describe "#following" do
+    test "returns the following users for the given user", %{conn: conn} do
+      %{follower: user1, followee: user2} = insert(:follow)
+      insert(:user) # Additional unfollowed user
 
-      conn = get(conn, Routes.follow_path(conn, :show, id))
-
-      assert %{
-               "id" => id
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.follow_path(conn, :create), follow: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+      conn = get(conn, "/api/users/#{user1.slug}/following")
+      assert [followee] = json_response(conn, 200)["following"]
+      assert followee.id == user2.id
     end
   end
 
-  describe "update follow" do
-    setup [:create_follow]
+  describe "#follow" do
+    test "creates a follow record and updates counts", %{conn: conn, user: user} do
+      user2 = insert(:user)
+      conn = post(conn, "/api/follow/#{user2.slug}")
 
-    test "renders follow when data is valid", %{conn: conn, follow: %Follow{id: id} = follow} do
-      conn = put(conn, Routes.follow_path(conn, :update, follow), follow: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, Routes.follow_path(conn, :show, id))
-
-      assert %{
-               "id" => id
-             } = json_response(conn, 200)["data"]
+      assert json_response(conn, 201)
+      assert List.first(Social.list_following(user)).id == user2.id
+      assert Accounts.get_user_by_slug!(user.slug).following_count == 1
+      assert Accounts.get_user_by_slug!(user2.slug).follower_count == 1
     end
 
-    test "renders errors when data is invalid", %{conn: conn, follow: follow} do
-      conn = put(conn, Routes.follow_path(conn, :update, follow), follow: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
+    test "fails if already following", %{conn: conn} do
+      %{followee: user2} = insert(:follow, follower: user)
+      conn = post(conn, "/api/follow/#{user2.slug}")
 
-  describe "delete follow" do
-    setup [:create_follow]
-
-    test "deletes chosen follow", %{conn: conn, follow: follow} do
-      conn = delete(conn, Routes.follow_path(conn, :delete, follow))
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.follow_path(conn, :show, follow))
-      end
+      assert json_response(conn, 400)
     end
   end
 
-  defp create_follow(_) do
-    follow = fixture(:follow)
-    {:ok, follow: follow}
+  describe "#unfollow" do
+    test "deletes a follow record and updates counts", %{conn: conn, user: user} do
+      %{followee: user2} = insert(:follow, follower: user)
+      conn = post(conn, "/api/unfollow/#{user2.slug}")
+
+      assert json_response(conn, 204)
+      assert Social.list_following(user) == []
+      assert Accounts.get_user_by_slug!(user.slug).following_count == 0
+      assert Accounts.get_user_by_slug!(user2.slug).follower_count == 0
+    end
+
+    test "fails if already following", %{conn: conn} do
+      user2 = insert(:user)
+      conn = post(conn, "/api/follow/#{user2.slug}")
+
+      assert json_response(conn, 400)
+    end
   end
 end
