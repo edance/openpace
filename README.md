@@ -59,3 +59,5 @@ Please email us with any ideas, bugs, suggestions at feedback AT openpace.co.
 ## Why is it named squeeze?
 
 The project was originally under the domain [squeeze.run](https://squeeze.run) with the goal of taking all your running data and "squeezing" it into summaries and graphs.
+
+Test
