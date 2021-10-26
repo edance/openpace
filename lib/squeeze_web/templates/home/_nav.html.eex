@@ -30,6 +30,13 @@
         <li class="nav-item">
           <%= link("Namer", to: "/namer", class: "nav-link") %>
         </li>
+
+        <li class="nav-item">
+          <%= active_link(@conn, gettext("Sign Up"), to: Routes.onboard_path(@conn, :index), class: "nav-link") %>
+        </li>
+        <li class="nav-item">
+          <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
+        </li>
       </ul>
     </div>
   </div>
