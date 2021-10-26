@@ -29,6 +29,7 @@ defmodule SqueezeWeb.FormatHelpers do
     case Timex.diff(date, TimeHelper.today(user), :days) do
       0 -> "today"
       1 -> "tomorrow"
+      x when x < 0 -> "#{format_plural(x * -1, "day")} ago"
       x when x <= 14 -> "in #{format_plural(x, "day")}"
       x when rem(x, 7) == 0 -> "in #{format_plural(div(x, 7), "wk")}"
       x -> "in #{div(x, 7)} wks, #{format_plural(rem(x, 7), "day")}"
