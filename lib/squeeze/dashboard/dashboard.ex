@@ -4,9 +4,9 @@ defmodule Squeeze.Dashboard do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.{Changeset, Multi}
+  alias Ecto.{Changeset}
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, Trackpoint, TrackpointSet}
+  alias Squeeze.Dashboard.{Activity, TrackpointSet}
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
 
@@ -107,16 +107,10 @@ defmodule Squeeze.Dashboard do
 
   """
   def get_detailed_activity!(%User{} = user, id) do
-    trackpoint_query = from t in Trackpoint, order_by: t.time
-    trackpoint_set_query = from ts in TrackpointSet,
-      order_by: ts.inserted_at,
-      limit: 1,
-      preload: [trackpoints: ^trackpoint_query]
-
     Activity
     |> by_user(user)
     |> Repo.get!(id)
-    |> Repo.preload([:user, trackpoint_set: trackpoint_set_query])
+    |> Repo.preload([:user, :trackpoint_set])
   end
 
   @doc """
@@ -186,20 +180,11 @@ defmodule Squeeze.Dashboard do
   end
 
   def create_trackpoint_set(%Activity{} = activity, trackpoints) do
-    changeset = %TrackpointSet{}
+    %TrackpointSet{}
     |> TrackpointSet.changeset()
     |> Changeset.put_change(:activity_id, activity.id)
-    Multi.new()
-    |> Multi.insert(:trackpoint_set, changeset)
-    |> Multi.run(:trackpoint_count, fn(repo, %{trackpoint_set: trackpoint_set}) ->
-      trackpoints
-      |> Enum.map(&Map.merge(&1, %{trackpoint_set_id: trackpoint_set.id}))
-      |> Enum.chunk_every(100)
-      |> Enum.each(&(repo.insert_all(Trackpoint, &1)))
-
-      {:ok, length(trackpoints)}
-    end)
-    |> Repo.transaction()
+    |> Changeset.put_embed(:trackpoints, trackpoints)
+    |> Repo.insert()
   end
 
   defp by_user(query, %User{} = user) do

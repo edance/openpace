@@ -14,7 +14,7 @@ defmodule Squeeze.Dashboard.TrackpointSet do
   schema "trackpoint_sets" do
     belongs_to :activity, Activity
 
-    has_many :trackpoints, Trackpoint
+    embeds_many :trackpoints, Trackpoint
 
     timestamps()
   end
