@@ -36,19 +36,12 @@ defmodule SqueezeWeb.OverviewView do
     "#{distance} #{Distances.label(imperial: user.user_prefs.imperial)}"
   end
 
-  def weekly_diff(%{year_dataset: dataset}) do
-    distances = dataset
+  def last_week_distance(%{year_dataset: dataset, current_user: user}) do
+    distance = dataset
     |> Enum.reverse()
-    |> Enum.map(&(&1.distance))
-
-    curr_distance = Enum.at(distances, 0)
-    prev_distance = Enum.at(distances, 1)
-    if prev_distance == 0 do
-      nil
-    else
-      percent = (curr_distance - prev_distance) / prev_distance * 100
-      trunc(percent)
-    end
+    |> Enum.at(1)
+    |> Map.get(:distance)
+    "#{distance} #{Distances.label(imperial: user.user_prefs.imperial)}"
   end
 
   def dates(assigns) do

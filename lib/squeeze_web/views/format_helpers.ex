@@ -26,13 +26,24 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def relative_date(%User{} = user, date) do
-    case Timex.diff(date, TimeHelper.today(user), :days) do
-      0 -> "today"
-      1 -> "tomorrow"
-      x when x < 0 -> "#{format_plural(x * -1, "day")} ago"
+    relative_date(Timex.diff(date, TimeHelper.today(user), :days))
+  end
+
+  defp relative_date(-1), do: "yesterday"
+  defp relative_date(0), do: "today"
+  defp relative_date(1), do: "tomorrow"
+  defp relative_date(diff_in_days) when diff_in_days > 0 do
+    case abs(diff_in_days) do
       x when x <= 14 -> "in #{format_plural(x, "day")}"
       x when rem(x, 7) == 0 -> "in #{format_plural(div(x, 7), "wk")}"
       x -> "in #{div(x, 7)} wks, #{format_plural(rem(x, 7), "day")}"
+    end
+  end
+  defp relative_date(diff_in_days) do
+    case abs(diff_in_days) do
+      x when x <= 14 -> "#{format_plural(x, "day")} ago"
+      x when rem(x, 7) == 0 -> "#{format_plural(div(x, 7), "wk")} ago"
+      x -> "#{div(x, 7)} wks, #{format_plural(rem(x, 7), "day")} ago"
     end
   end
 

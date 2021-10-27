@@ -17,19 +17,9 @@
     </div>
 
     <p class="mt-3 mb-0 text-muted text-sm">
-      <% weekly_diff = weekly_diff(assigns) %>
-      <% color = if weekly_diff > 0, do: "green", else: "red" %>
-      <% direction = if weekly_diff > 0, do: "up", else: "down" %>
-      <% text = if is_nil(weekly_diff), do: "N/A", else: "#{abs(weekly_diff)}%" %>
-
-      <span class="text-<%= color %> mr-2">
-        <span class="iconify" data-icon="ant-design:caret-<%= direction %>-fill" data-inline="false">
-        </span>
-        <%= text %>
-      </span>
-
       <span class="text-nowrap">
-        <%= gettext("vs last week") %>
+        <%= last_week_distance(assigns) %>&nbsp;
+        <%= gettext("last week") %>
       </span>
     </p>
   </div>
