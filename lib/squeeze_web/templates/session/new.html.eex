@@ -3,9 +3,9 @@
   <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
   <!-- Header -->
-  <div class="header py-7 py-lg-8">
+  <div class="header">
     <div class="container">
-      <div class="header-body text-center mb-7">
+      <div class="header-body text-center mt-2 mb-6">
         <div class="row justify-content-center">
           <div class="col-lg-5 col-md-6">
             <h1><%= gettext("Welcome Back!") %></h1>
@@ -16,7 +16,7 @@
   </div>
 
   <!-- Page content -->
-  <div class="container mt--8 pb-5">
+  <div class="container pb-5">
     <div class="row justify-content-center">
       <div class="col-lg-5 col-md-7">
         <div class="card bg-secondary shadow border-0">
@@ -40,7 +40,7 @@
             <%= render "form.html", Map.put(assigns, :action, Routes.session_path(@conn, :new)) %>
           </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3 mb-6">
           <div class="col-6">
             <%= link(to: Routes.forgot_password_path(@conn, :show), class: "text-light") do %>
               <small><%= gettext("Forgot password?") %></small>

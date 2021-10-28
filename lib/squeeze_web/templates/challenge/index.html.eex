@@ -1,0 +1,58 @@
+<!-- Header -->
+<div class="header pb-8 pt-5 d-flex align-items-center">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-8"></span>
+</div>
+
+<div class="container-fluid mt--7 mb-8">
+  <!-- Table -->
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">
+                <%= gettext("Challenges") %>
+              </h3>
+            </div>
+            <div class="col text-right">
+              <%= link(gettext("Create New Plan"), to: Routes.plan_path(@conn, :new), class: "btn btn-sm btn-primary") %>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">
+                  <%= gettext("Name") %>
+                </th>
+                <th scope="col">
+                  <%= gettext("Weeks") %>
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for challenge <- @challenges do %>
+                <tr>
+                  <td>
+                    <%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge.slug) %>
+                  </td>
+                  <td>
+                    Weeks
+                  </td>
+
+                  <td class="text-right">
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

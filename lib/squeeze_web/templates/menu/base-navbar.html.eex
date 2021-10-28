@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
-    <%= link(to: Routes.dashboard_path(@conn, :index), class: "navbar-brand pt-2") do %>
-      <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
+    <%= link(to: Routes.dashboard_path(@conn, :index), class: "navbar-brand") do %>
+      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
     <% end %>
 
-    <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -25,14 +25,17 @@
         </div>
       </div>
 
-
       <!-- Navigation -->
-      <ul class="navbar-nav mt-2 mt-lg-0 ml-auto">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <%= active_link(@conn, gettext("Sign Up"), to: Routes.onboard_path(@conn, :index), class: "nav-link text-sm") %>
+          <%= link("Namer", to: "/namer", class: "nav-link") %>
+        </li>
+
+        <li class="nav-item">
+          <%= active_link(@conn, gettext("Sign Up"), to: Routes.user_path(@conn, :new), class: "nav-link") %>
         </li>
         <li class="nav-item">
-          <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0 text-sm") %>
+          <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
         </li>
       </ul>
     </div>

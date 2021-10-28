@@ -3,6 +3,11 @@
 //
 
 
+.modal-title {
+    font-size: $modal-title-font-size;
+}
+
+
 // Fluid modal
 
 .modal-fluid {
@@ -10,6 +15,7 @@
         margin-top: 0;
         margin-bottom: 0;
     }
+
     .modal-content {
         border-radius: 0;
     }

@@ -7,9 +7,16 @@
     // Background-color and (when enabled) gradient
     &::before {
         border: $custom-control-indicator-border-width solid $custom-control-indicator-border-color;
-        @if $enable-transitions {
-            transition: $input-transition;
-        }
+        @include transition($input-transition);
+        top:($font-size-base * $line-height-base - $custom-control-indicator-size) / 2;
+        left: -($custom-control-gutter + $custom-control-indicator-size - 1rem);
+
+    }
+
+    &::after{
+      top:($font-size-base * $line-height-base - $custom-control-indicator-size) / 2;
+      left: -($custom-control-gutter + $custom-control-indicator-size - 1rem);
+
     }
 
     span {

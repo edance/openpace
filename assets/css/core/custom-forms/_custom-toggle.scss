@@ -4,9 +4,11 @@
 
 .custom-toggle {
     position: relative;
-    display: inline-block;
+    display: inherit;
     width: $custom-toggle-width;
     height: 1.5rem;
+    margin: 0;
+    display: inline-block;
 
     input {
         display: none;
@@ -17,7 +19,7 @@
 
                 &:before {
                     background: $custom-toggle-checked-bg;
-                    transform: translateX(1.625rem);
+                    transform: translateX(28px);
                 }
             }
         }
@@ -47,7 +49,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border: $custom-control-indicator-border-width solid $input-border-color;
+    border: $custom-control-indicator-border-width solid $custom-toggle-border-color;
     border-radius: 34px !important;
     background-color: transparent;
 
@@ -62,5 +64,59 @@
         border-radius: 50% !important;
         background-color: $custom-toggle-slider-bg;
         transition: $input-transition;
+    }
+}
+
+.custom-toggle-wrapper {
+    .custom-toggle + .custom-toggle {
+        margin-left: 1rem !important;
+    }
+}
+
+
+// Labeled toggles
+
+.custom-toggle {
+    input {
+        &:checked {
+             + .custom-toggle-slider {
+
+                &:after {
+                    content: attr(data-label-on);
+                    color: $custom-control-indicator-checked-border-color;
+                    right: auto;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+.custom-toggle-slider {
+    &:after {
+        color: $custom-toggle-border-color;
+        content: attr(data-label-off);
+        display: block;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: .75rem;
+        line-height: 24px;
+        position: absolute;
+        right: 0;
+        margin: 0 .21667rem;
+        top: 0;
+        text-align: center;
+        min-width: 1.66667rem;
+        overflow: hidden;
+        @include transition($transition-base);
+    }
+}
+
+
+// Color variations
+
+@each $color, $value in $theme-colors {
+    .custom-toggle-#{$color} {
+        @include custom-toggle-variant($value);
     }
 }

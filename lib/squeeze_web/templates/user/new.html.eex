@@ -1,22 +1,7 @@
-<section class="section section-shaped section-lg">
-  <nav class="navbar navbar-expand-lg">
-    <div class="container text-container">
-      <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
-        <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo-white@2x.png") %>" />
-      <% end %>
-    </div>
-  </nav>
+<main>
+  <!-- Navbar -->
+  <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
-  <div class="shape shape-style-1 bg-gradient-default">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
   <div class="container pt-lg-7">
     <div class="row justify-content-center">
       <div class="col-lg-4">
@@ -44,4 +29,4 @@
       </div>
     </div>
   </div>
-</section>
+</main>

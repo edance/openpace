@@ -1,5 +1,4 @@
 <%= form_for @changeset, @action, [class: "ui form", as: :user, id: "sign-up-form"], fn f -> %>
-
   <div class="form-row mb-3">
     <div class="col">
       <%= input f, :first_name, placeholder: gettext("First Name"), class: "form-control" %>

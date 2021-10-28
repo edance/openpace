@@ -5,7 +5,7 @@
     </button>
 
     <%= link(to: Routes.dashboard_path(@conn, :index), class: "navbar-brand") do %>
-      <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
+      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
     <% end %>
 
     <!-- Collapse -->
@@ -35,8 +35,8 @@
           </li>
 
           <li class="nav-item">
-            <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link text-sm") do %>
-              <%= gettext("Calendar") %>
+            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= gettext("Challenges") %>
             <% end %>
           </li>
 

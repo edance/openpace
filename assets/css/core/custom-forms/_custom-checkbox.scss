@@ -6,32 +6,15 @@
     .custom-control-input ~ .custom-control-label {
         cursor: pointer;
         font-size: $font-size-sm;
+        height: $custom-control-indicator-size;
     }
+}
 
-    .custom-control-input {
-        &:checked {
-            ~ .custom-control-label {
-                &::before {
-                    border-color: $custom-control-indicator-checked-border-color;
-                }
-                &::after {
-                    background-image: $custom-checkbox-indicator-icon-checked;
-                }
-            }
-        }
 
-        &:disabled {
-            ~ .custom-control-label {
-                &::before {
-                    border-color: $custom-control-indicator-disabled-bg;
-                }
-            }
+// Color variations
 
-            &:checked {
-                &::before {
-                    border-color: $custom-control-indicator-checked-disabled-bg;
-                }
-            }
-        }
+@each $color, $value in $theme-colors {
+    .custom-checkbox-#{$color} {
+        @include custom-checkbox-variant($value);
     }
 }

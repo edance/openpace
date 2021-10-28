@@ -3,6 +3,7 @@
 //
 
 .alert {
+
     font-size: $font-size-sm;
 }
 
@@ -16,6 +17,7 @@
 
 
 // Alert icon
+
 .alert-icon {
     font-size: 1.25rem;
     margin-right: 1.25rem;
@@ -24,12 +26,13 @@
 
     i.ni {
         position: relative;
-        top: 1px;
+        top: 2px;
     }
 }
 
 
 // Alert text next to an alert icon
+
 .alert-text {
     display: inline-block;
     vertical-align: middle;

@@ -50,6 +50,10 @@
         th {
             background-color: $table-dark-head-bg;
             color: $table-dark-head-color;
+
+            a {
+                color: $table-dark-head-color;
+            }
         }
     }
 
@@ -60,6 +64,10 @@
         th {
             background-color: $table-head-bg;
             color: $table-head-color;
+
+            a {
+                color: $table-head-color;
+            }
         }
     }
 }
@@ -114,5 +122,14 @@
             padding-left: $card-spacer-x;
             padding-right: $card-spacer-x;
         }
+    }
+}
+
+
+// Fixes for custom elements inside tables
+
+.table {
+    .custom-toggle {
+        display: block;
     }
 }
