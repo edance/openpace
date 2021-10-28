@@ -14,7 +14,7 @@ defmodule SqueezeWeb.Api.UserController do
   end
 
   def create(conn, user_params) do
-    with {:ok, %User{} = user} <- Accounts.register_user(user_params),
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
 
       user = Repo.preload(user, [:credentials, :user_prefs])

@@ -16,7 +16,7 @@ defmodule SqueezeWeb.UserController do
   end
 
   def register(conn, %{"user" => user_params}) do
-    case Accounts.register_user(user_params) do
+    case Accounts.create_user(user_params) do
       {:ok, user} ->
         conn
         |> Plug.sign_in(user)

@@ -15,7 +15,7 @@ import Squeeze.Factory
 
 # Make the default user
 user_params = params_for(:user, email: "a@b.co", encrypted_password: "password")
-{:ok, user} = Accounts.register_user(user_params)
+{:ok, user} = Accounts.create_user(user_params)
 
 # Make a few challenges
 challenges = (1..10) |> Enum.map(fn _ -> insert(:challenge) |> with_scores() end)

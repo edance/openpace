@@ -12,7 +12,9 @@ defmodule SqueezeWeb.OverviewController do
   def index(conn, _params, user) do
     activities = Dashboard.recent_activities(user)
     run_activities = run_activities(activities)
+
     render(conn, "index.html",
+      activity_summaries: Dashboard.list_activity_summaries(),
       activities: activities,
       run_activities: run_activities,
       run_dates: run_dates(run_activities),

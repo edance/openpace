@@ -31,7 +31,7 @@ defmodule SqueezeWeb.Api.GoogleAuthController do
   end
 
   defp create_user(conn, user_params) do
-    with {:ok, user} <- Accounts.register_user(user_params),
+    with {:ok, user} <- Accounts.create_user(user_params),
          {:ok, _} <- Accounts.create_credential(user, user_params[:credential]) do
       render_token(conn, user)
     end

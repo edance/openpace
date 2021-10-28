@@ -27,14 +27,14 @@ defmodule SqueezeWeb.UserControllerTest do
     setup [:setup_mocks]
 
     test "updates the users email and password", %{conn: conn} do
-      register_user(conn)
+      create_user(conn)
       user = Accounts.get_user_by_email("test@example.com")
       assert user.email == "test@example.com"
       refute is_nil(user.encrypted_password)
     end
 
     test "creates customer and subscription", %{conn: conn} do
-      register_user(conn)
+      create_user(conn)
       user = Accounts.get_user_by_email("test@example.com")
       refute is_nil(user.customer_id)
     end
@@ -47,7 +47,7 @@ defmodule SqueezeWeb.UserControllerTest do
     end
   end
 
-  defp register_user(conn) do
+  defp create_user(conn) do
     attrs = %{
       email: "test@example.com",
       encrypted_password: "password",

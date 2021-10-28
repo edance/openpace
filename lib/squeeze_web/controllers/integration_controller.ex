@@ -51,18 +51,10 @@ defmodule SqueezeWeb.IntegrationController do
   end
 
   defp redirect_current_user(conn, credential) do
-    user = conn.assigns.current_user
-
-    if user.registered do
-      conn
-      |> put_flash(:info, "Connected to #{credential.provider}")
-      |> redirect(to: Routes.dashboard_path(conn, :index))
-    else
-      load_history(credential)
-      conn
-      |> put_flash(:info, "Connected to #{credential.provider}")
-      |> redirect(to: Routes.onboard_path(conn, :index))
-    end
+    load_history(credential)
+    conn
+    |> put_flash(:info, "Connected to #{credential.provider}")
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp setup_integration(conn, client, "fitbit") do
