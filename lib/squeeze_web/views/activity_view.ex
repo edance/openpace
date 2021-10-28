@@ -102,6 +102,12 @@ defmodule SqueezeWeb.ActivityView do
     |> Jason.encode!()
   end
 
+  def previous_page(%{page: 1}), do: nil
+  def previous_page(%{page: page}), do: page - 1
+
+  def next_page(%{activities: activities}) when length(activities) < 24, do: nil
+  def next_page(%{page: page}), do: page + 1
+
   defp trackpoint(t, imperial) do
     %{
       altitude: Distances.to_feet(t.altitude, imperial: imperial),

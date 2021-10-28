@@ -9,9 +9,10 @@ defmodule SqueezeWeb.ActivityController do
     apply(__MODULE__, action_name(conn), args)
   end
 
-  def index(conn, _, current_user) do
-    activities = Dashboard.recent_activities(current_user)
-    render(conn, "index.html", activities: activities)
+  def index(conn, params, current_user) do
+    page = params |> Map.get("page", "1") |> String.to_integer()
+    activities = Dashboard.recent_activities(current_user, page)
+    render(conn, "index.html", activities: activities, page: page)
   end
 
   def new(conn, _, _user) do
