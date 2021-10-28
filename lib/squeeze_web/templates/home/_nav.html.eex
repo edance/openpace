@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light mt-2">
+<nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
     <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
-      <img class="w-100" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
+      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
     <% end %>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
         </li>
 
         <li class="nav-item">
-          <%= active_link(@conn, gettext("Sign Up"), to: Routes.onboard_path(@conn, :index), class: "nav-link") %>
+          <%= active_link(@conn, gettext("Sign Up"), to: Routes.user_path(@conn, :new), class: "nav-link") %>
         </li>
         <li class="nav-item">
           <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>

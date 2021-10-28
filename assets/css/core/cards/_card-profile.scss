@@ -6,16 +6,16 @@
     position: relative;
 
     img {
-        max-width: 180px;
+        max-width: 140px;
         border-radius: $border-radius;
-        @extend .shadow;
-        transform: translate(-50%,-30%);
+        border: 3px solid $card-bg;
+        transform: translate(-50%,-50%) scale(1);
         position: absolute;
         left: 50%;
         transition: $transition-base;
 
         &:hover {
-            transform: translate(-50%, -33%);
+            transform: translate(-50%,-50%) scale(1.03);
         }
     }
 }

@@ -77,6 +77,8 @@ defmodule SqueezeWeb.Router do
     end
 
     resources "/plans", PlanController
+
+    resources "/challenges", ChallengeController, only: [:index, :show]
   end
 
   scope "/webhook", SqueezeWeb do

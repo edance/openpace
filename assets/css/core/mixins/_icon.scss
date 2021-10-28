@@ -2,3 +2,9 @@
     color: saturate(darken($color, 10%), 10);
     background-color: transparentize(lighten($color, 10%), .5);
 }
+
+@mixin icon-font($content, $font-size) {
+    content: $content;
+    font-family: $icon-font-family;
+    font-size: $font-size;
+}
