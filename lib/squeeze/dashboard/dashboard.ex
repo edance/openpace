@@ -36,12 +36,13 @@ defmodule Squeeze.Dashboard do
   [%Activity{}, ...]
 
   """
-  def recent_activities(%User{} = user) do
+  def recent_activities(%User{} = user, page \\ 1) do
     Activity
     |> by_user(user)
     |> where([a], not(is_nil(a.start_at)))
     |> order_by([a], [desc: a.start_at])
-    |> Repo.all
+    |> by_page(page)
+    |> Repo.all()
     |> Repo.preload(:user)
   end
 
@@ -204,6 +205,11 @@ defmodule Squeeze.Dashboard do
     from q in query,
       where: (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or
              (q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last)
+  end
+
+  def by_page(query, page \\ 1, page_size \\ 24) do
+    offset = page_size * (page - 1)
+    from q in query, offset: ^offset, limit: ^page_size
   end
 
   defp status(query, status) do
