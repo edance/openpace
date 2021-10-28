@@ -59,6 +59,7 @@ $yellow:  #ffd600 !default;
 $green:   #2dce89 !default;
 $teal:    #11cdef !default;
 $cyan:    #2bffc6 !default;
+$waves:   #e7e6fa !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -76,7 +77,8 @@ $colors: map-merge((
   "gray":       $gray-600,
   "light":      $gray-400,
   "lighter":    $gray-200,
-  "gray-dark":  $gray-800
+  "gray-dark":  $gray-800,
+  "waves":      $waves
 ), $colors);
 
 $default:       #172b4d !default;

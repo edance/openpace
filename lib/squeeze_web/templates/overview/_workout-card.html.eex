@@ -15,7 +15,7 @@
         </span>
       </div>
       <div class="col-auto">
-        <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
           <span class="iconify" data-icon="ic:baseline-directions-run" data-inline="false"></span>
         </div>
       </div>

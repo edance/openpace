@@ -10,7 +10,7 @@
         </span>
       </div>
       <div class="col-auto">
-        <div class="icon icon-shape bg-teal text-white rounded-circle shadow">
+        <div class="icon icon-shape bg-gradient-teal text-white rounded-circle shadow">
           <span class="iconify" data-icon="gridicons:line-graph" data-inline="false"></span>
         </div>
       </div>
