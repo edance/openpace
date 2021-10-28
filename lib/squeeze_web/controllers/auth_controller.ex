@@ -19,13 +19,12 @@ defmodule SqueezeWeb.AuthController do
       user = Accounts.get_user_by_email(user_params[:email]) ->
         sign_in_and_redirect(conn, user)
       true ->
-        update_current_user(conn, user_params)
+        create_user(conn, user_params)
     end
   end
 
-  defp update_current_user(conn, user_params) do
-    user = conn.assigns.current_user
-    with {:ok, user} <- Accounts.update_user(user, user_params),
+  defp create_user(conn, user_params) do
+    with {:ok, user} <- Accounts.create_user(user_params),
          {:ok, _} <- Accounts.create_credential(user, user_params[:credential]) do
       redirect_current_user(conn)
     else

@@ -9,7 +9,7 @@
 </div>
 
 <%= for dates <- Enum.chunk_every(dates(assigns), 7) do %>
-  <div class="row no-gutters mb-2">
+  <div class="row no-gutters mb-1">
     <%= for date <- dates do %>
       <div class="col text-center">
         <div class="text-uppercase text-muted small">

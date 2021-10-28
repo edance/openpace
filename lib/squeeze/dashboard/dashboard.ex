@@ -27,6 +27,17 @@ defmodule Squeeze.Dashboard do
     |> Repo.preload(:user)
   end
 
+  def list_activity_summaries() do
+    time_window = Timex.now() |> Timex.shift(years: -1)
+
+    query = from a in Activity,
+      where: a.status == :complete,
+      where: a.start_at > ^time_window,
+      select: [:id, :distance, :duration, :type, :start_at_local]
+
+    Repo.all(query)
+  end
+
   @doc """
   Returns the list of recent activities by user.
 

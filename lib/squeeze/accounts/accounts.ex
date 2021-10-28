@@ -103,17 +103,10 @@ defmodule Squeeze.Accounts do
 
   """
   def create_user(attrs \\ %{user_prefs: %{}}) do
+    attrs = Map.put_new(attrs, :user_prefs, %{})
+
     %User{}
     |> User.changeset(attrs)
-    |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
-    |> Repo.insert_with_slug()
-  end
-
-  def register_user(attrs \\ %{user_prefs: %{}}) do
-    attrs = Map.put_new(attrs, "user_prefs", %{})
-
-    %User{}
-    |> User.registration_changeset(attrs)
     |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.insert_with_slug()
   end
