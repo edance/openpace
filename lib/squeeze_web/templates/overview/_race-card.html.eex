@@ -10,7 +10,7 @@
         </span>
       </div>
       <div class="col-auto">
-        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+        <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
           <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
         </div>
       </div>
