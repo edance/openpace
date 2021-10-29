@@ -33,7 +33,15 @@ defmodule Squeeze.Dashboard do
     query = from a in Activity,
       where: a.status == :complete,
       where: a.start_at > ^time_window,
-      select: [:id, :distance, :duration, :type, :start_at_local]
+      order_by: [desc: :start_at],
+      select: %{
+        id: a.id,
+        distance: a.distance,
+        duration: a.duration,
+        elevation_gain: a.elevation_gain,
+        type: a.type,
+        start_at_local: a.start_at_local
+      }
 
     Repo.all(query)
   end

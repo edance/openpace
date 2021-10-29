@@ -77,6 +77,7 @@
           <div class="card-body">
             <!-- Chart -->
             <div id="overview-chart" class="chart"
+                 data-summaries="<%= Jason.encode!(@activity_summaries) %>"
                  data-distance="<%= Jason.encode!(@year_dataset) %>"
                  data-imperial="<%= @current_user.user_prefs.imperial %>"
             >
