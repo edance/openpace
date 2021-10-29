@@ -2,6 +2,7 @@ defmodule SqueezeWeb.OverviewController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Dashboard
+  alias Squeeze.Challenges
   alias Squeeze.Stats
 
   def action(conn, _) do
@@ -12,10 +13,12 @@ defmodule SqueezeWeb.OverviewController do
   def index(conn, _params, user) do
     activities = Dashboard.recent_activities(user)
     run_activities = run_activities(activities)
+    challenges = Challenges.list_current_challenges(user)
 
     render(conn, "index.html",
       activity_summaries: Dashboard.list_activity_summaries(),
       activities: activities,
+      challenges: challenges,
       run_activities: run_activities,
       run_dates: run_dates(run_activities),
       todays_activities: Dashboard.todays_activities(user),

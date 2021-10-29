@@ -27,17 +27,32 @@
 
       <!-- Navigation -->
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <%= link("Namer", to: "/namer", class: "nav-link") %>
-        </li>
+        <%= unless @current_user do %>
+          <li class="nav-item">
+            <%= link("Namer", to: "/namer", class: "nav-link") %>
+          </li>
 
-        <li class="nav-item">
-          <%= active_link(@conn, gettext("Sign Up"), to: Routes.user_path(@conn, :new), class: "nav-link") %>
-        </li>
-        <li class="nav-item">
-          <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
-        </li>
+          <li class="nav-item">
+            <%= active_link(@conn, gettext("Sign Up"), to: Routes.user_path(@conn, :new), class: "nav-link") %>
+          </li>
+          <li class="nav-item">
+            <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
+          </li>
+        <% end %>
       </ul>
     </div>
+
+    <%= if @current_user do %>
+      <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="media align-items-center">
+          <%= render "_avatar.html", assigns %>
+          <div class="media-body ml-2 d-none d-lg-block">
+            <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
+          </div>
+        </div>
+      </a>
+
+      <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
+    <% end %>
   </div>
 </nav>

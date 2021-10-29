@@ -29,6 +29,8 @@
     <div class="row">
       <div class="col-xl-3">
         <%= render "_profile-card.html", assigns %>
+
+        <%= render "_challenges-card.html", assigns %>
       </div>
 
       <div class="col-xl-5 mb-5 mb-xl-0">
