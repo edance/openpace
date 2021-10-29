@@ -6,7 +6,11 @@
           <%= gettext("Race Date") %>
         </h5>
         <span class="h2 font-weight-bold mb-0">
-          <%= race_date(@current_user) %>
+          <%= if @current_user.user_prefs.race_date do %>
+            <%= race_date(@current_user) %>
+          <% else %>
+            Not Planned
+          <% end %>
         </span>
       </div>
       <div class="col-auto">
@@ -17,7 +21,13 @@
     </div>
 
     <p class="mt-3 mb-0 text-muted text-sm">
-      <span class="text-nowrap">Race <%= weeks_until_race(@current_user) %></span>
+      <%= if @current_user.user_prefs.race_date do %>
+        <span class="text-nowrap">Race <%= weeks_until_race(@current_user) %></span>
+      <% else %>
+        <span class="text-nowrap">
+          Plan a Race »
+        </span>
+      <% end %>
     </p>
   </div>
 </div>

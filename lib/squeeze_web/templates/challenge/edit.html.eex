@@ -1,0 +1,5 @@
+<h2>Edit Challenge</h2>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.challenge_path(@conn, :update)) %>
+
+<span><%= link "Back", to: Routes.challenge_path(@conn, :index) %></span>
