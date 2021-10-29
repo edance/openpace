@@ -11,6 +11,7 @@ defmodule SqueezeWeb.OverviewView do
 
   def full_name(%User{} = user), do: User.full_name(user)
 
+  def hometown(%User{city: nil, state: nil}), do: nil
   def hometown(%User{city: city, state: state}) do
     "#{city}, #{state}"
   end

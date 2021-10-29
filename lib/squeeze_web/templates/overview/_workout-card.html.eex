@@ -7,7 +7,7 @@
         </h5>
         <span class="h2 font-weight-bold mb-0">
           <%= if length(@todays_activities) == 0 do %>
-            <%= gettext("Rest") %>
+            <%= gettext("None") %>
           <% end %>
           <%= for activity <- @todays_activities do %>
             <%= link(activity.name || activity.type, to: Routes.activity_path(@conn, :show, activity), class: "text-default") %>

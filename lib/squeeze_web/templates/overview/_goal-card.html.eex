@@ -6,7 +6,11 @@
           <%= gettext("Current Goal") %>
         </h5>
         <span class="h2 font-weight-bold mb-0">
-          <%= format_goal(@current_user) %>
+          <%= if @current_user.user_prefs.duration do %>
+            <%= format_goal(@current_user) %>
+          <% else %>
+            <%= gettext("TBD") %>
+          <% end %>
         </span>
       </div>
       <div class="col-auto">
@@ -26,7 +30,9 @@
           <%= gettext("faster than PR") %>
         </span>
       <% else %>
-        <span class="text-nowrap"></span>
+        <span class="text-nowrap">
+          Create a Goal »
+        </span>
       <% end %>
     </p>
   </div>

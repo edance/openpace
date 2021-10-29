@@ -1,0 +1,12 @@
+<div class="card bg-gradient-orange">
+  <!-- Card body -->
+  <div class="card-body">
+    <div class="h1 text-white">Connect with Strava</div>
+
+    <p class="text-sm text-white">
+      Sync all of your runs and activities with OpenPace through Strava.
+    </p>
+
+    <%= link(gettext("Connect"), to: Routes.integration_path(@conn, :request, "strava"), class: "btn btn-sm btn-secondary") %>
+  </div>
+</div>
