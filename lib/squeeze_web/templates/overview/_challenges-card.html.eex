@@ -1,0 +1,36 @@
+<div class="card">
+
+  <div class="card-header bg-transparent">
+    <div class="row align-items-center">
+      <div class="col">
+        <h6 class="text-uppercase text-muted ls-1 mb-1">
+          <%= gettext("Current Challenges") %>
+        </h6>
+        <h2 class="mb-0">
+          <%= gettext("Challenges") %>
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card body -->
+  <div class="card-body">
+    <!-- List group -->
+    <ul class="list-group list-group-flush list my--3">
+      <%= for challenge <- @challenges do %>
+        <li class="list-group-item px-0">
+          <%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge.slug) %>
+          <p class="mt-0 text-sm">
+            Ends <%= relative_time(challenge.end_date) %>
+          </p>
+
+          <div class="avatar-group d-flex mb-4">
+            <%= for score <- challenge.scores do %>
+              <%= render SqueezeWeb.SharedView, "avatar.html", Map.merge(assigns, %{user: score.user}) %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

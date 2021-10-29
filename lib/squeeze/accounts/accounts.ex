@@ -7,6 +7,7 @@ defmodule Squeeze.Accounts do
   alias Ecto.Changeset
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
   alias Squeeze.Repo
+  alias Squeeze.Utils
 
   def get_user_by_slug!(slug) do
     query = from u in User,
@@ -103,10 +104,12 @@ defmodule Squeeze.Accounts do
 
   """
   def create_user(attrs \\ %{user_prefs: %{}}) do
-    attrs = Map.put_new(attrs, :user_prefs, %{})
+    new_attrs = attrs
+    |> Utils.key_to_atom()
+    |> Map.put_new(:user_prefs, %{})
 
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset(new_attrs)
     |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
     |> Repo.insert_with_slug()
   end

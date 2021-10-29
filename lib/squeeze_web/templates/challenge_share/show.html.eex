@@ -1,6 +1,6 @@
 <main role="main">
   <!-- Navbar -->
-  <%= render SqueezeWeb.MenuView, "nav.html", assigns %>
+  <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
   <div class="jumbotron bg-terrain pb-8 mb-0">
     <div class="container">
@@ -27,7 +27,11 @@
           </div>
 
           <p>
-            <a class="btn btn-primary" href="<%= "openpace:///invite/#{@challenge.slug}" %>" role="button">Join Challenge »</a>
+            <%= if @current_user do %>
+              <%= link(gettext("Join Challenge »"), to: Routes.challenge_path(@conn, :join, @challenge.slug), class: "btn btn-primary", method: :put) %>
+            <% else %>
+              <a class="btn btn-primary" href="<%= "openpace:///invite/#{@challenge.slug}" %>" role="button">Join Challenge »</a>
+            <% end %>
           </p>
         </div>
 
