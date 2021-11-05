@@ -41,6 +41,24 @@
           </li>
 
           <li class="nav-item">
+            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= gettext("Goals") %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= gettext("Races") %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= gettext("Stats") %>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
             <%= if in_trial?(@current_user) do %>
               <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 text-sm font-weight-bold") do %>
                 Trial expires <%= relative_time(@current_user.trial_end) %>

@@ -25,10 +25,18 @@ defmodule Squeeze.Challenges do
     Repo.all(query)
   end
 
-  def list_challenges(%User{} = user, start_date, end_date) do
-    start_date = TimeHelper.beginning_of_day(user, start_date)
-    end_date = TimeHelper.beginning_of_day(user, end_date)
+  def list_challenges(%User{} = user, [ends_after: after_date]) do
+    query = from p in Challenge,
+      join: s in assoc(p, :scores),
+      where: p.end_date >= ^after_date,
+      where: s.user_id == ^user.id,
+      order_by: p.start_date,
+      preload: [scores: ^five_scores_query()]
 
+    Repo.all(query)
+  end
+
+  def list_challenges(%User{} = user, start_date, end_date) do
     query = from p in Challenge,
       join: s in assoc(p, :scores),
       where: p.start_date >= ^start_date,
@@ -66,6 +74,25 @@ defmodule Squeeze.Challenges do
       preload: [scores: ^five_scores_query()]
 
     Repo.one!(query)
+  end
+
+  def podium_finishes(%User{} = user) do
+    today = TimeHelper.today(user)
+
+    podium_query =
+      from c in Score,
+      select: %{challenge_id: c.challenge_id, user_id: c.user_id, row_number: row_number() |> over(:challenges_partition)},
+      windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score, asc: :inserted_at]]]
+
+    query = from c in Challenge,
+      join: r in subquery(podium_query),
+      on: c.id == r.challenge_id and r.row_number <= 3,
+      where: r.user_id == ^user.id,
+      where: c.end_date < ^today,
+      order_by: [desc: :end_date],
+      preload: [scores: ^five_scores_query()]
+
+    Repo.all(query)
   end
 
   defp five_scores_query do

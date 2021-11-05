@@ -4,6 +4,7 @@ defmodule SqueezeWeb.ChallengeController do
   alias Squeeze.Challenges
   alias Squeeze.Challenges.Challenge
   alias Squeeze.Notifications
+  alias Squeeze.TimeHelper
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.current_user]
@@ -11,8 +12,10 @@ defmodule SqueezeWeb.ChallengeController do
   end
 
   def index(conn, _, user) do
-    challenges = Challenges.list_current_challenges(user)
-    render(conn, "index.html", challenges: challenges)
+    date = TimeHelper.today(user) |> Timex.shift(days: -3)
+    challenges = Challenges.list_challenges(user, ends_after: date)
+    podium_finishes = Challenges.podium_finishes(user)
+    render(conn, "index.html", challenges: challenges, podium_finishes: podium_finishes)
   end
 
   def join(conn, %{"id" => slug}, user) do
