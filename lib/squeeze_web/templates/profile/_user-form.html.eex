@@ -13,20 +13,27 @@
         <div class="form-group focused">
           <%= label(f, :last_name, class: "form-control-label") %>
           <%= input(f, :last_name, class: "form-control form-control-alternative", placeholder: gettext("Last name")) %>
-          <%= error_tag(f, :first_name) %>
+          <%= error_tag(f, :last_name) %>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-4">
         <div class="form-group focused">
           <%= label(f, :city, class: "form-control-label") %>
           <%= input(f, :city, class: "form-control form-control-alternative", placeholder: gettext("City")) %>
-          <%= error_tag(f, :first_name) %>
+          <%= error_tag(f, :city) %>
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-4">
+        <div class="form-group focused">
+          <%= label(f, :state, class: "form-control-label") %>
+          <%= input(f, :state, class: "form-control form-control-alternative", placeholder: gettext("State/Region")) %>
+          <%= error_tag(f, :state) %>
+        </div>
+      </div>
+      <div class="col-lg-4">
         <div class="form-group focused">
           <%= label(f, :country, class: "form-control-label") %>
           <%= input(f, :country, class: "form-control form-control-alternative", placeholder: gettext("Country")) %>
