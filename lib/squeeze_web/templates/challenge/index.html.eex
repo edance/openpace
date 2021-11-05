@@ -1,54 +1,205 @@
-<div class="bg-gradient-primary">
-  <div class="container pt-4">
-    <!-- Table -->
-    <div class="row">
-      <div class="col-xl-8 order-xl-1">
-        <div class="card shadow">
-          <div class="card-header border-0">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="mb-0">
-                  <%= gettext("Challenges") %>
-                </h3>
-              </div>
-              <div class="col text-right">
-                <%= link(gettext("Create New Plan"), to: Routes.plan_path(@conn, :new), class: "btn btn-sm btn-primary") %>
-              </div>
-            </div>
+<div class="main-content" id="panel">
+  <!-- Header -->
+  <div class="header bg-waves pb-8">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 d-inline-block mb-0">
+              <%= gettext("Challenges") %>
+            </h6>
           </div>
-
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">
-                    <%= gettext("Name") %>
-                  </th>
-                  <th scope="col">
-                    <%= gettext("Weeks") %>
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <%= for challenge <- @challenges do %>
-                  <tr>
-                    <td>
-                      <%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge.slug) %>
-                    </td>
-                    <td>
-                      Weeks
-                    </td>
-
-                    <td class="text-right">
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
+          <div class="col-lg-6 col-5 text-right">
+            <a href="#" class="btn btn-sm btn-neutral">New</a>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="container-fluid mt--8">
+    <div class="row">
+      <div class="col-xl-4">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">
+              Overview
+            </h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Total sales</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-sales" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">Performance</h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Total orders</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-bars" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">Performance</h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Total orders</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-bars" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">Growth</h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Sales value</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-points" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">Users</h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Audience overview</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-doughnut" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">Partners</h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Affiliate traffic</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-pie" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6">
+        <!--* Card header *-->
+        <!--* Card body *-->
+        <!--* Card init *-->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Surtitle -->
+            <h6 class="surtitle">Overview</h6>
+            <!-- Title -->
+            <h5 class="h3 mb-0">Product comparison</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <div class="chart">
+              <!-- Chart wrapper -->
+              <canvas id="chart-bar-stacked" class="chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer pt-0">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+          <div class="copyright text-center  text-lg-left  text-muted">
+            &copy; 2021 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </div>
 </div>

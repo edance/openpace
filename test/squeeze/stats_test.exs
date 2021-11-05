@@ -4,18 +4,4 @@ defmodule Squeeze.StatsTest do
   @moduledoc false
 
   import Squeeze.Factory
-  alias Squeeze.Stats
-
-  describe "yearly_dateset/1" do
-    setup [:build_user]
-
-    test "returns the last 52 weeks", %{user: user} do
-      dates = Stats.yearly_dateset(user)
-      assert length(dates) == 52
-    end
-  end
-
-  defp build_user(_) do
-    {:ok, user: build(:user)}
-  end
 end

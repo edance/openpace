@@ -22,6 +22,18 @@ defmodule SqueezeWeb.OverviewView do
 
   def improvement_amount(%User{} = user), do: User.improvement_amount(user)
 
+  def total_distance(%{ytd_run_stats: ytd_run_stats, current_user: user}) do
+    Distances.to_int(ytd_run_stats.distance, [imperial: user.user_prefs.imperial])
+  end
+
+  def total_hours(%{ytd_run_stats: ytd_run_stats}) do
+    round(ytd_run_stats.duration / (60 * 60))
+  end
+
+  def total_elevation(%{ytd_run_stats: ytd_run_stats, current_user: user}) do
+    Distances.to_feet(ytd_run_stats.elevation_gain, [imperial: user.user_prefs.imperial])
+  end
+
   def format_goal(user) do
     user.user_prefs.duration
     |> format_duration()
@@ -38,19 +50,39 @@ defmodule SqueezeWeb.OverviewView do
     relative_date(user, date)
   end
 
-  def weekly_distance(%{year_dataset: dataset, current_user: user}) do
-    distance = dataset
-    |> List.last()
-    |> Map.get(:distance)
-    "#{distance} #{Distances.label(imperial: user.user_prefs.imperial)}"
+  def weekly_distance(%{activity_summaries: summaries, current_user: user}) do
+    date = Timex.now()
+    |> Timex.to_datetime(user.user_prefs.timezone)
+    |> Timex.beginning_of_week()
+
+    distance = summaries
+    |> Enum.filter(&(Timex.after?(&1.start_at_local, date)))
+    |> Enum.filter(&(String.contains?(&1.type, "Run")))
+    |> Enum.map(&(&1.distance))
+    |> Enum.sum()
+
+    imperial = user.user_prefs.imperial
+
+    "#{Distances.to_float(distance, imperial: imperial)} #{Distances.label(imperial: imperial)}"
   end
 
-  def last_week_distance(%{year_dataset: dataset, current_user: user}) do
-    distance = dataset
-    |> Enum.reverse()
-    |> Enum.at(1)
-    |> Map.get(:distance)
-    "#{distance} #{Distances.label(imperial: user.user_prefs.imperial)}"
+  def last_week_distance(%{activity_summaries: summaries, current_user: user}) do
+    start_date = Timex.now()
+    |> Timex.to_datetime(user.user_prefs.timezone)
+    |> Timex.shift(weeks: -1)
+    |> Timex.beginning_of_week()
+
+    end_date = start_date |> Timex.end_of_week()
+
+    distance = summaries
+    |> Enum.filter(&(Timex.between?(&1.start_at_local, start_date, end_date)))
+    |> Enum.filter(&(String.contains?(&1.type, "Run")))
+    |> Enum.map(&(&1.distance))
+    |> Enum.sum()
+
+    imperial = user.user_prefs.imperial
+
+    "#{Distances.to_float(distance, imperial: imperial)} #{Distances.label(imperial: imperial)}"
   end
 
   def dates(assigns) do
@@ -64,9 +96,9 @@ defmodule SqueezeWeb.OverviewView do
     TimeHelper.today(user)
   end
 
-  def active_on_date?(%{run_dates: dates}, date) do
-    dates
-    |> Enum.member?(date)
+  def active_on_date?(%{activity_map: activity_map}, date) do
+    list = Map.get(activity_map, date, [])
+    !Enum.empty?(list)
   end
 
   def streak(%{run_dates: dates, current_user: user}) do
