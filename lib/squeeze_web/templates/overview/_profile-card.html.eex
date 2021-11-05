@@ -18,26 +18,31 @@
       <h5 class="h3">
         <%= full_name(@current_user) %>
       </h5>
-      <%= if hometown(@current_user) do  %>
-        <div class="h5 font-weight-300">
-          <i class="ni location_pin mr-2"></i> <%= hometown(@current_user) %>
-        </div>
-      <% end %>
+      <div class="h5 font-weight-300">
+        YTD Running Totals
+      </div>
     </div>
+
     <div class="row">
       <div class="col">
         <div class="card-profile-stats d-flex justify-content-center">
           <div>
-            <span class="heading">22</span>
+            <span class="heading">
+              <%= @ytd_run_stats.count %>
+            </span>
+            <span class="description">Runs</span>
+          </div>
+          <div>
+            <span class="heading">
+              <%= total_distance(assigns) %>
+            </span>
             <span class="description">Miles</span>
           </div>
           <div>
-            <span class="heading">10</span>
+            <span class="heading">
+              <%= total_hours(assigns) %>
+            </span>
             <span class="description">Hours</span>
-          </div>
-          <div>
-            <span class="heading">89</span>
-            <span class="description">Elevation</span>
           </div>
         </div>
       </div>
