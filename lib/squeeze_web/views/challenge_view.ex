@@ -1,6 +1,8 @@
 defmodule SqueezeWeb.ChallengeView do
   use SqueezeWeb, :view
 
+  alias Squeeze.Accounts.User
+  alias Squeeze.Distances
   alias Squeeze.TimeHelper
 
   def title("show.html", %{challenge: challenge}), do: challenge.name
@@ -68,4 +70,35 @@ defmodule SqueezeWeb.ChallengeView do
       _ -> nil
     end
   end
+
+  def format_score(%{challenge_type: :segment}, amount) do
+    if amount > 0 do
+      format_duration(amount)
+    else
+      "No Attempt"
+    end
+  end
+
+  def format_score(challenge, amount) do
+    case challenge.challenge_type do
+      :distance -> Distances.format(amount)
+      :time -> format_duration(amount)
+      :altitude -> "#{Distances.to_feet(amount, imperial: true)} ft"
+      _ -> format_duration(amount)
+    end
+  end
+
+  def full_name(%User{} = user), do: User.full_name(user)
+
+  def initials(%User{first_name: first_name, last_name: last_name}) do
+    "#{String.at(first_name, 0)}#{String.at(last_name, 0)}"
+  end
+
+  def avatar_size(0), do: "avatar-xl"
+  def avatar_size(1), do: "avatar-lg"
+  def avatar_size(_), do: ""
+
+  def podium_order(0), do: "order-2"
+  def podium_order(1), do: "order-1"
+  def podium_order(_), do: "order-3"
 end
