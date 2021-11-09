@@ -10,8 +10,8 @@
       <%= link @challenge.name, to: Routes.challenge_path(@conn, :show, @challenge.slug) %>
 
       <p class="mt-0 mb-1 text-sm">
-        <%= podium_finish(assigns) %> &dot;
-        <%= challenge_type(assigns) %> &dot;
+        <%= podium_finish(assigns) %> &middot;
+        <%= challenge_type(assigns) %> &middot;
         <%= challenge_relative_date(assigns) %>
       </p>
     </div>

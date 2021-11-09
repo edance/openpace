@@ -5,6 +5,8 @@
     </div>
   <% end %>
 
+  <%= hidden_input f, :challenge_type %>
+
   <div class="form-group">
     <%= label f, :name, class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
@@ -12,15 +14,15 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :week_count, class: "control-label" %>
-    <%= number_input f, :week_count, class: "form-control" %>
-    <%= error_tag f, :week_count %>
+    <%= label f, :start_date, class: "control-label" %>
+    <%= text_input f, :start_date, class: "form-control" %>
+    <%= error_tag f, :start_date %>
   </div>
 
   <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
-    <%= error_tag f, :description %>
+    <%= label f, :end_date, class: "control-label" %>
+    <%= text_input f, :end_date, class: "form-control" %>
+    <%= error_tag f, :end_date %>
   </div>
 
   <div class="form-group">

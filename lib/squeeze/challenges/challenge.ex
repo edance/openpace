@@ -12,13 +12,15 @@ defmodule Squeeze.Challenges.Challenge do
     name
     activity_type
     challenge_type
-    timeline
     start_date
     end_date
   )a
-  @optional_fields ~w(
+  @segment_required_fields ~w(
     segment_id
     polyline
+  )a
+  @optional_fields ~w(
+    timeline
     private
     recurring
   )a
@@ -60,7 +62,7 @@ defmodule Squeeze.Challenges.Challenge do
 
   defp validate_segment_type(changeset) do
     case get_field(changeset, :challenge_type) do
-      :segment -> validate_required(changeset, [:segment_id])
+      :segment -> validate_required(changeset, @segment_required_fields)
       _ -> changeset
     end
   end

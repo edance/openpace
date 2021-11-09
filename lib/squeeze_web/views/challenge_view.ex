@@ -9,15 +9,17 @@ defmodule SqueezeWeb.ChallengeView do
   def title(_, _assigns), do: "Challenges"
 
   def challenge_relative_date(%{challenge: challenge, current_user: user}) do
-    today = TimeHelper.today(user)
+    now = Timex.now()
+    start_at = TimeHelper.beginning_of_day(user, challenge.start_date)
+    end_at = TimeHelper.end_of_day(user, challenge.end_date)
 
     cond do
-      Timex.after?(challenge.start_date, today) ->
-        "Starts #{relative_time(challenge.start_date)}"
-      Timex.before?(challenge.end_date, today) ->
-        "Ended #{relative_time(challenge.end_date)}"
+      Timex.after?(start_at, now) ->
+        "Starts #{relative_time(start_at)}"
+      Timex.before?(end_at, now) ->
+        "Ended #{relative_time(end_at)}"
       true ->
-        "Ends #{relative_time(challenge.end_date)}"
+        "Ends #{relative_time(end_at)}"
     end
   end
 
@@ -35,7 +37,11 @@ defmodule SqueezeWeb.ChallengeView do
   end
 
   def challenge_type(%{challenge: challenge}) do
-    case challenge.challenge_type do
+    challenge_type(challenge.challenge_type)
+  end
+
+  def challenge_type(challenge_type) do
+    case challenge_type do
       :distance -> "Distance Challenge"
       :time -> "Time Challenge"
       :altitude -> "Elevation Gain Challenge"

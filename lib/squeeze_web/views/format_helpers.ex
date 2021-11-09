@@ -62,4 +62,8 @@ defmodule SqueezeWeb.FormatHelpers do
     pace = trunc(duration / miles)
     "#{format_duration(pace)}/#{label}"
   end
+
+  def format_ordinal_date(date) do
+    Timex.format!(date, "%b #{Ordinal.ordinalize(date.day)}", :strftime)
+  end
 end

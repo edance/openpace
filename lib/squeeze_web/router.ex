@@ -78,7 +78,7 @@ defmodule SqueezeWeb.Router do
 
     resources "/plans", PlanController
 
-    resources "/challenges", ChallengeController
+    resources "/challenges", ChallengeController, except: [:edit, :update, :delete]
     put "/challenges/:id/join", ChallengeController, :join
   end
 

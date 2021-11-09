@@ -1,0 +1,27 @@
+<div class="card">
+  <!-- Card header -->
+  <div class="card-header">
+    <!-- Title -->
+    <h5 class="h3 mb-0">Pick a Segment</h5>
+  </div>
+
+  <div class="card-body">
+    <!-- List group -->
+    <ul class="list-group list-group-flush list my--3">
+      <li class="list-group-item px-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <h4 class="mb-0">
+              <a href="#!">John Michael</a>
+            </h4>
+            <span class="text-success">●</span>
+            <small>Online</small>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-sm btn-primary">Add</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
