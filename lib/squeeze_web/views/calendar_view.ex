@@ -19,9 +19,37 @@ defmodule SqueezeWeb.CalendarView do
     |> Enum.group_by(fn({_, idx}) -> div(idx, 7) end, fn({v, _}) -> v end)
   end
 
+  def activities_in_dates(dates, %{activities_by_date: activities_map}) do
+    dates
+    |> Enum.flat_map(&(Map.get(activities_map, &1, [])))
+  end
+
   def activities_in_dates(user, activities, dates) do
     activities
     |> Enum.filter(&(Enum.member?(dates, activity_date(user, &1))))
+  end
+
+  def today(%{current_user: user}) do
+    TimeHelper.today(user)
+  end
+
+  def current_month(conn) do
+    case conn.query_params["date"] do
+      nil -> today(conn.assigns) |> Timex.beginning_of_month()
+      date -> Timex.parse!(date, "{YYYY}-{0M}-{0D}")
+    end
+  end
+
+  def next_month_date(conn) do
+    current_month(conn)
+    |> Timex.shift(months: 1)
+    |> format_date()
+  end
+
+  def prev_month_date(conn) do
+    current_month(conn)
+    |> Timex.shift(months: -1)
+    |> format_date()
   end
 
   defp format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")

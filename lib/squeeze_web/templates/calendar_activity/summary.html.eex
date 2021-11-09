@@ -9,7 +9,3 @@
 <%= if race_date?(assigns) do %>
   <%= render("_race.html", assigns) %>
 <% end %>
-
-<button class="btn-calendar-activity badge badge-circle bg-red text-white" data-date="<%= @date %>">
-  <span class="iconify" data-icon="foundation:plus" data-inline="false"></span>
-</button>

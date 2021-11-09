@@ -63,9 +63,9 @@ defmodule SqueezeWeb.CalendarActivityView do
     |> Enum.join(" · ")
   end
 
-  def ordered_activities(%{activities: activities, current_user: user, date: date}) do
-    activities
-    |> Enum.filter(&(on_date?(user, date, &1)))
+  def ordered_activities(%{activities_by_date: activities_map, date: date}) do
+    activities_map
+    |> Map.get(date, [])
     |> Enum.sort_by(&(&1.start_at))
   end
 

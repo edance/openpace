@@ -64,8 +64,8 @@ defmodule SqueezeWeb.Router do
 
     get "/overview", OverviewController, :index
 
-    get "/profile", ProfileController, :edit
-    put "/profile", ProfileController, :update
+    get "/settings", ProfileController, :edit
+    put "/settings", ProfileController, :update
 
     get "/billing", BillingController, :index
     put "/billing/cancel", BillingController, :cancel

@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.CalendarController do
   use SqueezeWeb, :controller
 
-  alias Plug.Conn
   alias Squeeze.Accounts.User
   alias Squeeze.Calendar
   alias Squeeze.Dashboard
@@ -12,11 +11,7 @@ defmodule SqueezeWeb.CalendarController do
   plug :validate_type when action in [:show]
 
   def index(conn, _) do
-    [ua | _] = Conn.get_req_header(conn, "user-agent")
-    case Browser.mobile?(ua) do
-      true -> redirect(conn, to: Routes.calendar_path(conn, :show, "day"))
-      _ -> redirect(conn, to: Routes.calendar_path(conn, :show, "month"))
-    end
+    redirect(conn, to: Routes.calendar_path(conn, :show, "month"))
   end
 
   def show(conn, %{"type" => type} = params) do
@@ -26,8 +21,18 @@ defmodule SqueezeWeb.CalendarController do
     conn
     |> assign(:date, date)
     |> assign(:dates, dates)
-    |> assign(:activities, Dashboard.list_activities(user, dates))
+    |> assign(:activities_by_date, activities_by_date(user, dates))
     |> render("#{type}.html")
+  end
+
+  def activities_by_date(user, dates) do
+    user
+    |> Dashboard.list_activities(dates)
+    |> Enum.reduce(%{}, fn(x, acc) ->
+      date = x.start_at_local |> Timex.to_date()
+      list = Map.get(acc, date, [])
+      Map.put(acc, date, [x | list])
+    end)
   end
 
   defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
