@@ -73,7 +73,7 @@
                 <p class="card-text mb-4">
                   Go the distance! Challenge your friends to who can run the longest distance in a given amount of time.
                 </p>
-                <a href="#" class="btn btn-outline-default w-100"><%= gettext("Get Started") %></a>
+                <%= link(gettext("Get Started"), to: Routes.challenge_path(@conn, :new, challenge_type: "distance"), class: "btn btn-outline-default w-100") %>
               </div>
             </div>
           </div>
@@ -87,12 +87,12 @@
                 </div>
 
                 <h3 class="card-title text-center mb-3">
-                  <%= gettext("Duration Challenge") %>
+                  <%= gettext("Time Challenge") %>
                 </h3>
                 <p class="card-text mb-4">
                   For this challenge, time is on your side. You don't need to be fast to win. You just have to put in the time.
                 </p>
-                <a href="#" class="btn btn-outline-default w-100"><%= gettext("Get Started") %></a>
+                <%= link(gettext("Get Started"), to: Routes.challenge_path(@conn, :new, challenge_type: "time"), class: "btn btn-outline-default w-100") %>
               </div>
             </div>
           </div>
@@ -109,9 +109,9 @@
                   <%= gettext("Climbing Challenge") %>
                 </h3>
                 <p class="card-text mb-4">
-                  Channel your inner Kate Bush and run up that hill...or mountain. The runner with the most elevation gain wins this challenge.
+                  Run up that hill or mountain or whatever you can to get elevation. The runner with the most elevation gain wins this challenge.
                 </p>
-                <a href="#" class="btn btn-outline-default w-100"><%= gettext("Get Started") %></a>
+                <%= link(gettext("Get Started"), to: Routes.challenge_path(@conn, :new, challenge_type: "altitude"), class: "btn btn-outline-default w-100") %>
               </div>
             </div>
           </div>
@@ -130,7 +130,7 @@
                 <p class="card-text mb-4">
                   Pick your favorite Strava segment and race your friends. Whoever runs the segment the fastest will be declared the winner.
                 </p>
-                <a href="#" class="btn btn-outline-default w-100"><%= gettext("Get Started") %></a>
+                <%= link(gettext("Get Started"), to: Routes.challenge_path(@conn, :new, challenge_type: "segment"), class: "btn btn-outline-default w-100") %>
               </div>
             </div>
           </div>

@@ -23,56 +23,35 @@ defmodule SqueezeWeb.ChallengeController do
 
     with {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
       Notifications.notify_user_joined(challenge, user)
-      redirect(conn, to: Routes.dashboard_path(conn, :index))
+      redirect(conn, to: Routes.challenge_path(conn, :show, challenge.slug))
     end
   end
 
-  def new(conn, _, _user) do
-    changeset = Challenges.change_challenge(%Challenge{})
-    render(conn, "new.html", changeset: changeset)
+  def new(conn, %{"challenge_type" => type}, _user) do
+    type = String.to_atom(type)
+    changeset = Challenges.change_challenge(%Challenge{challenge_type: type, activity_type: :run})
+    render(conn, "new.html", changeset: changeset, challenge_type: type)
   end
 
-  def create(conn, %{"challenge" => challenge_params}, user) do
-    case Challenges.create_challenge(user, challenge_params) do
-      {:ok, challenge} ->
+  def new(conn, _, _user) do
+    redirect(conn, to: Routes.challenge_path(conn, :index))
+  end
+
+  def create(conn, %{"challenge" => params, "challenge_type" => type}, user) do
+    type = String.to_atom(type)
+    with {:ok, challenge} <- Challenges.create_challenge(user, params),
+         {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
         conn
         |> put_flash(:info, "Challenge created successfully.")
-        |> redirect(to: Routes.challenge_path(conn, :edit, challenge))
+        |> redirect(to: Routes.challenge_path(conn, :show, challenge.slug))
+    else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, challenge_type: type)
     end
   end
 
   def show(conn, %{"id" => slug}, _user) do
     challenge = Challenges.get_challenge_by_slug!(slug)
     render(conn, "show.html", %{challenge: challenge})
-  end
-
-  def edit(conn, %{"id" => id}, user) do
-    challenge = Challenges.get_challenge!(user, id)
-    changeset = Challenges.change_challenge(challenge)
-    render(conn, "edit.html", challenge: challenge, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "challenge" => challenge_params}, user) do
-    challenge = Challenges.get_challenge!(user, id)
-
-    case Challenges.update_challenge(challenge, challenge_params) do
-      {:ok, challenge} ->
-        conn
-        |> put_flash(:info, "Challenge updated successfully.")
-        |> redirect(to: Routes.challenge_path(conn, :show, challenge))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", challenge: challenge, changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}, user) do
-    challenge = Challenges.get_challenge!(user, id)
-    {:ok, _challenge} = Challenges.delete_challenge(challenge)
-
-    conn
-    |> put_flash(:info, "Challenge deleted successfully.")
-    |> redirect(to: Routes.challenge_path(conn, :index))
   end
 end

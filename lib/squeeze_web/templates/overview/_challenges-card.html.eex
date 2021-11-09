@@ -15,22 +15,14 @@
 
   <!-- Card body -->
   <div class="card-body">
-    <!-- List group -->
-    <ul class="list-group list-group-flush list my--3">
-      <%= for challenge <- @challenges do %>
-        <li class="list-group-item px-0">
-          <%= link challenge.name, to: Routes.challenge_path(@conn, :show, challenge.slug) %>
-          <p class="mt-0 text-sm">
-            Ends <%= relative_time(challenge.end_date) %>
-          </p>
-
-          <div class="avatar-group d-flex mb-4">
-            <%= for score <- challenge.scores do %>
-              <%= render SqueezeWeb.SharedView, "avatar.html", Map.merge(assigns, %{user: score.user}) %>
-            <% end %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
+    <%= if Enum.empty?(@challenges) do %>
+      <p class="text-sm">You have no challenges.</p>
+    <% else %>
+      <ul class="list-group list-group-flush list my--3">
+        <%= for challenge <- @challenges do %>
+          <%= render SqueezeWeb.ChallengeView, "list-item.html", Map.merge(assigns, %{challenge: challenge}) %>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 </div>

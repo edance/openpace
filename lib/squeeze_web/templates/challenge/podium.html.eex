@@ -47,8 +47,8 @@
     <div class="row my-4">
       <div class="col-md-8">
         <p class="mt-0 mb-1 text-sm">
-          <%= challenge_type(assigns) %> &dot;
-          <%= challenge_relative_date(assigns) %>
+          <%= challenge_type(assigns) %> &middot;
+          <%= format_ordinal_date(@challenge.start_date) %> - <%= format_ordinal_date(@challenge.end_date) %>
         </p>
 
 
@@ -56,6 +56,10 @@
           <% percentage = remaining_percentage(assigns) %>
           <div class="progress-bar" role="progressbar" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%;"></div>
         </div>
+
+        <p class="mt-0 mb-1 text-sm">
+          <%= challenge_relative_date(assigns) %>
+        </p>
       </div>
     </div>
 

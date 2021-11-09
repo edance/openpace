@@ -9,6 +9,7 @@ defmodule Squeeze.Challenges do
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
+  alias Squeeze.Utils
 
   alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Challenges.{Challenge, ChallengeActivity, Score}
@@ -155,6 +156,18 @@ defmodule Squeeze.Challenges do
   end
 
   def create_challenge(%User{} = user, attrs \\ %{}) do
+    attrs = attrs |> Utils.key_to_atom()
+
+    attrs = case Map.get(attrs, :date_range) do
+      nil -> attrs
+      dates ->
+        [start_date, end_date] = String.split(dates, " to ")
+
+        attrs
+        |> Map.put_new(:start_date, start_date)
+        |> Map.put_new(:end_date, end_date)
+    end
+
     %Challenge{}
     |> Challenge.changeset(attrs)
     |> Changeset.put_change(:user_id, user.id)
