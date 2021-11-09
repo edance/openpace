@@ -19,9 +19,9 @@ defmodule Squeeze.Stats do
       where: a.user_id == ^user.id,
       where: a.type == "Run",
       select: %{
-        distance: sum(a.distance),
-        duration: sum(a.duration),
-        elevation_gain: sum(a.elevation_gain),
+        distance: fragment("coalesce(?, 0)", sum(a.distance)),
+        duration: fragment("coalesce(?, 0)", sum(a.duration)),
+        elevation_gain: fragment("coalesce(?, 0)", sum(a.elevation_gain)),
         count: count(a.id)
       }
 
