@@ -7,7 +7,7 @@
 
   <%= link(to: Routes.profile_path(@conn, :edit), class: "dropdown-item") do %>
     <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
-    <span><%= gettext("Profile") %></span>
+    <span><%= gettext("Settings") %></span>
   <% end %>
 
   <%= link(to: Routes.billing_path(@conn, :index), class: "dropdown-item") do %>

@@ -19,7 +19,7 @@
         <%= full_name(@current_user) %>
       </h5>
       <div class="h5 font-weight-300">
-        YTD Running Totals
+        Year Running Totals
       </div>
     </div>
 
