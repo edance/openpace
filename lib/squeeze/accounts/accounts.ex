@@ -114,6 +114,17 @@ defmodule Squeeze.Accounts do
     |> Repo.insert_with_slug()
   end
 
+  def register_user(attrs \\ %{user_prefs: %{}}) do
+    new_attrs = attrs
+    |> Utils.key_to_atom()
+    |> Map.put_new(:user_prefs, %{})
+
+    %User{}
+    |> User.registration_changeset(new_attrs)
+    |> Changeset.cast_assoc(:user_prefs, with: &UserPrefs.changeset/2)
+    |> Repo.insert_with_slug()
+  end
+
   def update_user_password(%User{} = user, attrs) do
     user
     |> User.password_changeset(attrs)
