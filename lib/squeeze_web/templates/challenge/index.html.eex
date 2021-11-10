@@ -2,7 +2,7 @@
   <!-- Page content -->
   <div class="container pt-4">
     <div class="row">
-      <div class="col-xl-5">
+      <div class="col-lg-5">
         <div class="card">
           <div class="card-header bg-transparent">
             <div class="row align-items-center">
@@ -20,12 +20,16 @@
 
           <!-- Card body -->
           <div class="card-body">
-            <!-- List group -->
-            <ul class="list-group list-group-flush list my--3">
-              <%= for challenge <- @challenges do %>
-                <%= render SqueezeWeb.ChallengeView, "list-item.html", Map.merge(assigns, %{challenge: challenge}) %>
-              <% end %>
-            </ul>
+            <%= if Enum.empty?(@challenges) do %>
+              <p>No current challenges.</p>
+            <% else %>
+              <!-- List group -->
+              <ul class="list-group list-group-flush list my--3">
+                <%= for challenge <- @challenges do %>
+                  <%= render SqueezeWeb.ChallengeView, "list-item.html", Map.merge(assigns, %{challenge: challenge}) %>
+                <% end %>
+              </ul>
+            <% end %>
           </div>
         </div>
 
@@ -46,19 +50,23 @@
 
           <!-- Card body -->
           <div class="card-body">
-            <!-- List group -->
-            <ul class="list-group list-group-flush list my--3">
-              <%= for challenge <- @podium_finishes do %>
-                <%= render SqueezeWeb.ChallengeView, "podium-list-item.html", Map.merge(assigns, %{challenge: challenge}) %>
-              <% end %>
-            </ul>
+            <%= if Enum.empty?(@podium_finishes) do %>
+              <p>No podium finishes.</p>
+            <% else %>
+              <!-- List group -->
+              <ul class="list-group list-group-flush list my--3">
+                <%= for challenge <- @podium_finishes do %>
+                  <%= render SqueezeWeb.ChallengeView, "podium-list-item.html", Map.merge(assigns, %{challenge: challenge}) %>
+                <% end %>
+              </ul>
+            <% end %>
           </div>
         </div>
       </div>
 
-      <div class="col-xl-7">
+      <div class="col-lg-7">
         <div class="row">
-          <div class="col-xl-6">
+          <div class="col-md-6">
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-4">
@@ -77,7 +85,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-6">
+          <div class="col-md-6">
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-4">
@@ -96,7 +104,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-6">
+          <div class="col-md-6">
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-4">
@@ -115,7 +123,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-6">
+          <div class="col-md-6">
             <div class="card">
               <div class="card-body">
                 <div class="text-center mb-4">

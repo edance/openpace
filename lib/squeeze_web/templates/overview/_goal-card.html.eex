@@ -30,9 +30,9 @@
           <%= gettext("faster than PR") %>
         </span>
       <% else %>
-        <span class="text-nowrap">
+        <%= link(to: Routes.profile_path(@conn, :edit), class: "text-nowrap") do %>
           Create a Goal »
-        </span>
+        <% end %>
       <% end %>
     </p>
   </div>
