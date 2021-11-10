@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "ui form", as: :user, id: "sign-up-form"], fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form", as: :user], fn f -> %>
   <div class="form-row mb-3">
     <div class="col">
       <%= input f, :first_name, placeholder: gettext("First Name"), class: "form-control" %>
@@ -17,6 +17,12 @@
     <%= input f, :encrypted_password, placeholder: gettext("Password"), value: "", type: "password", class: "form-control" %>
     <%= error_tag f, :encrypted_password %>
   </div>
+
+  <%= inputs_for f, :user_prefs, fn p -> %>
+    <%= hidden_input p, :timezone, class: "timezone-hidden-input" %>
+    <%= hidden_input p, :imperial, class: "imperial-hidden-input" %>
+  <% end %>
+
   <div class="text-center">
     <%= submit gettext("Sign Up"), class: "btn btn-primary my-4 btn-spinner" %>
   </div>

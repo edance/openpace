@@ -2,54 +2,45 @@
   <!-- Navbar -->
   <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="container">
-      <div class="header-body text-center mt-2 mb-6">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 col-md-6">
-            <h1><%= gettext("Welcome Back!") %></h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Page content -->
-  <div class="container pb-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-7">
-        <div class="card bg-secondary shadow border-0">
-          <div class="card-header bg-transparent pb-5">
-            <div class="text-muted text-center mt-2 mb-3">
-              <small><%= gettext("Sign in with") %></small>
+  <div class="bg-gradient-primary">
+    <div class="container pt-lg-7 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent">
+              <h1 class="h3">Welcome Back</h1>
             </div>
-            <div class="btn-wrapper text-center">
-              <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon" do %>
-                <span class="btn-inner--icon">
-                  <img src="<%= Routes.static_path(@conn, "/images/google.svg") %>" />
-                </span>
-                <span class="btn-inner--text">Google</span>
+
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="pb-5">
+                <div class="btn-wrapper text-center">
+                  <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon" do %>
+                    <span class="btn-inner--icon">
+                      <img src="<%= Routes.static_path(@conn, "/images/google.svg") %>" />
+                    </span>
+                    <span class="btn-inner--text">Google</span>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="text-center text-muted mb-4">
+                <small><%= gettext("Or sign in with credentials") %></small>
+              </div>
+              <%= render "form.html", Map.put(assigns, :action, Routes.session_path(@conn, :new)) %>
+            </div>
+          </div>
+          <div class="row mt-3 mb-6">
+            <div class="col-6">
+              <%= link(to: Routes.forgot_password_path(@conn, :show), class: "text-light") do %>
+                <small><%= gettext("Forgot password?") %></small>
               <% end %>
             </div>
-          </div>
-          <div class="card-body px-lg-5 py-lg-5">
-            <div class="text-center text-muted mb-4">
-              <small><%= gettext("Or sign in with credentials") %></small>
+            <div class="col-6 text-right">
+              <%= link(to: Routes.user_path(@conn, :new), class: "text-light") do %>
+                <small><%= gettext("Create new account") %></small>
+              <% end %>
             </div>
-            <%= render "form.html", Map.put(assigns, :action, Routes.session_path(@conn, :new)) %>
-          </div>
-        </div>
-        <div class="row mt-3 mb-6">
-          <div class="col-6">
-            <%= link(to: Routes.forgot_password_path(@conn, :show), class: "text-light") do %>
-              <small><%= gettext("Forgot password?") %></small>
-            <% end %>
-          </div>
-          <div class="col-6 text-right">
-            <%= link(to: Routes.onboard_path(@conn, :index), class: "text-light") do %>
-              <small><%= gettext("Create new account") %></small>
-            <% end %>
           </div>
         </div>
       </div>
