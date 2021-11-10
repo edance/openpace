@@ -3,6 +3,7 @@ defmodule SqueezeWeb.WeeklySummaryView do
 
   alias Squeeze.Distances
 
+  def weeks_until_race(%{current_user: %{user_prefs: %{race_date: nil}}}), do: nil
   def weeks_until_race(%{current_user: user, dates: dates}) do
     race_date = user.user_prefs.race_date
     date = List.first(dates)

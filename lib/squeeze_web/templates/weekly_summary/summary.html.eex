@@ -8,7 +8,7 @@
       <div class="text-muted">Race Week</div>
     <% end %>
 
-    <%= if weeks_left > 0 do %>
+    <%= if !is_nil(weeks_left) && weeks_left > 0 do %>
       <div class="text-muted"><%= weeks_left %> weeks until race</div>
     <% end %>
   </div>

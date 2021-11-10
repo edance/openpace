@@ -71,14 +71,14 @@
             <%= label p, :duration, class: "form-control-label" do %>
               Goal Time
             <% end %>
-            <%= duration_input p, :duration, class: "form-control form-control-alternative" %>
+            <%= duration_select p, :duration, class: "form-control form-control-alternative" %>
             <%= error_tag(p, :duration) %>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group focused">
             <%= label(p, :personal_record, class: "form-control-label") %>
-            <%= duration_input p, :personal_record, class: "form-control form-control-alternative" %>
+            <%= duration_select p, :personal_record, class: "form-control form-control-alternative" %>
             <%= error_tag(p, :personal_record) %>
           </div>
         </div>
@@ -108,5 +108,7 @@
     </div>
   <% end %>
 
-  <button class="btn btn-primary" type="submit">Save</button>
+  <div class="mt-4">
+    <button class="btn btn-primary" type="submit">Save</button>
+  </div>
 <% end %>

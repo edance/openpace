@@ -24,9 +24,10 @@
       <%= if @current_user.user_prefs.race_date do %>
         <span class="text-nowrap">Race <%= weeks_until_race(@current_user) %></span>
       <% else %>
-        <span class="text-nowrap">
+
+        <%= link(to: Routes.profile_path(@conn, :edit), class: "text-nowrap") do %>
           Plan a Race »
-        </span>
+        <% end %>
       <% end %>
     </p>
   </div>
