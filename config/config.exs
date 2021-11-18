@@ -16,8 +16,7 @@ config :squeeze, SqueezeWeb.Endpoint,
   url: [scheme: "http", host: "localhost", port: 4000],
   secret_key_base: "dQoFqEeDanLKBUOlYj3JJN3GOKv3AK9id6Je17YxqP2wg+c1Bs8ckUPo9YDTPD1k",
   render_errors: [view: SqueezeWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Squeeze.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Squeeze.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
