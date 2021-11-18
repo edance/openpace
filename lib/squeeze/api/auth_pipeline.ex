@@ -8,6 +8,7 @@ defmodule Squeeze.Api.AuthPipeline do
     module: Squeeze.Guardian,
     error_handler: Squeeze.Api.AuthErrorHandler
 
+  plug Guardian.Plug.VerifySession
   plug Guardian.Plug.VerifyHeader
   plug Guardian.Plug.EnsureAuthenticated
   plug Guardian.Plug.LoadResource

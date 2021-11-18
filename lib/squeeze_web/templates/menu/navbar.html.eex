@@ -8,34 +8,32 @@
       <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
     <% end %>
 
-    <!-- Collapse -->
-    <div class="collapse navbar-collapse" id="nav-collapse">
-      <!-- Collapse header -->
-      <div class="navbar-collapse-header d-md-none">
-        <div class="row">
-          <div class="col-6 collapse-brand">
-            <%= company_name() %>
-          </div>
-          <div class="col-6 collapse-close">
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle sidenav">
-              <span></span>
-              <span></span>
-            </button>
+    <%= if @current_user do %>
+      <a class="nav-link pr-0 order-md-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="media align-items-center">
+          <%= render "_avatar.html", assigns %>
+          <div class="media-body ml-2 d-none d-lg-block">
+            <span class="mb-0 font-weight-bold"><%= full_name(@current_user) %></span>
           </div>
         </div>
-      </div>
+      </a>
 
+      <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
+    <% end %>
+
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse order-md-2" id="nav-collapse">
       <!-- Navigation -->
       <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
         <%= if @current_user do %>
           <li class="nav-item">
-            <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link text-sm") do %>
+            <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link") do %>
               <%= gettext("Dashboard") %>
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link text-sm") do %>
+            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link") do %>
               <%= gettext("Challenges") %>
             <% end %>
           </li>
@@ -44,7 +42,7 @@
             <%= render SqueezeWeb.CalendarView, "navbar-item.html", assigns %>
           <% else %>
             <li class="nav-item">
-              <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link text-sm") do %>
+              <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link") do %>
                 <%= gettext("Calendar") %>
               <% end %>
             </li>
@@ -52,7 +50,7 @@
 
           <li class="nav-item">
             <%= if in_trial?(@current_user) do %>
-              <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 text-sm font-weight-bold") do %>
+              <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 font-weight-bold") do %>
                 Trial expires <%= relative_time(@current_user.trial_end) %>
               <% end %>
             <% end %>
@@ -61,17 +59,5 @@
       </ul>
     </div>
 
-    <%= if @current_user do %>
-      <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <div class="media align-items-center">
-          <%= render "_avatar.html", assigns %>
-          <div class="media-body ml-2 d-none d-lg-block">
-            <span class="mb-0 text-sm  font-weight-bold"><%= full_name(@current_user) %></span>
-          </div>
-        </div>
-      </a>
-
-      <%= render SqueezeWeb.MenuView, "user-dropdown.html", assigns %>
-    <% end %>
   </div>
 </nav>

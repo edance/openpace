@@ -1,10 +1,4 @@
 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-  <div class=" dropdown-header noti-title">
-    <h6 class="text-overflow m-0">
-      <%= gettext("Welcome") %>
-    </h6>
-  </div>
-
   <%= link(to: Routes.profile_path(@conn, :edit), class: "dropdown-item") do %>
     <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
     <span><%= gettext("Settings") %></span>
