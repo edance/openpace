@@ -14,6 +14,8 @@ defmodule Squeeze.Application do
     children = [
       # Start the Ecto repository
       supervisor(Squeeze.Repo, []),
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Squeeze.PubSub},
       # Start the endpoint when the application starts
       supervisor(Endpoint, []),
       # Start your own worker by calling: Squeeze.Worker.start_link(arg1, arg2, arg3)

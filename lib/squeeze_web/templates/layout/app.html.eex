@@ -8,7 +8,7 @@
 
   <body>
     <%= render SqueezeWeb.SharedView, "flash.html", assigns %>
-    <%= render @view_module, @view_template, assigns %>
+    <%= @inner_content %>
     <%= render SqueezeWeb.MenuView, "footer.html", assigns %>
   </body>
 </html>
