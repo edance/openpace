@@ -72,7 +72,7 @@ defmodule Squeeze.OAuth1 do
 
   def signature(verb, url, params, %Credentials{method: :hmac_sha1} = creds) do
     :sha
-    |> :crypto.hmac(compose_key(creds), base_string(verb, url, params))
+    |> :crypto.mac(:hmac, compose_key(creds), base_string(verb, url, params))
     |> Base.encode64()
   end
 
