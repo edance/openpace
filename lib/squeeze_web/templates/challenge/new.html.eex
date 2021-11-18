@@ -1,46 +1,15 @@
 <div class="container py-4">
+  <%= form_for @changeset, Routes.challenge_path(@conn, :create, challenge_type: @challenge_type), fn f -> %>
   <div class="row">
     <div class="col-xl-6 offset-xl-3">
-      <div class="card">
-        <!-- Card header -->
-        <div class="card-header">
-          <h3 class="mb-0">New <%= challenge_type(@challenge_type) %></h3>
-        </div>
-        <!-- Card body -->
-        <div class="card-body">
-          <%= form_for @changeset, Routes.challenge_path(@conn, :create, challenge_type: @challenge_type), fn f -> %>
-            <%= if @changeset.action do %>
-              <div class="alert alert-danger">
-                <p>Oops, something went wrong! Please check the errors below.</p>
-              </div>
-            <% end %>
+      <%= if @challenge_type == :segment do %>
+        <%= render "segment-card.html", Map.merge(assigns, %{form: f}) %>
+      <% end %>
 
-            <div class="form-group">
-              <%= label f, :name, class: "form-control-label" %>
-              <%= text_input f, :name, placeholder: "Weekend Distance Challenge", class: "form-control" %>
-              <%= error_tag f, :name %>
-            </div>
-
-            <div class="form-group">
-              <%= label f, :dates, class: "form-control-label" %>
-
-              <div class="d-flex justify-content-center pt-4">
-                <%= text_input f, :date_range, class: "form-control date-picker d-none", data: [range: true, inline: true] %>
-              </div>
-
-              <%= error_tag f, :start_date %>
-              <%= error_tag f, :end_date %>
-            </div>
-
-            <%= hidden_input f, :activity_type %>
-            <%= hidden_input f, :challenge_type %>
-
-            <div class="form-group">
-              <%= submit "Create Challenge", class: "btn btn-primary" %>
-            </div>
-          <% end %>
-        </div>
-      </div>
+      <%#= render "timeline-card.html", Map.merge(assigns, %{form: f}) %>
+      <%= render "dates-card.html", Map.merge(assigns, %{form: f}) %>
+      <%= render "info-card.html", Map.merge(assigns, %{form: f}) %>
     </div>
   </div>
+  <% end %>
 </div>

@@ -4,7 +4,7 @@
 
   <!-- Page content -->
   <div class="bg-gradient-primary">
-    <div class="container pt-lg-7 pb-5">
+    <div class="container py-5 pt-lg-7">
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-7">
           <div class="card bg-secondary shadow border-0">

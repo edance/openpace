@@ -131,7 +131,7 @@
 }
 
 .container-dashboard {
-  max-width: 1600px;
+  max-width: 1440px;
 }
 
 .bg-terrain {
@@ -140,4 +140,8 @@
 
 .calendar {
   height: calc(100vh - 76px);
+}
+
+.segment-list {
+  max-height: 500px;
 }

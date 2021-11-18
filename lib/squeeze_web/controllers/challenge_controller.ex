@@ -1,10 +1,14 @@
 defmodule SqueezeWeb.ChallengeController do
   use SqueezeWeb, :controller
 
+  alias Squeeze.Accounts
   alias Squeeze.Challenges
   alias Squeeze.Challenges.Challenge
   alias Squeeze.Notifications
+  alias Squeeze.Strava.Client
   alias Squeeze.TimeHelper
+
+  @strava_segments Application.get_env(:squeeze, :strava_segments)
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.current_user]
@@ -27,6 +31,13 @@ defmodule SqueezeWeb.ChallengeController do
     end
   end
 
+  def new(conn, %{"challenge_type" => "segment"}, user) do
+    with {:ok, credential} <- Accounts.fetch_credential_by_provider(user, "strava"),
+         {:ok, segments} <- get_strava_segments(credential) do
+      changeset = Challenges.change_challenge(%Challenge{challenge_type: :segment, activity_type: :run})
+      render(conn, "new.html", changeset: changeset, challenge_type: :segment, segments: segments)
+    end
+  end
   def new(conn, %{"challenge_type" => type}, _user) do
     type = String.to_atom(type)
     changeset = Challenges.change_challenge(%Challenge{challenge_type: type, activity_type: :run})
@@ -53,5 +64,14 @@ defmodule SqueezeWeb.ChallengeController do
   def show(conn, %{"id" => slug}, _user) do
     challenge = Challenges.get_challenge_by_slug!(slug)
     render(conn, "show.html", %{challenge: challenge})
+  end
+
+  defp get_strava_segments(credential) do
+    opts = [
+      per_page: 50,
+      page: 1,
+    ]
+    Client.new(credential)
+    |> @strava_segments.get_logged_in_athlete_starred_segments(opts)
   end
 end

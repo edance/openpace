@@ -1,0 +1,40 @@
+<div class="card">
+  <!-- Card header -->
+  <div class="card-header">
+    <h3 class="mb-0">
+      General Information
+    </h3>
+  </div>
+  <!-- Card body -->
+  <div class="card-body">
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= label @form, :name, class: "form-control-label" %>
+      <%= text_input @form, :name, placeholder: "Weekend Warriors", class: "form-control" %>
+      <%= error_tag @form, :name %>
+    </div>
+
+    <div class="form-group">
+      <textarea class="form-control" placeholder="Description" cols="30" id="" name="" rows="10"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-check-label">
+        <%= checkbox(@form, :public) %>
+        Allow anyone to join this challenge
+      </label>
+    </div>
+
+    <%= hidden_input @form, :activity_type %>
+    <%= hidden_input @form, :challenge_type %>
+
+    <div class="form-group">
+      <%= submit "Create Challenge", class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

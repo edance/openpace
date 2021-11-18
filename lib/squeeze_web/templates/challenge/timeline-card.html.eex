@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="mb-0">Choose Timeline</h3>
+  </div>
+  <div class="card-body">
+    <div data-toggle="buttons">
+      <label type="button" class="btn btn-outline-primary btn-block mb-2">
+        <%= radio_button @form, :timeline, :day, class: "custom-control-input" %> One Day
+      </label>
+
+      <label type="button" class="btn btn-outline-primary btn-block mb-2">
+        <%= radio_button @form, :timeline, :week, class: "custom-control-input" %> One Week
+      </label>
+
+      <label type="button" class="btn btn-outline-primary btn-block mb-2">
+        <%= radio_button @form, :timeline, :weekend, class: "custom-control-input" %> Weekend
+      </label>
+
+      <label type="button" class="btn btn-outline-primary btn-block mb-2">
+        <%= radio_button @form, :timeline, :custom, class: "custom-control-input" %> Custom Dates
+      </label>
+    </div>
+  </div>
+</div>
