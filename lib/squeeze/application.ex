@@ -8,19 +8,16 @@ defmodule Squeeze.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
-    import Supervisor.Spec
-
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-      supervisor(Squeeze.Repo, []),
+      Squeeze.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Squeeze.PubSub},
-      # Start the endpoint when the application starts
-      supervisor(Endpoint, []),
-      # Start your own worker by calling: Squeeze.Worker.start_link(arg1, arg2, arg3)
-      # worker(Squeeze.Worker, [arg1, arg2, arg3]),
-      worker(Squeeze.Scheduler, []),
+      # Start the Endpoint (http/https)
+      SqueezeWeb.Endpoint,
+      # Start a worker by calling: Squeeze.Worker.start_link(arg)
+      Squeeze.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
