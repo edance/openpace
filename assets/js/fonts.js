@@ -1,5 +1,6 @@
 // Load fonts async
 import WebFont from 'webfontloader';
+import Iconify from '@iconify/iconify';
 
 WebFont.load({
   google: {
@@ -8,7 +9,8 @@ WebFont.load({
 });
 
 // Iconify must scan the dom each turbolinks load and replace the icons
-Iconify.setConfig('localStorage', true);
+// Enable caching in localStorage
+Iconify.enableCache('local');
 document.addEventListener("turbolinks:load", function() {
-  Iconify.scanDOM();
+  Iconify.scan();
 });
