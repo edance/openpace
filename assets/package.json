@@ -6,6 +6,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "@iconify/iconify": "^2.1.0",
     "algoliasearch": "^4.3.0",
     "autocomplete.js": "^0.37.1",
     "bootstrap": "^4.5.0",

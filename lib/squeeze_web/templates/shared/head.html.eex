@@ -8,9 +8,6 @@
 
 <link href="<%= Routes.static_path(@conn, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
-<link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
-<script src="https://code.iconify.design/1/1.0.2/iconify.min.js"></script>
-
 <%= render("_gtm.html", assigns) %>
 
 <script>
