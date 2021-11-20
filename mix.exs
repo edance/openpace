@@ -37,10 +37,10 @@ defmodule Squeeze.Mixfile do
   defp deps do
     [
       {:phoenix, "~> 1.5.13"},
-      {:phoenix_pubsub, "~> 2.0"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.0"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
+      {:phoenix_live_view, "~> 0.15.1"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_active_link, "~> 0.2.1"},
@@ -55,7 +55,7 @@ defmodule Squeeze.Mixfile do
       {:guardian, "~> 2.0"},
       {:browser, "~> 0.4.4"},
       {:ecto_enum, "~> 1.1"},
-      {:stripity_stripe, "~> 2.7.0"},
+      {:stripity_stripe, "~> 2.12.0"},
       {:httpoison, "~> 1.5"},
       {:set_locale, "~> 0.2.9"},
       {:bamboo, "~> 1.2"},
@@ -76,6 +76,7 @@ defmodule Squeeze.Mixfile do
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.9", only: [:dev, :test]},
+      {:floki, ">= 0.30.0", only: :test},
       {:excoveralls, "~> 0.9", only: :test},
       {:mox, "~> 0.4", only: :test}
     ]

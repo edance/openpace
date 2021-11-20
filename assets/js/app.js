@@ -15,3 +15,6 @@ import './turbolinks';
 
 // Fonts
 import './fonts';
+
+// Live View
+import './live_view';
