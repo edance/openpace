@@ -1,0 +1,36 @@
+<h1>Calendar</h1>
+
+<button class="btn btn-primary" phx-click="prev">Prev Month</button>
+<button class="btn btn-primary" phx-click="next">Next Month</button>
+<button class="btn btn-primary" phx-click="today">Today</button>
+
+<div class="calendar d-flex flex-column">
+  <div class="d-none d-md-flex row bg-waves no-gutters w-100">
+    <div class="col small text-center"><%= gettext("Week") %></div>
+    <div class="col small text-center"><%= gettext("Mon") %></div>
+    <div class="col small text-center"><%= gettext("Tue") %></div>
+    <div class="col small text-center"><%= gettext("Wed") %></div>
+    <div class="col small text-center"><%= gettext("Thu") %></div>
+    <div class="col small text-center"><%= gettext("Fri") %></div>
+    <div class="col small text-center"><%= gettext("Sat") %></div>
+    <div class="col small text-center"><%= gettext("Sun") %></div>
+  </div>
+
+  <div class="row no-gutters flex-grow-1 w-100">
+    <%= for {_week, dates} <- weeks(assigns) do %>
+      <div class="row no-gutters w-100">
+        <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
+
+        <%= for date <- dates do %>
+        <div class="col-md p-2 calendar-date">
+          <div class="pb-1 small">
+            <%= date_label(date, @current_user) %>
+          </div>
+
+          <%= live_component(SqueezeWeb.CalendarItemComponent, activities: Map.get(@activities_by_date, date, []), date: date, current_user: @current_user) %>
+        </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

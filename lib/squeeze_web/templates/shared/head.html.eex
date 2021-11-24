@@ -3,11 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="description" content="">
 <meta name="author" content="">
-<meta name="csrf-token" content="<%= get_csrf_token() %>" />
-<meta name="csrf-param" content="_csrf_token" />
+<%= csrf_meta_tag() %>
 
-<link href="<%= Routes.static_path(@conn, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
+<link phx-track-static href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/css/app.css") %>">
 <%= render("_gtm.html", assigns) %>
 
 <script>

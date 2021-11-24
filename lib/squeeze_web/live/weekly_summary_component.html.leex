@@ -1,0 +1,23 @@
+<div class="col-md p-2 bg-white">
+  <div class="small mb-2">
+    Summary
+
+    <% weeks_left = weeks_until_race(assigns) %>
+
+    <%= if weeks_left == 0 do %>
+      <div class="text-muted">Race Week</div>
+    <% end %>
+
+    <%= if !is_nil(weeks_left) && weeks_left > 0 do %>
+      <div class="text-muted"><%= weeks_left %> weeks until race</div>
+    <% end %>
+  </div>
+
+  <%= unless Enum.empty?(@activities) do %>
+    <div class="h2">
+      <span class="text-green">
+        <%= completed_distance(assigns) %><%= distance_label(assigns) %>
+      </span>
+    </div>
+  <% end %>
+</div>

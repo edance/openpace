@@ -62,6 +62,8 @@ defmodule SqueezeWeb.Router do
     get "/calendar", CalendarController, :index
     get "/calendar/:type", CalendarController, :show
 
+    live "/calendar-live", CalendarLive, :index
+
     get "/overview", OverviewController, :index
 
     get "/settings", ProfileController, :edit
@@ -101,6 +103,8 @@ defmodule SqueezeWeb.Router do
 
     get "/", HomeController, :index
     post "/", HomeController, :subscribe
+
+    live "/evan", PageLive, :index
 
     get "/privacy", PageController, :privacy_policy
     get "/terms", PageController, :terms
