@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <%= csrf_meta_tag() %>
+    <%= live_title_tag assigns[:page_title] || "Dashboard", suffix: " | OpenPace" %>
+    <!-- <%= render SqueezeWeb.SharedView, "head.html", assigns %> -->
+    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@socket, "/css/app.css") %>"/>
+    <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@socket, "/js/app.js") %>"></script>
+  </head>
+
+  <body>
+    <div class="main-content">
+      <% info_msg = live_flash(@flash, :info) %>
+      <% error_msg = live_flash(@flash, :error) %>
+
+      <%= if info_msg do %>
+      <div class="alert alert-info alert-dismissible fixed-top mt-4 fade show"
+           data-auto-hide="true"
+           role="alert"
+           phx-click="lv:clear-flash"
+           phx-value-key="info">
+        <%= info_msg %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <% end %>
+
+      <%= if error_msg do %>
+      <div class="alert alert-warning alert-dismissible fixed-top mt-4 fade show"
+           data-auto-hide="true"
+           role="alert"
+           phx-click="lv:clear-flash"
+           phx-value-key="error">
+        <%= error_msg %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <% end %>
+
+      <%= @inner_content %>
+    </div>
+  </body>
+</html>

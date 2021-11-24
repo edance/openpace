@@ -10,10 +10,10 @@
       <div class="col-xl-6">
         <ul class="nav nav-footer justify-content-center justify-content-xl-end">
           <li class="nav-item">
-            <%= link("Terms and Conditions", to: Routes.page_path(@conn, :terms), class: "nav-link", target: "_blank") %>
+            <%= link("Terms and Conditions", to: Routes.page_path(SqueezeWeb.Endpoint, :terms), class: "nav-link", target: "_blank") %>
           </li>
           <li class="nav-item">
-            <%= link("Privacy Policy", to: Routes.page_path(@conn, :privacy_policy), class: "nav-link", target: "_blank") %>
+            <%= link("Privacy Policy", to: Routes.page_path(SqueezeWeb.Endpoint, :privacy_policy), class: "nav-link", target: "_blank") %>
           </li>
           <li class="nav-item">
             <a href="https://github.com/edance/openpace" class="nav-link" target="_blank">
