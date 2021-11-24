@@ -11,9 +11,5 @@ defmodule SqueezeWeb.MenuView do
     user.subscription_status == :trialing
   end
 
-  def on_calendar?(conn) do
-    conn.request_path == Routes.calendar_path(conn, :show, :month)
-  end
-
   def full_name(%User{} = user), do: User.full_name(user)
 end

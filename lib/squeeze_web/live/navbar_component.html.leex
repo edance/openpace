@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container container-dashboard">
+    <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%= link(to: Routes.dashboard_path(SqueezeWeb.Endpoint, :index), class: "navbar-brand") do %>
+      <img class="logo-img" src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/logo.svg") %>" />
+    <% end %>
+
+    <%= if @current_user do %>
+      <a class="nav-link pr-0 order-md-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="media align-items-center">
+          <%= if @current_user.avatar do %>
+            <div class="avatar avatar-sm rounded-circle">
+              <img alt="<%= @current_user.first_name %>" src="<%= @current_user.avatar %>" />
+            </div>
+          <% else %>
+            <div class="avatar avatar-sm rounded-circle bg-gradient-warning text-bold">
+              <%= initials(@current_users) %>
+            </div>
+          <% end %>
+
+          <div class="media-body ml-2 d-none d-lg-block">
+            <span class="mb-0 font-weight-bold"><%= full_name(@current_user) %></span>
+          </div>
+        </div>
+      </a>
+
+      <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+        <%= link(to: Routes.profile_path(SqueezeWeb.Endpoint, :edit), class: "dropdown-item") do %>
+          <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
+          <span><%= gettext("Settings") %></span>
+        <% end %>
+
+        <%= link(to: Routes.billing_path(SqueezeWeb.Endpoint, :index), class: "dropdown-item") do %>
+          <span class="iconify" data-icon="fa-regular:credit-card" data-inline="false"></span>
+          <span><%= gettext("Billing") %></span>
+        <% end %>
+
+        <div class="dropdown-divider"></div>
+
+        <%= link class: "dropdown-item", to: Routes.session_path(SqueezeWeb.Endpoint, :delete), method: :delete do %>
+          <span class="iconify" data-icon="websymbol:logout" data-inline="false"></span>
+          <span><%= gettext("Logout") %></span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse order-md-2" id="nav-collapse">
+      <!-- Navigation -->
+      <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
+        <li class="nav-item">
+          <%= link(to: Routes.overview_path(SqueezeWeb.Endpoint, :index), class: "nav-link") do %>
+          <%= gettext("Dashboard") %>
+          <% end %>
+        </li>
+
+        <li class="nav-item">
+          <%= link(to: Routes.challenge_path(SqueezeWeb.Endpoint, :index), class: "nav-link") do %>
+          <%= gettext("Challenges") %>
+          <% end %>
+        </li>
+
+        <li class="nav-item">
+          <%= link(to: Routes.calendar_path(SqueezeWeb.Endpoint, :index), class: "nav-link") do %>
+          <%= gettext("Calendar") %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
