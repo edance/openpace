@@ -5,7 +5,7 @@
     </button>
 
     <%= link(to: Routes.dashboard_path(@conn, :index), class: "navbar-brand") do %>
-      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo@2x.png") %>" />
+      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo.svg") %>" />
     <% end %>
 
     <%= if @current_user do %>
@@ -38,15 +38,11 @@
             <% end %>
           </li>
 
-          <%= if on_calendar?(@conn) do %>
-            <%= render SqueezeWeb.CalendarView, "navbar-item.html", assigns %>
-          <% else %>
-            <li class="nav-item">
-              <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link") do %>
-                <%= gettext("Calendar") %>
-              <% end %>
-            </li>
-          <% end %>
+          <li class="nav-item">
+            <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link") do %>
+              <%= gettext("Calendar") %>
+            <% end %>
+          </li>
 
           <li class="nav-item">
             <%= if in_trial?(@current_user) do %>

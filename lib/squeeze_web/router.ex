@@ -59,10 +59,8 @@ defmodule SqueezeWeb.Router do
     pipe_through [:browser, :dashboard_layout]
 
     get "/", DashboardController, :index
-    get "/calendar", CalendarController, :index
-    get "/calendar/:type", CalendarController, :show
 
-    live "/calendar-live", CalendarLive, :index
+    live "/calendar", CalendarLive, :index
 
     get "/overview", OverviewController, :index
 

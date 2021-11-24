@@ -1,23 +1,38 @@
-<h1>Calendar</h1>
+<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
 
-<button class="btn btn-primary" phx-click="prev">Prev Month</button>
-<button class="btn btn-primary" phx-click="next">Next Month</button>
-<button class="btn btn-primary" phx-click="today">Today</button>
+<div class="main-content">
+  <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
 
-<div class="calendar d-flex flex-column">
-  <div class="d-none d-md-flex row bg-waves no-gutters w-100">
-    <div class="col small text-center"><%= gettext("Week") %></div>
-    <div class="col small text-center"><%= gettext("Mon") %></div>
-    <div class="col small text-center"><%= gettext("Tue") %></div>
-    <div class="col small text-center"><%= gettext("Wed") %></div>
-    <div class="col small text-center"><%= gettext("Thu") %></div>
-    <div class="col small text-center"><%= gettext("Fri") %></div>
-    <div class="col small text-center"><%= gettext("Sat") %></div>
-    <div class="col small text-center"><%= gettext("Sun") %></div>
+  <div class="container container-dashboard d-flex align-items-center py-2">
+    <button class="btn btn-secondary btn-sm" phx-click="today">Today</button>
+
+    <button class="btn btn-primary btn-sm text-white btn-icon-only rounded-circle" phx-click="prev">
+      <span class="iconify" data-icon="akar-icons:chevron-left" data-inline="false"></span>
+    </button>
+
+    <button class="btn btn-primary btn-sm text-white btn-icon-only rounded-circle" phx-click="next">
+      <span class="iconify" data-icon="akar-icons:chevron-right" data-inline="false"></span>
+    </button>
+
+    <span class="h3 mb-0">
+      <%= Timex.format!(@date, "%B %Y", :strftime) %>
+    </span>
   </div>
 
-  <div class="row no-gutters flex-grow-1 w-100">
-    <%= for {_week, dates} <- weeks(assigns) do %>
+  <div class="calendar d-flex flex-column">
+    <div class="d-none d-md-flex row bg-waves no-gutters w-100">
+      <div class="col small text-center"><%= gettext("Week") %></div>
+      <div class="col small text-center"><%= gettext("Mon") %></div>
+      <div class="col small text-center"><%= gettext("Tue") %></div>
+      <div class="col small text-center"><%= gettext("Wed") %></div>
+      <div class="col small text-center"><%= gettext("Thu") %></div>
+      <div class="col small text-center"><%= gettext("Fri") %></div>
+      <div class="col small text-center"><%= gettext("Sat") %></div>
+      <div class="col small text-center"><%= gettext("Sun") %></div>
+    </div>
+
+    <div class="row no-gutters flex-grow-1 w-100">
+      <%= for {_week, dates} <- weeks(assigns) do %>
       <div class="row no-gutters w-100">
         <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
 
@@ -31,6 +46,7 @@
         </div>
         <% end %>
       </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
