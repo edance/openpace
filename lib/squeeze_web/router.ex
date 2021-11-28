@@ -61,6 +61,10 @@ defmodule SqueezeWeb.Router do
     get "/", DashboardController, :index
 
     live "/calendar", CalendarLive, :index
+    live "/challenges", ChallengeLive, :index
+    live "/challenges/new", Challenges.NewLive, :new
+    # live "/challenges/:id", Challenges.ShowLive, :show
+    get "/challenges/:id", ChallengeController, :show
 
     get "/overview", OverviewController, :index
 
@@ -78,7 +82,7 @@ defmodule SqueezeWeb.Router do
 
     resources "/plans", PlanController
 
-    resources "/challenges", ChallengeController, except: [:edit, :update, :delete]
+    # resources "/challenges", ChallengeController, except: [:edit, :update, :delete]
     put "/challenges/:id/join", ChallengeController, :join
   end
 
