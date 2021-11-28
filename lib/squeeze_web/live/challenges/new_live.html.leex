@@ -1,0 +1,106 @@
+<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+j
+<div class="main-content">
+  <div class="container py-4">
+    <%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
+    <div class="row">
+      <div class="col-xl-6 offset-xl-3">
+        <%= if @challenge_type == :segment do %>
+          <!-- Segment Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h5 class="h3 mb-0">Pick a Segment</h5>
+                </div>
+                <div class="col text-right">
+                  <div phx-click="reload" class="btn btn-sm btn-default">
+                    Reload
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body segment-list overflow-auto">
+              <%= if @loading do %>
+                Loading Segments...
+              <% end %>
+
+              <%= if Enum.empty?(@segments) && !@loading do %>
+              <p>No Starred Segments</p>
+              <% end %>
+
+              <%= if !Enum.empty?(@segments) && !@loading do %>
+              <!-- List group -->
+              <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
+                <%= for segment <- @segments do %>
+                <li class="list-group-item px-0">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h4 class="mb-0">
+                        <a href="https://www.strava.com/segments/<%= segment.id %>" target="_blank">
+                          <%= segment.name %>
+                        </a>
+                      </h4>
+                      <small><%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %></small>
+                    </div>
+                    <div class="col-auto">
+
+                      <label type="button" class="btn btn-sm btn-secondary">
+                        <%= radio_button f, :segment_id, segment.id, class: "custom-control-input" %> Select
+                      </label>
+                    </div>
+                  </div>
+                </li>
+                <% end %>
+              </ul>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- General Info Card -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">
+              General Information
+            </h3>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p>Oops, something went wrong! Please check the errors below.</p>
+            </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= label f, :name, class: "form-control-label" %>
+              <%= text_input f, :name, placeholder: "Weekend Warriors", class: "form-control" %>
+              <%= error_tag f, :name %>
+            </div>
+
+            <div class="form-group">
+              <textarea class="form-control" placeholder="Description" cols="30" id="" name="" rows="10"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-check-label">
+                <%= checkbox(f, :public) %>
+                Allow anyone to join this challenge
+              </label>
+            </div>
+
+            <%= hidden_input f, :activity_type %>
+            <%= hidden_input f, :challenge_type %>
+
+            <div class="form-group">
+              <%= submit "Create Challenge", class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    </div>
+  </div>

@@ -1,0 +1,19 @@
+<li class="list-group-item px-0">
+  <div class="row">
+    <div class="col-auto">
+      <div class="text-xl">
+        <span class="iconify" data-icon="<%= podium_icon(assigns) %>" data-inline="false"></span>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= link @challenge.name, to: Routes.challenge_path(SqueezeWeb.Endpoint, :show, @challenge.slug) %>
+
+      <p class="mt-0 mb-1 text-sm">
+        <%= podium_finish(assigns) %> &middot;
+        <%= challenge_type(assigns) %> &middot;
+        <%= challenge_relative_date(assigns) %>
+      </p>
+    </div>
+  </div>
+</li>
