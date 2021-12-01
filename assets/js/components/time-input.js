@@ -42,7 +42,9 @@ const handleKeyDown = (e) => {
   target.value = formatValue(value);
 };
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   u('.time-input').handle('keydown', handleKeyDown);
-});
+};
 
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

@@ -20,7 +20,6 @@ defmodule SqueezeWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: SqueezeWeb
-      use Turbolinks
       import Plug.Conn
       import SqueezeWeb.Gettext
 

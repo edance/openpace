@@ -74,7 +74,7 @@ function addListenersToForm(form, card, errorContainer, stripe) {
   });
 }
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   const $form = u('.payment-form');
 
   if ($form.length === 0) {
@@ -92,4 +92,7 @@ document.addEventListener("turbolinks:load", function() {
       addListenersToForm(element, card, errorContainer, stripe);
     });
   });
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

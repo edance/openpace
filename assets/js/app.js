@@ -10,9 +10,6 @@ import 'bootstrap';
 // Import base components
 import './components/base';
 
-// Turbolinks
-import './turbolinks';
-
 // Fonts
 import './fonts';
 

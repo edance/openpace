@@ -8,9 +8,9 @@ WebFont.load({
   },
 });
 
-// Iconify must scan the dom each turbolinks load and replace the icons
+// Iconify must scan the dom each load and replace the icons
 // Enable caching in localStorage
 Iconify.enableCache('local');
-document.addEventListener("turbolinks:load", function() {
-  Iconify.scan();
-});
+
+window.addEventListener("phx:page-loading-stop", Iconify.scan);
+window.addEventListener("load", Iconify.scan);

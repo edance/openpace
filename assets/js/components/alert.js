@@ -8,10 +8,13 @@ function removeElement(alert) {
   alert.remove();
 }
 
-document.addEventListener('turbolinks:load', function() {
+function init() {
   const timeout = setTimeout(() => {
     const alert = u('.alert[data-auto-hide="true"]');
     fadeOut(alert);
     setTimeout(() => removeElement(alert), 150);
   }, 4000);
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

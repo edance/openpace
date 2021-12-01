@@ -12,7 +12,6 @@ defmodule SqueezeWeb.Router do
     plug Squeeze.AuthPipeline
     plug Plug.Auth
     plug Plug.Locale
-    plug Turbolinks
   end
 
   pipeline :api do

@@ -1,6 +1,6 @@
 import { u } from 'umbrellajs';
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   u('.duration-select').each(el => {
     const $input = u(el).find('input');
     const value = parseInt($input.attr('value'), 10);
@@ -43,4 +43,7 @@ document.addEventListener("turbolinks:load", function() {
 
     $component.find('input').attr('value', total);
   });
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

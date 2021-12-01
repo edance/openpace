@@ -8,7 +8,7 @@ function parseData($element, name) {
   return JSON.parse($element.data(name));
 }
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   const $chart = u('#overview-chart');
   if ($chart.length === 0) {
     return;
@@ -192,4 +192,7 @@ document.addEventListener("turbolinks:load", function() {
       },
     ]
   });
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);
