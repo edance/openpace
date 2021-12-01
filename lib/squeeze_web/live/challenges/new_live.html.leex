@@ -6,58 +6,97 @@ j
     <div class="row">
       <div class="col-xl-6 offset-xl-3">
         <%= if @challenge_type == :segment do %>
-          <!-- Segment Card -->
-          <div class="card">
-            <div class="card-header">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h5 class="h3 mb-0">Pick a Segment</h5>
-                </div>
-                <div class="col text-right">
-                  <div phx-click="reload" class="btn btn-sm btn-default">
-                    Reload
-                  </div>
+        <!-- Segment Select Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h5 class="h3 mb-0">Pick a Segment</h5>
+              </div>
+              <div class="col text-right">
+                <div phx-click="reload" class="btn btn-sm btn-default">
+                  Reload
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="card-body segment-list overflow-auto">
-              <%= if @loading do %>
-                Loading Segments...
-              <% end %>
+          <div class="card-body segment-list overflow-auto">
+            <%= if @loading do %>
+            Loading Segments...
+            <% end %>
 
-              <%= if Enum.empty?(@segments) && !@loading do %>
-              <p>No Starred Segments</p>
-              <% end %>
+            <%= if Enum.empty?(@segments) && !@loading do %>
+            <p>No Starred Segments</p>
+            <% end %>
 
-              <%= if !Enum.empty?(@segments) && !@loading do %>
-              <!-- List group -->
-              <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
-                <%= for segment <- @segments do %>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <h4 class="mb-0">
-                        <a href="https://www.strava.com/segments/<%= segment.id %>" target="_blank">
-                          <%= segment.name %>
-                        </a>
-                      </h4>
-                      <small><%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %></small>
-                    </div>
-                    <div class="col-auto">
-
-                      <label type="button" class="btn btn-sm btn-secondary">
-                        <%= radio_button f, :segment_id, segment.id, class: "custom-control-input" %> Select
-                      </label>
-                    </div>
+            <%= if !Enum.empty?(@segments) && !@loading do %>
+            <!-- List group -->
+            <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
+              <%= for segment <- @segments do %>
+              <li class="list-group-item px-0">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h4 class="mb-0">
+                      <a href="https://www.strava.com/segments/<%= segment.id %>" target="_blank">
+                        <%= segment.name %>
+                      </a>
+                    </h4>
+                    <small><%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %></small>
                   </div>
-                </li>
-                <% end %>
-              </ul>
+                  <div class="col-auto">
+                    <%= if @segment && @segment.id == segment.id do %>
+                    <button type="button" class="btn btn-sm btn-secondary active" phx-click="select_segment" phx-value-id="<%= segment.id %>">
+                      Select
+                    </button>
+                    <% else %>
+                    <button type="button" class="btn btn-sm btn-secondary" phx-click="select_segment" phx-value-id="<%= segment.id %>">
+                      Select
+                    </button>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
               <% end %>
+            </ul>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+
+        <%= if @segment do %>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">
+              <%= @segment.name %>
+            </h3>
+
+            <div class="card-body">
+              <div id="static-map" data-polyline="<%= @segment.map.polyline %>">
+              </div>
+
+              <%= inspect(@segment) %>
             </div>
           </div>
+        </div>
         <% end %>
+
+        <!-- Dates Card -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">Choose Dates</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+                <%= text_input f, :date_range, class: "form-control date-picker d-none", data: [range: true, inline: true] %>
+              </div>
+
+              <%= error_tag f, :start_date %>
+              <%= error_tag f, :end_date %>
+            </div>
+          </div>
+        </div>
 
         <!-- General Info Card -->
         <div class="card">
@@ -68,15 +107,9 @@ j
           </div>
           <!-- Card body -->
           <div class="card-body">
-            <%= if @changeset.action do %>
-            <div class="alert alert-danger">
-              <p>Oops, something went wrong! Please check the errors below.</p>
-            </div>
-            <% end %>
-
             <div class="form-group">
               <%= label f, :name, class: "form-control-label" %>
-              <%= text_input f, :name, placeholder: "Weekend Warriors", class: "form-control" %>
+              <%= input f, :name, placeholder: "Weekend Warriors", class: "form-control" %>
               <%= error_tag f, :name %>
             </div>
 
@@ -93,6 +126,14 @@ j
 
             <%= hidden_input f, :activity_type %>
             <%= hidden_input f, :challenge_type %>
+
+            <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p class="text-sm mb-0">
+                Oops, something went wrong! Please check the errors.
+              </p>
+            </div>
+            <% end %>
 
             <div class="form-group">
               <%= submit "Create Challenge", class: "btn btn-primary" %>

@@ -1,8 +1,6 @@
 defmodule SqueezeWeb.CalendarItemComponent do
   use SqueezeWeb, :live_component
 
-  alias Squeeze.TimeHelper
-
   def race_date?(%{current_user: user, date: date}) do
     user.user_prefs.race_date == date
   end

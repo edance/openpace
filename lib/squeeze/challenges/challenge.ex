@@ -49,7 +49,7 @@ defmodule Squeeze.Challenges.Challenge do
   @doc false
   def changeset(challenge, attrs) do
     challenge
-    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast(attrs, @required_fields ++ @optional_fields ++ @segment_required_fields)
     |> validate_required(@required_fields)
     |> validate_segment_type()
     |> unique_constraint(:slug)

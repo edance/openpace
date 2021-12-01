@@ -20,8 +20,7 @@ defmodule SqueezeWeb.Challenges.NewLive do
 
     socket = socket
     |> assign_new(:current_user, fn -> get_current_user(session) end)
-    |> assign(loading: true)
-    |> assign(segments: [])
+    |> assign(loading: true, segments: [], segment: nil)
     |> assign(changeset: changeset)
     |> assign(challenge_type: type)
 
@@ -32,6 +31,12 @@ defmodule SqueezeWeb.Challenges.NewLive do
   def handle_event("reload", _params, socket) do
     send(self(), :fetch_segments)
     {:noreply, assign(socket, loading: true)}
+  end
+
+  @impl true
+  def handle_event("select_segment", %{"id" => segment_id}, socket) do
+    send(self(), {:fetch_segment, segment_id})
+    {:noreply, socket}
   end
 
   @impl true
@@ -51,25 +56,40 @@ defmodule SqueezeWeb.Challenges.NewLive do
     end
   end
 
+  @impl true
   def handle_info(:fetch_segments, socket) do
     user = socket.assigns.current_user
 
     with {:ok, credential} <- Accounts.fetch_credential_by_provider(user, "strava"),
          {:ok, segments} <- get_strava_segments(credential) do
-      {:noreply, assign(socket, segments: segments, loading: false)}
+      {:noreply, assign(socket, segments: segments, credential: credential, loading: false)}
     else
       _ ->
         {:noreply, assign(socket, segments: [], loading: false)}
     end
   end
 
-  def get_current_user(%{"guardian_default_token" => token}) do
+  @impl true
+  def handle_info({:fetch_segment, id}, socket) do
+    credential = socket.assigns.credential
+
+    case get_strava_segment(credential, id) do
+      {:ok, segment} ->
+        socket = socket
+        |> assign(segment: segment)
+
+        {:noreply, socket}
+      _ -> {:noreply, socket}
+    end
+  end
+
+  defp get_current_user(%{"guardian_default_token" => token}) do
     case Guardian.resource_from_token(token) do
       {:ok, user, _claims} -> user
       _ -> nil
     end
   end
-  def get_current_user(_), do: nil
+  defp get_current_user(_), do: nil
 
   defp get_strava_segments(credential) do
     opts = [
@@ -78,5 +98,10 @@ defmodule SqueezeWeb.Challenges.NewLive do
     ]
     Client.new(credential)
     |> @strava_segments.get_logged_in_athlete_starred_segments(opts)
+  end
+
+  defp get_strava_segment(credential, id) do
+    Client.new(credential)
+    |> @strava_segments.get_segment_by_id(id)
   end
 end
