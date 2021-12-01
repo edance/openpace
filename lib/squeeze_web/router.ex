@@ -61,8 +61,9 @@ defmodule SqueezeWeb.Router do
 
     live "/calendar", CalendarLive, :index
     live "/challenges", ChallengeLive, :index
-    live "/challenges/new", Challenges.NewLive, :new
-    # live "/challenges/:id", Challenges.ShowLive, :show
+    live "/challenges/new", Challenges.NewLive, :new, as: :challenge
+    # live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
+
     get "/challenges/:id", ChallengeController, :show
 
     get "/overview", OverviewController, :index

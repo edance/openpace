@@ -157,15 +157,16 @@ defmodule Squeeze.Challenges do
 
   def create_challenge(%User{} = user, attrs \\ %{}) do
     attrs = attrs |> Utils.key_to_atom()
+    range = Map.get(attrs, :date_range, "")
 
-    attrs = case Map.get(attrs, :date_range) do
-      nil -> attrs
-      dates ->
-        [start_date, end_date] = String.split(dates, " to ")
+    attrs = if String.contains?(range, " to ") do
+      [start_date, end_date] = String.split(range, " to ")
 
-        attrs
-        |> Map.put_new(:start_date, start_date)
-        |> Map.put_new(:end_date, end_date)
+      attrs
+      |> Map.put_new(:start_date, start_date)
+      |> Map.put_new(:end_date, end_date)
+    else
+      attrs
     end
 
     %Challenge{}
