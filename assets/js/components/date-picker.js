@@ -3,7 +3,7 @@ import flatpickr  from 'flatpickr';
 
 import { u } from 'umbrellajs';
 
-document.addEventListener("turbolinks:load", function() {
+function load() {
   u('.date-picker').each((el) => {
     const options = {
       inline: el.dataset["inline"],
@@ -15,4 +15,6 @@ document.addEventListener("turbolinks:load", function() {
 
     flatpickr(el, options);
   });
-});
+}
+
+window.addEventListener("phx:page-loading-stop", load);

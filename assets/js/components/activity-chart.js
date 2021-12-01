@@ -42,7 +42,7 @@ function formatPoint(point, imperial) {
   return '';
 }
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   const $chart = u('#activity-chart');
   if ($chart.length === 0) {
     return;
@@ -208,4 +208,7 @@ document.addEventListener("turbolinks:load", function() {
       },
     ]
   });
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

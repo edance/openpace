@@ -10,8 +10,5 @@ import './components/activity-chart';
 import './components/activity-map';
 import './components/overview-chart';
 
-// Turbolinks
-import './turbolinks';
-
 // Fonts
 import './fonts';

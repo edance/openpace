@@ -1,7 +1,6 @@
-document.addEventListener("turbolinks:load", function() {
+function init() {
   setTimeout(() => $('.modal[data-show="true"]').modal('show'), 1000);
-});
+};
 
-document.addEventListener('turbolinks:before-visit', function() {
-  $('.modal').modal('hide');
-});
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

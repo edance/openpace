@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import { u } from 'umbrellajs';
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   const $form = u('#sign-up-form');
 
   $form.handle('submit', (e) => {

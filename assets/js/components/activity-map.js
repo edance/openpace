@@ -31,7 +31,7 @@ function addLineString(map, coordinates) {
   });
 }
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   const $mapCanvas = u('.activity-map');
   if ($mapCanvas.length === 0) {
     return;
@@ -61,4 +61,7 @@ document.addEventListener("turbolinks:load", function() {
   map.on('load', function () {
     map.addLayer(geojson);
   });
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);

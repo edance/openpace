@@ -1,6 +1,6 @@
 import { u } from 'umbrellajs';
 
-document.addEventListener("turbolinks:load", function() {
+function init() {
   const $input = u('.copy-input input');
 
   $input.on("click", (e) => {
@@ -13,4 +13,7 @@ document.addEventListener("turbolinks:load", function() {
     /* Copy the text inside the text field */
     navigator.clipboard.writeText(node.value);
   });
-});
+};
+
+window.addEventListener("phx:page-loading-stop", init);
+window.addEventListener("load", init);
