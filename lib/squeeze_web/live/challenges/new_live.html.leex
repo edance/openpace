@@ -1,8 +1,9 @@
 <%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
-j
+
+
 <div class="main-content">
   <div class="container py-4">
-    <%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
+    <%= f = form_for @changeset, "#", [phx_submit: :save] %>
     <div class="row">
       <div class="col-xl-6 offset-xl-3">
         <%= if @challenge_type == :segment do %>
@@ -72,10 +73,7 @@ j
             </h3>
 
             <div class="card-body">
-              <div id="static-map" data-polyline="<%= @segment.map.polyline %>">
-              </div>
-
-              <%= inspect(@segment) %>
+              <%= live_component(SqueezeWeb.Challenges.StaticMapComponent, polyline: @segment.map.polyline) %>
             </div>
           </div>
         </div>
@@ -142,6 +140,6 @@ j
         </div>
       </div>
     </div>
-    <% end %>
+    </form>
     </div>
   </div>
