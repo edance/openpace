@@ -13,32 +13,44 @@ defmodule SqueezeWeb.MapboxStaticMap do
   * start_color (string): start of the gradient color in hex (example "#FF512F")
   * end_color (string): end of the gradient color in hex (example "#FF512F")
   * stroke_width (integer): width of the path
+  * style (string): mapbox style of map (default "dark-v10")
+  * outline_color (color): outline the path with this color if present
   """
   def map_url(polyline, opts \\ []) do
     height = Keyword.get(opts, :height, 256)
-    width = Keyword.get(opts, :height, 256)
-    show_pins = Keyword.get(opts, :show_pins, false)
-
+    width = Keyword.get(opts, :width, 256)
+    style = Keyword.get(opts, :style, "dark-v10")
     encoded_path = URI.encode(make_path(polyline, opts), &URI.char_unreserved?(&1))
 
-    "https://api.mapbox.com/styles/v1/mapbox/light-v9/static/#{encoded_path}/auto/#{width}x#{height}@2x?access_token=#{@token}"
+    "https://api.mapbox.com/styles/v1/mapbox/#{style}/static/#{encoded_path}/auto/#{width}x#{height}@2x?access_token=#{@token}"
   end
 
-  defp make_path(polyline, opts \\ []) do
-    show_pins = Keyword.get(opts, :show_pins, false)
+  defp make_path(polyline, opts) do
     coords = decode_polyline(polyline)
 
-    if show_pins do
-      "#{make_path_with_gradient(coords, opts)},#{make_pins(coords, opts)}"
-    else
-      make_path_with_gradient(coords, opts)
+    [
+      make_outline_path(coords, opts),
+      make_path_with_gradient(coords, opts),
+      make_pins(coords, opts)
+    ]
+    |> Enum.reject(&is_nil/1)
+    |> Enum.join(",")
+  end
+
+  defp make_outline_path(coords, opts) do
+    case Keyword.get(opts, :outline_color, nil) do
+      nil -> nil
+      color ->
+        stroke_width = Keyword.get(opts, :stroke_width, 4) + 2 # one pixel padding on each side
+        color = color |> String.replace("#", "")
+        "path-#{stroke_width}+#{color}(#{Polyline.encode(coords)})"
     end
   end
 
-  defp make_path_with_gradient(coords, opts \\ []) do
+  defp make_path_with_gradient(coords, opts) do
     start_color = Keyword.get(opts, :start_color, "#FF512F")
     end_color = Keyword.get(opts, :end_color, "#F09819")
-    stroke_width = Keyword.get(opts, :stroke_width, 2)
+    stroke_width = Keyword.get(opts, :stroke_width, 4)
 
     color_a = hex_str_to_rgb(start_color)
     color_b = hex_str_to_rgb(end_color)
@@ -54,18 +66,22 @@ defmodule SqueezeWeb.MapboxStaticMap do
     |> Enum.join(",")
   end
 
-  defp make_pins(coords, opts \\ []) do
-    start_color = Keyword.get(opts, :start_color, "#FF512F")
-    end_color = Keyword.get(opts, :end_color, "#F09819")
-    color_a = hex_str_to_rgb(start_color)
-    color_b = hex_str_to_rgb(end_color)
-    {lon1, lat1} = List.first(coords)
-    {lon2, lat2} = List.last(coords)
+  defp make_pins(coords, opts) do
+    if Keyword.get(opts, :show_pins, false) do
+      start_color = Keyword.get(opts, :start_color, "#FF512F")
+      end_color = Keyword.get(opts, :end_color, "#F09819")
+      color_a = hex_str_to_rgb(start_color)
+      color_b = hex_str_to_rgb(end_color)
+      {lon1, lat1} = List.first(coords)
+      {lon2, lat2} = List.last(coords)
 
-    Enum.join([
-      "pin-s-a+#{rgb_to_hex_str(color_a)}(#{lon1},#{lat1})",
-      "pin-s-b+#{rgb_to_hex_str(color_b)}(#{lon2},#{lat2})"
-    ], ",")
+      Enum.join([
+        "pin-s-a+#{rgb_to_hex_str(color_a)}(#{lon1},#{lat1})",
+        "pin-s-b+#{rgb_to_hex_str(color_b)}(#{lon2},#{lat2})"
+      ], ",")
+    else
+      nil
+    end
   end
 
   defp decode_polyline(polyline) do
@@ -73,7 +89,7 @@ defmodule SqueezeWeb.MapboxStaticMap do
     length = length(coords)
 
     if length > 100 do
-      Enum.take_every(coords, :math.ceil(length / 100))
+      Enum.take_every(coords, round(:math.ceil(length / 100)))
     else
       coords
     end
