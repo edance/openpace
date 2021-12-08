@@ -1,11 +1,10 @@
 <%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
 
-
 <div class="main-content">
   <div class="container py-4">
     <%= f = form_for @changeset, "#", [phx_submit: :save] %>
     <div class="row">
-      <div class="col-xl-6 offset-xl-3">
+      <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
         <%= if @challenge_type == :segment do %>
         <!-- Segment Select Card -->
         <div class="card">
@@ -66,17 +65,9 @@
         <% end %>
 
         <%= if @segment do %>
-        <div class="card">
-          <div class="card-header">
-            <h3 class="mb-0">
-              <%= @segment.name %>
-            </h3>
-
-            <div class="card-body">
-              <%= live_component(SqueezeWeb.Challenges.StaticMapComponent, polyline: @segment.map.polyline) %>
-            </div>
-          </div>
-        </div>
+        <%= live_component(SqueezeWeb.Challenges.StaticMapComponent, changeset: @changeset, user: @current_user, segment: @segment) %>
+        <%= hidden_input f, :segment_id, value: @segment.id %>
+        <%= hidden_input f, :polyline, value: @segment.map.polyline %>
         <% end %>
 
         <!-- Dates Card -->
@@ -107,12 +98,12 @@
           <div class="card-body">
             <div class="form-group">
               <%= label f, :name, class: "form-control-label" %>
-              <%= input f, :name, placeholder: "Weekend Warriors", class: "form-control" %>
+              <%= input f, :name, placeholder: "Weekend Warriors", class: "form-control", autocomplete: "off" %>
               <%= error_tag f, :name %>
             </div>
 
             <div class="form-group">
-              <textarea class="form-control" placeholder="Description" cols="30" id="" name="" rows="10"></textarea>
+              <%= textarea f, :description, placeholder: "Description", class: "form-control", rows: "10" %>
             </div>
 
             <div class="form-group">

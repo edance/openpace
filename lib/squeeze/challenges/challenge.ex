@@ -23,6 +23,7 @@ defmodule Squeeze.Challenges.Challenge do
     timeline
     private
     recurring
+    description
   )a
 
   schema "challenges" do
@@ -37,6 +38,7 @@ defmodule Squeeze.Challenges.Challenge do
     field :slug, :string
     field :segment_id, Squeeze.Stringable
     field :polyline, :string
+    field :description, :string
 
     belongs_to :user, User
     has_many :scores, Score

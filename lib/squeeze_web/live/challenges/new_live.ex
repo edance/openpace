@@ -1,11 +1,13 @@
 defmodule SqueezeWeb.Challenges.NewLive do
   use SqueezeWeb, :live_view
 
+  alias Ecto.Changeset
   alias Squeeze.Accounts
   alias Squeeze.Challenges
   alias Squeeze.Challenges.Challenge
   alias Squeeze.Guardian
   alias Squeeze.Strava.Client
+  alias SqueezeWeb.Endpoint
 
   @strava_segments Application.get_env(:squeeze, :strava_segments)
 
@@ -47,11 +49,11 @@ defmodule SqueezeWeb.Challenges.NewLive do
          {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
 
       socket = socket
-      |> put_flash(:info, "Challenge Created")
+      |> redirect(to: Routes.challenge_path(Endpoint, :show, challenge.slug))
 
       {:noreply, socket}
     else
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, %Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
   end

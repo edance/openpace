@@ -1,1 +1,14 @@
-<img src="<%= map_url(@polyline) %>" />
+<div class="card">
+  <!-- Card image -->
+  <img class="card-img-top" src="<%= map_url(@segment.map.polyline) %>" alt="<%= @segment.name %> route">
+
+  <!-- Card body -->
+  <div class="card-body">
+    <h4 class="mb-0">
+      <%= @segment.name %>
+    </h4>
+    <small>
+      <%= description(@user, @segment) %>
+    </small>
+  </div>
+</div>

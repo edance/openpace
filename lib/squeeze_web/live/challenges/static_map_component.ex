@@ -4,6 +4,17 @@ defmodule SqueezeWeb.Challenges.StaticMapComponent do
   alias SqueezeWeb.MapboxStaticMap
 
   def map_url(polyline) do
-    MapboxStaticMap.map_url(polyline, height: 512, width: 512, show_pins: true)
+    opts = [
+      height: 300,
+      width: 500,
+      show_pins: true,
+      outline_color: "#FFFFFF"
+    ]
+    MapboxStaticMap.map_url(polyline, opts)
+  end
+
+  def description(user, segment) do
+    distance = format_distance(segment.distance, user.user_prefs)
+    "#{distance} - #{segment.city}, #{segment.state}"
   end
 end
