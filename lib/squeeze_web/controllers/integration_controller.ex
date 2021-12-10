@@ -6,7 +6,7 @@ defmodule SqueezeWeb.IntegrationController do
   alias Squeeze.Fitbit.Auth
   alias Squeeze.Garmin
 
-  @strava_auth Application.get_env(:squeeze, :strava_auth)
+  @strava_auth Application.compile_env(:squeeze, :strava_auth)
 
   def request(conn, %{"provider" => "garmin"}) do
     params = Garmin.Auth.request_token!()

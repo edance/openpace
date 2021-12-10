@@ -4,7 +4,7 @@ defmodule SqueezeWeb.PaymentMethodController do
   alias Squeeze.Billing
   alias Squeeze.Billing.PaymentMethod
 
-  @payment_processor Application.get_env(:squeeze, :payment_processor)
+  @payment_processor Application.compile_env(:squeeze, :payment_processor)
 
   def index(conn, _params) do
     redirect(conn, to: Routes.billing_path(conn, :index))

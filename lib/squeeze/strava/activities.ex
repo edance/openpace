@@ -6,7 +6,7 @@ defmodule Squeeze.Strava.Activities do
   alias Squeeze.Accounts.User
   alias Squeeze.Strava.Client
 
-  @strava_activities Application.get_env(:squeeze, :strava_activities)
+  @strava_activities Application.compile_env(:squeeze, :strava_activities)
 
   def get_activity_by_id(%User{} = user, id) do
     user

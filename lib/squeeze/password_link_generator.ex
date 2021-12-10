@@ -1,14 +1,14 @@
 defmodule Squeeze.PasswordLinkGenerator do
   @moduledoc """
   Signs and verifies text
+
+  Pulled from: https://github.com/trenpixster/addict/blob/master/lib/addict/crypto.ex
   """
-  # Pulled from:
-  # https://github.com/trenpixster/addict/blob/master/lib/addict/crypto.ex
 
   alias Squeeze.Accounts.User
 
-  @config Application.get_env(:squeeze, SqueezeWeb.Endpoint)
-  @secret_key Application.get_env(:squeeze, Squeeze.Guardian)[:secret_key]
+  @config Application.compile_env(:squeeze, SqueezeWeb.Endpoint)
+  @secret_key Application.compile_env(:squeeze, Squeeze.Guardian)[:secret_key]
   @token_ttl 86_400
 
   @doc """

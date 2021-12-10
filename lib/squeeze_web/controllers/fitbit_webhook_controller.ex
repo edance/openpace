@@ -10,7 +10,7 @@ defmodule SqueezeWeb.FitbitWebhookController do
   alias Squeeze.Fitbit.Client
   alias Squeeze.Logger
 
-  @challenge Application.get_env(:squeeze, Squeeze.OAuth2.Fitbit)[:webhook_challenge]
+  @challenge Application.compile_env(:squeeze, Squeeze.OAuth2.Fitbit)[:webhook_challenge]
 
   plug :log_webhook_event
 

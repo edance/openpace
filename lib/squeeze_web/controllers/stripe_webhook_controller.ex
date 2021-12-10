@@ -10,8 +10,6 @@ defmodule SqueezeWeb.StripeWebhookController do
   alias Squeeze.Logger
   alias Stripe.Webhook
 
-  @secret Application.get_env(:stripity_stripe, :webhook_secret)
-
   plug :log_webhook_event
 
   def webhook(conn, _params) do
@@ -24,6 +22,10 @@ defmodule SqueezeWeb.StripeWebhookController do
       {:error, _reason} ->
         render_bad_request(conn)
     end
+  end
+
+  def stripe_secret do
+    Application.get_env(:stripity_stripe, :webhook_secret)
   end
 
   defp process_event(%{type: "invoice." <> _} = event) do
@@ -52,7 +54,7 @@ defmodule SqueezeWeb.StripeWebhookController do
     if is_nil(payload) || is_nil(signature) do
       {:error, "invalid event"}
     else
-      Webhook.construct_event(payload, signature, @secret)
+      Webhook.construct_event(payload, signature, stripe_secret())
     end
   end
 
@@ -63,7 +65,7 @@ defmodule SqueezeWeb.StripeWebhookController do
   end
 
   defp parse_invoice(object) do
-    name = object.lines.data |> Enum.map(&Map.get(&1, :description)) |> Enum.join(", ")
+    name = object.lines.data |> Enum.map_join(", ", &Map.get(&1, :description))
     {:ok, due_date} = DateTime.from_unix(object.period_end)
     object
     |> Map.take(~w(amount_due status)a)

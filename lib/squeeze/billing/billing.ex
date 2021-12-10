@@ -9,7 +9,7 @@ defmodule Squeeze.Billing do
   alias Squeeze.Billing.{Invoice, PaymentMethod}
   alias Squeeze.Repo
 
-  @payment_processor Application.get_env(:squeeze, :payment_processor)
+  @payment_processor Application.compile_env(:squeeze, :payment_processor)
   @trial_period_days 30
 
   @doc """

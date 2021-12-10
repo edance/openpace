@@ -5,7 +5,7 @@ defmodule Squeeze.Garmin.Middleware.OAuth do
 
   @behaviour Tesla.Middleware
 
-  @config Application.get_env(:squeeze, Squeeze.Garmin)
+  @config Application.compile_env(:squeeze, Squeeze.Garmin)
 
   alias Squeeze.OAuth1
 

@@ -8,7 +8,7 @@ defmodule SqueezeWeb.ChallengeController do
   alias Squeeze.Strava.Client
   alias Squeeze.TimeHelper
 
-  @strava_segments Application.get_env(:squeeze, :strava_segments)
+  @strava_segments Application.compile_env(:squeeze, :strava_segments)
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.current_user]

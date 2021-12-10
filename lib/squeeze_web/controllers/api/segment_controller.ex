@@ -6,7 +6,7 @@ defmodule SqueezeWeb.Api.SegmentController do
 
   action_fallback SqueezeWeb.Api.FallbackController
 
-  @strava_segments Application.get_env(:squeeze, :strava_segments)
+  @strava_segments Application.compile_env(:squeeze, :strava_segments)
 
   def starred(conn, params) do
     user = conn.assigns.current_user
