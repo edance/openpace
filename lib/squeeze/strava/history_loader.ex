@@ -9,7 +9,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   alias Squeeze.Strava.{ActivityFormatter, Client}
   alias Strava.Paginator
 
-  @strava_activities Application.get_env(:squeeze, :strava_activities)
+  @strava_activities Application.compile_env(:squeeze, :strava_activities)
 
   def load_recent(%Credential{} = credential) do
     create_activities(credential)

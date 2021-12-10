@@ -12,8 +12,7 @@ defmodule Squeeze.ChallengeFactory do
 
         name = [timeline, type, :challenge]
         |> Enum.map(&Atom.to_string/1)
-        |> Enum.map(&String.capitalize/1)
-        |> Enum.join(" ")
+        |> Enum.map_join(" ", &String.capitalize/1)
 
         user = build(:user)
 

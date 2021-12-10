@@ -10,8 +10,6 @@ defmodule SqueezeWeb.StravaWebhookController do
   alias Squeeze.Logger
   alias Squeeze.Strava.ActivityLoader
 
-  @challenge_token Application.get_env(:strava, :webhook_challenge)
-
   plug :validate_token when action in [:challenge]
   plug :log_event
 
@@ -48,9 +46,13 @@ defmodule SqueezeWeb.StravaWebhookController do
     render(conn, "challenge.json", challenge: challenge)
   end
 
+  def challenge_token do
+    Application.get_env(:strava, :webhook_challenge)
+  end
+
   defp validate_token(conn, _) do
     token = conn.params["hub.verify_token"]
-    if token == @challenge_token do
+    if token == challenge_token() do
       conn
     else
       conn

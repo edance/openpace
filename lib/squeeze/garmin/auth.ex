@@ -5,7 +5,7 @@ defmodule Squeeze.Garmin.Auth do
 
   alias Squeeze.Garmin.Client
 
-  @config Application.get_env(:squeeze, Squeeze.Garmin)
+  @config Application.compile_env(:squeeze, Squeeze.Garmin)
 
   def get_user!(opts) do
     url = "https://healthapi.garmin.com/wellness-api/rest/user/id"

@@ -56,8 +56,7 @@ defmodule SqueezeWeb.OverviewView do
     |> Timex.beginning_of_week()
 
     distance = summaries
-    |> Enum.filter(&(Timex.after?(&1.start_at_local, date)))
-    |> Enum.filter(&(String.contains?(&1.type, "Run")))
+    |> Enum.filter(&(Timex.after?(&1.start_at_local, date) && String.contains?(&1.type, "Run")))
     |> Enum.map(&(&1.distance))
     |> Enum.sum()
 
@@ -75,8 +74,7 @@ defmodule SqueezeWeb.OverviewView do
     end_date = start_date |> Timex.end_of_week()
 
     distance = summaries
-    |> Enum.filter(&(Timex.between?(&1.start_at_local, start_date, end_date)))
-    |> Enum.filter(&(String.contains?(&1.type, "Run")))
+    |> Enum.filter(&(Timex.between?(&1.start_at_local, start_date, end_date) && String.contains?(&1.type, "Run")))
     |> Enum.map(&(&1.distance))
     |> Enum.sum()
 

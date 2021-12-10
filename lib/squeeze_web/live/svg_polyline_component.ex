@@ -1,18 +1,21 @@
 defmodule SqueezeWeb.SvgPolylineComponent do
-  use SqueezeWeb, :live_component
+  @moduledoc """
+  SVG Polyline component. Builds an svg path on the server based on a polyline.
 
-  # Converted from JS here: https://stackoverflow.com/questions/46646901/convert-google-maps-polyline-to-svg
+  Converted from JS here: https://stackoverflow.com/questions/46646901/convert-google-maps-polyline-to-svg
+  """
+
+  use SqueezeWeb, :live_component
 
   def svg_path(nil), do: nil
   def svg_path(polyline) do
-    require IEx; IEx.pry
     coords = Polyline.decode(polyline)
     points = coords |> Enum.map(&coord_to_point/1)
     min_x = points |> Enum.map(&(&1.x)) |> Enum.min()
     min_y = points |> Enum.map(&(&1.y)) |> Enum.min()
     max_x = points |> Enum.map(&(&1.x)) |> Enum.max()
     max_y = points |> Enum.map(&(&1.y)) |> Enum.max()
-    svg_path = points |> Enum.map(&("#{&1.x},#{&1.y}")) |> Enum.join(" ")
+    svg_path = points |> Enum.map_join(" ", &("#{&1.x},#{&1.y}"))
     stroke_width = Enum.max([(max_x - min_x) * 0.01, (max_y - min_y) * 0.01])
 
     %{

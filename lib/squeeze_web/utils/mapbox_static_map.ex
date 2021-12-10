@@ -1,7 +1,9 @@
 defmodule SqueezeWeb.MapboxStaticMap do
-  # Converted from JS here: https://blog.mapbox.com/generate-gradient-lines-with-the-static-image-api-368eb28068a3
+  @moduledoc """
+  Utility library to create a map url for mapbox which has a gradient line.
 
-  @token Application.get_env(:squeeze, :mapbox_access_token)
+  Converted from JS here: https://blog.mapbox.com/generate-gradient-lines-with-the-static-image-api-368eb28068a3
+  """
 
   @doc """
   Get a mapbox static url for a polyline
@@ -22,7 +24,7 @@ defmodule SqueezeWeb.MapboxStaticMap do
     style = Keyword.get(opts, :style, "dark-v10")
     encoded_path = URI.encode(make_path(polyline, opts), &URI.char_unreserved?(&1))
 
-    "https://api.mapbox.com/styles/v1/mapbox/#{style}/static/#{encoded_path}/auto/#{width}x#{height}@2x?access_token=#{@token}"
+    "https://api.mapbox.com/styles/v1/mapbox/#{style}/static/#{encoded_path}/auto/#{width}x#{height}@2x?access_token=#{token()}"
   end
 
   defp make_path(polyline, opts) do
@@ -35,6 +37,10 @@ defmodule SqueezeWeb.MapboxStaticMap do
     ]
     |> Enum.reject(&is_nil/1)
     |> Enum.join(",")
+  end
+
+  def token() do
+    Application.get_env(:squeeze, :mapbox_access_token)
   end
 
   defp make_outline_path(coords, opts) do
@@ -62,8 +68,7 @@ defmodule SqueezeWeb.MapboxStaticMap do
     # format from https://docs.mapbox.com/api/maps/#path
     paths
     |> Enum.zip(spectrum_colors)
-    |> Enum.map(fn {path, color} -> "path-#{stroke_width}+#{color}(#{Polyline.encode(path)})" end)
-    |> Enum.join(",")
+    |> Enum.map_join(",", fn {path, color} -> "path-#{stroke_width}+#{color}(#{Polyline.encode(path)})" end)
   end
 
   defp make_pins(coords, opts) do
@@ -111,8 +116,7 @@ defmodule SqueezeWeb.MapboxStaticMap do
 
   defp rgb_to_hex_str(rgb) do
     rgb
-    |> Enum.map(&dec_to_hex/1)
-    |> Enum.join("")
+    |> Enum.map_join(&dec_to_hex/1)
   end
 
   defp hex_str_to_rgb(hex_str) do

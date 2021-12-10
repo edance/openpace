@@ -6,7 +6,7 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
   import Squeeze.Factory
   alias Squeeze.PasswordLinkGenerator
 
-  @secret_key Application.get_env(:squeeze, Squeeze.Guardian)[:secret_key]
+  @secret_key Application.compile_env(:squeeze, Squeeze.Guardian)[:secret_key]
 
   describe "create_link/2" do
     setup [:create_user]

@@ -4,7 +4,7 @@ defmodule SqueezeWeb.Api.StravaController do
   alias Squeeze.Accounts
   alias Squeeze.Strava.HistoryLoader
 
-  @strava_auth Application.get_env(:squeeze, :strava_auth)
+  @strava_auth Application.compile_env(:squeeze, :strava_auth)
 
   def exchange_code(conn, %{"code" => code}) do
     user = conn.assigns.current_user

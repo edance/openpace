@@ -11,8 +11,8 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.Repo
   alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}
 
-  @strava_activities Application.get_env(:squeeze, :strava_activities)
-  @strava_streams Application.get_env(:squeeze, :strava_streams)
+  @strava_activities Application.compile_env(:squeeze, :strava_activities)
+  @strava_streams Application.compile_env(:squeeze, :strava_streams)
 
   def update_or_create_activity(%Credential{} = credential, strava_activity_id)
   when is_binary(strava_activity_id) or is_integer(strava_activity_id) do

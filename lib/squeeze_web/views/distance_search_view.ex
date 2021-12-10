@@ -12,8 +12,7 @@ defmodule SqueezeWeb.DistanceSearchView do
   def distance_name(%{distance: distance}) do
     distance
     |> String.split("-")
-    |> Enum.map(&String.capitalize/1)
-    |> Enum.join(" ")
+    |> Enum.map_join(" ", &String.capitalize/1)
   end
 
   def h1(assigns) do

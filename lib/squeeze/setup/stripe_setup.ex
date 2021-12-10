@@ -5,7 +5,7 @@ defmodule Squeeze.Setup.StripeSetup do
 
   alias Squeeze.Billing
 
-  @payment_processor Application.get_env(:squeeze, :payment_processor)
+  @payment_processor Application.compile_env(:squeeze, :payment_processor)
 
   def setup do
     product = create_product()

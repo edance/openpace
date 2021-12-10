@@ -9,7 +9,7 @@ defmodule SqueezeWeb.Challenges.NewLive do
   alias Squeeze.Strava.Client
   alias SqueezeWeb.Endpoint
 
-  @strava_segments Application.get_env(:squeeze, :strava_segments)
+  @strava_segments Application.compile_env(:squeeze, :strava_segments)
 
   @impl true
   def mount(%{"challenge_type" => type}, session, socket) do
