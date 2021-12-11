@@ -1,9 +1,7 @@
-<%= if @user.avatar do %>
-  <div class="avatar avatar-sm rounded-circle">
+<div class="avatar <%= avatar_size(assigns) %> <%= bg_color(@user) %> text-bold rounded-circle">
+  <%= if @user.avatar do %>
     <img alt="<%= full_name(@user) %>" src="<%= @user.avatar %>" />
-  </div>
-<% else %>
-  <div class="avatar avatar-sm rounded-circle bg-gradient-warning text-bold">
+  <% else %>
     <%= initials(@user) %>
-  </div>
-<% end %>
+  <% end %>
+</div>

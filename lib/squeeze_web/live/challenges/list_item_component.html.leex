@@ -7,7 +7,7 @@
     </div>
 
     <div class="col">
-      <%= link @challenge.name, to: Routes.challenge_path(SqueezeWeb.Endpoint, :show, @challenge.slug) %>
+      <%= live_redirect @challenge.name, to: Routes.challenge_path(@socket, :show, @challenge.slug) %>
 
       <p class="mt-0 mb-1 text-sm">
         <%= challenge_type(assigns) %> &middot;

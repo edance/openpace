@@ -11,6 +11,17 @@ defmodule SqueezeWeb.FormatHelpers do
   alias Squeeze.Duration
   alias Squeeze.TimeHelper
 
+  def full_name(%User{} = user), do: User.full_name(user)
+
+  def initials(%User{first_name: first_name, last_name: last_name}) do
+    "#{String.at(first_name, 0)}#{String.at(last_name, 0)}"
+  end
+
+  def hometown(%User{city: nil, state: nil}), do: nil
+  def hometown(%User{city: city, state: state}) do
+    "#{city}, #{state}"
+  end
+
   @doc """
   Formats a duration like a stopwatch
 
@@ -66,4 +77,44 @@ defmodule SqueezeWeb.FormatHelpers do
   def format_ordinal_date(date) do
     Timex.format!(date, "%b #{Ordinal.ordinalize(date.day)}", :strftime)
   end
+
+  def format_score(%{challenge_type: :segment}, amount) do
+    if amount > 0 do
+      format_duration(amount)
+    else
+      "No Attempt"
+    end
+  end
+  def format_score(challenge, amount) do
+    case challenge.challenge_type do
+      :distance -> Distances.format(amount)
+      :time -> format_duration(amount)
+      :altitude -> "#{Distances.to_feet(amount, imperial: true)} ft"
+      _ -> format_duration(amount)
+    end
+  end
+
+  def challenge_type(%{challenge: challenge}) do
+    challenge_type(challenge.challenge_type)
+  end
+
+  def challenge_type(challenge_type) do
+    case challenge_type do
+      :distance -> "Distance Challenge"
+      :time -> "Time Challenge"
+      :altitude -> "Elevation Gain Challenge"
+      :segment -> "Segment Challenge"
+      _ -> "Challenge"
+    end
+  end
+
+  def challenge_label(%{challenge: challenge}) do
+    case challenge.challenge_type do
+      :distance -> "Distance"
+      :time -> "Time"
+      :altitude -> "Elevation Gain"
+      :segment -> "Time"
+    end
+  end
+
 end

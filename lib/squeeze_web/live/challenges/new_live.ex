@@ -5,7 +5,6 @@ defmodule SqueezeWeb.Challenges.NewLive do
   alias Squeeze.Accounts
   alias Squeeze.Challenges
   alias Squeeze.Challenges.Challenge
-  alias Squeeze.Guardian
   alias Squeeze.Strava.Client
   alias SqueezeWeb.Endpoint
 
@@ -84,14 +83,6 @@ defmodule SqueezeWeb.Challenges.NewLive do
       _ -> {:noreply, socket}
     end
   end
-
-  defp get_current_user(%{"guardian_default_token" => token}) do
-    case Guardian.resource_from_token(token) do
-      {:ok, user, _claims} -> user
-      _ -> nil
-    end
-  end
-  defp get_current_user(_), do: nil
 
   defp get_strava_segments(credential) do
     opts = [

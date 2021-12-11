@@ -1,11 +1,25 @@
 defmodule SqueezeWeb.AvatarComponent do
   use SqueezeWeb, :live_component
 
-  alias Squeeze.Accounts.User
+  @colors ~w(
+    blue
+    indigo
+    purple
+    pink
+    red
+    orange
+    yellow
+    green
+    teal
+    cyan
+  )
 
-  def initials(user) do
-    "#{String.at(user.first_name, 0)}#{String.at(user.last_name, 0)}"
+  def avatar_size(%{size: size}), do: "avatar-#{size}"
+  def avatar_size(_), do: "avatar-sm"
+
+  def bg_color(user) do
+    idx = rem(user.id, length(@colors))
+    color = Enum.at(@colors, idx)
+    "bg-gradient-#{color}"
   end
-
-  def full_name(user), do: User.full_name(user)
 end

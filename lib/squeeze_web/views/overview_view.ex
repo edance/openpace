@@ -9,17 +9,6 @@ defmodule SqueezeWeb.OverviewView do
     gettext("Dashboard")
   end
 
-  def full_name(%User{} = user), do: User.full_name(user)
-
-  def hometown(%User{city: nil, state: nil}), do: nil
-  def hometown(%User{city: city, state: state}) do
-    "#{city}, #{state}"
-  end
-
-  def initials(%User{first_name: first_name, last_name: last_name}) do
-    "#{String.at(first_name, 0)}#{String.at(last_name, 0)}"
-  end
-
   def improvement_amount(%User{} = user), do: User.improvement_amount(user)
 
   def total_distance(%{ytd_run_stats: ytd_run_stats, current_user: user}) do

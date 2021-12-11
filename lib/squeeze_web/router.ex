@@ -71,7 +71,7 @@ defmodule SqueezeWeb.Router do
     live "/calendar", CalendarLive, :index
     live "/challenges", ChallengeLive, :index
     live "/challenges/new", Challenges.NewLive, :new, as: :challenge
-    # live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
+    live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
   end
 
   scope "/dashboard", SqueezeWeb do
@@ -79,7 +79,7 @@ defmodule SqueezeWeb.Router do
 
     get "/", DashboardController, :index
 
-    get "/challenges/:id", ChallengeController, :show
+    # get "/challenges/:id", ChallengeController, :show
 
     get "/overview", OverviewController, :index
 
