@@ -14,6 +14,17 @@ defmodule SqueezeWeb.Router do
     plug Plug.Locale
   end
 
+  pipeline :live_browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {SqueezeWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug Squeeze.AuthPipeline
+    plug Plug.Locale
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug :put_layout, {SqueezeWeb.LayoutView, :none}
@@ -55,14 +66,18 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/dashboard", SqueezeWeb do
-    pipe_through [:browser, :dashboard_layout]
-
-    get "/", DashboardController, :index
+    pipe_through [:live_browser]
 
     live "/calendar", CalendarLive, :index
     live "/challenges", ChallengeLive, :index
     live "/challenges/new", Challenges.NewLive, :new, as: :challenge
     # live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
+  end
+
+  scope "/dashboard", SqueezeWeb do
+    pipe_through [:browser, :dashboard_layout]
+
+    get "/", DashboardController, :index
 
     get "/challenges/:id", ChallengeController, :show
 

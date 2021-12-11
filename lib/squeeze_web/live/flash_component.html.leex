@@ -1,5 +1,5 @@
 <%= if info_msg(@flash) do %>
-  <div class="alert alert-info alert-dismissible fixed-top mt-4 fade show"
+  <div class="alert alert-info alert-dismissible fixed-top container mt-4 fade show"
       data-auto-hide="true"
       role="alert"
       phx-click="lv:clear-flash"
@@ -12,7 +12,7 @@
 <% end %>
 
 <%= if error_msg(@flash) do %>
-  <div class="alert alert-warning alert-dismissible fixed-top mt-4 fade show"
+  <div class="alert alert-warning alert-dismissible fixed-top container mt-4 fade show"
       data-auto-hide="true"
       role="alert"
       phx-click="lv:clear-flash"

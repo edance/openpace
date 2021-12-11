@@ -52,21 +52,15 @@
       <!-- Navigation -->
       <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
         <li class="nav-item">
-          <%= link(to: Routes.overview_path(SqueezeWeb.Endpoint, :index), class: "nav-link") do %>
-          <%= gettext("Dashboard") %>
-          <% end %>
+          <%= link gettext("Dashboard"), to: Routes.overview_path(SqueezeWeb.Endpoint, :index), class: "nav-link" %>
         </li>
 
         <li class="nav-item">
-          <%= link(to: Routes.challenge_path(SqueezeWeb.Endpoint, :index), class: "nav-link") do %>
-          <%= gettext("Challenges") %>
-          <% end %>
+          <%= live_redirect gettext("Challenges"), to: Routes.challenge_path(@socket, :index), class: "nav-link" %>
         </li>
 
         <li class="nav-item">
-          <%= link(to: Routes.calendar_path(SqueezeWeb.Endpoint, :index), class: "nav-link") do %>
-          <%= gettext("Calendar") %>
-          <% end %>
+          <%= live_redirect gettext("Calendar"), to: Routes.calendar_path(@socket, :index), class: "nav-link" %>
         </li>
       </ul>
     </div>
