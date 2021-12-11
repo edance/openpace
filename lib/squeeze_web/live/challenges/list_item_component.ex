@@ -25,20 +25,6 @@ defmodule SqueezeWeb.Challenges.ListItemComponent do
     end
   end
 
-  def challenge_type(%{challenge: challenge}) do
-    challenge_type(challenge.challenge_type)
-  end
-
-  def challenge_type(challenge_type) do
-    case challenge_type do
-      :distance -> "Distance Challenge"
-      :time -> "Time Challenge"
-      :altitude -> "Elevation Gain Challenge"
-      :segment -> "Segment Challenge"
-      _ -> "Challenge"
-    end
-  end
-
   def challenge_relative_date(%{challenge: challenge, current_user: user}) do
     now = Timex.now()
     start_at = TimeHelper.beginning_of_day(user, challenge.start_date)

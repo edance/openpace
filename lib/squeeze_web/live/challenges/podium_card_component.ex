@@ -1,10 +1,7 @@
-defmodule SqueezeWeb.ChallengeView do
-  use SqueezeWeb, :view
+defmodule SqueezeWeb.Challenges.PodiumCardComponent do
+  use SqueezeWeb, :live_component
 
   alias Squeeze.TimeHelper
-
-  def title("show.html", %{challenge: challenge}), do: challenge.name
-  def title(_, _assigns), do: "Challenges"
 
   def challenge_relative_date(%{challenge: challenge, current_user: user}) do
     now = Timex.now()
@@ -52,9 +49,9 @@ defmodule SqueezeWeb.ChallengeView do
     end
   end
 
-  def avatar_size(0), do: "avatar-xl"
-  def avatar_size(1), do: "avatar-lg"
-  def avatar_size(_), do: ""
+  def avatar_size(0), do: "xl"
+  def avatar_size(1), do: "lg"
+  def avatar_size(_), do: "md"
 
   def podium_order(0), do: "order-2"
   def podium_order(1), do: "order-1"
