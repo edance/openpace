@@ -4,15 +4,15 @@
   <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
 
   <div class="container container-dashboard d-flex align-items-center py-2">
-    <button class="btn btn-secondary btn-sm" phx-click="today">Today</button>
+    <%= live_patch gettext("Today"), to: Routes.calendar_path(@socket, :index), replace: true, class: "btn btn-secondary btn-sm" %>
 
-    <button class="btn btn-primary btn-sm text-white btn-icon-only rounded-circle" phx-click="prev">
+    <%= live_patch to: Routes.calendar_path(@socket, :index, date: prev(@date)), replace: true, class: "btn btn-primary btn-sm text-white btn-icon-only rounded-circle" do %>
       <span class="iconify" data-icon="akar-icons:chevron-left" data-inline="false"></span>
-    </button>
+    <% end %>
 
-    <button class="btn btn-primary btn-sm text-white btn-icon-only rounded-circle" phx-click="next">
+    <%= live_patch to: Routes.calendar_path(@socket, :index, date: next(@date)), replace: true, class: "btn btn-primary btn-sm text-white btn-icon-only rounded-circle" do %>
       <span class="iconify" data-icon="akar-icons:chevron-right" data-inline="false"></span>
-    </button>
+    <% end %>
 
     <span class="h3 mb-0">
       <%= Timex.format!(@date, "%B %Y", :strftime) %>
@@ -34,7 +34,7 @@
     <div class="row no-gutters flex-grow-1 w-100">
       <%= for {_week, dates} <- weeks(assigns) do %>
       <div class="row no-gutters w-100">
-        <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
+        <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities_by_date: @activities_by_date, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
 
         <%= for date <- dates do %>
         <div class="col-md p-2 calendar-date">

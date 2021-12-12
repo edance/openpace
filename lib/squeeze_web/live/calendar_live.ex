@@ -20,45 +20,21 @@ defmodule SqueezeWeb.CalendarLive do
     |> assign(:current_user, user)
     |> assign(:date, date)
     |> assign(:dates, dates)
-    |> assign(:page_title, "Calendar")
+    |> assign(:page_title, Timex.format!(date, "%B %Y", :strftime))
     |> assign(:activities_by_date, activities_by_date(user, dates))
 
     {:ok, socket}
   end
 
   @impl true
-  def handle_event("prev", _params, socket) do
+  def handle_params(params, _uri, socket) do
     user = socket.assigns.current_user
-    date = socket.assigns.date |> Timex.shift(months: -1)
+    date = parse_date(user, params["date"])
     dates = Calendar.visible_dates(date, "month")
     socket = socket
     |> assign(:date, date)
     |> assign(:dates, dates)
-    |> assign(:activities_by_date, activities_by_date(user, dates))
-
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("next", _params, socket) do
-    user = socket.assigns.current_user
-    date = socket.assigns.date |> Timex.shift(months: 1)
-    dates = Calendar.visible_dates(date, "month")
-    socket = socket
-    |> assign(:date, date)
-    |> assign(:dates, dates)
-    |> assign(:activities_by_date, activities_by_date(user, dates))
-
-    {:noreply, socket}
-  end
-
-  def handle_event("today", _params, socket) do
-    user = socket.assigns.current_user
-    date = parse_date(user, nil)
-    dates = Calendar.visible_dates(date, "month")
-    socket = socket
-    |> assign(:date, date)
-    |> assign(:dates, dates)
+    |> assign(:page_title, Timex.format!(date, "%B %Y", :strftime))
     |> assign(:activities_by_date, activities_by_date(user, dates))
 
     {:noreply, socket}
@@ -92,7 +68,11 @@ defmodule SqueezeWeb.CalendarLive do
     |> Enum.filter(&(Enum.member?(dates, activity_date(user, &1))))
   end
 
-  defp format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")
+  def format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")
+
+  def next(date), do: date |> Timex.shift(months: 1) |> format_date()
+
+  def prev(date), do: date |> Timex.shift(months: -1) |> format_date()
 
   defp activities_by_date(user, dates) do
     user
