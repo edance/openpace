@@ -33,11 +33,11 @@
 
     <div class="row no-gutters flex-grow-1 w-100">
       <%= for {_week, dates} <- weeks(assigns) do %>
-      <div class="row no-gutters w-100">
-        <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities_by_date: @activities_by_date, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
+      <div class="row no-gutters border-bottom w-100">
+        <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
 
         <%= for date <- dates do %>
-        <div class="col-md p-2 calendar-date">
+        <div class="col p-2 border-right bg-white">
           <div class="pb-1 small">
             <%= date_label(date, @current_user) %>
           </div>

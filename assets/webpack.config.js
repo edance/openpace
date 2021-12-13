@@ -8,7 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env, options) => {
   const plugins = [
-    new MiniCssExtractPlugin({ filename: '../css/app.css' }),
+    new MiniCssExtractPlugin({ filename: '../css/[name].css' }),
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
   ].concat(process.argv.includes("--withReport")? [new BundleAnalyzerPlugin()] : []);
 

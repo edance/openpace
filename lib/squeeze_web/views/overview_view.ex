@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.OverviewView do
   use SqueezeWeb, :view
 
+  alias Number.Delimit
   alias Squeeze.Accounts.User
   alias Squeeze.Distances
   alias Squeeze.TimeHelper
@@ -12,15 +13,19 @@ defmodule SqueezeWeb.OverviewView do
   def improvement_amount(%User{} = user), do: User.improvement_amount(user)
 
   def total_distance(%{ytd_run_stats: ytd_run_stats, current_user: user}) do
-    Distances.to_int(ytd_run_stats.distance, [imperial: user.user_prefs.imperial])
+    ytd_run_stats.distance
+    |> Distances.to_int([imperial: user.user_prefs.imperial])
+    |> Delimit.number_to_delimited(precision: 0)
   end
 
   def total_hours(%{ytd_run_stats: ytd_run_stats}) do
-    round(ytd_run_stats.duration / (60 * 60))
+    Delimit.number_to_delimited(ytd_run_stats.duration / (60 * 60), precision: 0)
   end
 
   def total_elevation(%{ytd_run_stats: ytd_run_stats, current_user: user}) do
-    Distances.to_feet(ytd_run_stats.elevation_gain, [imperial: user.user_prefs.imperial])
+    ytd_run_stats.elevation_gain
+    |> Distances.to_feet([imperial: user.user_prefs.imperial])
+    |> Delimit.number_to_delimited(precision: 0)
   end
 
   def format_goal(user) do

@@ -1,35 +1,9 @@
 import { u } from 'umbrellajs';
-// import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
+import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from 'mapbox-gl';
 import { colors, fonts } from './../variables.js';
 
 mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
-
-function addLineString(map, coordinates) {
-  map.addLayer({
-    id: "LineString",
-    type: "line",
-    source: {
-      type: "geojson",
-      data: {
-        type: "Feature",
-        properties: {},
-        geometry: {
-          type: "LineString",
-          coordinates: coordinates,
-        }
-      }
-    },
-    layout: {
-      "line-join": "round",
-      "line-cap": "round"
-    },
-    paint: {
-      "line-color": colors.theme['primary'],
-      "line-width": 5
-    }
-  });
-}
 
 function init() {
   const $mapCanvas = u('.activity-map');
@@ -64,4 +38,3 @@ function init() {
 };
 
 window.addEventListener("phx:page-loading-stop", init);
-window.addEventListener("load", init);

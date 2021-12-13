@@ -211,4 +211,3 @@ function init() {
 };
 
 window.addEventListener("phx:page-loading-stop", init);
-window.addEventListener("load", init);
