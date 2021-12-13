@@ -1,0 +1,67 @@
+<div class="card-header border-0">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="mb-0">Splits</h3>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">
+          Split
+        </th>
+        <th scope="col">
+          Pace
+          <%= if @current_user.user_prefs.imperial do %>
+            <div class="small">min/mi</div>
+          <% else %>
+            <div class="small">min/km</div>
+          <% end %>
+        </th>
+        <th scope="col">
+          Split Time
+        </th>
+        <th scope="col">
+          Time
+        </th>
+        <th scope="col">
+          HR
+          <div class="small">bpm</div>
+        </th>
+        <th scope="col">
+          Cadence
+          <div class="small">steps/min</div>
+        </th>
+        <th scope="col">
+          Elevation
+          <%= if @current_user.user_prefs.imperial do %>
+            <div class="small">feet</div>
+          <% else %>
+            <div class="small">meters</div>
+          <% end %>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= for split <- splits(assigns) do %>
+        <tr>
+          <td><%= split.split %></td>
+          <td><%= format_duration(split.pace) %></td>
+          <td><%= format_duration(split.split_time) %></td>
+          <td><%= format_duration(split.time) %></td>
+          <td><%= split.heartrate %></td>
+          <td><%= split.cadence %></td>
+          <td>
+            <%= round(split.up) %>
+            <span class="iconify mr-1" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
+            <%= round(split.down) %>
+            <span class="iconify mr-1" data-icon="ant-design:caret-down-fill" data-inline="false"></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

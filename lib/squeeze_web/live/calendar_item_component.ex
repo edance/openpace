@@ -5,10 +5,14 @@ defmodule SqueezeWeb.CalendarItemComponent do
     user.user_prefs.race_date == date
   end
 
-  def activity_color(%{status: :pending}), do: "info"
-  def activity_color(%{status: :complete}), do: "success"
-  def activity_color(%{status: :incomplete}), do: "danger"
-  def activity_color(%{status: :partial}), do: "warning"
+  def activity_color(activity) do
+    cond do
+      String.contains?(activity.type, "Run") -> "blue"
+      String.contains?(activity.type, "Ride") -> "purple"
+      String.contains?(activity.type, "Swim") -> "pink"
+      true -> "indigo"
+    end
+  end
 
   def activity_icon(activity) do
     cond do

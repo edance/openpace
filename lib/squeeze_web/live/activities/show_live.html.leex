@@ -1,0 +1,59 @@
+<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+
+<%= if coordinates?(assigns) do %>
+  <%= live_component(SqueezeWeb.Activities.MapComponent, activity: @activity, trackpoints: @trackpoints, current_user: @current_user) %>
+<% end %>
+
+<div class="container-fluid bg-secondary">
+  <div class="container pt-5 pb-8">
+    <div class="row">
+      <div class="col">
+        <h1><%= name(assigns) %></h1>
+        <p class="text-muted">
+          <%= date(assigns) %>
+          · <%= @activity.type %>
+          <%= if @activity.status == :pending do %>
+            · Planned
+          <% end %>
+        </p>
+      </div>
+      <div class="col text-right">
+      </div>
+    </div>
+
+    <%= live_component(SqueezeWeb.Activities.CardsComponent, activity: @activity, current_user: @current_user) %>
+
+    <%= if trackpoints?(assigns) do %>
+      <div class="card mt-4">
+        <div class="card-body">
+          <%= live_component SqueezeWeb.Activities.ChartComponent, trackpoints: @trackpoints, current_user: @current_user %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= if distance?(assigns) do %>
+      <div class="card mt-4">
+        <%= live_component SqueezeWeb.Activities.SplitsComponent, trackpoints: @trackpoints, current_user: @current_user %>
+      </div>
+    <% end %>
+
+    <div class="card mt-4 mb-8">
+      <div class="card-header border-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="mb-0"><%= gettext("Notes") %></h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <%= if @activity.description do %>
+          <%= @activity.description %>
+        <% else %>
+          No description added. How were you feeling? What was the weather? Add details about your <%= @activity.type %>
+          <%#= link(gettext("here"), to: Routes.activity_path(@conn, :edit, @activity)) %>.
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

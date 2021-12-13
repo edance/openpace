@@ -72,6 +72,8 @@ defmodule SqueezeWeb.Router do
     live "/challenges", ChallengeLive, :index
     live "/challenges/new", Challenges.NewLive, :new, as: :challenge
     live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
+
+    live "/activities/:id", Activities.ShowLive, :show, as: :activity
   end
 
   scope "/dashboard", SqueezeWeb do
@@ -91,7 +93,7 @@ defmodule SqueezeWeb.Router do
 
     resources "/payment", PaymentMethodController, only: [:index, :new, :create, :delete]
 
-    resources "/activities", ActivityController do
+    resources "/activities", ActivityController, except: [:show] do
       patch "/mark-complete", ActivityController, :mark_complete, as: :mark_complete
     end
 
