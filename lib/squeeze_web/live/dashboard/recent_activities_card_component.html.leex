@@ -1,0 +1,56 @@
+<%= if length(@activities) > 0 do %>
+  <div class="card shadow">
+    <div class="card-header border-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="mb-0">
+            <%= gettext("Recent Activities") %>
+          </h3>
+        </div>
+        <div class="col text-right">
+          <%= link(gettext("See all"), to: Routes.activity_path(@socket, :index), class: "btn btn-sm btn-primary") %>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">
+              <%= gettext("Name") %>
+            </th>
+            <th scope="col">
+              <%= gettext("Distance") %>
+            </th>
+            <th scope="col">
+              <%= gettext("Start at") %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for activity <- @activities do %>
+            <tr scope="row">
+              <td><%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity) %></td>
+              <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
+              <td><%= relative_time(activity.start_at) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% else %>
+  <!-- Strava Connect Card -->
+  <div class="card bg-gradient-orange">
+    <div class="card-body">
+      <div class="h1 text-white">Connect with Strava</div>
+
+      <p class="text-sm text-white">
+        Sync all of your runs and activities with OpenPace through Strava.
+      </p>
+
+      <%= link(gettext("Connect"), to: Routes.integration_path(@socket, :request, "strava"), class: "btn btn-sm btn-secondary") %>
+    </div>
+  </div>
+<% end %>

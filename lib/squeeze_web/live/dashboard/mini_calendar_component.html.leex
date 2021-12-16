@@ -1,0 +1,52 @@
+<div class="card shadow">
+  <div class="card-header bg-transparent">
+    <div class="row align-items-center">
+      <div class="col">
+        <h6 class="text-uppercase text-muted ls-1 mb-1">
+          <%= gettext("Performance") %>
+        </h6>
+        <h2 class="mb-0">
+          <%= gettext("Recent Runs") %>
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row no-gutters mb-2">
+      <%= for date <- Enum.take(dates(assigns), 7) do %>
+      <div class="col text-center">
+        <div class="text-uppercase small">
+          <%= date |> Timex.format!("%a", :strftime) |> String.first() %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <%= for dates <- Enum.chunk_every(dates(assigns), 7) do %>
+    <div class="row no-gutters mb-1">
+      <%= for date <- dates do %>
+      <div class="col text-center">
+        <div class="text-uppercase text-muted small">
+          <%= if date.day == 1 do %>
+          <%= Timex.format!(date, "%b", :strftime) %>
+          <% else %>
+          &nbsp;
+          <% end %>
+        </div>
+
+        <%= if active_on_date?(assigns, date) do %>
+        <div class="small badge badge-circle bg-primary text-white mb-1">
+          <%= date.day %>
+        </div>
+        <% else %>
+        <div class="small badge badge-circle mb-1">
+          <%= date.day %>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

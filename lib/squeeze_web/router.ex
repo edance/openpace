@@ -68,6 +68,8 @@ defmodule SqueezeWeb.Router do
   scope "/dashboard", SqueezeWeb do
     pipe_through [:live_browser]
 
+    live "/overview", Dashboard.OverviewLive, :index, as: :overview
+
     live "/calendar", CalendarLive, :index
     live "/challenges", ChallengeLive, :index
     live "/challenges/new", Challenges.NewLive, :new, as: :challenge
@@ -80,10 +82,6 @@ defmodule SqueezeWeb.Router do
     pipe_through [:browser, :dashboard_layout]
 
     get "/", DashboardController, :index
-
-    # get "/challenges/:id", ChallengeController, :show
-
-    get "/overview", OverviewController, :index
 
     get "/settings", ProfileController, :edit
     put "/settings", ProfileController, :update
