@@ -1,4 +1,5 @@
 import './alert';
+import './avatar';
 import './btn-spinner';
 import './copy-input';
 import './date-picker';

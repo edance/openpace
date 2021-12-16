@@ -11,15 +11,8 @@
     <%= if @current_user do %>
       <a class="nav-link pr-0 order-md-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="media align-items-center">
-          <%= if @current_user.avatar do %>
-            <div class="avatar avatar-sm rounded-circle">
-              <img alt="<%= @current_user.first_name %>" src="<%= @current_user.avatar %>" />
-            </div>
-          <% else %>
-            <div class="avatar avatar-sm rounded-circle bg-gradient-warning text-bold">
-              <%= initials(@current_user) %>
-            </div>
-          <% end %>
+
+          <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user) %>
 
           <div class="media-body ml-2 d-none d-lg-block">
             <span class="mb-0 font-weight-bold"><%= full_name(@current_user) %></span>
