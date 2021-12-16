@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header bg-transparent">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="mb-0">
+          <%= gettext("Challenges") %>
+        </h3>
+      </div>
+
+      <div class="col text-right">
+        <%= live_redirect(gettext("See All"), to: Routes.challenge_path(@socket, :index), class: "btn btn-sm btn-primary") %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card body -->
+  <div class="card-body">
+    <%= if Enum.empty?(@challenges) do %>
+      <p class="text-sm">You have no challenges.</p>
+    <% else %>
+      <ul class="list-group list-group-flush list my--3">
+        <%= for challenge <- @challenges do %>
+          <%= live_component(SqueezeWeb.Challenges.ListItemComponent, current_user: @current_user, challenge: challenge) %>
+      <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

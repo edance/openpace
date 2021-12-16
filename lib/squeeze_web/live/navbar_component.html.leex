@@ -4,7 +4,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <%= link(to: Routes.dashboard_path(SqueezeWeb.Endpoint, :index), class: "navbar-brand") do %>
+    <%= live_redirect(to: Routes.overview_path(@socket, :index), class: "navbar-brand") do %>
       <img class="logo-img" src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/logo.svg") %>" />
     <% end %>
 
@@ -45,7 +45,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
         <li class="nav-item">
-          <%= link gettext("Dashboard"), to: Routes.overview_path(SqueezeWeb.Endpoint, :index), class: "nav-link" %>
+          <%= live_redirect gettext("Dashboard"), to: Routes.overview_path(SqueezeWeb.Endpoint, :index), class: "nav-link" %>
         </li>
 
         <li class="nav-item">
