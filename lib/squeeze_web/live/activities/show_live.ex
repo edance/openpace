@@ -1,7 +1,9 @@
 defmodule SqueezeWeb.Activities.ShowLive do
   use SqueezeWeb, :live_view
 
+  alias Number.Delimit
   alias Squeeze.Dashboard
+  alias Squeeze.Distances
 
   @impl true
   def mount(%{"id" => id}, session, socket) do
@@ -9,6 +11,7 @@ defmodule SqueezeWeb.Activities.ShowLive do
     activity = Dashboard.get_detailed_activity!(user, id)
 
     socket = socket
+    |> assign(page_title: activity.name)
     |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
 
     {:ok, socket}
@@ -28,11 +31,28 @@ defmodule SqueezeWeb.Activities.ShowLive do
     |> Timex.format!("%b %-d, %Y %-I:%M %p ", :strftime)
   end
 
+  def distance(%{activity: activity, current_user: user}) do
+    Distances.to_float(activity.distance, user.user_prefs)
+  end
+
   def distance?(%{trackpoints: trackpoints}) do
     trackpoints
     |> Enum.take(5)
     |> Enum.map(&(&1.distance))
     |> Enum.any?(&(!is_nil(&1)))
+  end
+
+  def elevation(%{activity: activity, current_user: user}) do
+    imperial = user.user_prefs.imperial
+    value = activity.elevation_gain
+    |> Distances.to_feet(imperial: imperial)
+    |> Delimit.number_to_delimited(precision: 0)
+
+    if imperial do
+      "#{value} ft"
+    else
+      "#{value} m"
+    end
   end
 
   def coordinates?(%{trackpoints: trackpoints}) do

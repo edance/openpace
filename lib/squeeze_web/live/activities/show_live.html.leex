@@ -1,58 +1,68 @@
 <%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
 
-<%= if coordinates?(assigns) do %>
-  <%= live_component(SqueezeWeb.Activities.MapComponent, activity: @activity, trackpoints: @trackpoints, current_user: @current_user) %>
-<% end %>
+<div class="main-content bg-waves">
+  <div class="container-fluid pt-4 pb-8">
+    <div class="card overflow-hidden">
+      <div class="row no-gutters">
+        <div class="col-md-5 bg-white">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user, size: "lg") %>
+              </div>
+              <div class="col ml--2">
+                <h1 class="h3 mb-0"><%= @activity.name %></h1>
+                <p class="text-sm text-muted mb-0">
+                  <%= date(assigns) %> · <%= @activity.type %>
+                </p>
+              </div>
+            </div>
 
-<div class="container-fluid bg-secondary">
-  <div class="container pt-5 pb-8">
-    <div class="row">
-      <div class="col">
-        <h1><%= name(assigns) %></h1>
-        <p class="text-muted">
-          <%= date(assigns) %>
-          · <%= @activity.type %>
-          <%= if @activity.status == :pending do %>
-            · Planned
+            <div class="row pt-4">
+              <div class="col-3">
+                <h5 class="card-title text-uppercase text-muted mb-0">Distance</h5>
+                <span class="h2 font-weight-bold mb-0"><%= format_distance(@activity.distance, @current_user.user_prefs) %></span>
+              </div>
+
+              <div class="col-3">
+                <h5 class="card-title text-uppercase text-muted mb-0">Time</h5>
+                <span class="h2 font-weight-bold mb-0"><%= format_duration(@activity.duration) %></span>
+              </div>
+
+              <%= if @activity.distance > 0 do %>
+              <div class="col-3">
+                <h5 class="card-title text-uppercase text-muted mb-0">Pace</h5>
+                <span class="h2 font-weight-bold mb-0">
+                  <%= format_pace(@activity, @current_user.user_prefs) %>
+                </span>
+              </div>
+              <% end %>
+
+              <%= if @activity.elevation_gain > 0 do %>
+              <div class="col-3">
+                <h5 class="card-title text-uppercase text-muted mb-0">Elevation</h5>
+                <span class="h2 font-weight-bold mb-0">
+                  <%= elevation(assigns) %>
+                </span>
+              </div>
+              <% end %>
+            </div>
+          </div>
+          <%= if trackpoints?(assigns) do %>
+          <%= live_component SqueezeWeb.Activities.SplitsComponent, trackpoints: @trackpoints, current_user: @current_user %>
           <% end %>
-        </p>
-      </div>
-      <div class="col text-right">
-      </div>
-    </div>
+        </div>
 
-    <%= live_component(SqueezeWeb.Activities.CardsComponent, activity: @activity, current_user: @current_user) %>
-
-    <%= if trackpoints?(assigns) do %>
-      <div class="card mt-4">
-        <div class="card-body">
+        <div class="col-md-7">
+          <%= if coordinates?(assigns) do %>
+          <%= live_component(SqueezeWeb.Activities.MapComponent, activity: @activity, trackpoints: @trackpoints, current_user: @current_user) %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row pt-4">
+        <div class="col-12">
           <%= live_component SqueezeWeb.Activities.ChartComponent, trackpoints: @trackpoints, current_user: @current_user %>
         </div>
-      </div>
-    <% end %>
-
-    <%= if distance?(assigns) do %>
-      <div class="card mt-4">
-        <%= live_component SqueezeWeb.Activities.SplitsComponent, trackpoints: @trackpoints, current_user: @current_user %>
-      </div>
-    <% end %>
-
-    <div class="card mt-4 mb-8">
-      <div class="card-header border-0">
-        <div class="row align-items-center">
-          <div class="col">
-            <h3 class="mb-0"><%= gettext("Notes") %></h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-body">
-        <%= if @activity.description do %>
-          <%= @activity.description %>
-        <% else %>
-          No description added. How were you feeling? What was the weather? Add details about your <%= @activity.type %>
-          <%#= link(gettext("here"), to: Routes.activity_path(@conn, :edit, @activity)) %>.
-        <% end %>
       </div>
     </div>
   </div>
