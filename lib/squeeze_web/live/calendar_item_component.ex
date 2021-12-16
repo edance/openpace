@@ -49,9 +49,7 @@ defmodule SqueezeWeb.CalendarItemComponent do
   def description(activity, user) do
     [
       distance(activity, user),
-      duration(activity),
-      pace(activity, user),
-      formatted_start_at(%{activity: activity, current_user: user})
+      duration(activity)
     ]
     |> Enum.reject(&(is_nil(&1) || &1 <= 0))
     |> Enum.join(" · ")
