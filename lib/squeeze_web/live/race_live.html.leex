@@ -1,0 +1,92 @@
+<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+
+<div class="main-content bg-waves" id="panel">
+  <!-- Page content -->
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="card">
+          <div class="card-header bg-transparent">
+            <h3 class="mb-0">
+              <%= gettext("Race Timeline") %>
+            </h3>
+          </div>
+
+          <div class="card-body">
+            <button class="btn" phx-click="toggle_modal">Show Modal <%= @show_modal %></button>
+
+            <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+              <div class="timeline-block">
+                <span class="timeline-step badge-success">
+                  <i class="ni ni-bell-55"></i>
+                </span>
+                <div class="timeline-content">
+                  <small class="text-muted font-weight-bold">10:30 AM</small>
+                  <h5 class=" mt-3 mb-0">New message</h5>
+                  <p class=" text-sm mt-1 mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                  <div class="mt-3">
+                    <span class="badge badge-pill badge-success">design</span>
+                    <span class="badge badge-pill badge-success">system</span>
+                    <span class="badge badge-pill badge-success">creative</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0"><%= gettext("Add a Race") %></h3>
+          </div>
+          <div class="card-body">
+            <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+            <div class="form-group">
+              <%= label f, :name, class: "form-control-label" %>
+              <%= input f, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
+            </div>
+
+            <div class="form-group">
+              <%= label(f, :distance, class: "form-control-label") %>
+              <%= autocomplete(f, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
+              <%= error_tag(f, :distance) %>
+            </div>
+
+            <div class="form-group">
+              <%= label(f, "Race Date", class: "form-control-label") %>
+              <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+              <%= text_input f, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
+                </div>
+
+              <%= error_tag f, :start_date %>
+            </div>
+
+            <%= submit "Save Race", class: "btn btn-primary" %>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade <%= if @show_modal, do: "d-block show" %>" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card bg-secondary shadow border-0">
+          <div class="card-header bg-transparent pb-5">
+            <div class="text-muted text-center mt-2 mb-3">
+              <small><%= gettext("Add Race") %></small>
+            </div>
+
+            <button class="btn" phx-click="toggle_modal">Show Modal <%= @show_modal %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
