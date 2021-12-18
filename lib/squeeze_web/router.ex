@@ -76,6 +76,8 @@ defmodule SqueezeWeb.Router do
     live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
 
     live "/activities/:id", Activities.ShowLive, :show, as: :activity
+
+    live "/races", RaceLive, :index
   end
 
   scope "/dashboard", SqueezeWeb do

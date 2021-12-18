@@ -4,11 +4,22 @@ defmodule Squeeze.Races.Race do
   """
 
   use Ecto.Schema
+  import Ecto.Changeset
 
-  alias Squeeze.Races.{Event, ResultSummary}
+  alias Squeeze.Races.{Event, Race, ResultSummary}
 
-  # @required_fields ~w(name slug city state country)a
-  # @optional_fields ~w(content url)a
+  @required_fields ~w(
+    name
+    start_date
+  )a
+
+  @optional_fields ~w(
+    city
+    state
+    country
+    content
+    url
+  )a
 
   schema "races" do
     field :name, :string
@@ -43,5 +54,12 @@ defmodule Squeeze.Races.Race do
     has_many :result_summaries, ResultSummary
 
     timestamps()
+  end
+
+  @doc false
+  def changeset(%Race{} = race, attrs) do
+    race
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
   end
 end

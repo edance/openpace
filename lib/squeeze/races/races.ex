@@ -6,6 +6,7 @@ defmodule Squeeze.Races do
   import Ecto.Query, warn: false
   alias Squeeze.Repo
 
+  alias Squeeze.Accounts.User
   alias Squeeze.Races.Race
 
   @doc """
@@ -26,5 +27,24 @@ defmodule Squeeze.Races do
     Race
     |> Repo.get_by!(slug: slug)
     |> Repo.preload([:events, :result_summaries])
+  end
+
+  def create_race(%User{} = _user, attrs \\ %{}) do
+    %Race{}
+    |> Race.changeset(attrs)
+    |> Repo.insert_with_slug()
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking race changes.
+
+  ## Examples
+
+  iex> change_race(race)
+  %Ecto.Changeset{source: %Race{}}
+
+  """
+  def change_race(%Race{} = race) do
+    Race.changeset(race, %{})
   end
 end
