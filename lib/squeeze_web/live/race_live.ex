@@ -13,8 +13,10 @@ defmodule SqueezeWeb.RaceLive do
   def mount(_params, session, socket) do
     user = socket.assigns[:current_user] || get_current_user(session)
     changeset = Races.change_race(%Race{})
+    activities = Races.list_race_activities(user)
 
     socket = assign(socket,
+      activities: activities,
       page_title: "Races",
       show_modal: false,
       current_user: user,
@@ -25,8 +27,13 @@ defmodule SqueezeWeb.RaceLive do
   end
 
   @impl true
-  def handle_event("toggle_modal", _params, socket) do
-    {:noreply, assign(socket, show_modal: !socket.assigns.show_modal)}
+  def handle_event("open_modal", _params, socket) do
+    {:noreply, assign(socket, show_modal: true)}
+  end
+
+  @impl true
+  def handle_event("close_modal", _params, socket) do
+    {:noreply, assign(socket, show_modal: false)}
   end
 
   @impl true
