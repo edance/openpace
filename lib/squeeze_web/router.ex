@@ -21,8 +21,12 @@ defmodule SqueezeWeb.Router do
     plug :put_root_layout, {SqueezeWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Squeeze.AuthPipeline
+    plug Squeeze.LiveAuthPipeline
     plug Plug.Locale
+  end
+
+  pipeline :unauthenticated do
+    plug Guardian.Plug.EnsureNotAuthenticated
   end
 
   pipeline :api do
@@ -37,7 +41,7 @@ defmodule SqueezeWeb.Router do
   end
 
   pipeline :dashboard_layout do
-    plug Plug.RequireRegistered
+    plug Guardian.Plug.EnsureAuthenticated
     plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
@@ -117,24 +121,17 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/", SqueezeWeb do
-    # Use the default browser stack
-    pipe_through :browser
+    # Redirect these users to the dashboard pages
+    pipe_through [:browser, :unauthenticated]
 
     get "/", HomeController, :index
     post "/", HomeController, :subscribe
-
-    live "/evan", PageLive, :index
-
-    get "/privacy", PageController, :privacy_policy
-    get "/terms", PageController, :terms
-    get "/support", PageController, :support
 
     get "/onboard", OnboardController, :index
     put "/onboard", OnboardController, :update
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
-    delete "/logout", SessionController, :delete
 
     get "/sign-up", UserController, :new
     post "/sign-up", UserController, :register
@@ -146,6 +143,17 @@ defmodule SqueezeWeb.Router do
     get "/reset-password", ResetPasswordController, :show
     post "/reset-password", ResetPasswordController, :reset
     put "/reset-password", ResetPasswordController, :reset
+  end
+
+  scope "/", SqueezeWeb do
+    # Use the default browser stack
+    pipe_through :browser
+
+    get "/privacy", PageController, :privacy_policy
+    get "/terms", PageController, :terms
+    get "/support", PageController, :support
+
+    delete "/logout", SessionController, :delete
 
     get "/invite/:slug", ChallengeShareController, :show
   end
