@@ -2,7 +2,13 @@
   <div class="row justify-content-center">
     <div class="col-lg-3 order-lg-2">
       <div class="card-profile-image">
-        <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user, size: "xl", position: "absolute") %>
+        <%= if @current_user.avatar do %>
+          <img class="rounded-circle" alt="<%= @current_user.first_name %>" src="<%= @current_user.avatar %>" />
+        <% else %>
+          <span class="avatar rounded-circle">
+            <span class="iconify" data-icon="whh:profile" data-inline="false"></span>
+          </span>
+        <% end %>
       </div>
     </div>
   </div>

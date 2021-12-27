@@ -6,15 +6,36 @@
     <div class="row">
       <div class="col-lg-7">
         <div class="card">
-          <div class="card-header bg-transparent">
+          <div class="card-header">
             <h3 class="mb-0">
-              <%= gettext("Race Timeline") %>
+              <%= gettext("Races") %>
             </h3>
           </div>
 
           <div class="card-body">
-            <button class="btn" phx-click="toggle_modal">Show Modal <%= @show_modal %></button>
+          </div>
+        </div>
+      </div>
 
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">
+                  <%= gettext("Upcoming Races") %>
+                </h3>
+              </div>
+
+              <div class="col text-right">
+                <button class="btn btn-sm btn-secondary" phx-click="open_modal">
+                  <%= gettext("Add a Race") %>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
             <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
               <div class="timeline-block">
                 <span class="timeline-step badge-success">
@@ -32,40 +53,10 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-lg-5">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="mb-0"><%= gettext("Add a Race") %></h3>
-          </div>
-          <div class="card-body">
-            <%= f = form_for @changeset, "#", [phx_submit: :save] %>
-            <div class="form-group">
-              <%= label f, :name, class: "form-control-label" %>
-              <%= input f, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
-            </div>
-
-            <div class="form-group">
-              <%= label(f, :distance, class: "form-control-label") %>
-              <%= autocomplete(f, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
-              <%= error_tag(f, :distance) %>
-            </div>
-
-            <div class="form-group">
-              <%= label(f, "Race Date", class: "form-control-label") %>
-              <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
-              <%= text_input f, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
-                </div>
-
-              <%= error_tag f, :start_date %>
-            </div>
-
-            <%= submit "Save Race", class: "btn btn-primary" %>
-
-            </form>
+            <button class="btn btn-sm btn-secondary mt-4" phx-click="open_modal">
+              <%= gettext("Add a Race") %>
+            </button>
           </div>
         </div>
       </div>
@@ -73,20 +64,45 @@
   </div>
 </div>
 
-<div class="modal fade <%= if @show_modal, do: "d-block show" %>" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-body p-0">
-        <div class="card bg-secondary shadow border-0">
-          <div class="card-header bg-transparent pb-5">
-            <div class="text-muted text-center mt-2 mb-3">
-              <small><%= gettext("Add Race") %></small>
-            </div>
+<div class="modal fade <%= if @show_modal, do: "d-block show" %>" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <%= f = form_for @changeset, "#", [class: "modal-content", phx_submit: :save] %>
+    <div class="modal-header">
+      <h5 class="modal-title">
+        <%= gettext("Add a Race") %>
+      </h5>
 
-            <button class="btn" phx-click="toggle_modal">Show Modal <%= @show_modal %></button>
-          </div>
+      <button type="button" class="close" phx-click="close_modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <%= label f, :name, class: "form-control-label" %>
+        <%= input f, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
+      </div>
+
+      <div class="form-group">
+        <%= label(f, :distance, class: "form-control-label") %>
+        <%= autocomplete(f, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
+        <%= error_tag(f, :distance) %>
+      </div>
+
+      <div class="form-group">
+        <%= label(f, "Race Date", class: "form-control-label") %>
+        <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+          <%= text_input f, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
         </div>
+
+        <%= error_tag f, :start_date %>
       </div>
     </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" phx-click="close_modal">Close</button>
+      <%= submit "Save", class: "btn btn-primary" %>
+    </div>
+    </form>
   </div>
 </div>

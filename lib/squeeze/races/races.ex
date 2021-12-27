@@ -7,6 +7,7 @@ defmodule Squeeze.Races do
   alias Squeeze.Repo
 
   alias Squeeze.Accounts.User
+  alias Squeeze.Dashboard.Activity
   alias Squeeze.Races.Race
 
   @doc """
@@ -33,6 +34,14 @@ defmodule Squeeze.Races do
     %Race{}
     |> Race.changeset(attrs)
     |> Repo.insert_with_slug()
+  end
+
+  def list_race_activities(%User{} = user) do
+    query = from a in Activity,
+      where: [user_id: ^user.id],
+      where: [workout_type: :race]
+
+    Repo.all(query)
   end
 
   @doc """
