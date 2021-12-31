@@ -1,4 +1,5 @@
 import './alert';
+import './autocomplete-input';
 import './avatar';
 import './btn-spinner';
 import './copy-input';

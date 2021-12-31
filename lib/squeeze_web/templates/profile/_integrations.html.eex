@@ -1,11 +1,27 @@
-<div class="mb-2">
-  <div class="mb-2">
-    <%= if integration?("strava", assigns) do %>
-      <%= gettext("Connected to %{provider}", provider: "Strava") %>
-    <% else %>
-      <%= link to: Routes.integration_path(@conn, :request, "strava") do %>
-        <%= gettext("Connect to %{provider}", provider: "Strava") %>
-      <% end %>
-    <% end %>
+<div class="card bg-secondary shadow">
+  <div class="card-header bg-white border-0">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h3 class="mb-0"><%= gettext("Connections") %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row no-gutters">
+      <div class="col-auto">
+        <img src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png") %>" />
+      </div>
+      <div class="col ml-2">
+        <%= if integration?("strava", assigns) do %>
+          <p class="mb-0"><%= gettext("Connected to %{provider}", provider: "Strava") %></p>
+        <% else %>
+          <%= link to: Routes.integration_path(@conn, :request, "strava") do %>
+            <%= gettext("Connect with %{provider}", provider: "Strava") %>
+          <% end %>
+        <% end %>
+
+        <p class="small text-muted">Automatically sync activities.</p>
+      </div>
+    </div>
   </div>
 </div>

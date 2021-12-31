@@ -17,4 +17,5 @@ function load() {
   });
 }
 
+window.addEventListener("load", load);
 window.addEventListener("phx:page-loading-stop", load);

@@ -7,7 +7,7 @@
           <div class="card-header bg-white border-0">
             <div class="row align-items-center">
               <div class="col-8">
-                <h3 class="mb-0"><%= gettext("My account") %></h3>
+                <h3 class="mb-0"><%= gettext("My Account") %></h3>
               </div>
             </div>
           </div>
@@ -16,21 +16,32 @@
           </div>
         </div>
       </div>
+
       <div class="col-xl-4 mb-5 mb-xl-0">
-        <div class="card card-profile shadow">
-          <div class="card bg-secondary shadow">
-            <div class="card-header bg-white border-0">
-              <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0"><%= gettext("Integrations") %></h3>
-                </div>
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0"><%= gettext("Account Info") %></h3>
               </div>
             </div>
-            <div class="card-body">
-              <%= render "_integrations.html", assigns %>
-            </div>
+          </div>
+          <div class="card-body">
+            <h4>Email</h4>
+
+            <p class="small"><%= @current_user.email %></p>
+
+            <h4>Membership Status</h4>
+
+            <p class="small"><%= membership_status(assigns) %></p>
+
+            <%= if @current_user.subscription_status == :free do %>
+              <%= link(gettext("Subscribe"), to: Routes.billing_path(@conn, :index), class: "btn btn-info btn-sm") %>
+            <% end %>
           </div>
         </div>
+
+        <%= render "_integrations.html", assigns %>
       </div>
     </div>
   </div>
