@@ -15,4 +15,11 @@ defmodule SqueezeWeb.ProfileView do
   def integration?(provider, %{credentials: credentials}) do
     Enum.any?(credentials, &(&1.provider == provider))
   end
+
+  def membership_status(%{current_user: user}) do
+    case user.subscription_status do
+      :free -> "Free Account"
+      _status -> "Premium Account"
+    end
+  end
 end
