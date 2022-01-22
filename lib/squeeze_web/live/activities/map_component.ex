@@ -92,16 +92,6 @@ defmodule SqueezeWeb.Activities.MapComponent do
     end
   end
 
-  defp paint do
-    %{
-      "circle-radius": %{
-        base: 1.75,
-        stops: [[12, 2], [22, 180]]
-      },
-      "circle-color": ["get", "color"]
-    }
-  end
-
   defp average_velocity(activity) do
     activity.distance / activity.duration
   end

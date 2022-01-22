@@ -40,7 +40,6 @@ defmodule SqueezeWeb.RaceLive do
   def handle_event("save", %{"race_goal" => params}, socket) do
     user = socket.assigns.current_user
     Races.create_race_goal(user, params)
-    require IEx; IEx.pry
 
     # with {:ok, race} <- Races.create_race(params),
     #      {:ok, _goal} <- Races.create_race_goal(user, race) do
