@@ -46,7 +46,7 @@
 
           <li class="nav-item">
             <%= if in_trial?(@current_user) do %>
-              <%= link(to: Routes.billing_path(@conn, :index), class: "mb-0 font-weight-bold") do %>
+              <%= link(to: Routes.billing_path(@conn, :checkout), class: "mb-0 font-weight-bold") do %>
                 Trial expires <%= relative_time(@current_user.trial_end) %>
               <% end %>
             <% end %>

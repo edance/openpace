@@ -26,7 +26,7 @@
           <span><%= gettext("Settings") %></span>
         <% end %>
 
-        <%= link(to: Routes.billing_path(SqueezeWeb.Endpoint, :index), class: "dropdown-item") do %>
+        <%= link(to: Routes.billing_path(@socket, :portal), class: "dropdown-item") do %>
           <span class="iconify" data-icon="fa-regular:credit-card" data-inline="false"></span>
           <span><%= gettext("Billing") %></span>
         <% end %>
@@ -60,7 +60,10 @@
           <%#= live_redirect gettext("Races"), to: Routes.race_path(@socket, :index), class: "nav-link" %>
         </li>
       </ul>
-    </div>
 
+      <%= if @current_user.subscription_status == :free do %>
+        <%= live_redirect gettext("Start Trial"), to: Routes.billing_path(@socket, :checkout), class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </div>
   </div>
 </nav>

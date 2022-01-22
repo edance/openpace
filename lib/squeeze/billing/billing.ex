@@ -32,6 +32,18 @@ defmodule Squeeze.Billing do
     |> Repo.one()
   end
 
+  def find_or_create_external_customer(%User{customer_id: nil} = user) do
+    case @payment_processor.create_customer(Map.from_struct(user)) do
+      {:ok, customer} ->
+        user
+        |> User.payment_processor_changeset(%{customer_id: customer.id})
+        |> Repo.update()
+
+      error -> error
+    end
+  end
+  def find_or_create_external_customer(%User{} = user), do: {:ok, user}
+
   @doc """
   Creates a customer for the user and creates a subscription if a default billing plan exists.
 

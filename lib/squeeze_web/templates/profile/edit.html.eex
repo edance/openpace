@@ -36,7 +36,7 @@
             <p class="small"><%= membership_status(assigns) %></p>
 
             <%= if @current_user.subscription_status == :free do %>
-              <%= link(gettext("Subscribe"), to: Routes.billing_path(@conn, :index), class: "btn btn-info btn-sm") %>
+              <%= link(gettext("Subscribe"), to: Routes.billing_path(@conn, :checkout), class: "btn btn-info btn-sm") %>
             <% end %>
           </div>
         </div>
