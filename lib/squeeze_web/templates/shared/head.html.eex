@@ -5,15 +5,14 @@
 <meta name="author" content="">
 <%= csrf_meta_tag() %>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
 <link phx-track-static href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/css/app.css") %>">
 <%= render("_gtm.html", assigns) %>
 
 <script>
- window.STRIPE_PUBLISHABLE_KEY =
-   '<%= Application.get_env(:stripity_stripe, :publishable_key) %>';
  window.MAPBOX_ACCESS_TOKEN = '<%= Application.get_env(:squeeze, :mapbox_access_token) %>';
-
- window.ALGOLIA_APPLICATION_ID = '<%= Application.get_env(:algolia, :application_id) %>';
- window.ALGOLIA_API_KEY = '<%= Application.get_env(:algolia, :api_key) %>';
 </script>

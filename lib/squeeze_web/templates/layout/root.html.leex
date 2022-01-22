@@ -8,13 +8,18 @@
 
     <%= live_title_tag assigns[:page_title] || "Dashboard", suffix: " · OpenPace" %>
 
+    <%# Google Fonts %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <%# Tracked Assets %>
     <link phx-track-static href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/css/dashboard.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/js/dashboard.js") %>"></script>
 
     <%# Global Variables for External Libraries %>
     <script>
-     window.STRIPE_PUBLISHABLE_KEY = '<%= Application.get_env(:stripity_stripe, :publishable_key) %>';
      window.MAPBOX_ACCESS_TOKEN = '<%= Application.get_env(:squeeze, :mapbox_access_token) %>';
     </script>
 
