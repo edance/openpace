@@ -4,7 +4,7 @@
     <span><%= gettext("Settings") %></span>
   <% end %>
 
-  <%= link(to: Routes.billing_path(@conn, :index), class: "dropdown-item") do %>
+  <%= link(to: Routes.billing_path(@conn, :portal), class: "dropdown-item") do %>
     <span class="iconify" data-icon="fa-regular:credit-card" data-inline="false"></span>
     <span><%= gettext("Billing") %></span>
   <% end %>

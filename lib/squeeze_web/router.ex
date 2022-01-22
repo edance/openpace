@@ -92,10 +92,8 @@ defmodule SqueezeWeb.Router do
     get "/settings", ProfileController, :edit
     put "/settings", ProfileController, :update
 
-    get "/billing", BillingController, :index
-    put "/billing/cancel", BillingController, :cancel
-
-    resources "/payment", PaymentMethodController, only: [:index, :new, :create, :delete]
+    get "/billing", BillingController, :portal
+    get "/checkout", BillingController, :checkout
 
     resources "/activities", ActivityController, except: [:show] do
       patch "/mark-complete", ActivityController, :mark_complete, as: :mark_complete
