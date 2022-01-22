@@ -9,7 +9,6 @@
 
 This is the repository for [openpace.co](https://www.openpace.co).
 It is built in [Elixir](http://elixir-lang.org/) using the [Phoenix](http://www.phoenixframework.org/) web framework.
-We use [Webflow](https://webflow.com) to host our landing pages and content.
 
 ## What is OpenPace?
 

@@ -78,25 +78,42 @@
     </div>
 
     <div class="modal-body">
-      <div class="form-group">
-        <%= label f, :name, class: "form-control-label" %>
-        <%= input f, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
-      </div>
-
-      <div class="form-group">
-        <%= label(f, :distance, class: "form-control-label") %>
-        <%= autocomplete(f, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
-        <%= error_tag(f, :distance) %>
-      </div>
-
-      <div class="form-group">
-        <%= label(f, "Race Date", class: "form-control-label") %>
-        <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
-          <%= text_input f, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
+      <%= inputs_for f, :race, fn r -> %>
+        <div class="form-group">
+          <%= label r, :name, class: "form-control-label" %>
+          <%= input r, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
         </div>
 
-        <%= error_tag f, :start_date %>
-      </div>
+        <div class="form-group">
+          <%= label(r, :distance, class: "form-control-label") %>
+          <%= autocomplete(r, :distance, distances(), class: "form-control form-control-alternative", placeholder: "Choose a distance") %>
+          <%= error_tag(r, :distance) %>
+        </div>
+
+        <div class="form-group focused">
+          <%= label f, :duration, class: "form-control-label" do %>
+            Goal Time
+          <% end %>
+          <%= duration_select f, :duration, class: "form-control form-control-alternative" %>
+          <%= error_tag(f, :duration) %>
+        </div>
+
+        <div class="form-group">
+          <label class="form-check-label">
+            <%= checkbox(f, :just_finish) %>
+            My goal is to just finish
+          </label>
+        </div>
+
+        <div class="form-group">
+          <%= label(r, "Race Date", class: "form-control-label") %>
+          <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+            <%= text_input r, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
+          </div>
+
+          <%= error_tag r, :start_date %>
+        </div>
+      <% end %>
     </div>
 
     <div class="modal-footer">
