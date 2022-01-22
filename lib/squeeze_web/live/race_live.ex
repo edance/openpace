@@ -2,17 +2,17 @@ defmodule SqueezeWeb.RaceLive do
   use SqueezeWeb, :live_view
 
   @moduledoc """
-  This is the module for the calendar live view
+  This is the module for the race live view
   """
 
   alias Squeeze.Distances
   alias Squeeze.Races
-  alias Squeeze.Races.Race
+  alias Squeeze.Races.RaceGoal
 
   @impl true
   def mount(_params, session, socket) do
     user = socket.assigns[:current_user] || get_current_user(session)
-    changeset = Races.change_race(%Race{})
+    changeset = Races.change_race_goal(%RaceGoal{})
     activities = Races.list_race_activities(user)
 
     socket = assign(socket,
@@ -37,7 +37,14 @@ defmodule SqueezeWeb.RaceLive do
   end
 
   @impl true
-  def handle_event("save", _params, socket) do
+  def handle_event("save", %{"race_goal" => params}, socket) do
+    user = socket.assigns.current_user
+    Races.create_race_goal(user, params)
+    require IEx; IEx.pry
+
+    # with {:ok, race} <- Races.create_race(params),
+    #      {:ok, _goal} <- Races.create_race_goal(user, race) do
+    # end
     # Save the race
     # Add the user to the race
     # Set a goal time
