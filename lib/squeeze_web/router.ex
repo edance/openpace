@@ -123,6 +123,7 @@ defmodule SqueezeWeb.Router do
     pipe_through [:browser, :unauthenticated]
 
     get "/", HomeController, :index
+    get "/namer", HomeController, :namer
     post "/", HomeController, :subscribe
 
     get "/onboard", OnboardController, :index

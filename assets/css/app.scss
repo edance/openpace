@@ -70,6 +70,9 @@
 @import 'custom/utilities';
 @import 'custom/vendors';
 
+// For Specific Pages
+@import 'pages/namer';
+
 .logo-img {
   width: 150px;
 }

@@ -1,0 +1,29 @@
+.btn-strava {
+  width: 200px;
+}
+
+.namer-example-txt {
+  position: absolute;
+  top: 85px;
+  left: 12px;
+  color: $black;
+  font-weight: 600;
+
+  @include media-breakpoint-up(md) {
+    top: 50px;
+    font-size: 12px;
+    left: 6px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    top: 70px;
+    font-size: 14px;
+    left: 8px;
+  }
+
+  @include media-breakpoint-up(xl) {
+    top: 85px;
+    font-size: 16px;
+    left: 12px;
+  }
+}

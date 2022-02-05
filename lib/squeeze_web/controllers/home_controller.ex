@@ -11,6 +11,10 @@ defmodule SqueezeWeb.HomeController do
     render(conn, "index.html", changeset: changeset)
   end
 
+  def namer(conn, _params) do
+    render(conn, "namer.html")
+  end
+
   def subscribe(conn, %{"subscription" => subscription_params}) do
     attrs = Map.merge(subscription_params, %{"type" => "homepage"})
     case MailingList.create_subscription(attrs) do
