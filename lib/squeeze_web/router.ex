@@ -55,6 +55,10 @@ defmodule SqueezeWeb.Router do
     # Use the default browser stack
     pipe_through :browser
 
+    get "/strava", StravaIntegrationController, :request
+    get "/strava/callback", StravaIntegrationController, :callback
+    post "/strava/callback", StravaIntegrationController, :callback
+
     get "/:provider", IntegrationController, :request
     get "/:provider/callback", IntegrationController, :callback
     post "/:provider/callback", IntegrationController, :callback
