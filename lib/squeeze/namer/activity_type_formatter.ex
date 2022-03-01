@@ -1,0 +1,45 @@
+defmodule Squeeze.Namer.ActivityTypeFormatter do
+  @moduledoc """
+  This module returns a string for an activity type
+  """
+
+  import SqueezeWeb.Gettext
+
+  def format("AlpineSki"), do: gettext("Ski")
+  def format("BackcountrySki"), do: gettext("Backcountry Ski")
+  def format("Canoeing"), do: gettext("Canoeing")
+  def format("Crossfit"), do: gettext("Crossfit")
+  def format("EBikeRide"), do: gettext("Bike")
+  def format("Elliptical"), do: gettext("Elliptical")
+  def format("Golf"), do: gettext("Golf")
+  def format("Handcycle"), do: gettext("Handcycle")
+  def format("Hike"), do: gettext("Hike")
+  def format("IceSkate"), do: gettext("Ice Skate")
+  def format("InlineSkate"), do: gettext("Inline Skate")
+  def format("Kayaking"), do: gettext("Kayaking")
+  def format("Kitesurf"), do: gettext("Kitesurf")
+  def format("NordicSki"), do: gettext("Nordic Ski")
+  def format("Ride"), do: gettext("Ride")
+  def format("RockClimbing"), do: gettext("Rock Climbing")
+  def format("RollerSki"), do: gettext("Roller Ski")
+  def format("Rowing"), do: gettext("Rowing")
+  def format("Run"), do: gettext("Run")
+  def format("Sail"), do: gettext("Sail")
+  def format("Skateboard"), do: gettext("Skateboard")
+  def format("Snowboard"), do: gettext("Snowboard")
+  def format("Snowshoe"), do: gettext("Snowshoe")
+  def format("Soccer"), do: gettext("Soccer")
+  def format("StairStepper"), do: gettext("Stair Stepper")
+  def format("StandUpPaddling"), do: gettext("SUP")
+  def format("Surfing"), do: gettext("Surfing")
+  def format("Swim"), do: gettext("Swim")
+  def format("Velomobile"), do: gettext("Velomobile")
+  def format("VirtualRide"), do: gettext("Ride")
+  def format("VirtualRun"), do: gettext("Run")
+  def format("Walk"), do: gettext("Walk")
+  def format("WeightTraining"), do: gettext("Weight Training")
+  def format("Wheelchair"), do: gettext("Wheelchair")
+  def format("Windsurf"), do: gettext("Windsurf")
+  def format("Workout"), do: gettext("Workout")
+  def format("Yoga"), do: gettext("Yoga")
+end
