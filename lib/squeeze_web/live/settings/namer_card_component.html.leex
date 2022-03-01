@@ -1,0 +1,82 @@
+<div class="card bg-secondary shadow">
+  <div class="card-header bg-white border-0">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h3 class="mb-0"><%= gettext("Namer Settings") %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+    <%= inputs_for f, :user_prefs, fn p -> %>
+      <div class="form-group">
+        <div class="d-flex">
+          <label class="custom-toggle">
+            <%= checkbox(p, :rename_activities) %>
+            <span class="custom-toggle-slider rounded-circle"></span>
+          </label>
+
+          <%= label(p, :rename_activities, class: "ml-2") do %>
+            Rename Activities
+          <% end %>
+        </div>
+        <small class="form-text text-muted">
+          Let OpenPace know if you'd like us to rename your activities.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <div class="d-flex">
+          <label class="custom-toggle">
+            <%= checkbox(p, :emoji) %>
+            <span class="custom-toggle-slider rounded-circle"></span>
+          </label>
+
+          <%= label(p, :emoji, class: "ml-2") do %>
+            Add Emoji to Title
+          <% end %>
+        </div>
+        <small class="form-text text-muted">
+          Let OpenPace know if you would like us to add an emoji to the title of your activity.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <%= label(p, :gender, "Emoji Gender", class: "form-control-label") %>
+        <%= select p, :gender, gender_opts(), class: "form-control form-control-alternative" %>
+
+        <small class="form-text text-muted">
+          Let us know what gender you would like to use for the emoji.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <div class="d-flex">
+          <label class="custom-toggle">
+            <%= checkbox(p, :branding) %>
+            <span class="custom-toggle-slider rounded-circle"></span>
+          </label>
+
+          <%= label(p, :branding, class: "ml-2") do %>
+            Add Renamed by OpenPace
+          <% end %>
+        </div>
+        <small class="form-text text-muted">
+          If 'renamed by OpenPace' should be added after your activity description.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <%= label(p, :imperial, "Units & Measurements", class: "form-control-label") %>
+        <%= select p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true], class: "form-control form-control-alternative" %>
+
+        <small class="form-text text-muted">
+          If your activity has a distance, we will display it in kilometers or miles depending on this preference.
+        </small>
+      </div>
+    <% end %>
+
+    <button class="btn btn-primary mt-4" type="submit">Save</button>
+    </form>
+  </div>
+</div>
