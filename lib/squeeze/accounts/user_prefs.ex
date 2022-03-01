@@ -21,6 +21,9 @@ defmodule Squeeze.Accounts.UserPrefs do
     imperial
     gender
     birthdate
+    rename_activities
+    emoji
+    branding
   )a
 
   schema "user_prefs" do
@@ -33,6 +36,11 @@ defmodule Squeeze.Accounts.UserPrefs do
     field :imperial, :boolean
     field :gender, GenderEnum
     field :birthdate, :date
+
+    # Namer Fields
+    field :rename_activities, :boolean
+    field :emoji, :boolean
+    field :branding, :boolean
 
     belongs_to :user, User
 

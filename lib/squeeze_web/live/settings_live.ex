@@ -20,6 +20,22 @@ defmodule SqueezeWeb.SettingsLive do
     {:ok, socket}
   end
 
+  @impl true
+  def handle_event("save", %{"user" => user_params}, socket) do
+    user = socket.assigns.current_user
+
+    case Accounts.update_user(user, user_params) do
+      {:ok, _} ->
+        socket = socket
+        |> put_flash(:info, gettext("Your preferences have been updated"))
+        |> redirect(to: Routes.dashboard_path(socket, :index))
+        {:noreply, socket}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
   def membership_status(%{current_user: user}) do
     case user.subscription_status do
       :free -> "Free Account"

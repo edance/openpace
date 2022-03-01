@@ -53,7 +53,7 @@
               Automatically updates activity names to include information, like distance and emojis. It's free - just click the button below to get started!
             </p>
 
-            <%= link to: Routes.strava_integration_path(@conn, :request) do %>
+            <%= link to: Routes.strava_integration_path(@conn, :request, rename: true) do %>
               <img alt="Connect to Strava" class="btn-strava" src="<%= Routes.static_path(@conn, "/images/btn_strava@2x.png") %>" />
             <% end %>
           </div>

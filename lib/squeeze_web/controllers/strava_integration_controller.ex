@@ -5,15 +5,15 @@ defmodule SqueezeWeb.StravaIntegrationController do
   alias Squeeze.Guardian.Plug
   # alias Squeeze.Reporter
 
-  # @strava_auth Application.compile_env(:squeeze, :strava_auth)
+  @strava_auth Application.compile_env(:squeeze, :strava_auth)
 
-  def request(conn, _) do
-    redirect(conn, external: authorize_url!())
+  def request(conn, params) do
+    redirect(conn, external: authorize_url!(conn, params))
   end
 
   def callback(conn, %{"code" => code}) do
     client = get_token!(code)
-    athlete = Strava.Auth.get_athlete!(client)
+    athlete = @strava_auth.get_athlete!(client)
     credential_params = credential_params(client, athlete)
 
     cond do
@@ -26,13 +26,14 @@ defmodule SqueezeWeb.StravaIntegrationController do
     end
   end
 
-  defp authorize_url!() do
+  defp authorize_url!(conn, params) do
     scope = "read,activity:read_all,activity:write"
-    Strava.Auth.authorize_url!(scope: scope)
+    redirect_uri = Routes.strava_integration_url(conn, :callback, params)
+    @strava_auth.authorize_url!(scope: scope, redirect_uri: redirect_uri)
   end
 
   defp get_token!(code) do
-    Strava.Auth.get_token!(code: code, grant_type: "authorization_code")
+    @strava_auth.get_token!(code: code, grant_type: "authorization_code")
   end
 
   defp token_attrs(%{token: token}) do
