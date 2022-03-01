@@ -6,6 +6,9 @@ defmodule SqueezeWeb.UserController do
   alias Squeeze.{Email, Mailer}
   alias Squeeze.Guardian.Plug
 
+  @honeypot_field "website"
+  plug :validate_honeypot when action in [:register]
+
   def new(conn, %{}) do
     case conn.assigns[:current_user] do
       nil ->
@@ -25,6 +28,18 @@ defmodule SqueezeWeb.UserController do
         |> redirect(to: Routes.dashboard_path(conn, :index))
       {:error, changeset} ->
         render_error(conn, changeset)
+    end
+  end
+
+  defp validate_honeypot(conn, _) do
+    if conn.params["user"][@honeypot_field] == "" do
+      conn
+    else
+      changeset = Accounts.change_user(%User{})
+      conn
+      |> put_flash(:error, "Sorry we can't process your request. Error code: 005")
+      |> render_error(changeset)
+      |> halt()
     end
   end
 
