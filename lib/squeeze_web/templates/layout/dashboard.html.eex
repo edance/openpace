@@ -14,9 +14,5 @@
       <%= @inner_content %>
       <%= render SqueezeWeb.MenuView, "footer.html", assigns %>
     </div>
-
-    <%= unless @current_user.registered do %>
-      <%= render SqueezeWeb.ModalView, "auth.html", assigns %>
-    <% end %>
   </body>
 </html>
