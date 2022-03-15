@@ -93,6 +93,7 @@ defmodule SqueezeWeb do
       import SqueezeWeb.FormatHelpers
       import SqueezeWeb.ErrorHelpers
       import SqueezeWeb.Gettext
+      import SqueezeWeb.HoneypotInput
       import SqueezeWeb.ImageHelpers
       alias SqueezeWeb.Router.Helpers, as: Routes
     end
