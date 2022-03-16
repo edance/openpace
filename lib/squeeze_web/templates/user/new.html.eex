@@ -5,18 +5,23 @@
   <div class="bg-waves">
     <div class="container py-5 pt-lg-7">
       <div class="row justify-content-center">
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-7">
           <div class="card bg-secondary shadow border-0 mb-8">
             <div class="card-header bg-white pb-5">
               <div class="text-muted text-center mt-2 mb-3">
                 <small><%= gettext("Sign in with") %></small>
               </div>
               <div class="text-center">
-                <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon" do %>
+                <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon mb-2" do %>
                   <span class="btn-inner--icon">
                     <img src="<%= Routes.static_path(@conn, "/images/google.svg") %>" />
                   </span>
                   <span class="btn-inner--text">Google</span>
+                <% end %>
+              </div>
+              <div class="text-center">
+                <%= link to: Routes.strava_integration_path(@conn, :request), class: "" do %>
+                  <img alt="Connect to Strava" class="btn-strava" src="<%= Routes.static_path(@conn, "/images/btn_strava@2x.png") %>" />
                 <% end %>
               </div>
             </div>

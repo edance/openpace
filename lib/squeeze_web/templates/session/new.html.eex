@@ -6,7 +6,7 @@
   <div class="bg-gradient-primary">
     <div class="container py-5 pt-lg-7">
       <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
+        <div class="col-lg-4 col-md-7">
           <div class="card bg-secondary shadow border-0">
             <div class="card-header bg-transparent">
               <h1 class="h3">Welcome Back</h1>
@@ -14,12 +14,18 @@
 
             <div class="card-body px-lg-5 py-lg-5">
               <div class="pb-5">
-                <div class="btn-wrapper text-center">
-                  <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon" do %>
+                <div class="text-center">
+                  <%= link to: Routes.auth_path(@conn, :request, "google"), class: "btn btn-neutral btn-icon mb-2" do %>
                     <span class="btn-inner--icon">
                       <img src="<%= Routes.static_path(@conn, "/images/google.svg") %>" />
                     </span>
                     <span class="btn-inner--text">Google</span>
+                  <% end %>
+                </div>
+
+                <div class="text-center">
+                  <%= link to: Routes.strava_integration_path(@conn, :request), class: "" do %>
+                    <img alt="Connect to Strava" class="btn-strava" src="<%= Routes.static_path(@conn, "/images/btn_strava@2x.png") %>" />
                   <% end %>
                 </div>
               </div>
