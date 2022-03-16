@@ -33,12 +33,6 @@ async function fetchResponse(request) {
 
   url.hostname = 'squeeze-run.herokuapp.com';
 
-  // Handle anything that is under the /namer/ path (including /namer)
-  if (/^\/namer$/.test(pathname) || /^\/namer\/.+$/.test(pathname)) {
-    url.pathname = url.pathname.replace('/namer', '');
-    url.hostname = 'activity-namer.herokuapp.com';
-  }
-
   return fetch(new Request(url, request));
 }
 
