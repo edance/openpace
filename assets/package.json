@@ -13,7 +13,7 @@
     "datalist-polyfill": "^1.22.1",
     "flatpickr": "^4.6.9",
     "grapheme-splitter": "^1.0.4",
-    "highcharts": "^7.2.0",
+    "highcharts": "^9.0.0",
     "instantsearch.js": "^4.6.0",
     "jquery": "^3.4.0",
     "luxon": "^2.0.2",
