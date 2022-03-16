@@ -8,6 +8,7 @@ defmodule SqueezeWeb.StravaWebhookController do
   alias Squeeze.Accounts
   alias Squeeze.Dashboard
   alias Squeeze.Logger
+  alias Squeeze.Namer.RenamerJob
   alias Squeeze.Strava.ActivityLoader
 
   plug :validate_token when action in [:challenge]
@@ -26,6 +27,8 @@ defmodule SqueezeWeb.StravaWebhookController do
 
   # User creates or updates an activity on strava
   def webhook(conn, %{"object_type" => "activity"} = params) do
+    Task.start(fn -> process_event(params) end)
+
     with {:ok, credential} <- Accounts.fetch_credential("strava", params["owner_id"]),
          {:ok, _} <- ActivityLoader.update_or_create_activity(credential, params["object_id"]) do
       render(conn, "success.json")
@@ -60,6 +63,12 @@ defmodule SqueezeWeb.StravaWebhookController do
       |> halt()
     end
   end
+
+  defp process_event(%{"aspect_type" => "create", "object_type" => "activity"} = params) do
+    %{"owner_id" => strava_uid, "object_id" => activity_id} = params
+    RenamerJob.perform(strava_uid, activity_id)
+  end
+  defp process_event(_), do: nil
 
   defp render_bad_request(conn)  do
     conn

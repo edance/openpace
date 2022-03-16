@@ -9,6 +9,16 @@ defmodule Squeeze.Namer.NameGenerator do
   alias Squeeze.Namer.EmojiFormatter
   alias Squeeze.Namer.RelativeTimeFormatter
 
+
+  @doc """
+  Returns the name for the activity
+
+  ## Examples
+
+  iex> generate_name(%User{}, activity)
+  "5mi Afternoon Run"
+
+  """
   def generate_name(%{user_prefs: %{emoji: emoji, gender: gender, imperial: imperial}}, activity) do
     parts = [
       EmojiFormatter.format(activity, emoji: emoji, gender: gender),

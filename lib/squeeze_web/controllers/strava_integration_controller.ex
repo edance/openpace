@@ -63,7 +63,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
     credential_params = credential_params(client, athlete)
     case Accounts.create_credential(user, credential_params) do
       {:ok, _credentials} ->
-        redirect(conn, to: Routes.profile_path(conn, :edit))
+        redirect(conn, to: Routes.settings_path(conn, :namer))
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
