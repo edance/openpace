@@ -101,7 +101,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
          {:ok, _credentials} <- Accounts.create_credential(user, credential_params) do
       conn
       |> Plug.sign_in(user)
-      |> redirect(to: Routes.profile_path(conn, :edit))
+      |> redirect(to: Routes.settings_path(conn, :namer))
     else
       _ ->
         conn

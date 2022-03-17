@@ -26,6 +26,11 @@
           <span><%= gettext("Settings") %></span>
         <% end %>
 
+        <%= link(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "dropdown-item") do %>
+          <span class="iconify" data-icon="heroicons-solid:refresh" data-inline="false"></span>
+          <span><%= gettext("Rename Activities") %></span>
+        <% end %>
+
         <%= link(to: Routes.billing_path(@socket, :portal), class: "dropdown-item") do %>
           <span class="iconify" data-icon="fa-regular:credit-card" data-inline="false"></span>
           <span><%= gettext("Billing") %></span>
