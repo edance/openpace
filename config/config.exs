@@ -74,9 +74,9 @@ config :squeeze, Squeeze.Garmin,
 
 config :squeeze, Squeeze.Scheduler,
   jobs: [
-    {"0 * * * *",      {Squeeze.Notifications, :batch_notify_challenge_start, []}}, # Run every hour
-    {"0 * * * *",      {Squeeze.Notifications, :batch_notify_challenge_ending, []}}, # Run every hour
-    {"0 * * * *",      {Squeeze.Notifications, :batch_notify_challenge_ended, []}}, # Run every hour
+    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_start, []}}, # Run every hour
+    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_ending, []}}, # Run every hour
+    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_ended, []}}, # Run every hour
   ]
 
 config :algolia,

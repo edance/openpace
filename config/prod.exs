@@ -57,6 +57,10 @@ config :strava,
   webhook_callback_url: "https://www.openpace.co/webhook/strava",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
+config :new_relic_agent,
+  app_name: System.get_env("NEW_RELIC_APP") || "OpenPace Production",
+  license_key: System.get_env("NEW_RELIC_KEY")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

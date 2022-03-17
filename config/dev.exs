@@ -65,3 +65,7 @@ config :squeeze, Squeeze.Repo,
   pool_size: 10
 
 config :squeeze, Squeeze.Mailer, adapter: Bamboo.LocalAdapter
+
+config :new_relic_agent,
+  app_name: "OpenPace Development",
+  license_key: System.get_env("NEW_RELIC_KEY")
