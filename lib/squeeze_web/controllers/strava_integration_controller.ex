@@ -77,7 +77,8 @@ defmodule SqueezeWeb.StravaIntegrationController do
   end
 
   defp sign_in_and_redirect(conn, client, user, params) do
-    case Accounts.update_user(user, token_attrs(client)) do
+    credential = Enum.find(user.credentials, &(&1.provider == "strava"))
+    case Accounts.update_credential(credential, token_attrs(client)) do
       {:ok, _} ->
         conn = Plug.sign_in(conn, user)
 
