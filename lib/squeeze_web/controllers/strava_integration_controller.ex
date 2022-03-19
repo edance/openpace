@@ -3,7 +3,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
 
   alias Squeeze.Accounts
   alias Squeeze.Guardian.Plug
-  # alias Squeeze.Reporter
+  alias Squeeze.Reporter
 
   @strava_auth Application.compile_env(:squeeze, :strava_auth)
 
@@ -99,6 +99,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
 
     with {:ok, user} <- Accounts.create_user(user_params),
          {:ok, _credentials} <- Accounts.create_credential(user, credential_params) do
+      Reporter.report_new_user(user)
       conn
       |> Plug.sign_in(user)
       |> redirect(to: Routes.settings_path(conn, :namer))

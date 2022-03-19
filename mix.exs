@@ -71,6 +71,7 @@ defmodule Squeeze.Mixfile do
       {:cors_plug, "~> 2.0"},
       {:ex_machina, "~> 2.7"},
       {:quantum, "~> 3.0"},
+      {:slack, "~> 0.23.5"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
