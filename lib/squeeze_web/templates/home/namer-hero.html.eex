@@ -43,7 +43,7 @@
   <section class="section section-lg position-relative overflow-hidden mb-8">
     <div class="container text-container py-4 py-md-8">
       <div class="row">
-        <div class="col-12 col-md-6 mb-6">
+        <div class="col-12 col-md-6 mb-3">
           <h1 class="display-1 mb-4 text-dark font-weight-light">
             Emojify Your Activities
           </h1>
@@ -53,8 +53,12 @@
           </p>
 
           <%= link to: Routes.strava_integration_path(@conn, :request, rename: true) do %>
-            <img alt="Connect to Strava" class="btn-strava" src="<%= Routes.static_path(@conn, "/images/btn_strava@2x.png") %>" />
+            <img alt="Connect to Strava" class="btn-strava mb-4" src="<%= Routes.static_path(@conn, "/images/btn_strava@2x.png") %>" />
           <% end %>
+
+          <div class="alert alert-light" role="alert">
+            We recently migrated backend systems, which disconnected all accounts. To re-enable Namer, please sign in with Strava above.
+          </div>
         </div>
 
         <div class="col-12 order-md-last col-md-6">
