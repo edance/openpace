@@ -1,0 +1,51 @@
+<section class="section section-lg position-relative overflow-hidden mb-8">
+  <div class="container text-container">
+    <div class="row">
+      <div class="col">
+        <h2 class="display-2 mb-4">
+          <%= gettext("Frequently Asked Questions") %>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h3 class="display-4">
+          How does this work?
+        </h3>
+        <p>
+          Connect Namer with Strava and we'll handle the rest. After your run, yoga session, or other activity, we'll rename it to include info like distance, time, and of course, emojis.
+        </p>
+
+        <h3 class="display-4">
+          ‍What does it cost?
+        </h3>
+        <p>
+          Namer is free! If you like the project, feel free to enable branding so you can help spread the Namer word. Also, check out OpenPace to help train for your next big race.
+        </p>
+
+        <h3 class="display-4">
+          ‍Can I customize the emojis?
+        </h3>
+        <p>
+         Not yet! There are a few feature requests and OpenPace is just one me working away on little running hacks. If you like the project and want to contribute, Namer is open source! Check out the source code <a target="_blank" href="https://github.com/edance/openpace">here</a>.
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <h3 class="display-4">
+          What data do you store?
+        </h3>
+        <p>
+          We store user information, like your name and profile picture and activity data. We do not store your email address. This means no emails from us!
+        </p>
+
+        <h3 class="display-4">
+          ‍How do I delete my account?
+        </h3>
+        <p>
+          If you'd like to stop using Namer just go to your Strava Apps page. You'll see "OpenPace" listed. Click 'Revoke Access' and you're all set - this removes all your information from OpenPace.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
