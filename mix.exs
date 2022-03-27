@@ -51,7 +51,7 @@ defmodule Squeeze.Mixfile do
       {:plug, "~> 1.7"},
       {:strava, "~> 1.0"},
       {:timex, "~> 3.3"},
-      {:guardian, "~> 2.0"},
+      {:guardian, "~> 2.2.3"},
       {:browser, "~> 0.4.4"},
       {:polyline, "~> 1.3"},
       {:ecto_enum, "~> 1.1"},

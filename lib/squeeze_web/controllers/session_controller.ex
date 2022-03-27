@@ -3,7 +3,7 @@ defmodule SqueezeWeb.SessionController do
 
   alias Squeeze.Accounts
   alias Squeeze.Accounts.User
-  alias Squeeze.Guardian.Plug
+  alias SqueezeWeb.Plug.Auth
 
   def new(conn, _params) do
     render(conn, "new.html")
@@ -14,7 +14,7 @@ defmodule SqueezeWeb.SessionController do
     case check_password(user, auth_params["password"]) do
       {:ok, user} ->
         conn
-        |> Plug.sign_in(user)
+        |> Auth.sign_in(user)
         |> put_flash(:info, "Signed in successfully.")
         |> redirect(to: Routes.dashboard_path(conn, :index))
       {:error, message} ->
@@ -26,7 +26,7 @@ defmodule SqueezeWeb.SessionController do
 
   def delete(conn, _params) do
     conn
-    |> Plug.sign_out()
+    |> Auth.sign_out()
     |> put_flash(:info, "You have been logged out!")
     |> redirect(to: "/")
   end

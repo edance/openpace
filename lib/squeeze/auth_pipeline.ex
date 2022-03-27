@@ -9,5 +9,6 @@ defmodule Squeeze.AuthPipeline do
     error_handler: Squeeze.AuthErrorHandler
 
   plug Guardian.Plug.VerifySession
+  plug SqueezeWeb.Plug.VerifyRememberMe
   plug Guardian.Plug.LoadResource, allow_blank: true
 end

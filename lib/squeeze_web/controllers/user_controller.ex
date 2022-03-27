@@ -4,7 +4,7 @@ defmodule SqueezeWeb.UserController do
   alias Squeeze.Accounts
   alias Squeeze.Accounts.User
   alias Squeeze.{Email, Mailer}
-  alias Squeeze.Guardian.Plug
+  alias SqueezeWeb.Plug.Auth
 
   @honeypot_field "website"
   plug :validate_honeypot when action in [:register]
@@ -22,7 +22,7 @@ defmodule SqueezeWeb.UserController do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
         conn
-        |> Plug.sign_in(user)
+        |> Auth.sign_in(user)
         |> send_welcome_email(user)
         |> put_flash(:info, "Signed up successfully.")
         |> redirect(to: Routes.dashboard_path(conn, :index))

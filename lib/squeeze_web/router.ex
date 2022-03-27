@@ -22,6 +22,7 @@ defmodule SqueezeWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Squeeze.LiveAuthPipeline
+    plug Plug.Auth
     plug Plug.Locale
   end
 

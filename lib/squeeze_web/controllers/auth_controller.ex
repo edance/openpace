@@ -2,8 +2,8 @@ defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Accounts
-  alias Squeeze.Guardian.Plug
   alias Squeeze.OAuth2.{Google}
+  alias SqueezeWeb.Plug.Auth
 
   def request(conn, %{"provider" => provider}) do
     redirect(conn, external: authorize_url!(provider))
@@ -42,7 +42,7 @@ defmodule SqueezeWeb.AuthController do
 
   defp sign_in_and_redirect(conn, user) do
     conn
-    |> Plug.sign_in(user)
+    |> Auth.sign_in(user)
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 

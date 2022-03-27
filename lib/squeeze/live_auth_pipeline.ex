@@ -9,5 +9,6 @@ defmodule Squeeze.LiveAuthPipeline do
     error_handler: Squeeze.AuthErrorHandler
 
   plug Guardian.Plug.VerifySession
+  plug SqueezeWeb.Plug.VerifyRememberMe
   plug Guardian.Plug.EnsureAuthenticated
 end

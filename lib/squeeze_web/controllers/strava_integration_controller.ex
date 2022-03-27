@@ -2,8 +2,8 @@ defmodule SqueezeWeb.StravaIntegrationController do
   use SqueezeWeb, :controller
 
   alias Squeeze.Accounts
-  alias Squeeze.Guardian.Plug
   alias Squeeze.Reporter
+  alias SqueezeWeb.Plug.Auth
 
   @strava_auth Application.compile_env(:squeeze, :strava_auth)
 
@@ -80,7 +80,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))
     case Accounts.update_credential(credential, token_attrs(client)) do
       {:ok, _} ->
-        conn = Plug.sign_in(conn, user)
+        conn = Auth.sign_in(conn, user)
 
         if params["rename"] do
           redirect(conn, to: Routes.settings_path(conn, :namer))
@@ -102,7 +102,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
          {:ok, _credentials} <- Accounts.create_credential(user, credential_params) do
       Reporter.report_new_user(user)
       conn
-      |> Plug.sign_in(user)
+      |> Auth.sign_in(user)
       |> redirect(to: Routes.settings_path(conn, :namer))
     else
       _ ->
