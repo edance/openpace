@@ -4,7 +4,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   """
 
   alias Squeeze.Accounts
-  alias Squeeze.Accounts.{Credential}
+  alias Squeeze.Accounts.{Credential, User}
   alias Squeeze.Dashboard
   alias Squeeze.Strava.{ActivityFormatter, Client}
   alias Strava.Paginator
@@ -12,15 +12,19 @@ defmodule Squeeze.Strava.HistoryLoader do
   @strava_activities Application.compile_env(:squeeze, :strava_activities)
 
   def load_recent(%Credential{} = credential) do
-    create_activities(credential)
+    load_recent(credential.user, credential)
+  end
+
+  def load_recent(%User{} = user, %Credential{} = credential) do
+    create_activities(user, credential)
     Accounts.update_credential(credential, %{sync_at: Timex.now})
   end
 
-  defp create_activities(credential) do
+  defp create_activities(user, credential) do
     credential
     |> activity_stream
     |> Stream.map(&ActivityFormatter.format/1)
-    |> Stream.each(fn(a) -> Dashboard.create_activity(credential.user, a) end)
+    |> Stream.each(fn(a) -> Dashboard.create_activity(user, a) end)
     |> Enum.to_list()
   end
 

@@ -26,6 +26,8 @@
       </div>
 
       <div class="col-xl-4">
+        <%= live_component(SqueezeWeb.Dashboard.LoadHistoryComponent, current_user: @current_user, id: @current_user.id) %>
+
         <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, current_user: @current_user, activity_map: @activity_map) %>
 
         <div class="card bg-gradient-default shadow">
