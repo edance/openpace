@@ -37,12 +37,9 @@
 
       <div class="row justify-content-center mt-4">
         <div class="col-6 text-center">
-          <a href="https://play.google.com/store/apps/details?id=com.openpace.challenges" target="_blank" class="m-1">
-            <%= img_tag(Routes.static_path(@conn, "/images/home/google-play.svg"), class: "mb-2", width: 170) %>
-          </a>
-          <a href="https://apps.apple.com/us/app/openpace/id1542497215" target="_blank" class="m-1">
-            <%= img_tag(Routes.static_path(@conn, "/images/home/app-store.svg"), class: "mb-2", width: 150) %>
-          </a>
+          <%= link to: Routes.strava_integration_path(@conn, :request), class: "" do %>
+            <img alt="Connect to Strava" class="btn-strava" src="<%= Routes.static_path(@conn, "/images/btn_strava_orange.svg") %>" />
+          <% end %>
         </div>
       </div>
     </div>
