@@ -40,6 +40,8 @@
           <%= link to: Routes.strava_integration_path(@conn, :request), class: "" do %>
             <img alt="Connect to Strava" class="btn-strava" src="<%= Routes.static_path(@conn, "/images/btn_strava_orange.svg") %>" />
           <% end %>
+
+          <p class="text-sm text-muted mt-2">Sync your runs and activities from Strava</p>
         </div>
       </div>
     </div>
