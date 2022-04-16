@@ -16,14 +16,23 @@ defmodule SqueezeWeb.SvgPolylineComponent do
     max_x = points |> Enum.map(&(&1.x)) |> Enum.max()
     max_y = points |> Enum.map(&(&1.y)) |> Enum.max()
     svg_path = points |> Enum.map_join(" ", &("#{&1.x},#{&1.y}"))
-    stroke_width = Enum.max([(max_x - min_x) * 0.01, (max_y - min_y) * 0.01])
+
+    max_width_or_height = Enum.max([max_x - min_x, max_y - min_y])
+
+    stroke_width = max_width_or_height * 0.020
+    padding = max_width_or_height * 0.05
+
+    max_width_or_height_with_padding = max_width_or_height + padding * 2
+
+    width = max_x - min_x + padding * 2
+    height = max_y - min_y + padding * 2
 
     %{
       path: "M#{svg_path}",
-      x: min_x - stroke_width,
-      y: min_y - stroke_width,
-      width: max_x - min_x + stroke_width * 2,
-      height: max_y - min_y + stroke_width * 2,
+      x: min_x - padding - (max_width_or_height_with_padding - width) / 2,
+      y: min_y - padding - (max_width_or_height_with_padding - height) / 2,
+      width: max_width_or_height + padding * 2,
+      height: max_width_or_height + padding * 2,
       stroke_width: stroke_width
     }
   end
@@ -33,5 +42,8 @@ defmodule SqueezeWeb.SvgPolylineComponent do
       x: (lon + 180) * (256 / 360),
       y: (256 / 2) - (256 * :math.log(:math.tan((:math.pi() / 4) + ((lat * :math.pi() / 180) / 2))) / (2 * :math.pi()))
     }
+  end
+
+  def padding do
   end
 end

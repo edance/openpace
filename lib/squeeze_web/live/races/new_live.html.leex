@@ -1,0 +1,77 @@
+<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+
+<div class="main-content">
+  <div class="container py-4">
+    <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">
+            Race Information
+          </h3>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+          <%= inputs_for f, :race, fn r -> %>
+          <div class="form-group">
+            <%= label r, :name, class: "form-control-label" %>
+            <%= input r, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
+          </div>
+
+          <div class="form-group">
+            <%= label(r, :distance, class: "form-control-label") %>
+            <%= autocomplete(r, :distance, distances(), class: "form-control form-control", placeholder: "Choose a distance") %>
+            <%= error_tag(r, :distance) %>
+          </div>
+
+          <div class="form-group">
+            <%= label(r, "Race Date", class: "form-control-label") %>
+            <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+              <%= text_input r, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
+            </div>
+
+            <%= error_tag r, :start_date %>
+          </div>
+        <% end %>
+      </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">
+            Goal Information
+          </h3>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+          <div class="form-group focused">
+            <%= label f, :duration, class: "form-control-label" do %>
+              Goal Time
+            <% end %>
+            <%= duration_select f, :duration, class: "form-control form-control" %>
+            <%= error_tag(f, :duration) %>
+          </div>
+
+          <div class="form-group">
+            <label class="form-check-label">
+              <%= checkbox(f, :just_finish) %>
+              My goal is to just finish
+            </label>
+          </div>
+
+          <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p class="text-sm mb-0">
+                Oops, something went wrong! Please check the errors.
+              </p>
+            </div>
+          <% end %>
+
+          <div class="form-group mt-4">
+            <%= submit "Create Race", class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,6 @@ defmodule SqueezeWeb.RaceLive do
   This is the module for the race live view
   """
 
-  alias Squeeze.Distances
   alias Squeeze.Races
   alias Squeeze.Races.RaceGoal
 
@@ -14,26 +13,17 @@ defmodule SqueezeWeb.RaceLive do
     user = socket.assigns[:current_user] || get_current_user(session)
     changeset = Races.change_race_goal(%RaceGoal{})
     activities = Races.list_race_activities(user)
+    race_goals = Races.list_upcoming_race_goals(user)
 
     socket = assign(socket,
       activities: activities,
       page_title: "Races",
-      show_modal: false,
       current_user: user,
-      changeset: changeset
+      changeset: changeset,
+      race_goals: race_goals
     )
 
     {:ok, socket}
-  end
-
-  @impl true
-  def handle_event("open_modal", _params, socket) do
-    {:noreply, assign(socket, show_modal: true)}
-  end
-
-  @impl true
-  def handle_event("close_modal", _params, socket) do
-    {:noreply, assign(socket, show_modal: false)}
   end
 
   @impl true
@@ -50,8 +40,9 @@ defmodule SqueezeWeb.RaceLive do
     {:noreply, socket}
   end
 
-  def distances do
-    Distances.distances
-    |> Enum.map(fn(x) -> {x.name, x.distance} end)
+  def format_start_at_local(start_at) do
+    date = Ordinal.ordinalize(start_at.day)
+    start_at
+    |> Timex.format!("%a %b #{date}, %Y at %-I:%M %p", :strftime)
   end
 end
