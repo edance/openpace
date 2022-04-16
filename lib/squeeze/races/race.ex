@@ -6,11 +6,13 @@ defmodule Squeeze.Races.Race do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Squeeze.SlugGenerator
   alias Squeeze.Races.{Event, Race, ResultSummary}
 
   @required_fields ~w(
     name
     start_date
+    distance
   )a
 
   @optional_fields ~w(
@@ -62,6 +64,7 @@ defmodule Squeeze.Races.Race do
   def changeset(%Race{} = race, attrs) do
     race
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> put_change(:slug, SlugGenerator.gen_slug())
     |> validate_required(@required_fields)
   end
 end

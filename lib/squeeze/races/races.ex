@@ -48,9 +48,19 @@ defmodule Squeeze.Races do
   def list_race_activities(%User{} = user) do
     query = from a in Activity,
       where: [user_id: ^user.id],
-      where: [workout_type: :race]
+      where: [workout_type: :race],
+      order_by: [desc: :start_at]
 
     Repo.all(query)
+  end
+
+  def list_upcoming_race_goals(%User{} = user) do
+    query = from r in RaceGoal,
+      where: [user_id: ^user.id]
+
+    query
+    |> Repo.all()
+    |> Repo.preload(:race)
   end
 
   @doc """

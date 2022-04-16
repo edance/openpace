@@ -6,6 +6,7 @@ defmodule SqueezeWeb.FormatHelpers do
 
   use Phoenix.HTML
 
+  alias Number.Delimit
   alias Squeeze.Accounts.{User, UserPrefs}
   alias Squeeze.Distances
   alias Squeeze.Duration
@@ -34,6 +35,18 @@ defmodule SqueezeWeb.FormatHelpers do
 
   def format_distance(distance, %UserPrefs{} = user_prefs) do
     Distances.format(distance, imperial: user_prefs.imperial)
+  end
+
+  def format_elevation_gain(elevation_gain, %UserPrefs{imperial: imperial}) do
+    value = elevation_gain
+    |> Distances.to_feet(imperial: imperial)
+    |> Delimit.number_to_delimited(precision: 0)
+
+    if imperial do
+      "#{value} ft"
+    else
+      "#{value} m"
+    end
   end
 
   def relative_date(%User{} = user, date) do
