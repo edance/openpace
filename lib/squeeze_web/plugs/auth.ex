@@ -27,6 +27,6 @@ defmodule SqueezeWeb.Plug.Auth do
   end
 
   def sign_out(conn) do
-    Plug.sign_out(conn)
+    Plug.sign_out(conn, clear_remember_me: true)
   end
 end
