@@ -102,11 +102,8 @@ defmodule SqueezeWeb.Router do
     get "/billing", BillingController, :portal
     get "/checkout", BillingController, :checkout
 
-    resources "/activities", ActivityController, except: [:show] do
-      patch "/mark-complete", ActivityController, :mark_complete, as: :mark_complete
-    end
-
-    resources "/plans", PlanController
+    get "/activities", ActivityController, :index
+    patch "/activities/:activity_id/mark-complete", ActivityController, :mark_complete, as: :activity_mark_complete
 
     # resources "/challenges", ChallengeController, except: [:edit, :update, :delete]
     put "/challenges/:id/join", ChallengeController, :join
@@ -132,9 +129,6 @@ defmodule SqueezeWeb.Router do
     get "/", HomeController, :index
     get "/namer", HomeController, :namer
     post "/", HomeController, :subscribe
-
-    get "/onboard", OnboardController, :index
-    put "/onboard", OnboardController, :update
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
@@ -215,7 +209,8 @@ defmodule SqueezeWeb.Router do
 
     get "/users/me/activities", ActivityController, :index
 
-    get "/users/:slug/follows", FollowController, :index
+    get "/users/:slug/followers", FollowController, :followers
+    get "/users/:slug/following", FollowController, :following
     post "/follow/:slug", FollowController, :follow
     delete "/unfollow/:slug", FollowController, :unfollow
   end

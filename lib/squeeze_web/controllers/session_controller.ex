@@ -16,10 +16,11 @@ defmodule SqueezeWeb.SessionController do
         conn
         |> Auth.sign_in(user)
         |> put_flash(:info, "Signed in successfully.")
-        |> redirect(to: Routes.dashboard_path(conn, :index))
+        |> redirect(to: Routes.overview_path(conn, :index))
       {:error, message} ->
         conn
         |> put_flash(:error, message)
+        |> put_status(:unprocessable_entity)
         |> render("new.html")
     end
   end

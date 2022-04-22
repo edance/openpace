@@ -19,9 +19,12 @@ defmodule Squeeze.Social do
 
   """
   def list_following(%User{} = user) do
+    subset = from f in Follow,
+      where: f.follower_id == ^user.id,
+      select: f.followee_id
+
     query = from u in User,
-      join: f in Follow, on: u.id == f.follower_id,
-      where: f.follower_id == ^user.id
+      where: u.id in subquery(subset)
 
     Repo.all(query)
   end
@@ -36,9 +39,12 @@ defmodule Squeeze.Social do
 
   """
   def list_followers(%User{} = user) do
+    subset = from f in Follow,
+      where: f.followee_id == ^user.id,
+      select: f.follower_id
+
     query = from u in User,
-      join: f in Follow, on: u.id == f.followee_id,
-      where: f.followee_id == ^user.id
+      where: u.id in subquery(subset)
 
     Repo.all(query)
   end
@@ -69,7 +75,7 @@ defmodule Squeeze.Social do
 
     Multi.new()
     |> Multi.insert(:follow, changeset)
-    |> Multi.update_all(:followers_count, followee_query, [inc: [followers_count: 1]])
+    |> Multi.update_all(:follower_count, followee_query, [inc: [follower_count: 1]])
     |> Multi.update_all(:following_count, follower_query, [inc: [following_count: 1]])
     |> Repo.transaction()
   end
@@ -97,7 +103,7 @@ defmodule Squeeze.Social do
 
     Multi.new()
     |> Multi.delete_all(:follow, follow_query)
-    |> Multi.update_all(:followers_count, followee_query, [inc: [followers_count: -1]])
+    |> Multi.update_all(:follower_count, followee_query, [inc: [follower_count: -1]])
     |> Multi.update_all(:following_count, follower_query, [inc: [following_count: -1]])
     |> Repo.transaction()
   end

@@ -2,16 +2,15 @@ defmodule SqueezeWeb.Api.FollowControllerTest do
   use SqueezeWeb.ConnCase
 
   alias Squeeze.Social
-  alias Squeeze.Social.Follow
 
   describe "#followers" do
     test "returns the followers for the given user", %{conn: conn} do
-      %{follower: user1, followee: user2} = insert(:follow)
+      %{follower: user1, followee: user2} = _follow = insert(:follow)
       insert(:user) # Additional unfollowed user
 
-      conn = get(conn, "/api/users/#{user2.slug}/followers")
+      conn = get(conn, api_follow_path(conn, :followers, user2.slug))
       assert [follower] = json_response(conn, 200)["followers"]
-      assert follower.id == user1.id
+      assert follower["slug"] == user1.slug
     end
   end
 
@@ -22,7 +21,7 @@ defmodule SqueezeWeb.Api.FollowControllerTest do
 
       conn = get(conn, "/api/users/#{user1.slug}/following")
       assert [followee] = json_response(conn, 200)["following"]
-      assert followee.id == user2.id
+      assert followee["slug"] == user2.slug
     end
   end
 
@@ -33,34 +32,23 @@ defmodule SqueezeWeb.Api.FollowControllerTest do
 
       assert json_response(conn, 201)
       assert List.first(Social.list_following(user)).id == user2.id
-      assert Accounts.get_user_by_slug!(user.slug).following_count == 1
-      assert Accounts.get_user_by_slug!(user2.slug).follower_count == 1
     end
 
-    test "fails if already following", %{conn: conn} do
+    test "fails if already following", %{conn: conn, user: user} do
       %{followee: user2} = insert(:follow, follower: user)
       conn = post(conn, "/api/follow/#{user2.slug}")
 
-      assert json_response(conn, 400)
+      assert json_response(conn, 422)
     end
   end
 
   describe "#unfollow" do
     test "deletes a follow record and updates counts", %{conn: conn, user: user} do
       %{followee: user2} = insert(:follow, follower: user)
-      conn = post(conn, "/api/unfollow/#{user2.slug}")
+      conn = delete(conn, "/api/unfollow/#{user2.slug}")
 
-      assert json_response(conn, 204)
+      assert response(conn, 204) == ""
       assert Social.list_following(user) == []
-      assert Accounts.get_user_by_slug!(user.slug).following_count == 0
-      assert Accounts.get_user_by_slug!(user2.slug).follower_count == 0
-    end
-
-    test "fails if already following", %{conn: conn} do
-      user2 = insert(:user)
-      conn = post(conn, "/api/follow/#{user2.slug}")
-
-      assert json_response(conn, 400)
     end
   end
 end

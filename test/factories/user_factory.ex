@@ -20,6 +20,7 @@ defmodule Squeeze.UserFactory do
           avatar: "https://placekitten.com/300/300",
           country: Address.country_code(),
           registered: true,
+          slug: sequence(:user_slug, &"#{&1}"),
           user_prefs: build(:user_prefs)
         }
       end

@@ -6,6 +6,7 @@ defmodule Squeeze.Factory do
   use Squeeze.ChallengeFactory
   use Squeeze.CredentialFactory
   use Squeeze.DetailedActivityFactory
+  use Squeeze.FollowFactory
   use Squeeze.InvoiceFactory
   use Squeeze.PaymentMethodFactory
   use Squeeze.PushTokenFactory

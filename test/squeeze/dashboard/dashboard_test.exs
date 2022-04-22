@@ -83,9 +83,8 @@ defmodule Squeeze.DashboardTest do
     test "creates a trackpoint set and trackpoints" do
       activity = insert(:activity)
       trackpoints = [%{distance: 0.0, time: 0}, %{distance: 10.0, time: 4}]
-      {:ok, %{trackpoint_count: count, trackpoint_set: set}} =
-        Dashboard.create_trackpoint_set(activity, trackpoints)
-      assert count == 2
+      {:ok, set} = Dashboard.create_trackpoint_set(activity, trackpoints)
+      assert length(set.trackpoints) == 2
       refute set.id == nil
       assert set.activity_id == activity.id
     end

@@ -23,11 +23,27 @@ defmodule Squeeze.ChallengeFactory do
           timeline: timeline,
           name: name,
           segment_id: "12345",
+          polyline: "12345",
           start_date: Date.backward(1),
           end_date: Date.forward(10),
           recurring: false,
           user: user
         }
+      end
+
+      def recurring_challenge_factory do
+        start_date = Timex.today() |>  Timex.beginning_of_week() |> Timex.to_date()
+        end_date = start_date |> Timex.end_of_week() |> Timex.to_date()
+        struct!(
+          challenge_factory(),
+          %{
+            recurring: true,
+            timeline: :week,
+            challenge_type: :distance,
+            start_date: start_date,
+            end_date: end_date,
+          }
+        )
       end
 
       def future_challenge_factory do

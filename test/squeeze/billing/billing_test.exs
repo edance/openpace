@@ -15,14 +15,6 @@ defmodule Squeeze.BillingTest do
       default_method = Billing.get_default_payment_method(payment_method.user)
       assert default_method.id == payment_method.id
     end
-
-    test "returns only the latest payment_method" do
-      method_1 = insert(:payment_method)
-      user = method_1.user
-      method_2 = insert(:payment_method, user: user)
-      default_method = Billing.get_default_payment_method(user)
-      assert default_method.id == method_2.id
-    end
   end
 
   describe "start_free_trial/1" do

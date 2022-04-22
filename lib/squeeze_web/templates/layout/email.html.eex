@@ -61,7 +61,7 @@
 
                   <tr>
                     <td class="content-cell" style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; padding: 35px; word-break: break-word;">
-                      <%= render @view_module, @view_template, assigns %>
+                      <%= @inner_content %>
                     </td>
                   </tr>
                 </table>

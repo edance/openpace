@@ -19,7 +19,7 @@ defmodule SqueezeWeb.ProfileController  do
       {:ok, _} ->
         conn
         |> put_flash(:info, gettext("Your preferences have been updated"))
-        |> redirect(to: Routes.dashboard_path(conn, :index))
+        |> redirect(to: Routes.overview_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         credentials = Accounts.list_credentials(current_user)
         render(conn, "edit.html", changeset: changeset, credentials: credentials)

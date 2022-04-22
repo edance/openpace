@@ -5,7 +5,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
   alias Squeeze.PasswordLinkGenerator
 
   describe "GET /show" do
-    test "with valid token and signature", %{conn: conn, user: user} do
+    @tag :no_user
+    test "with valid token and signature", %{conn: conn} do
+      user = insert(:user)
       link = user
       |> PasswordLinkGenerator.create_link()
       conn = conn
@@ -14,7 +16,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       assert html_response(conn, 200) =~ "Please reset your password below"
     end
 
-    test "with an expired token", %{conn: conn, user: user} do
+    @tag :no_user
+    test "with an expired token", %{conn: conn} do
+      user = insert(:user)
       conn = conn
       |> get(expired_link(user))
 
@@ -22,7 +26,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       assert redirected_to(conn) == home_path(conn, :index)
     end
 
-    test "with an invalid token", %{conn: conn, user: user} do
+    @tag :no_user
+    test "with an invalid token", %{conn: conn} do
+      user = insert(:user)
       conn = conn
       |> get(invalid_link(user))
 
@@ -32,7 +38,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
   end
 
   describe "POST /reset" do
-    test "with valid token and signature", %{conn: conn, user: user} do
+    @tag :no_user
+    test "with valid token and signature", %{conn: conn} do
+      user = insert(:user)
       attrs = %{encrypted_password: "password1234"}
       link = PasswordLinkGenerator.create_link(user)
       conn = post(conn, link, user: attrs)
@@ -43,7 +51,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
         Accounts.get_user!(user.id).encrypted_password
     end
 
-    test "with an invalid password", %{conn: conn, user: user} do
+    @tag :no_user
+    test "with an invalid password", %{conn: conn} do
+      user = insert(:user)
       attrs = %{encrypted_password: "abc"}
       link = PasswordLinkGenerator.create_link(user)
       conn = post(conn, link, user: attrs)
@@ -51,7 +61,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       assert html_response(conn, 200) =~ "Please reset your password below"
     end
 
-    test "with invalid token", %{conn: conn, user: user} do
+    @tag :no_user
+    test "with invalid token", %{conn: conn} do
+      user = insert(:user)
       attrs = %{encrypted_password: "password1234"}
       link = invalid_link(user)
       conn = post(conn, link, user: attrs)
