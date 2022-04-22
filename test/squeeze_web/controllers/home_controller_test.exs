@@ -5,7 +5,7 @@ defmodule SqueezeWeb.HomeControllerTest do
     test "as a registered user", %{conn: conn} do
       conn = conn
       |> get("/")
-      assert redirected_to(conn) == dashboard_path(conn, :index)
+      assert redirected_to(conn) == overview_path(conn, :index)
     end
   end
 

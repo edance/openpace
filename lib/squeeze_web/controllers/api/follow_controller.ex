@@ -22,10 +22,16 @@ defmodule SqueezeWeb.Api.FollowController do
     user = conn.assigns.current_user
     followee = Accounts.get_user_by_slug!(slug)
 
-    with {:ok, _} <- Social.follow_user(user, followee) do
-      conn
-      |> put_status(:created)
-      |> render("follow.json")
+    case Social.follow_user(user, followee) do
+      {:ok, follow} ->
+        conn
+        |> put_status(:created)
+        |> render("follow.json", follow: follow)
+      {:error, :follow, changeset, _} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> put_view(SqueezeWeb.Api.ChangesetView)
+        |> render("error.json", changeset: changeset)
     end
   end
 

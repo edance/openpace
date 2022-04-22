@@ -3,8 +3,8 @@ defmodule SqueezeWeb.Api.UserControllerTest do
 
   alias Squeeze.Accounts
 
-  @tag :no_user
   describe "#create" do
+    @tag :no_user
     test "returns an auth token and the user", %{conn: conn} do
       attrs = %{
         email: "test@example.com",
@@ -20,6 +20,7 @@ defmodule SqueezeWeb.Api.UserControllerTest do
       assert Map.keys(response) |> Enum.member?("user")
     end
 
+    @tag :no_user
     test "with invalid params", %{conn: conn} do
       attrs = %{
         email: "test@example.com",
@@ -32,8 +33,8 @@ defmodule SqueezeWeb.Api.UserControllerTest do
     end
   end
 
-  @tag :no_user
   describe "#sign_in" do
+    @tag :no_user
     test "with a valid password", %{conn: conn} do
       user = insert(:user)
       attrs = %{
@@ -47,6 +48,7 @@ defmodule SqueezeWeb.Api.UserControllerTest do
       assert Map.keys(response) |> Enum.member?("user")
     end
 
+    @tag :no_user
     test "with an invalid password", %{conn: conn} do
       user = insert(:user)
       attrs = %{
@@ -60,8 +62,7 @@ defmodule SqueezeWeb.Api.UserControllerTest do
   end
 
   describe "#update" do
-    test "with valid data saves user", %{conn: conn} do
-      user = conn.assigns.current_user
+    test "with valid data saves user", %{conn: conn, user: user} do
       conn = put(conn, api_user_path(conn, :update), user: %{first_name: "ABC"})
       assert Accounts.get_user!(user.id).first_name == "ABC"
       assert response(conn, 204) == ""
@@ -77,7 +78,7 @@ defmodule SqueezeWeb.Api.UserControllerTest do
     test "returns the current user", %{conn: conn} do
       conn = get(conn, api_user_path(conn, :me))
 
-      assert response = json_response(conn, 200)
+      assert json_response(conn, 200)
     end
   end
 end

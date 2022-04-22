@@ -19,11 +19,13 @@ defmodule SqueezeWeb.ConnCase do
   alias Phoenix.ConnTest
   alias Plug.Conn
   alias Squeeze.{Factory, Guardian, Repo}
+  alias SqueezeWeb.Plug.Auth
 
   using do
     quote do
       # Import conveniences for testing with connections
-      use ConnTest
+      import Plug.Conn
+      import Phoenix.ConnTest
       import SqueezeWeb.Router.Helpers
       import Squeeze.Factory
 
@@ -43,11 +45,14 @@ defmodule SqueezeWeb.ConnCase do
 
     conn =
       ConnTest.build_conn()
-      |> Conn.assign(:current_user, user)
+      |> sign_in_user(user)
       |> put_auth_header(user)
 
     {:ok, conn: conn, user: user}
   end
+
+  def sign_in_user(conn, nil), do: conn
+  def sign_in_user(conn, user), do: Auth.sign_in(conn, user)
 
   defp put_auth_header(conn, nil), do: conn
   defp put_auth_header(conn, user) do

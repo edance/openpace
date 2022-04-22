@@ -10,11 +10,10 @@ defmodule SqueezeWeb.ProfileControllerTest do
   end
 
   describe "#update" do
-    test "with valid data saves user and redirects to dashboard", %{conn: conn} do
-      user = conn.assigns.current_user
+    test "with valid data saves user and redirects to dashboard", %{conn: conn, user: user} do
       conn = put(conn, profile_path(conn, :update), user: %{first_name: "ABC"})
       assert Accounts.get_user!(user.id).first_name == "ABC"
-      assert redirected_to(conn) == dashboard_path(conn, :index)
+      assert redirected_to(conn) == overview_path(conn, :index)
     end
 
     test "with invalid data renders errors", %{conn: conn} do

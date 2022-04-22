@@ -2,6 +2,7 @@ defmodule SqueezeWeb.ForgotPasswordControllerTest do
   use SqueezeWeb.ConnCase
 
   describe "GET /show" do
+    @tag :no_user
     test "renders form", %{conn: conn} do
       conn = conn
       |> get(forgot_password_path(conn, :show))
@@ -13,13 +14,16 @@ defmodule SqueezeWeb.ForgotPasswordControllerTest do
   end
 
   describe "POST /forgot-password" do
-    test "sends an email and redirects to home", %{conn: conn, user: user} do
+    @tag :no_user
+    test "sends an email and redirects to home", %{conn: conn} do
+      user = insert(:user)
       conn = conn
       |> post(forgot_password_path(conn, :request), %{email: user.email})
 
       assert redirected_to(conn) == home_path(conn, :index)
     end
 
+    @tag :no_user
     test "with invalid email shows alert", %{conn: conn} do
       conn = conn
       |> post(forgot_password_path(conn, :request), email: "madeup@email.com")

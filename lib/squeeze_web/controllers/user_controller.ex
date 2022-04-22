@@ -38,7 +38,8 @@ defmodule SqueezeWeb.UserController do
   end
 
   defp validate_honeypot(conn, _) do
-    if conn.params["user"][@honeypot_field] == "" do
+    value = conn.params["user"][@honeypot_field] 
+    if is_nil(value) || String.trim(value) == "" do
       conn
     else
       Logger.warn("Spam user: Honeypot field")

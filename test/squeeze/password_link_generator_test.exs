@@ -69,8 +69,7 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
   end
 
   defp sign_token(token) do
-    :sha512
-    |> :crypto.mac(:hmac, @secret_key, token)
+    :crypto.mac(:hmac, :sha256, @secret_key, token)
     |> Base.url_encode64
   end
 

@@ -38,7 +38,7 @@ defmodule SqueezeWeb.IntegrationControllerTest do
       conn = conn
       |> get(integration_path(conn, :callback, "strava", code: "1234"))
 
-      assert redirected_to(conn) == dashboard_path(conn, :index)
+      assert redirected_to(conn) == overview_path(conn, :index)
     end
   end
 end

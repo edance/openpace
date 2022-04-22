@@ -15,7 +15,6 @@ defmodule Squeeze.Challenges.RecurringChallenges do
     activity_type
     challenge_type
     timeline
-    user_id
     segment_id
     polyline
     private
@@ -33,14 +32,13 @@ defmodule Squeeze.Challenges.RecurringChallenges do
     changeset = %Challenge{}
     |> Challenge.changeset(challenge_attrs(challenge))
     |> Changeset.put_change(:slug, slug)
+    |> Changeset.put_change(:user_id, challenge.user_id)
 
     Multi.new()
     |> Multi.insert(:challenge, changeset)
-    |> Multi.run(:scores, fn(repo, %{challenge: new_challenge}) ->
+    |> Multi.insert_all(:scores, Score, fn(%{challenge: new_challenge}) ->
       Challenges.list_users(challenge)
       |> Enum.map(&(score_attrs(new_challenge, &1)))
-      |> Enum.chunk_every(100)
-      |> Enum.each(&(repo.insert_all(Score, &1)))
       end)
     |> Repo.transaction()
   end
@@ -52,6 +50,7 @@ defmodule Squeeze.Challenges.RecurringChallenges do
   end
 
   def score_attrs(%Challenge{} = challenge, user) do
+    now = Timex.now() |> Timex.to_naive_datetime() |> NaiveDateTime.truncate(:second)
     amount = case challenge.challenge_type do
                :segment -> nil
                _ -> 0.0
@@ -61,7 +60,9 @@ defmodule Squeeze.Challenges.RecurringChallenges do
       user_id: user.id,
       challenge_id: challenge.id,
       amount: amount,
-      score: Challenges.ranking_score(challenge, amount)
+      score: Challenges.ranking_score(challenge, amount),
+      inserted_at: now,
+      updated_at: now
     }
   end
 
