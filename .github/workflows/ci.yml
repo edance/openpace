@@ -13,6 +13,8 @@ jobs:
       matrix:
         elixir: ['1.12.3']
         otp: ['23.3.1']
+    env:
+      MIX_ENV: test
     steps:
       - name: Checkout Github repo
         uses: actions/checkout@v2
