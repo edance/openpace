@@ -1,9 +1,9 @@
 ![OpenPace](https://github.com/edance/art/blob/master/squeeze/repo-banner.png)
 
 [![Built with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://spacemacs.org)
-[![Build Status](https://travis-ci.org/edance/openpace.svg?branch=master)](https://travis-ci.org/edance/openpace)
-[![Coverage Status](https://coveralls.io/repos/github/edance/openpace/badge.svg?branch=master)](https://coveralls.io/github/edance/openpace?branch=master)
-[![license](https://img.shields.io/github/license/edance/openpace.svg)](https://github.com/edance/openpace/blob/master/LICENSE.md)
+[![Build Status](https://github.com/edance/openpace/actions/workflows/ci.yml/badge.svg)](https://github.com/edance/openpace/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/edance/openpace/badge.svg?branch=main)](https://coveralls.io/github/edance/openpace?branch=main)
+[![license](https://img.shields.io/github/license/edance/openpace.svg)](https://github.com/edance/openpace/blob/main/LICENSE.md)
 
 ## What is this?
 
