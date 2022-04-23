@@ -37,3 +37,6 @@ npm-debug.log
 
 # ElixirLS Dialyzer
 .elixir_ls/
+
+# Docs
+/doc

@@ -12,7 +12,17 @@ defmodule Squeeze.Mixfile do
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+
+      # Docs
+      name: "OpenPace",
+      source_url: "https://github.com/edance/openpace",
+      homepage_url: "https://www.openpace.co",
+      docs: [
+        # main: "OpenPace", # The main page in the docs
+        # logo: "path/to/logo.png",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -74,7 +84,7 @@ defmodule Squeeze.Mixfile do
       {:new_relic_agent, "~> 1.0"},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
       {:credo, "~> 1.6.1", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:floki, ">= 0.30.0", only: :test},
