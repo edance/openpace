@@ -1,8 +1,10 @@
 defmodule Squeeze.Repo.Migrations.AddDefaultSubscriptionStatus do
   use Ecto.Migration
 
+  alias Squeeze.Accounts.User
+
   def up do
-    statuses = SubscriptionStatusEnum.__enum_map__()
+    statuses = Ecto.Enum.mappings(User, :subscription_status)
     alter table(:users) do
       modify :subscription_status, :integer, default: statuses[:active], null: false
     end

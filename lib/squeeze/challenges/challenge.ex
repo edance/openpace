@@ -27,12 +27,12 @@ defmodule Squeeze.Challenges.Challenge do
   )a
 
   schema "challenges" do
-    field :activity_type, ActivityTypeEnum
-    field :challenge_type, ChallengeTypeEnum
+    field :activity_type, Ecto.Enum, values: [run: 0, bike: 1, swim: 2, other: 3]
+    field :challenge_type, Ecto.Enum, values: [distance: 0, time: 1, altitude: 2, segment: 3]
     field :start_date, :date # starts at 00:00 on start_date
     field :end_date, :date # ends at 11:59 on end_date
     field :name, :string
-    field :timeline, TimelineEnum
+    field :timeline, Ecto.Enum, values: [day: 0, week: 1, weekend: 2, month: 3, custom: 4]
     field :private, :boolean
     field :recurring, :boolean
     field :slug, :string

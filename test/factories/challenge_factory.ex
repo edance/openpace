@@ -7,8 +7,8 @@ defmodule Squeeze.ChallengeFactory do
   defmacro __using__(_opts) do
     quote do
       def challenge_factory do
-        {type, _} = Enum.random(ChallengeTypeEnum.__enum_map__())
-        {timeline, _} = Enum.random(TimelineEnum.__enum_map__())
+        {type, _} = Enum.random(Ecto.Enum.mappings(Challenge, :challenge_type))
+        {timeline, _} = Enum.random(Ecto.Enum.mappings(Challenge, :timeline))
 
         name = [timeline, type, :challenge]
         |> Enum.map(&Atom.to_string/1)

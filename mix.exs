@@ -38,7 +38,7 @@ defmodule Squeeze.Mixfile do
     [
       {:phoenix, "~> 1.5.13"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.4"},
+      {:ecto_sql, "~> 3.7"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.15.1"},
       {:phoenix_html, "~> 2.11"},
@@ -54,7 +54,6 @@ defmodule Squeeze.Mixfile do
       {:guardian, "~> 2.2.3"},
       {:browser, "~> 0.4.4"},
       {:polyline, "~> 1.3"},
-      {:ecto_enum, "~> 1.1"},
       {:stripity_stripe, "~> 2.12.0"},
       {:httpoison, "~> 1.5"},
       {:set_locale, "~> 0.2.9"},

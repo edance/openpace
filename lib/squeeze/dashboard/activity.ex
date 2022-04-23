@@ -35,21 +35,23 @@ defmodule Squeeze.Dashboard.Activity do
 
   schema "activities" do
     field :name, :string
-    field :activity_type, ActivityTypeEnum
+    field :activity_type, Ecto.Enum, values: [run: 0, bike: 1, swim: 2, other: 3]
     field :type, :string
-    field :workout_type, WorkoutTypeEnum
+    field :workout_type, Ecto.Enum, values: [
+      race: 0, long_run: 1, workout: 2
+    ]
 
     # Planning Fields
     field :planned_distance, :float # in meters
     field :planned_distance_amount, :float
-    field :planned_distance_unit, DistanceUnitEnum
+    field :planned_distance_unit, Ecto.Enum, values: [m: 0, km: 1, mi: 2]
     field :planned_duration, Duration
     field :planned_date, :date
 
     # Fields for after activity is completed
     field :distance, :float # in meters
     field :distance_amount, :float
-    field :distance_unit, DistanceUnitEnum
+    field :distance_unit, Ecto.Enum, values: [m: 0, km: 1, mi: 2]
     field :duration, Duration
     field :start_at, :utc_datetime
     field :start_at_local, :naive_datetime
@@ -59,7 +61,7 @@ defmodule Squeeze.Dashboard.Activity do
 
     field :description, :string
 
-    field :status, ActivityStatusEnum
+    field :status, Ecto.Enum, values: [pending: 0, complete: 1, incomplete: 2, partial: 3]
     field :complete, :boolean
 
     belongs_to :user, User

@@ -14,7 +14,7 @@ defmodule Squeeze.TrainingPlans.Plan do
 
   schema "training_plans" do
     field :name, :string
-    field :experience_level, ExperienceLevelEnum
+    field :experience_level, Ecto.Enum, values: [novice: 0, intermediate: 1, advanced: 2]
     field :week_count, :integer
     field :description, :string
 

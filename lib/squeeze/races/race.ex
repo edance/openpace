@@ -46,9 +46,9 @@ defmodule Squeeze.Races.Race do
     field :registration_url, :string
     field :url, :string
 
-    field :course_profile, CourseProfileEnum
-    field :course_terrain, CourseTerrainEnum
-    field :course_type, CourseTypeEnum
+    field :course_profile, Ecto.Enum, values: [unknown: 0, downhill: 1, flat: 2, rolling_hills: 3, hilly: 4]
+    field :course_terrain, Ecto.Enum, values: [unknown: 0, road: 1, trail: 2]
+    field :course_type, Ecto.Enum, values: [unknown: 0, loop: 1, out_and_back: 2, point_to_point: 3]
 
     field :external_id, :string
 

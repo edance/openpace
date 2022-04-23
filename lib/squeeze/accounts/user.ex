@@ -31,7 +31,7 @@ defmodule Squeeze.Accounts.User do
 
     field :customer_id, :string
     field :subscription_id, :string
-    field :subscription_status, SubscriptionStatusEnum
+    field :subscription_status, Ecto.Enum, values: [incomplete: 0, incomplete_expired: 1, trialing: 2, active: 3, past_due: 4, canceled: 5, unpaid: 6, free: 7]
     field :trial_end, :utc_datetime
 
     has_many :credentials, Credential

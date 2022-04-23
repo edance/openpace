@@ -1,8 +1,10 @@
 defmodule SqueezeWeb.Settings.NamerCardComponent do
   use SqueezeWeb, :live_component
 
+  alias Squeeze.Accounts.UserPrefs
+
   def gender_opts do
-    GenderEnum.__enum_map__()
+    Ecto.Enum.mappings(UserPrefs, :gender)
     |> Enum.map(fn ({k, _}) -> {format_option(k), k} end)
   end
 

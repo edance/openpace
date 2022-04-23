@@ -34,7 +34,7 @@ defmodule Squeeze.Accounts.UserPrefs do
     field :experience, :integer
     field :timezone, :string
     field :imperial, :boolean
-    field :gender, GenderEnum
+    field :gender, Ecto.Enum, values: [male: 0, female: 1, other: 2, prefer_not_to_say: 3]
     field :birthdate, :date
 
     # Namer Fields

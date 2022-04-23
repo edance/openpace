@@ -1,8 +1,10 @@
 defmodule Squeeze.Repo.Migrations.AddDefaultTimelineToChallenges do
   use Ecto.Migration
 
+  alias Squeeze.Challenges.Challenge
+
   def up do
-    statuses = TimelineEnum.__enum_map__()
+    statuses = Ecto.Enum.mappings(Challenge, :timeline)
     alter table(:challenges) do
       modify :timeline, :integer, default: statuses[:custom], null: false
     end
