@@ -3,9 +3,14 @@ defmodule SqueezeWeb.Dashboard.MiniCalendarComponent do
 
   alias Squeeze.TimeHelper
 
-  def active_on_date?(%{activity_map: activity_map}, date) do
-    list = Map.get(activity_map, date, [])
-    !Enum.empty?(list)
+  def data(%{activity_map: activity_map} = assigns) do
+    dates(assigns)
+    |> Enum.map(fn(date) ->
+      %{
+        date: date,
+        activities: Map.get(activity_map, date, [])
+      }
+    end)
   end
 
   def dates(assigns) do

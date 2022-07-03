@@ -6,7 +6,7 @@
           <%= gettext("Performance") %>
         </h6>
         <h2 class="mb-0">
-          <%= gettext("Recent Runs") %>
+          <%= gettext("This Month") %>
         </h2>
       </div>
     </div>
@@ -23,30 +23,16 @@
       <% end %>
     </div>
 
-    <%= for dates <- Enum.chunk_every(dates(assigns), 7) do %>
     <div class="row no-gutters mb-1">
-      <%= for date <- dates do %>
-      <div class="col text-center">
-        <div class="text-uppercase text-muted small">
-          <%= if date.day == 1 do %>
-          <%= Timex.format!(date, "%b", :strftime) %>
-          <% else %>
-          &nbsp;
-          <% end %>
-        </div>
-
-        <%= if active_on_date?(assigns, date) do %>
-        <div class="small badge badge-circle bg-primary text-white mb-1">
-          <%= date.day %>
-        </div>
-        <% else %>
-        <div class="small badge badge-circle mb-1">
-          <%= date.day %>
-        </div>
-        <% end %>
+      <div style="height: 100%; width: 100%;">
+        <canvas id="calendar-chart"
+                aria-label="Mini Calendar of Activities"
+                role="img"
+                data-summaries="<%= Jason.encode!(data(assigns)) %>"
+                data-imperial="<%= @current_user.user_prefs.imperial %>"
+        >
+        </canvas>
       </div>
-      <% end %>
     </div>
-    <% end %>
   </div>
 </div>

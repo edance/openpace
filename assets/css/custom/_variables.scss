@@ -59,7 +59,7 @@ $yellow:  #ffd600 !default;
 $green:   #2dce89 !default;
 $teal:    #11cdef !default;
 $cyan:    #2bffc6 !default;
-$waves:   #e1e2f9 !default;
+$waves:   #2e3148 !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -216,8 +216,9 @@ $love-color: $red !default;
 
 // Body
 
-$body-bg:       #f8f9fe !default;
-$body-color:    $gray-700 !default;
+/* $body-bg:       #f8f9fe !default; */
+$body-bg:       $gray-900 !default;
+$body-color:    $white !default;
 
 
 // Sections
@@ -385,7 +386,7 @@ $headings-margin-bottom:      ($spacer / 2);
 $headings-font-family:        inherit !default;
 $headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.5 !default;
-$headings-color:              $gray-800 !default;
+$headings-color:              $white !default;
 
 $heading-letter-spacing:      .025em !default;
 $heading-font-size:           .95rem !default;
@@ -931,8 +932,8 @@ $card-border-width:                 $border-width !default;
 $card-border-radius:                $border-radius !default;
 $card-border-color:                 rgba($black, .05) !default;
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width}) !default;
-$card-cap-bg:                       $white !default;
-$card-bg:                           $white !default;
+$card-cap-bg:                       #424660 !default;
+$card-bg:                           #424660 !default;
 $card-box-shadow:                   $box-shadow !default;
 
 $card-img-overlay-padding:          1.25rem !default;
