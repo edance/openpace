@@ -41,6 +41,7 @@ defmodule Squeeze.Dashboard do
         duration: a.duration,
         elevation_gain: a.elevation_gain,
         type: a.type,
+        workout_type: a.workout_type,
         start_at_local: a.start_at_local
       }
 
