@@ -9,6 +9,7 @@ import './duration-select';
 import './imperial-hidden-input';
 import './modal';
 import './onboard-down-btn';
+import './recent-activities-chart';
 import './timezone-hidden-input';
 import './time-input';
 import './typewriter';

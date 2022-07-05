@@ -2161,6 +2161,11 @@ color@^3.0.0:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
+colorjs.io@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/colorjs.io/-/colorjs.io-0.2.4.tgz#f200aa6aa32e63841836f34b4bcb705610f784a8"
+  integrity sha512-8SNAZVcezPu9V7dDwx9lWmPATdEe6yEj4xOO3O7VBDYbcD/maTJBgPIISWEVgm9y+TH+CYONc+uWey6fLaPpIA==
+
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"

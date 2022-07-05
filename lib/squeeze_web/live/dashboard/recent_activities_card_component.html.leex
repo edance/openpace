@@ -1,46 +1,25 @@
-  <div class="card shadow">
-    <div class="card-header border-0">
-      <div class="row align-items-center">
-        <div class="col">
-          <h3 class="mb-0">
-            <%= gettext("Recent Activities") %>
-          </h3>
-        </div>
-        <div class="col text-right">
-          <%= link(gettext("See all"), to: Routes.activity_path(@socket, :index), class: "btn btn-sm btn-primary") %>
-        </div>
+<div class="card shadow">
+  <div class="card-header border-0">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="mb-0">
+          <%= gettext("Recent Activities") %>
+        </h3>
+      </div>
+      <div class="col text-right">
+        <%= link(gettext("See all"), to: Routes.activity_path(@socket, :index), class: "btn btn-sm btn-primary") %>
       </div>
     </div>
-    <%= if length(@activities) > 0 do %>
-    <div class="table-responsive">
-      <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">
-              <%= gettext("Name") %>
-            </th>
-            <th scope="col">
-              <%= gettext("Distance") %>
-            </th>
-            <th scope="col">
-              <%= gettext("Start at") %>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= for activity <- @activities do %>
-          <tr scope="row">
-            <td><%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity) %></td>
-            <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
-            <td><%= relative_time(activity.start_at) %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <% else %>
-    <div class="card-body">
-      <p class="text-sm">No activites to show.</p>
-    </div>
-    <% end %>
   </div>
+
+  <div class="card-body">
+    <canvas id="recent-activities-chart"
+            aria-label="Recent Activites Chart"
+            role="img"
+            style="aspect-ratio: 2 / 1;"
+            data-summaries="<%= Jason.encode!(@activity_summaries) %>"
+            data-imperial="<%= @current_user.user_prefs.imperial %>"
+    >
+    </canvas>
+  </div>
+</div>
