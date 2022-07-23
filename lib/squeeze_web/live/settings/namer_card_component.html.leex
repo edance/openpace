@@ -1,5 +1,5 @@
-<div class="card bg-secondary shadow">
-  <div class="card-header bg-white border-0">
+<div class="card shadow">
+  <div class="card-header border-0">
     <div class="row align-items-center">
       <div class="col-8">
         <h3 class="mb-0"><%= gettext("Namer Settings") %></h3>
@@ -43,7 +43,7 @@
 
       <div class="form-group">
         <%= label(p, :gender, "Emoji Gender", class: "form-control-label") %>
-        <%= select p, :gender, gender_opts(), class: "form-control form-control-alternative" %>
+        <%= select p, :gender, gender_opts(), class: "form-control" %>
 
         <small class="form-text text-muted">
           Let us know what gender you would like to use for the emoji.

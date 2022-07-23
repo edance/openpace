@@ -6,26 +6,24 @@
 // Labels
 
 .form-control-label {
-    color: $gray-700;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-bold;
+  color: $gray-300;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
 }
 
 
 // Text inputs
 
 .form-control {
-    font-size: $input-btn-font-size;
-    @include transition($transition-ease-in-out);
-    height:  calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + #{$input-height-border * 2.5});
+  font-size: $input-btn-font-size;
+  @include transition($transition-ease-in-out);
+  height:  calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + #{$input-height-border * 2.5});
 
-    &:focus {
-        &::placeholder {
-            color: $input-focus-placeholder-color;
-        }
+  &:focus {
+    &::placeholder {
+      color: $input-focus-placeholder-color;
     }
-
-    
+  }
 }
 
 .form-control-lg{
@@ -42,34 +40,34 @@
 // Removes borders and paddings from inputs and text areas
 
 .form-control-flush {
-    padding: 0;
-    border-width: 0;
+  padding: 0;
+  border-width: 0;
+  background-color: transparent;
+  box-shadow: none;
+
+  &:focus {
     background-color: transparent;
     box-shadow: none;
-
-    &:focus {
-        background-color: transparent;
-        box-shadow: none;
-        border-width: 0;
-    }
+    border-width: 0;
+  }
 }
 
 // Textarea
 
 textarea[resize="none"] {
-    resize: none!important;
+  resize: none!important;
 }
 
 textarea[resize="both"] {
-    resize: both!important;
+  resize: both!important;
 }
 
 textarea[resize="vertical"] {
-    resize: vertical!important;
+  resize: vertical!important;
 }
 
 textarea[resize="horizontal"] {
-    resize: horizontal!important;
+  resize: horizontal!important;
 }
 
 
@@ -78,26 +76,26 @@ textarea[resize="horizontal"] {
 // Muted input
 
 .form-control-muted {
-    background-color: $input-muted-bg;
-    border-color: $input-muted-bg;
-    box-shadow: none;
+  background-color: $input-muted-bg;
+  border-color: $input-muted-bg;
+  box-shadow: none;
 
-    &:focus {
-        background-color: $input-focus-muted-bg;
-    }
+  &:focus {
+    background-color: $input-focus-muted-bg;
+  }
 }
 
 
 // Alternative input
 
 .form-control-alternative {
-    box-shadow: $input-alternative-box-shadow;
-    border: 0;
-    transition: box-shadow .15s ease;
+  box-shadow: $input-alternative-box-shadow;
+  border: 0;
+  transition: box-shadow .15s ease;
 
-    &:focus {
-        box-shadow: $input-focus-alternative-box-shadow;
-    }
+  &:focus {
+    box-shadow: $input-focus-alternative-box-shadow;
+  }
 }
 
 // Size variations: Fixes to the bootstrap defaults
@@ -105,5 +103,5 @@ textarea[resize="horizontal"] {
 .form-control-lg,
 .input-group-lg .form-control,
 .input-group-text {
-    font-size: $font-size-base !important;
+  font-size: $font-size-base !important;
 }

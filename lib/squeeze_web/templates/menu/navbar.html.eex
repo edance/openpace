@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container container-dashboard">
     <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <%= link(to: Routes.dashboard_path(@conn, :index), class: "navbar-brand") do %>
-      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo.svg") %>" />
+      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo-white.svg") %>" />
     <% end %>
 
     <%= if @current_user do %>
@@ -13,7 +13,7 @@
         <div class="media align-items-center">
           <%= render "_avatar.html", assigns %>
           <div class="media-body ml-2 d-none d-lg-block">
-            <span class="mb-0 font-weight-bold"><%= full_name(@current_user) %></span>
+            <span class="mb-0 text-white"><%= full_name(@current_user) %></span>
           </div>
         </div>
       </a>
