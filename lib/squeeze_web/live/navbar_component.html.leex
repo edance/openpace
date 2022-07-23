@@ -9,18 +9,16 @@
     <% end %>
 
     <%= if @current_user do %>
-      <a class="nav-link pr-0 order-md-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <div class="media align-items-center">
+      <div class="dropdown nav-item order-md-3 pr-0">
+      <a class="nav-link text-white dropdown-toggle align-items-center media" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user) %>
 
-          <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user) %>
-
-          <div class="media-body ml-2 d-none d-lg-block">
-            <span class="mb-0 font-weight-bold"><%= full_name(@current_user) %></span>
-          </div>
+        <div class="media-body ml-2 d-none d-lg-block">
+          <span class="mb-0 text-white"><%= full_name(@current_user) %></span>
         </div>
       </a>
 
-      <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+      <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbarDropdown">
         <%= link(to: Routes.profile_path(SqueezeWeb.Endpoint, :edit), class: "dropdown-item") do %>
           <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
           <span><%= gettext("Settings") %></span>
@@ -42,6 +40,7 @@
           <span class="iconify" data-icon="websymbol:logout" data-inline="false"></span>
           <span><%= gettext("Logout") %></span>
         <% end %>
+      </div>
       </div>
     <% end %>
 

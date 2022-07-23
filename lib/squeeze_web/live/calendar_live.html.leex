@@ -1,8 +1,7 @@
 <%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
 
-<div class="main-content">
-  <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
-
+<div class="main-content" id="panel">
+  <!-- Page content -->
   <div class="container container-dashboard d-flex align-items-center py-2">
     <%= live_patch gettext("Today"), to: Routes.calendar_path(@socket, :index), replace: true, class: "btn btn-secondary btn-sm" %>
 
@@ -19,7 +18,8 @@
     </span>
   </div>
 
-  <div class="calendar d-flex flex-column">
+  <div class="container container-dashboard">
+    <div class="card calendar d-flex flex-column">
     <div class="d-none d-md-flex row bg-waves no-gutters w-100">
       <div class="col small text-center"><%= gettext("Week") %></div>
       <div class="col small text-center"><%= gettext("Mon") %></div>
@@ -33,20 +33,21 @@
 
     <div class="row no-gutters flex-grow-1 w-100">
       <%= for {_week, dates} <- weeks(assigns) do %>
-      <div class="row no-gutters border-bottom w-100">
-        <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
+        <div class="row no-gutters w-100">
+          <%= live_component(SqueezeWeb.WeeklySummaryComponent, activities: activities_in_dates(dates, assigns), dates: dates, current_user: @current_user) %>
 
-        <%= for date <- dates do %>
-        <div class="col p-2 border-right bg-white">
-          <div class="pb-1 small">
-            <%= date_label(date, @current_user) %>
-          </div>
+          <%= for date <- dates do %>
+            <div class="col p-2">
+              <div class="pb-1 small">
+                <%= date_label(date, @current_user) %>
+              </div>
 
-          <%= live_component(SqueezeWeb.CalendarItemComponent, activities: Map.get(@activities_by_date, date, []), date: date, current_user: @current_user) %>
+              <%= live_component(SqueezeWeb.CalendarItemComponent, activities: Map.get(@activities_by_date, date, []), date: date, current_user: @current_user) %>
+            </div>
+          <% end %>
         </div>
-        <% end %>
-      </div>
       <% end %>
     </div>
+  </div>
   </div>
 </div>

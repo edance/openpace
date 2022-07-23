@@ -234,7 +234,7 @@ $section-colors: map-merge((
 
 // Links
 
-$link-color:                $primary !default;
+$link-color:                $white !default;
 $link-decoration:           none !default;
 $link-hover-color:          darken($link-color, 15%) !default;
 $link-hover-decoration:     none !default;
@@ -423,7 +423,7 @@ $lead-font-weight:            300 !default;
 
 $small-font-size:             80% !default;
 
-$text-muted:                  $gray-600 !default;
+$text-muted:                  $gray-400 !default;
 
 $blockquote-small-color:      $gray-600 !default;
 $blockquote-font-size:        ($font-size-base * 1.25) !default;
@@ -535,18 +535,18 @@ $input-border-radius-xl:                $border-radius-xl !default;
 $input-border-radius-lg:                $border-radius-lg !default;
 $input-border-radius-sm:                $border-radius-sm !default;
 
-$input-bg:                              $white !default;
+$input-bg:                              $gray-700 !default;
 $input-disabled-bg:                     $gray-200 !default;
 
 $input-muted-bg:                        #F7FAFE !default;
 $input-focus-muted-bg:                  lighten($input-muted-bg, 1%) !default;
 
-$input-color:                           $gray-600 !default;
-$input-border-color:                    $gray-300 !default;
+$input-color:                           $white !default;
+$input-border-color:                    $gray-600 !default;
 $input-border-width:                    $input-btn-border-width !default;
 $input-box-shadow:                      0 3px 2px rgba($gray-200, .05) !default;
 
-$input-focus-bg:                        $white !default;
+$input-focus-bg:                        $gray-700 !default;
 $input-focus-border-color:              $primary !default;
 $input-focus-color:                     $input-color !default;
 $input-focus-width:                     0 !default;

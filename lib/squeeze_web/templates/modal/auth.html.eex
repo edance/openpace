@@ -2,7 +2,7 @@
   <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
-        <div class="card bg-secondary shadow border-0">
+        <div class="card shadow border-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-muted text-center mt-2 mb-3">
               <small><%= gettext("Sign in with") %></small>
