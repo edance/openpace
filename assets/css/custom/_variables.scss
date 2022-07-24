@@ -472,7 +472,7 @@ $table-head-font-size:        .65rem !default;
 $table-head-font-weight:      $font-weight-bold !default;
 $table-head-text-transform:   uppercase !default;
 $table-head-letter-spacing:   1px !default;
-$table-head-bg:               $gray-100 !default;
+$table-head-bg:               transparent !default;
 $table-head-color:            $gray-600 !default;
 $table-action-color:          $gray-500 !default;
 
@@ -823,7 +823,7 @@ $alert-color-level: 0 !default;
 
 // List group
 
-$list-group-bg:                     $white !default;
+$list-group-bg:                     transparent !default;
 $list-group-border-color:           $border-color !default; //rgba($black, .125);
 $list-group-border-width:           $border-width !default;
 $list-group-border-radius:          $border-radius !default;

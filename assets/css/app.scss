@@ -77,6 +77,32 @@
   width: 150px;
 }
 
+.dashboard-bg {
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+
+  .waves {
+    position: absolute;
+    top: -70px;
+  }
+
+  .fill {
+    position: absolute;
+    top: 400px;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+.header .waves {
+  position: absolute;
+  top: -70px;
+}
+
 .header .waves {
   position: absolute;
   top: -70px;
