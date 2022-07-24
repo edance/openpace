@@ -2,12 +2,7 @@
 // @import "node_modules/flatpickr/dist/themes/confetti";
 // @import "node_modules/flatpickr/dist/themes/light";
 
-input.date-picker {
-  background-color: $white !important;
-}
-
 .flatpickr-calendar {
-  background: transparent;
   opacity: 0;
   display: none;
   text-align: center;
@@ -76,13 +71,13 @@ input.date-picker {
 }
 .flatpickr-calendar.hasTime .flatpickr-time {
   height: 40px;
-  border-top: 1px solid $gray-100;
+  border-top: 1px solid $input-bg;
 }
 .flatpickr-calendar.hasTime .flatpickr-innerContainer {
   border-bottom: 0;
 }
 .flatpickr-calendar.hasTime .flatpickr-time {
-  border: 1px solid $gray-100;
+  border: 1px solid $input-bg;
 }
 .flatpickr-calendar.noCalendar.hasTime .flatpickr-time {
   height: auto;
@@ -123,20 +118,20 @@ input.date-picker {
   bottom: 100%;
 }
 .flatpickr-calendar.arrowTop:before {
-  border-bottom-color: $gray-100;
+  border-bottom-color: $input-bg;
 }
 .flatpickr-calendar.arrowTop:after {
-  border-bottom-color: $gray-100;
+  border-bottom-color: $input-bg;
 }
 .flatpickr-calendar.arrowBottom:before,
 .flatpickr-calendar.arrowBottom:after {
   top: 100%;
 }
 .flatpickr-calendar.arrowBottom:before {
-  border-top-color: $gray-100;
+  border-top-color: $input-bg;
 }
 .flatpickr-calendar.arrowBottom:after {
-  border-top-color: $gray-100;
+  border-top-color: $input-bg;
 }
 .flatpickr-calendar:focus {
   outline: 0;
@@ -153,9 +148,9 @@ input.date-picker {
 }
 .flatpickr-months .flatpickr-month {
   border-radius: 5px 5px 0 0;
-  background: $gray-100;
-  color: $default;
-  fill: $default;
+  background: $input-bg;
+  color: $input-color;
+  fill: $input-color;
   height: 34px;
   line-height: 1;
   text-align: center;
@@ -179,8 +174,8 @@ input.date-picker {
   height: 34px;
   padding: 10px;
   z-index: 3;
-  color: $default;
-  fill: $default;
+  color: darken($input-color, 10%);
+  fill: darken($input-color, 10%);
 }
 .flatpickr-months .flatpickr-prev-month.flatpickr-disabled,
 .flatpickr-months .flatpickr-next-month.flatpickr-disabled {
@@ -224,11 +219,11 @@ input.date-picker {
       /*rtl:end:ignore*/
 .flatpickr-months .flatpickr-prev-month:hover,
 .flatpickr-months .flatpickr-next-month:hover {
-  color: $gray-400;
+  color: $input-color;
 }
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
-  fill: #f64747;
+  fill: $input-color;
 }
 .flatpickr-months .flatpickr-prev-month svg,
 .flatpickr-months .flatpickr-next-month svg {
@@ -348,10 +343,10 @@ input.date-picker {
   display: inline-block;
 }
 .flatpickr-current-month .numInputWrapper span.arrowUp:after {
-  border-bottom-color: $default;
+  border-bottom-color: $input-color;
 }
 .flatpickr-current-month .numInputWrapper span.arrowDown:after {
-  border-top-color: $default;
+  border-top-color: $input-color;
 }
 .flatpickr-current-month input.cur-year {
   background: transparent;
@@ -379,17 +374,17 @@ input.date-picker {
 .flatpickr-current-month input.cur-year[disabled],
 .flatpickr-current-month input.cur-year[disabled]:hover {
   font-size: 100%;
-  color: rgba(90,97,113,0.5);
+  color: $input-color;
   background: transparent;
   pointer-events: none;
 }
 .flatpickr-current-month .flatpickr-monthDropdown-months {
   appearance: menulist;
-  background: $gray-100;
+  background: $input-bg;
   border: none;
   border-radius: 0;
   box-sizing: border-box;
-  color: inherit;
+  color: $input-color;
   cursor: pointer;
   font-size: inherit;
   font-weight: 300;
@@ -413,12 +408,12 @@ input.date-picker {
   background: rgba(0,0,0,0.05);
 }
 .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
-  background-color: $gray-100;
+  background-color: $input-bg;
   outline: none;
   padding: 0;
 }
 .flatpickr-weekdays {
-  background: $gray-100;
+  background: $input-bg;
   text-align: center;
   overflow: hidden;
   width: 100%;
@@ -445,8 +440,8 @@ input.date-picker {
 span.flatpickr-weekday {
   cursor: default;
   font-size: 90%;
-  background: $gray-100;
-  color: $default;
+  background: $input-bg;
+  color: $input-color;
   line-height: 1;
   margin: 0;
   text-align: center;
@@ -473,8 +468,8 @@ span.flatpickr-weekday {
       -ms-flex-align: start;
           align-items: flex-start;
   width: 307.875px;
-  border-left: 1px solid $gray-100;
-  border-right: 1px solid $gray-100;
+  border-left: 1px solid $input-bg;
+  border-right: 1px solid $input-bg;
 }
 .flatpickr-days:focus {
   outline: 0;
@@ -504,16 +499,16 @@ span.flatpickr-weekday {
   opacity: 1;
 }
 .dayContainer + .dayContainer {
-  -webkit-box-shadow: -1px 0 0 $gray-100;
-          box-shadow: -1px 0 0 $gray-100;
+  -webkit-box-shadow: -1px 0 0 $input-bg;
+          box-shadow: -1px 0 0 $input-bg;
 }
 .flatpickr-day {
   background: none;
   border: 1px solid transparent;
   border-radius: 150px;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  color: #484848;
+  box-sizing: border-box;
+  color: $input-color;
   cursor: pointer;
   font-weight: 400;
   width: 14.2857143%;
@@ -548,6 +543,7 @@ span.flatpickr-weekday {
   outline: 0;
   background: #e2e2e2;
   border-color: #e2e2e2;
+  color: $input-bg;
 }
 .flatpickr-day.today {
   border-color: $gray-400;
@@ -615,7 +611,7 @@ span.flatpickr-weekday {
 .flatpickr-day.notAllowed,
 .flatpickr-day.notAllowed.prevMonthDay,
 .flatpickr-day.notAllowed.nextMonthDay {
-  color: rgba(72,72,72,0.3);
+  color: darken($input-color, 20%);
   background: transparent;
   border-color: transparent;
   cursor: default;
@@ -623,7 +619,7 @@ span.flatpickr-weekday {
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover {
   cursor: not-allowed;
-  color: rgba(72,72,72,0.1);
+  color: $input-color;
 }
 .flatpickr-day.week.selected {
   border-radius: 0;
@@ -641,7 +637,7 @@ span.flatpickr-weekday {
 }
 .flatpickr-weekwrapper .flatpickr-weeks {
   padding: 0 12px;
-  border-left: 1px solid $gray-100;
+  border-left: 1px solid $input-bg;
 }
 .flatpickr-weekwrapper .flatpickr-weekday {
   float: none;
@@ -653,7 +649,7 @@ span.flatpickr-weekday {
   display: block;
   width: 100%;
   max-width: none;
-  color: rgba(72,72,72,0.3);
+  color: $input-bg;
   background: transparent;
   cursor: default;
   border: none;
@@ -667,8 +663,8 @@ span.flatpickr-weekday {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
-  background: $white;
-  border-bottom: 1px solid $gray-100;
+  background: $input-bg;
+  border-bottom: 1px solid $input-bg;
 }
 .flatpickr-rContainer {
   display: inline-block;

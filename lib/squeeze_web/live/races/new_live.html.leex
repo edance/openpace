@@ -6,9 +6,7 @@
     <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
       <div class="card">
         <div class="card-header">
-          <h3 class="mb-0">
-            Race Information
-          </h3>
+          <h3 class="mb-0">Race Information</h3>
         </div>
         <!-- Card body -->
         <div class="card-body">
@@ -20,7 +18,7 @@
 
           <div class="form-group">
             <%= label(r, :distance, class: "form-control-label") %>
-            <%= autocomplete(r, :distance, distances(), class: "form-control form-control", placeholder: "Choose a distance") %>
+            <%= select(r, :distance, distances(), class: "distance-select form-control", placeholder: "Choose a distance") %>
             <%= error_tag(r, :distance) %>
           </div>
 
@@ -44,7 +42,7 @@
         </div>
         <!-- Card body -->
         <div class="card-body">
-          <div class="form-group focused">
+          <div class="form-group">
             <%= label f, :duration, class: "form-control-label" do %>
               Goal Time
             <% end %>

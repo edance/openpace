@@ -8,8 +8,7 @@ defmodule SqueezeWeb.Dashboard.LoadHistoryComponent do
 
   @impl true
   def handle_event("load_history", _params, socket) do
-    send(self(), :load_strava_history)
-    {:noreply, assign(socket, loading: true)}
+    send(self(), :start_history_loader)
+    {:noreply, socket}
   end
-
 end

@@ -4,6 +4,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   alias Squeeze.Dashboard
   alias Squeeze.Challenges
   alias Squeeze.Strava.HistoryLoader
+  alias SqueezeWeb.Endpoint
 
   @impl true
   def mount(_params, session, socket) do
@@ -19,6 +20,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       activity_summaries: summaries,
       activities: activities,
       challenges: Challenges.list_current_challenges(user),
+      loading: false,
       run_activities: run_activities(summaries),
       run_dates: run_dates(summaries),
       todays_activities: Dashboard.todays_activities(user),
@@ -29,11 +31,21 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   end
 
   @impl true
-  def handle_info(:load_strava_history, socket) do
+  def handle_info(:start_history_loader, socket) do
+    send(self(), :load_recent_history)
+    {:noreply, assign(socket, loading: true)}
+  end
+
+  @impl true
+  def handle_info(:load_recent_history, socket) do
     user = socket.assigns.current_user
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))
     HistoryLoader.load_recent(user, credential)
-    {:noreply, assign(socket, loading: false)}
+
+    socket = socket
+    |> redirect(to: Routes.overview_path(Endpoint, :index))
+
+    {:noreply, socket}
   end
 
   defp activity_map(summaries) do
