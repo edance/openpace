@@ -90,3 +90,24 @@ export function hexToRGB(hex, alpha) {
     return `rgb(${r}, ${g}, ${b})`;
   }
 }
+
+export function parseDistance(distanceStr) {
+  const parts = distanceStr.match(/([0-9\.,]*)\s*(km|k|m|mile|mi|miles)/);
+
+  if (parts.length !== 3) {
+    return null;
+  }
+
+  const distance = parseFloat(parts[1]);
+  if (isNaN(distance)) { return null; }
+
+  if (['mi', 'mile', 'miles'].indexOf(parts[2]) !== -1) {
+    return 1609 * distance;
+  }
+
+  if (['km', 'k'].indexOf(parts[2]) !== -1) {
+    return distance * 1000;
+  }
+
+  return distance;
+}

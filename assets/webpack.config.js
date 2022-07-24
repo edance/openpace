@@ -53,16 +53,6 @@ module.exports = (env, options) => {
           ]
         },
         {
-          test: require.resolve('jquery'),
-          use: [{
-            loader: 'expose-loader',
-            options: 'jQuery'
-          },{
-            loader: 'expose-loader',
-            options: '$'
-          }]
-        },
-        {
           test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
           loader: 'url-loader?limit=30000'
         }

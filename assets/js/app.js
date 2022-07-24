@@ -5,7 +5,9 @@ import '../css/app.scss';
 
 // Import dependencies
 import 'phoenix_html';
-import 'bootstrap';
+
+// Import bootstrap and required libraries
+import './bootstrap';
 
 // Import base components
 import './components/base';
