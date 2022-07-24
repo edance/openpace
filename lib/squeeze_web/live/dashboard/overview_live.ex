@@ -3,6 +3,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
 
   alias Squeeze.Dashboard
   alias Squeeze.Challenges
+  alias Squeeze.Races
   alias Squeeze.Strava.HistoryLoader
   alias SqueezeWeb.Endpoint
 
@@ -21,6 +22,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       activities: activities,
       challenges: Challenges.list_current_challenges(user),
       loading: false,
+      race_goal: Races.next_race_goal(user),
       run_activities: run_activities(summaries),
       run_dates: run_dates(summaries),
       todays_activities: Dashboard.todays_activities(user),
