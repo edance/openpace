@@ -3,6 +3,8 @@ defmodule Squeeze.Distances do
   This module defines the distances used in forms.
   """
 
+  alias Number.Delimit
+
   @mile_in_meters 1_609 # 1 mile == 1609 meters
 
   @distances [
@@ -35,10 +37,24 @@ defmodule Squeeze.Distances do
   def to_int(distance, [imperial: true]), do: trunc(distance / mile_in_meters())
   def to_int(distance, [imperial: _]), do: trunc(distance / 1_000)
 
-  def format(distance, opts), do: "#{to_float(distance, opts)} #{label(opts)}"
   def format(distance), do: format(distance, imperial: true)
+  def format(distance, opts) do
+    d = to_float(distance, opts)
+    |> Delimit.number_to_delimited(precision: 2)
+
+    "#{d} #{label(opts)}"
+  end
 
   def distances, do: @distances
+
+  def distance_name(distance, opts) do
+      dist_obj = Enum.find(@distances, &(&1.distance == distance))
+    if dist_obj do
+      dist_obj.name
+    else
+      format(distance, opts)
+    end
+  end
 
   def to_meters(nil, _), do: 0
   def to_meters(distance, :mi), do: distance * @mile_in_meters
