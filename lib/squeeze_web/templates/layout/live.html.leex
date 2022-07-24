@@ -1,5 +1,14 @@
 <div class="main-content">
   <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
 
-  <%= @inner_content %>
+  <%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+  <div class="main-content" id="panel">
+    <!-- Page Background -->
+    <div class="dashboard-bg">
+      <img class="waves" src="<%= Routes.static_path(@socket, "/images/waves.svg") %>" />
+      <div class="fill bg-waves"></div>
+    </div>
+
+    <%= @inner_content %>
+  </div>
 </div>

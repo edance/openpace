@@ -1,25 +1,21 @@
-<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+<div class="container container-dashboard d-flex align-items-center py-2">
+  <%= live_patch gettext("Today"), to: Routes.calendar_path(@socket, :index), replace: true, class: "btn btn-secondary btn-sm" %>
 
-<div class="main-content" id="panel">
-  <!-- Page content -->
-  <div class="container container-dashboard d-flex align-items-center py-2">
-    <%= live_patch gettext("Today"), to: Routes.calendar_path(@socket, :index), replace: true, class: "btn btn-secondary btn-sm" %>
+  <%= live_patch to: Routes.calendar_path(@socket, :index, date: prev(@date)), replace: true, class: "btn btn-primary btn-sm text-white btn-icon-only rounded-circle" do %>
+    <span class="iconify" data-icon="akar-icons:chevron-left" data-inline="false"></span>
+  <% end %>
 
-    <%= live_patch to: Routes.calendar_path(@socket, :index, date: prev(@date)), replace: true, class: "btn btn-primary btn-sm text-white btn-icon-only rounded-circle" do %>
-      <span class="iconify" data-icon="akar-icons:chevron-left" data-inline="false"></span>
-    <% end %>
+  <%= live_patch to: Routes.calendar_path(@socket, :index, date: next(@date)), replace: true, class: "btn btn-primary btn-sm text-white btn-icon-only rounded-circle" do %>
+    <span class="iconify" data-icon="akar-icons:chevron-right" data-inline="false"></span>
+  <% end %>
 
-    <%= live_patch to: Routes.calendar_path(@socket, :index, date: next(@date)), replace: true, class: "btn btn-primary btn-sm text-white btn-icon-only rounded-circle" do %>
-      <span class="iconify" data-icon="akar-icons:chevron-right" data-inline="false"></span>
-    <% end %>
+  <span class="h3 mb-0">
+    <%= Timex.format!(@date, "%B %Y", :strftime) %>
+  </span>
+</div>
 
-    <span class="h3 mb-0">
-      <%= Timex.format!(@date, "%B %Y", :strftime) %>
-    </span>
-  </div>
-
-  <div class="container container-dashboard">
-    <div class="card calendar d-flex flex-column">
+<div class="container container-dashboard">
+  <div class="card calendar d-flex flex-column">
     <div class="d-none d-md-flex row bg-waves no-gutters w-100">
       <div class="col small text-center"><%= gettext("Week") %></div>
       <div class="col small text-center"><%= gettext("Mon") %></div>
@@ -48,6 +44,5 @@
         </div>
       <% end %>
     </div>
-  </div>
   </div>
 </div>

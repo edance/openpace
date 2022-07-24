@@ -1,73 +1,68 @@
-<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-lg-7">
+      <%= for activity <- @activities do %>
+        <div class="card mb-3 overflow-hidden">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: activity.polyline) %>
+            </div>
 
-<div class="main-content" id="panel">
-  <!-- Page content -->
-  <div class="container pt-4">
-    <div class="row">
-      <div class="col-lg-7">
-        <%= for activity <- @activities do %>
-          <div class="card mb-3 overflow-hidden">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: activity.polyline) %>
-              </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity), class: "card-title" %>
+                    <p class="text-sm text-muted mb-0">
+                      <%= format_start_at_local(activity.start_at_local) %> · Race
+                    </p>
+                  </div>
+                </div>
 
-              <div class="col-md-8">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity), class: "card-title" %>
-                      <p class="text-sm text-muted mb-0">
-                        <%= format_start_at_local(activity.start_at_local) %> · Race
-                      </p>
-                    </div>
+                <div class="row pt-4">
+                  <div class="col-3">
+                    <div class="text-xs text-uppercase text-muted mb-0">Distance</div>
+                    <span class="h4 font-weight-bold mb-0"><%= format_distance(activity.distance, @current_user.user_prefs) %></span>
                   </div>
 
-                  <div class="row pt-4">
-                    <div class="col-3">
-                      <div class="text-xs text-uppercase text-muted mb-0">Distance</div>
-                      <span class="h4 font-weight-bold mb-0"><%= format_distance(activity.distance, @current_user.user_prefs) %></span>
+                  <div class="col-3">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Time
                     </div>
+                    <span class="h4 font-weight-bold mb-0"><%= format_duration(activity.duration) %></span>
+                  </div>
 
+                  <%= if activity.distance > 0 do %>
                     <div class="col-3">
                       <div class="text-xs text-uppercase text-muted mb-0">
-                        Time
+                        Pace
                       </div>
-                      <span class="h4 font-weight-bold mb-0"><%= format_duration(activity.duration) %></span>
+                      <span class="h4 font-weight-bold mb-0">
+                        <%= format_pace(activity, @current_user.user_prefs) %>
+                      </span>
                     </div>
+                  <% end %>
 
-                    <%= if activity.distance > 0 do %>
-                      <div class="col-3">
-                        <div class="text-xs text-uppercase text-muted mb-0">
-                          Pace
-                        </div>
-                        <span class="h4 font-weight-bold mb-0">
-                          <%= format_pace(activity, @current_user.user_prefs) %>
-                        </span>
+                  <%= if activity.elevation_gain > 0 do %>
+                    <div class="col-3">
+                      <div class="text-xs text-uppercase text-muted mb-0">
+                        Elevation
                       </div>
-                    <% end %>
-
-                    <%= if activity.elevation_gain > 0 do %>
-                      <div class="col-3">
-                        <div class="text-xs text-uppercase text-muted mb-0">
-                          Elevation
-                        </div>
-                        <span class="h4 font-weight-bold mb-0">
-                          <%= format_elevation_gain(activity.elevation_gain, @current_user.user_prefs) %>
-                        </span>
-                      </div>
-                    <% end %>
-                  </div>
+                      <span class="h4 font-weight-bold mb-0">
+                        <%= format_elevation_gain(activity.elevation_gain, @current_user.user_prefs) %>
+                      </span>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+    </div>
 
-      <div class="col-lg-5">
-        <%= live_component(SqueezeWeb.Races.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
-      </div>
+    <div class="col-lg-5">
+      <%= live_component(SqueezeWeb.Races.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
     </div>
   </div>
 </div>

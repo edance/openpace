@@ -1,20 +1,9 @@
-<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
-
-<!-- Header -->
-<div class="header pt-5 pt-xl-6 overflow-hidden">
-  <img class="waves" src="<%= Routes.static_path(@socket, "/images/waves.svg") %>" />
-
-  <div class="container container-dashboard">
-    <div class="header-body">
-      <%= live_component(SqueezeWeb.Dashboard.CardsComponent, current_user: @current_user, todays_activities: @todays_activities, run_dates: @run_dates, activity_summaries: @activity_summaries, race_goal: @race_goal) %>
-    </div>
-  </div>
-</div>
-
 <!-- Page content -->
-<div class="position-relative py-5 bg-waves">
+<div class="position-relative py-5">
   <div class="container container-dashboard">
-    <div class="row">
+    <%= live_component(SqueezeWeb.Dashboard.CardsComponent, current_user: @current_user, todays_activities: @todays_activities, run_dates: @run_dates, activity_summaries: @activity_summaries, race_goal: @race_goal) %>
+
+    <div class="row mt-5">
       <div class="col-xl-3 col-md-6">
         <%= live_component(SqueezeWeb.Dashboard.ProfileCardComponent, current_user: @current_user, ytd_run_stats: @ytd_run_stats) %>
 

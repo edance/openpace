@@ -1,5 +1,9 @@
-<div class="header bg-gradient-primary pb-8 pt-5 pt-xl-8"></div>
-<div class="container-fluid mt--7">
+<div class="dashboard-bg">
+  <img class="waves" src="<%= Routes.static_path(@conn, "/images/waves.svg") %>" />
+  <div class="fill bg-waves"></div>
+</div>
+
+<div class="container pt-5">
   <!-- Table -->
   <div class="row">
     <div class="col">

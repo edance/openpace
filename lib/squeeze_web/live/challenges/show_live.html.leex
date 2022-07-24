@@ -1,62 +1,57 @@
-<%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <%= live_component(SqueezeWeb.Challenges.PodiumCardComponent, challenge: @challenge, current_user: @current_user) %>
+    </div>
 
-<div id="panel" class="main-content bg-terrain pb-8 mb-0">
-  <div class="container pt-4">
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <%= live_component(SqueezeWeb.Challenges.PodiumCardComponent, challenge: @challenge, current_user: @current_user) %>
-      </div>
+    <div class="col-12 col-md-6">
+      <div class="card mb-8">
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Leaderboard</h3>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">
+                  <%= challenge_label(assigns) %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="list">
 
-      <div class="col-12 col-md-6">
-        <div class="card mb-8">
-          <!-- Card header -->
-          <div class="card-header border-0">
-            <h3 class="mb-0">Leaderboard</h3>
-          </div>
-          <!-- Light table -->
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
+              <%= for {score, idx} <- Enum.with_index(@challenge.scores) do %>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">
-                    <%= challenge_label(assigns) %>
+                  <th scope="row">
+                    <%= idx + 1 %>
                   </th>
-                </tr>
-              </thead>
-              <tbody class="list">
+                  <td scope="row">
+                    <div class="media align-items-center">
+                      <%= live_component(SqueezeWeb.AvatarComponent, user: score.user) %>
 
-                <%= for {score, idx} <- Enum.with_index(@challenge.scores) do %>
-                  <tr>
-                    <th scope="row">
-                      <%= idx + 1 %>
-                    </th>
-                    <td scope="row">
-                      <div class="media align-items-center">
-                        <%= live_component(SqueezeWeb.AvatarComponent, user: score.user) %>
-
-                        <div class="media-body ml-2">
-                          <span class="name mb-0 text-sm">
-                            <%= score.user.first_name %> <%= score.user.last_name %>
-                          </span>
-                        </div>
+                      <div class="media-body ml-2">
+                        <span class="name mb-0 text-sm">
+                          <%= score.user.first_name %> <%= score.user.last_name %>
+                        </span>
                       </div>
-                    </td>
-                    <td class="budget text-right">
-                      <%= format_score(@challenge, score.amount) %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <!-- Card footer -->
-          <div class="card-footer py-4">
-          </div>
+                    </div>
+                  </td>
+                  <td class="budget text-right">
+                    <%= format_score(@challenge, score.amount) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <!-- Card footer -->
+        <div class="card-footer py-4">
         </div>
       </div>
     </div>
   </div>
 </div>
-
