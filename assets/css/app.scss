@@ -141,8 +141,20 @@
   background-image: url('/images/bg-terrain.jpg');
 }
 
-.calendar {
-  height: calc(100vh - 76px);
+.calendar-row:nth-child(even) {
+  .calendar-item:nth-child(odd) {
+    background-color: lighten($card-bg, 5%);
+  }
+}
+
+.calendar-row:nth-child(odd) {
+  .calendar-item:nth-child(even) {
+    background-color: lighten($card-bg, 5%);
+  }
+}
+
+.calendar-item {
+  aspect-ratio: 1/1;
 }
 
 .segment-list {
