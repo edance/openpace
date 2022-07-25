@@ -18,6 +18,7 @@
             role="img"
             class="w-100"
             style="aspect-ratio: 2 / 1;"
+            phx-hook="RecentActivityChart"
             data-summaries="<%= Jason.encode!(@activity_summaries) %>"
             data-imperial="<%= @current_user.user_prefs.imperial %>"
     >

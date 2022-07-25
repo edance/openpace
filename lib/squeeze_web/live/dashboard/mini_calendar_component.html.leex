@@ -28,6 +28,7 @@
               aria-label="Mini Calendar of Activities"
               role="img"
               class="w-100"
+              phx-hook="CalendarChart"
               style="aspect-ratio: 4 / 3;"
               data-summaries="<%= Jason.encode!(data(assigns)) %>"
               data-imperial="<%= @current_user.user_prefs.imperial %>"
