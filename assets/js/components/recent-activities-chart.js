@@ -102,6 +102,9 @@ function init() {
       layout: {
         // padding: 30,
       },
+      elements: {
+        pointStyle: 'circle',
+      },
       plugins: {
         // tooltip: {
         //   callbacks: {
@@ -118,9 +121,7 @@ function init() {
         legend: {
           position: 'bottom',
           labels: {
-            boxWidth: 20,
-            boxHeight: 20,
-            pointStyle: 'circle',
+            boxWidth: 6,
             usePointStyle: true,
             color: 'white',
             padding: 15,
