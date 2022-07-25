@@ -1,7 +1,6 @@
 import {Socket} from "phoenix";
 import LiveSocket from "phoenix_live_view";
-
-const hooks = {};
+import hooks from './hooks/base';
 
 function scrollAt() {
   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;

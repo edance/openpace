@@ -1,10 +1,12 @@
 defmodule SqueezeWeb.Dashboard.OverviewLive do
   use SqueezeWeb, :live_view
 
+  alias Squeeze.Accounts.User
   alias Squeeze.Dashboard
   alias Squeeze.Challenges
   alias Squeeze.Races
   alias Squeeze.Strava.HistoryLoader
+  alias Squeeze.TimeHelper
   alias SqueezeWeb.Endpoint
 
   @impl true
@@ -19,17 +21,20 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       current_user: user,
       activity_map: activity_map,
       activity_summaries: summaries,
-      activities: activities,
       challenges: Challenges.list_current_challenges(user),
       loading: false,
       race_goal: Races.next_race_goal(user),
-      run_activities: run_activities(summaries),
       run_dates: run_dates(summaries),
       todays_activities: Dashboard.todays_activities(user),
       ytd_run_stats: Squeeze.Stats.ytd_run_summary(user)
     )
 
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("load-week", params, socket) do
+    {:noreply, push_patch(socket, to: Routes.overview_path(socket, :index, date: params["date"]), replace: true)}
   end
 
   @impl true
@@ -50,6 +55,19 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_params(params, _uri, socket) do
+    user = socket.assigns.current_user
+    date = parse_date(user, params["date"])
+    dates = Date.range(date, Timex.end_of_week(date))
+    activities = Dashboard.list_activities(user, dates)
+
+    socket = assign(socket,
+      activities: activities
+    )
+    {:noreply, socket}
+  end
+
   defp activity_map(summaries) do
     summaries
     |> Enum.reduce(%{}, fn(x, acc) ->
@@ -59,16 +77,19 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     end)
   end
 
-  defp run_activities(summaries) do
-    summaries
-    |> Enum.filter(&(String.contains?(&1.type, "Run")))
-  end
-
   defp run_dates(summaries) do
     summaries
     |> Enum.filter(&(String.contains?(&1.type, "Run")))
     |> Enum.map(&(Timex.to_date(&1.start_at_local)))
     |> Enum.uniq()
     |> Enum.reject(&is_nil/1)
+  end
+
+  defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
+  defp parse_date(%User{} = user, date) do
+    case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
+      {:ok, date} -> date
+      {:error, _} -> parse_date(user, nil)
+    end
   end
 end
