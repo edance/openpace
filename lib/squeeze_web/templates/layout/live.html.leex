@@ -1,7 +1,7 @@
 <div class="main-content">
   <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
 
-  <%= live_component(SqueezeWeb.NavbarComponent, current_user: @current_user) %>
+  <%= live_component(SqueezeWeb.NavbarComponent, id: "nav-bar", current_user: @current_user) %>
   <div class="main-content" id="panel">
     <!-- Page Background -->
     <div class="dashboard-bg">
