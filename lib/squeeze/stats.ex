@@ -7,6 +7,7 @@ defmodule Squeeze.Stats do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Activity
   alias Squeeze.Repo
+  alias Squeeze.TimeHelper
 
   def ytd_run_summary(%User{} = user) do
     time_window = Timex.now()
@@ -45,6 +46,36 @@ defmodule Squeeze.Stats do
         type: a.type,
         month: fragment("date_trunc('month', ?)", a.start_at_local)
       }
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Returns a number for the current activity streak for a user.
+  """
+  def current_activity_streak(%User{} = user) do
+    dates = active_dates(user)
+    today = TimeHelper.today(user)
+    yesterday = Timex.shift(today, days: -1)
+    most_recent_date = List.first(dates)
+
+    if today == most_recent_date || yesterday == most_recent_date do
+      streak = dates
+      |> Enum.with_index()
+      |> Enum.reduce_while(0, fn({x, idx}, acc) ->
+        if x == Timex.shift(most_recent_date, days: -idx), do: {:cont, acc + 1}, else: {:halt, acc}
+      end)
+    else
+      0
+    end
+  end
+
+  defp active_dates(%User{} = user) do
+    query = from a in Activity,
+      where: [user_id: ^user.id],
+      select: type(a.start_at_local, :date),
+      group_by: [type(a.start_at_local, :date)],
+      order_by: [desc: type(a.start_at_local, :date)]
 
     Repo.all(query)
   end

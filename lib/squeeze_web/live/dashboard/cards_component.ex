@@ -3,23 +3,8 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Distances
-  alias Squeeze.TimeHelper
 
   def improvement_amount(%User{} = user), do: User.improvement_amount(user)
-
-  def streak(%{run_dates: dates, current_user: user}) do
-    today = TimeHelper.today(user)
-    yesterday = Timex.shift(today, days: -1)
-    most_recent_date = List.first(dates)
-    if today == most_recent_date || yesterday == most_recent_date do
-      streak = dates
-      |> Enum.with_index()
-      |> Enum.filter(fn({x, idx}) -> x == Timex.shift(most_recent_date, days: -idx) end)
-      "#{length(streak)} day streak"
-    else
-      "0 day streak"
-    end
-  end
 
   def weekly_distance(%{activity_summaries: summaries, current_user: user}) do
     date = Timex.now()

@@ -101,8 +101,12 @@
         </div>
 
         <p class="mt-3 mb-0 text-muted text-sm">
-          <span class="iconify text-red mr-1" data-icon="fa-solid:fire"></span>
-          <%= streak(assigns) %>
+          <%= if @current_streak > 0 do  %>
+            <span class="iconify text-red mr-1" data-icon="fa-solid:fire"></span>
+          <% else %>
+            <span class="iconify mr-1" data-icon="fa-solid:fire"></span>
+          <% end %>
+          <%= format_number(@current_streak) %> day streak
         </p>
       </div>
     </div>
