@@ -12,7 +12,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   @impl true
   def mount(_params, session, socket) do
     user = socket.assigns[:current_user] || get_current_user(session)
-    activities = Dashboard.recent_activities(user)
     summaries = Dashboard.list_activity_summaries(user)
     activity_map = activity_map(summaries)
 

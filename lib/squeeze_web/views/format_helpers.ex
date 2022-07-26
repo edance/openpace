@@ -91,6 +91,12 @@ defmodule SqueezeWeb.FormatHelpers do
     Timex.format!(date, "%b #{Ordinal.ordinalize(date.day)}", :strftime)
   end
 
+  def format_date_with_time(start_at) do
+    date = Ordinal.ordinalize(start_at.day)
+    start_at
+    |> Timex.format!("%a %b #{date}, %Y at %-I:%M %p", :strftime)
+  end
+
   def format_score(%{challenge_type: :segment}, amount) do
     if amount > 0 do
       format_duration(amount)

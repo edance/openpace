@@ -12,12 +12,70 @@
 
       <div class="col-xl-5 col-md-6 mb-5 mb-xl-0">
         <%= live_component(SqueezeWeb.Dashboard.RecentActivitiesCardComponent, id: "recent-activity-card", current_user: @current_user, activity_summaries: @activity_summaries) %>
+
+        <%= for activity <- @activities do %>
+          <div class="card mb-3 overflow-hidden">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: activity.polyline) %>
+              </div>
+
+              <div class="col-md-8">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity), class: "card-title" %>
+                      <p class="text-sm text-muted mb-0">
+                        <%= format_date_with_time(activity.start_at_local) %> · <%= activity.type %>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row pt-4">
+                    <div class="col">
+                      <div class="text-xs text-uppercase text-muted mb-0">Distance</div>
+                      <span class="h4 font-weight-bold mb-0"><%= format_distance(activity.distance, @current_user.user_prefs) %></span>
+                    </div>
+
+                    <div class="col">
+                      <div class="text-xs text-uppercase text-muted mb-0">
+                        Time
+                      </div>
+                      <span class="h4 font-weight-bold mb-0"><%= format_duration(activity.duration) %></span>
+                    </div>
+
+                    <%= if activity.distance > 0 && String.contains?(activity.type, "Run") do %>
+                      <div class="col">
+                        <div class="text-xs text-uppercase text-muted mb-0">
+                          Pace
+                        </div>
+                        <span class="h4 font-weight-bold mb-0">
+                          <%= format_pace(activity, @current_user.user_prefs) %>
+                        </span>
+                      </div>
+                    <% end %>
+
+                    <%= if activity.elevation_gain > 0 do %>
+                      <div class="col">
+                        <div class="text-xs text-uppercase text-muted mb-0">
+                          Elevation
+                        </div>
+                        <span class="h4 font-weight-bold mb-0">
+                          <%= format_elevation_gain(activity.elevation_gain, @current_user.user_prefs) %>
+                        </span>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
       </div>
 
       <div class="col-xl-4">
-        <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, current_user: @current_user, activity_map: @activity_map) %>
-
-        <%= live_component(SqueezeWeb.Dashboard.LoadHistoryComponent, current_user: @current_user, loading: @loading, id: @current_user.id) %>
+        <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, id: "mini-calendar-card", current_user: @current_user, activity_map: @activity_map) %>
       </div>
     </div>
     <div class="row mt-5">
