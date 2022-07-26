@@ -97,6 +97,10 @@ defmodule SqueezeWeb.FormatHelpers do
     |> Timex.format!("%a %b #{date}, %Y at %-I:%M %p", :strftime)
   end
 
+  def format_number(num) do
+    Delimit.number_to_delimited(num, precision: 0)
+  end
+
   def format_score(%{challenge_type: :segment}, amount) do
     if amount > 0 do
       format_duration(amount)

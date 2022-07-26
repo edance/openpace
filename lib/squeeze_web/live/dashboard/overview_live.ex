@@ -4,6 +4,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard
   alias Squeeze.Challenges
+  alias Squeeze.Stats
   alias Squeeze.Races
   alias Squeeze.Strava.HistoryLoader
   alias Squeeze.TimeHelper
@@ -21,11 +22,11 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       activity_map: activity_map,
       activity_summaries: summaries,
       challenges: Challenges.list_current_challenges(user),
+      current_streak: Stats.current_activity_streak(user),
       loading: false,
       race_goal: Races.next_race_goal(user),
-      run_dates: run_dates(summaries),
       todays_activities: Dashboard.todays_activities(user),
-      ytd_run_stats: Squeeze.Stats.ytd_run_summary(user)
+      ytd_run_stats: Stats.ytd_run_summary(user)
     )
 
     {:ok, socket}
@@ -74,14 +75,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       list = Map.get(acc, date, [])
       Map.put(acc, date, [x | list])
     end)
-  end
-
-  defp run_dates(summaries) do
-    summaries
-    |> Enum.filter(&(String.contains?(&1.type, "Run")))
-    |> Enum.map(&(Timex.to_date(&1.start_at_local)))
-    |> Enum.uniq()
-    |> Enum.reject(&is_nil/1)
   end
 
   defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
