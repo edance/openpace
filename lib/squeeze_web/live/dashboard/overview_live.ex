@@ -59,7 +59,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   def handle_params(params, _uri, socket) do
     user = socket.assigns.current_user
     date = parse_date(user, params["date"])
-    dates = Date.range(date, Timex.end_of_week(date))
+    dates = Date.range(Timex.beginning_of_week(date), Timex.end_of_week(date))
     activities = Dashboard.list_activities(user, dates)
 
     socket = assign(socket,
