@@ -2,24 +2,7 @@ import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { parse } from 'date-fns';
 import { colors, fonts } from './../variables.js';
-import { calcDistance, calcFeet, roundTo } from '../utils';
-
-const backgroundColors = [
-  'rgba(255, 99, 132, 0.2)',
-  'rgba(54, 162, 235, 0.2)',
-  'rgba(255, 206, 86, 0.2)',
-  'rgba(75, 192, 192, 0.2)',
-  'rgba(153, 102, 255, 0.2)',
-  'rgba(255, 159, 64, 0.2)'
-];
-const borderColor = [
-  'rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)'
-];
+import { activityColor, calcDistance, calcFeet, hexToRGB, roundTo } from '../utils';
 
 function bubbleSize(activities) {
   const minBubble = 10;
@@ -60,23 +43,13 @@ export default {
             const index = context.dataIndex;
             const value = context.dataset.data[index];
 
-            if (value.types.length === 1) {
-              const type = value.types[0];
-              if (type === 'Run') { return backgroundColors[0]; }
-              if (type === 'Ride') { return backgroundColors[1]; }
-            }
-            return backgroundColors[2];
+            return hexToRGB(activityColor(value.types[0]), 0.2);
           },
           borderColor: function(context, options) {
             const index = context.dataIndex;
             const value = context.dataset.data[index];
 
-            if (value.types.length === 1) {
-              const type = value.types[0];
-              if (type === 'Run') { return borderColor[0]; }
-              if (type === 'Ride') { return borderColor[1]; }
-            }
-            return backgroundColors[2];
+            return hexToRGB(activityColor(value.types[0]), 1.0);
           },
           borderWidth: 1
         }]
@@ -112,8 +85,9 @@ export default {
               return 'center';
             },
             color: function(context) {
-              var value = context.dataset.data[context.dataIndex];
-              return 'white';
+              const { date } = context.dataset.data[context.dataIndex];
+              const today = new Date();
+              return date.getMonth() === today.getMonth() ? 'white' : hexToRGB(colors.white, 0.5);
             },
             font: {
               weight: 'bold'
