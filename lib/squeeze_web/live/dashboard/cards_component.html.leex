@@ -89,7 +89,7 @@
                 <%= gettext("None") %>
               <% end %>
               <%= for activity <- @todays_activities do %>
-                <%= link(activity.name || activity.type, to: Routes.activity_path(@socket, :show, activity), class: "text-default") %>
+                <%= link(activity.name || activity.type, to: Routes.activity_path(@socket, :show, activity)) %>
               <% end %>
             </span>
           </div>

@@ -9,6 +9,10 @@ defmodule SqueezeWeb.Activities.MapComponent do
     |> Jason.encode!()
   end
 
+  def show_pace?(%{activity: activity}) do
+    activity.type == "Run"
+  end
+
   def path_layer(%{trackpoints: trackpoints, activity: activity}) do
     avg_velocity = average_velocity(activity)
     [first_tp | trackpoints] = trackpoints
