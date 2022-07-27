@@ -45,7 +45,7 @@
             <% end %>
           </div>
         </div>
-        <%= if trackpoints?(assigns) do %>
+        <%= if show_splits?(assigns) do %>
           <%= live_component SqueezeWeb.Activities.SplitsComponent, trackpoints: @trackpoints, current_user: @current_user %>
         <% end %>
       </div>

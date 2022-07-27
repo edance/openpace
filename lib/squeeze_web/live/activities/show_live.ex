@@ -80,6 +80,10 @@ defmodule SqueezeWeb.Activities.ShowLive do
     |> Enum.any?(&(!is_nil(&1)))
   end
 
+  def show_splits?(%{trackpoints: trackpoints, activity: activity}) do
+    !Enum.empty?(trackpoints) && activity.type == "Run"
+  end
+
   def trackpoints?(%{trackpoints: trackpoints}) do
     !Enum.empty?(trackpoints)
   end

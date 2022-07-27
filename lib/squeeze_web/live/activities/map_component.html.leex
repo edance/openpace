@@ -4,14 +4,16 @@
        data-coordinates="<%= coordinates(assigns) %>">
   </div>
 
-  <div class="fluid-container">
-    <div class="row mx-0">
-      <% pace = pace(assigns) %>
-      <%= for color <- gradient() do %>
+  <%= if show_pace?(assigns) do %>
+    <div class="fluid-container">
+      <div class="row mx-0">
+        <% pace = pace(assigns) %>
+        <%= for color <- gradient() do %>
           <div class="col text-white small" style="background-color: <%= color.color %>">
             <%= format_duration(pace / color.factor) %>
           </div>
-          <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
