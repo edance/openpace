@@ -1,3 +1,5 @@
+import { colors } from './variables.js';
+
 export function formatDate(date) {
   let month = date.getMonth() + 1,
       day = date.getDate(),
@@ -110,4 +112,15 @@ export function parseDistance(distanceStr) {
   }
 
   return distance;
+}
+
+export function activityColor(type) {
+  const map = {
+    'Run': colors['red'],
+    'Hike': colors['orange'],
+    'Ride': colors['blue'],
+    'Swim': colors['green'],
+  };
+
+  return map[type] || colors['yellow'];
 }

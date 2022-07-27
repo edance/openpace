@@ -1,36 +1,8 @@
 import Chart from 'chart.js/auto';
 import { parse } from 'date-fns';
 import { colors, fonts } from './../variables.js';
-import { calcDistance, calcFeet, hexToRGB, roundTo } from '../utils';
+import { activityColor, calcDistance, calcFeet, hexToRGB, roundTo } from '../utils';
 import { DateTime } from "luxon";
-
-const backgroundColors = [
-  'rgba(255, 99, 132, 0.2)',
-  'rgba(54, 162, 235, 0.2)',
-  'rgba(255, 206, 86, 0.2)',
-  'rgba(75, 192, 192, 0.2)',
-  'rgba(153, 102, 255, 0.2)',
-  'rgba(255, 159, 64, 0.2)'
-];
-const borderColor = [
-  'rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)'
-];
-
-function activityColor(type) {
-  const map = {
-    'Run': colors['red'],
-    'Hike': colors['orange'],
-    'Ride': colors['blue'],
-    'Swim': colors['green'],
-  };
-
-  return map[type] || colors['yellow'];
-}
 
 function lastXWeeks() {
   const weekCount = 52;
@@ -140,6 +112,17 @@ export default {
               color: 'white',
             },
           },
+        },
+        onHover: (evt) => {
+          const { chart } = evt;
+          const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+          if (points.length) {
+            evt.native.target.style.cursor = 'pointer';
+          }
+          else {
+            evt.native.target.style.cursor = 'inherit';
+          }
         },
         onClick: (evt) => {
           const { chart } = evt;
