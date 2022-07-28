@@ -31,6 +31,12 @@ defmodule Squeeze.Races do
     |> Repo.preload([:events, :result_summaries])
   end
 
+  def get_race_goal!(slug) do
+    RaceGoal
+    |> Repo.get_by!(slug: slug)
+    |> Repo.preload([:race])
+  end
+
   def create_race(attrs \\ %{}) do
     %Race{}
     |> Race.changeset(attrs)
@@ -42,7 +48,7 @@ defmodule Squeeze.Races do
     |> RaceGoal.changeset(attrs)
     |> Changeset.cast_assoc(:race, with: &Race.changeset/2)
     |> Changeset.put_change(:user_id, user.id)
-    |> Repo.insert()
+    |> Repo.insert_with_slug()
   end
 
   def list_race_activities(%User{} = user) do

@@ -32,12 +32,12 @@
                   </div>
 
                   <div class="row pt-4">
-                    <div class="col">
+                    <div class="col-4">
                       <div class="text-xs text-uppercase text-muted mb-0">Distance</div>
                       <span class="h4 font-weight-bold mb-0"><%= format_distance(activity.distance, @current_user.user_prefs) %></span>
                     </div>
 
-                    <div class="col">
+                    <div class="col-4">
                       <div class="text-xs text-uppercase text-muted mb-0">
                         Time
                       </div>
@@ -45,7 +45,7 @@
                     </div>
 
                     <%= if activity.distance > 0 && String.contains?(activity.type, "Run") do %>
-                      <div class="col">
+                      <div class="col-4">
                         <div class="text-xs text-uppercase text-muted mb-0">
                           Pace
                         </div>
@@ -56,7 +56,7 @@
                     <% end %>
 
                     <%= if activity.elevation_gain > 0 do %>
-                      <div class="col">
+                      <div class="col-4">
                         <div class="text-xs text-uppercase text-muted mb-0">
                           Elevation
                         </div>

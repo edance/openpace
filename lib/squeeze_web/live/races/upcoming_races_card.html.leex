@@ -23,7 +23,7 @@
 
           <div class="timeline-content">
             <h3 class="mb-0">
-              <%= live_redirect race.name, to: Routes.race_path(@socket, :show, race.slug), class: "card-title" %>
+              <%= live_redirect race.name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "card-title" %>
             </h3>
             <small class="text-muted font-weight-bold">
               <%= race_date(race) %> (<%= relative_date(@current_user, race.start_date) %>)

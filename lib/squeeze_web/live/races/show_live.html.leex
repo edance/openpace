@@ -1,1 +1,99 @@
-Nice
+  <div class="pt-5 pb-8 mb-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <h1 class="display-3 mb-0">
+            <%= @race.name %>
+          </h1>
+
+          <p class="mt-0 text-muted">
+            <%= format_ordinal_date(@race.start_date) %> (<%= relative_date(@current_user, @race.start_date) %>)
+          </p>
+
+          <div class="card">
+            <div class="card-body">
+              <%= unless @race_goal.just_finish do %>
+                <div class="row pt-4">
+                  <div class="col">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Distance
+                    </div>
+                    <span class="h4 font-weight-bold mb-0">
+                      <%= distance_name(@race, @current_user) %>
+                    </span>
+                  </div>
+
+                  <div class="col">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Goal
+                    </div>
+                    <span class="h4 font-weight-bold mb-0">
+                      <%= format_duration(@race_goal.duration) %>
+                    </span>
+                  </div>
+
+                  <div class="col">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Pace
+                    </div>
+                    <span class="h4 font-weight-bold mb-0">
+                      <%= format_pace(%{distance: @race.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                    </span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    <%= gettext("Race Goal") %>
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= if @race_goal do %>
+                      <%= if @race_goal.just_finish do %>
+                        <%= gettext("Finish") %>
+                      <% else %>
+                        <%= format_duration(@race_goal.duration) %>
+                      <% end %>
+                    <% else %>
+                      <%= gettext("TBD") %>
+                    <% end %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                    <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <div class="col-auto">
+                  <div class="text-xs text-uppercase text-muted mb-0">
+                    Distance
+                  </div>
+                  <span class="h4 font-weight-bold mb-0">
+                    <%= distance_name(@race, @current_user) %>
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <div class="text-xs text-uppercase text-muted mb-0">
+                    Pace
+                  </div>
+                  <span class="h4 font-weight-bold mb-0">
+                    <%= format_pace(%{distance: @race.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
