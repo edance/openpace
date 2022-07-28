@@ -7,7 +7,7 @@ defmodule Squeeze.Races.Race do
   import Ecto.Changeset
 
   alias Squeeze.SlugGenerator
-  alias Squeeze.Races.{Event, Race, ResultSummary}
+  alias Squeeze.Races.{Event, Race, RaceGoal, ResultSummary}
 
   @required_fields ~w(
     name
@@ -56,6 +56,7 @@ defmodule Squeeze.Races.Race do
 
     has_many :events, Event
     has_many :result_summaries, ResultSummary
+    has_many :race_goals, RaceGoal
 
     timestamps()
   end

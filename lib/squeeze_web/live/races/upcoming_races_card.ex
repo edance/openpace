@@ -9,7 +9,6 @@ defmodule SqueezeWeb.Races.UpcomingRacesCard do
     purple
     red
     orange
-    yellow
     green
     teal
     cyan

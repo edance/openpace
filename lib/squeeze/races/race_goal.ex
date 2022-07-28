@@ -9,11 +9,13 @@ defmodule Squeeze.Races.RaceGoal do
   alias Squeeze.Accounts.User
   alias Squeeze.Duration
   alias Squeeze.Races.{Race, RaceGoal}
+  alias Squeeze.SlugGenerator
 
   @required_fields ~w()a
   @optional_fields ~w(duration just_finish)a
 
   schema "race_goals" do
+    field :slug, :string
     field :duration, Duration
     field :just_finish, :boolean
 
@@ -26,6 +28,7 @@ defmodule Squeeze.Races.RaceGoal do
   def changeset(%RaceGoal{} = race_goal, attrs) do
     race_goal
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> put_change(:slug, SlugGenerator.gen_slug())
     |> validate_required(@required_fields)
   end
 end
