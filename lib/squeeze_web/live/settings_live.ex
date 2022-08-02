@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.SettingsLive do
   use SqueezeWeb, :live_view
 
+  alias Phoenix.LiveView.Helpers
   alias Squeeze.Accounts
 
   @moduledoc """
@@ -34,6 +35,11 @@ defmodule SqueezeWeb.SettingsLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
+  end
+
+  def link_item(socket, current_action, text, route_action) do
+    class_list = "nav-link#{if current_action == route_action, do: " active"}"
+    Helpers.live_redirect(text, class: class_list, to: Routes.settings_path(socket, route_action))
   end
 
   def membership_status(%{current_user: user}) do

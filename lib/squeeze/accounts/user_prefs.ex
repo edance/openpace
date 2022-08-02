@@ -6,7 +6,7 @@ defmodule Squeeze.Accounts.UserPrefs do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Accounts.{User, UserPrefs}
+  alias Squeeze.Accounts.{PersonalRecord, User, UserPrefs}
   alias Squeeze.Duration
 
   @required_fields ~w()a
@@ -41,6 +41,8 @@ defmodule Squeeze.Accounts.UserPrefs do
     field :rename_activities, :boolean
     field :emoji, :boolean
     field :branding, :boolean
+
+    embeds_many :personal_records, PersonalRecord
 
     belongs_to :user, User
 

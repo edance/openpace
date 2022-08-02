@@ -19,12 +19,12 @@
       </a>
 
       <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <%= link(to: Routes.profile_path(SqueezeWeb.Endpoint, :edit), class: "dropdown-item") do %>
+        <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :general), class: "dropdown-item") do %>
           <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
           <span><%= gettext("Settings") %></span>
         <% end %>
 
-        <%= link(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "dropdown-item") do %>
+        <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "dropdown-item") do %>
           <span class="iconify" data-icon="heroicons-solid:refresh" data-inline="false"></span>
           <span><%= gettext("Rename Activities") %></span>
         <% end %>
