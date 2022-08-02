@@ -90,6 +90,7 @@ defmodule SqueezeWeb.Router do
     live "/races/new", Races.NewLive, :new, as: :race
     live "/races/:slug", Races.ShowLive, :show, as: :race
 
+    live "/settings", SettingsLive, :general
     live "/settings/namer", SettingsLive, :namer
   end
 
@@ -97,9 +98,6 @@ defmodule SqueezeWeb.Router do
     pipe_through [:browser, :dashboard_layout]
 
     get "/", DashboardController, :index
-
-    get "/settings", ProfileController, :edit
-    put "/settings", ProfileController, :update
 
     get "/billing", BillingController, :portal
     get "/checkout", BillingController, :checkout

@@ -700,8 +700,8 @@ $map-height: 500px !default;
 
 $nav-link-padding-y:                .25rem !default;
 $nav-link-padding-x:                .75rem !default;
-$nav-link-color:                    $gray-700 !default;
-$nav-link-hover-color:              theme-color("primary") !default;
+$nav-link-color:                    $link-color;
+$nav-link-hover-color:              $link-hover-color;
 $nav-link-disabled-color:           $gray-600 !default;
 
 $nav-pills-padding-y:               .75rem !default;
@@ -709,16 +709,17 @@ $nav-pills-padding-x:               1rem !default;
 
 $nav-pills-space-x:                 1rem !default;
 
-$nav-pills-bg:                      $white !default;
+$nav-pills-bg:                      transparent !default;
 $nav-pills-border-width:            1px !default;
 $nav-pills-border-color:            theme-color("primary") !default;
 $nav-pills-border-radius:           $border-radius !default;
 
-$nav-pills-link-color:              theme-color("primary") !default;
-$nav-pills-link-hover-color:        darken(theme-color("primary"), 5%) !default;
+$nav-pills-link-color:              $nav-link-color;
+$nav-pills-link-hover-color:        $nav-link-hover-color;
+$nav-pills-link-disabled-color:     $nav-link-disabled-color;
 $nav-pills-link-active-color:       color-yiq(theme-color("primary")) !default;
 $nav-pills-link-active-bg:          theme-color("primary") !default;
-$nav-pills-box-shadow:              $btn-box-shadow !default;
+$nav-pills-box-shadow:              none !default;
 
 
 

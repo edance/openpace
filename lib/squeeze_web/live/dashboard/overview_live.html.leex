@@ -8,6 +8,32 @@
         <%= live_component(SqueezeWeb.Dashboard.ProfileCardComponent, current_user: @current_user, ytd_run_stats: @ytd_run_stats) %>
 
         <%= live_component(SqueezeWeb.Dashboard.ChallengesCardComponent, current_user: @current_user, challenges: @challenges) %>
+
+        <div class="card bg-gradient-default">
+          <div class="card-header bg-transparent">
+            <div class="row">
+              <div class="col">
+                <h3 class="mb-0">
+                  <%= gettext("Personal Records") %>
+                </h3>
+              </div>
+
+              <div class="col-auto text-right">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#personalRecordModal">
+                  <%= gettext("Add") %>
+                </button>
+
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <%= for pr <- @current_user.user_prefs.personal_records do %>
+              <%= pr.distance %>
+              <%= pr.duration %>
+              <%= pr.results_url %>
+            <% end %>
+          </div>
+        </div>
       </div>
 
       <div class="col-xl-5 col-md-6 mb-5 mb-xl-0">
@@ -80,6 +106,29 @@
     </div>
     <div class="row mt-5">
       <div class="col-xl-8 mb-5 mb-xl-0">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="personalRecordModal" tabindex="-1" role="dialog" aria-labelledby="personalRecordModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="personalRecordModalLabel">
+          <%= gettext("Personal Records") %>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
