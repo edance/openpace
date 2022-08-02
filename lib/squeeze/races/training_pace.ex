@@ -7,8 +7,6 @@ defmodule Squeeze.Races.TrainingPace do
 
   alias Squeeze.Colors
   alias Squeeze.RacePredictor
-  alias Squeeze.Races.RaceGoal
-
   import Squeeze.Distances, only: [marathon_in_meters: 0, mile_in_meters: 0]
 
   embedded_schema do

@@ -1,88 +1,29 @@
-  <div class="pt-5 pb-8 mb-0">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-8">
-          <h1 class="display-3 mb-0">
-            <%= @race.name %>
-          </h1>
+<div class="pt-5 pb-8 mb-0">
+  <div class="container container-dashboard">
+    <div class="row">
+      <div class="col-12 col-md-9">
+        <h1 class="display-3 mb-0">
+          <%= @race.name %>
+        </h1>
 
-          <p class="mt-0">
-            <%= format_ordinal_date(@race.start_date) %> (<%= relative_date(@current_user, @race.start_date) %>)
-          </p>
+        <p class="mt-0">
+          <%= format_ordinal_date(@race.start_date) %> (<%= relative_date(@current_user, @race.start_date) %>)
+        </p>
 
-          <div class="card">
-            <div class="card-body">
-              <ul>
-                <li>A - Training paces for the course - Automatically generated</li>
-                <li>A - Training plan for the marathon - Allow them to select from a list?</li>
-                <li>A - Personal Records for the marathon</li>
-                <li>B - Weekly effort - look in the Jeff Daniels book for formula</li>
-                <li>C - Map of the course</li>
-                <li>C - Elevation chart of the course</li>
-              </ul>
+        <div class="card">
+          <div class="card-body">
+            <ul>
+              <li>A - Training paces for the course - Automatically generated</li>
+              <li>A - Training plan for the marathon - Allow them to select from a list?</li>
+              <li>A - Personal Records for the marathon</li>
+              <li>B - Weekly effort - look in the Jeff Daniels book for formula</li>
+              <li>C - Map of the course</li>
+              <li>C - Elevation chart of the course</li>
+            </ul>
 
-              <%= unless @race_goal.just_finish do %>
-                <div class="row pt-4">
-                  <div class="col">
-                    <div class="text-xs text-uppercase text-muted mb-0">
-                      Distance
-                    </div>
-                    <span class="h4 font-weight-bold mb-0">
-                      <%= distance_name(@race_goal.distance, @current_user) %>
-                    </span>
-                  </div>
-
-                  <div class="col">
-                    <div class="text-xs text-uppercase text-muted mb-0">
-                      Goal
-                    </div>
-                    <span class="h4 font-weight-bold mb-0">
-                      <%= format_duration(@race_goal.duration) %>
-                    </span>
-                  </div>
-
-                  <div class="col">
-                    <div class="text-xs text-uppercase text-muted mb-0">
-                      Pace
-                    </div>
-                    <span class="h4 font-weight-bold mb-0">
-                      <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
-                    </span>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">
-                    <%= gettext("Race Goal") %>
-                  </h5>
-                  <span class="h2 font-weight-bold mb-0">
-                    <%= if @race_goal do %>
-                      <%= if @race_goal.just_finish do %>
-                        <%= gettext("Finish") %>
-                      <% else %>
-                        <%= format_duration(@race_goal.duration) %>
-                      <% end %>
-                    <% else %>
-                      <%= gettext("TBD") %>
-                    <% end %>
-                  </span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                    <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
-                  </div>
-                </div>
-              </div>
+            <%= unless @race_goal.just_finish do %>
               <div class="row pt-4">
-                <div class="col-auto">
+                <div class="col">
                   <div class="text-xs text-uppercase text-muted mb-0">
                     Distance
                   </div>
@@ -91,7 +32,16 @@
                   </span>
                 </div>
 
-                <div class="col-auto">
+                <div class="col">
+                  <div class="text-xs text-uppercase text-muted mb-0">
+                    Goal
+                  </div>
+                  <span class="h4 font-weight-bold mb-0">
+                    <%= format_duration(@race_goal.duration) %>
+                  </span>
+                </div>
+
+                <div class="col">
                   <div class="text-xs text-uppercase text-muted mb-0">
                     Pace
                   </div>
@@ -100,66 +50,153 @@
                   </span>
                 </div>
               </div>
-            </div>
+            <% end %>
           </div>
+        </div>
+      </div>
 
-          <div class="card bg-gradient-default">
-            <div class="card-header bg-transparent border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">
-                    <%= gettext("Training Paces") %>
-                  </h3>
-                </div>
-
-                <div class="col text-right">
-                  <%= live_redirect(gettext("Edit"), to: Routes.challenge_path(@socket, :index), class: "btn btn-sm btn-secondary") %>
+      <div class="col-12 col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                  <%= gettext("Race Goal") %>
+                </h5>
+                <span class="h2 font-weight-bold mb-0">
+                  <%= if @race_goal do %>
+                    <%= if @race_goal.just_finish do %>
+                      <%= gettext("Finish") %>
+                    <% else %>
+                      <%= format_duration(@race_goal.duration) %>
+                    <% end %>
+                  <% else %>
+                    <%= gettext("TBD") %>
+                  <% end %>
+                </span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                  <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
                 </div>
               </div>
             </div>
+            <div class="row pt-4">
+              <div class="col-auto">
+                <div class="text-xs text-uppercase text-muted mb-0">
+                  Distance
+                </div>
+                <span class="h4 font-weight-bold mb-0">
+                  <%= distance_name(@race_goal.distance, @current_user) %>
+                </span>
+              </div>
 
-            <div class="card-body px-0 pt-0">
-              <div class="table-responsive">
-                <table class="table table-sm align-items-center table-flush">
-                  <tbody>
-                    <%= for pace <- @paces do %>
-                      <tr scope="row">
-                        <td class="d-flex align-items-center">
+              <div class="col-auto">
+                <div class="text-xs text-uppercase text-muted mb-0">
+                  Pace
+                </div>
+                <span class="h4 font-weight-bold mb-0">
+                  <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-gradient-default">
+          <div class="card-header bg-transparent border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">
+                  <%= gettext("Training Paces") %>
+                </h3>
+              </div>
+
+              <div class="col text-right">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body px-0 pt-0">
+            <div class="table-responsive">
+              <table class="table table-sm align-items-center table-flush">
+                <tbody>
+                  <%= for pace <- @paces do %>
+                    <tr scope="row">
+                      <td>
+                        <div class="d-flex align-items-center">
                           <div class="badge badge-circle text-white mr-2" style="background: <%= pace.color %>;">
                           </div>
                           <%= pace.name %>
-                        </td>
-                        <td>
-                          <%= if pace.speed do %>
-                            <%= format_speed(pace.speed, @current_user.user_prefs) %>
-                          <% else %>
-                            <%= format_speed(pace.max_speed, @current_user.user_prefs) %> -
-                            <%= format_speed(pace.min_speed, @current_user.user_prefs) %>
-                          <% end %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
+                        </div>
+                      </td>
+                      <td>
+                        <%= if pace.speed do %>
+                          <%= format_speed(pace.speed, @current_user.user_prefs) %>
+                        <% else %>
+                          <%= format_speed(pace.max_speed, @current_user.user_prefs) %> -
+                          <%= format_speed(pace.min_speed, @current_user.user_prefs) %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
             </div>
-
           </div>
 
-          <div class="card bg-gradient-orange">
-            <div class="card-body">
-              <div class="h3 text-white">Add Course Information</div>
+        </div>
 
-              <p class="text-sm text-white">
-                Upload a GPX or TCX file of the course.
-              </p>
-
-              <button class="btn btn-sm btn-secondary">
-                <%= gettext("Sync History") %>
-              </button>
+        <div class="card">
+          <div class="card-header bg-transparent border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">
+                  <%= gettext("Equivalent Performances") %>
+                </h3>
+              </div>
             </div>
+          </div>
+
+          <div class="card-body px-0 pt-0">
+            <div class="table-responsive">
+              <table class="table table-sm align-items-center table-flush">
+                <tbody>
+                  <%= for distance <- Map.keys(@predictions) |> Enum.sort() do %>
+                    <tr scope="row">
+                      <td>
+                        <%= distance_name(distance, @current_user) %>
+                      </td>
+                      <td>
+                        <%= if distance == @race_goal.distance && @race_goal.duration do  %>
+                          <%= format_duration(@race_goal.duration) %>
+                        <% else %>
+                          <%= format_duration(Map.get(@predictions, distance)) %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card bg-gradient-orange">
+          <div class="card-body">
+            <div class="h3 text-white">Add Course Information</div>
+
+            <p class="text-sm text-white">
+              Upload a GPX or TCX file of the course.
+            </p>
+
+            <button class="btn btn-sm btn-secondary">
+              <%= gettext("Sync History") %>
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
