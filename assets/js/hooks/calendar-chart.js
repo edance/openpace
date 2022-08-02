@@ -84,10 +84,8 @@ export default {
               var value = context.dataset.data[context.dataIndex];
               return 'center';
             },
-            color: function(context) {
-              const { date } = context.dataset.data[context.dataIndex];
-              const today = new Date();
-              return date.getMonth() === today.getMonth() ? 'white' : hexToRGB(colors.white, 0.5);
+            color: function(_context) {
+              return 'white';
             },
             font: {
               weight: 'bold'
