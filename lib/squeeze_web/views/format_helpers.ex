@@ -87,6 +87,13 @@ defmodule SqueezeWeb.FormatHelpers do
     "#{format_duration(pace)}/#{label}"
   end
 
+  def format_speed(speed, user_prefs) do
+    meters = if user_prefs.imperial, do: Distances.mile_in_meters(), else: 1_000
+    pace = meters / speed
+    label = Distances.label(imperial: user_prefs.imperial)
+    "#{format_duration(pace)}/#{label}"
+  end
+
   def format_ordinal_date(date) do
     Timex.format!(date, "%b #{Ordinal.ordinalize(date.day)}", :strftime)
   end

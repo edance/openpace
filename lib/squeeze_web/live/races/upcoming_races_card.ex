@@ -25,7 +25,7 @@ defmodule SqueezeWeb.Races.UpcomingRacesCard do
     "bg-gradient-#{color}"
   end
 
-  def distance_name(race, current_user) do
-    Distances.distance_name(race.distance, imperial: current_user.user_prefs.imperial)
+  def distance_name(distance, current_user) do
+    Distances.distance_name(distance, imperial: current_user.user_prefs.imperial)
   end
 end

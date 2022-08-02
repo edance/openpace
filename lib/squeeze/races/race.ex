@@ -12,7 +12,6 @@ defmodule Squeeze.Races.Race do
   @required_fields ~w(
     name
     start_date
-    distance
   )a
 
   @optional_fields ~w(

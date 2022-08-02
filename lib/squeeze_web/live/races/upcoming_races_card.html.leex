@@ -36,7 +36,7 @@
                     Distance
                   </div>
                   <span class="h4 font-weight-bold mb-0">
-                    <%= distance_name(race, @current_user) %>
+                    <%= distance_name(race_goal.distance, @current_user) %>
                   </span>
                 </div>
 
@@ -54,7 +54,7 @@
                     Pace
                   </div>
                   <span class="h4 font-weight-bold mb-0">
-                    <%= format_pace(%{distance: race.distance, duration: race_goal.duration}, @current_user.user_prefs) %>
+                    <%= format_pace(%{distance: race_goal.distance, duration: race_goal.duration}, @current_user.user_prefs) %>
                   </span>
                 </div>
               </div>
@@ -62,7 +62,7 @@
 
             <div class="mt-3">
               <span class="badge badge-pill <%= bg_color(race) %>">
-                <%= distance_name(race, @current_user) %>
+                <%= distance_name(race_goal.distance, @current_user) %>
               </span>
             </div>
           </div>

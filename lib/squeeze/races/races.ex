@@ -9,7 +9,7 @@ defmodule Squeeze.Races do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.Activity
-  alias Squeeze.Races.{Race, RaceGoal}
+  alias Squeeze.Races.{Race, RaceGoal, TrainingPace}
 
   @doc """
   Gets a single race.
@@ -44,10 +44,13 @@ defmodule Squeeze.Races do
   end
 
   def create_race_goal(%User{} = user, attrs \\ %{}) do
-    %RaceGoal{}
+    changeset = %RaceGoal{}
     |> RaceGoal.changeset(attrs)
     |> Changeset.cast_assoc(:race, with: &Race.changeset/2)
     |> Changeset.put_change(:user_id, user.id)
+
+    changeset
+    |> Changeset.put_embed(:training_paces, default_paces(changeset))
     |> Repo.insert_with_slug()
   end
 
@@ -107,5 +110,15 @@ defmodule Squeeze.Races do
   """
   def change_race(%Race{} = race) do
     Race.changeset(race, %{})
+  end
+
+  defp default_paces(changeset) do
+    distance = Changeset.get_change(changeset, :distance)
+    duration = Changeset.get_change(changeset, :duration)
+    if distance && duration do
+      TrainingPace.default_paces(distance, duration)
+    else
+      []
+    end
   end
 end
