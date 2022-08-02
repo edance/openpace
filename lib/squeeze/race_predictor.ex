@@ -50,6 +50,10 @@ defmodule Squeeze.RacePredictor do
     |> Kernel.*(60.0)
     |> Kernel.round()
   end
+  def predict_race_time(distance, %{distance: race_distance, duration: race_duration}) do
+    vo2_max = estimated_vo2max(race_distance, race_duration)
+    predict_race_time(distance, vo2_max)
+  end
 
   # Returns time in minutes for distance in meters based on 6min/mile pace
   defp base_estimate(distance) do

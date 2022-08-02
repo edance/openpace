@@ -6,6 +6,7 @@ defmodule Squeeze.Distances do
   alias Number.Delimit
 
   @mile_in_meters 1_609 # 1 mile == 1609 meters
+  @marathon_in_meters 42_195
 
   @distances [
     %{name: "5k", distance: 5_000},
@@ -15,7 +16,7 @@ defmodule Squeeze.Distances do
     %{name: "15k", distance: 15_000},
     %{name: "10 Mile", distance: @mile_in_meters * 10},
     %{name: "Half Marathon", distance: 21_097},
-    %{name: "Marathon", distance: 42_195},
+    %{name: "Marathon", distance: @marathon_in_meters},
     %{name: "20k", distance: 20_000},
     %{name: "25k", distance: 25_000},
     %{name: "30k", distance: 30_000},
@@ -26,6 +27,7 @@ defmodule Squeeze.Distances do
   ]
 
   def mile_in_meters, do: @mile_in_meters
+  def marathon_in_meters, do: @marathon_in_meters
 
   def to_feet(nil, _), do: 0
   def to_feet(distance, [imperial: false]), do: distance

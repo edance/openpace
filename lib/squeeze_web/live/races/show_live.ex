@@ -17,13 +17,14 @@ defmodule SqueezeWeb.Races.ShowLive do
       page_title: race_goal.race.name,
       race_goal: race_goal,
       race: race_goal.race,
+      paces: race_goal.training_paces,
       current_user: user
     )
 
     {:ok, socket}
   end
 
-  def distance_name(race, current_user) do
-    Distances.distance_name(race.distance, imperial: current_user.user_prefs.imperial)
+  def distance_name(distance, current_user) do
+    Distances.distance_name(distance, imperial: current_user.user_prefs.imperial)
   end
 end
