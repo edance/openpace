@@ -4,6 +4,8 @@ defmodule Squeeze.RacePredictor do
   With help from this article: http://www.simpsonassociatesinc.com/runningmath9.htm
   """
 
+  import Squeeze.Distances, only: [distances: 0]
+
   @doc """
   Calculates an estimated vo2 max for a given distance and duration (race effort)
 
@@ -50,9 +52,22 @@ defmodule Squeeze.RacePredictor do
     |> Kernel.*(60.0)
     |> Kernel.round()
   end
-  def predict_race_time(distance, %{distance: race_distance, duration: race_duration}) do
-    vo2_max = estimated_vo2max(race_distance, race_duration)
-    predict_race_time(distance, vo2_max)
+
+  @doc """
+  Calculates race time predictions for many different race distances based on vo2_max
+
+  Returns a map of distance (in meters) to time (in seconds)
+
+  ## Examples
+
+  iex> predict_all_race_times(61)
+  %{distance => time}
+  """
+  def predict_all_race_times(vo2_max) do
+    distances()
+    |> Enum.reduce(%{}, fn(%{distance: distance}, obj) ->
+      Map.put(obj, distance, predict_race_time(distance, vo2_max))
+    end)
   end
 
   # Returns time in minutes for distance in meters based on 6min/mile pace
