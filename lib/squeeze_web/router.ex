@@ -92,6 +92,7 @@ defmodule SqueezeWeb.Router do
 
     live "/settings", SettingsLive, :general
     live "/settings/namer", SettingsLive, :namer
+    live "/settings/personal-records", SettingsLive, :personal_records
   end
 
   scope "/dashboard", SqueezeWeb do

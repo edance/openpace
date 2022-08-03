@@ -48,26 +48,6 @@ defmodule Squeeze.Accounts.User do
     "#{first_name} #{last_name}"
   end
 
-  def improvement_amount(%User{user_prefs: %{personal_record: nil}}), do: nil
-
-  def improvement_amount(%User{
-        user_prefs: %{duration: duration, personal_record: personal_record}
-      })
-      when duration > 0 do
-    percent = abs(personal_record - duration) / duration * 100
-    "#{Float.round(percent, 1)}%"
-  end
-
-  def improvement_amount(%User{
-        user_prefs: %{duration: _duration, personal_record: _personal_record}
-      }) do
-    "0%"
-  end
-
-  def onboarded?(%User{} = user) do
-    UserPrefs.complete?(user.user_prefs)
-  end
-
   @doc false
   def changeset(%User{} = user, attrs) do
     fields = ~w(first_name last_name email description avatar city state country)a

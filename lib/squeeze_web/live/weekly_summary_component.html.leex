@@ -1,16 +1,6 @@
 <div class="col p-2 d-none d-md-block">
   <div class="small mb-2">
     Summary
-
-    <% weeks_left = weeks_until_race(assigns) %>
-
-    <%= if weeks_left == 0 do %>
-      <div class="text-muted">Race Week</div>
-    <% end %>
-
-    <%= if !is_nil(weeks_left) && weeks_left > 0 do %>
-      <div class="text-muted"><%= weeks_left %> weeks until race</div>
-    <% end %>
   </div>
 
   <%= unless Enum.empty?(@activities) do %>
