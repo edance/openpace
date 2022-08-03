@@ -1,10 +1,6 @@
 defmodule SqueezeWeb.CalendarItemComponent do
   use SqueezeWeb, :live_component
 
-  def race_date?(%{current_user: user, date: date}) do
-    user.user_prefs.race_date == date
-  end
-
   def activity_color(activity) do
     cond do
       String.contains?(activity.type, "Run") -> "blue"

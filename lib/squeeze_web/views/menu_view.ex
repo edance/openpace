@@ -3,10 +3,6 @@ defmodule SqueezeWeb.MenuView do
 
   alias Squeeze.Accounts.User
 
-  def authenticated?(user) do
-    User.onboarded?(user)
-  end
-
   def in_trial?(user) do
     user.subscription_status == :trialing
   end

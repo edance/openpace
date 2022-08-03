@@ -19,10 +19,7 @@
               </div>
 
               <div class="col-auto text-right">
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#personalRecordModal">
-                  <%= gettext("Add") %>
-                </button>
-
+                <%= live_redirect(gettext("Edit"), to: Routes.settings_path(@socket, :personal_records), class: "btn btn-sm btn-primary") %>
               </div>
             </div>
           </div>
@@ -106,29 +103,6 @@
     </div>
     <div class="row mt-5">
       <div class="col-xl-8 mb-5 mb-xl-0">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="personalRecordModal" tabindex="-1" role="dialog" aria-labelledby="personalRecordModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="personalRecordModalLabel">
-          <%= gettext("Personal Records") %>
-        </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

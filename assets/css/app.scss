@@ -108,13 +108,6 @@
   top: -70px;
 }
 
-.onboard-question {
-  @include media-breakpoint-up(md) {
-    border-right: 1px solid $card-border-color;
-    height: 100vh;
-  }
-}
-
 .custom-radio-lg {
   .custom-control-label {
     font-size: 1.5em !important;
@@ -123,22 +116,6 @@
     &::after {
       margin-top: 6px;
     }
-  }
-}
-
-.onboard-down-btn {
-  background: white;
-  bottom: 100px;
-  display: none;
-  font-size: 2em;
-  left: 0;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  width: 1em;
-
-  @include media-breakpoint-up(md) {
-    display: block;
   }
 }
 

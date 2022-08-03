@@ -4,8 +4,6 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
   alias Squeeze.Accounts.User
   alias Squeeze.Distances
 
-  def improvement_amount(%User{} = user), do: User.improvement_amount(user)
-
   def weekly_distance(%{activity_summaries: summaries, current_user: user}) do
     date = Timex.now()
     |> Timex.to_datetime(user.user_prefs.timezone)

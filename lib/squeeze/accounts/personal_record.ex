@@ -8,6 +8,8 @@ defmodule Squeeze.Accounts.PersonalRecord do
   alias Squeeze.Accounts.PersonalRecord
   alias Squeeze.Duration
 
+  import Squeeze.Distances, only: [distances: 0]
+
   @required_fields ~w(
     distance
   )a
@@ -28,5 +30,10 @@ defmodule Squeeze.Accounts.PersonalRecord do
     personal_record
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+  end
+
+  def default_distances do
+    distances()
+    |> Enum.map(&(%PersonalRecord{distance: &1.distance}))
   end
 end

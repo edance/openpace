@@ -6,8 +6,6 @@ defmodule SqueezeWeb.Plug.RequireRegistered do
 
   1. The user has registered
   2. The page has a query param of welcome
-
-  After onboarding, the user will see their dashboard and be prompted to register.
   """
 
   alias Phoenix.Controller

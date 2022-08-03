@@ -1,0 +1,39 @@
+<div class="card shadow">
+  <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+  <div class="card-header border-0">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h3 class="mb-0"><%= gettext("Personal Records") %></h3>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <%= inputs_for f, :user_prefs, fn p -> %>
+      <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Distance</th>
+            <th scope="col">Personal Record</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= inputs_for p, :personal_records, fn(%{data: personal_record} = i) -> %>
+            <tr>
+              <th scope="row">
+                <%= distance_name(personal_record.distance, imperial: @current_user.user_prefs.imperial) %>
+              </th>
+              <td>
+                <%= duration_select(i, :duration) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn btn-primary" type="submit">Save</button>
+  </div>
+  </form>
+</div>

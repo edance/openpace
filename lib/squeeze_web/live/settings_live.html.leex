@@ -8,6 +8,9 @@
               <%= link_item(@socket, @live_action, gettext("Account Settings"), :general) %>
             </li>
             <li class="nav-item">
+              <%= link_item(@socket, @live_action, gettext("Personal Records"), :personal_records) %>
+            </li>
+            <li class="nav-item">
               <%= link_item(@socket, @live_action, gettext("Rename Activities"), :namer) %>
             </li>
             <li class="nav-item">
@@ -21,6 +24,10 @@
     <div class="col-md-6">
       <%= if @live_action == :general do %>
         <%= live_component(SqueezeWeb.Settings.UserFormComponent, changeset: @changeset, current_user: @current_user) %>
+      <% end %>
+
+      <%= if @live_action == :personal_records do %>
+        <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent, changeset: @changeset, current_user: @current_user) %>
       <% end %>
 
       <%= if @live_action == :namer do %>
