@@ -30,16 +30,19 @@ defmodule Squeeze.Strava.HistoryLoader do
 
   defp activity_stream(credential) do
     client = Client.new(credential)
+    query = query(credential)
+
     Paginator.stream(
       fn pagination ->
+        pagination = Keyword.merge(pagination, query)
         @strava_activities.get_logged_in_athlete_activities(client, pagination)
       end,
-      query(credential)
+      per_page: 30
     )
   end
 
-  defp query(%{sync_at: nil}), do: [per_page: 50]
+  defp query(%{sync_at: nil}), do: []
   defp query(%{sync_at: sync_at}) do
-    [after: DateTime.to_unix(sync_at), per_page: 50]
+    [after: DateTime.to_unix(sync_at)]
   end
 end
