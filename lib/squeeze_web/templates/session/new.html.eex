@@ -3,7 +3,7 @@
   <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
   <!-- Page content -->
-  <div class="bg-gradient-primary">
+  <div class="">
     <div class="container py-5 pt-lg-7">
       <div class="row justify-content-center">
         <div class="col-lg-4 col-md-7">

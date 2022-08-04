@@ -2,12 +2,12 @@
   <!-- Navbar -->
   <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
 
-  <div class="bg-waves">
+  <div class="">
     <div class="container py-5 pt-lg-7">
       <div class="row justify-content-center">
         <div class="col-lg-4 col-md-7">
           <div class="card shadow border-0 mb-8">
-            <div class="card-header bg-white pb-5">
+            <div class="card-header bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-3">
                 <small><%= gettext("Sign in with") %></small>
               </div>
