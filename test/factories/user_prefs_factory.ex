@@ -3,8 +3,6 @@ defmodule Squeeze.UserPrefsFactory do
 
   alias Squeeze.Accounts.UserPrefs
 
-  alias Faker.{Date}
-
   defmacro __using__(_opts) do
     quote do
       def user_prefs_factory do

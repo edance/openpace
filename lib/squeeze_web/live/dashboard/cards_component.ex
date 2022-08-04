@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.Dashboard.CardsComponent do
   use SqueezeWeb, :live_component
 
-  alias Squeeze.Accounts.User
   alias Squeeze.Distances
 
   def weekly_distance(%{activity_summaries: summaries, current_user: user}) do

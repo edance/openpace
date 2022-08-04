@@ -60,7 +60,7 @@ defmodule Squeeze.Stats do
     most_recent_date = List.first(dates)
 
     if today == most_recent_date || yesterday == most_recent_date do
-      streak = dates
+      dates
       |> Enum.with_index()
       |> Enum.reduce_while(0, fn({x, idx}, acc) ->
         if x == Timex.shift(most_recent_date, days: -idx), do: {:cont, acc + 1}, else: {:halt, acc}
