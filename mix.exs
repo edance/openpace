@@ -46,12 +46,15 @@ defmodule Squeeze.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.13"},
+      {:phoenix, "~> 1.6.0"},
+      {:phoenix_live_dashboard, "~> 0.5"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 0.5"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.7"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.15.1"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_view, "~> 0.16.4"},
+      {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:gettext, "~> 0.11"},
       {:ordinal, "~> 0.1.0"},
