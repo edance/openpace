@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
     <%= link(to: Routes.home_path(@conn, :index), class: "navbar-brand") do %>
-      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo.svg") %>" />
+      <img class="logo-img" src="<%= Routes.static_path(@conn, "/images/logo-white.svg") %>" />
     <% end %>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
