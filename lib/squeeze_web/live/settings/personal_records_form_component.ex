@@ -3,7 +3,7 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
   """
 
   use SqueezeWeb, :live_component
-  import Squeeze.Distances, only: [distances: 0, distance_name: 2]
+  import Squeeze.Distances, only: [distance_name: 2]
 
   def pr_at_distance(%{current_user: user}, distance) do
     user.user_prefs.personal_records

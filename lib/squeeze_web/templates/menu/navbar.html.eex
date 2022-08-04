@@ -27,19 +27,19 @@
       <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
         <%= if @current_user do %>
           <li class="nav-item">
-            <%= active_link(@conn, to: Routes.overview_path(@conn, :index), class: "nav-link") do %>
+            <%= link(to: Routes.overview_path(@conn, :index), class: "nav-link") do %>
               <%= gettext("Dashboard") %>
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= active_link(@conn, to: Routes.challenge_path(@conn, :index), class: "nav-link") do %>
+            <%= link(to: Routes.challenge_path(@conn, :index), class: "nav-link") do %>
               <%= gettext("Challenges") %>
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= active_link(@conn, to: Routes.calendar_path(@conn, :index), class: "nav-link") do %>
+            <%= link(to: Routes.calendar_path(@conn, :index), class: "nav-link") do %>
               <%= gettext("Calendar") %>
             <% end %>
           </li>

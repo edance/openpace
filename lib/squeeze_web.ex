@@ -39,8 +39,6 @@ defmodule SqueezeWeb do
       unquote(view_helpers())
 
       import Squeeze.CompanyHelper
-
-      import PhoenixActiveLink
     end
   end
 

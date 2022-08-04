@@ -40,3 +40,6 @@ npm-debug.log
 
 # Docs
 /doc
+
+# NewRelic Logs
+/tmp/new_relic.log

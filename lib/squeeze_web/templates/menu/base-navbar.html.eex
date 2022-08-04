@@ -33,10 +33,10 @@
           </li>
 
           <li class="nav-item">
-            <%= active_link(@conn, gettext("Sign Up"), to: Routes.user_path(@conn, :new), class: "nav-link") %>
+            <%= link(gettext("Sign Up"), to: Routes.user_path(@conn, :new), class: "nav-link") %>
           </li>
           <li class="nav-item">
-            <%= active_link(@conn, gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
+            <%= link(gettext("Log In"), to: Routes.session_path(@conn, :new), class: "nav-link pr-0") %>
           </li>
         <% end %>
       </ul>
