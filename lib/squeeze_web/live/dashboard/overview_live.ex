@@ -10,6 +10,8 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   alias Squeeze.TimeHelper
   alias SqueezeWeb.Endpoint
 
+  import Squeeze.Distances, only: [distance_name: 2]
+
   @impl true
   def mount(_params, session, socket) do
     user = socket.assigns[:current_user] || get_current_user(session)

@@ -25,4 +25,9 @@ defmodule SqueezeWeb.AvatarComponent do
     color = Enum.at(@colors, idx)
     "bg-gradient-#{color}"
   end
+
+  def class_list(%{user: user} = assigns) do
+    ["avatar", avatar_size(assigns), bg_color(user), position(assigns), "text-bold rounded-circle"]
+    |> Enum.join(" ")
+  end
 end

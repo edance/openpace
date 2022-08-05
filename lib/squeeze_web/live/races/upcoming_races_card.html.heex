@@ -17,7 +17,7 @@
     <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
       <%= for %{race: race} = race_goal <- @race_goals do %>
         <div class="timeline-block">
-          <span class="timeline-step <%= bg_color(race) %>">
+          <span class={"timeline-step #{bg_color(race)}"}>
             <span class="iconify" data-icon="gis:finish" data-inline="false"></span>
           </span>
 
@@ -61,7 +61,7 @@
             <% end %>
 
             <div class="mt-3">
-              <span class="badge badge-pill <%= bg_color(race) %>">
+              <span class={"badge badge-pill #{bg_color(race)}"}>
                 <%= distance_name(race_goal.distance, @current_user) %>
               </span>
             </div>

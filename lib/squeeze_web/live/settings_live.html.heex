@@ -76,7 +76,7 @@
         <div class="card-body">
           <div class="row no-gutters">
             <div class="col-auto">
-              <img src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png") %>" />
+              <img src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")} />
             </div>
             <div class="col ml-2">
               <%= if strava_integration?(assigns) do %>

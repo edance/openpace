@@ -14,9 +14,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
     <%# Tracked Assets %>
-    <link phx-track-static href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
-    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/css/dashboard.css") %>"/>
-    <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/js/dashboard.js") %>"></script>
+    <link phx-track-static href={Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png")} rel="shortcut icon" type="image/x-icon">
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(SqueezeWeb.Endpoint, "/css/dashboard.css")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(SqueezeWeb.Endpoint, "/js/dashboard.js")}></script>
 
     <%# Global Variables for External Libraries %>
     <script>

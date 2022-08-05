@@ -19,7 +19,7 @@
       <%= for idx <- [0, 1, 2] do %>
         <% score = Enum.at(@challenge.scores, idx) %>
 
-        <div class="col <%= podium_order(idx) %>">
+        <div class={podium_order(idx)}>
           <%= if score do %>
             <div class="text-center">
               <%= live_component(SqueezeWeb.AvatarComponent, user: score.user, size: avatar_size(idx)) %>
@@ -46,7 +46,7 @@
 
         <div class="progress progress-xs mb-2">
           <% percentage = remaining_percentage(assigns) %>
-          <div class="progress-bar" role="progressbar" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%;"></div>
+          <div class="progress-bar" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={"width: #{percentage}%;"}></div>
         </div>
 
         <p class="mt-0 mb-1 text-sm">
@@ -57,7 +57,7 @@
 
     <h5>Share Link</h5>
     <div class="copy-input input-group mb-3">
-      <input type="text" class="form-control" value="<%= Routes.challenge_share_url(SqueezeWeb.Endpoint, :show, @challenge.slug) %>" placeholder="Share Link">
+      <input type="text" class="form-control" value={Routes.challenge_share_url(SqueezeWeb.Endpoint, :show, @challenge.slug)} placeholder="Share Link">
 
       <!-- <div class="input-group-append"> -->
       <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->

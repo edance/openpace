@@ -7,7 +7,7 @@
         Import all of your runs and activities from Strava to OpenPace.
       </p>
 
-      <button phx-click="load_history" phx-target=<%= @myself %> class="btn btn-sm btn-secondary">
+      <button phx-click="load_history" phx-target={@myself} class="btn btn-sm btn-secondary">
         <%= gettext("Sync History") %>
       </button>
     </div>

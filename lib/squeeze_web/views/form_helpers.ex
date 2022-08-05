@@ -128,7 +128,7 @@ defmodule SqueezeWeb.FormHelpers do
     opts =
       opts
       |> Keyword.put(:name, field)
-      |> Keyword.put(:prompt, field)
+      |> Keyword.put(:prompt, field |> Atom.to_string())
 
     class_list = "#{opts[:class]} slim-select"
     opts = Keyword.merge(opts, class: class_list)
