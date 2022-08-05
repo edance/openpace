@@ -23,12 +23,25 @@
               </div>
             </div>
           </div>
-          <div class="card-body">
-            <%= for pr <- @current_user.user_prefs.personal_records do %>
-              <%= pr.distance %>
-              <%= pr.duration %>
-              <%= pr.results_url %>
-            <% end %>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped">
+              <tbody>
+                <%= for pr <- @current_user.user_prefs.personal_records do %>
+                  <tr>
+                    <th scope="row">
+                      <%= distance_name(pr.distance, imperial: @current_user.user_prefs.imperial) %>
+                    </th>
+                    <td>
+                      <%= if pr.duration do %>
+                        <%= format_duration(pr.duration) %>
+                      <% else %>
+                        --
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

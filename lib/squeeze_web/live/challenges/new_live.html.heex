@@ -1,5 +1,5 @@
 <div class="container py-4">
-  <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+  <.form let={f} for={@changeset} phx-submit="save">
   <div class="row">
     <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
       <%= if @challenge_type == :segment do %>
@@ -35,7 +35,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h4 class="mb-0">
-                    <a href="https://www.strava.com/segments/<%= segment.id %>" target="_blank">
+                    <a href={"https://www.strava.com/segments/#{segment.id}"} target="_blank">
                       <%= segment.name %>
                     </a>
                   </h4>
@@ -43,11 +43,11 @@
                 </div>
                 <div class="col-auto">
                   <%= if @segment && @segment.id == segment.id do %>
-                  <button type="button" class="btn btn-sm btn-secondary active" phx-click="select_segment" phx-value-id="<%= segment.id %>">
+                  <button type="button" class="btn btn-sm btn-secondary active" phx-click="select_segment" phx-value-id={segment.id}>
                     Select
                   </button>
                   <% else %>
-                  <button type="button" class="btn btn-sm btn-secondary" phx-click="select_segment" phx-value-id="<%= segment.id %>">
+                  <button type="button" class="btn btn-sm btn-secondary" phx-click="select_segment" phx-value-id={segment.id}>
                     Select
                   </button>
                   <% end %>
@@ -128,5 +128,5 @@
       </div>
     </div>
   </div>
-  </form>
+  </.form>
  </div>

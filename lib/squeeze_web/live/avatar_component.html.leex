@@ -1,9 +1,0 @@
-<span class="avatar <%= avatar_size(assigns) %> <%= bg_color(@user) %> <%= position(assigns) %> text-bold rounded-circle">
-  <span class="position-absolute">
-    <%= initials(@user) %>
-  </span>
-
-  <%= if @user.avatar do %>
-    <img class="position-absolute" alt="<%= full_name(@user) %>" src="<%= @user.avatar %>" />
-  <% end %>
-</span>

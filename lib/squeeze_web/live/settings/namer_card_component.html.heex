@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="card-body">
-    <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+    <.form let={f} for={@changeset} phx-submit="save">
     <%= inputs_for f, :user_prefs, fn p -> %>
       <div class="form-group">
         <div class="d-flex">
@@ -77,6 +77,6 @@
     <% end %>
 
     <%= submit "Save", class: "btn btn-primary mt-4" %>
-    </form>
+    </.form>
   </div>
 </div>

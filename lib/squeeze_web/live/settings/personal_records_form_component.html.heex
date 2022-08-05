@@ -1,5 +1,5 @@
 <div class="card shadow">
-  <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+  <.form let={f} for={@changeset} phx-submit="save">
   <div class="card-header border-0">
     <div class="row align-items-center">
       <div class="col-8">
@@ -14,16 +14,28 @@
           <tr>
             <th scope="col">Distance</th>
             <th scope="col">Personal Record</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <%= inputs_for p, :personal_records, fn(%{data: personal_record} = i) -> %>
+          <%= inputs_for p, :personal_records, fn(%{data: personal_record} = _i) -> %>
             <tr>
               <th scope="row">
                 <%= distance_name(personal_record.distance, imperial: @current_user.user_prefs.imperial) %>
               </th>
               <td>
-                <%= duration_select(i, :duration) %>
+                <%= if personal_record.duration do %>
+                  <%= format_duration(personal_record.duration) %>
+                <% else %>
+                  --
+                <% end %>
+              </td>
+              <td>
+                <%= if personal_record.duration do %>
+                  Edit
+                <% else %>
+                  Add
+                <% end %>
               </td>
             </tr>
           <% end %>
@@ -35,5 +47,5 @@
   <div class="card-footer">
     <button class="btn btn-primary" type="submit">Save</button>
   </div>
-  </form>
+  </.form>
 </div>

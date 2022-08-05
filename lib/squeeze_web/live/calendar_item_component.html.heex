@@ -4,7 +4,7 @@
 
   <div class="d-flex flex-wrap flex-lg-nowrap mb-2">
     <%= live_redirect to: Routes.activity_path(@socket, :show, activity), class: "flex-shrink-0 badge badge-circle bg-#{color} text-white mb-1" do %>
-      <span class="iconify" data-icon="<%= activity_icon(activity) %>" data-inline="false"></span>
+      <span class="iconify" data-icon={activity_icon(activity)} data-inline="false"></span>
     <% end %>
 
     <div class="small ml-2 d-none d-md-block">

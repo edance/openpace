@@ -5,7 +5,7 @@
     </button>
 
     <%= live_redirect(to: Routes.overview_path(@socket, :index), class: "navbar-brand") do %>
-      <img class="logo-img" src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/logo-white.svg") %>" />
+      <img class="logo-img" src={Routes.static_path(SqueezeWeb.Endpoint, "/images/logo-white.svg")} />
     <% end %>
 
     <%= if @current_user do %>

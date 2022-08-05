@@ -53,7 +53,7 @@ defmodule SqueezeWeb.Challenges.PodiumCardComponent do
   def avatar_size(1), do: "lg"
   def avatar_size(_), do: "md"
 
-  def podium_order(0), do: "order-2"
-  def podium_order(1), do: "order-1"
-  def podium_order(_), do: "order-3"
+  def podium_order(0), do: "col order-2"
+  def podium_order(1), do: "col order-1"
+  def podium_order(_), do: "col order-3"
 end
