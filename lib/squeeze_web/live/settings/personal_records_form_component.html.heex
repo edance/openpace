@@ -7,6 +7,7 @@
       </div>
     </div>
   </div>
+
   <div class="table-responsive">
     <%= inputs_for f, :user_prefs, fn p -> %>
       <table class="table table-sm table-striped">
@@ -18,10 +19,11 @@
           </tr>
         </thead>
         <tbody>
-          <%= inputs_for p, :personal_records, fn(%{data: personal_record} = _i) -> %>
+          <%= inputs_for p, :personal_records, fn(%{data: personal_record} = i) -> %>
             <tr>
               <th scope="row">
                 <%= distance_name(personal_record.distance, imperial: @current_user.user_prefs.imperial) %>
+                <%= hidden_input(i, :distance) %>
               </th>
               <td>
                 <%= if personal_record.duration do %>
@@ -31,11 +33,13 @@
                 <% end %>
               </td>
               <td>
-                <%= if personal_record.duration do %>
-                  Edit
-                <% else %>
-                  Add
-                <% end %>
+                <a href="#" phx-click={JS.remove_class("d-none", to: "#duration#{i.index}")}>
+                  <%= if personal_record.duration, do: gettext("Edit"), else: gettext("Add") %>
+                </a>
+
+                <div id={"duration#{i.index}"} class="d-none">
+                  <%= duration_select(i, :duration, class: "form-control") %>
+                </div>
               </td>
             </tr>
           <% end %>

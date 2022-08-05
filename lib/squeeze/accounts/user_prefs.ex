@@ -31,7 +31,7 @@ defmodule Squeeze.Accounts.UserPrefs do
     field :emoji, :boolean
     field :branding, :boolean
 
-    embeds_many :personal_records, PersonalRecord
+    embeds_many :personal_records, PersonalRecord, on_replace: :delete
 
     belongs_to :user, User
 
@@ -39,10 +39,15 @@ defmodule Squeeze.Accounts.UserPrefs do
   end
 
   @doc false
+  def changeset(%UserPrefs{} = user_prefs, %{"personal_records" => prs} = attrs) do
+    user_prefs
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_embed(:personal_records, with: &PersonalRecord.changeset/2)
+    |> validate_required(@required_fields)
+  end
   def changeset(%UserPrefs{} = user_prefs, attrs) do
     user_prefs
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
-    |> put_embed(:personal_records, PersonalRecord.default_distances())
   end
 end
