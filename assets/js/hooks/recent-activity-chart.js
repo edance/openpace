@@ -1,5 +1,4 @@
 import Chart from 'chart.js/auto';
-import { parse } from 'date-fns';
 import { colors, fonts } from './../variables.js';
 import { activityColor, calcDistance, calcFeet, formatNumber, hexToRGB, roundTo } from '../utils';
 import { DateTime, Duration } from "luxon";
@@ -62,7 +61,13 @@ export default {
     const datasets = types.map(type => {
       return {
         label: type,
-        backgroundColor: hexToRGB(activityColor(type), 0.2),
+        backgroundColor: (context) => {
+          const week = this.weeks[context.dataIndex];
+          if (this.currentDate.hasSame(week, 'week')) {
+            return hexToRGB(activityColor(type), 0.8);
+          }
+          return hexToRGB(activityColor(type), 0.2);
+        },
         borderColor: hexToRGB(activityColor(type), 1.0),
         borderWidth: 1,
         data: this.weeklyAmountTotalByType(type, this.field, this.activities),
@@ -78,6 +83,7 @@ export default {
   mounted() {
     this.activities = JSON.parse(this.el.dataset['summaries']);
     this.imperial = JSON.parse(this.el.dataset['imperial']);
+    this.currentDate = DateTime.fromISO(this.el.dataset['currentDate']);
     this.weeks = lastXWeeks();
     this.field = 'distance';
 
@@ -180,6 +186,9 @@ export default {
             const date = this.weeks[firstPoint.index];
             // Send event to backend
             hook.pushEvent("load-week", { date: date.toISODate() });
+            this.currentDate = date;
+
+            this.chart.update();
           }
         }
       },

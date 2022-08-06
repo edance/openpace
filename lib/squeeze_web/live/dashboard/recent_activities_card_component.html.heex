@@ -26,6 +26,8 @@
             phx-hook="RecentActivityChart"
             data-summaries={Jason.encode!(@activity_summaries)}
             data-imperial={"#{@current_user.user_prefs.imperial}"}
+            data-current-date={@date}
+            phx-update="ignore"
     >
     </canvas>
   </div>

@@ -17,6 +17,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     user = socket.assigns[:current_user] || get_current_user(session)
     summaries = Dashboard.list_activity_summaries(user)
     activity_map = activity_map(summaries)
+    race_goals = Races.list_upcoming_race_goals(user)
 
     socket = assign(socket,
       page_title: "Dashboard",
@@ -26,7 +27,8 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       challenges: Challenges.list_current_challenges(user),
       current_streak: Stats.current_activity_streak(user),
       loading: false,
-      race_goal: Races.next_race_goal(user),
+      race_goal: List.first(race_goals),
+      race_goals: race_goals,
       todays_activities: Dashboard.todays_activities(user),
       ytd_run_stats: Stats.ytd_run_summary(user)
     )
@@ -65,7 +67,8 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     activities = Dashboard.list_activities(user, dates)
 
     socket = assign(socket,
-      activities: activities
+      activities: activities,
+      date: date
     )
     {:noreply, socket}
   end
