@@ -4,6 +4,7 @@ defmodule Squeeze.Races do
   """
 
   import Ecto.Query, warn: false
+  import Squeeze.TimeHelper, only: [today: 1]
   alias Ecto.Changeset
   alias Squeeze.Repo
 
@@ -78,7 +79,21 @@ defmodule Squeeze.Races do
   def list_upcoming_race_goals(%User{} = user) do
     query = from rg in RaceGoal,
       join: r in assoc(rg, :race),
-      where: [user_id: ^user.id],
+      where: r.start_date >= ^today(user),
+      where: rg.user_id == ^user.id,
+      order_by: [asc: r.start_date]
+
+    query
+    |> Repo.all()
+    |> Repo.preload(:race)
+  end
+
+  def list_race_goals(%User{} = user, %{first: first, last: last}) do
+    query = from rg in RaceGoal,
+      join: r in assoc(rg, :race),
+      where: r.start_date >= ^first,
+      where: r.start_date <= ^last,
+      where: rg.user_id == ^user.id,
       order_by: [asc: r.start_date]
 
     query
