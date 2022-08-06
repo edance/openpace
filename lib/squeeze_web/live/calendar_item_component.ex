@@ -1,14 +1,7 @@
 defmodule SqueezeWeb.CalendarItemComponent do
   use SqueezeWeb, :live_component
 
-  def activity_color(activity) do
-    cond do
-      String.contains?(activity.type, "Run") -> "blue"
-      String.contains?(activity.type, "Ride") -> "purple"
-      String.contains?(activity.type, "Swim") -> "pink"
-      true -> "indigo"
-    end
-  end
+  import Squeeze.Colors, only: [activity_color: 1]
 
   def activity_icon(activity) do
     cond do
