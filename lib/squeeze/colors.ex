@@ -1,4 +1,17 @@
 defmodule Squeeze.Colors do
+  @colors ~w(
+    blue
+    indigo
+    purple
+    pink
+    red
+    orange
+    yellow
+    green
+    teal
+    cyan
+  )
+
   def blue, do: "#5e72e4"
   def indigo, do: "#5603ad"
   def purple, do: "#8965e0"
@@ -10,4 +23,20 @@ defmodule Squeeze.Colors do
   def teal, do: "#11cdef"
   def cyan, do: "#2bffc6"
   def waves, do: "#2e3148"
+
+  def activity_color(type) do
+    cond do
+      String.contains?(type, "Run") -> red()
+      String.contains?(type, "Hike") -> orange()
+      String.contains?(type, "Ride") -> blue()
+      String.contains?(type, "Swim") -> green()
+      true -> yellow()
+    end
+  end
+
+  def gradient_class_by_id(id) do
+    idx = rem(id, length(@colors))
+    color = Enum.at(@colors, idx)
+    "bg-gradient-#{color}"
+  end
 end
