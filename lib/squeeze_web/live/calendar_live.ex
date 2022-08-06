@@ -5,23 +5,22 @@ defmodule SqueezeWeb.CalendarLive do
   This is the module for the calendar live view
   """
 
+  import Squeeze.TimeHelper, only: [today: 1, to_date: 2]
+
   alias Squeeze.Accounts.User
   alias Squeeze.Calendar
   alias Squeeze.Dashboard
   alias Squeeze.Guardian
-  alias Squeeze.TimeHelper
+  alias Squeeze.Races
 
   @impl true
-  def mount(params, %{"guardian_default_token" => token}, socket) do
-    {:ok, user, _claims} = Guardian.resource_from_token(token)
-    date = parse_date(user, params["date"])
-    dates = Calendar.visible_dates(date, "month")
-    socket = socket
-    |> assign(:current_user, user)
-    |> assign(:date, date)
-    |> assign(:dates, dates)
-    |> assign(:page_title, Timex.format!(date, "%B %Y", :strftime))
-    |> assign(:activities_by_date, activities_by_date(user, dates))
+  def mount(params, session, socket) do
+    user = socket.assigns[:current_user] || get_current_user(session)
+
+    socket = assign(socket,
+      page_title: "Calendar",
+      current_user: user
+    )
 
     {:ok, socket}
   end
@@ -31,17 +30,20 @@ defmodule SqueezeWeb.CalendarLive do
     user = socket.assigns.current_user
     date = parse_date(user, params["date"])
     dates = Calendar.visible_dates(date, "month")
-    socket = socket
-    |> assign(:date, date)
-    |> assign(:dates, dates)
-    |> assign(:page_title, Timex.format!(date, "%B %Y", :strftime))
-    |> assign(:activities_by_date, activities_by_date(user, dates))
+
+    socket = assign(socket,
+      date: date,
+      dates: dates,
+      page_title: Timex.format!(date, "%B %Y", :strftime),
+      activities_by_date: activities_by_date(user, dates),
+      race_goals_by_date: race_goals_by_date(user, dates)
+    )
 
     {:noreply, socket}
   end
 
   def date_label(date, user) do
-    class_names = if TimeHelper.today(user) == date do
+    class_names = if today(user) == date do
       "date-label d-inline border-bottom border-primary"
     else
       "date-label"
@@ -84,7 +86,16 @@ defmodule SqueezeWeb.CalendarLive do
     end)
   end
 
-  defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
+  def race_goals_by_date(user, dates) do
+    Races.list_race_goals(user, dates)
+    |> Enum.reduce(%{}, fn(x, acc) ->
+      date = x.race.start_date |> Timex.to_date()
+      list = Map.get(acc, date, [])
+      Map.put(acc, date, [x | list])
+    end)
+  end
+
+  defp parse_date(%User{} = user, nil), do: today(user)
   defp parse_date(%User{} = user, date) do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date
@@ -101,6 +112,6 @@ defmodule SqueezeWeb.CalendarLive do
   end
 
   defp activity_date(user, activity) do
-    activity.planned_date || TimeHelper.to_date(user, activity.start_at)
+    activity.planned_date || to_date(user, activity.start_at)
   end
 end

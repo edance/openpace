@@ -38,7 +38,12 @@
                 <%= date_label(date, @current_user) %>
               </div>
 
-              <%= live_component(SqueezeWeb.CalendarItemComponent, activities: Map.get(@activities_by_date, date, []), date: date, current_user: @current_user) %>
+              <%= live_component(SqueezeWeb.CalendarItemComponent,
+                activities: Map.get(@activities_by_date, date, []),
+                date: date,
+                current_user: @current_user,
+                race_goals: Map.get(@race_goals_by_date, date, [])
+              ) %>
             </div>
           <% end %>
         </div>
