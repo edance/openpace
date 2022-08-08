@@ -22,7 +22,7 @@ defmodule Squeeze.DistancesTest do
     end
 
     test "with imperial: false returns km" do
-      assert Distances.format(10_000, imperial: false) == "10.0 km"
+      assert Distances.format(10_000, imperial: false) == "10.00 km"
     end
   end
 

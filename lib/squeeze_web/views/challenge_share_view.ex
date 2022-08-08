@@ -1,10 +1,6 @@
 defmodule SqueezeWeb.ChallengeShareView do
   use SqueezeWeb, :view
 
-  def title(_page, _assigns) do
-    gettext("Challenge Invite")
-  end
-
   def remaining_percentage(%{challenge: challenge}) do
     now = DateTime.utc_now()
     start_date = challenge.start_date

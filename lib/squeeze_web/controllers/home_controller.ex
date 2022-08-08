@@ -8,11 +8,11 @@ defmodule SqueezeWeb.HomeController do
 
   def index(conn, _params) do
     changeset = MailingList.change_subscription(%Subscription{})
-    render(conn, "index.html", changeset: changeset)
+    render(conn, "index.html", page_title: "Run Your Best Marathon Ever", changeset: changeset)
   end
 
   def namer(conn, _params) do
-    render(conn, "namer.html")
+    render(conn, "namer.html", page_title: gettext("Rename your Strava Activities Automatically"))
   end
 
   def subscribe(conn, %{"subscription" => subscription_params}) do

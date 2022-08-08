@@ -43,7 +43,6 @@ defmodule SqueezeWeb.Router do
 
   pipeline :dashboard_layout do
     plug Guardian.Plug.EnsureAuthenticated
-    plug :put_layout, {SqueezeWeb.LayoutView, :dashboard}
   end
 
   pipeline :xml do
@@ -102,9 +101,6 @@ defmodule SqueezeWeb.Router do
 
     get "/billing", BillingController, :portal
     get "/checkout", BillingController, :checkout
-
-    get "/activities", ActivityController, :index
-    patch "/activities/:activity_id/mark-complete", ActivityController, :mark_complete, as: :activity_mark_complete
 
     put "/challenges/:id/join", ChallengeController, :join
   end

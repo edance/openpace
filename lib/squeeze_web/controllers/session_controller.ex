@@ -6,7 +6,7 @@ defmodule SqueezeWeb.SessionController do
   alias SqueezeWeb.Plug.Auth
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    render(conn, "new.html", page_title: "Sign into your account")
   end
 
   def create(conn, %{"session" => auth_params}) do

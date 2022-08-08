@@ -10,11 +10,10 @@ defmodule SqueezeWeb.CalendarLive do
   alias Squeeze.Accounts.User
   alias Squeeze.Calendar
   alias Squeeze.Dashboard
-  alias Squeeze.Guardian
   alias Squeeze.Races
 
   @impl true
-  def mount(params, session, socket) do
+  def mount(_params, session, socket) do
     user = socket.assigns[:current_user] || get_current_user(session)
 
     socket = assign(socket,

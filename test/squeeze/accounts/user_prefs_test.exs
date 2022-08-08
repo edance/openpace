@@ -16,9 +16,4 @@ defmodule Squeeze.Accounts.UserPrefsTest do
     changeset = UserPrefs.changeset(%UserPrefs{}, %{})
     assert changeset.valid?
   end
-
-  test "with a complete profile" do
-    user = insert(:user, user_prefs: build(:user_prefs))
-    assert UserPrefs.complete?(user.user_prefs)
-  end
 end
