@@ -13,7 +13,7 @@
           <div class="card-header bg-transparent">
             <div class="row">
               <div class="col">
-                <h3 class="mb-0">
+                <h3 class="mb-0 text-white">
                   <%= gettext("Personal Records") %>
                 </h3>
               </div>
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table table-sm table-striped">
+            <table class="table table-dark table-sm table-striped">
               <tbody>
                 <%= for pr <- @current_user.user_prefs.personal_records do %>
                   <tr>

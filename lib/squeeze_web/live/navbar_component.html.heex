@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg">
   <div class="container container-dashboard">
     <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,11 +10,11 @@
 
     <%= if @current_user do %>
       <div class="dropdown nav-item order-md-3 pr-0">
-      <a class="nav-link text-white dropdown-toggle align-items-center media" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle align-items-center media" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user) %>
 
         <div class="media-body ml-2 d-none d-lg-block">
-          <span class="mb-0 text-white"><%= full_name(@current_user) %></span>
+          <span class="mb-0"><%= full_name(@current_user) %></span>
         </div>
       </a>
 
