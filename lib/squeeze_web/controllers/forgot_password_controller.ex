@@ -4,7 +4,7 @@ defmodule SqueezeWeb.ForgotPasswordController do
   alias Squeeze.{Accounts, Email, Mailer, PasswordLinkGenerator}
 
   def show(conn, _params) do
-    render(conn, "show.html")
+    render(conn, "show.html", page_title: gettext("Forgot Password"))
   end
 
   def request(conn, params) do

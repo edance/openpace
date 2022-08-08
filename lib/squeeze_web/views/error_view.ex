@@ -1,10 +1,6 @@
 defmodule SqueezeWeb.ErrorView do
   use SqueezeWeb, :view
 
-  def title(_page, _assigns) do
-    "Error"
-  end
-
   def render("404.html", _assigns) do
     "Page not found"
   end

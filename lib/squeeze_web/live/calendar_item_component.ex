@@ -2,7 +2,6 @@ defmodule SqueezeWeb.CalendarItemComponent do
   use SqueezeWeb, :live_component
 
   import Squeeze.Colors, only: [activity_color: 1]
-  import Squeeze.Distances, only: [distance_name: 2]
 
   def race_date?(_) do
     false

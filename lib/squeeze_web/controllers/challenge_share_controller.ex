@@ -5,6 +5,6 @@ defmodule SqueezeWeb.ChallengeShareController do
 
   def show(conn, %{"slug" => slug}) do
     challenge = Challenges.get_challenge_by_slug!(slug)
-    render(conn, "show.html", challenge: challenge)
+    render(conn, "show.html", challenge: challenge, page_title: "Challenge Invite")
   end
 end
