@@ -5,7 +5,7 @@
         <div class="card-body">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <%= link_item(@socket, @live_action, gettext("General Settings"), :general) %>
+              <%= link_item(@socket, @live_action, gettext("Account Settings"), :general) %>
             </li>
             <li class="nav-item">
               <%= link_item(@socket, @live_action, gettext("Rename Activities"), :namer) %>
@@ -55,6 +55,46 @@
           <%= if @current_user.subscription_status == :free do %>
             <%= link(gettext("Subscribe"), to: Routes.billing_path(@socket, :checkout), class: "btn btn-info btn-sm") %>
           <% end %>
+        </div>
+      </div>
+
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0"><%= gettext("Connections") %></h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row no-gutters">
+            <div class="col-auto">
+              <img src="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png") %>" />
+            </div>
+            <div class="col ml-2">
+              <%= if strava_integration?(assigns) do %>
+                <p class="mb-0"><%= gettext("Connected to %{provider}", provider: "Strava") %></p>
+              <% else %>
+                <%= link to: Routes.integration_path(@conn, :request, "strava") do %>
+                  <%= gettext("Connect with %{provider}", provider: "Strava") %>
+                <% end %>
+              <% end %>
+              <p class="small text-muted">Automatically sync activities.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= if @syncing do %>
+                <button class="btn btn-sm btn-outline-white" disabled>
+                  <%= gettext("Syncing...") %>
+                </button>
+              <% else %>
+                <button class="btn btn-sm btn-outline-white" phx-click="sync">
+                  <%= gettext("Sync Activities") %>
+                </button>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>

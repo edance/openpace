@@ -105,7 +105,6 @@ defmodule SqueezeWeb.Router do
     get "/activities", ActivityController, :index
     patch "/activities/:activity_id/mark-complete", ActivityController, :mark_complete, as: :activity_mark_complete
 
-    # resources "/challenges", ChallengeController, except: [:edit, :update, :delete]
     put "/challenges/:id/join", ChallengeController, :join
   end
 
