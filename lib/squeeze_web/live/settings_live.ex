@@ -3,6 +3,7 @@ defmodule SqueezeWeb.SettingsLive do
 
   alias Phoenix.LiveView.Helpers
   alias Squeeze.Accounts
+  alias Squeeze.Strava.HistoryLoader
 
   @moduledoc """
   This is the module for the settings live view
@@ -15,6 +16,7 @@ defmodule SqueezeWeb.SettingsLive do
     socket = assign(socket,
       page_title: "Settings",
       current_user: user,
+      syncing: false,
       changeset: Accounts.change_user(user)
     )
 
@@ -35,6 +37,28 @@ defmodule SqueezeWeb.SettingsLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
+  end
+
+  @impl true
+  def handle_event("sync", _params, socket) do
+    send(self(), :load_recent_history)
+    {:noreply, assign(socket, syncing: true)}
+  end
+
+  @impl true
+  def handle_info(:load_recent_history, socket) do
+    user = socket.assigns.current_user
+    credential = Enum.find(user.credentials, &(&1.provider == "strava"))
+    HistoryLoader.load_recent(user, credential)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "Syncing finished")
+     |> assign(syncing: false)}
+  end
+
+  def strava_integration?(%{current_user: user}) do
+    Enum.any?(user.credentials, &(&1.provider == "strava"))
   end
 
   def link_item(socket, current_action, text, route_action) do

@@ -1,5 +1,5 @@
 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-  <%= link(to: Routes.profile_path(@conn, :edit), class: "dropdown-item") do %>
+  <%= link(to: Routes.settings_path(@conn, :general), class: "dropdown-item") do %>
     <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
     <span><%= gettext("Settings") %></span>
   <% end %>
