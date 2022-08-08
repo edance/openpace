@@ -24,7 +24,13 @@
 
 // Argon functions
 @import "custom/functions";
-@import "custom/variables";
+
+// Light mode Variables - Disabled by default
+// @import "custom/light-variables";
+
+// Dark mode Variables - Enabled by default
+@import "custom/dark-variables";
+
 @import "node_modules/bootstrap/scss/variables";
 
 // Argon mixins
