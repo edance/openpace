@@ -3,7 +3,7 @@
   <head>
     <%= live_title_tag assigns[:page_title] || "Home", suffix: " · OpenPace" %>
     <%= render SqueezeWeb.SharedView, "head.html", assigns %>
-    <script src="<%= Routes.static_path(@conn, "/js/app.js") %>" defer></script>
+    <script src="<%= Routes.static_path(@conn, "/assets/app.js") %>" defer></script>
   </head>
 
   <body>

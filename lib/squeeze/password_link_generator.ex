@@ -7,7 +7,7 @@ defmodule Squeeze.PasswordLinkGenerator do
 
   alias Squeeze.Accounts.User
 
-  @config Application.compile_env(:squeeze, SqueezeWeb.Endpoint)
+  @config Application.get_env(:squeeze, SqueezeWeb.Endpoint)
   @secret_key Application.compile_env(:squeeze, Squeeze.Guardian)[:secret_key]
   @token_ttl 86_400
 

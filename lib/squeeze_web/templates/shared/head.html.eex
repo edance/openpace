@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 
 <link phx-track-static href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png") %>" rel="shortcut icon" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/css/app.css") %>">
+<link rel="stylesheet" type="text/css" href="<%= Routes.static_path(SqueezeWeb.Endpoint, "/assets/app.css") %>">
 <%= render("_gtm.html", assigns) %>
 
 <script>

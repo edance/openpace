@@ -5,6 +5,7 @@ use Mix.Config
 config :squeeze, SqueezeWeb.Endpoint,
   url: [scheme: "http", host: "www.example.com", port: 80],
   http: [port: 4001],
+  secret_key_base: "loAnOMQZRfauy3CxAygWKHtaLuZnU8yvA/xvnmEZ89n3I4K5Afs8tt3cpOdOPRgl",
   server: false
 
 # Print only warnings and errors during test
