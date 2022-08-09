@@ -18,7 +18,7 @@ defmodule SqueezeWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :squeeze, gzip: true,
-    only: ~w(css fonts images js favicon.ico robots.txt .well-known),
+    only: ~w(assets fonts images favicon.ico robots.txt .well-known),
     content_types: %{"apple-app-site-association" => "application/json"}
 
   # Code reloading can be explicitly enabled under the

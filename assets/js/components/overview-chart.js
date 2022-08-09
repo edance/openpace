@@ -141,14 +141,12 @@ function init() {
       backgroundColor: 'white',
       valueDecimals: 1,
       xDateFormat: 'Week of %m-%d',
-      shared: true,
     },
     series: [
       {
         name: 'Elevation Gain',
         type: 'area',
         data: gains.map((x, idx) => [dates[idx], x]),
-        color: colors.theme['secondary'],
         borderWidth: 0,
         yAxis: 'elevation',
         marker: {
