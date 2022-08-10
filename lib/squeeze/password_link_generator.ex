@@ -7,10 +7,6 @@ defmodule Squeeze.PasswordLinkGenerator do
 
   alias Squeeze.Accounts.User
 
-  @config Application.get_env(:squeeze, SqueezeWeb.Endpoint)
-  @secret_key Application.compile_env(:squeeze, Squeeze.Guardian)[:secret_key]
-  @token_ttl 86_400
-
   @doc """
   """
   def create_link(%User{id: id}, time \\ :erlang.system_time(:seconds)) do
@@ -23,7 +19,7 @@ defmodule Squeeze.PasswordLinkGenerator do
     [timestamp, _] = parse_token(token)
     diff = :erlang.system_time(:seconds) - timestamp
     cond do
-      diff > @token_ttl -> {:error, "Token has expired"}
+      diff > token_ttl() -> {:error, "Token has expired"}
       sign_token(token) == signature -> {:ok, true}
       true -> {:error, "Token not valid"}
     end
@@ -37,12 +33,18 @@ defmodule Squeeze.PasswordLinkGenerator do
   end
 
   defp sign_token(token) do
-    :crypto.mac(:hmac, :sha256, @secret_key, token)
+    :crypto.mac(:hmac, :sha256, secret_key(), token)
     |> Base.url_encode64
   end
 
+  defp secret_key do
+    Application.get_env(:squeeze, Squeeze.Guardian)[:secret_key]
+  end
+
+  def token_ttl, do: 86_400
+
   defp base_url do
-    url = @config[:url]
+    url = Application.get_env(:squeeze, SqueezeWeb.Endpoint)[:url]
     %URI{
       scheme: url[:scheme],
       host: url[:host],

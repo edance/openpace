@@ -77,7 +77,6 @@ config :squeeze, Squeeze.OAuth2.Fitbit,
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "http://localhost:4000/integration/strava/callback",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 config :squeeze, Squeeze.Garmin,

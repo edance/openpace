@@ -6,8 +6,6 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
   import Squeeze.Factory
   alias Squeeze.PasswordLinkGenerator
 
-  @secret_key Application.compile_env(:squeeze, Squeeze.Guardian)[:secret_key]
-
   describe "create_link/2" do
     setup [:create_user]
 
@@ -69,8 +67,12 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
   end
 
   defp sign_token(token) do
-    :crypto.mac(:hmac, :sha256, @secret_key, token)
+    :crypto.mac(:hmac, :sha256, secret_key(), token)
     |> Base.url_encode64
+  end
+
+  defp secret_key do
+    Application.get_env(:squeeze, Squeeze.Guardian)[:secret_key]
   end
 
   def parse_query_params(link) do

@@ -48,10 +48,6 @@ config :logger, level: :info
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
-config :squeeze, Squeeze.Guardian,
-  issuer: "squeeze",
-  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
-
 config :squeeze, Squeeze.OAuth2.Google,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
@@ -71,8 +67,6 @@ config :squeeze, Squeeze.Garmin,
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
-  redirect_uri: "https://www.openpace.co/integration/strava/callback",
-  webhook_callback_url: "https://www.openpace.co/webhook/strava",
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
 
 config :new_relic_agent,
