@@ -35,7 +35,7 @@ config :squeeze, :payment_processor, Squeeze.MockPaymentProcessor
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: "1",
   client_secret: "123456789",
-  redirect_uri: "http://localhost:4000/auth/strava/callback",
+  redirect_uri: "http://localhost:4000/auth/fitbit/callback",
   webhook_challenge: "FITBIT"
 
 ### Additional config
@@ -45,7 +45,6 @@ config :argon2_elixir, t_cost: 2, m_cost: 8
 config :strava,
   client_id: "1",
   client_secret: "123456789",
-  redirect_uri: "http://localhost:4000/auth/strava/callback",
   webhook_challenge: "STRAVA"
 
 config :tesla, adapter: Tesla.Mock
