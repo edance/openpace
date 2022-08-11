@@ -22,7 +22,6 @@ defmodule SqueezeWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Squeeze.LiveAuthPipeline
-    plug Plug.Auth
     plug Plug.Locale
   end
 
@@ -76,22 +75,25 @@ defmodule SqueezeWeb.Router do
   scope "/dashboard", SqueezeWeb do
     pipe_through [:live_browser]
 
-    live "/overview", Dashboard.OverviewLive, :index, as: :overview
+    live_session :dashboard, on_mount: SqueezeWeb.LiveAuth do
+      live "/overview", Dashboard.OverviewLive, :index, as: :overview
 
-    live "/calendar", CalendarLive, :index
-    live "/challenges", ChallengeLive, :index
-    live "/challenges/new", Challenges.NewLive, :new, as: :challenge
-    live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
+      live "/calendar", CalendarLive, :index
+      live "/challenges", ChallengeLive, :index
+      live "/challenges/new", Challenges.NewLive, :new, as: :challenge
+      live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
 
-    live "/activities/:id", Activities.ShowLive, :show, as: :activity
+      live "/activities", ActivityLive.Index, :index, as: :activity_index
+      live "/activities/:id", Activities.ShowLive, :show, as: :activity
 
-    live "/races", RaceLive, :index
-    live "/races/new", Races.NewLive, :new, as: :race
-    live "/races/:slug", Races.ShowLive, :show, as: :race
+      live "/races", RaceLive, :index
+      live "/races/new", Races.NewLive, :new, as: :race
+      live "/races/:slug", Races.ShowLive, :show, as: :race
 
-    live "/settings", SettingsLive, :general
-    live "/settings/namer", SettingsLive, :namer
-    live "/settings/personal-records", SettingsLive, :personal_records
+      live "/settings", SettingsLive, :general
+      live "/settings/namer", SettingsLive, :namer
+      live "/settings/personal-records", SettingsLive, :personal_records
+    end
   end
 
   scope "/dashboard", SqueezeWeb do
