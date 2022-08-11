@@ -101,7 +101,7 @@ defmodule SqueezeWeb.FormatHelpers do
   def format_date_with_time(start_at) do
     date = Ordinal.ordinalize(start_at.day)
     start_at
-    |> Timex.format!("%a %b #{date}, %Y at %-I:%M %p", :strftime)
+    |> Timex.format!("%a, %b #{date}, %Y at %-I:%M %p", :strftime)
   end
 
   def format_number(num) do

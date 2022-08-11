@@ -12,7 +12,7 @@
           <option value="duration">Time</option>
           <option value="elevation_gain">Elevation</option>
         </select>
-        <%#= link(gettext("See all"), to: Routes.activity_path(@socket, :index), class: "btn btn-sm btn-primary") %>
+        <%= live_redirect(gettext("See all"), to: Routes.activity_index_path(@socket, :index), class: "btn btn-sm btn-primary") %>
       </div>
     </div>
   </div>

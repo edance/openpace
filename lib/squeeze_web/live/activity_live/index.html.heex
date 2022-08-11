@@ -1,0 +1,95 @@
+<div class="container mt-4">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Activities</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Sport</th>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Distance</th>
+                <th scope="col">Duration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for activity <- @activities do %>
+                <tr id={"activity-#{activity.id}"} scope="row">
+                  <td><%= activity.type %></td>
+                  <td><%= Timex.format!(activity.start_at_local, "%a, %b #{Ordinal.ordinalize(activity.start_at_local.day)}", :strftime) %></td>
+                  <td><%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity) %></td>
+                  <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
+                  <td><%= format_duration(activity.duration) %></td>
+
+                  <td>
+                    <button class="btn btn-sm btn-outline-danger" phx-click="delete" phx-value-id={activity.id} data-confirm="Are you sure?" >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              <%= if previous_page(assigns) do %>
+                <li class="page-item">
+                  <%= live_patch(to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)), class: "page-link") do %>
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  <% end %>
+
+                  <li class="page-item">
+                    <%= live_patch(previous_page(assigns), to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)), class: "page-link") %>
+                  </li>
+                </li>
+              <% else %>
+                <li class="page-item disabled">
+                  <div class="page-link">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </div>
+                </li>
+              <% end %>
+
+              <li class="page-item active">
+                <div class="page-link"><%= @page %> <span class="sr-only">(current)</span></div>
+              </li>
+
+              <%= if next_page(assigns) do %>
+                <li class="page-item">
+                  <%= live_redirect(next_page(assigns), to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)), class: "page-link") %>
+                </li>
+
+                <li class="page-item">
+                  <%= live_patch(to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)), class: "page-link") do %>
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  <% end %>
+                </li>
+              <% else %>
+                <li class="page-item disabled">
+                  <div class="page-link">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

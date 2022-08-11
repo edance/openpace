@@ -24,6 +24,7 @@ defmodule SqueezeWeb.Plug.Auth do
     conn
     |> Plug.sign_in(user)
     |> Plug.remember_me(user)
+    |> assign(:current_user, user)
   end
 
   def sign_out(conn) do
