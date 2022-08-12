@@ -73,6 +73,12 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     {:noreply, socket}
   end
 
+  defp personal_records(%{current_user: user}) do
+    user.user_prefs.personal_records
+    |> Enum.reject(&(is_nil(&1.duration) || &1.duration == 0))
+    |> Enum.sort_by(&(&1.distance))
+  end
+
   defp activity_map(summaries) do
     summaries
     |> Enum.reduce(%{}, fn(x, acc) ->
