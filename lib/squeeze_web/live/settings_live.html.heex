@@ -27,7 +27,7 @@
       <% end %>
 
       <%= if @live_action == :personal_records do %>
-        <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent, changeset: @changeset, current_user: @current_user) %>
+        <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent, id: "pr-form", changeset: @changeset, current_user: @current_user, x: 1) %>
       <% end %>
 
       <%= if @live_action == :namer do %>

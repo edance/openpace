@@ -23,26 +23,34 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-dark table-sm table-striped">
-              <tbody>
-                <%= for pr <- @current_user.user_prefs.personal_records do %>
-                  <tr>
-                    <th scope="row">
-                      <%= distance_name(pr.distance, imperial: @current_user.user_prefs.imperial) %>
-                    </th>
-                    <td>
-                      <%= if pr.duration do %>
-                        <%= format_duration(pr.duration) %>
-                      <% else %>
-                        --
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
+          <%= if Enum.empty?(@current_user.user_prefs.personal_records) do %>
+            <div class="card-body">
+              <p class="text-muted">
+                <%= live_redirect(gettext("Add a PR here."), to: Routes.settings_path(@socket, :personal_records)) %>
+              </p>
+            </div>
+          <% else %>
+            <div class="table-responsive">
+              <table class="table table-dark table-sm table-striped">
+                <tbody>
+                  <%= for pr <- @current_user.user_prefs.personal_records do %>
+                    <tr>
+                      <th scope="row">
+                        <%= distance_name(pr.distance, imperial: @current_user.user_prefs.imperial) %>
+                      </th>
+                      <td>
+                        <%= if pr.duration do %>
+                          <%= format_duration(pr.duration) %>
+                        <% else %>
+                          --
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
         </div>
       </div>
 

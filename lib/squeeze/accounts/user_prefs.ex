@@ -39,15 +39,10 @@ defmodule Squeeze.Accounts.UserPrefs do
   end
 
   @doc false
-  def changeset(%UserPrefs{} = user_prefs, %{"personal_records" => _prs} = attrs) do
-    user_prefs
-    |> cast(attrs, @required_fields ++ @optional_fields)
-    |> cast_embed(:personal_records, with: &PersonalRecord.changeset/2)
-    |> validate_required(@required_fields)
-  end
   def changeset(%UserPrefs{} = user_prefs, attrs) do
     user_prefs
     |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast_embed(:personal_records, with: &PersonalRecord.changeset/2)
     |> validate_required(@required_fields)
   end
 end
