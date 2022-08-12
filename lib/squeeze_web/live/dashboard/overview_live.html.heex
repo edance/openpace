@@ -33,7 +33,7 @@
             <div class="table-responsive">
               <table class="table table-dark table-sm table-striped">
                 <tbody>
-                  <%= for pr <- @current_user.user_prefs.personal_records do %>
+                  <%= for pr <- personal_records(assigns) do %>
                     <tr>
                       <th scope="row">
                         <%= distance_name(pr.distance, imperial: @current_user.user_prefs.imperial) %>

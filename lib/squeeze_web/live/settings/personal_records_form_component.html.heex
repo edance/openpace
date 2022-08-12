@@ -53,7 +53,7 @@
         <.form let={f} for={:personal_record} phx-submit={JS.push("save", target: @myself) |> JS.dispatch("hide-modal", to: "#modal")}>
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Personal Record</h5>
-          <button type="button" class="close" phx-click={hide_modal()} aria-label="Close">
+          <button type="button" class="close" phx-click={hide_modal(@myself)} aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  phx-click={JS.push("hide_modal", target: @myself) |> hide_modal()}>Close</button>
+          <button type="button" class="btn btn-secondary"  phx-click={hide_modal(@myself)}>Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
         </.form>

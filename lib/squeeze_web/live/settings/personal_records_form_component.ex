@@ -56,8 +56,8 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
     ]
   end
 
-  defp hide_modal(js \\ %JS{}) do
-    js
+  defp hide_modal(target) do
+    JS.push("hide_modal", target: target)
     |> JS.dispatch("hide-modal", to: "#modal")
   end
 end
