@@ -3,6 +3,16 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
 
   alias Squeeze.Distances
 
+  import Number.Percentage, only: [number_to_percentage: 2]
+
+  @impl true
+  def update(assigns, socket) do
+    {:ok,
+     socket
+     |> assign(assigns)
+     |> assign(:improvement_amount, improvement_amount(assigns))}
+  end
+
   def weekly_distance(%{activity_summaries: summaries, current_user: user}) do
     date = Timex.now()
     |> Timex.to_datetime(user.user_prefs.timezone)
@@ -34,5 +44,19 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
     imperial = user.user_prefs.imperial
 
     "#{Distances.to_float(distance, imperial: imperial)} #{Distances.label(imperial: imperial)}"
+  end
+
+  defp personal_record(%{current_user: user, race_goal: race_goal}) do
+    user.user_prefs.personal_records
+    |> Enum.find(&(&1.distance == race_goal.distance))
+  end
+
+  def improvement_amount(%{race_goal: race_goal} = assigns) do
+    case personal_record(assigns) do
+      %{duration: pr_duration}
+      when not is_nil(pr_duration) and not is_nil(race_goal.duration) ->
+        (pr_duration - race_goal.duration) / pr_duration * 100
+      _ -> nil
+    end
   end
 end

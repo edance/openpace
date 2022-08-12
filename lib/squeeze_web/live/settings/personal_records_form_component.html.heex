@@ -1,5 +1,4 @@
 <div class="card shadow">
-  <.form let={f} for={@changeset} phx-submit="save">
   <div class="card-header border-0">
     <div class="row align-items-center">
       <div class="col-8">
@@ -9,82 +8,78 @@
   </div>
 
   <div class="table-responsive">
-    <%= inputs_for f, :user_prefs, fn p -> %>
-      <table class="table table-striped">
-        <thead>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Distance</th>
+          <th scope="col">Personal Record</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for %{name: name, distance: distance} <- distances() do %>
           <tr>
-            <th scope="col">Distance</th>
-            <th scope="col">Personal Record</th>
-            <th scope="col"></th>
+            <th scope="row">
+              <%= name %>
+            </th>
+            <td>
+              <%= formatted_pr(assigns, distance) %>
+            </td>
+            <td>
+              <a href="#" phx-click="show_modal" phx-value-distance={distance} phx-target={@myself}>
+                <%= if pr_at_distance(assigns, distance), do: gettext("Edit"), else: gettext("Add") %>
+              </a>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <%= for {%{name: name, distance: distance}, idx} <- Enum.with_index(distances()) do %>
-            <tr>
-              <th scope="row">
-                <%= name %>
-                <%= hidden_input(f, :distance, input_opts(:distance, idx)) %>
-              </th>
-              <td>
-                <%= formatted_pr(assigns, distance) %>
-              </td>
-              <td>
-                <a href="#" phx-click="show_modal" phx-value-distance={distance} phx-target={@myself}>
-                  <%= if pr_at_distance(assigns, distance), do: gettext("Edit"), else: gettext("Add") %>
-                </a>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 
   <div class="card-footer">
     <button class="btn btn-primary" type="submit">Save</button>
   </div>
-</.form>
 
-  <!-- Modal -->
-<%= if @distance do %>
-  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" phx-hook="Modal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <.form let={f} for={:personal_record} phx-submit={JS.push("save", target: @myself) |> JS.dispatch("hide-modal", to: "#modal")}>
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Personal Record</h5>
-          <button type="button" class="close" phx-click={hide_modal(@myself)} aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-              <%= label(f, :distance, class: "form-control-label") %>
-              <h3>
-                <%= distance_name(@distance, imperial: @current_user.user_prefs.imperial) %>
-              </h3>
-              <%= hidden_input(f, :distance, value: @distance) %>
-              <%= error_tag(f, :first_name) %>
+  <!-- Personal Record Modal -->
+  <%= if @distance do %>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" phx-hook="Modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <.form let={f} for={:personal_record} phx-submit={JS.push("save", target: @myself) |> JS.dispatch("hide-modal", to: "#modal")}>
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Personal Record</h5>
+              <button type="button" class="close" phx-click={hide_modal(@myself)} aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <%= label(f, :distance, class: "form-control-label") %>
+                <h3>
+                  <%= distance_name(@distance, imperial: @current_user.user_prefs.imperial) %>
+                </h3>
+                <%= hidden_input(f, :distance, value: @distance) %>
+                <%= error_tag(f, :first_name) %>
+              </div>
 
-          <div class="form-group">
-            <%= label(f, :duration, class: "form-control-label") %>
-            <%= duration_select(f, :duration, class: "form-control") %>
-          </div>
+              <div class="form-group">
+                <%= label(f, :duration, class: "form-control-label") %>
+                <%= duration_select(f, :duration, class: "form-control") %>
+              </div>
 
-          <div class="form-group">
-            <%= label(f, :results_url, "Results URL", class: "form-control-label") %>
-            <%= input(f, :results_url, class: "form-control", placeholder: "https://runrace.com/1234") %>
-            <%= error_tag(f, :results_url) %>
-          </div>
+              <div class="form-group">
+                <%= label(f, :results_url, "Results URL", class: "form-control-label") %>
+                <%= input(f, :results_url, class: "form-control", placeholder: "https://runrace.com/1234") %>
+                <%= error_tag(f, :results_url) %>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"  phx-click={hide_modal(@myself)}>Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </.form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  phx-click={hide_modal(@myself)}>Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-        </.form>
       </div>
     </div>
-  </div>
   <% end %>
 </div>
