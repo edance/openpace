@@ -13,8 +13,8 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   import Squeeze.Distances, only: [distance_name: 2]
 
   @impl true
-  def mount(_params, session, socket) do
-    user = socket.assigns[:current_user] || get_current_user(session)
+  def mount(_params, _session, socket) do
+    user = socket.assigns.current_user
     summaries = Dashboard.list_activity_summaries(user)
     activity_map = activity_map(summaries)
     race_goals = Races.list_upcoming_race_goals(user)
