@@ -289,6 +289,22 @@ defmodule Squeeze.Accounts do
     |> Repo.update()
   end
 
+  def put_personal_record(%User{} = user, %{"distance" => distance} = personal_record_attrs)
+  when is_binary(distance) do
+    {distance, ""} = Float.parse(distance)
+
+    put_personal_record(user, Map.put(personal_record_attrs, "distance", distance))
+  end
+  def put_personal_record(%User{} = user, %{"distance" => distance} = personal_record_attrs) do
+    prs = user.user_prefs.personal_records
+    |> Enum.reject(&(&1.distance == distance))
+    |> Enum.map(&Map.from_struct/1)
+
+    user.user_prefs
+    |> UserPrefs.changeset(%{personal_records: prs ++ [personal_record_attrs]})
+    |> Repo.update()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking user_prefs changes.
 

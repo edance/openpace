@@ -83,7 +83,8 @@ defmodule SqueezeWeb.FormHelpers do
   end
 
   def duration_select(form, field, opts \\ []) do
-    content_tag(:div, class: "duration-select form-row") do
+    id = "#{form.id}_duration_select_#{field}"
+    content_tag(:div, id: id, class: "duration-select form-row", phx_hook: "DurationSelect") do
       [
         select_tag(form, field, :hours, opts),
         select_tag(form, field, :minutes, opts),
