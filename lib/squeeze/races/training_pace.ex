@@ -121,9 +121,9 @@ defmodule Squeeze.Races.TrainingPace do
     if distance == marathon_in_meters() do
       distance / duration
     else
-      marathon_in_meters()
-      |> RacePredictor.predict_race_time(vo2_max)
-      |> Kernel./(marathon_in_meters())
+      distance = marathon_in_meters()
+      duration = RacePredictor.predict_race_time(distance, vo2_max)
+      distance / duration
     end
   end
 end
