@@ -14,60 +14,64 @@
   </div>
 
   <div class="card-body">
-    <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
-      <%= for %{race: race} = race_goal <- @race_goals do %>
-        <div class="timeline-block">
-          <span class={"timeline-step text-white #{bg_color(race)}"}>
-            <span class="iconify" data-icon="gis:finish" data-inline="false"></span>
-          </span>
+    <%= if Enum.empty?(@race_goals) do %>
+      <p>You have no upcoming races at this time.</p>
+    <% else %>
+      <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+        <%= for %{race: race} = race_goal <- @race_goals do %>
+          <div class="timeline-block">
+            <span class={"timeline-step text-white #{bg_color(race)}"}>
+              <span class="iconify" data-icon="gis:finish" data-inline="false"></span>
+            </span>
 
-          <div class="timeline-content">
-            <h3 class="mb-0">
-              <%= live_redirect race.name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "card-title" %>
-            </h3>
-            <small class="text-muted font-weight-bold">
-              <%= race_date(race) %> (<%= relative_date(@current_user, race.start_date) %>)
-            </small>
+            <div class="timeline-content">
+              <h3 class="mb-0">
+                <%= live_redirect race.name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "card-title" %>
+              </h3>
+              <small class="text-muted font-weight-bold">
+                <%= race_date(race) %> (<%= relative_date(@current_user, race.start_date) %>)
+              </small>
 
-            <%= unless race_goal.just_finish do %>
-              <div class="row pt-4">
-                <div class="col">
-                  <div class="text-xs text-uppercase text-muted mb-0">
-                    Distance
+              <%= unless race_goal.just_finish do %>
+                <div class="row pt-4">
+                  <div class="col">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Distance
+                    </div>
+                    <span class="h4 font-weight-bold mb-0">
+                      <%= distance_name(race_goal.distance, @current_user) %>
+                    </span>
                   </div>
-                  <span class="h4 font-weight-bold mb-0">
+
+                  <div class="col">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Goal
+                    </div>
+                    <span class="h4 font-weight-bold mb-0">
+                      <%= format_duration(race_goal.duration) %>
+                    </span>
+                  </div>
+
+                  <div class="col">
+                    <div class="text-xs text-uppercase text-muted mb-0">
+                      Pace
+                    </div>
+                    <span class="h4 font-weight-bold mb-0">
+                      <%= format_pace(%{distance: race_goal.distance, duration: race_goal.duration}, @current_user.user_prefs) %>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  <span class={"badge badge-pill text-white #{bg_color(race)}"}>
                     <%= distance_name(race_goal.distance, @current_user) %>
                   </span>
                 </div>
-
-                <div class="col">
-                  <div class="text-xs text-uppercase text-muted mb-0">
-                    Goal
-                  </div>
-                  <span class="h4 font-weight-bold mb-0">
-                    <%= format_duration(race_goal.duration) %>
-                  </span>
-                </div>
-
-                <div class="col">
-                  <div class="text-xs text-uppercase text-muted mb-0">
-                    Pace
-                  </div>
-                  <span class="h4 font-weight-bold mb-0">
-                    <%= format_pace(%{distance: race_goal.distance, duration: race_goal.duration}, @current_user.user_prefs) %>
-                  </span>
-                </div>
-              </div>
-            <% end %>
-
-            <div class="mt-3">
-              <span class={"badge badge-pill text-white #{bg_color(race)}"}>
-                <%= distance_name(race_goal.distance, @current_user) %>
-              </span>
+              <% end %>
             </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

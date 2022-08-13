@@ -10,6 +10,7 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:personal_record, personal_record(assigns))
      |> assign(:improvement_amount, improvement_amount(assigns))}
   end
 
@@ -46,12 +47,15 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
     "#{Distances.to_float(distance, imperial: imperial)} #{Distances.label(imperial: imperial)}"
   end
 
+  defp personal_record(%{race_goal: nil}), do: nil
   defp personal_record(%{current_user: user, race_goal: race_goal}) do
     user.user_prefs.personal_records
+    |> Enum.reject(&(is_nil(&1.duration)))
     |> Enum.find(&(&1.distance == race_goal.distance))
   end
 
-  def improvement_amount(%{race_goal: race_goal} = assigns) do
+  defp improvement_amount(%{race_goal: nil}), do: nil
+  defp improvement_amount(%{race_goal: race_goal} = assigns) do
     case personal_record(assigns) do
       %{duration: pr_duration}
       when not is_nil(pr_duration) and not is_nil(race_goal.duration) ->
