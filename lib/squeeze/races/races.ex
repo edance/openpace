@@ -102,6 +102,22 @@ defmodule Squeeze.Races do
   end
 
   @doc """
+  Deletes an RaceGoal.
+
+  ## Examples
+
+  iex> delete_race_goal(race_goal)
+  {:ok, %RaceGoal{}}
+
+  iex> delete_race_goal(race_goal)
+  {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_race_goal(%RaceGoal{} = race_goal) do
+    Repo.delete(race_goal)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking race changes.
 
   ## Examples
