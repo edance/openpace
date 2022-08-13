@@ -55,7 +55,11 @@
                     Pace
                   </div>
                   <span class="h4 font-weight-bold mb-0">
-                    <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                    <%= if @race_goal.duration do %>
+                      <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                    <% else %>
+                      <%= gettext("N/A") %>
+                    <% end %>
                   </span>
                 </div>
               </div>
@@ -73,14 +77,10 @@
                   <%= gettext("Race Goal") %>
                 </h5>
                 <span class="h2 font-weight-bold mb-0">
-                  <%= if @race_goal do %>
-                    <%= if @race_goal.just_finish do %>
-                      <%= gettext("Finish") %>
-                    <% else %>
-                      <%= format_duration(@race_goal.duration) %>
-                    <% end %>
+                  <%= if @race_goal.just_finish do %>
+                    <%= gettext("Finish") %>
                   <% else %>
-                    <%= gettext("TBD") %>
+                    <%= format_duration(@race_goal.duration) %>
                   <% end %>
                 </span>
               </div>
@@ -105,92 +105,100 @@
                   Pace
                 </div>
                 <span class="h4 font-weight-bold mb-0">
-                  <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                  <%= if @race_goal.just_finish do %>
+                    <%= gettext("N/A") %>
+                  <% else %>
+                    <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                  <% end %>
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="card bg-gradient-default">
-          <div class="card-header bg-transparent border-0">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="mb-0">
-                  <%= gettext("Training Paces") %>
-                </h3>
-              </div>
+        <%= unless Enum.empty?(@paces) do %>
+          <div class="card bg-gradient-default">
+            <div class="card-header bg-transparent border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">
+                    <%= gettext("Training Paces") %>
+                  </h3>
+                </div>
 
-              <div class="col text-right">
+                <div class="col text-right">
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="card-body px-0 pt-0">
-            <div class="table-responsive">
-              <table class="table table-sm align-items-center table-flush">
-                <tbody>
-                  <%= for pace <- @paces do %>
-                    <tr scope="row">
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <div class="badge badge-circle text-white mr-2" style={"background: #{pace.color}"}>
+            <div class="card-body px-0 pt-0">
+              <div class="table-responsive">
+                <table class="table table-sm align-items-center table-flush">
+                  <tbody>
+                    <%= for pace <- @paces do %>
+                      <tr scope="row">
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="badge badge-circle text-white mr-2" style={"background: #{pace.color}"}>
+                            </div>
+                            <%= pace.name %>
                           </div>
-                          <%= pace.name %>
-                        </div>
-                      </td>
-                      <td>
-                        <%= if pace.speed do %>
-                          <%= format_speed(pace.speed, @current_user.user_prefs) %>
-                        <% else %>
-                          <%= format_speed(pace.max_speed, @current_user.user_prefs) %> -
-                          <%= format_speed(pace.min_speed, @current_user.user_prefs) %>
-                        <% end %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="card">
-          <div class="card-header bg-transparent border-0">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="mb-0">
-                  <%= gettext("Equivalent Performances") %>
-                </h3>
+                        </td>
+                        <td>
+                          <%= if pace.speed do %>
+                            <%= format_speed(pace.speed, @current_user.user_prefs) %>
+                          <% else %>
+                            <%= format_speed(pace.max_speed, @current_user.user_prefs) %> -
+                            <%= format_speed(pace.min_speed, @current_user.user_prefs) %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
               </div>
             </div>
-          </div>
 
-          <div class="card-body px-0 pt-0">
-            <div class="table-responsive">
-              <table class="table table-sm align-items-center table-flush">
-                <tbody>
-                  <%= for distance <- Map.keys(@predictions) |> Enum.sort() do %>
-                    <tr scope="row">
-                      <td>
-                        <%= distance_name(distance, @current_user) %>
-                      </td>
-                      <td>
-                        <%= if distance == @race_goal.distance && @race_goal.duration do  %>
-                          <%= format_duration(@race_goal.duration) %>
-                        <% else %>
-                          <%= format_duration(Map.get(@predictions, distance)) %>
-                        <% end %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
+          </div>
+        <% end %>
+
+        <%= unless @race_goal.just_finish do %>
+          <div class="card">
+            <div class="card-header bg-transparent border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">
+                    <%= gettext("Equivalent Performances") %>
+                  </h3>
+                </div>
+              </div>
             </div>
-          </div>
 
-        </div>
+            <div class="card-body px-0 pt-0">
+              <div class="table-responsive">
+                <table class="table table-sm align-items-center table-flush">
+                  <tbody>
+                    <%= for distance <- Map.keys(@predictions) |> Enum.sort() do %>
+                      <tr scope="row">
+                        <td>
+                          <%= distance_name(distance, @current_user) %>
+                        </td>
+                        <td>
+                          <%= if distance == @race_goal.distance && @race_goal.duration do  %>
+                            <%= format_duration(@race_goal.duration) %>
+                          <% else %>
+                            <%= format_duration(Map.get(@predictions, distance)) %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        <% end %>
 
         <div class="card bg-gradient-orange">
           <div class="card-body">
