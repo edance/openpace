@@ -28,6 +28,16 @@ defmodule SqueezeWeb.Races.ShowLive do
     {:ok, socket}
   end
 
+  @impl true
+  def handle_event("delete", _params, socket) do
+    {:ok, _} = Races.delete_race_goal(socket.assigns.race_goal)
+
+    socket = socket
+    |> redirect(to: Routes.race_path(socket, :index))
+
+    {:noreply, socket}
+  end
+
   def distance_name(distance, current_user) do
     Distances.distance_name(distance, imperial: current_user.user_prefs.imperial)
   end
