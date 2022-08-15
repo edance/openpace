@@ -1,7 +1,7 @@
 defmodule Squeeze.RaceFactory do
   @moduledoc false
 
-  alias Faker.{Address, Lorem}
+  alias Faker.{Address, Date, Lorem}
   alias Squeeze.Distances
   alias Squeeze.Races.Race
 
@@ -23,7 +23,8 @@ defmodule Squeeze.RaceFactory do
           city: city,
           content: Lorem.paragraph(6),
           state: state,
-          external_id: sequence(:external_id, &"#{&1}")
+          external_id: sequence(:external_id, &"#{&1}"),
+          start_date: Date.forward(100),
         }
       end
 

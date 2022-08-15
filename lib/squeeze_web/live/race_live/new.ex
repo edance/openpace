@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.Races.NewLive do
+defmodule SqueezeWeb.RaceLive.New do
   use SqueezeWeb, :live_view
 
   @moduledoc """
@@ -11,9 +11,9 @@ defmodule SqueezeWeb.Races.NewLive do
   alias Squeeze.Races.RaceGoal
 
   @impl true
-  def mount(_params, session, socket) do
+  def mount(_params, _session, socket) do
     changeset = Races.change_race_goal(%RaceGoal{})
-    user = socket.assigns[:current_user] || get_current_user(session)
+    user = socket.assigns.current_user
 
     socket = socket
     |> assign(current_user: user)
