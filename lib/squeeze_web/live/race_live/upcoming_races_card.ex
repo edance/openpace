@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.Races.UpcomingRacesCard do
+defmodule SqueezeWeb.RaceLive.UpcomingRacesCard do
   use SqueezeWeb, :live_component
 
   alias Squeeze.Distances

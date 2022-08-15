@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.Races.NewLive do
+defmodule SqueezeWeb.RaceLive.New do
   use SqueezeWeb, :live_view
 
   @moduledoc """
