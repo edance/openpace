@@ -4,9 +4,9 @@ defmodule Squeeze.Dashboard do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.{Changeset}
+  alias Ecto.{Changeset, Multi}
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, TrackpointSet}
+  alias Squeeze.Dashboard.{Activity, TrackpointSet, TrackpointSection}
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
 
@@ -207,6 +207,28 @@ defmodule Squeeze.Dashboard do
     |> Changeset.put_change(:activity_id, activity.id)
     |> Changeset.put_embed(:trackpoints, trackpoints)
     |> Repo.insert()
+  end
+
+  def create_trackpoint_sections(%TrackpointSet{trackpoints: trackpoints, activity_id: activity_id}) do
+    [start | rest] = trackpoints
+    {sections, _} = Enum.map_reduce(rest, start, fn(cur, prev) ->
+      section = %{
+        velocity: (prev.velocity + cur.velocity) / 2,
+        distance: cur.distance - prev.distance,
+        duration: cur.time - prev.time,
+        activity_id: activity_id
+      }
+      {section, cur}
+    end)
+    Multi.new()
+    |> Multi.run(:section_count, fn(repo, _) ->
+      sections
+      |> Enum.chunk_every(100)
+      |> Enum.each(&(repo.insert_all(TrackpointSection, &1)))
+
+      {:ok, length(sections)}
+    end)
+    |> Repo.transaction()
   end
 
   defp by_user(query, %User{} = user) do

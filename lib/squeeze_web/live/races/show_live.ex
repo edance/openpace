@@ -5,6 +5,7 @@ defmodule SqueezeWeb.Races.ShowLive do
   Shows a race
   """
 
+  alias Squeeze.Dashboard
   alias Squeeze.Distances
   alias Squeeze.RacePredictor
   alias Squeeze.Races
@@ -29,6 +30,18 @@ defmodule SqueezeWeb.Races.ShowLive do
   end
 
   @impl true
+  def handle_params(_params, _uri, socket) do
+    user = socket.assigns.current_user
+    activities = list_activities(user, socket.assigns.race_goal)
+
+    socket = assign(socket,
+      activities: activities
+    )
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("delete", _params, socket) do
     {:ok, _} = Races.delete_race_goal(socket.assigns.race_goal)
 
@@ -50,5 +63,11 @@ defmodule SqueezeWeb.Races.ShowLive do
   defp predictions(nil), do: nil
   defp predictions(vo2_max) do
     RacePredictor.predict_all_race_times(vo2_max)
+  end
+
+  defp list_activities(user, %{race: %{start_date: race_date}}) do
+    start_date = race_date |> Timex.shift(weeks: -18) |> Timex.shift(days: 1)
+    range = Date.range(start_date, race_date)
+    Dashboard.list_activities(user, range)
   end
 end

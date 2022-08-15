@@ -26,9 +26,9 @@ defmodule SqueezeWeb.Races.NewLive do
   def handle_event("save", %{"race_goal" => params}, socket) do
     user = socket.assigns.current_user
     case Races.create_race_goal(user, params) do
-      {:ok, _race} ->
+      {:ok, race_goal} ->
         socket = socket
-        |> redirect(to: Routes.race_path(socket, :index))
+        |> redirect(to: Routes.race_path(socket, :show, race_goal.slug))
 
         {:noreply, socket}
       {:error, %Changeset{} = changeset} ->
