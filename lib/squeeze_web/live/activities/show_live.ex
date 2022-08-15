@@ -7,8 +7,8 @@ defmodule SqueezeWeb.Activities.ShowLive do
   alias Squeeze.Strava.ActivityLoader
 
   @impl true
-  def mount(%{"id" => id}, session, socket) do
-    user = socket.assigns[:current_user] || get_current_user(session)
+  def mount(%{"id" => id}, _session, socket) do
+    user = socket.assigns.current_user
     activity = Dashboard.get_detailed_activity!(user, id)
 
     if connected?(socket) && !activity.trackpoint_set do

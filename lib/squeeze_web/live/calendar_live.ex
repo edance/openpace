@@ -13,8 +13,8 @@ defmodule SqueezeWeb.CalendarLive do
   alias Squeeze.Races
 
   @impl true
-  def mount(_params, session, socket) do
-    user = socket.assigns[:current_user] || get_current_user(session)
+  def mount(_params, _session, socket) do
+    user = socket.assigns.current_user
 
     socket = assign(socket,
       page_title: "Calendar",

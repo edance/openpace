@@ -47,8 +47,6 @@ defmodule SqueezeWeb do
       use Phoenix.LiveView, layout: {SqueezeWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
-
-      import SqueezeWeb.Helpers.AuthHelper
     end
   end
 
