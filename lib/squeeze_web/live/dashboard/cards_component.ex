@@ -46,6 +46,7 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
     "#{Distances.to_float(distance, imperial: imperial)} #{Distances.label(imperial: imperial)}"
   end
 
+  defp personal_record(%{race_goal: nil}), do: nil
   defp personal_record(%{current_user: user, race_goal: race_goal}) do
     user.user_prefs.personal_records
     |> Enum.find(&(&1.distance == race_goal.distance))
