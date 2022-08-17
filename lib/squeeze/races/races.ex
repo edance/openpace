@@ -9,7 +9,7 @@ defmodule Squeeze.Races do
   alias Squeeze.Repo
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Dashboard.{Activity, TrackpointSection}
   alias Squeeze.Races.{Race, RaceGoal, TrainingPace}
 
   @doc """
@@ -141,6 +141,57 @@ defmodule Squeeze.Races do
   """
   def change_race(%Race{} = race) do
     Race.changeset(race, %{})
+  end
+
+  # SELECT CASE WHEN velocity < 2 THEN '< 2'
+  # WHEN velocity BETWEEN 2 AND 3 THEN '2-3'
+  # WHEN velocity BETWEEN 3 AND 4 THEN '3-4'
+  # WHEN velocity > 4 THEN '> 4'
+  # END,
+  # SUM(duration) as duration
+  # FROM trackpoint_sections
+  # GROUP BY 1;
+  def duration_by_pace(user, date_range, training_paces) do
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+    [p1, p2, p3, p4, p5, p6] = training_paces
+
+    from(tps in TrackpointSection)
+    |> join(:inner, [tps], a in assoc(tps, :activity))
+    |> where([_tps, a], a.user_id == ^user.id and a.type == "Run")
+    |> where([_tps, a], a.start_at_local >= ^start_at and a.start_at_local <= ^end_at)
+    |> group_by(fragment("1"))
+    |> select([tps],
+    [
+      fragment(
+        """
+        CASE
+        WHEN ? BETWEEN ? AND ? THEN ?
+        WHEN ? BETWEEN ? AND ? THEN ?
+        WHEN ? BETWEEN ? AND ? THEN ?
+        WHEN ? BETWEEN ? AND ? THEN ?
+        WHEN ? BETWEEN ? AND ? THEN ?
+        WHEN ? BETWEEN ? AND ? THEN ?
+        END
+        """,
+        tps.velocity, ^min_speed(p1), ^max_speed(p1), ^p1.name,
+        tps.velocity, ^min_speed(p2), ^max_speed(p2), ^p2.name,
+        tps.velocity, ^min_speed(p3), ^max_speed(p3), ^p3.name,
+        tps.velocity, ^min_speed(p4), ^max_speed(p4), ^p4.name,
+        tps.velocity, ^min_speed(p5), ^max_speed(p5), ^p5.name,
+        tps.velocity, ^min_speed(p6), ^max_speed(p6), ^p6.name
+      ),
+      sum(tps.duration)
+    ])
+    |> Repo.all()
+  end
+
+  defp min_speed(pace) do
+    pace.min_speed || TrainingPace.adjust_pace_by_secs(pace.speed, 10)
+  end
+
+  defp max_speed(pace) do
+    pace.max_speed || TrainingPace.adjust_pace_by_secs(pace.speed, -10)
   end
 
   defp default_paces(changeset) do

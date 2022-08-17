@@ -66,7 +66,7 @@
       <div class="col-xl-4">
         <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, id: "mini-calendar-card", current_user: @current_user, activity_map: @activity_map) %>
 
-        <%= live_component(SqueezeWeb.Races.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
+        <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
       </div>
     </div>
     <div class="row mt-5">

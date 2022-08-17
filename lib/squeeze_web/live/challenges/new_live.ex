@@ -11,7 +11,7 @@ defmodule SqueezeWeb.Challenges.NewLive do
   @strava_segments Application.compile_env(:squeeze, :strava_segments)
 
   @impl true
-  def mount(%{"challenge_type" => type}, session, socket) do
+  def mount(%{"challenge_type" => type}, _session, socket) do
     type = String.to_atom(type)
     changeset = Challenges.change_challenge(%Challenge{challenge_type: type, activity_type: :run})
 
@@ -20,7 +20,6 @@ defmodule SqueezeWeb.Challenges.NewLive do
     end
 
     socket = socket
-    |> assign_new(:current_user, fn -> get_current_user(session) end)
     |> assign(loading: true, segments: [], segment: nil)
     |> assign(changeset: changeset)
     |> assign(challenge_type: type)

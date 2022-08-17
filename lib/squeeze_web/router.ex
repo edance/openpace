@@ -86,9 +86,15 @@ defmodule SqueezeWeb.Router do
       live "/activities", ActivityLive.Index, :index, as: :activity_index
       live "/activities/:id", Activities.ShowLive, :show, as: :activity
 
-      live "/races", RaceLive, :index
-      live "/races/new", Races.NewLive, :new, as: :race
-      live "/races/:slug", Races.ShowLive, :show, as: :race
+      # live "/races", RaceLive, :index
+      # live "/races/new", Races.NewLive, :new, as: :race
+      # live "/races/:slug", Races.ShowLive, :show, as: :race
+
+      live "/races", RaceLive.Index, :index, as: :race
+      live "/races/new", RaceLive.New, :new, as: :race
+      live "/races/:slug", RaceLive.Show, :show, as: :race
+      # live "/races/:slug/show/edit", RaceLive.Show, :edit, as: :race
+
 
       live "/settings", SettingsLive, :general
       live "/settings/namer", SettingsLive, :namer
@@ -151,6 +157,7 @@ defmodule SqueezeWeb.Router do
     get "/terms", PageController, :terms
     get "/support", PageController, :support
 
+    get "/logout", SessionController, :delete
     delete "/logout", SessionController, :delete
 
     get "/invite/:slug", ChallengeShareController, :show
