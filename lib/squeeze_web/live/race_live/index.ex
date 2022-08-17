@@ -9,8 +9,8 @@ defmodule SqueezeWeb.RaceLive.Index do
   alias Squeeze.Races.RaceGoal
 
   @impl true
-  def mount(_params, session, socket) do
-    user = socket.assigns[:current_user] || get_current_user(session)
+  def mount(_params, _session, socket) do
+    user = socket.assigns.current_user
     changeset = Races.change_race_goal(%RaceGoal{})
     activities = Races.list_race_activities(user)
     race_goals = Races.list_upcoming_race_goals(user)

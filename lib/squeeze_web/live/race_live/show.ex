@@ -11,8 +11,8 @@ defmodule SqueezeWeb.RaceLive.Show do
   alias Squeeze.Races
 
   @impl true
-  def mount(%{"slug" => slug}, session, socket) do
-    user = socket.assigns[:current_user] || get_current_user(session)
+  def mount(%{"slug" => slug}, _session, socket) do
+    user = socket.assigns.current_user
     race_goal = Races.get_race_goal!(slug)
     vo2_max = vo2_max(race_goal)
 

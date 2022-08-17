@@ -10,7 +10,12 @@ defmodule SqueezeWeb.LiveAuth do
 
   def on_mount(:default, _params, session, socket) do
     socket = assign_new(socket, :current_user, fn -> get_current_user(session) end)
-    {:cont, socket}
+
+    if socket.assigns.current_user do
+      {:cont, socket}
+    else
+      {:halt, redirect(socket, to: "/logout")}
+    end
   end
 
   defp get_current_user(%{@token_key => token}) do

@@ -157,6 +157,7 @@ defmodule SqueezeWeb.Router do
     get "/terms", PageController, :terms
     get "/support", PageController, :support
 
+    get "/logout", SessionController, :delete
     delete "/logout", SessionController, :delete
 
     get "/invite/:slug", ChallengeShareController, :show

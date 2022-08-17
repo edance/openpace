@@ -20,4 +20,11 @@ defmodule Squeeze.AuthErrorHandler do
     |> Controller.redirect(to: Routes.overview_path(conn, :index))
     |> halt()
   end
+  def auth_error(conn, _error, _opts) do
+    conn
+    |> clear_session()
+    |> Controller.put_flash(:error, "You must be logged in to view")
+    |> Controller.redirect(to: Routes.session_path(conn, :new))
+    |> halt()
+  end
 end
