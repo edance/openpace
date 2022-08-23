@@ -1,59 +1,74 @@
-![OpenPace](https://github.com/edance/art/blob/master/squeeze/repo-banner.png)
+<h1>
+  <a href="https://www.openpace.co/" target="_blank">
+   <img src="https://github.com/edance/art/raw/master/squeeze/repo-banner.png" alt="Openpace" width="100%">
+  </a>
+</h1>
 
 [![Built with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://spacemacs.org)
 [![Build Status](https://github.com/edance/openpace/actions/workflows/ci.yml/badge.svg)](https://github.com/edance/openpace/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/edance/openpace/badge.svg?branch=main)](https://coveralls.io/github/edance/openpace?branch=main)
 [![license](https://img.shields.io/github/license/edance/openpace.svg)](https://github.com/edance/openpace/blob/main/LICENSE.md)
 
-## What is this?
+OpenPace is an open-source, web application that helps runners run their fastest marathon built with [Phoenix LiveView](https://github.com/phoenixframework/phoenix_live_view). It features tools to hit new personal bests, analyze your training program, and take a deep dive into your race performance.
 
-This is the repository for [openpace.co](https://www.openpace.co).
-It is built in [Elixir](http://elixir-lang.org/) using the [Phoenix](http://www.phoenixframework.org/) web framework.
+From a developer standpoint, it features:
 
-## What is OpenPace?
+  * Sync's all fitness data from [Strava](https://github.com/slashdotdash/strava) including activities, GPS, heart rate, pace information.
 
-OpenPace is a goal oriented application that helps long distance runners hit their goals and measure their progress and fitness.
+  * Dashboard based off of the [Argon Dashboard by Creative Tim](https://www.creative-tim.com/product/argon-dashboard) using [Bootstrap 4](https://getbootstrap.com)
 
-## Why is it open source?
+  * Canvas charts provided by [Chart.js](https://chartjs.org) using [Phoenix LiveView hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook)
 
-Many runners are developers and hackers.
-We believe that you should be able to build and hack on your running data.
+  * Maps using [Mapbox GL](https://mapbox.com)
 
-## What does it look like?
+  * Payment processing with Stripe using the [Stripity Stripe](https://github.com/beam-community/stripity_stripe)
 
-### Dashboard
-![Dashboard](https://github.com/edance/art/blob/master/squeeze/screenshots/dashboard.jpg)
+I'm actively working on Openpace and can use any help I can get. Feel free to create an issue or open a pull request.
 
-### Calendar
-![Calendar](https://github.com/edance/art/blob/master/squeeze/screenshots/calendar.jpg)
+![Dashboard](https://github.com/edance/openpace/raw/ml-playground/.github/imgs/dashboard.png)
 
-### Activity
-![Activity](https://github.com/edance/art/blob/master/squeeze/screenshots/activity.jpg)
 
-## How can I help?
+## Documentation
 
-### Contributing
+Documentation is hosted using ex_doc. And you can view the documentation [here](https://www.openpace.co/docs).
 
-Here are the steps to get started:
 
-  * Copy `.env.example` file to `.env` with `cp .env.example .env`
-  * Create an app for strava [here](https://developers.strava.com).
-  * Set environment variables in your `.env` file.
-  * **If you are using Docker:**
-    * Install Docker and docker-compose in your machine
-    * Run `docker-compose up -d`
-  * **If you are not using Docker:**
-    * Import your environment variables with `export $(cat .env | grep -v ^# | xargs)`
-    * Install dependencies with `mix deps.get`
-    * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-    * Install Node.js dependencies with `cd assets && yarn install`
-    * Start Phoenix endpoint with `iex -S mix phx.server`
+## Development
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+You'll need to install Elixir v1.13 or later. I recommend installing using [asdf](https://github.com/asdf-vm/asdf) with `asdf install elixir`.
+
+```shell
+git clone https://github.com/edance/openpace.git
+cd openpace
+
+# Copy the example env to your own file and edit it
+cp .env.example .env
+
+# Use this command to export the variables into your system
+export $(cat .env | grep -v ^# | xargs)
+
+# Get dependencies, create and seed database, and install js deps
+mix setup
+
+# Start Phoenix Server
+iex -S mix phx.server
+```
+
+### Environment Variables
+
+To run locally, you'll need to set up a [strava api account](https://www.strava.com/settings/api). And set the following environment variables.
+
+  * STRAVA_CLIENT_ID
+
+  * STRAVA_CLIENT_SECRET
+
+  * STRAVA_WEBHOOK_TOKEN
+
+There are additional environment variables in `.env.example`.
 
 ### Feedback
 
-Please email us with any ideas, bugs, suggestions at feedback AT openpace.co.
+Please create a github issue with any ideas, feedback, or suggestions, etc. Pull requests are welcome.
 
 ## Why is it named squeeze?
 
