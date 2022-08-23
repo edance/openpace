@@ -5,9 +5,9 @@ defmodule Squeeze.Mixfile do
     [
       app: :squeeze,
       version: "0.0.1",
-      elixir: "~> 1.7",
+      elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      compilers: [] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -21,7 +21,10 @@ defmodule Squeeze.Mixfile do
       docs: [
         # main: "OpenPace", # The main page in the docs
         # logo: "path/to/logo.png",
-        extras: ["README.md"]
+        output: "priv/static/docs",
+        javascript_config_path: nil,
+        extras: [
+        ]
       ]
     ]
   end
@@ -55,14 +58,14 @@ defmodule Squeeze.Mixfile do
       {:phoenix_live_view, "~> 0.17.11"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
-      {:gettext, "~> 0.11"},
+      {:gettext, "~> 0.20"},
       {:ordinal, "~> 0.1.0"},
       {:plug_cowboy, "~> 2.1"},
       {:cowboy, "< 2.8.0", override: true},
       {:plug, "~> 1.7"},
       {:strava, "~> 1.0"},
       {:timex, "~> 3.3"},
-      {:guardian, "~> 2.2.3"},
+      {:guardian, "~> 2.3.0"},
       {:browser, "~> 0.4.4"},
       {:polyline, "~> 1.3"},
       {:stripity_stripe, "~> 2.12.0"},
@@ -74,7 +77,7 @@ defmodule Squeeze.Mixfile do
       {:number, "~> 1.0.0"},
       {:tesla, "~> 1.3.0"},
       {:hackney, "~> 1.16.0"},
-      {:jason, "~> 1.1"},
+      {:jason, "~> 1.4"},
       {:sma, "~> 0.1"},
       {:html_sanitize_ex, "~> 1.4.0"},
       {:algolia, "~> 0.8.0"},
@@ -83,13 +86,13 @@ defmodule Squeeze.Mixfile do
       {:quantum, "~> 3.0"},
       {:slack, "~> 0.23.5"},
       {:new_relic_agent, "~> 1.0"},
+      {:ex_doc, "~> 0.27", runtime: false},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
-      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
       {:credo, "~> 1.6.1", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:floki, ">= 0.30.0", only: :test},
-      {:excoveralls, "~> 0.9", only: :test},
+      {:excoveralls, "~> 0.14.6", only: :test},
       {:mox, "~> 0.4", only: :test}
     ]
   end
@@ -104,6 +107,7 @@ defmodule Squeeze.Mixfile do
     [
       setup: ["deps.get", "ecto.setup", "cmd --cd assets yarn install"],
       compile: ["compile --warnings-as-errors"],
+      "ecto.seed": ["run priv/repo/seeds.exs"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],

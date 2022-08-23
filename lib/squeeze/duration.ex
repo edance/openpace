@@ -55,6 +55,10 @@ defmodule Squeeze.Duration do
 
   def equal?(left, right), do: left == right
 
+  def to_seconds(time) do
+    Map.get(time, :hours, 0) * 3600 + Map.get(time, :minutes, 0) * 60 + Map.get(time, :seconds)
+  end
+
   defp parse_integer(""), do: {:ok, nil}
 
   defp parse_integer(str) when is_binary(str) do
