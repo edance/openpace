@@ -1,0 +1,77 @@
+# Race Predictions with Machine Learning
+
+## Introduction
+
+I've been working on [Openpace](https://www.openpace.co) on and off for the last five years. I've built a lot of different pages and features but nothing has kept me coming back to use my own application.
+
+When I started this project, I named it Squeeze. The idea was that I could take all of your running data, sleep data, miscellaneous data and "squeeze" out some solid predictions about your fitness. I invisioned being able to accurately predict race times, know exactly the minute I'm overtraining, and be able to tell me which workouts in my training plan were important.
+
+What is tricky about the marathon is that so much training goes into the race but you don't really know where you stand until you get to the starting line. I've been addicted to the marathon but I still haven't figured out the right balance on race day. I start out too fast and end up hitting the wall every time.
+
+The goal of this whole article/post is to document and figure out how to write this algorithm to predict race times. The best case is we build something that tells me the fitness shape I'm in and the pace I can run at come race day. The worst case is we learn some machine learning along the way.
+
+Here are some of articles that I used to help me write this:
+
+* [Running Smart with Machine Learning and Strava](https://towardsdatascience.com/running-smart-with-machine-learning-and-strava-9ba186decde0) - What I want to build but in Elixir
+* [Machine Learning with Nx and Axon](https://bitfield.co/posts/machine-learning-in-elixir-with-nx-and-axon/) - walkthrough on how to use Nx and Axon
+* [Beginners Guide for Nx](https://dockyard.com/blog/2022/03/15/nx-for-absolute-beginners)
+
+I'm not an expert when it comes to machine learning so please let me know how I can improve. I'm going to try to write out a version using linear regression and one using neural networks. All of this is written in a livebook so that you, the reader, can easily follow along, run this code, and extend my work.
+
+## Getting Started
+
+You'll first want to follow the installation guide for Openpace to get it up and running. You can use Strava to load all of your data. I originally wanted to do it all in this guide but it was a little too much code for me.
+
+## Getting Data from Strava
+
+The first thing that we need to do is get our running data in the right format. With Strava, we get a list of activities and inside those activities we can get more information such as pace, heart rate, etc.
+
+Neural networks have hidden layers. If we think about what goes into running a marathon, we can start to define what we might think those hidden layers could be.
+
+The fastest marathoners in the world:
+
+* Run long distances each week (quantity)
+* Run workouts at different paces (quality)
+* Have high cadence (running form)
+
+What data we'd like to get:
+
+* weekly run count
+* weekly distance
+* weekly time in different heart rate zones
+* weekly time spent on other activities (this is important but they might not add all that to strava)
+* week over week increase in running time
+
+Let's think about this a bit. Every marathon training program has long runs, weekly easy runs to get "time on feet", some faster than easy pace running (probably some marathon pace training, some slightly faster threshold, and maybe a little speed work), and a taper period.
+
+```elixir
+user = Squeeze.Accounts.get_user!(1)
+data = Squeeze.Races.list_race_activities(user)
+Kino.DataTable.new(data, keys: [:id, :name, :distance])
+```
+
+```elixir
+access_token = Kino.Input.read(input)
+client = Strava.Client.new(access_token)
+Strava.Activities.get_logged_in_athlete_activities(client)
+```
+
+## Playground with Nx
+
+Let's start out with some linear regression and see if we can get that working with Nx. We'll define a function `ax+b` and create some training data for it like so:
+
+```elixir
+target_fn = fn x -> 3 * x + 15 end
+
+data =
+  Stream.repeatedly(fn -> for _ <- 1..32, do: :rand.uniform() * 10 end)
+  |> Stream.map(fn x -> Enum.zip(x, Enum.map(x, target_fn)) end)
+
+data |> List.first()
+```
+
+```elixir
+import Nx.Defn
+
+defn(add_two(a, b), do: a + b)
+```

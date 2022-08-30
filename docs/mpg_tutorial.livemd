@@ -1,0 +1,187 @@
+# MPG Tutorial
+
+```elixir
+Mix.install([
+  {:nx, "~> 0.3.0"},
+  {:axon, "~> 0.2.0"},
+  {:tesla, "~> 1.3.0"},
+  {:kino, "~> 0.6.2"},
+  {:explorer, "~> 0.2.0"}
+])
+```
+
+## Fetch the data from our source
+
+Fetch using the tesla library to get the mpg data from the source. This is a CSV so we're going to have to parse it.
+
+```elixir
+url = "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data"
+
+%{status: 200, body: body} = Tesla.get!(url)
+body
+```
+
+```elixir
+defmodule DataParser do
+  def convert(line) do
+    <<
+      mpg::binary-size(7),
+      cylinders::binary-size(4),
+      displacement::binary-size(11),
+      horsepower::binary-size(11),
+      _::binary
+    >> = line
+
+    %{
+      mpg: mpg |> String.trim() |> String.to_float(),
+      cylinders: cylinders |> String.trim() |> String.to_integer(),
+      displacement: displacement |> String.trim() |> String.to_float(),
+      horsepower: horsepower |> String.trim() |> String.to_float()
+    }
+  rescue
+    _ in ArgumentError ->
+      :doesnt_parse
+
+    _ in MatchError ->
+      :doesnt_parse
+  end
+end
+
+data =
+  body
+  |> String.split("\n")
+  # split each line using bitstreams...
+  |> Enum.map(&DataParser.convert/1)
+  # toss out bad rows
+  |> Enum.reject(fn r -> r == :doesnt_parse end)
+
+Kino.DataTable.new(data)
+```
+
+```elixir
+df = Explorer.DataFrame.new(data)
+```
+
+```elixir
+num_examples = Explorer.DataFrame.n_rows(df)
+num_train = ceil(0.85 * num_examples)
+num_test = num_examples - num_train
+
+train_df = Explorer.DataFrame.slice(df, 0, num_train)
+test_df = Explorer.DataFrame.slice(df, num_train, num_test)
+```
+
+```elixir
+x_train_df = Explorer.DataFrame.select(train_df, &(&1 == "mpg"), :drop)
+y_train_df = Explorer.DataFrame.select(train_df, &(&1 == "mpg"), :keep)
+x_test_df = Explorer.DataFrame.select(test_df, &(&1 == "mpg"), :drop)
+y_test_df = Explorer.DataFrame.select(test_df, &(&1 == "mpg"), :keep)
+
+x_train_df
+```
+
+```elixir
+to_tensor = fn df ->
+  df
+  |> Explorer.DataFrame.names()
+  |> Enum.map(&(Explorer.Series.to_tensor(df[&1]) |> Nx.new_axis(-1)))
+  |> Nx.concatenate(axis: 1)
+end
+
+x_train = to_tensor.(x_train_df)
+y_train = to_tensor.(y_train_df)
+x_test = to_tensor.(x_test_df)
+y_test = to_tensor.(y_test_df)
+```
+
+```elixir
+batched_train_inputs = Nx.to_batched(x_train, 64)
+batched_train_targets = Nx.to_batched(y_train, 64)
+batched_train = Stream.zip(batched_train_inputs, batched_train_targets)
+
+batched_test_inputs = Nx.to_batched(x_test, 48)
+batched_test_targets = Nx.to_batched(y_test, 48)
+batched_test = Stream.zip(batched_test_inputs, batched_test_targets)
+```
+
+## Basic Linear Regression
+
+For the equation `mx+b`, it is common to refer to `m` as a `weight` and `b` as a `bias`. We can make up some guess weights and a guess bias like below.
+
+```elixir
+row = data |> List.first()
+
+inputs = [[row.cylinders, row.displacement, row.horsepower]] |> Nx.tensor()
+weights = [[0.01], [0.05], [0.06]] |> Nx.tensor()
+bias = [-0.9] |> Nx.tensor()
+
+Nx.dot(inputs, weights)
+
+mpg =
+  inputs
+  |> Nx.dot(weights)
+  |> Nx.add(bias)
+  |> Nx.to_flat_list()
+  |> List.first()
+```
+
+```elixir
+# Take 75% for training data
+amount = round(length(data) * 0.75)
+
+training_inputs =
+  data
+  |> Enum.take(amount)
+  |> Enum.map(&[[&1.cylinders, &1.displacement, &1.horsepower]])
+  |> Enum.map(&Nx.tensor/1)
+  |> Nx.concatenate()
+```
+
+```elixir
+train_max = Nx.reduce_max(training_inputs, axes: [0], keep_axes: true)
+```
+
+```elixir
+normalized_training_inputs =
+  training_inputs
+  |> Nx.divide(train_max)
+```
+
+```elixir
+training_targets =
+  data
+  |> Enum.take(amount)
+  |> Enum.map(&[&1.mpg])
+  |> Nx.tensor()
+```
+
+```elixir
+batched_train_inputs = Nx.to_batched(training_inputs, 48)
+batched_train_targets = Nx.to_batched(training_targets, 48)
+batched_train = Stream.zip(batched_train_inputs, batched_train_targets)
+```
+
+```elixir
+model =
+  Axon.input("input", shape: {nil, 3})
+  |> Axon.dense(10)
+  |> Axon.dense(1)
+
+model_state =
+  model
+  |> Axon.Loop.trainer(:mean_squared_error, :adam)
+  |> Axon.Loop.metric(:precision)
+  |> Axon.Loop.metric(:recall)
+  |> Axon.Loop.run(batched_train, %{}, epochs: 30)
+```
+
+```elixir
+first = Nx.take(x_test, 1)
+Axon.predict(model, model_state, x_test)
+
+y_test
+```
+
+```elixir
+
+```

@@ -23,8 +23,7 @@ defmodule Squeeze.Mixfile do
         # logo: "path/to/logo.png",
         output: "priv/static/docs",
         javascript_config_path: nil,
-        extras: [
-        ]
+        extras: ["README.md", "/docs/machine_learning.md"]
       ]
     ]
   end
@@ -91,6 +90,10 @@ defmodule Squeeze.Mixfile do
       {:poolboy, "~> 1.5"},
       {:sweet_xml, "~> 0.7.1"},
       {:ex_doc, "~> 0.27", runtime: false},
+      {:nx, "~> 0.3.0"},
+      {:axon, "~> 0.2.0"},
+      {:kino, "~> 0.6.2", only: :dev},
+      {:explorer, "~> 0.2.0", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:credo, "~> 1.6.1", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.9", only: [:dev, :test]},
