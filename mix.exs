@@ -6,13 +6,18 @@ defmodule Squeeze.Mixfile do
       app: :squeeze,
       version: "0.0.1",
       elixir: "~> 1.14.2",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
 
       # Docs
       name: "OpenPace",
@@ -23,7 +28,11 @@ defmodule Squeeze.Mixfile do
         # logo: "path/to/logo.png",
         output: "priv/static/docs",
         javascript_config_path: nil,
-        extras: ["README.md", "/docs/machine_learning.md"]
+        extras: [
+          "guides/machine_learning.livemd",
+          "guides/example.livemd",
+          "guides/mpg_tutorial.livemd"
+        ]
       ]
     ]
   end
@@ -41,7 +50,7 @@ defmodule Squeeze.Mixfile do
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support", "test/factories"]
   defp elixirc_paths(:dev), do: ["lib", "test/support/factory.ex", "test/factories"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -61,7 +70,9 @@ defmodule Squeeze.Mixfile do
       {:ordinal, "~> 0.1.0"},
       {:plug_cowboy, "~> 2.5"},
       {:plug, "~> 1.7"},
-      {:strava, git: "https://github.com/edance/strava.git", ref: "0942445666e7bab56d128343c36be0ef5bee468f"},
+      {:strava,
+       git: "https://github.com/edance/strava.git",
+       ref: "0942445666e7bab56d128343c36be0ef5bee468f"},
       {:timex, "~> 3.3"},
       {:guardian, "~> 2.3.0"},
       {:browser, "~> 0.4.4"},
@@ -94,6 +105,8 @@ defmodule Squeeze.Mixfile do
       {:axon, "~> 0.2.0"},
       {:kino, "~> 0.6.2", only: :dev},
       {:explorer, "~> 0.2.0", only: :dev},
+      {:vega_lite, "~> 0.1.6", only: :dev},
+      {:kino_vega_lite, "~> 0.1.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
       {:credo, "~> 1.6.1", only: [:dev, :test], runtime: false},
       {:faker, "~> 0.9", only: [:dev, :test]},
@@ -117,7 +130,11 @@ defmodule Squeeze.Mixfile do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
-      "assets.deploy": ["cmd --cd assets yarn install", "cmd --cd assets node build.js --deploy", "phx.digest"]
+      "assets.deploy": [
+        "cmd --cd assets yarn install",
+        "cmd --cd assets node build.js --deploy",
+        "phx.digest"
+      ]
     ]
   end
 end
