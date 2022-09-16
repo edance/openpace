@@ -86,6 +86,7 @@ defmodule Squeeze.Mixfile do
       {:quantum, "~> 3.0"},
       {:slack, "~> 0.23.5"},
       {:new_relic_agent, "~> 1.0"},
+      {:redirect, "~> 0.4.0"},
       {:ex_doc, "~> 0.27", runtime: false},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},

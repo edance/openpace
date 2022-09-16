@@ -1,6 +1,7 @@
 defmodule SqueezeWeb.Router do
   use SqueezeWeb, :router
 
+  import Redirect
   alias SqueezeWeb.Plug
 
   pipeline :browser do
@@ -49,6 +50,9 @@ defmodule SqueezeWeb.Router do
     plug :put_layout, {SqueezeWeb.LayoutView, :none}
     plug :put_resp_content_type, "application/xml"
   end
+
+  # Redirects
+  redirect "/docs", "/docs/index.html", :permanent, preserve_query_string: true
 
   scope "/integration", SqueezeWeb do
     # Use the default browser stack
