@@ -1,4 +1,6 @@
 defmodule Squeeze.Repo do
+  @moduledoc false
+
   use Ecto.Repo,
     otp_app: :squeeze,
     adapter: Ecto.Adapters.Postgres

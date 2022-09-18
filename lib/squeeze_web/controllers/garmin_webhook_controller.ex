@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.GarminWebhookController do
   use SqueezeWeb, :controller
-
-  @moduledoc """
-  Controller to handle the pings from Garmin
-  """
+  @moduledoc false
 
   alias Squeeze.Logger
 

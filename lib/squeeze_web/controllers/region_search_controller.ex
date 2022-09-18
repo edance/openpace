@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.RegionSearchController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.RaceSearch
   alias Squeeze.Regions

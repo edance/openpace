@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.ChallengeShareView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def remaining_percentage(%{challenge: challenge}) do
     now = DateTime.utc_now()

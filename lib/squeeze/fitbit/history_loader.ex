@@ -1,7 +1,5 @@
 defmodule Squeeze.Fitbit.HistoryLoader do
-  @moduledoc """
-  Loads the last 20 events from fitbit and finds matching activities
-  """
+  @moduledoc false
 
   alias Squeeze.Accounts
   alias Squeeze.Accounts.{Credential}

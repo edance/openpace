@@ -1,8 +1,9 @@
 defmodule SqueezeWeb.AuthController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Accounts
-  alias Squeeze.OAuth2.{Google}
+  alias Squeeze.OAuth2.Google
   alias SqueezeWeb.Plug.Auth
 
   def request(conn, %{"provider" => provider}) do

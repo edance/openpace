@@ -1,7 +1,5 @@
 defmodule Squeeze.Dashboard.TrackpointSet do
-  @moduledoc """
-  This module holds trackpoint from an activity.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

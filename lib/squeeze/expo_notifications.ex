@@ -1,15 +1,17 @@
 defmodule Squeeze.ExpoNotifications do
   @moduledoc """
   Provides a basic HTTP interface to allow easy communication with the Exponent Push Notification
-  API, by wrapping `HTTPotion`.
+  API, by wrapping `Tesla`.
 
   ## Examples
   Requests are made to the Exponent Push Notification API by passing in a `Map` into one
   of the `Notification` module's functions. The correct URL to the resource is inferred
   from the module name.
 
-    ExponentServerSdk.PushNotification.push(messages)
-    {:ok, %{"status" => "ok", "id" => "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"}}
+  ```elixir
+  ExpoNotifications.push_list(messages)
+  {:ok, %{"status" => "ok", "id" => "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"}}
+  ```
 
   Items are returned as instances of the given module's struct. For more
   details, see the documentation for each function.
@@ -25,7 +27,7 @@ defmodule Squeeze.ExpoNotifications do
   end
 
   defmodule NotificationMessage do
-    @moduledoc "Behavior for the time provider"
+    @moduledoc false
 
     defstruct [
       :to,
@@ -41,14 +43,14 @@ defmodule Squeeze.ExpoNotifications do
   end
 
   defmodule NotificationProvider do
-    @moduledoc "Behavior for the time provider"
+    @moduledoc false
     @callback push_list(
       [NotificationMessage.t()]
     ) :: {:ok, [NotificationMessage.t()] | {:error, Tesla.Env.t()}}
   end
 
   defmodule DefaultNotificationProvider do
-    @moduledoc "The default time provider"
+    @moduledoc false
     @behaviour NotificationProvider
     @impl NotificationProvider
 

@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Dashboard.MiniCalendarComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Squeeze.TimeHelper
 

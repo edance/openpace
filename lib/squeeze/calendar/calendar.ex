@@ -1,8 +1,17 @@
 defmodule Squeeze.Calendar do
   @moduledoc """
-  The Calendar context.
+  Calendar module to help with visible_dates of calendar and other helper functions.
   """
 
+  @doc """
+  Get visible dates for a calendar based on `type` which can either be "day" or "month".
+
+  Returns a date range based of of the `base` day and the `type`.
+
+  - "day" - the previous day and the following day
+  - "month" - returns a date range starting with the Monday on the first week of the month and the Sunday of the last week of the month
+
+  """
   def visible_dates(base, type) do
     Date.range(first_date(base, type), last_date(base, type))
   end

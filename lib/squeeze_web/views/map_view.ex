@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.MapView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   alias Squeeze.Distances
 

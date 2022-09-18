@@ -1,7 +1,5 @@
 defmodule Squeeze.Garmin.Auth do
-  @moduledoc """
-  OAuth 1.0 for Garmin
-  """
+  @moduledoc false
 
   alias Squeeze.Garmin.Client
 

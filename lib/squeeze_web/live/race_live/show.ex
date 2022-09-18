@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.RaceLive.Show do
   use SqueezeWeb, :live_view
-
-  @moduledoc """
-  Shows a race
-  """
+  @moduledoc false
 
   alias Squeeze.Distances
   alias Squeeze.RacePredictor

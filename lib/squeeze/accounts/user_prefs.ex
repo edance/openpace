@@ -1,7 +1,5 @@
 defmodule Squeeze.Accounts.UserPrefs do
-  @moduledoc """
-  This module is the schema for the user preferences.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

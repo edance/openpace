@@ -1,7 +1,5 @@
 defmodule Squeeze.Garmin.Client do
-  @moduledoc """
-  Handle Tesla connections for Garmin.
-  """
+  @moduledoc false
 
   use Tesla
 

@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.UserPrefsView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def render("user_prefs.json", %{user_prefs: user_prefs}) do
     %{

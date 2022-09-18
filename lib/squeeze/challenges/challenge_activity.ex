@@ -1,7 +1,5 @@
 defmodule Squeeze.Challenges.ChallengeActivity do
-  @moduledoc """
-  This module associates activities with a given challenge.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

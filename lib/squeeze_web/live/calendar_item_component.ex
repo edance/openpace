@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.CalendarItemComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   import Squeeze.Colors, only: [activity_color: 1]
 

@@ -1,7 +1,5 @@
 defmodule Squeeze.Fitbit.ActivityLoader do
-  @moduledoc """
-  Loads data from fitbit and updates the activity
-  """
+  @moduledoc false
 
   alias Squeeze.Accounts.Credential
   alias Squeeze.ActivityMatcher

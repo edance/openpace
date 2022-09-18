@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.ChallengeActivityController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Challenges
 

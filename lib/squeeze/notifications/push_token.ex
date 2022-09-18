@@ -1,7 +1,5 @@
 defmodule Squeeze.Notifications.PushToken do
-  @moduledoc """
-  This module is the schema for push tokens to send notifications to physical devices.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

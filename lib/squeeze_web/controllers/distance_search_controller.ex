@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.DistanceSearchController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.RaceSearch
 

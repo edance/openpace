@@ -1,10 +1,5 @@
 defmodule Squeeze.Garmin.HistoryLoader do
-  @moduledoc """
-  Loads historical activities from Garmin.
-
-  Garmin has a backfill endpoint which you can send a GET request.
-  Garmin then sends pings to our activity webhook with each activity from the user.
-  """
+  @moduledoc false
 
   alias Squeeze.Accounts.{Credential}
   alias Squeeze.Garmin.Client

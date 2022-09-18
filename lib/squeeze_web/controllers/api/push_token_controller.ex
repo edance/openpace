@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.PushTokenController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Notifications
 

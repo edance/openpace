@@ -1,8 +1,6 @@
 defmodule SqueezeWeb.Challenges.StaticMapComponent do
-  @moduledoc """
-  A component for the card of a segment challenge which includes a map and a description of the polyline.
-  """
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias SqueezeWeb.MapboxStaticMap
 

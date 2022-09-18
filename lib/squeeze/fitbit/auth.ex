@@ -1,7 +1,6 @@
 defmodule Squeeze.Fitbit.Auth do
-  @moduledoc """
-  An OAuth2 strategy for Fitbit.
-  """
+  @moduledoc false
+
   use OAuth2.Strategy
 
   @defaults [

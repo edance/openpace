@@ -1,11 +1,7 @@
 defmodule Squeeze.Accounts.Credential do
   use Ecto.Schema
 
-  @moduledoc """
-  This is a module that holds the token for different ways to connect.
-  Currently strava is the only way to connect. This also holds data about when
-  the last sync was.
-  """
+  @moduledoc false
 
   import Ecto.Changeset
   alias Squeeze.Accounts.{Credential, User}

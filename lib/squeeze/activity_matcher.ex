@@ -1,11 +1,31 @@
 defmodule Squeeze.ActivityMatcher do
   @moduledoc """
-  Matches the users closest activity
+  This module matches new activities to existing activities.
   """
 
   alias Squeeze.Accounts.{User}
   alias Squeeze.Dashboard
 
+  @doc """
+  Gets the closest activity for a user given an activity.
+
+  Matches on the following criteria:
+
+  1. Only matches if the activities are on the same date
+  2. Only matches if activities are of the same type (example: "Run" or "Ride")
+  3. If multiple activities match, it scores the activities based on distance, duration, and external_id
+
+  Returns nil if no activities match
+
+  ## Examples
+
+  iex> get_closest_activity(user, matching_activity)
+  %Activity{}
+
+  iex> get_closest_activity(user, no_match_activity)
+  null
+
+  """
   def get_closest_activity(%User{} = user, %{} = activity) do
     date = Timex.to_date(activity.start_at_local)
     user

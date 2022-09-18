@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.RaceController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.MailingList
   alias Squeeze.MailingList.Subscription

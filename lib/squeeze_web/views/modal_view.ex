@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.ModalView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def activity_types do
     [

@@ -4,7 +4,7 @@ defmodule Squeeze.Dashboard do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.{Changeset}
+  alias Ecto.Changeset
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, TrackpointSet}
   alias Squeeze.Repo
@@ -15,9 +15,10 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
+  ```elixir
   iex> list_activities(user, date_range)
   [%Activity{}, ...]
-
+  ```
   """
   def list_activities(%User{} = user, date_range) do
     Activity
@@ -228,7 +229,7 @@ defmodule Squeeze.Dashboard do
              (q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last)
   end
 
-  def by_page(query, page \\ 1, page_size \\ 24) do
+  defp by_page(query, page, page_size \\ 24) do
     offset = page_size * (page - 1)
     from q in query, offset: ^offset, limit: ^page_size
   end

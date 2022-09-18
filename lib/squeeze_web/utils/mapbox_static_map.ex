@@ -39,7 +39,7 @@ defmodule SqueezeWeb.MapboxStaticMap do
     |> Enum.join(",")
   end
 
-  def token() do
+  def token do
     Application.get_env(:squeeze, :mapbox_access_token)
   end
 

@@ -1,9 +1,7 @@
 defmodule Squeeze.Email do
   use Bamboo.Phoenix, view: SqueezeWeb.EmailView
 
-  @moduledoc """
-  Module for building emails
-  """
+  @moduledoc false
 
   alias Squeeze.CompanyHelper
 

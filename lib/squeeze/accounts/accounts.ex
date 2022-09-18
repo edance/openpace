@@ -1,6 +1,6 @@
 defmodule Squeeze.Accounts do
   @moduledoc """
-  The Accounts context.
+  The Accounts context which is responsible for users, preferences, and credentials.
   """
 
   import Ecto.Query, warn: false
@@ -9,6 +9,16 @@ defmodule Squeeze.Accounts do
   alias Squeeze.Repo
   alias Squeeze.Utils
 
+  @doc """
+  Something something
+
+  ## Examples
+
+  ```elixir
+  iex> get_user_by_slug(slug)
+  %User{}
+  ```
+  """
   def get_user_by_slug!(slug) do
     query = from u in User,
       where: u.slug == ^slug
@@ -31,11 +41,11 @@ defmodule Squeeze.Accounts do
 
   ## Examples
 
-  iex> get_user_by_email(email)
-  %User{}
+      iex> get_user_by_email(email)
+      %User{}
 
-  iex> get_user_by_email(bad_email)
-  nil
+      iex> get_user_by_email(bad_email)
+      nil
 
   """
   def get_user_by_email(email) when is_nil(email), do: nil
@@ -334,8 +344,8 @@ defmodule Squeeze.Accounts do
 
   ## Examples
 
-  iex> change_user_prefs(user_prefs)
-  %Ecto.Changeset{source: %UserPrefs{}}
+      iex> change_user_prefs(user_prefs)
+      %Ecto.Changeset{source: %UserPrefs{}}
 
   """
   def change_user_prefs(%UserPrefs{} = user_prefs) do

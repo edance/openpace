@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Challenges.ShowLive do
   use SqueezeWeb, :live_view
+  @moduledoc false
 
   alias Squeeze.Challenges
 

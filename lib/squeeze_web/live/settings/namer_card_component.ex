@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Settings.NamerCardComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Squeeze.Accounts.UserPrefs
 

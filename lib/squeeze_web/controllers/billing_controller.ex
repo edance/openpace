@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.BillingController  do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Billing
 

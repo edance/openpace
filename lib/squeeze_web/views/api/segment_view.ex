@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.SegmentView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def render("starred.json", %{segments: segments}) do
     %{

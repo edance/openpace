@@ -1,8 +1,6 @@
 # https://hexdocs.pm/plug/Plug.Parsers.html#module-custom-body-reader
 defmodule CacheBodyReader do
-  @moduledoc """
-  Cache the body to perform verification later, such as HTTP Signature Verification.
-  """
+  @moduledoc false
 
   alias Plug.Conn
 

@@ -1,7 +1,5 @@
 defmodule Squeeze.Races.RaceGoal do
-  @moduledoc """
-  This defines the goals for a user for a given race.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

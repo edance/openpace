@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Activities.CardsComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Squeeze.Distances
 

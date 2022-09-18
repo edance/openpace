@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.PageController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   def privacy_policy(conn, _params) do
     render(conn, "privacy_policy.html", page_title: "Privacy Policy")

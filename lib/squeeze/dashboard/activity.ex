@@ -1,8 +1,5 @@
 defmodule Squeeze.Dashboard.Activity do
-  @moduledoc """
-  This module contains the schema for the activity. Activities are pulled from
-  different services.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

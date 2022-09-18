@@ -1,7 +1,5 @@
 defmodule Squeeze.MailingList do
-  @moduledoc """
-  The MailingList context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Squeeze.Repo

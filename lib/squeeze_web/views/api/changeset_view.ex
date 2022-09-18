@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.ChangesetView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   @doc """
   Traverses and translates changeset errors.

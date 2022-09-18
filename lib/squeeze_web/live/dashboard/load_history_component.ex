@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Dashboard.LoadHistoryComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   def show_component?(%{current_user: user}) do
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))

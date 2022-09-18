@@ -1,7 +1,5 @@
 defmodule Squeeze.Accounts.PersonalRecord do
-  @moduledoc """
-  This module is an embedded schema for a user's personal records (PRs) or personal bests.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

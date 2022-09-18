@@ -1,7 +1,5 @@
 defmodule Squeeze.Accounts.User do
-  @moduledoc """
-  This module is the schema for the user in the database.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

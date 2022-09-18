@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Settings.UserFormComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   def time_zones do
     Tzdata.zone_list()

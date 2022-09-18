@@ -1,7 +1,5 @@
 defmodule Squeeze.Challenges.ScoreUpdater do
-  @moduledoc """
-  This module takes an activity and updates the score for that user
-  """
+  @moduledoc false
 
   alias Squeeze.Accounts.User
   alias Squeeze.Challenges

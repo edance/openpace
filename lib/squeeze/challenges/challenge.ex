@@ -1,7 +1,5 @@
 defmodule Squeeze.Challenges.Challenge do
-  @moduledoc """
-  This module is the schema for challenges in the database.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

@@ -1,8 +1,5 @@
 defmodule SqueezeWeb.ImageHelpers do
-  @moduledoc """
-  This module contains different helper functions for the different data types
-  used in the app.
-  """
+  @moduledoc false
 
   use Phoenix.HTML
 

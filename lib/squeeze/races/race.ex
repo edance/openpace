@@ -1,7 +1,5 @@
 defmodule Squeeze.Races.Race do
-  @moduledoc """
-  This module contains the schema for the race.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

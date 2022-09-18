@@ -1,9 +1,6 @@
 defmodule Mix.Tasks.UpdateStartDates do
   use Mix.Task
-
-  @moduledoc """
-  Migrate start_at to start_date
-  """
+  @moduledoc false
 
   alias Squeeze.Challenges.Challenge
   alias Squeeze.Repo

@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.RaceLive.Index do
   use SqueezeWeb, :live_view
-
-  @moduledoc """
-  This is the module for the race live view
-  """
+  @moduledoc false
 
   alias Squeeze.Races
   alias Squeeze.Races.RaceGoal

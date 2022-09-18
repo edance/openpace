@@ -1,9 +1,7 @@
 defmodule Squeeze.StripePaymentProcessor do
   @behaviour Squeeze.PaymentProcessor
 
-  @moduledoc """
-  Small wrapper around Stripe
-  """
+  @moduledoc false
 
   alias Stripe.{Card, Customer, Plan, Product, Subscription}
 

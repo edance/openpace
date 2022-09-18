@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Activities.ShowLive do
   use SqueezeWeb, :live_view
+  @moduledoc false
 
   alias Number.Delimit
   alias Squeeze.Dashboard

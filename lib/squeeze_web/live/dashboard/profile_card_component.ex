@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Dashboard.ProfileCardComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Number.Delimit
   alias Squeeze.Distances

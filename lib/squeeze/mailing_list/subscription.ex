@@ -1,8 +1,5 @@
 defmodule Squeeze.MailingList.Subscription do
-  @moduledoc """
-  This module is the schema for email subscriptions to get updates and join
-  mailing list.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

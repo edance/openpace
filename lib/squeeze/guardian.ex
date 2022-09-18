@@ -1,7 +1,5 @@
 defmodule Squeeze.Guardian do
-  @moduledoc """
-  This module handles fetching the user from the session with guardian.
-  """
+  @moduledoc false
 
   use Guardian, otp_app: :squeeze
 

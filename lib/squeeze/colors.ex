@@ -1,4 +1,8 @@
 defmodule Squeeze.Colors do
+  @moduledoc """
+  Color codes for different activities and gradients.
+  """
+
   @colors ~w(
     blue
     indigo

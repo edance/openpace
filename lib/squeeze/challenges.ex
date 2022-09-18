@@ -1,6 +1,6 @@
 defmodule Squeeze.Challenges do
   @moduledoc """
-  The Challenges context.
+  The Challenges context which is responsible for handling challenges and scores.
   """
 
   import Ecto.Query, warn: false

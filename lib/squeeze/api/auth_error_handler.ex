@@ -1,7 +1,5 @@
 defmodule Squeeze.Api.AuthErrorHandler do
-  @moduledoc """
-  This module handles redirection if the user is not authenticated.
-  """
+  @moduledoc false
 
   import Plug.Conn
 

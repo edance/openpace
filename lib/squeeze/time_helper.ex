@@ -1,6 +1,6 @@
 defmodule Squeeze.TimeHelper do
   @moduledoc """
-  Module to handle time
+  Module to handle time for a user based on their timezone preference.
   """
 
   alias Squeeze.Accounts.User

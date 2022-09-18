@@ -1,7 +1,5 @@
 defmodule Squeeze.TrainingPlans do
-  @moduledoc """
-  The TrainingPlans context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Squeeze.Repo
