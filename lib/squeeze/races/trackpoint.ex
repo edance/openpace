@@ -1,7 +1,5 @@
 defmodule Squeeze.Races.Trackpoint do
-  @moduledoc """
-  This module holds track point for a race route.
-  """
+  @moduledoc false
 
   use Ecto.Schema
 

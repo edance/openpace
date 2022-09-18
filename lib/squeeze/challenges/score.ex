@@ -1,7 +1,5 @@
 defmodule Squeeze.Challenges.Score do
-  @moduledoc """
-  This module keeps score of the challenge and builds the leaderboard.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

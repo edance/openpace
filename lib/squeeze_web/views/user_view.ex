@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.UserView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def title("new.html", _) do
     "Create an Account"

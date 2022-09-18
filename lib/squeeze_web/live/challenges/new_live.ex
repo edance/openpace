@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Challenges.NewLive do
   use SqueezeWeb, :live_view
+  @moduledoc false
 
   alias Ecto.Changeset
   alias Squeeze.Accounts

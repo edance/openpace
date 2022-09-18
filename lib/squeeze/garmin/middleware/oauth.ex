@@ -1,7 +1,5 @@
 defmodule Squeeze.Garmin.Middleware.OAuth do
-  @moduledoc """
-  OAuth 1.0 Middleware for Garmin
-  """
+  @moduledoc false
 
   @behaviour Tesla.Middleware
 

@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.ActivityController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Dashboard
 

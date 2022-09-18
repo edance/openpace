@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.AvatarComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   @colors ~w(
     blue

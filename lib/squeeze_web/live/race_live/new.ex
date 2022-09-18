@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.RaceLive.New do
   use SqueezeWeb, :live_view
-
-  @moduledoc """
-  This is the module for creating a new race
-  """
+  @moduledoc false
 
   alias Ecto.Changeset
   alias Squeeze.Distances

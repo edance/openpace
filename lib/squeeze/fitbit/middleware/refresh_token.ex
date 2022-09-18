@@ -1,8 +1,5 @@
 defmodule Squeeze.Fitbit.Middleware.RefreshToken do
-  @moduledoc """
-  Attempt to refresh access token using provided refresh token on
-  "401 Unauthorized" HTTP response codes.
-  """
+  @moduledoc false
 
   @behaviour Tesla.Middleware
 

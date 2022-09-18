@@ -1,8 +1,5 @@
 defmodule Squeeze.Api.AuthPipeline do
-  @moduledoc """
-  This module defines the pipeline for auth allowing a shared error handler
-  across api plugs.
-  """
+  @moduledoc false
 
   use Guardian.Plug.Pipeline, otp_app: :squeeze,
     module: Squeeze.Guardian,

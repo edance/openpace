@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.StravaController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Accounts
   alias Squeeze.Strava.HistoryLoader

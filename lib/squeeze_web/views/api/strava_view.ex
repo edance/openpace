@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.StravaView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def render("credential.json", %{credential: credential}) do
     %{

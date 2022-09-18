@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.UserPrefsController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Accounts
 

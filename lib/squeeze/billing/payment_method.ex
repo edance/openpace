@@ -1,7 +1,5 @@
 defmodule Squeeze.Billing.PaymentMethod do
-  @moduledoc """
-  This module contains the schema for stripe payment methods.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

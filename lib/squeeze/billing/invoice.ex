@@ -1,7 +1,5 @@
 defmodule Squeeze.Billing.Invoice do
-  @moduledoc """
-  This module contains the schema for the billing plans.
-  """
+  @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset

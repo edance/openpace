@@ -1,7 +1,5 @@
 defmodule SqueezeWeb.HoneypotInput do
-  @moduledoc """
-  Honeypot Input Helper
-  """
+  @moduledoc false
 
   use Phoenix.HTML
 

@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.FormatHelpers do
   @moduledoc """
+  @moduledoc false
   This module defines helpers common running related formatting like pace,
   distance, duration.
   """

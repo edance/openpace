@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.ForgotPasswordController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.{Accounts, Email, Mailer, PasswordLinkGenerator}
 

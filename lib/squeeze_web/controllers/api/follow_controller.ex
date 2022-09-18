@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.FollowController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Accounts
   alias Squeeze.Social

@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.UserController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Accounts
   alias Squeeze.Accounts.User
@@ -38,7 +39,7 @@ defmodule SqueezeWeb.UserController do
   end
 
   defp validate_honeypot(conn, _) do
-    value = conn.params["user"][@honeypot_field] 
+    value = conn.params["user"][@honeypot_field]
     if is_nil(value) || String.trim(value) == "" do
       conn
     else

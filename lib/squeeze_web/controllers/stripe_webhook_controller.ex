@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.StripeWebhookController do
   use SqueezeWeb, :controller
-
-  @moduledoc """
-  Controller to handle the webhooks from Stripe
-  """
+  @moduledoc false
 
   alias Plug.Conn
   alias Squeeze.Billing

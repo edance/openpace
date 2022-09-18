@@ -1,7 +1,5 @@
 defmodule Squeeze.Races.ResultSummary do
-  @moduledoc """
-  This module contains the schema for the race.
-  """
+  @moduledoc false
 
   use Ecto.Schema
 

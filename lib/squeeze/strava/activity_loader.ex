@@ -3,7 +3,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   Loads data from strava and updates the activity
   """
 
-  alias Squeeze.Accounts.{Credential}
+  alias Squeeze.Accounts.Credential
   alias Squeeze.ActivityMatcher
   alias Squeeze.Challenges.ScoreUpdater
   alias Squeeze.Dashboard

@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.StravaWebhookController do
   use SqueezeWeb, :controller
-
-  @moduledoc """
-  Controller to handle the webhooks from Strava
-  """
+  @moduledoc false
 
   alias Squeeze.Accounts
   alias Squeeze.Dashboard

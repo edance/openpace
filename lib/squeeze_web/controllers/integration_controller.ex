@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.IntegrationController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias OAuth2.Client
   alias Squeeze.Accounts

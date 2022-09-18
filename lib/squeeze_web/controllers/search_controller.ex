@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.SearchController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.RaceSearch
 

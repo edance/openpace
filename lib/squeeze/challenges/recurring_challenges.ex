@@ -1,7 +1,5 @@
 defmodule Squeeze.Challenges.RecurringChallenges do
-  @moduledoc """
-  This module finds recurring challenges and creates the next iteration.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Ecto.{Changeset, Multi}

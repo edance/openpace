@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Activities.MapComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Squeeze.Distances
 

@@ -1,9 +1,6 @@
 defmodule SqueezeWeb.FitbitWebhookController do
   use SqueezeWeb, :controller
-
-  @moduledoc """
-  Controller to handle the webhooks from Fitbit
-  """
+  @moduledoc false
 
   alias Squeeze.Accounts
   alias Squeeze.Fitbit.ActivityLoader

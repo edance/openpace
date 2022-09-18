@@ -7,7 +7,7 @@ defmodule Squeeze.RaceGoalFactory do
   defmacro __using__(_opts) do
     quote do
       def race_goal_factory do
-        distance = race_distance();
+        distance = race_distance()
         pace = Enum.random(5..9) # 5-9 min/miles
         duration = round(distance / 1609 * pace * 60)
 

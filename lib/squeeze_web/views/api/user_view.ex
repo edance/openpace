@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.UserView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def render("auth.json", %{user: user, token: token}) do
     %{

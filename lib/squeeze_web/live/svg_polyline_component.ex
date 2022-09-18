@@ -43,7 +43,4 @@ defmodule SqueezeWeb.SvgPolylineComponent do
       y: (256 / 2) - (256 * :math.log(:math.tan((:math.pi() / 4) + ((lat * :math.pi() / 180) / 2))) / (2 * :math.pi()))
     }
   end
-
-  def padding do
-  end
 end

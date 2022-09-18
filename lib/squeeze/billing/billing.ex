@@ -1,7 +1,5 @@
 defmodule Squeeze.Billing do
-  @moduledoc """
-  The Billing context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Ecto.Changeset

@@ -1,7 +1,6 @@
 defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
-  @moduledoc false
-
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Phoenix.LiveView.JS
   alias Squeeze.Accounts

@@ -1,11 +1,12 @@
 defmodule SqueezeWeb.Dashboard.OverviewLive do
   use SqueezeWeb, :live_view
+  @moduledoc false
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard
   alias Squeeze.Challenges
-  alias Squeeze.Stats
+  alias Squeeze.Dashboard
   alias Squeeze.Races
+  alias Squeeze.Stats
   alias Squeeze.Strava.HistoryLoader
   alias Squeeze.TimeHelper
   alias SqueezeWeb.Endpoint

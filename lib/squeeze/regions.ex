@@ -1,7 +1,5 @@
 defmodule Squeeze.Regions do
-  @moduledoc """
-  This module defines regions used for races.
-  """
+  @moduledoc false
 
   @regions [
     %{short_name: "AK", long_name: "Alaska", slug: "alaska"},

@@ -1,7 +1,5 @@
 defmodule Squeeze.Fitbit.Client do
-  @moduledoc """
-  Handle Tesla connections for Fitbit.
-  """
+  @moduledoc false
 
   use Tesla
 

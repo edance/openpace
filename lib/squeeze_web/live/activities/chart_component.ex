@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Activities.ChartComponent do
   use SqueezeWeb, :live_component
+  @moduledoc false
 
   alias Squeeze.{Distances, Velocity}
 

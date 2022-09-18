@@ -1,7 +1,5 @@
 defmodule Squeeze.PaymentProcessor do
-  @moduledoc """
-  Wrapper around our payment processor
-  """
+  @moduledoc false
 
   @callback create_card(map()) :: {:ok, struct()} | {:error, struct()}
   @callback create_customer(map()) :: {:ok, struct()} | {:error, struct()}

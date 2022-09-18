@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.ActivityChartView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   alias Squeeze.{Distances, Velocity}
 

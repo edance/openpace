@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.ChallengeShareController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Challenges
 

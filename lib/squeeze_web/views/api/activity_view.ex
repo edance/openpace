@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.ActivityView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   def render("activities.json", %{activities: activities}) do
     %{

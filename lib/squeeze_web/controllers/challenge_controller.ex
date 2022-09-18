@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.ChallengeController do
   use SqueezeWeb, :controller
+  @moduledoc false
 
   alias Squeeze.Challenges
   alias Squeeze.Notifications

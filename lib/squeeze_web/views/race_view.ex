@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.RaceView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   alias Number.Delimit
   alias Squeeze.Regions

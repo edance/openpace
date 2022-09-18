@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.Api.FollowView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   alias SqueezeWeb.Api.UserView
 

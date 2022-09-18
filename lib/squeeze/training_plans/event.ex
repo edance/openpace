@@ -1,7 +1,5 @@
 defmodule Squeeze.TrainingPlans.Event do
-  @moduledoc """
-  This module contains the schema for the training plans.
-  """
+  @moduledoc false
 
   use Ecto.Schema
 

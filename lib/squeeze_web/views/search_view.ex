@@ -1,5 +1,6 @@
 defmodule SqueezeWeb.SearchView do
   use SqueezeWeb, :view
+  @moduledoc false
 
   alias Squeeze.Regions
 
