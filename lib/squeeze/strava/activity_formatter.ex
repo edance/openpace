@@ -25,10 +25,13 @@ defmodule Squeeze.Strava.ActivityFormatter do
       elevation_gain: strava_activity.total_elevation_gain,
       external_id: "#{strava_activity.id}",
       planned_date: Timex.to_date(strava_activity.start_date_local),
-      polyline: strava_activity.map.summary_polyline,
+      polyline: polyline(strava_activity),
       workout_type: workout_type(strava_activity)
     }
   end
+
+  defp polyline(%{map: nil}), do: nil
+  defp polyline(%{map: %{summary_polyline: polyline}}), do: polyline
 
   defp workout_type(strava_activity) do
     case strava_activity.workout_type do

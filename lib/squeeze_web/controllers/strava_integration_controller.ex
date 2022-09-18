@@ -65,11 +65,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
     credential_params = credential_params(client, athlete)
     case Accounts.create_credential(user, credential_params) do
       {:ok, _credentials} ->
-        if params["rename"] do
-          redirect(conn, to: Routes.settings_path(conn, :namer))
-        else
-          redirect(conn, to: Routes.overview_path(conn, :index))
-        end
+        redirect_user(conn, params)
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
@@ -81,13 +77,9 @@ defmodule SqueezeWeb.StravaIntegrationController do
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))
     case Accounts.update_credential(credential, token_attrs(client)) do
       {:ok, _} ->
-        conn = Auth.sign_in(conn, user)
-
-        if params["rename"] do
-          redirect(conn, to: Routes.settings_path(conn, :namer))
-        else
-          redirect(conn, to: Routes.overview_path(conn, :index))
-        end
+        conn
+        |> Auth.sign_in(user)
+        |> redirect_user(params)
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
@@ -104,12 +96,20 @@ defmodule SqueezeWeb.StravaIntegrationController do
       Reporter.report_new_user(user)
       conn
       |> Auth.sign_in(user)
-      |> redirect(to: Routes.settings_path(conn, :namer))
+      |> redirect_user(params)
     else
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
         |> redirect(to: Routes.home_path(conn, :namer))
+    end
+  end
+
+  def redirect_user(conn, params) do
+    if params["rename"] do
+      redirect(conn, to: Routes.settings_path(conn, :namer))
+    else
+      redirect(conn, to: Routes.overview_path(conn, :index))
     end
   end
 
