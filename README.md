@@ -54,6 +54,8 @@ mix setup
 iex -S mix phx.server
 ```
 
+You will then be able to sign in with `a@b.co` and the password `password`.
+
 ### Environment Variables
 
 To run locally, you'll need to set up a [strava api account](https://www.strava.com/settings/api). And set the following environment variables.

@@ -12,4 +12,8 @@ defmodule Squeeze.Utils do
       {key, value}, acc when is_binary(key) -> Map.put(acc, String.to_existing_atom(key), value)
     end)
   end
+
+  def random_float(a, b), do: a + (b - a) * :rand.uniform()
+
+  def random_int(a, b), do: a + :rand.uniform(b - a)
 end

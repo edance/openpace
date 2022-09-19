@@ -28,12 +28,17 @@ defmodule SqueezeWeb.Activities.ShowLive do
     user = socket.assigns.current_user
     existing_activity = socket.assigns.activity
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))
-    ActivityLoader.update_or_create_activity(credential, existing_activity.external_id)
-    activity = Dashboard.get_detailed_activity!(user, existing_activity.id)
-    socket = socket
-    |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
 
-    {:noreply, socket}
+    if credential && existing_activity.external_id do
+      ActivityLoader.update_or_create_activity(credential, existing_activity.external_id)
+      activity = Dashboard.get_detailed_activity!(user, existing_activity.id)
+      socket = socket
+      |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
+
+      {:noreply, socket}
+    else
+      {:noreply, socket}
+    end
   end
 
   def name(%{activity: activity}) do

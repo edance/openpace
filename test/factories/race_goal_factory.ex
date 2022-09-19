@@ -3,12 +3,13 @@ defmodule Squeeze.RaceGoalFactory do
 
   alias Squeeze.Distances
   alias Squeeze.Races.{TrainingPace, RaceGoal}
+  import Squeeze.Utils, only: [random_float: 2]
 
   defmacro __using__(_opts) do
     quote do
       def race_goal_factory do
         distance = race_distance()
-        pace = Enum.random(5..9) # 5-9 min/miles
+        pace =  random_float(5, 9) # 5-9 min/miles
         duration = round(distance / 1609 * pace * 60)
 
         %RaceGoal{
