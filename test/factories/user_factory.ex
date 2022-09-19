@@ -9,6 +9,11 @@ defmodule Squeeze.UserFactory do
       def user_factory do
         # Set all passwords to "password"
         encrypted_password = Argon2.hash_pwd_salt("password")
+        email = Internet.email()
+        hash = email
+        |> :erlang.md5()
+        |> Base.encode16(case: :lower)
+        avatar = "https://www.gravatar.com/avatar/#{hash}?s=300&d=identicon"
 
         %User{
           first_name: Name.first_name(),
@@ -17,7 +22,7 @@ defmodule Squeeze.UserFactory do
           encrypted_password: encrypted_password,
           city: Address.city(),
           state: Address.state_abbr(),
-          avatar: "https://placekitten.com/300/300",
+          avatar: avatar,
           country: Address.country_code(),
           registered: true,
           slug: sequence(:user_slug, &"#{&1}"),

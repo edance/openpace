@@ -1,6 +1,6 @@
 <% data = svg_path(@polyline) %>
 <%= if data do %>
-  <svg class="bg-gradient-default" height="200" width="200" viewport="0 0 400 400" preserveAspectRatio="xMinYMin meet" viewBox={"#{data.x} #{data.y} #{data.width} #{data.height}"}>
+  <svg class="bg-gradient-default h-100 w-100" viewport="0 0 400 400" preserveAspectRatio="xMinYMin meet" viewBox={"#{data.x} #{data.y} #{data.width} #{data.height}"}>
     <g>
       <path style={"stroke: white; stroke-width: #{data.stroke_width}; fill: none;"} d={data.path}></path>
     </g>

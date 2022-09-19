@@ -30,11 +30,13 @@ defmodule Squeeze.TimeHelperTest do
     test "returns the utc datetime for the beginning of the day", %{user: user} do
       now = Timex.now()
       date = Timex.to_date(now)
-      beginning_of_day = Timex.beginning_of_day(now)
-      datetime = TimeHelper.beginning_of_day(user, date)
-      diff = Timex.diff(datetime, beginning_of_day, :hours)
-      # New York is either 4 or 5 hours behind depending on Daylight Savings
-      assert diff == 4 || diff == 5
+
+      datetime = date
+      |> Timex.to_datetime(user.user_prefs.timezone)
+      |> Timex.beginning_of_day()
+      |> Timex.to_datetime()
+
+      assert TimeHelper.beginning_of_day(user, date) == datetime
     end
   end
 
