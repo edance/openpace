@@ -207,7 +207,7 @@ defmodule Squeeze.Dashboard do
     |> TrackpointSet.changeset()
     |> Changeset.put_change(:activity_id, activity.id)
     |> Changeset.put_embed(:trackpoints, trackpoints)
-    |> Repo.insert()
+    |> Repo.insert(on_conflict: :replace_all, conflict_target: :activity_id)
   end
 
   defp by_user(query, %User{} = user) do
