@@ -75,3 +75,21 @@ Please create a github issue with any ideas, feedback, or suggestions, etc. Pull
 ## Why is it named squeeze?
 
 The project was originally under the domain [squeeze.run](https://squeeze.run) with the goal of taking all your running data and "squeezing" it into summaries and graphs.
+
+## Deployment on Fly
+
+This project is run on fly.io. You can run your own with `fly deploy`.
+
+Fly deploy does not include `mix` so one-off tasks have to be run using a command like:
+
+```shell
+fly ssh console -C  "/app/bin/squeeze eval Squeeze.TaskModule.method"
+```
+
+See `Squeeze.Release.migrate` for an example.
+
+You can also open remote iex with:
+
+```shell
+fly ssh console -C  "/app/bin/squeeze remote"
+```
