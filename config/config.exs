@@ -41,9 +41,6 @@ config :squeeze, Squeeze.Mailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: System.get_env("SENDGRID_API_KEY")
 
-config :squeeze, gtm_id: System.get_env("GTM_ID")
-config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
-
 config :squeeze, :notification_provider, Squeeze.ExpoNotifications.DefaultNotificationProvider
 
 config :squeeze, :strava_activities, Strava.Activities

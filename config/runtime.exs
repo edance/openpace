@@ -67,6 +67,10 @@ if config_env() == :prod do
     issuer: "squeeze",
     secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
+  config :squeeze, gtm_id: System.get_env("GTM_ID")
+
+  config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
