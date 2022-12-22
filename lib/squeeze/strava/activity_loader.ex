@@ -27,6 +27,7 @@ defmodule Squeeze.Strava.ActivityLoader do
     case ActivityMatcher.get_closest_activity(user, activity) do
       nil ->
         with {:ok, activity} <- Dashboard.create_activity(user, activity),
+             {:ok, _} <- save_laps(activity, strava_activity.laps),
              {:ok, _} <- save_trackpoints(credential, activity) do
           Notifications.notify_new_activity(activity)
           ScoreUpdater.update_score(activity)
@@ -34,6 +35,7 @@ defmodule Squeeze.Strava.ActivityLoader do
         end
       existing_activity ->
         with {:ok, activity} <- Dashboard.update_activity(existing_activity, activity),
+             {:ok, _} <- save_laps(activity, strava_activity.laps),
              {:ok, _} <- save_trackpoints(credential, activity) do
           {:ok, activity}
         end
@@ -50,6 +52,33 @@ defmodule Squeeze.Strava.ActivityLoader do
     stream_set = fetch_streams(strava_activity_id, credential)
     trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set)
     Dashboard.create_trackpoint_set(activity, trackpoints)
+  end
+
+  defp save_laps(_, nil), do: {:ok, 0}
+  defp save_laps(activity, laps) do
+    laps = Enum.map(laps, &(format_lap(activity, &1)))
+    Dashboard.create_laps(activity, laps)
+  end
+
+  defp format_lap(activity, lap) do
+    %{
+      average_cadence: lap.average_cadence,
+      average_speed: lap.average_speed,
+      distance: lap.distance,
+      elapsed_time: lap.elapsed_time,
+      start_index: lap.start_index,
+      end_index: lap.end_index,
+      lap_index: lap.lap_index,
+      max_speed: lap.max_speed,
+      moving_time: lap.moving_time,
+      name: lap.name,
+      pace_zone: lap.pace_zone,
+      split: lap.split,
+      start_date: Timex.to_naive_datetime(lap.start_date) |> NaiveDateTime.truncate(:second),
+      start_date_local: Timex.to_naive_datetime(lap.start_date_local) |> NaiveDateTime.truncate(:second),
+      total_elevation_gain: lap.total_elevation_gain,
+      activity_id: activity.id
+    }
   end
 
   defp fetch_streams(id, credential) do

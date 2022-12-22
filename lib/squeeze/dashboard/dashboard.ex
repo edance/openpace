@@ -6,7 +6,7 @@ defmodule Squeeze.Dashboard do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, TrackpointSet}
+  alias Squeeze.Dashboard.{Activity, ActivityLap, TrackpointSet}
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
 
@@ -24,6 +24,7 @@ defmodule Squeeze.Dashboard do
     Activity
     |> by_user(user)
     |> by_date_range(date_range)
+    |> order_by([a], [desc: a.start_at])
     |> Repo.all
     |> Repo.preload(:user)
   end
@@ -133,7 +134,7 @@ defmodule Squeeze.Dashboard do
     Activity
     |> by_user(user)
     |> Repo.get!(id)
-    |> Repo.preload([:user, :trackpoint_set])
+    |> Repo.preload([:user, :trackpoint_set, :laps])
   end
 
   @doc """
@@ -208,6 +209,22 @@ defmodule Squeeze.Dashboard do
     |> Changeset.put_change(:activity_id, activity.id)
     |> Changeset.put_embed(:trackpoints, trackpoints)
     |> Repo.insert(on_conflict: :replace_all, conflict_target: :activity_id)
+  end
+
+  def create_laps(%Activity{} = _activity, laps) do
+    laps = Enum.map(laps, fn(row) ->
+      now = Timex.now() |> Timex.to_naive_datetime() |> NaiveDateTime.truncate(:second)
+      row
+      |> Map.put(:inserted_at, now)
+      |> Map.put(:updated_at, now)
+    end)
+
+    {count, _} = Repo.insert_all(
+      ActivityLap,
+      laps,
+      on_conflict: {:replace_all_except, [:id]}, conflict_target: [:split, :activity_id]
+    )
+    {:ok, count}
   end
 
   defp by_user(query, %User{} = user) do

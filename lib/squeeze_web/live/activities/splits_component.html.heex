@@ -19,14 +19,14 @@
         <th scope="col">
           Time
         </th>
-        <th scope="col">
-          HR
-          <div class="small">bpm</div>
-        </th>
-        <th scope="col">
-          Cadence
-          <div class="small">steps/min</div>
-        </th>
+        <!-- <th scope="col">
+             HR
+             <div class="small">bpm</div>
+             </th>
+             <th scope="col">
+             Cadence
+             <div class="small">steps/min</div>
+             </th> -->
         <th scope="col">
           Elevation
           <%= if @current_user.user_prefs.imperial do %>
@@ -45,8 +45,6 @@
           <td><%= format_duration(split.pace) %></td>
           <td><%= format_duration(split.split_time) %></td>
           <td><%= format_duration(split.time) %></td>
-          <td><%= split.heartrate %></td>
-          <td><%= split.cadence %></td>
           <td>
             <%= round(split.up) %>
             <span class="iconify mr-1" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
