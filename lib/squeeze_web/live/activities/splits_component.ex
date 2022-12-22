@@ -36,18 +36,9 @@ defmodule SqueezeWeb.Activities.SplitsComponent do
       split: idx + 1,
       distance: last.distance,
       time: last.time,
-      heartrate: round(avg_by(trackpoints, :heartrate)),
-      cadence: round(avg_by(trackpoints, :cadence) * 2),
       up: Distances.to_feet(altitude_deltas.up, imperial: imperial),
       down: Distances.to_feet(altitude_deltas.down, imperial: imperial)
     }
-  end
-
-  defp avg_by(trackpoints, field) do
-    sum = trackpoints
-    |> Enum.map(&(Map.get(&1, field)))
-    |> Enum.sum()
-    sum / length(trackpoints)
   end
 
   defp calc_up_and_downs(trackpoints) do

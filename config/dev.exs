@@ -75,6 +75,10 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :squeeze, Squeeze.Mailer, adapter: Bamboo.LocalAdapter
 
+config :squeeze, gtm_id: System.get_env("GTM_ID")
+
+config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
+
 config :new_relic_agent,
   app_name: "OpenPace Development",
   license_key: System.get_env("NEW_RELIC_KEY")

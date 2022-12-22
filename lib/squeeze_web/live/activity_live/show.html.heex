@@ -26,7 +26,7 @@
               <span class="h2 font-weight-bold mb-0"><%= format_duration(@activity.duration) %></span>
             </div>
 
-            <%= if @activity.distance > 0 do %>
+            <%= if show_pace?(assigns) do %>
               <div class="col-3">
                 <h5 class="card-title text-uppercase text-muted mb-0">Pace</h5>
                 <span class="h2 font-weight-bold mb-0">
