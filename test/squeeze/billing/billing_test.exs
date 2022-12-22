@@ -185,7 +185,7 @@ defmodule Squeeze.BillingTest do
       assert {:ok, _} = Billing.create_or_update_invoice(user, attrs)
     end
 
-    test "with a valid exising invoice", %{user: user} do
+    test "with a valid existing invoice", %{user: user} do
       %{id: id, provider_id: provider_id} = insert(:invoice, user: user)
       attrs = params_for(:invoice, name: "test", provider_id: provider_id)
       assert {:ok, invoice} = Billing.create_or_update_invoice(user, attrs)
