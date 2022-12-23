@@ -1,14 +1,14 @@
 defmodule Squeeze.PaymentMethodFactory do
   @moduledoc false
 
-  alias Faker.{Address, Lorem, Name}
+  alias Faker.{Address, Lorem, Person}
   alias Squeeze.Billing.PaymentMethod
 
   defmacro __using__(_opts) do
     quote do
       def payment_method_factory do
         company = Enum.random(["Visa", "Mastercard", "American Express"])
-        owner = Name.name()
+        owner = Person.name()
 
         %PaymentMethod{
           owner_name: owner,

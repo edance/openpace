@@ -1,7 +1,7 @@
 defmodule Squeeze.UserFactory do
   @moduledoc false
 
-  alias Faker.{Address, Internet, Name}
+  alias Faker.{Address, Internet, Person}
   alias Squeeze.Accounts.User
 
   defmacro __using__(_opts) do
@@ -16,8 +16,8 @@ defmodule Squeeze.UserFactory do
         avatar = "https://www.gravatar.com/avatar/#{hash}?s=300&d=identicon"
 
         %User{
-          first_name: Name.first_name(),
-          last_name: Name.last_name(),
+          first_name: Person.first_name(),
+          last_name: Person.last_name(),
           email: Internet.email(),
           encrypted_password: encrypted_password,
           city: Address.city(),
