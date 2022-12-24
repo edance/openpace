@@ -90,4 +90,9 @@ if config_env() == :prod do
     api_key: System.get_env("SENDGRID_API_KEY")
 
   config :slack, api_token: System.get_env("SLACK_TOKEN")
+
+  config :stripity_stripe,
+    api_key: System.get_env("STRIPE_SECRET_KEY"),
+    publishable_key: System.get_env("STRIPE_PUBLISHABLE_KEY"),
+    webhook_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
 end
