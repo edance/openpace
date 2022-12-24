@@ -5,6 +5,7 @@ defmodule SqueezeWeb.UserController do
   alias Squeeze.Accounts
   alias Squeeze.Accounts.User
   alias Squeeze.{Email, Mailer}
+  alias Squeeze.Reporter
   alias SqueezeWeb.Plug.Auth
 
   require Logger
@@ -28,6 +29,7 @@ defmodule SqueezeWeb.UserController do
   def register(conn, %{"user" => user_params}) do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
+        Reporter.report_new_user(user)
         conn
         |> Auth.sign_in(user)
         |> send_welcome_email(user)

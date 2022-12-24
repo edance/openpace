@@ -19,9 +19,7 @@ defmodule Squeeze.Reporter do
   end
 
   defp post_message(text) do
-    case Chat.post_message("#general", text) do
-      %{"ok" => false} ->
-        Logger.info(text)
-    end
+    Chat.post_message("#general", text)
+    Logger.info(text)
   end
 end
