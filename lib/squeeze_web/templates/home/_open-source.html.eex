@@ -13,7 +13,7 @@
               <%= gettext("Open Source Platform") %>
             </h4>
             <p class="text-white">
-              Many runners are spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it.
+              Many runners spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it.
             </p>
 
             <a class="btn btn-secondary" href="https://github.com/edance/openpace" target="_blank">

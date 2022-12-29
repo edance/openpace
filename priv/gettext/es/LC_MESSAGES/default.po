@@ -457,7 +457,7 @@ msgstr ""
 
 #, elixir-format
 #: source.html.eex:22
-msgid "Many runners are spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it."
+msgid "Many runners spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it."
 msgstr ""
 
 #, elixir-format
