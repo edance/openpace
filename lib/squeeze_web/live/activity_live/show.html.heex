@@ -1,7 +1,7 @@
 <div class="container-dashboard container pt-4 pb-8">
   <div class="card overflow-hidden">
     <div class="row no-gutters">
-      <div class="col-md-5">
+      <div class="col-md-9">
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col-auto">
@@ -50,16 +50,27 @@
         <% end %>
       </div>
 
-      <div class="col-md-7">
-        <%= if coordinates?(assigns) do %>
-          <%= live_component(SqueezeWeb.Activities.MapComponent, activity: @activity, trackpoints: @trackpoints, current_user: @current_user) %>
-        <% end %>
-      </div>
     </div>
     <div class="row pt-4">
       <div class="col-12">
         <%= live_component SqueezeWeb.Activities.ChartComponent, trackpoints: @trackpoints, current_user: @current_user %>
       </div>
     </div>
+
+    <%= for tp <- @trackpoints do %>
+      Distance: <%= format_distance(tp.distance, @current_user.user_prefs) %>
+      Distance (m): <%= tp.distance %>
+      Moving: <%= tp.moving %>
+      Velocity: <%= tp.velocity %>
+      Time: <%= tp.time %>
+      <br/>
+
+    <% end %>
+
+
+    <%= for lap <- @activity.laps do %>
+      Split: <%= lap.split %> - Distance: <%= lap.distance %> - Elevation: <%= lap.total_elevation_gain %>
+      <br/>
+    <% end %>
   </div>
 </div>

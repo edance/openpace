@@ -7,6 +7,9 @@ defmodule SqueezeWeb.Activities.SplitsComponent do
   def splits(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
 
+    res = Squeeze.Splits.calculate_splits(trackpoints, split_distance: split_distance(imperial))
+    # IO.puts(res.splits)
+
     {splits, _} = trackpoints
     |> Enum.chunk_by(&(trunc(&1.distance / split_distance(imperial))))
     |> Enum.with_index()
