@@ -8,9 +8,9 @@ defmodule SqueezeWeb.ActivityLive.Show do
   alias Squeeze.Strava.ActivityLoader
 
   @impl true
-  def mount(%{"id" => id}, _session, socket) do
+  def mount(%{"slug" => slug}, _session, socket) do
     user = socket.assigns.current_user
-    activity = Dashboard.get_detailed_activity!(user, id)
+    activity = Dashboard.get_detailed_activity_by_slug!(user, slug)
 
     if connected?(socket) && !activity.trackpoint_set do
       send(self(), :fetch_detailed_info)
@@ -31,7 +31,7 @@ defmodule SqueezeWeb.ActivityLive.Show do
 
     if credential && existing_activity.external_id do
       ActivityLoader.update_or_create_activity(credential, existing_activity.external_id)
-      activity = Dashboard.get_detailed_activity!(user, existing_activity.id)
+      activity = Dashboard.get_detailed_activity_by_slug!(user, existing_activity.slug)
       socket = socket
       |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
 

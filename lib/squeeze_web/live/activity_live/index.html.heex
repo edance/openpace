@@ -23,7 +23,7 @@
                 <tr id={"activity-#{activity.id}"} scope="row">
                   <td><%= activity.type %></td>
                   <td><%= Timex.format!(activity.start_at_local, "%a, %b #{Ordinal.ordinalize(activity.start_at_local.day)}", :strftime) %></td>
-                  <td><%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity) %></td>
+                  <td><%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity.slug) %></td>
                   <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
                   <td><%= format_duration(activity.duration) %></td>
 

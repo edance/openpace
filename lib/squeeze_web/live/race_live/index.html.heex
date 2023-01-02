@@ -12,7 +12,7 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col">
-                    <%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity), class: "card-title" %>
+                    <%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity.slug), class: "card-title" %>
                     <p class="text-sm text-muted mb-0">
                       <%= format_start_at_local(activity.start_at_local) %> · Race
                     </p>

@@ -12,15 +12,7 @@ defmodule Squeeze.SlugGenerator do
   "hrz9f6"
 
   """
-  def gen_slug do
-    min = String.to_integer("100000", 36)
-    max = String.to_integer("ZZZZZZ", 36)
-
-    max
-    |> Kernel.-(min)
-    |> :rand.uniform()
-    |> Kernel.+(min)
-    |> Integer.to_string(36)
-    |> String.downcase()
+  def gen_slug(length \\ 6) do
+    for _ <- 1..length, into: "", do: <<Enum.random('0123456789abcdefghijklmnopqrstuvwxyz')>>
   end
 end

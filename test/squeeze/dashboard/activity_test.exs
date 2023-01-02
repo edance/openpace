@@ -2,6 +2,7 @@ defmodule Squeeze.Dashboard.ActivityTest do
   use Squeeze.DataCase
 
   alias Squeeze.Dashboard.Activity
+  alias Squeeze.Repo
 
   import Squeeze.Factory
 
@@ -16,5 +17,13 @@ defmodule Squeeze.Dashboard.ActivityTest do
   test "changeset with invalid attributes" do
     changeset = Activity.changeset(%Activity{}, @invalid_attrs)
     assert !changeset.valid?
+  end
+
+  test "with a duplicate slug, it appends to slug" do
+    %{slug: slug} = insert(:activity)
+    changeset = Activity.changeset(%Activity{}, @valid_attrs)
+
+    {:ok, activity} = Repo.insert_with_slug(changeset, slug: slug)
+    refute slug == activity.slug
   end
 end

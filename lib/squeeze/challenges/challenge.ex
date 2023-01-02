@@ -52,7 +52,6 @@ defmodule Squeeze.Challenges.Challenge do
     |> cast(attrs, @required_fields ++ @optional_fields ++ @segment_required_fields)
     |> validate_required(@required_fields)
     |> validate_segment_type()
-    |> unique_constraint(:slug)
   end
 
   def add_user_changeset(challenge, %User{} = user) do

@@ -123,18 +123,20 @@ defmodule Squeeze.Dashboard do
 
   ## Examples
 
-      iex> get_detailed_activity!(%User{}, 123)
+      iex> get_detailed_activity_by_slug!(%User{}, 123)
       %Activity{}
 
-      iex> get_detailed_activity!(%User{}, 456)
+      iex> get_detailed_activity_by_slug!(%User{}, 456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_detailed_activity!(%User{} = user, id) do
-    Activity
-    |> by_user(user)
-    |> Repo.get!(id)
-    |> Repo.preload([:user, :trackpoint_set, :laps])
+  def get_detailed_activity_by_slug!(%User{} = user, slug) do
+    query = from a in Activity,
+      where: a.slug == ^slug,
+      where: [user_id: ^user.id],
+      preload: [:user, :trackpoint_set, :laps]
+
+    Repo.one!(query)
   end
 
   @doc """
@@ -153,7 +155,7 @@ defmodule Squeeze.Dashboard do
     %Activity{}
     |> Activity.changeset(attrs)
     |> Changeset.put_change(:user_id, user.id)
-    |> Repo.insert()
+    |> Repo.insert_with_slug()
   end
 
   @doc """
