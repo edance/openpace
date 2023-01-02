@@ -6,27 +6,24 @@ defmodule Squeeze.Dashboard.ActivityLap do
 
   alias Squeeze.Dashboard.{Activity}
 
-  # @required_fields ~w(type)a
-  # @optional_fields ~w(
-  #   activity_type
-  #   name
-  #   workout_type
-  #   planned_distance
-  #   planned_distance_amount
-  #   planned_distance_unit
-  #   planned_duration
-  #   planned_date
-  #   distance
-  #   distance_amount
-  #   distance_unit
-  #   start_at
-  #   start_at_local
-  #   duration
-  #   description
-  #   elevation_gain
-  #   external_id
-  #   polyline
-  # )a
+  @required_fields ~w(
+    average_cadence
+    average_speed
+    distance
+    elapsed_time
+    end_index
+    lap_index
+    max_speed
+    moving_time
+    name
+    pace_zone
+    split
+    start_date
+    start_date_local
+    start_index
+    total_elevation_gain
+  )a
+  @optional_fields ~w()a
 
   schema "activity_laps" do
     field :average_cadence, :float
@@ -53,7 +50,7 @@ defmodule Squeeze.Dashboard.ActivityLap do
   @doc false
   def changeset(activity_lap, attrs) do
     activity_lap
-    |> cast(attrs, [:average_cadence, :average_speed, :distance, :elapsed_time, :start_index, :end_index, :lap_index, :max_speed, :moving_time, :name, :pace_zone, :split, :start_date, :start_date_local, :total_elevation_gain])
-    |> validate_required([:average_cadence, :average_speed, :distance, :elapsed_time, :start_index, :end_index, :lap_index, :max_speed, :moving_time, :name, :pace_zone, :split, :start_date, :start_date_local, :total_elevation_gain])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
   end
 end
