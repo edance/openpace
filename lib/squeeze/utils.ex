@@ -16,4 +16,8 @@ defmodule Squeeze.Utils do
   def random_float(a, b), do: a + (b - a) * :rand.uniform()
 
   def random_int(a, b), do: a + :rand.uniform(b - a)
+
+  def cast_float(nil), do: nil
+  def cast_float(x) when is_integer(x), do: x * 1.0
+  def cast_float(x), do: x
 end

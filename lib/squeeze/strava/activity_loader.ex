@@ -11,6 +11,8 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.Repo
   alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}
 
+  import Squeeze.Utils, only: [cast_float: 1]
+
   @strava_activities Application.compile_env(:squeeze, :strava_activities)
   @strava_streams Application.compile_env(:squeeze, :strava_streams)
 
@@ -62,21 +64,21 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   defp format_lap(activity, lap) do
     %{
-      average_cadence: lap.average_cadence * 1.0,
-      average_speed: lap.average_speed * 1.0,
-      distance: lap.distance * 1.0,
+      average_cadence: cast_float(lap.average_cadence),
+      average_speed: cast_float(lap.average_speed),
+      distance: cast_float(lap.distance),
       elapsed_time: lap.elapsed_time,
       start_index: lap.start_index,
       end_index: lap.end_index,
       lap_index: lap.lap_index,
-      max_speed: lap.max_speed * 1.0,
+      max_speed: cast_float(lap.max_speed),
       moving_time: lap.moving_time,
       name: lap.name,
       pace_zone: lap.pace_zone,
       split: lap.split,
       start_date: Timex.to_naive_datetime(lap.start_date) |> NaiveDateTime.truncate(:second),
       start_date_local: Timex.to_naive_datetime(lap.start_date_local) |> NaiveDateTime.truncate(:second),
-      total_elevation_gain: lap.total_elevation_gain * 1.0,
+      total_elevation_gain: cast_float(lap.total_elevation_gain),
       activity_id: activity.id
     }
   end
