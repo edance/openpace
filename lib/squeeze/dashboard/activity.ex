@@ -31,6 +31,7 @@ defmodule Squeeze.Dashboard.Activity do
   )a
 
   schema "activities" do
+    field :slug, :string
     field :name, :string
     field :activity_type, Ecto.Enum, values: [run: 0, bike: 1, swim: 2, other: 3]
     field :type, :string
@@ -70,7 +71,7 @@ defmodule Squeeze.Dashboard.Activity do
   end
 
   @doc false
-  def changeset(%Activity{} = activity, attrs) do
+  def changeset(%Activity{} = activity, attrs \\ %{}) do
     activity
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)

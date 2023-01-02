@@ -15,6 +15,7 @@ defmodule Squeeze.ActivityFactory do
         start_at = Map.get(attrs, :start_at, Timex.now())
 
         %Activity{
+          slug: sequence(:slug, &("#{&1}")),
           distance: miles * 1609.0,
           duration: round(pace * miles * 60),
           name: Enum.random(["Morning Run", "Afternoon Run", "Evening Run"]),

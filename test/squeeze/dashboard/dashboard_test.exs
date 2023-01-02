@@ -79,6 +79,27 @@ defmodule Squeeze.DashboardTest do
     end
   end
 
+  describe "#get_detailed_activity_by_slug!/2" do
+    test "returns the activity if found" do
+      activity = insert(:activity)
+      user = activity.user
+      assert activity.id == Dashboard.get_detailed_activity_by_slug!(user, activity.slug).id
+    end
+
+    test "raises error if activity does not belong to user" do
+      activity = insert(:activity)
+      user = insert(:user)
+      assert_raise Ecto.NoResultsError, fn ->
+        Dashboard.get_detailed_activity_by_slug!(user, activity.slug) end
+    end
+
+    test "raises error if activity does not exist" do
+      user = insert(:user)
+      assert_raise Ecto.NoResultsError, fn ->
+        Dashboard.get_detailed_activity_by_slug!(user, "1234") end
+    end
+  end
+
   describe "create_trackpoint_set/2" do
     test "creates a trackpoint set and trackpoints" do
       activity = insert(:activity)

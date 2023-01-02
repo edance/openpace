@@ -88,7 +88,7 @@ defmodule SqueezeWeb.Router do
       live "/challenges/:id", Challenges.ShowLive, :show, as: :challenge
 
       live "/activities", ActivityLive.Index, :index, as: :activity_index
-      live "/activities/:id", ActivityLive.Show, :show, as: :activity
+      live "/activities/:slug", ActivityLive.Show, :show, as: :activity
 
       live "/races", RaceLive.Index, :index, as: :race
       live "/races/new", RaceLive.New, :new, as: :race
