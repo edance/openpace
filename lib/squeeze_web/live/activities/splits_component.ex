@@ -43,15 +43,21 @@ defmodule SqueezeWeb.Activities.SplitsComponent do
 
   defp calc_up_and_downs(trackpoints) do
     first = List.first(trackpoints)
-    acc = %{up: 0, down: 0, altitude: first.altitude}
-    trackpoints
-    |> Enum.reduce(acc, fn(x, %{up: up, down: down, altitude: altitude}) ->
-      delta = x.altitude - altitude
-      if delta >= 0 do
-        %{up: up + delta, down: down, altitude: x.altitude}
-      else
-        %{up: up, down: down - delta, altitude: x.altitude}
-      end
-    end)
+
+    if is_nil(first.altitude) do
+      %{up: 0, down: 0, altitude: 0}
+    else
+      acc = %{up: 0, down: 0, altitude: first.altitude}
+
+      trackpoints
+      |> Enum.reduce(acc, fn(x, %{up: up, down: down, altitude: altitude}) ->
+        delta = x.altitude - altitude
+        if delta >= 0 do
+          %{up: up + delta, down: down, altitude: x.altitude}
+        else
+          %{up: up, down: down - delta, altitude: x.altitude}
+        end
+      end)
+    end
   end
 end
