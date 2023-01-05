@@ -51,6 +51,10 @@ defmodule SqueezeWeb.Router do
     plug :put_resp_content_type, "application/xml"
   end
 
+  pipeline :no_layout do
+    plug :put_layout, {SqueezeWeb.LayoutView, :none}
+  end
+
   # Redirects
   redirect "/docs", "/docs/index.html", :permanent, preserve_query_string: true
 
@@ -97,6 +101,7 @@ defmodule SqueezeWeb.Router do
       live "/settings", SettingsLive, :general
       live "/settings/namer", SettingsLive, :namer
       live "/settings/personal-records", SettingsLive, :personal_records
+      live "/settings/api", SettingsLive, :api
     end
   end
 
@@ -175,6 +180,11 @@ defmodule SqueezeWeb.Router do
 
     get "/index.xml", SitemapController, :index
   end
+
+  scope "/export", SqueezeWeb do
+    get "/users/:slug/activities.csv", ExportController, :activities
+  end
+
 
   scope "/api", SqueezeWeb.Api, as: :api do
     pipe_through :api

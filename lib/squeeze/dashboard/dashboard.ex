@@ -50,6 +50,23 @@ defmodule Squeeze.Dashboard do
     Repo.all(query)
   end
 
+  def list_activity_exports(%User{} = user) do
+    query = from a in Activity,
+      where: a.status == :complete,
+      where: [user_id: ^user.id],
+      order_by: [desc: :start_at],
+      select: %{
+        distance: a.distance,
+        duration: a.duration,
+        elevation_gain: a.elevation_gain,
+        type: a.type,
+        workout_type: a.workout_type,
+        start_at_local: a.start_at_local
+      }
+
+    Repo.all(query)
+  end
+
   @doc """
   Returns the list of recent activities by user.
 

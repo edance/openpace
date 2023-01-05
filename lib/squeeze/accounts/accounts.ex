@@ -21,7 +21,8 @@ defmodule Squeeze.Accounts do
   """
   def get_user_by_slug!(slug) do
     query = from u in User,
-      where: u.slug == ^slug
+      where: u.slug == ^slug,
+      preload: [:credentials, :user_prefs]
 
     Repo.one!(query)
   end

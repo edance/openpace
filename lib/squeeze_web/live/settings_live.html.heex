@@ -33,6 +33,10 @@
       <%= if @live_action == :namer do %>
         <%= live_component(SqueezeWeb.Settings.NamerCardComponent, changeset: @changeset, current_user: @current_user) %>
       <% end %>
+
+      <%= if @live_action == :api do %>
+        <%= live_component(SqueezeWeb.Settings.ApiConfigComponent, changeset: @changeset, current_user: @current_user) %>
+      <% end %>
     </div>
 
     <div class="col-md-3 mb-5 mb-xl-0">
