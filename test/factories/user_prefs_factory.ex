@@ -17,6 +17,7 @@ defmodule Squeeze.UserPrefsFactory do
         %UserPrefs{
           timezone: "America/Los_Angeles",
           imperial: true,
+          api_enabled: false,
           personal_records: [
             %{
               distance: Distances.half_marathon_in_meters(),
@@ -28,6 +29,15 @@ defmodule Squeeze.UserPrefsFactory do
             }
           ]
         }
+      end
+
+      def user_prefs_with_user_factory do
+        struct!(
+          user_prefs_factory(),
+          %{
+            user: build(:user, user_prefs: nil)
+          }
+        )
       end
     end
   end

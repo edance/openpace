@@ -15,6 +15,7 @@ defmodule Squeeze.Accounts.UserPrefs do
     rename_activities
     emoji
     branding
+    api_enabled
   )a
 
   schema "user_prefs" do
@@ -28,6 +29,7 @@ defmodule Squeeze.Accounts.UserPrefs do
     field :rename_activities, :boolean
     field :emoji, :boolean
     field :branding, :boolean
+    field :api_enabled, :boolean
 
     embeds_many :personal_records, PersonalRecord, on_replace: :delete
 
