@@ -126,6 +126,19 @@ defmodule Squeeze.Dashboard do
     |> Repo.preload([:user])
   end
 
+  def fetch_activity_by_external_id(%User{} = user, external_id) do
+    activity = Activity
+    |> by_user(user)
+    |> Repo.get_by(external_id: external_id)
+    |> Repo.preload([:user])
+
+    if activity do
+      {:ok, activity}
+    else
+      {:error, :not_found}
+    end
+  end
+
   def get_activity_by_external_id!(%User{} = user, external_id) do
     Activity
     |> by_user(user)

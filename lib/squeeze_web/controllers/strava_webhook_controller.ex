@@ -4,9 +4,12 @@ defmodule SqueezeWeb.StravaWebhookController do
 
   alias Squeeze.Accounts
   alias Squeeze.Dashboard
-  alias Squeeze.Logger
   alias Squeeze.Namer.RenamerJob
-  alias Squeeze.Strava.ActivityLoader
+  alias Squeeze.Strava.{ActivityLoader, Client}
+
+  require Logger
+
+  @strava_activities Application.compile_env(:squeeze, :strava_activities)
 
   plug :validate_token when action in [:challenge]
   plug :log_event
@@ -15,10 +18,17 @@ defmodule SqueezeWeb.StravaWebhookController do
 
   # User deletes an activity on strava
   def webhook(conn, %{"aspect_type" => "delete", "object_type" => "activity"} = params) do
-    with {:ok, credential} <- Accounts.fetch_credential("strava", params["owner_id"]) do
-      activity = Dashboard.get_activity_by_external_id!(credential.user, params["object_id"])
+    object_id = params["object_id"]
+
+    with {:ok, %{user: user}} <- Accounts.fetch_credential("strava", params["owner_id"]),
+         {:error, %{status: 404}} <- fetch_strava_activity(user, object_id), # Check deleted on strava
+         {:ok, activity} <- Dashboard.fetch_activity_by_external_id(user, object_id) do
       Dashboard.delete_activity(activity)
       render(conn, "success.json")
+    else
+      _ ->
+        Logger.warn("Failed to delete record id: #{object_id} user_id: #{params["owner_id"]}")
+        render(conn, "success.json")
     end
   end
 
@@ -50,6 +60,12 @@ defmodule SqueezeWeb.StravaWebhookController do
     Application.get_env(:strava, :webhook_challenge)
   end
 
+  def fetch_strava_activity(user, activity_id) do
+    user
+    |> Client.new
+    |> @strava_activities.get_activity_by_id(activity_id)
+  end
+
   defp validate_token(conn, _) do
     token = conn.params["hub.verify_token"]
     if token == challenge_token() do
@@ -75,7 +91,7 @@ defmodule SqueezeWeb.StravaWebhookController do
 
   defp log_event(conn, _)  do
     body = Jason.encode!(conn.params)
-    Logger.log_webhook_event(%{provider: "strava", body: body})
+    Squeeze.Logger.log_webhook_event(%{provider: "strava", body: body})
     conn
   end
 end
