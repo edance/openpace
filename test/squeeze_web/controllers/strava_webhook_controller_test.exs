@@ -29,15 +29,13 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
     end
   end
 
-  describe "POST /webhook/strava" do
+  describe "POST /webhook/strava for delete activity" do
     setup [:setup_account, :setup_mocks]
 
-    test "returns 200 and empty response", %{conn: conn} do
-      conn = post(conn, "/webhook/strava")
-      assert json_response(conn, 200) == %{}
-    end
+    test "deletes activity if not found on strava", %{conn: conn, activity: activity, credential: credential} do
+      Squeeze.Strava.MockActivities
+      |> expect(:get_activity_by_id, fn(_, _) -> {:error, %{status: 404}} end)
 
-    test "user deletes an activity on strava", %{conn: conn, activity: activity, credential: credential} do
       params = %{
         "aspect_type" => "delete",
         "object_type" => "activity",
@@ -50,8 +48,35 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
         Dashboard.get_activity_by_external_id!(credential.user, activity.external_id) end
     end
 
+    test "does not delete if found on strava", %{conn: conn, activity: activity, credential: credential} do
+      Squeeze.Strava.MockActivities
+      |> expect(:get_activity_by_id, fn(_, id) -> {:ok, build(:detailed_activity, id: id)} end)
+
+      params = %{
+        "aspect_type" => "delete",
+        "object_type" => "activity",
+        "object_id" => activity.external_id,
+        "owner_id" => credential.uid
+      }
+      conn = post(conn, "/webhook/strava", params)
+      assert json_response(conn, 200) == %{}
+      {:ok, %Activity{}} = Dashboard.fetch_activity_by_external_id(credential.user, activity.external_id)
+    end
+  end
+
+  describe "POST /webhook/strava" do
+    setup [:setup_account, :setup_mocks]
+
+    test "returns 200 and empty response", %{conn: conn} do
+      conn = post(conn, "/webhook/strava")
+      assert json_response(conn, 200) == %{}
+    end
+
     test "user creates an activity on strava", %{conn: conn, credential: credential} do
       activity = build(:activity)
+      Squeeze.Strava.MockActivities
+      |> expect(:get_activity_by_id, fn(_, id) -> {:ok, build(:detailed_activity, id: id)} end)
+
       params = %{
         "aspect_type" => "create",
         "object_type" => "activity",
@@ -64,6 +89,10 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
     end
 
     test "user updates an activity on strava", %{conn: conn, credential: credential, activity: activity} do
+
+      Squeeze.Strava.MockActivities
+      |> expect(:get_activity_by_id, fn(_, id) -> {:ok, build(:detailed_activity, id: id)} end)
+
       params = %{
         "aspect_type" => "update",
         "object_type" => "activity",
@@ -100,9 +129,6 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
   defp setup_mocks(_) do
     Squeeze.Strava.MockClient
     |> expect(:new, 2, fn(_, _) -> %Tesla.Client{} end)
-
-    Squeeze.Strava.MockActivities
-    |> expect(:get_activity_by_id, fn(_, id) -> {:ok, build(:detailed_activity, id: id)} end)
 
     Squeeze.Strava.MockStreams
     |> expect(:get_activity_streams, fn(_, _, _, _) -> {:ok, %Strava.StreamSet{}} end)
