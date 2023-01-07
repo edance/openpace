@@ -18,7 +18,7 @@ user = insert(:user, email: "a@b.co")
 
 # Add upcoming races for the user
 pr = user.user_prefs.personal_records |> List.last()
-goal_duration = pr.duration - random_float(90, 5 * 60) # Race Goal 90 seconds to 5 minutes faster
+goal_duration = pr.duration - random_int(90, 5 * 60) # Race Goal 90 seconds to 5 minutes faster
 insert(:race_goal, distance: pr.distance, duration: goal_duration, user: user)
 
 # Add activities for the user (for the ninety days)
