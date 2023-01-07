@@ -30,15 +30,15 @@ defmodule Squeeze.Dashboard do
   end
 
   def list_activity_summaries(%User{} = user) do
-    time_window = Timex.now() |> Timex.shift(years: -1)
+    # time_window = Timex.now() |> Timex.shift(years: -1)
 
     query = from a in Activity,
       where: a.status == :complete,
-      where: a.start_at > ^time_window,
+      # where: a.start_at > ^time_window,
       where: [user_id: ^user.id],
       order_by: [desc: :start_at],
       select: %{
-        id: a.id,
+        slug: a.slug,
         distance: a.distance,
         duration: a.duration,
         elevation_gain: a.elevation_gain,
