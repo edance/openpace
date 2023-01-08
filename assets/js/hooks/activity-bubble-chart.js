@@ -1,11 +1,11 @@
 import * as d3 from "d3";
+import RBush from "rbush";
 
 /*
  * ActivityBubbleChart Hook
  * D3 chart based on https://observablehq.com/@ch-bu/bubble-chart-split-my-running-by-year
  * Rewritten using canvas to be more performant for the force animations
- * TODO: Tooltips using picking see https://medium.com/free-code-camp/d3-and-canvas-in-3-steps-8505c8b27444
- * Animation on hover
+ * Uses rtree to find the hovering node that is being hovered over
  * Axis drawing https://observablehq.com/@spattana/drawing-axis-in-d3-canvas
  */
 export default {
@@ -33,6 +33,12 @@ export default {
 
     const context = canvas.node().getContext("2d");
     context.scale(dpi, dpi);
+
+    // Setup rtree
+    const tree = new RBush();
+
+    // Currently selected node
+    let selectedNode;
 
     this.handleEvent("summaries", ({ summaries }) => {
       const data = summaries.filter((d) => d.type === "Run");
@@ -82,7 +88,33 @@ export default {
         )
         .on("tick", ticked);
 
-      function ticked() {
+      // Handle mousemove events
+      canvas.on("mousemove", function (event) {
+        const [x, y] = d3.pointer(event);
+
+        // Search rtree for the intersection
+        const result = tree.search({
+          minX: x,
+          minY: y,
+          maxX: x,
+          maxY: y,
+        });
+
+        // Set the selected node if it exists
+        selectedNode = result[0]?.slug;
+
+        // Change to pointer
+        document.body.style.cursor = result[0] ? "pointer" : "auto";
+
+        // If the simulation has finished, then redraw
+        // No need to redraw if we are still animating
+        if (simulation.alpha() <= simulation.alphaMin()) {
+          draw();
+        }
+      });
+
+      // Draw each circle using arc and fill
+      function draw() {
         context.clearRect(0, 0, width, height);
         context.save();
 
@@ -90,10 +122,37 @@ export default {
           context.beginPath();
           context.moveTo(d.x + r(d.distance), d.y);
           context.arc(d.x, d.y, r(d.distance), 0, 2 * Math.PI);
-          context.fillStyle = color(d.velocity);
+          context.fillStyle =
+            d.slug === selectedNode ? "#fff" : color(d.velocity);
           context.fill();
         }
         context.restore();
+      }
+
+      function buildBBox() {
+        tree.clear();
+
+        // Build bounding boxes for each node
+        const nodes = data.map((d) => {
+          return {
+            ...d,
+            minX: d.x - r(d.distance),
+            maxX: d.x + r(d.distance),
+            minY: d.y - r(d.distance),
+            maxY: d.y + r(d.distance),
+          };
+        });
+
+        tree.load(nodes);
+      }
+
+      function ticked() {
+        draw();
+
+        // Building the bounding box each render may be too slow
+        // If it is too slow, I can see that the simulation is done rendering
+        // simulation.alpha() <= simulation.alphaMin()
+        buildBBox();
       }
     });
   },
