@@ -35,25 +35,12 @@ export default {
     context.scale(dpi, dpi);
 
     this.handleEvent("summaries", ({ summaries }) => {
-      const data = summaries
-        .filter((d) => d.type === "Run")
-        .map((d) => {
-          const speed = d.distance / d.duration; // meters per second
+      const data = summaries.filter((d) => d.type === "Run");
 
-          return {
-            ...d,
-            distance: d.distance / 1609,
-            start_at_local: new Date(d.start_at_local),
-            year: new Date(d.start_at_local).getFullYear(),
-            speed,
-            pace: 1609 / 60 / speed,
-          };
-        });
-
-      // X range (speed low to high)
+      // X range (velocity low to high)
       const x = d3
         .scaleLinear()
-        .domain(d3.extent(data, (d) => d.speed))
+        .domain(d3.extent(data, (d) => d.velocity))
         .range([margin.left, margin.left + innerWidth]);
 
       // Y range (each year)
@@ -70,7 +57,7 @@ export default {
 
       // Color range (faster is yellow, slower is black)
       const color = d3.scaleSequential(
-        d3.extent(data, (d) => d.speed),
+        d3.extent(data, (d) => d.velocity),
         d3.interpolateMagma
       );
 
@@ -80,7 +67,7 @@ export default {
         .velocityDecay(0.2)
         .force(
           "x",
-          d3.forceX((d) => x(d.speed))
+          d3.forceX((d) => x(d.velocity))
         )
         .force(
           "y",
@@ -103,7 +90,7 @@ export default {
           context.beginPath();
           context.moveTo(d.x + r(d.distance), d.y);
           context.arc(d.x, d.y, r(d.distance), 0, 2 * Math.PI);
-          context.fillStyle = color(d.speed);
+          context.fillStyle = color(d.velocity);
           context.fill();
         }
         context.restore();

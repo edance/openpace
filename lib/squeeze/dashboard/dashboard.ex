@@ -39,6 +39,7 @@ defmodule Squeeze.Dashboard do
       order_by: [desc: :start_at],
       select: %{
         slug: a.slug,
+        name: a.name,
         distance: a.distance,
         duration: a.duration,
         elevation_gain: a.elevation_gain,
