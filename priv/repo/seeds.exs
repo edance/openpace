@@ -30,7 +30,6 @@ insert(:race_goal, distance: pr.distance, duration: goal_duration, user: user)
     insert(:activity, start_at: start_at, user: user, external_id: nil)
   end
 end)
-365
 
 # Make a challenge
 challenge = insert(:challenge) |> with_scores()
