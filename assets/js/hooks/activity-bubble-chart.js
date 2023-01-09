@@ -27,6 +27,9 @@ export default {
 
     const svg = container.append("svg").attr("viewBox", [0, 0, width, height]);
 
+    // Need to have position relative for canvas position absolute to work
+    container.style("position", "relative");
+
     const wrapper = svg
       .append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
