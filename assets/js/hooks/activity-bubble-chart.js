@@ -25,11 +25,20 @@ export default {
     // Get the dpi to calculate the height/width for pixel devices
     const dpi = devicePixelRatio;
 
+    const svg = container.append("svg").attr("viewBox", [0, 0, width, height]);
+
+    const wrapper = svg
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
     const canvas = container
       .append("canvas")
-      .attr("width", width * dpi)
-      .attr("height", height * dpi)
-      .style("width", `${width}px`);
+      .attr("width", innerWidth * dpi)
+      .attr("height", innerHeight * dpi)
+      .style("width", `${innerWidth}px`)
+      .style("position", "absolute")
+      .style("top", `${margin.top}px`)
+      .style("left", `${margin.left}px`);
 
     const context = canvas.node().getContext("2d");
     context.scale(dpi, dpi);
@@ -47,13 +56,29 @@ export default {
       const x = d3
         .scaleLinear()
         .domain(d3.extent(data, (d) => d.velocity))
-        .range([margin.left, margin.left + innerWidth]);
+        .range([0, innerWidth]);
+
+      const minX = d3.min(data.map((d) => d.velocity));
+      const maxX = d3.max(data.map((d) => d.velocity));
+
+      const xAxis = (g) => g.call(d3.axisTop(x).tickFormat((d) => `${d} mps`));
+      wrapper.append("g").call(xAxis);
 
       // Y range (each year)
-      const y = d3
-        .scaleLinear()
-        .domain(d3.extent(data, (d) => d.year))
-        .range([margin.top, height - margin.bottom]);
+      // const y = d3
+      //   .scaleLinear()
+      //   .domain(d3.extent(data, (d) => d.year))
+      //   .range([0, innerHeight]);
+
+      // Y range (just "All")
+      const y = d3.scaleBand().domain(["All Runs"]).range([0, innerHeight]);
+
+      const yAxis = (g) =>
+        g
+          .call(d3.axisLeft(y))
+          .call((g) => g.select(".domain").remove())
+          .call((g) => g.selectAll(".tick line").remove());
+      wrapper.append("g").call(yAxis);
 
       // Radius range (map distance to 1-10)
       const r = d3
@@ -77,7 +102,7 @@ export default {
         )
         .force(
           "y",
-          d3.forceY(() => height / 2)
+          d3.forceY(() => innerHeight / 2)
         )
         .force(
           "collide",
@@ -115,7 +140,7 @@ export default {
 
       // Draw each circle using arc and fill
       function draw() {
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, innerWidth, innerHeight);
         context.save();
 
         for (const d of data) {
