@@ -18,10 +18,10 @@ defmodule SqueezeWeb.StravaIntegrationController do
     credential_params = credential_params(client, athlete)
 
     cond do
-      conn.assigns[:current_user] ->
-        connect_and_redirect(conn, client, athlete, params)
       user = Accounts.get_user_by_credential(credential_params) ->
         sign_in_and_redirect(conn, client, user, params)
+      conn.assigns[:current_user] ->
+        connect_and_redirect(conn, client, athlete, params)
       true ->
         create_user_and_redirect(conn, client, athlete, params)
     end
@@ -75,16 +75,10 @@ defmodule SqueezeWeb.StravaIntegrationController do
 
   defp sign_in_and_redirect(conn, client, user, params) do
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))
-    case Accounts.update_credential(credential, token_attrs(client)) do
-      {:ok, _} ->
-        conn
-        |> Auth.sign_in(user)
-        |> redirect_user(params)
-      _ ->
-        conn
-        |> put_flash(:error, "Authentication failed")
-        |> redirect(to: Routes.page_path(conn, :index))
-    end
+    {:ok, _credential} = Accounts.update_credential(credential, token_attrs(client))
+    conn
+    |> Auth.sign_in(user)
+    |> redirect_user(params)
   end
 
   defp create_user_and_redirect(conn, client, athlete, params) do
