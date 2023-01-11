@@ -3,15 +3,42 @@ defmodule SqueezeWeb.TrendsLive.Index do
 
   alias Squeeze.Dashboard
   alias Squeeze.Distances
+  alias Squeeze.Stats
   alias Squeeze.Velocity
 
   @impl true
   def mount(_params, _session, socket) do
+    user = socket.assigns.current_user
+    socket = assign(socket,
+      years: Stats.years_active(user)
+    )
+
+    if connected?(socket) do
+      send(self(), :fetch_summaries)
+    end
+
     {:ok, socket}
   end
 
   @impl true
-  def handle_params(_params, _url, socket) do
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :show, %{"year" => year}) do
+    socket
+    |> assign(:page_title, "#{year} Trends")
+    |> assign(:year, year)
+  end
+
+  defp apply_action(socket, :index, _params) do
+    socket
+    |> assign(:page_title, "All-Time Trends")
+    |> assign(:year, nil)
+  end
+
+  @impl true
+  def handle_info(:fetch_summaries, socket) do
     user = socket.assigns.current_user
     summaries = list_summaries(user)
     {:noreply, push_event(socket, "summaries", %{summaries: summaries})}
