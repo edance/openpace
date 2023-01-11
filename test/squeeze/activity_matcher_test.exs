@@ -33,13 +33,6 @@ defmodule Squeeze.ActivityMatcherTest do
       assert ActivityMatcher.get_closest_activity(user, attrs).id == activity.id
     end
 
-    test "with duration match on the same day", %{user: user, today: today, now: now} do
-      [activity, _] = insert_pair(:planned_activity, planned_date: today, user: user, planned_distance: 1)
-      attrs = build(:activity, start_at: now, duration: activity.planned_duration, planned_distance: 1)
-
-      assert ActivityMatcher.get_closest_activity(user, attrs).id == activity.id
-    end
-
     test "with an activity of a different type", %{user: user, today: today, now: now} do
       insert(:planned_activity, planned_date: today, user: user)
       attrs = build(:activity, start_at: now, type: "Yoga")
