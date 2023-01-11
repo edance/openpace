@@ -56,10 +56,10 @@ config :squeeze, SqueezeWeb.Endpoint,
 config :squeeze, SqueezeWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/squeeze_web/(live|views)/.*(ex)$",
-      ~r"lib/squeeze_web/templates/.*(eex)$"
+      ~r"priv/static/[^#]*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/[^#]*(po)$",
+      ~r"lib/squeeze_web/(live|views)/[^#]*(ex)$",
+      ~r"lib/squeeze_web/templates/[^#]*(eex)$"
     ]
   ]
 
