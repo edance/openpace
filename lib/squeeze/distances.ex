@@ -35,9 +35,11 @@ defmodule Squeeze.Distances do
   def to_feet(distance, [imperial: false]), do: distance
   def to_feet(distance, [imperial: _]), do: round_distance(distance * 3.28)
 
+  def to_float(nil, _), do: 0.0
   def to_float(distance, [imperial: true]), do: round_distance(distance / mile_in_meters())
   def to_float(distance, [imperial: _]), do: round_distance(distance / 1_000)
 
+  def to_int(nil, _), do: 0
   def to_int(distance, [imperial: true]), do: trunc(distance / mile_in_meters())
   def to_int(distance, [imperial: _]), do: trunc(distance / 1_000)
 

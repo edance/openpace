@@ -51,6 +51,29 @@ defmodule Squeeze.Stats do
   end
 
   @doc """
+  Returns a list of active years in order
+
+  ## Examples
+
+  ```elixir
+  iex> years_active(user)
+  [2017, 2018, 2019, 2020]
+  ```
+  """
+  def years_active(%User{} = user) do
+    query = from a in Activity,
+      where: a.status == :complete,
+      where: [user_id: ^user.id],
+      group_by: [fragment("date_part('year', ?)", a.start_at_local)],
+      order_by: [fragment("date_part('year', ?)", a.start_at_local)],
+      select: %{
+        year: fragment("cast(date_part('year', ?) as text)", a.start_at_local)
+      }
+    Repo.all(query)
+    |> Enum.map(&(&1.year))
+  end
+
+  @doc """
   Returns a number for the current activity streak for a user.
   """
   def current_activity_streak(%User{} = user) do
