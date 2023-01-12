@@ -55,7 +55,7 @@
        phx-update="ignore"
   >
     <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-primary border-0">
+      <div id="distance-card" class="card bg-gradient-primary border-0">
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -72,6 +72,8 @@
                   <%= gettext("km") %>
                 <% end %>
               </span>
+              <div class="mini-chart" id="total-distance-chart" style="aspect-ratio: 6 / 1;">
+              </div>
             </div>
           </div>
         </div>
@@ -92,6 +94,8 @@
               <span class="mb-0 text-sm">
                 <%= gettext("hours") %>
               </span>
+              <div class="mini-chart" id="total-duration-chart" style="aspect-ratio: 6 / 1;">
+              </div>
             </div>
           </div>
         </div>
@@ -109,11 +113,15 @@
               <span id="elevation-gain" class="h2 font-weight-bold mb-0 text-white">
                 0
               </span>
-              <%= if @current_user.user_prefs.imperial do %>
-                <%= gettext("feet") %>
-              <% else %>
-                <%= gettext("meters") %>
-              <% end %>
+              <span class="mb-0 text-sm">
+                <%= if @current_user.user_prefs.imperial do %>
+                  <%= gettext("feet") %>
+                <% else %>
+                  <%= gettext("meters") %>
+                <% end %>
+              </span>
+              <div class="mini-chart" id="total-elevation-chart" style="aspect-ratio: 6 / 1;">
+              </div>
             </div>
           </div>
         </div>
@@ -135,6 +143,9 @@
               <span class="mb-0 text-sm">
                 <%= gettext("runs") %>
               </span>
+
+              <div class="mini-chart" id="run-count-chart" style="aspect-ratio: 6 / 1;">
+              </div>
             </div>
           </div>
         </div>
