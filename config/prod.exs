@@ -47,15 +47,3 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
-
-config :squeeze, Squeeze.OAuth2.Fitbit,
-  client_id: System.get_env("FITBIT_CLIENT_ID"),
-  client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
-  redirect_uri: "https://www.openpace.co/integration/fitbit/callback",
-  webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
-
-config :squeeze, Squeeze.Garmin,
-  consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
-  consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
-  redirect_uri: "https://www.openpace.co/integration/garmin/callback"
-

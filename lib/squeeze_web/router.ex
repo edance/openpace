@@ -123,13 +123,7 @@ defmodule SqueezeWeb.Router do
     get "/strava", StravaWebhookController, :challenge
     post "/strava", StravaWebhookController, :webhook
 
-    get "/fitbit", FitbitWebhookController, :webhook
-    post "/fitbit", FitbitWebhookController, :webhook
-
     post "/stripe", StripeWebhookController, :webhook
-
-    get "/garmin", GarminWebhookController, :webhook
-    post "/garmin", GarminWebhookController, :webhook
   end
 
   scope "/", SqueezeWeb do
