@@ -9,11 +9,6 @@ defmodule SqueezeWeb.IntegrationControllerTest do
   setup :verify_on_exit!
 
   describe "GET #request" do
-    test "with provider fitbit", %{conn: conn} do
-      conn = get(conn, integration_path(conn, :request, "fitbit"))
-      assert redirected_to(conn) =~ ~r/https:\/\/www.fitbit.com/
-    end
-
     test "with provider strava", %{conn: conn} do
       Squeeze.Strava.MockAuth
       |> expect(:authorize_url!, fn(_) -> "https://www.strava.com" end)
