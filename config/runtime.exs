@@ -73,7 +73,8 @@ if config_env() == :prod do
 
   config :new_relic_agent,
     app_name: "OpenPace Production",
-    license_key: System.get_env("NEW_RELIC_KEY")
+    license_key: System.get_env("NEW_RELIC_KEY"),
+    logs_in_context: :direct
 
   config :squeeze, Squeeze.OAuth2.Google,
     client_id: System.get_env("GOOGLE_CLIENT_ID"),

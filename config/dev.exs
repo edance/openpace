@@ -81,4 +81,5 @@ config :squeeze, mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN")
 
 config :new_relic_agent,
   app_name: "OpenPace Development",
-  license_key: System.get_env("NEW_RELIC_KEY")
+  license_key: System.get_env("NEW_RELIC_KEY"),
+  logs_in_context: :direct
