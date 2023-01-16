@@ -120,6 +120,8 @@ export default {
         )
         .on("tick", ticked);
 
+      window.force = simulation;
+
       // Handle mousemove events
       canvas.on("mousemove", function (event) {
         const [x, y] = d3.pointer(event);
