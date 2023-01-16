@@ -18,10 +18,7 @@ export default {
     const width = this.el.clientWidth;
     const height = this.el.clientHeight;
 
-    // Inner section (not working yet)
-    const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-
     // Get the dpi to calculate the height/width for pixel devices
     const dpi = devicePixelRatio;
 
@@ -36,12 +33,12 @@ export default {
 
     const canvas = container
       .append("canvas")
-      .attr("width", innerWidth * dpi)
-      .attr("height", innerHeight * dpi)
-      .style("width", `${innerWidth}px`)
+      .attr("width", width * dpi)
+      .attr("height", height * dpi)
+      .style("width", `${width}px`)
       .style("position", "absolute")
-      .style("top", `${margin.top}px`)
-      .style("left", `${margin.left}px`);
+      .style("top", "0px")
+      .style("left", "0px");
 
     const context = canvas.node().getContext("2d");
     context.scale(dpi, dpi);
@@ -59,29 +56,36 @@ export default {
       const x = d3
         .scaleLinear()
         .domain(d3.extent(data, (d) => d.velocity))
-        .range([0, innerWidth]);
+        .nice()
+        .range([margin.left, width - margin.right]);
 
       const minX = d3.min(data.map((d) => d.velocity));
       const maxX = d3.max(data.map((d) => d.velocity));
 
       const xAxis = (g) => g.call(d3.axisTop(x).tickFormat((d) => `${d} mps`));
-      wrapper.append("g").call(xAxis);
+      svg
+        .append("g")
+        .attr("transform", `translate(0, ${margin.top})`)
+        .call(xAxis);
 
       // Y range (each year)
       // const y = d3
       //   .scaleLinear()
       //   .domain(d3.extent(data, (d) => d.year))
-      //   .range([0, innerHeight]);
+      //   .range([0, height]);
 
       // Y range (just "All")
-      const y = d3.scaleBand().domain(["All Runs"]).range([0, innerHeight]);
+      const y = d3.scaleBand().domain(["All Runs"]).range([0, height]);
 
       const yAxis = (g) =>
         g
           .call(d3.axisLeft(y))
           .call((g) => g.select(".domain").remove())
           .call((g) => g.selectAll(".tick line").remove());
-      wrapper.append("g").call(yAxis);
+      svg
+        .append("g")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(yAxis);
 
       // Radius range (map distance to 1-10)
       const r = d3
@@ -105,7 +109,7 @@ export default {
         )
         .force(
           "y",
-          d3.forceY(() => innerHeight / 2)
+          d3.forceY(() => height / 2)
         )
         .force(
           "collide",
@@ -131,6 +135,8 @@ export default {
         // Set the selected node if it exists
         selectedNode = result[0]?.slug;
 
+        // console.log("selectedNode", result[0]);
+
         // Change to pointer
         document.body.style.cursor = result[0] ? "pointer" : "auto";
 
@@ -143,7 +149,7 @@ export default {
 
       // Draw each circle using arc and fill
       function draw() {
-        context.clearRect(0, 0, innerWidth, innerHeight);
+        context.clearRect(0, 0, width, height);
         context.save();
 
         for (const d of data) {
