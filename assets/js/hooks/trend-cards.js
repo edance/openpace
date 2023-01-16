@@ -5,7 +5,6 @@ import { formatNumber } from "../utils";
 function formatDate(date) {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
-    // day: "numeric",
     year: "numeric",
   }).format(date);
 }
@@ -86,6 +85,20 @@ export default {
         durationChart.setTooltipPosition(nearestDate);
         elevationChart.setTooltipPosition(nearestDate);
         runCountChart.setTooltipPosition(nearestDate);
+      });
+
+      this.el.addEventListener("mouseOut", () => {
+        distanceChart.mouseOut();
+        durationChart.mouseOut();
+        elevationChart.mouseOut();
+        runCountChart.mouseOut();
+      });
+
+      this.el.addEventListener("mouseOver", () => {
+        distanceChart.mouseOver();
+        durationChart.mouseOver();
+        elevationChart.mouseOver();
+        runCountChart.mouseOver();
       });
     });
   },
@@ -215,9 +228,14 @@ export default {
     const tooltipDate = tooltipInner.append("strong");
     const tooltipValue = tooltipInner.append("div");
 
-    function focusMouseOut() {}
+    function focusMouseOut() {
+      const e = new CustomEvent("mouseOut");
+      el.dispatchEvent(e);
+    }
 
     function focusMouseOver(event) {
+      const e = new CustomEvent("mouseOver");
+      el.dispatchEvent(e);
       mouseLine.attr("opacity", "1");
     }
 
@@ -253,14 +271,20 @@ export default {
         .style("display", null);
     }
 
-    function hideTooltip() {
+    function mouseOut() {
       mouseLine.attr("opacity", "0");
       tooltip.style("display", "none");
     }
 
+    function mouseOver() {
+      mouseLine.attr("opacity", "1");
+      tooltip.style("display", null);
+    }
+
     return {
       setTooltipPosition,
-      hideTooltip,
+      mouseOut,
+      mouseOver,
     };
   },
 };
