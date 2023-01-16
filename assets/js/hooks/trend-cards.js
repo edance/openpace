@@ -253,7 +253,7 @@ export default {
     function setTooltipPosition(nearestDate) {
       const nearestXCord = x(nearestDate.toJSDate());
       const dateStr = nearestDate.toISODate();
-      const value = dataMap[dateStr];
+      const value = dataMap[dateStr] || 0;
 
       mouseLine
         .attr("d", `M ${nearestXCord} 0 V ${height}`)
