@@ -2,11 +2,21 @@ import * as d3 from "d3";
 import { DateTime } from "luxon";
 import { formatNumber } from "../utils";
 
+function formatDate(date) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    // day: "numeric",
+    year: "numeric",
+  }).format(date);
+}
+
 export default {
   mounted() {
     this.handleEvent("summaries", ({ summaries }) => {
+      // Filter for only runs
       const data = summaries.filter((d) => d.type === "Run");
 
+      // totals for each metric
       const totalDistance = d3.sum(data, (d) => d.distance);
       const totalDuration = d3.sum(data, (d) => d.duration) / 60 / 60;
       const elevationGain = d3.sum(data, (d) => d.elevation_gain);
@@ -32,7 +42,7 @@ export default {
         };
 
         item.distance += d.distance;
-        item.duration += d.duration;
+        item.duration += d.duration / 60 / 60;
         item.elevationGain += d.elevation_gain;
         item.runCount += 1;
 
@@ -48,10 +58,35 @@ export default {
         };
       });
 
-      this.lineChart("#total-distance-chart", dataByMonth, "distance");
-      this.lineChart("#total-duration-chart", dataByMonth, "duration");
-      this.lineChart("#total-elevation-chart", dataByMonth, "elevationGain");
-      this.lineChart("#run-count-chart", dataByMonth, "runCount");
+      const distanceChart = this.lineChart(
+        "#total-distance-chart",
+        dataByMonth,
+        "distance"
+      );
+      const durationChart = this.lineChart(
+        "#total-duration-chart",
+        dataByMonth,
+        "duration"
+      );
+      const elevationChart = this.lineChart(
+        "#total-elevation-chart",
+        dataByMonth,
+        "elevationGain"
+      );
+      const runCountChart = this.lineChart(
+        "#run-count-chart",
+        dataByMonth,
+        "runCount"
+      );
+
+      this.el.addEventListener("showTooltip", (e) => {
+        const nearestDate = e.detail;
+
+        distanceChart.setTooltipPosition(nearestDate);
+        durationChart.setTooltipPosition(nearestDate);
+        elevationChart.setTooltipPosition(nearestDate);
+        runCountChart.setTooltipPosition(nearestDate);
+      });
     });
   },
 
@@ -72,22 +107,46 @@ export default {
   },
 
   lineChart(id, data, field) {
+    const el = this.el;
     const container = d3.select(id);
+    const margin = { top: 30, right: 0, left: 0, bottom: 0 };
+
+    // Get the height and width from the container element
     const width = container.node().clientWidth;
-    const height = width / 6;
+    const height = container.node().clientHeight;
+
+    // Inner section
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const dataMap = data.reduce((obj, d) => {
+      const date = DateTime.fromJSDate(d.date, { zone: "utc" });
+      const dateStr = date.toISODate();
+      obj[dateStr] = d[field];
+      return obj;
+    }, {});
 
     const x = d3
       .scaleTime()
       .domain(d3.extent(data, (d) => d.date))
-      .range([0, width]);
+      .range([0 + margin.left, width - margin.right]);
 
     const y = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d[field])])
       .nice()
-      .range([height, 0]);
+      .range([height - margin.top, 0 + margin.bottom]);
 
-    const svg = container.append("svg").attr("viewBox", [0, 0, width, height]);
+    const svg = container
+      .append("svg")
+      .attr("viewBox", [0, 0, width, height])
+      .on("mousemove", focusMouseMove)
+      .on("mouseover", focusMouseOver)
+      .on("mouseout", focusMouseOut);
+
+    const chart = svg
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
     /* GRADIENT AREA CHART */
     const area = d3
@@ -97,7 +156,7 @@ export default {
       .y1((d) => y(d[field]))
       .y0((d) => y(0));
 
-    const gradient = svg
+    const gradient = chart
       .append("defs")
       .append("linearGradient")
       .attr("id", "mygrad") // defining an id
@@ -118,7 +177,7 @@ export default {
       .style("stop-color", "white")
       .style("stop-opacity", 0.0);
 
-    svg
+    chart
       .append("path")
       .datum(data)
       .attr("d", area)
@@ -129,15 +188,10 @@ export default {
     const line = d3
       .line()
       .curve(d3.curveBasis)
-      .x((d) => {
-        if (isNaN(d.date)) {
-          debugger;
-        }
-        return x(d.date);
-      })
+      .x((d) => x(d.date))
       .y((d) => y(d[field]));
 
-    svg
+    chart
       .append("path")
       .datum(data)
       .attr("fill", "none")
@@ -145,5 +199,68 @@ export default {
       .attr("stroke-width", 1.5)
       .attr("d", line);
     /* END OF LINE CHART */
+
+    const mouseLine = chart
+      .append("path") // create vertical line to follow mouse
+      .attr("class", "mouse-line")
+      .attr("stroke", "white")
+      .attr("stroke-width", 2)
+      .attr("opacity", "0");
+
+    const tooltip = container
+      .append("div")
+      .attr("class", "tooltip show")
+      .style("display", "none");
+    const tooltipInner = tooltip.append("div").attr("class", "tooltip-inner");
+    const tooltipDate = tooltipInner.append("strong");
+    const tooltipValue = tooltipInner.append("div");
+
+    function focusMouseOut() {}
+
+    function focusMouseOver(event) {
+      mouseLine.attr("opacity", "1");
+    }
+
+    function focusMouseMove(event) {
+      const mouse = d3.pointer(event);
+      const nearestDate = x.invert(mouse[0]);
+
+      const beginningOfMonth =
+        DateTime.fromJSDate(nearestDate).startOf("month");
+
+      const e = new CustomEvent("showTooltip", { detail: beginningOfMonth });
+      el.dispatchEvent(e);
+    }
+
+    function setTooltipPosition(nearestDate) {
+      const nearestXCord = x(nearestDate.toJSDate());
+      const dateStr = nearestDate.toISODate();
+      const value = dataMap[dateStr];
+
+      mouseLine
+        .attr("d", `M ${nearestXCord} 0 V ${height}`)
+        .attr("opacity", "1");
+
+      tooltipDate.text(formatDate(nearestDate.toJSDate()));
+      tooltipValue.text(formatNumber(value));
+
+      const tooltipWidth = tooltip.node().clientWidth;
+      const tooltipHeight = tooltip.node().clientHeight;
+
+      tooltip
+        .style("bottom", `${innerHeight + 10}px`)
+        .style("left", `${nearestXCord - tooltipWidth / 2}px`)
+        .style("display", null);
+    }
+
+    function hideTooltip() {
+      mouseLine.attr("opacity", "0");
+      tooltip.style("display", "none");
+    }
+
+    return {
+      setTooltipPosition,
+      hideTooltip,
+    };
   },
 };
