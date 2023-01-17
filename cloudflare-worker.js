@@ -1,18 +1,18 @@
-/* Upload this file to cloudflare.
+/*
+ * Upload this file to cloudflare.
  * Handles the reverse proxy between different heroku apps
- *
  */
 
 const securityHeaders = {
-	"Content-Security-Policy" : "upgrade-insecure-requests",
-	"Strict-Transport-Security" : "max-age=1000",
-	"X-Xss-Protection" : "1; mode=block",
-	"X-Frame-Options" : "DENY",
-	"X-Content-Type-Options" : "nosniff",
-	"Referrer-Policy" : "strict-origin-when-cross-origin",
+  "Content-Security-Policy": "upgrade-insecure-requests",
+  "Strict-Transport-Security": "max-age=1000",
+  "X-Xss-Protection": "1; mode=block",
+  "X-Frame-Options": "DENY",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
 };
 
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleResponse(event.request));
 });
 
@@ -26,34 +26,37 @@ async function fetchResponse(request) {
   const pathname = url.pathname;
 
   // Remove trailing slash for any url except /
-  if (pathname.length > 1 && pathname.endsWith('/')) {
+  if (pathname.length > 1 && pathname.endsWith("/")) {
     url.pathname = pathname.substring(0, pathname.length - 1);
     return Response.redirect(url, 301);
   }
 
-  url.hostname = 'squeeze-run.herokuapp.com';
+  url.hostname = "openpace.fly.dev";
 
   return fetch(new Request(url, request));
 }
 
 async function addHeaders(response) {
-	let newHdrs = new Headers(response.headers);
+  let newHdrs = new Headers(response.headers);
 
   if (!isHTML(newHdrs)) {
     return response;
   }
 
   Object.keys(securityHeaders).map((name, index) => {
-		newHdrs.set(name, securityHeaders[name]);
-	});
+    newHdrs.set(name, securityHeaders[name]);
+  });
 
-	return new Response(response.body , {
-		status: response.status,
-		statusText: response.statusText,
-		headers: newHdrs,
-	});
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHdrs,
+  });
 }
 
 function isHTML(headers) {
-	return headers.has("Content-Type") && headers.get("Content-Type").includes("text/html");
+  return (
+    headers.has("Content-Type") &&
+    headers.get("Content-Type").includes("text/html")
+  );
 }
