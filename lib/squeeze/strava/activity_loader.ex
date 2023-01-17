@@ -18,8 +18,12 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   def update_or_create_activity(%Credential{} = credential, strava_activity_id)
   when is_binary(strava_activity_id) or is_integer(strava_activity_id) do
-    {:ok, strava_activity} = fetch_strava_activity(credential, strava_activity_id)
-    update_or_create_activity(credential, strava_activity)
+    case fetch_strava_activity(credential, strava_activity_id) do
+      {:ok, strava_activity} ->
+        update_or_create_activity(credential, strava_activity)
+
+      {:error, %{status: 404}} -> {:error, :not_found}
+    end
   end
 
   def update_or_create_activity(%Credential{} = credential, strava_activity) do
@@ -51,9 +55,13 @@ defmodule Squeeze.Strava.ActivityLoader do
   end
 
   defp save_trackpoints(credential, %{external_id: strava_activity_id} = activity) do
-    stream_set = fetch_streams(strava_activity_id, credential)
-    trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set)
-    Dashboard.create_trackpoint_set(activity, trackpoints)
+    case fetch_streams(strava_activity_id, credential) do
+      {:ok, stream_set} ->
+        trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set)
+        Dashboard.create_trackpoint_set(activity, trackpoints)
+
+      {:error, %{status: 404}} -> {:ok, []} # Manually created activities do not have streams
+    end
   end
 
   defp save_laps(_, nil), do: {:ok, 0}
@@ -86,8 +94,6 @@ defmodule Squeeze.Strava.ActivityLoader do
   defp fetch_streams(id, credential) do
     client = Client.new(credential)
     streams = "altitude,cadence,distance,time,moving,heartrate,latlng,velocity_smooth"
-    {:ok, stream_set} =
-      @strava_streams.get_activity_streams(client, id, streams, true)
-    stream_set
+    @strava_streams.get_activity_streams(client, id, streams, true)
   end
 end
