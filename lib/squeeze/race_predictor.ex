@@ -89,13 +89,13 @@ defmodule Squeeze.RacePredictor do
 
   defp ft(distance, vo2_max) do
     fn (t) ->
-      (((0.000104 * :math.pow(distance, 2) * :math.pow(t, -2)) + (0.182258 * distance * :math.pow(t, -1)) -4.6) / ((0.2989558 * :math.exp( -0.1932605*t)) + (0.1894393 * :math.exp(-0.012778 * t)) + 0.8)) - vo2_max
+      (((0.000104 * :math.pow(distance, 2) * :math.pow(t, -2)) + (0.182258 * distance * :math.pow(t, -1)) - 4.6) / ((0.2989558 * :math.exp(-0.1932605 * t)) + (0.1894393 * :math.exp(-0.012778 * t)) + 0.8)) - vo2_max
     end
   end
 
   defp derivative_t(distance, vo2_max) do
     fn (t) ->
-      ((((0.2989558 * :math.exp( -0.1932605*t)) + (0.1894393 * :math.exp(-0.012778*t)) + 0.8)*((-0.000208) * (:math.pow(distance, 2)) * (:math.pow(t, -3))) - ((0.182258) * distance * (:math.pow(t, -2)))) - (vo2_max * ((0.2989558)*(:math.exp( -0.1932605*t)) + (0.1894393) * (:math.exp(-0.012778*t))))) / :math.pow(((0.2989558*:math.exp( -0.1932605*t)) + (0.1894393 * :math.exp(-0.012778*t)) + 0.8), 2)
+      ((((0.2989558 * :math.exp(-0.1932605 * t)) + (0.1894393 * :math.exp(-0.012778 * t)) + 0.8) * ((-0.000208) * (:math.pow(distance, 2)) * (:math.pow(t, -3))) - ((0.182258) * distance * (:math.pow(t, -2)))) - (vo2_max * ((0.2989558) * (:math.exp(-0.1932605 * t)) + (0.1894393) * (:math.exp(-0.012778 * t))))) / :math.pow(((0.2989558 * :math.exp(-0.1932605 * t)) + (0.1894393 * :math.exp(-0.012778 * t)) + 0.8), 2)
     end
   end
 end

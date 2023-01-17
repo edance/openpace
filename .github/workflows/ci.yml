@@ -75,4 +75,6 @@ jobs:
             _build
             priv/plts
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
-      - run: mix coveralls.github
+      - run: |
+          mix credo
+          mix coveralls.github
