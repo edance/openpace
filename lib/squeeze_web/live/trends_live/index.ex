@@ -57,7 +57,8 @@ defmodule SqueezeWeb.TrendsLive.Index do
           year: a.start_at_local.year,
           month: a.start_at_local.month,
           velocity: velocity(a),
-          pace: Velocity.to_float(velocity(a), imperial: imperial)
+          pace: Velocity.to_float(velocity(a), imperial: imperial),
+          elevation_gain: Distances.to_feet(a.elevation_gain, imperial: imperial)
         }
       )
     end)

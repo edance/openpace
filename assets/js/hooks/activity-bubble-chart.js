@@ -1,5 +1,16 @@
 import * as d3 from "d3";
 import RBush from "rbush";
+import { pad } from "../utils";
+
+function velocityToFormattedPace(velocity, imperial = false) {
+  const distance = imperial ? 1609 : 1000; // Mile or kilometer
+  const label = imperial ? "/mi" : "/km";
+
+  const min = Math.floor(distance / 60 / velocity);
+  const sec = Math.round(distance / velocity - min * 60);
+
+  return `${min}:${pad(sec)}${label}`;
+}
 
 /*
  * ActivityBubbleChart Hook
@@ -13,6 +24,8 @@ export default {
     // set the dimensions and margins of the graph
     const margin = { top: 30, right: 30, left: 120, bottom: 30 };
     const container = d3.select(this.el);
+
+    const imperial = JSON.parse(this.el.dataset["imperial"]);
 
     // Get the height and width from the container element
     const width = this.el.clientWidth;
@@ -59,10 +72,25 @@ export default {
         .nice()
         .range([margin.left, width - margin.right]);
 
-      const minX = d3.min(data.map((d) => d.velocity));
-      const maxX = d3.max(data.map((d) => d.velocity));
+      const xAxis = (g) =>
+        g
+          .call(
+            d3
+              .axisTop(x)
+              .tickFormat((d) => `${velocityToFormattedPace(d, imperial)}`)
+          )
+          .call((g) => g.select(".domain").remove())
+          .call((g) =>
+            g
+              .append("text")
+              .attr("x", width - margin.right)
+              .attr("y", 20)
+              .attr("font-weight", "bold")
+              .attr("fill", "currentColor")
+              .attr("text-anchor", "end")
+              .text("Running Faster →")
+          );
 
-      const xAxis = (g) => g.call(d3.axisTop(x).tickFormat((d) => `${d} mps`));
       svg
         .append("g")
         .attr("transform", `translate(0, ${margin.top})`)
@@ -86,6 +114,26 @@ export default {
         .append("g")
         .attr("transform", `translate(${margin.left}, 0)`)
         .call(yAxis);
+
+      // Add median speed
+      const median = d3.median(data, (d) => d.velocity);
+      const medianLine = svg
+        .append("line")
+        .attr("x1", x(median))
+        .attr("x2", x(median))
+        .attr("y1", margin.top)
+        .attr("y2", height - margin.bottom)
+        .attr("stroke", "#ccc");
+
+      // Add median text
+      const medianText = svg
+        .append("text")
+        .attr("x", x(median) + 5)
+        .attr("y", height - margin.bottom + 0)
+        .attr("font-weight", "bold")
+        .attr("fill", "currentColor")
+        .attr("font-size", "11px")
+        .text(`Median pace: ${velocityToFormattedPace(median, imperial)}`);
 
       // Radius range (map distance to 1-10)
       const r = d3

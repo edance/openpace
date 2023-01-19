@@ -8,7 +8,7 @@ export function formatDate(date) {
   return [year, pad(month), pad(day)].join('-');
 }
 
-function pad(num) {
+export function pad(num) {
   return num < 10 ? `0${num}` : num;
 }
 
