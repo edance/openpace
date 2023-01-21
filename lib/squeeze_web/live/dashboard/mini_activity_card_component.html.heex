@@ -1,12 +1,12 @@
 <div class="card mb-3 overflow-hidden">
   <div class="row no-gutters">
     <%= if @activity.polyline do %>
-      <div class="col-md-4">
+      <div class="col-4 col-md-12 col-lg-4">
         <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: @activity.polyline) %>
       </div>
     <% end %>
 
-    <div class="col-md-8">
+    <div class="col-8 col-md-12 col-lg-8">
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col">

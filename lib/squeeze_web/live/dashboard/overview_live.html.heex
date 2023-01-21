@@ -4,7 +4,7 @@
     <%= live_component(SqueezeWeb.Dashboard.CardsComponent, id: "overview-cards", current_user: @current_user, todays_activities: @todays_activities, current_streak: @current_streak, activity_summaries: @activity_summaries, race_goal: @race_goal) %>
 
     <div class="row mt-5">
-      <div class="col-xl-3 col-md-6">
+      <div class="col-xl-3 col-md-6 offset-md-6 order-last offset-xl-0 order-xl-first">
         <%= live_component(SqueezeWeb.Dashboard.ProfileCardComponent, current_user: @current_user, ytd_run_stats: @ytd_run_stats) %>
 
         <%= live_component(SqueezeWeb.Dashboard.ChallengesCardComponent, id: "challenges-card", current_user: @current_user, challenges: @challenges) %>
@@ -63,7 +63,7 @@
 
       </div>
 
-      <div class="col-xl-4">
+      <div class="col-xl-4 col-md-6">
         <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, id: "mini-calendar-card", current_user: @current_user, activity_map: @activity_map) %>
 
         <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
