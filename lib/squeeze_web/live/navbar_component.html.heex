@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-dark navbar-expand-lg">
   <div class="container container-dashboard">
-    <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -66,7 +66,7 @@
       </ul>
 
       <%= if @current_user.subscription_status == :free do %>
-        <%= live_redirect gettext("Start Trial"), to: Routes.billing_path(@socket, :checkout), class: "btn btn-primary btn-sm" %>
+        <%= live_redirect gettext("Start Trial"), to: Routes.billing_path(@socket, :checkout), class: "btn btn-primary btn-sm d-none d-lg-inline-block" %>
       <% end %>
     </div>
   </div>
