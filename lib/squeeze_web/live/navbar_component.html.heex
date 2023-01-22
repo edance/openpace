@@ -57,11 +57,17 @@
         </li>
 
         <li class="nav-item">
-          <%= live_redirect gettext("Calendar"), to: Routes.calendar_path(@socket, :index), class: "nav-link" %>
+          <%= live_redirect gettext("Trends"), to: Routes.trends_path(@socket, :index), class: "nav-link" %>
         </li>
 
-        <li class="nav-item">
-          <%= live_redirect gettext("Races"), to: Routes.race_path(@socket, :index), class: "nav-link" %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            <%= gettext("Training") %>
+          </a>
+          <div class="dropdown-menu">
+            <%= live_redirect gettext("Calendar"), to: Routes.calendar_path(@socket, :index), class: "dropdown-item" %>
+            <%= live_redirect gettext("Races"), to: Routes.race_path(@socket, :index), class: "dropdown-item" %>
+          </div>
         </li>
       </ul>
 
