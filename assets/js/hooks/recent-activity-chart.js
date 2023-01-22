@@ -4,7 +4,7 @@ import { activityColor, calcDistance, calcFeet, formatNumber, hexToRGB, roundTo 
 import { DateTime, Duration } from "luxon";
 
 function lastXWeeks() {
-  const weekCount = 52;
+  const weekCount = 20;
   const now = DateTime.now();
   const startDate = now.startOf("week").minus({ weeks: weekCount - 1 });
   const dates = [];

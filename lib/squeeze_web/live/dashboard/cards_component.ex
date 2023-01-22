@@ -48,6 +48,19 @@ defmodule SqueezeWeb.Dashboard.CardsComponent do
     "#{Distances.to_float(distance, imperial: imperial)} #{Distances.label(imperial: imperial)}"
   end
 
+  def latest_activity(%{activity_summaries: summaries}) do
+    List.first(summaries)
+  end
+
+  def activity_name(%{current_user: user} = assigns) do
+    latest = latest_activity(assigns)
+    cond do
+      latest.distance > 0 -> "#{format_distance(latest.distance, user.user_prefs)} #{latest.type}"
+      latest.duration > 0 -> "#{format_duration(latest.duration)} #{latest.type}"
+      true -> latest.type
+    end
+  end
+
   defp personal_record(%{race_goal: nil}), do: nil
   defp personal_record(%{current_user: user, race_goal: race_goal}) do
     user.user_prefs.personal_records

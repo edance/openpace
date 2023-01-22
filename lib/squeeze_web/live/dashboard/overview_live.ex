@@ -30,7 +30,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       loading: false,
       race_goal: List.first(race_goals),
       race_goals: race_goals,
-      todays_activities: Dashboard.todays_activities(user),
       ytd_run_stats: Stats.ytd_run_summary(user)
     )
 

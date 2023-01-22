@@ -49,8 +49,6 @@
             <% else %>
               Current PR » <%= format_duration(@personal_record.duration) %>
             <% end %>
-          <% else %>
-            <%= live_redirect("Add a Race »", to: Routes.race_path(@socket, :new), class: "text-nowrap") %>
           <% end %>
 
           <%= if @personal_record && is_nil(@race_goal) do %>
@@ -103,14 +101,15 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0">
-              <%= gettext("Today's Workout") %>
+              <%= gettext("Latest Activity") %>
             </h5>
             <span class="h2 font-weight-bold mb-0">
-              <%= if length(@todays_activities) == 0 do %>
+              <% latest_activity = latest_activity(assigns) %>
+
+              <%= if latest_activity do %>
+                <%= link(activity_name(assigns), to: Routes.activity_path(@socket, :show, latest_activity.slug)) %>
+              <% else %>
                 <%= gettext("None") %>
-              <% end %>
-              <%= for activity <- @todays_activities do %>
-                <%= link(activity.name || activity.type, to: Routes.activity_path(@socket, :show, activity.slug)) %>
               <% end %>
             </span>
           </div>
@@ -127,7 +126,7 @@
           <% else %>
             <span class="iconify mr-1" data-icon="fa-solid:fire"></span>
           <% end %>
-          <%= format_number(@current_streak) %> day streak
+          <%= gettext("%{streak_count} day run streak", streak_count: format_number(@current_streak)) %>
         </p>
       </div>
     </div>
