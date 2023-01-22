@@ -4,7 +4,7 @@ import DurationSelect from "./duration-select";
 import Modal from "./modal";
 import RecentActivityChart from "./recent-activity-chart";
 import SlimSelect from "./slim-select";
-import TrendCards from "./trend-cards";
+import TrendCard from "./trend-card";
 
 export default {
   ActivityBubbleChart,
@@ -13,5 +13,5 @@ export default {
   Modal,
   RecentActivityChart,
   SlimSelect,
-  TrendCards,
+  TrendCard,
 };
