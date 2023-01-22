@@ -58,16 +58,16 @@ export default {
 
       this.chart = this.lineChart(dataByMonth);
 
-      this.el.addEventListener("showTooltip", (e) => {
+      document.addEventListener("showTooltip", (e) => {
         const nearestDate = e.detail;
         this.chart.setTooltipPosition(nearestDate);
       });
 
-      this.el.addEventListener("mouseOut", () => {
+      document.addEventListener("graphMouseOut", () => {
         this.chart.mouseOut();
       });
 
-      this.el.addEventListener("mouseOver", () => {
+      document.addEventListener("graphMouseOver", () => {
         this.chart.mouseOver();
       });
     });
@@ -199,13 +199,13 @@ export default {
     const tooltipValue = tooltipInner.append("div");
 
     function focusMouseOut() {
-      const e = new CustomEvent("mouseOut");
-      el.dispatchEvent(e);
+      const e = new CustomEvent("graphMouseOut");
+      document.dispatchEvent(e);
     }
 
     function focusMouseOver(event) {
-      const e = new CustomEvent("mouseOver");
-      el.dispatchEvent(e);
+      const e = new CustomEvent("graphMouseOver");
+      document.dispatchEvent(e);
       mouseLine.attr("opacity", "1");
     }
 
@@ -217,7 +217,7 @@ export default {
         DateTime.fromJSDate(nearestDate).startOf("month");
 
       const e = new CustomEvent("showTooltip", { detail: beginningOfMonth });
-      el.dispatchEvent(e);
+      document.dispatchEvent(e);
     }
 
     function setTooltipPosition(nearestDate) {
