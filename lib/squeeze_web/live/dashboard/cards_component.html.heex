@@ -10,9 +10,9 @@
             <span class="h2 font-weight-bold mb-0">
               <%= if @race_goal do %>
                 <%= if @race_goal.just_finish do %>
-                  <%= gettext("Finish") %>
+                  <%= link(gettext("Finish"), to: Routes.race_path(@socket, :show, @race_goal.slug)) %>
                 <% else %>
-                  <%= format_duration(@race_goal.duration) %>
+                  <%= link(format_duration(@race_goal.duration), to: Routes.race_path(@socket, :show, @race_goal.slug)) %>
                 <% end %>
               <% else %>
                 <%= gettext("TBD") %>
