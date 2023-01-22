@@ -11,100 +11,70 @@ function formatDate(date) {
 
 export default {
   mounted() {
+    const field = this.el.dataset["field"];
+
     this.handleEvent("summaries", ({ summaries }) => {
       // Filter for only runs
       const data = summaries.filter((d) => d.type === "Run");
 
       // totals for each metric
-      const totalDistance = d3.sum(data, (d) => d.distance);
-      const totalDuration = d3.sum(data, (d) => d.duration) / 60 / 60;
-      const elevationGain = d3.sum(data, (d) => d.elevation_gain);
-      const runCount = data.length;
+      let total;
+
+      if (field === "count") {
+        total = data.length;
+      } else if (field === "duration") {
+        total = d3.sum(data, (d) => d.duration) / 60 / 60;
+      } else {
+        total = d3.sum(data, (d) => d[field]);
+      }
 
       // Animate the sums of various activity related figures
-      this.animateAmount("#total-distance", totalDistance);
-      this.animateAmount("#total-duration", totalDuration);
-      this.animateAmount("#elevation-gain", elevationGain);
-      this.animateAmount("#run-count", runCount);
+      this.animateAmount(total);
 
       // Iterate once through all the run activities
-      // sum up the distance, duration, elevation, and run count for each month
       const sumsByMonth = data.reduce((obj, d) => {
         const date = DateTime.fromISO(d.start_at_local).startOf("month");
         const dateStr = date.toISODate();
 
-        const item = obj[dateStr] || {
-          distance: 0,
-          duration: 0,
-          elevationGain: 0,
-          runCount: 0,
-        };
+        obj[dateStr] ||= 0;
 
-        item.distance += d.distance;
-        item.duration += d.duration / 60 / 60;
-        item.elevationGain += d.elevation_gain;
-        item.runCount += 1;
-
-        obj[dateStr] = item;
+        if (field === "count") {
+          obj[dateStr] += 1;
+        } else if (field === "duration") {
+          obj[dateStr] += d.duration / 60 / 60;
+        } else {
+          obj[dateStr] += d[field];
+        }
 
         return obj;
       }, {});
 
       const dataByMonth = Object.keys(sumsByMonth).map((key) => {
         return {
-          ...sumsByMonth[key],
+          amount: sumsByMonth[key],
           date: new Date(key),
         };
       });
 
-      const distanceChart = this.lineChart(
-        "#total-distance-chart",
-        dataByMonth,
-        "distance"
-      );
-      const durationChart = this.lineChart(
-        "#total-duration-chart",
-        dataByMonth,
-        "duration"
-      );
-      const elevationChart = this.lineChart(
-        "#total-elevation-chart",
-        dataByMonth,
-        "elevationGain"
-      );
-      const runCountChart = this.lineChart(
-        "#run-count-chart",
-        dataByMonth,
-        "runCount"
-      );
+      this.chart = this.lineChart(dataByMonth);
 
       this.el.addEventListener("showTooltip", (e) => {
         const nearestDate = e.detail;
-
-        distanceChart.setTooltipPosition(nearestDate);
-        durationChart.setTooltipPosition(nearestDate);
-        elevationChart.setTooltipPosition(nearestDate);
-        runCountChart.setTooltipPosition(nearestDate);
+        this.chart.setTooltipPosition(nearestDate);
       });
 
       this.el.addEventListener("mouseOut", () => {
-        distanceChart.mouseOut();
-        durationChart.mouseOut();
-        elevationChart.mouseOut();
-        runCountChart.mouseOut();
+        this.chart.mouseOut();
       });
 
       this.el.addEventListener("mouseOver", () => {
-        distanceChart.mouseOver();
-        durationChart.mouseOver();
-        elevationChart.mouseOver();
-        runCountChart.mouseOver();
+        this.chart.mouseOver();
       });
     });
   },
 
-  animateAmount(id, amount) {
-    const text = d3.select(id);
+  animateAmount(amount) {
+    const text = d3.select(this.el.querySelector(".total-amount"));
 
     text
       .transition()
@@ -119,9 +89,9 @@ export default {
       .duration(1000);
   },
 
-  lineChart(id, data, field) {
+  lineChart(data) {
     const el = this.el;
-    const container = d3.select(id);
+    const container = d3.select(this.el.querySelector(".mini-chart"));
     const margin = { top: 30, right: 0, left: 0, bottom: 0 };
 
     // Get the height and width from the container element
@@ -135,7 +105,7 @@ export default {
     const dataMap = data.reduce((obj, d) => {
       const date = DateTime.fromJSDate(d.date, { zone: "utc" });
       const dateStr = date.toISODate();
-      obj[dateStr] = d[field];
+      obj[dateStr] = d.amount;
       return obj;
     }, {});
 
@@ -146,7 +116,7 @@ export default {
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d[field])])
+      .domain([0, d3.max(data, (d) => d.amount)])
       .nice()
       .range([height - margin.top, 0 + margin.bottom]);
 
@@ -166,7 +136,7 @@ export default {
       .area()
       .curve(d3.curveBasis)
       .x((d) => x(d.date))
-      .y1((d) => y(d[field]))
+      .y1((d) => y(d.amount))
       .y0((d) => y(0));
 
     const gradient = chart
@@ -202,7 +172,7 @@ export default {
       .line()
       .curve(d3.curveBasis)
       .x((d) => x(d.date))
-      .y((d) => y(d[field]));
+      .y((d) => y(d.amount));
 
     chart
       .append("path")

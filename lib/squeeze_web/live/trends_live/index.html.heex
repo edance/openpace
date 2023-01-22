@@ -49,20 +49,21 @@
 </div>
 
 <div class="container container-dashboard mt--6">
-  <div class="row"
-       id="trend-cards"
-       phx-hook="TrendCards"
-       phx-update="ignore"
-  >
+  <div class="row" id="trend-cards">
     <div class="col-xl-3 col-md-6">
-      <div id="distance-card" class="card bg-gradient-primary border-0">
+      <div class="card bg-gradient-primary border-0"
+           id="distance-card"
+           data-field="distance"
+           phx-hook="TrendCard"
+           phx-update="ignore"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
               <h5 class="card-title text-uppercase text-muted mb-0 text-white">
                 <%= gettext("Total Distance") %>
               </h5>
-              <span id="total-distance" class="h2 font-weight-bold mb-0 text-white">
+              <span class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
               <span class="mb-0 text-sm">
@@ -81,14 +82,19 @@
     </div>
 
     <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-info border-0">
+      <div class="card bg-gradient-info border-0"
+           id="duration-card"
+           data-field="duration"
+           phx-hook="TrendCard"
+           phx-update="ignore"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
               <h5 class="card-title text-uppercase text-muted mb-0 text-white">
                 <%= gettext("Total Duration") %>
               </h5>
-              <span id="total-duration" class="h2 font-weight-bold mb-0 text-white">
+              <span class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
               <span class="mb-0 text-sm">
@@ -103,14 +109,19 @@
     </div>
 
     <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-danger border-0">
+      <div class="card bg-gradient-danger border-0"
+           id="elevation-card"
+           data-field="elevation_gain"
+           phx-hook="TrendCard"
+           phx-update="ignore"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
               <h5 class="card-title text-uppercase text-muted mb-0 text-white">
                 <%= gettext("Elevation Gain") %>
               </h5>
-              <span id="elevation-gain" class="h2 font-weight-bold mb-0 text-white">
+              <span class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
               <span class="mb-0 text-sm">
@@ -129,15 +140,19 @@
     </div>
 
     <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-default border-0">
-
+      <div class="card bg-gradient-default border-0"
+           id="count-card"
+           data-field="count"
+           phx-hook="TrendCard"
+           phx-update="ignore"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
               <h5 class="card-title text-uppercase text-muted mb-0 text-white">
                 <%= gettext("Number of Runs") %>
               </h5>
-              <span id="run-count" class="h2 font-weight-bold mb-0 text-white">
+              <span id="run-count" class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
               <span class="mb-0 text-sm">
@@ -154,13 +169,119 @@
   </div>
 
   <div class="row">
-    <div class="col-9">
+    <div class="col-xl-3">
+      <div class="card">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h6 class="text-light text-uppercase ls-1 mb-1">
+                <%= gettext("Overview") %>
+              </h6>
+              <h5 class="h3 text-white mb-0">
+                <%= gettext("Yearly Summary") %>
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Page name</th>
+                <th scope="col">Visitors</th>
+                <th scope="col">Unique users</th>
+                <th scope="col">Bounce rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  /argon/
+                </th>
+                <td>
+                  4,569
+                </td>
+                <td>
+                  340
+                </td>
+                <td>
+                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  /argon/index.html
+                </th>
+                <td>
+                  3,985
+                </td>
+                <td>
+                  319
+                </td>
+                <td>
+                  <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  /argon/charts.html
+                </th>
+                <td>
+                  3,513
+                </td>
+                <td>
+                  294
+                </td>
+                <td>
+                  <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  /argon/tables.html
+                </th>
+                <td>
+                  2,050
+                </td>
+                <td>
+                  147
+                </td>
+                <td>
+                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  /argon/profile.html
+                </th>
+                <td>
+                  1,795
+                </td>
+                <td>
+                  190
+                </td>
+                <td>
+                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-9">
       <div class="card">
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col">
-              <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-              <h5 class="h3 text-white mb-0">Running Bubbles</h5>
+              <h6 class="text-light text-uppercase ls-1 mb-1">
+                <%= gettext("Activities") %>
+              </h6>
+              <h5 class="h3 text-white mb-0">
+                <%= gettext("Running Bubbles") %>
+              </h5>
             </div>
 
             <div class="col">
@@ -183,15 +304,13 @@
         </div>
 
         <div phx-hook="ActivityBubbleChart"
-              phx-update="ignore"
-              id="activity-bubble-chart"
-              data-imperial={"#{@current_user.user_prefs.imperial}"}
-              style="aspect-ratio: 2 / 1; position: relative;">
+             phx-update="ignore"
+             id="activity-bubble-chart"
+             data-imperial={"#{@current_user.user_prefs.imperial}"}
+             style="aspect-ratio: 2 / 1; position: relative;">
         </div>
       </div>
 
-      <div class="col-3">
-      </div>
     </div>
   </div>
 </div>
