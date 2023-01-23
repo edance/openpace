@@ -10,8 +10,35 @@ function formatDate(date) {
 }
 
 export default {
+  updateChart(year) {
+    if (!this.chart) {
+      return;
+    }
+
+    if (year) {
+      const d1 = new Date(year, 0, 1);
+      const d2 = new Date(year, 11, 31);
+
+      this.x.domain([d1, d2]);
+    } else {
+      this.x.domain(d3.extent(this.data, (d) => d.date));
+    }
+
+    const line = d3
+      .line()
+      .curve(d3.curveBasis)
+      .x((d) => this.x(d.date))
+      .y((d) => this.y(d.amount));
+
+    // Update line position
+    this.chart.select(".line").transition().duration(1000).attr("d", line);
+  },
   mounted() {
     const field = this.el.dataset["field"];
+
+    this.handleEvent("update-year", ({ year }) => {
+      this.updateChart(year);
+    });
 
     this.handleEvent("summaries", ({ summaries }) => {
       // Filter for only runs
@@ -56,19 +83,21 @@ export default {
         };
       });
 
-      this.chart = this.lineChart(dataByMonth);
+      this.data = dataByMonth;
+
+      this.lineChart(dataByMonth);
 
       document.addEventListener("showTooltip", (e) => {
         const nearestDate = e.detail;
-        this.chart.setTooltipPosition(nearestDate);
+        // this.chart.setTooltipPosition(nearestDate);
       });
 
       document.addEventListener("graphMouseOut", () => {
-        this.chart.mouseOut();
+        // this.chart.mouseOut();
       });
 
       document.addEventListener("graphMouseOver", () => {
-        this.chart.mouseOver();
+        // this.chart.mouseOver();
       });
     });
   },
@@ -114,11 +143,15 @@ export default {
       .domain(d3.extent(data, (d) => d.date))
       .range([0 + margin.left, width - margin.right]);
 
+    this.x = x;
+
     const y = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d.amount)])
       .nice()
       .range([height - margin.top, 0 + margin.bottom]);
+
+    this.y = y;
 
     const svg = container
       .append("svg")
@@ -127,7 +160,7 @@ export default {
       .on("mouseover", focusMouseOver)
       .on("mouseout", focusMouseOut);
 
-    const chart = svg
+    this.chart = svg
       .append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -139,7 +172,7 @@ export default {
       .y1((d) => y(d.amount))
       .y0((d) => y(0));
 
-    const gradient = chart
+    const gradient = this.chart
       .append("defs")
       .append("linearGradient")
       .attr("id", "mygrad") // defining an id
@@ -160,7 +193,7 @@ export default {
       .style("stop-color", "white")
       .style("stop-opacity", 0.0);
 
-    chart
+    this.chart
       .append("path")
       .datum(data)
       .attr("d", area)
@@ -174,16 +207,17 @@ export default {
       .x((d) => x(d.date))
       .y((d) => y(d.amount));
 
-    chart
+    this.chart
       .append("path")
       .datum(data)
+      .attr("class", "line") // I add the class line to be able to modify this line later on.
       .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", 1.5)
       .attr("d", line);
     /* END OF LINE CHART */
 
-    const mouseLine = chart
+    const mouseLine = this.chart
       .append("path") // create vertical line to follow mouse
       .attr("class", "mouse-line")
       .attr("stroke", "white")
