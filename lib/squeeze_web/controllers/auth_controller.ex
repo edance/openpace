@@ -27,18 +27,13 @@ defmodule SqueezeWeb.AuthController do
   defp create_user(conn, user_params) do
     with {:ok, user} <- Accounts.create_user(user_params),
          {:ok, _} <- Accounts.create_credential(user, user_params[:credential]) do
-      redirect_current_user(conn)
+      sign_in_and_redirect(conn, user)
     else
       _err ->
         conn
         |> put_flash(:error, "Could not be authenticated")
         |> redirect(to: Routes.dashboard_path(conn, :index))
     end
-  end
-
-  defp redirect_current_user(conn) do
-    conn
-    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp sign_in_and_redirect(conn, user) do
