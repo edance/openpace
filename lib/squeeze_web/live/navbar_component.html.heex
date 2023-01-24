@@ -19,6 +19,13 @@
       </a>
 
       <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <%= if show_bulk_import_link?() do %>
+          <%= live_redirect(to: Routes.strava_bulk_upload_path(SqueezeWeb.Endpoint, :index), class: "dropdown-item") do %>
+            <span class="iconify" data-icon="uil:file-import" data-inline="false"></span>
+            <span><%= gettext("Bulk Import") %></span>
+          <% end %>
+        <% end %>
+
         <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :general), class: "dropdown-item") do %>
           <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
           <span><%= gettext("Settings") %></span>

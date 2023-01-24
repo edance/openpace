@@ -16,6 +16,7 @@ config :logger, level: :info
 
 # In application.ex, we allow fit decoder workers but not in production
 config :squeeze, :allow_fit_decoder, false
+config :squeeze, :allow_strava_upload, false
 
 # ## SSL Support
 #

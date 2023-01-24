@@ -1,0 +1,70 @@
+<div class="container py-2">
+  <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+    <div class="card">
+      <div class="card-header bg-transparent">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="mb-0">
+              <%= gettext("Strava Bulk Upload") %>
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card body -->
+      <div class="card-body">
+        <ol class="text-muted">
+          <li>
+            Log into the account on Strava.com from which you wish to bulk export data.
+          </li>
+          <li>
+            Hover over your name in the upper right-hand corner of the Strava page. Choose "Settings," then find the "My Account" tab from the menu listed on the Left.
+          </li>
+          <li>
+            Select "Get Started" under "Download or Delete Your Account."
+          </li>
+          <li>
+            Select "Request your archive" on the next page.
+          </li>
+          <li>
+            You will receive an email with a link to download your data (this may take a few hours.) For this reason, it’s important that you have access to the email account attached to your Strava profile.
+          </li>
+        </ol>
+
+        <p class="mb-4">You will be able to download a zip file with all your activity data. Upload that file below.</p>
+
+        <%= for entry <- @uploads.export.entries do %>
+          <article class="upload-entry mb-4">
+
+            <%# entry.progress will update automatically for in-flight entries %>
+            <progress value={entry.progress} max="100"> <%= entry.progress %>% </progress>
+
+            <%# a regular click event whose handler will invoke Phoenix.LiveView.cancel_upload/3 %>
+            <button class="btn btn-sm btn-secondary" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel">&times;</button>
+
+            <%# Phoenix.LiveView.Helpers.upload_errors/2 returns a list of error atoms %>
+            <%= for err <- upload_errors(@uploads.export, entry) do %>
+              <p class="alert alert-danger"><%= error_to_string(err) %></p>
+            <% end %>
+
+          </article>
+        <% end %>
+
+        <%# Phoenix.LiveView.Helpers.upload_errors/1 returns a list of error atoms %>
+        <%= for err <- upload_errors(@uploads.export) do %>
+          <p class="alert alert-danger"><%= error_to_string(err) %></p>
+        <% end %>
+
+        <%= if @activity_count > 0 do %>
+          <p class="mb-4">
+            <%= @activity_count %> Activities uploaded
+          </p>
+        <% end %>
+
+        <form id="upload-form" phx-submit="save" phx-change="validate">
+          <%= live_file_input @uploads.export %>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
