@@ -4,6 +4,8 @@ defmodule SqueezeWeb.Router do
   import Redirect
   alias SqueezeWeb.Plug
 
+  @allow_strava_upload Application.compile_env(:squeeze, :allow_strava_upload)
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -101,6 +103,10 @@ defmodule SqueezeWeb.Router do
       live "/settings/namer", SettingsLive, :namer
       live "/settings/personal-records", SettingsLive, :personal_records
       live "/settings/api", SettingsLive, :api
+
+      if @allow_strava_upload do
+        live "/strava-bulk-upload", StravaBulkUploadLive, :index
+      end
     end
   end
 
