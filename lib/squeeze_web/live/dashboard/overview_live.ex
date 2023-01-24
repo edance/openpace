@@ -42,24 +42,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   end
 
   @impl true
-  def handle_info(:start_history_loader, socket) do
-    send(self(), :load_recent_history)
-    {:noreply, assign(socket, loading: true)}
-  end
-
-  @impl true
-  def handle_info(:load_recent_history, socket) do
-    user = socket.assigns.current_user
-    credential = Enum.find(user.credentials, &(&1.provider == "strava"))
-    HistoryLoader.load_recent(user, credential)
-
-    socket = socket
-    |> redirect(to: Routes.overview_path(Endpoint, :index))
-
-    {:noreply, socket}
-  end
-
-  @impl true
   def handle_params(params, _uri, socket) do
     user = socket.assigns.current_user
     date = parse_date(user, params["date"])
@@ -71,6 +53,10 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       date: date
     )
     {:noreply, socket}
+  end
+
+  defp strava_integration?(%{current_user: user}) do
+    Enum.any?(user.credentials, &(&1.provider == "strava"))
   end
 
   defp personal_records(%{current_user: user}) do
