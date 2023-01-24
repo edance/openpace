@@ -9,6 +9,7 @@ defmodule Squeeze.FileParser.FitImport do
     {:ok, result} = Squeeze.FitDecoder.call(filename)
     data = Jason.decode!(result)
     start_at = start_at(data)
+    trackpoints = trackpoints(data)
 
     %{
       type: type(data),
@@ -18,8 +19,8 @@ defmodule Squeeze.FileParser.FitImport do
       start_at: start_at,
       start_at_local: Timex.shift(start_at, seconds: tz_offset_in_seconds(data)),
       elevation_gain: session_msg(data) |> Map.get("total_ascent") |> cast_float(),
-      polyline: nil, # need to make on my own
-      trackpoints: trackpoints(data),
+      polyline: polyline(trackpoints),
+      trackpoints: trackpoints,
       laps: laps(data)
     }
   end
@@ -31,7 +32,7 @@ defmodule Squeeze.FileParser.FitImport do
   defp type(data) do
     case Map.get(session_msg(data), "sport") do
       "running" -> "Run"
-      "cycling" -> "Bike"
+      "cycling" -> "Ride"
       "swimming" -> "Swim"
       sport -> sport
     end
@@ -49,6 +50,14 @@ defmodule Squeeze.FileParser.FitImport do
   defp start_at(data) do
     start_time = Map.get(session_msg(data), "start_time")
     Timex.parse!(start_time, "{ISO:Extended:Z}")
+  end
+
+  defp polyline(trackpoints) do
+    trackpoints
+    |> Enum.map(&(&1.coordinates))
+    |> Enum.reject(&is_nil/1)
+    |> Enum.map(&({&1.lon, &1.lat}))
+    |> Polyline.encode()
   end
 
   defp trackpoints(data) do
@@ -123,7 +132,7 @@ defmodule Squeeze.FileParser.FitImport do
         lon: record_msg["position_long"] / 11_930_465
       }
     else
-      %{}
+      nil
     end
   end
 end

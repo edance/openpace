@@ -22,6 +22,9 @@ npm-debug.log
 # Ignore docs that are generated on build.
 /priv/static/docs
 
+# Ignore uploads
+/priv/static/uploads
+
 # Files matching config/*.secret.exs pattern contain sensitive
 # data and you should not commit them into version control.
 #
@@ -47,6 +50,7 @@ npm-debug.log
 
 # NewRelic Logs
 /tmp/new_relic.log
+
 
 # Python cache
 /priv/python/__pycache__
