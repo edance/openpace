@@ -95,14 +95,18 @@
           </div>
           <div class="row">
             <div class="col">
-              <%= if @syncing do %>
-                <button class="btn btn-sm btn-outline-light" disabled>
-                  <%= gettext("Syncing...") %>
-                </button>
+              <%= if strava_integration?(assigns) do %>
+                <%= if @syncing do %>
+                  <button class="btn btn-sm btn-outline-light" disabled>
+                    <%= gettext("Syncing...") %>
+                  </button>
+                <% else %>
+                  <button class="btn btn-sm btn-outline-light" phx-click="sync">
+                    <%= gettext("Sync Activities") %>
+                  </button>
+                <% end %>
               <% else %>
-                <button class="btn btn-sm btn-outline-light" phx-click="sync">
-                  <%= gettext("Sync Activities") %>
-                </button>
+                <%= link gettext("Connect to Strava"), to: Routes.strava_integration_path(@socket, :request), class: "btn btn-sm btn-outline-light" %>
               <% end %>
             </div>
           </div>
