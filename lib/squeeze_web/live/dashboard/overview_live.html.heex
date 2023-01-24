@@ -67,6 +67,24 @@
       </div>
 
       <div class="col-xl-4 col-md-6">
+        <%= if !strava_integration?(assigns) do %>
+          <div class="card bg-gradient-orange">
+            <div class="card-body">
+              <h3 class="text-white">
+                <%= gettext("Sync Activities from Strava") %>
+              </h3>
+
+              <p class="text-sm text-white">
+                <%= gettext("In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us.") %>
+              </p>
+
+              <%= link to: Routes.strava_integration_path(@socket, :request), class: "" do %>
+                <img alt="Connect to Strava" class="btn-strava" src={Routes.static_path(@socket, "/images/btn_strava.svg")} />
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
         <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, id: "mini-calendar-card", current_user: @current_user, activity_map: @activity_map) %>
 
         <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
