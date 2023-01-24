@@ -51,7 +51,7 @@
             <% end %>
           <% end %>
 
-          <%= if @personal_record && is_nil(@race_goal) do %>
+          <%= if is_nil(@race_goal) do %>
             <%= live_redirect("Add a Race »", to: Routes.race_path(@socket, :new), class: "text-nowrap") %>
           <% end %>
 
