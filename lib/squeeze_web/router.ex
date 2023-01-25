@@ -65,10 +65,6 @@ defmodule SqueezeWeb.Router do
     get "/strava", StravaIntegrationController, :request
     get "/strava/callback", StravaIntegrationController, :callback
     post "/strava/callback", StravaIntegrationController, :callback
-
-    get "/:provider", IntegrationController, :request
-    get "/:provider/callback", IntegrationController, :callback
-    post "/:provider/callback", IntegrationController, :callback
   end
 
   scope "/auth", SqueezeWeb do
