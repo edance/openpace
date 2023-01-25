@@ -9,7 +9,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   alias Squeeze.Stats
   alias Squeeze.Strava.HistoryLoader
   alias Squeeze.TimeHelper
-  alias SqueezeWeb.Endpoint
 
   import Squeeze.Distances, only: [distance_name: 2]
 
@@ -27,7 +26,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       activity_summaries: summaries,
       challenges: Challenges.list_current_challenges(user),
       current_streak: Stats.current_activity_streak(user),
-      loading: false,
       race_goal: List.first(race_goals),
       race_goals: race_goals,
       ytd_run_stats: Stats.ytd_run_summary(user)
@@ -48,11 +46,27 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     dates = Date.range(Timex.beginning_of_week(date), Timex.end_of_week(date))
     activities = Dashboard.list_activities(user, dates)
 
+    if sync_history?(params, socket) do
+      credential = Enum.find(user.credentials, &(&1.provider == "strava"))
+      load_strava_history(user, credential)
+    end
+
     socket = assign(socket,
       activities: activities,
+      syncing: sync_history?(params, socket),
       date: date
     )
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info(:sync_finished, socket) do
+    socket = assign(socket, syncing: false)
+    {:noreply, socket}
+  end
+
+  defp sync_history?(params, socket) do
+    params["sync"] && strava_integration?(socket.assigns)
   end
 
   defp strava_integration?(%{current_user: user}) do
@@ -80,5 +94,13 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       {:ok, date} -> date
       {:error, _} -> parse_date(user, nil)
     end
+  end
+
+  defp load_strava_history(user, credential) do
+    view = self()
+    Task.start_link(fn ->
+      HistoryLoader.load_recent(user, credential)
+      send(view, :sync_finished)
+    end)
   end
 end
