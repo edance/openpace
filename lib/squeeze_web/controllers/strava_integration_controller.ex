@@ -103,7 +103,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
     if params["rename"] do
       redirect(conn, to: Routes.settings_path(conn, :namer))
     else
-      redirect(conn, to: Routes.overview_path(conn, :index))
+      redirect(conn, to: Routes.overview_path(conn, :index, sync: true))
     end
   end
 
