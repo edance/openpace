@@ -58,7 +58,7 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
       setup_successful_mocks()
 
       conn = post(conn, "/integration/strava/callback", code: "1234")
-      assert redirected_to(conn) == overview_path(conn, :index)
+      assert redirected_to(conn) == overview_path(conn, :index, sync: true)
     end
   end
 

@@ -86,9 +86,7 @@
               <%= if strava_integration?(assigns) do %>
                 <p class="mb-0"><%= gettext("Connected to %{provider}", provider: "Strava") %></p>
               <% else %>
-                <%= link to: Routes.integration_path(@socket, :request, "strava") do %>
-                  <%= gettext("Connect with %{provider}", provider: "Strava") %>
-                <% end %>
+                <%= gettext("Connect with %{provider}", provider: "Strava") %>
               <% end %>
               <p class="small text-muted">Automatically sync activities.</p>
             </div>
