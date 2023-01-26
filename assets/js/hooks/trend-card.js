@@ -10,40 +10,58 @@ function formatDate(date) {
 }
 
 export default {
+  calculateTotal() {
+    const filteredData = this.year
+      ? this.data.filter(
+          (d) =>
+            DateTime.fromISO(d.start_at_local).year === parseInt(this.year, 10)
+        )
+      : this.data;
+
+    if (this.field === "count") {
+      this.total = filteredData.length;
+    } else if (this.field === "duration") {
+      this.total = d3.sum(filteredData, (d) => d.duration) / 60 / 60;
+    } else {
+      this.total = d3.sum(filteredData, (d) => d[this.field]);
+    }
+  },
   mounted() {
-    const field = this.el.dataset["field"];
+    this.field = this.el.dataset["field"];
+    this.data = [];
+    this.year = null;
+
+    this.handleEvent("update-year", ({ year }) => {
+      this.year = year;
+
+      this.calculateTotal();
+
+      // Animate the sums of various activity related figures
+      this.animateAmount(this.total);
+    });
 
     this.handleEvent("summaries", ({ summaries }) => {
       // Filter for only runs
-      const data = summaries.filter((d) => d.type === "Run");
+      this.data = summaries.filter((d) => d.type === "Run");
 
-      // totals for each metric
-      let total;
-
-      if (field === "count") {
-        total = data.length;
-      } else if (field === "duration") {
-        total = d3.sum(data, (d) => d.duration) / 60 / 60;
-      } else {
-        total = d3.sum(data, (d) => d[field]);
-      }
+      this.calculateTotal();
 
       // Animate the sums of various activity related figures
-      this.animateAmount(total);
+      this.animateAmount(this.total);
 
       // Iterate once through all the run activities
-      const sumsByMonth = data.reduce((obj, d) => {
+      const sumsByMonth = this.data.reduce((obj, d) => {
         const date = DateTime.fromISO(d.start_at_local).startOf("month");
         const dateStr = date.toISODate();
 
         obj[dateStr] ||= 0;
 
-        if (field === "count") {
+        if (this.field === "count") {
           obj[dateStr] += 1;
-        } else if (field === "duration") {
+        } else if (this.field === "duration") {
           obj[dateStr] += d.duration / 60 / 60;
         } else {
-          obj[dateStr] += d[field];
+          obj[dateStr] += d[this.field];
         }
 
         return obj;
@@ -79,12 +97,18 @@ export default {
     text
       .transition()
       .tween("text", function () {
-        const selection = d3.select(this); // selection of node being transitioned
-        const interpolator = d3.interpolateNumber(0, amount); // d3 interpolator
+        // selection of node being transitioned
+        const selection = d3.select(this);
+
+        // start value prior to transition without commas
+        const start = parseInt(selection.text().replace(/,/g, ""), 10);
+
+        // From start to amount
+        const interpolator = d3.interpolateNumber(start, amount);
 
         return function (t) {
           selection.text(formatNumber(interpolator(t)));
-        }; // return value
+        };
       })
       .duration(1000);
   },

@@ -29,12 +29,14 @@ defmodule SqueezeWeb.TrendsLive.Index do
     socket
     |> assign(:page_title, "#{year} Trends")
     |> assign(:year, year)
+    |> push_event("update-year", %{year: year})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "All-Time Trends")
     |> assign(:year, nil)
+    |> push_event("update-year", %{year: nil})
   end
 
   @impl true
