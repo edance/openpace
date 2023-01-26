@@ -93,7 +93,7 @@ export default {
       type: 'bar',
       data: this.calcChartData(),
       options: {
-        aspectRatio: 4 / 2,
+        maintainAspectRatio: false,
         elements: {
           pointStyle: 'circle',
         },

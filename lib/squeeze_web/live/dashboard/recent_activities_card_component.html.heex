@@ -12,23 +12,23 @@
           <option value="duration">Time</option>
           <option value="elevation_gain">Elevation</option>
         </select>
-        <%= live_redirect(gettext("See all"), to: Routes.activity_index_path(@socket, :index), class: "btn btn-sm btn-primary") %>
+        <%= live_redirect(gettext("See all"), to: Routes.activity_index_path(@socket, :index), class: "btn btn-sm btn-primary d-none d-lg-inline-block") %>
       </div>
     </div>
   </div>
 
   <div class="card-body">
-    <canvas id="recent-activities-chart"
-            aria-label="Recent Activities Chart"
-            role="img"
-            class="w-100"
-            style="aspect-ratio: 2 / 1;"
-            phx-hook="RecentActivityChart"
-            data-summaries={Jason.encode!(@activity_summaries)}
-            data-imperial={"#{@current_user.user_prefs.imperial}"}
-            data-current-date={@date}
-            phx-update="ignore"
-    >
-    </canvas>
+    <div class="chart-container position-relative w-100" style="height: 30vh;">
+      <canvas id="recent-activities-chart"
+              aria-label="Recent Activities Chart"
+              role="img"
+              phx-hook="RecentActivityChart"
+              data-summaries={Jason.encode!(@activity_summaries)}
+              data-imperial={"#{@current_user.user_prefs.imperial}"}
+              data-current-date={@date}
+              phx-update="ignore"
+      >
+      </canvas>
+    </div>
   </div>
 </div>
