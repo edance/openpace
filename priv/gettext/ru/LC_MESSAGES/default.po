@@ -47,8 +47,12 @@ msgstr ""
 msgid "You have set your goals high! Let's build your training program."
 msgstr ""
 
-#: cta.html.eex:13 lib/squeeze_web/templates/home/_hero.html.eex:16
-#: lib/squeeze_web/templates/wizard/distance.html.eex:14
+#: lib/squeeze_web/live/challenge_live.html.heex:82
+#: lib/squeeze_web/live/challenge_live.html.heex:101
+#: lib/squeeze_web/live/challenge_live.html.heex:120
+#: lib/squeeze_web/live/challenge_live.html.heex:139
+#: cta.html.eex:17
+#, elixir-autogen
 msgid "Get Started"
 msgstr ""
 
@@ -60,30 +64,36 @@ msgstr ""
 msgid "Choose a distance"
 msgstr ""
 
-#: form.html.eex:25
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:33
+#, elixir-autogen
 msgid "City"
 msgstr ""
 
-#: form.html.eex:32
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:47
+#, elixir-autogen
 msgid "Country"
 msgstr ""
 
-#: lib/squeeze_web/templates/session/new.html.eex:51
+#: lib/squeeze_web/templates/session/new.html.eex:47
+#, elixir-autogen
 msgid "Create new account"
 msgstr ""
 
 #: lib/squeeze_web/templates/forgot_password/form.html.eex:9
 #: lib/squeeze_web/templates/home/form.html.eex:3
 #: lib/squeeze_web/templates/session/form.html.eex:9
-#: lib/squeeze_web/templates/user/form.html.eex:7
+#: lib/squeeze_web/templates/user/form.html.eex:14
+#, elixir-autogen
 msgid "Email"
 msgstr ""
 
-#: form.html.eex:8
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:16
+#, elixir-autogen
 msgid "First name"
 msgstr ""
 
-#: lib/squeeze_web/templates/session/new.html.eex:46
+#: lib/squeeze_web/templates/session/new.html.eex:42
+#, elixir-autogen
 msgid "Forgot password?"
 msgstr ""
 
@@ -95,11 +105,14 @@ msgstr ""
 msgid "Hello, %{name}!"
 msgstr ""
 
-#: form.html.eex:15
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:23
+#, elixir-autogen
 msgid "Last name"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/navbar.html.eex:18 nav.html.eex:14
+#: lib/squeeze_web/templates/home/_nav.html.eex:38
+#: navbar.html.eex:39
+#, elixir-autogen
 msgid "Log In"
 msgstr ""
 
@@ -108,13 +121,15 @@ msgid "My account"
 msgstr ""
 
 #: lib/squeeze_web/templates/modal/auth.html.eex:21
-#: lib/squeeze_web/templates/session/new.html.eex:38
+#: lib/squeeze_web/templates/session/new.html.eex:34
+#, elixir-autogen
 msgid "Or sign in with credentials"
 msgstr ""
 
-#: lib/squeeze_web/templates/reset_password/form.html.eex:4
+#: lib/squeeze_web/templates/reset_password/form.html.eex:9
 #: lib/squeeze_web/templates/session/form.html.eex:18
-#: lib/squeeze_web/templates/user/form.html.eex:11
+#: lib/squeeze_web/templates/user/form.html.eex:21
+#, elixir-autogen
 msgid "Password"
 msgstr ""
 
@@ -127,17 +142,21 @@ msgstr ""
 msgid "Race information"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/navbar.html.eex:15 nav.html.eex:11
-#: lib/squeeze_web/templates/user/form.html.eex:15
+#: lib/squeeze_web/templates/home/_nav.html.eex:35
+#: navbar.html.eex:36
+#: lib/squeeze_web/templates/user/form.html.eex:31
+#, elixir-autogen
 msgid "Sign Up"
 msgstr ""
 
 #: lib/squeeze_web/templates/modal/auth.html.eex:8
-#: lib/squeeze_web/templates/session/new.html.eex:25
+#: lib/squeeze_web/templates/user/new.html.eex:12
+#, elixir-autogen
 msgid "Sign in with"
 msgstr ""
 
 #: lib/squeeze_web/templates/menu/footer.html.eex:20
+#, elixir-autogen
 msgid "Source Code"
 msgstr ""
 
@@ -146,24 +165,29 @@ msgstr ""
 msgid "Terms and Conditions"
 msgstr ""
 
-#: form.html.eex:2
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:11
+#, elixir-autogen
 msgid "User information"
 msgstr ""
 
 #: lib/squeeze_web/templates/reset_password/show.html.eex:12
-#: lib/squeeze_web/templates/session/new.html.eex:11
+#, elixir-autogen
 msgid "Welcome Back!"
 msgstr ""
 
-#: dropdown.html.eex:17
+#: lib/squeeze_web/live/navbar_component.html.heex:41
+#: dropdown.html.eex:21
+#, elixir-autogen
 msgid "Logout"
 msgstr ""
 
-#: dropdown.html.eex:10 lib/squeeze_web/views/profile_view.ex:8
+#: dropdown.html.eex:10
+#: lib/squeeze_web/views/profile_view.ex:8
 msgid "Profile"
 msgstr ""
 
 #: lib/squeeze_web/templates/session/form.html.eex:23
+#, elixir-autogen
 msgid "Sign In"
 msgstr ""
 
@@ -171,7 +195,8 @@ msgstr ""
 msgid "This is your profile page. You can update your preferences and manage your account here."
 msgstr ""
 
-#: lib/squeeze_web/templates/calendar/day.html.eex:2
+#: lib/squeeze_web/live/calendar_live.html.heex:2
+#, elixir-autogen
 msgid "Today"
 msgstr ""
 
@@ -180,19 +205,23 @@ msgid "Welcome"
 msgstr ""
 
 #: lib/squeeze_web/templates/forgot_password/show.html.eex:12
+#, elixir-autogen
 msgid "Forgot Your Password?"
 msgstr ""
 
 #: lib/squeeze_web/templates/forgot_password/show.html.eex:15
+#, elixir-autogen
 msgid "No worries! We will help you reset it."
 msgstr ""
 
 #: lib/squeeze_web/templates/reset_password/show.html.eex:15
+#, elixir-autogen
 msgid "Please reset your password below."
 msgstr ""
 
 #: lib/squeeze_web/templates/forgot_password/form.html.eex:14
-#: lib/squeeze_web/templates/reset_password/form.html.eex:10
+#: lib/squeeze_web/templates/reset_password/form.html.eex:15
+#, elixir-autogen
 msgid "Reset Password"
 msgstr ""
 
@@ -210,7 +239,8 @@ msgstr ""
 
 #: lib/squeeze_web/templates/wizard/duration.html.eex:11
 #: lib/squeeze_web/templates/wizard/experience.html.eex:21
-#: lib/squeeze_web/templates/wizard/improvement.html.eex:10 record.html.eex:13
+#: lib/squeeze_web/templates/wizard/improvement.html.eex:10
+#: record.html.eex:13
 #: date.html.eex:11
 msgid "Next"
 msgstr ""
@@ -224,20 +254,23 @@ msgid "Skip"
 msgstr ""
 
 #: lib/squeeze_web/templates/home/_features.html.eex:28
+#, elixir-autogen
 msgid "Create a Training Plan"
 msgstr ""
 
-#: card.html.eex:6
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:8
+#, elixir-autogen
 msgid "Current Goal"
 msgstr ""
 
-#: lib/squeeze_web/templates/menu/sidebar.html.eex:47
-#: lib/squeeze_web/templates/overview/index.html.eex:4
-#: lib/squeeze_web/views/overview_view.ex:8
+#: lib/squeeze_web/live/navbar_component.html.heex:52
+#: lib/squeeze_web/templates/menu/navbar.html.eex:31
+#, elixir-autogen
 msgid "Dashboard"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:106
+#: lib/squeeze_web/live/activities/cards_component.html.heex:7
+#, elixir-autogen
 msgid "Distance"
 msgstr ""
 
@@ -245,24 +278,29 @@ msgstr ""
 msgid "Juice up your run"
 msgstr ""
 
-#: charges.html.eex:18 lib/squeeze_web/templates/overview/index.html.eex:103
+#: charges.html.eex:18
+#: lib/squeeze_web/templates/overview/index.html.eex:103
 #: lib/squeeze_web/templates/plan/index.html.eex:37
 msgid "Name"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:42
+#: lib/squeeze_web/live/trends_live/index.html.heex:178
+#, elixir-autogen
 msgid "Overview"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:65
+#: lib/squeeze_web/live/dashboard/mini_calendar_component.html.heex:6
+#, elixir-autogen
 msgid "Performance"
 msgstr ""
 
-#: card.html.eex:6
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:71
+#, elixir-autogen
 msgid "Race Date"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:90
+#: lib/squeeze_web/live/dashboard/recent_activities_card_component.html.heex:6
+#, elixir-autogen
 msgid "Recent Activities"
 msgstr ""
 
@@ -270,7 +308,8 @@ msgstr ""
 msgid "Rest"
 msgstr ""
 
-#: lib/squeeze_web/templates/overview/index.html.eex:94
+#: lib/squeeze_web/live/dashboard/recent_activities_card_component.html.heex:15
+#, elixir-autogen
 msgid "See all"
 msgstr ""
 
@@ -286,15 +325,18 @@ msgstr ""
 msgid "Today's Workout"
 msgstr ""
 
-#: lib/squeeze_web/views/user_view.ex:5
+#: lib/squeeze_web/views/user_view.ex:10
+#, elixir-autogen
 msgid "User"
 msgstr ""
 
-#: card.html.eex:6 lib/squeeze_web/templates/overview/index.html.eex:45
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:140
+#, elixir-autogen
 msgid "Weekly Distance"
 msgstr ""
 
-#: card.html.eex:26
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:38
+#, elixir-autogen
 msgid "faster than PR"
 msgstr ""
 
@@ -303,367 +345,742 @@ msgid "than the previous week"
 msgstr ""
 
 #: lib/squeeze_web/templates/home/form.html.eex:6
+#, elixir-autogen
 msgid "Request Access"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/payment_method/form.html.eex:25
-msgid "Add Card"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/payment_method/new.html.eex:22
-msgid "Add Card Information"
-msgstr ""
-
-#, elixir-format
-#: method.html.eex:14
-msgid "Add a Payment Method"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:19
-#: lib/squeeze_web/templates/billing/_status.html.eex:39
-msgid "Add your payment method."
-msgstr ""
-
-#, elixir-format
-#: charges.html.eex:21
-msgid "Amount"
-msgstr ""
-
-#, elixir-format
 #: lib/squeeze_web/templates/home/_activity.html.eex:14
+#, elixir-autogen, elixir-format
 msgid "Analyze Your Effort"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:37
-msgid "Are you sure you want to cancel?"
-msgstr ""
-
-#, elixir-format
 #: cta.html.eex:10
+#, elixir-autogen, elixir-format
 msgid "Because if you do, we can help you get there! Try today for free and accomplish your goals."
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/billing/index.html.eex:22
-msgid "Billing Information"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/home/_dashboard.html.eex:17
-msgid "Build a training plan that is customized to you whether based on distance, duration, or effort. Measure your performance and see your progress all in one place."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/menu/sidebar.html.eex:53
+#: lib/squeeze_web/live/navbar_component.html.heex:68
+#: lib/squeeze_web/templates/menu/navbar.html.eex:43
+#, elixir-autogen, elixir-format
 msgid "Calendar"
 msgstr ""
 
-#, elixir-format
 #: lib/squeeze_web/templates/home/_calendar.html.eex:6
+#, elixir-autogen, elixir-format
 msgid "Calendar Preview"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:36
-msgid "Cancel or take a break?"
-msgstr ""
-
-#, elixir-format
 #: lib/squeeze_web/templates/home/_activity.html.eex:17
+#, elixir-autogen, elixir-format
 msgid "Check out your route, distance, duration, and fitness level toward your goal on one screen."
 msgstr ""
 
-#, elixir-format
 #: lib/squeeze_web/templates/home/_features.html.eex:31
+#, elixir-autogen, elixir-format
 msgid "Choose from one of our custom-built training plans or build your own. Add everything from runs, to cross-training, and anything in between."
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/home/_dashboard.html.eex:14
-msgid "Command Center for Your Race"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/profile/_integrations.html.eex:7
-#: lib/squeeze_web/templates/profile/_integrations.html.eex:17
-msgid "Connect to %{provider}"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/profile/_integrations.html.eex:4
-#: lib/squeeze_web/templates/profile/_integrations.html.eex:14
+#: lib/squeeze_web/live/settings_live.html.heex:87
+#, elixir-autogen, elixir-format
 msgid "Connected to %{provider}"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/plan/index.html.eex:27
-msgid "Create New Plan"
-msgstr ""
-
-#, elixir-format
 #: source.html.eex:39
+#, elixir-autogen, elixir-format
 msgid "Curious what features are still in the lab and coming around the corner? Check out our public roadmap for updates."
 msgstr ""
 
-#, elixir-format, fuzzy
 #: lib/squeeze_web/templates/home/_activity.html.eex:5
-#: lib/squeeze_web/templates/home/_dashboard.html.eex:6
+#: lib/squeeze_web/templates/home/_dashboard.html.eex:5
+#, elixir-autogen, elixir-format, fuzzy
 msgid "Dashboard Preview"
 msgstr ""
 
-#, elixir-format
-#: charges.html.eex:15
-msgid "Date"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/plan/index.html.eex:56
-msgid "Delete"
-msgstr ""
-
-#, elixir-format
 #: cta.html.eex:6
+#, elixir-autogen, elixir-format
 msgid "Do you want to"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:33
-#: lib/squeeze_web/templates/plan/edit.html.eex:16
+#: lib/squeeze_web/live/calendar_live.html.heex:25
+#, elixir-autogen, elixir-format
 msgid "Fri"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/profile/_header.html.eex:13
-msgid "Hello!"
-msgstr ""
-
-#, elixir-format
-#: nav.html.eex:8
-msgid "Home"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/home/_hero.html.eex:13
-msgid "If you have struggled to set a new personal record, you can track your training progress toward your goal so that you can have a breakthrough race day."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/profile/edit.html.eex:33
-msgid "Integrations"
-msgstr ""
-
-#, elixir-format
-#: source.html.eex:22
-msgid "Many runners spend their time building and engineering when they aren't running. Want to add features that we don't have? Add it. See a bug? Fix it."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/index.html.eex:4
-msgid "Membership Details"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:29
-#: lib/squeeze_web/templates/plan/edit.html.eex:12
+#: lib/squeeze_web/live/calendar_live.html.heex:21
+#, elixir-autogen, elixir-format
 msgid "Mon"
 msgstr ""
 
-#, elixir-format
-#: source.html.eex:19
+#: source.html.eex:13
+#, elixir-autogen, elixir-format
 msgid "Open Source Platform"
 msgstr ""
 
-#, elixir-format
-#: method.html.eex:2 lib/squeeze_web/templates/payment_method/new.html.eex:4
-msgid "Payment Method"
-msgstr ""
-
-#, elixir-format
 #: lib/squeeze_web/templates/home/_calendar.html.eex:14
+#, elixir-autogen, elixir-format
 msgid "Plan Your Run"
 msgstr ""
 
-#, elixir-format
 #: source.html.eex:36
+#, elixir-autogen, elixir-format
 msgid "Public Roadmap"
 msgstr ""
 
-#, elixir-format
-#: charges.html.eex:2
-msgid "Recent Charges"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/overview/index.html.eex:68
-msgid "Recent Runs"
-msgstr ""
-
-#, elixir-format
 #: cta.html.eex:7
+#, elixir-autogen, elixir-format
 msgid "Run Your Best Race?"
 msgstr ""
 
-#, elixir-format
-#: source.html.eex:7
-msgid "Runner Finishing Race"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:34
-#: lib/squeeze_web/templates/plan/edit.html.eex:17
+#: lib/squeeze_web/live/calendar_live.html.heex:26
+#, elixir-autogen, elixir-format
 msgid "Sat"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/activity/form.html.eex:47
-msgid "Save"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/home/_dashboard.html.eex:29
-msgid "See Upcoming Workouts"
-msgstr ""
-
-#, elixir-format
 #: lib/squeeze_web/templates/home/_features.html.eex:13
+#, elixir-autogen, elixir-format
 msgid "Set Your Goal"
 msgstr ""
 
-#, elixir-format
 #: lib/squeeze_web/templates/home/_features.html.eex:16
+#, elixir-autogen, elixir-format
 msgid "Set your goal based on your experience and your current personal record. We will help you achieve it."
 msgstr ""
 
-#, elixir-format
-#: charges.html.eex:24
-msgid "Status"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:2
-msgid "Subscription Status"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:35
-#: lib/squeeze_web/templates/plan/edit.html.eex:18
+#: lib/squeeze_web/live/calendar_live.html.heex:27
+#, elixir-autogen, elixir-format
 msgid "Sun"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:32
-#: lib/squeeze_web/templates/plan/edit.html.eex:15
+#: lib/squeeze_web/live/calendar_live.html.heex:24
+#, elixir-autogen, elixir-format
 msgid "Thu"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/home/_dashboard.html.eex:43
-msgid "Track Weekly Milage"
-msgstr ""
-
-#, elixir-format
 #: lib/squeeze_web/templates/home/_features.html.eex:43
+#, elixir-autogen, elixir-format
 msgid "Track Your Progress"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/home/_hero.html.eex:10
-msgid "Train. Race. Improve."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/menu/sidebar.html.eex:59
-#: lib/squeeze_web/templates/plan/index.html.eex:23
-msgid "Training Plans"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:30
-#: lib/squeeze_web/templates/plan/edit.html.eex:13
+#: lib/squeeze_web/live/calendar_live.html.heex:22
+#, elixir-autogen, elixir-format
 msgid "Tue"
 msgstr ""
 
-#, elixir-format
-#: method.html.eex:11
-msgid "Update Payment Method"
-msgstr ""
-
-#, elixir-format
 #: lib/squeeze_web/templates/home/_features.html.eex:46
+#, elixir-autogen, elixir-format
 msgid "Use our dashboards to see how each workout is getting you closer to your goal as you get closer to race date."
 msgstr ""
 
-#, elixir-format
 #: lib/squeeze_web/templates/home/_calendar.html.eex:17
+#, elixir-autogen, elixir-format
 msgid "View your daily and monthly progress and upcoming workouts with the calendar workout summary."
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/home/_dashboard.html.eex:57
-msgid "Warning for Overtraining or Injury"
-msgstr ""
-
-#, elixir-format
-#: method.html.eex:13
-msgid "We currently do not have a payment method on file."
-msgstr ""
-
-#, elixir-format
-#: warning.html.eex:2
-msgid "We use cookies to help make %{name} better. By visiting this site, you agree to our"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/calendar/month.html.eex:31
-#: lib/squeeze_web/templates/plan/edit.html.eex:14
+#: lib/squeeze_web/live/calendar_live.html.heex:23
+#, elixir-autogen, elixir-format
 msgid "Wed"
 msgstr ""
 
-#, elixir-format
-#: lib/squeeze_web/templates/plan/index.html.eex:40
-msgid "Weeks"
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:16
-msgid "You are currently on a free trial which ends %{date}."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:31
-msgid "You are currently on the free version."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:29
-msgid "You are currently on the monthly plan at %{price} per month."
-msgstr ""
-
-#, elixir-format
-#: charges.html.eex:7
-msgid "You have no recent charges."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/templates/billing/_status.html.eex:8
-msgid "Your account is currently canceled."
-msgstr ""
-
-#, elixir-format
-#: lib/squeeze_web/controllers/profile_controller.ex:21
+#: lib/squeeze_web/live/settings_live.ex:33
+#, elixir-autogen, elixir-format
 msgid "Your preferences have been updated"
 msgstr ""
 
-#, elixir-format
-#: warning.html.eex:3
-msgid "cookie policy."
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:129
+#, elixir-autogen, elixir-format
+msgid "%{streak_count} day streak"
 msgstr ""
 
-#, elixir-format
-#: card.html.eex:32
-msgid "vs the last week"
+#: lib/squeeze_web/live/settings/api_config_component.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "API Settings"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:47
+#, elixir-autogen, elixir-format
+msgid "Account Info"
+msgstr ""
+
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:5
+#: lib/squeeze_web/live/settings_live.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Account Settings"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:280
+#, elixir-autogen, elixir-format
+msgid "Activities"
+msgstr ""
+
+#: lib/squeeze_web/live/settings/personal_records_form_component.html.heex:30
+#, elixir-autogen, elixir-format
+msgid "Add"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/overview_live.html.heex:29
+#, elixir-autogen, elixir-format
+msgid "Add a PR here."
+msgstr ""
+
+#: lib/squeeze_web/live/race_live/upcoming_races_card.html.heex:11
+#, elixir-autogen, elixir-format
+msgid "Add a Race"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:19
+#: lib/squeeze_web/live/trends_live/index.html.heex:27
+#, elixir-autogen, elixir-format
+msgid "All Time"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:9
+#, elixir-autogen, elixir-format
+msgid "Backcountry Ski"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:12
+#, elixir-autogen, elixir-format
+msgid "Bike"
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:34
+#: lib/squeeze_web/live/settings_live.html.heex:17
+#: dropdown.html.eex:14
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Billing"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:10
+#, elixir-autogen, elixir-format
+msgid "Canoeing"
+msgstr ""
+
+#: lib/squeeze_web/live/challenges/podium_card_component.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "Challenge Details"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:13
+#: lib/squeeze_web/live/dashboard/challenges_card_component.html.heex:6
+#: lib/squeeze_web/live/navbar_component.html.heex:56
+#: lib/squeeze_web/templates/menu/navbar.html.eex:37
+#, elixir-autogen, elixir-format
+msgid "Challenges"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:115
+#, elixir-autogen, elixir-format
+msgid "Climbing Challenge"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:107
+#, elixir-autogen, elixir-format
+msgid "Connect to Strava"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:89
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Connect with %{provider}"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:76
+#, elixir-autogen, elixir-format
+msgid "Connections"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:11
+#, elixir-autogen, elixir-format
+msgid "Crossfit"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:77
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Distance Challenge"
+msgstr ""
+
+#: lib/squeeze_web/live/activities/cards_component.html.heex:26
+#, elixir-autogen, elixir-format
+msgid "Duration"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/overview_live.html.heex:22
+#: lib/squeeze_web/live/settings/personal_records_form_component.html.heex:30
+#, elixir-autogen, elixir-format
+msgid "Edit"
+msgstr ""
+
+#: lib/squeeze_web/live/activities/cards_component.html.heex:64
+#: lib/squeeze_web/live/trends_live/index.html.heex:122
+#, elixir-autogen, elixir-format
+msgid "Elevation Gain"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:13
+#, elixir-autogen, elixir-format
+msgid "Elliptical"
+msgstr ""
+
+#: lib/squeeze_web/templates/race/show.html.eex:33
+#, elixir-autogen, elixir-format
+msgid "Email Address"
+msgstr ""
+
+#: lib/squeeze_web/live/race_live/show.html.heex:174
+#, elixir-autogen, elixir-format
+msgid "Equivalent Performances"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:13
+#: lib/squeeze_web/live/race_live/show.html.heex:84
+#, elixir-autogen, elixir-format
+msgid "Finish"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/form.html.eex:4
+#, elixir-autogen, elixir-format, fuzzy
+msgid "First Name"
+msgstr ""
+
+#: lib/squeeze_web/controllers/forgot_password_controller.ex:8
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Forgot Password"
+msgstr ""
+
+#: faq.html.eex:6
+#, elixir-autogen, elixir-format
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:14
+#, elixir-autogen, elixir-format
+msgid "Golf"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:15
+#, elixir-autogen, elixir-format
+msgid "Handcycle"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:16
+#, elixir-autogen, elixir-format
+msgid "Hike"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:17
+#, elixir-autogen, elixir-format
+msgid "Ice Skate"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/overview_live.html.heex:78
+#, elixir-autogen, elixir-format
+msgid "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:18
+#, elixir-autogen, elixir-format
+msgid "Inline Skate"
+msgstr ""
+
+#: lib/squeeze_web/templates/challenge_share/show.html.eex:31
+#, elixir-autogen, elixir-format
+msgid "Join Challenge »"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:19
+#, elixir-autogen, elixir-format
+msgid "Kayaking"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:20
+#, elixir-autogen, elixir-format
+msgid "Kitesurf"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/form.html.eex:8
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Last Name"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:104
+#, elixir-autogen, elixir-format
+msgid "Latest Activity"
+msgstr ""
+
+#: lib/squeeze_web/live/race_live/show.html.heex:64
+#: lib/squeeze_web/live/race_live/show.html.heex:112
+#, elixir-autogen, elixir-format
+msgid "N/A"
+msgstr ""
+
+#: lib/squeeze_web/live/settings/namer_card_component.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Namer Settings"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:112
+#, elixir-autogen, elixir-format
+msgid "None"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:21
+#, elixir-autogen, elixir-format
+msgid "Nordic Ski"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:153
+#, elixir-autogen, elixir-format
+msgid "Number of Runs"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/new.html.eex:30
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Or sign up with credentials"
+msgstr ""
+
+#: lib/squeeze_web/live/activities/cards_component.html.heex:45
+#, elixir-autogen, elixir-format
+msgid "Pace"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/overview_live.html.heex:17
+#: lib/squeeze_web/live/settings/personal_records_form_component.html.heex:5
+#: lib/squeeze_web/live/settings_live.html.heex:11
+#, elixir-autogen, elixir-format
+msgid "Personal Records"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:43
+#, elixir-autogen, elixir-format
+msgid "Podium Finishes"
+msgstr ""
+
+#: lib/squeeze_web/live/race_live/show.html.heex:80
+#, elixir-autogen, elixir-format
+msgid "Race Goal"
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:69
+#, elixir-autogen, elixir-format
+msgid "Races"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:9
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Recent Challenges"
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:29
+#: lib/squeeze_web/live/settings_live.html.heex:14
+#: dropdown.html.eex:9
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Rename Activities"
+msgstr ""
+
+#: lib/squeeze_web/controllers/home_controller.ex:16
+#, elixir-autogen, elixir-format
+msgid "Rename your Strava Activities Automatically"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:22
+#: lib/squeeze/namer/activity_type_formatter.ex:37
+#, elixir-autogen, elixir-format
+msgid "Ride"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:23
+#, elixir-autogen, elixir-format
+msgid "Rock Climbing"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:24
+#, elixir-autogen, elixir-format
+msgid "Roller Ski"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:25
+#, elixir-autogen, elixir-format
+msgid "Rowing"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:26
+#: lib/squeeze/namer/activity_type_formatter.ex:38
+#, elixir-autogen, elixir-format
+msgid "Run"
+msgstr ""
+
+#: lib/squeeze_web/views/page_view.ex:5
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Run Your Best Race Ever"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:283
+#, elixir-autogen, elixir-format
+msgid "Running Bubbles"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:7
+#, elixir-autogen, elixir-format
+msgid "Running Trends"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:33
+#, elixir-autogen, elixir-format
+msgid "SUP"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:27
+#, elixir-autogen, elixir-format
+msgid "Sail"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/challenges_card_component.html.heex:11
+#, elixir-autogen, elixir-format, fuzzy
+msgid "See All"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:134
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Segment Challenge"
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:24
+#: dropdown.html.eex:4
+#, elixir-autogen, elixir-format
+msgid "Settings"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:28
+#, elixir-autogen, elixir-format
+msgid "Skateboard"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:8
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Ski"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:29
+#, elixir-autogen, elixir-format
+msgid "Snowboard"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:30
+#, elixir-autogen, elixir-format
+msgid "Snowshoe"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:31
+#, elixir-autogen, elixir-format
+msgid "Soccer"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:32
+#, elixir-autogen, elixir-format
+msgid "Stair Stepper"
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:75
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Start Trial"
+msgstr ""
+
+#: lib/squeeze_web/live/settings/user_form_component.html.heex:40
+#, elixir-autogen, elixir-format
+msgid "State/Region"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:17
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Stats"
+msgstr ""
+
+#: lib/squeeze_web/templates/race/show.html.eex:37
+#, elixir-autogen, elixir-format
+msgid "Submit"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:67
+#, elixir-autogen, elixir-format
+msgid "Subscribe"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:34
+#, elixir-autogen, elixir-format
+msgid "Surfing"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:35
+#, elixir-autogen, elixir-format
+msgid "Swim"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:103
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Sync Activities"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/overview_live.html.heex:74
+#, elixir-autogen, elixir-format
+msgid "Sync Activities from Strava"
+msgstr ""
+
+#: lib/squeeze_web/live/settings_live.html.heex:99
+#, elixir-autogen, elixir-format
+msgid "Syncing..."
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:18
+#, elixir-autogen, elixir-format
+msgid "TBD"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/mini_calendar_component.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "This Month"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:96
+#, elixir-autogen, elixir-format
+msgid "Time Challenge"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:64
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Total Distance"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:95
+#, elixir-autogen, elixir-format
+msgid "Total Duration"
+msgstr ""
+
+#: lib/squeeze_web/templates/home/_hero.html.eex:9
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Train. Challenge. Improve."
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:65
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Training"
+msgstr ""
+
+#: lib/squeeze_web/live/race_live/show.html.heex:128
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Training Paces"
+msgstr ""
+
+#: lib/squeeze_web/live/navbar_component.html.heex:60
+#: lib/squeeze_web/live/trends_live/index.html.heex:13
+#, elixir-autogen, elixir-format
+msgid "Trends"
+msgstr ""
+
+#: lib/squeeze_web/live/challenge_live.html.heex:39
+#, elixir-autogen, elixir-format
+msgid "Trophy Case"
+msgstr ""
+
+#: lib/squeeze_web/live/race_live/upcoming_races_card.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "Upcoming Races"
+msgstr ""
+
+#: lib/squeeze_web/live/settings/api_config_component.html.heex:25
+#, elixir-autogen, elixir-format
+msgid "Use this in observable to play with charts or in a livebook notebook for machine learning."
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:36
+#, elixir-autogen, elixir-format
+msgid "Velomobile"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:39
+#, elixir-autogen, elixir-format
+msgid "Walk"
+msgstr ""
+
+#: lib/squeeze_web/templates/user/form.html.eex:18
+#, elixir-autogen, elixir-format
+msgid "Website"
+msgstr ""
+
+#: lib/squeeze_web/live/calendar_live.html.heex:20
+#, elixir-autogen, elixir-format, fuzzy
+msgid "Week"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:40
+#, elixir-autogen, elixir-format
+msgid "Weight Training"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:41
+#, elixir-autogen, elixir-format
+msgid "Wheelchair"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:42
+#, elixir-autogen, elixir-format
+msgid "Windsurf"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:43
+#, elixir-autogen, elixir-format
+msgid "Workout"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/profile_card_component.html.heex:22
+#, elixir-autogen, elixir-format
+msgid "Year Running Totals"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:181
+#, elixir-autogen, elixir-format
+msgid "Yearly Summary"
+msgstr ""
+
+#: lib/squeeze/namer/activity_type_formatter.ex:44
+#, elixir-autogen, elixir-format
+msgid "Yoga"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:129
+#, elixir-autogen, elixir-format
+msgid "feet"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:101
+#, elixir-autogen, elixir-format
+msgid "hours"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:73
+#, elixir-autogen, elixir-format
+msgid "km"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:156
+#, elixir-autogen, elixir-format
+msgid "last week"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:131
+#, elixir-autogen, elixir-format
+msgid "meters"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:71
+#, elixir-autogen, elixir-format
+msgid "miles"
+msgstr ""
+
+#: lib/squeeze_web/live/trends_live/index.html.heex:159
+#, elixir-autogen, elixir-format
+msgid "runs"
+msgstr ""
+
+#: lib/squeeze_web/live/dashboard/cards_component.html.heex:46
+#, elixir-autogen, elixir-format, fuzzy
+msgid "slower than PR"
 msgstr ""
