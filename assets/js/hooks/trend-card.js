@@ -163,10 +163,12 @@ export default {
       .y1((d) => y(d.amount))
       .y0((d) => y(0));
 
+    const gradId = `${this.field}-grad`;
+
     const gradient = chart
       .append("defs")
       .append("linearGradient")
-      .attr("id", "mygrad") // defining an id
+      .attr("id", gradId) // defining an id
       .attr("x1", "0%")
       .attr("x2", "0%")
       .attr("y1", "0%")
@@ -188,7 +190,7 @@ export default {
       .append("path")
       .datum(data)
       .attr("d", area)
-      .style("fill", "url(#mygrad)"); // assigning to defined id
+      .style("fill", `url(#${gradId})`); // assigning to defined id
     /* END OF GRADIENT AREA CHART */
 
     /* LINE CHART */
