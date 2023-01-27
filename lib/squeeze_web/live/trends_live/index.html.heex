@@ -49,7 +49,7 @@
 </div>
 
 <div class="container container-dashboard mt--6">
-  <div class="row" id="trend-cards">
+  <div class="row">
     <div class="col-xl-3 col-md-6">
       <div class="card bg-gradient-primary border-0"
            id="distance-card"
@@ -66,7 +66,7 @@
               <span class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm">
+              <span class="mb-0 text-sm amount-label">
                 <%= if @current_user.user_prefs.imperial do %>
                   <%= gettext("miles") %>
                 <% else %>
@@ -97,7 +97,7 @@
               <span class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm">
+              <span class="mb-0 text-sm amount-label">
                 <%= gettext("hours") %>
               </span>
               <div class="mini-chart position-relative" id="total-duration-chart" style="aspect-ratio: 4 / 1;">
@@ -124,7 +124,7 @@
               <span class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm">
+              <span class="mb-0 text-sm amount-label">
                 <%= if @current_user.user_prefs.imperial do %>
                   <%= gettext("feet") %>
                 <% else %>
@@ -155,7 +155,7 @@
               <span id="run-count" class="h2 font-weight-bold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm">
+              <span class="mb-0 text-sm amount-label">
                 <%= gettext("runs") %>
               </span>
 

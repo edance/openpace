@@ -30,7 +30,6 @@ export default {
     this.field = this.el.dataset["field"];
     this.data = [];
     this.year = null;
-
     this.handleEvent("update-year", ({ year }) => {
       this.year = year;
 
@@ -115,6 +114,7 @@ export default {
 
   lineChart(data) {
     const el = this.el;
+    const label = this.el.querySelector(".amount-label").innerText;
     const container = d3.select(this.el.querySelector(".mini-chart"));
     const margin = { top: 30, right: 0, left: 0, bottom: 0 };
 
@@ -256,7 +256,7 @@ export default {
         .attr("opacity", "1");
 
       tooltipDate.text(formatDate(nearestDate.toJSDate()));
-      tooltipValue.text(formatNumber(value));
+      tooltipValue.text(`${formatNumber(value)} ${label}`);
 
       const tooltipWidth = tooltip.node().clientWidth;
       const tooltipHeight = tooltip.node().clientHeight;
