@@ -47,3 +47,6 @@ npm-debug.log
 
 # NewRelic Logs
 /tmp/new_relic.log
+
+# Python cache
+/priv/python/__pycache__

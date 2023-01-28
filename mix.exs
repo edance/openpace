@@ -88,6 +88,8 @@ defmodule Squeeze.Mixfile do
       {:new_relic_agent, "~> 1.0"},
       {:redirect, "~> 0.4.0"},
       {:csv, "~> 3.0"},
+      {:erlport, "~> 0.10.1"},
+      {:poolboy, "~> 1.5"},
       {:ex_doc, "~> 0.27", runtime: false},
       {:sweet_xml, "~> 0.3", only: :dev},
       {:distance, "~> 0.2.2", only: :dev},
