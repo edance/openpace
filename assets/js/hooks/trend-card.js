@@ -2,6 +2,8 @@ import * as d3 from "d3";
 import { DateTime } from "luxon";
 import { formatNumber } from "../utils";
 
+const ANIMATION_DURATION = 1000;
+
 function formatDate(date) {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -10,6 +12,27 @@ function formatDate(date) {
 }
 
 export default {
+  setXDomain() {
+    if (this.year) {
+      const d1 = DateTime.utc()
+        .set({ year: this.year })
+        .startOf("year")
+        .toJSDate();
+      const d2 = DateTime.utc()
+        .set({ year: this.year })
+        .endOf("year")
+        .toJSDate();
+
+      this.x.domain([d1, d2]);
+    } else {
+      this.x.domain(d3.extent(this.dataByMonth, (d) => d.date));
+    }
+  },
+
+  setYDomain() {
+    this.y.domain([0, d3.max(this.dataByMonth, (d) => d.amount)]);
+  },
+
   calculateTotal() {
     const filteredData = this.year
       ? this.data.filter(
@@ -26,6 +49,29 @@ export default {
       this.total = d3.sum(filteredData, (d) => d[this.field]);
     }
   },
+  updateChart() {
+    if (!this.chart) {
+      return;
+    }
+
+    this.setXDomain();
+    this.setYDomain();
+
+    // Update line position
+    this.chart
+      .select(".line")
+      .transition()
+      .duration(ANIMATION_DURATION)
+      .attr("d", this.line);
+
+    // Update line gradient
+    this.chart
+      .select(".line-gradient")
+      .transition()
+      .duration(ANIMATION_DURATION)
+      .attr("d", this.area);
+  },
+
   mounted() {
     this.field = this.el.dataset["field"];
     this.data = [];
@@ -33,20 +79,18 @@ export default {
     this.handleEvent("update-year", ({ year }) => {
       this.year = year;
 
-      this.calculateTotal();
+      this.updateChart();
 
       // Animate the sums of various activity related figures
-      this.animateAmount(this.total);
+      this.animateAmount();
     });
 
     this.handleEvent("summaries", ({ summaries }) => {
       // Filter for only runs
       this.data = summaries.filter((d) => d.type === "Run");
 
-      this.calculateTotal();
-
       // Animate the sums of various activity related figures
-      this.animateAmount(this.total);
+      this.animateAmount();
 
       // Iterate once through all the run activities
       const sumsByMonth = this.data.reduce((obj, d) => {
@@ -66,106 +110,62 @@ export default {
         return obj;
       }, {});
 
-      const dataByMonth = Object.keys(sumsByMonth).map((key) => {
+      this.dataByMonth = Object.keys(sumsByMonth).map((key) => {
         return {
           amount: sumsByMonth[key],
           date: new Date(key),
         };
       });
 
-      this.chart = this.lineChart(dataByMonth);
+      const { setTooltipPosition, mouseOut, mouseOver } = this.createChart();
 
       document.addEventListener("showTooltip", (e) => {
         const nearestDate = e.detail;
-        this.chart.setTooltipPosition(nearestDate);
+        setTooltipPosition(nearestDate);
       });
 
       document.addEventListener("graphMouseOut", () => {
-        this.chart.mouseOut();
+        mouseOut();
       });
 
       document.addEventListener("graphMouseOver", () => {
-        this.chart.mouseOver();
+        mouseOver();
       });
     });
   },
 
-  animateAmount(amount) {
-    const text = d3.select(this.el.querySelector(".total-amount"));
+  animateAmount() {
+    const selection = d3.select(this.el.querySelector(".total-amount"));
 
-    text
+    this.calculateTotal();
+
+    selection
       .transition()
-      .tween("text", function () {
-        // selection of node being transitioned
-        const selection = d3.select(this);
-
+      .tween("text", () => {
         // start value prior to transition without commas
         const start = parseInt(selection.text().replace(/,/g, ""), 10);
 
         // From start to amount
-        const interpolator = d3.interpolateNumber(start, amount);
+        const interpolator = d3.interpolateNumber(start, this.total);
 
         return function (t) {
           selection.text(formatNumber(interpolator(t)));
         };
       })
-      .duration(1000);
+      .duration(ANIMATION_DURATION);
   },
 
-  lineChart(data) {
-    const el = this.el;
-    const label = this.el.querySelector(".amount-label").innerText;
-    const container = d3.select(this.el.querySelector(".mini-chart"));
-    const margin = { top: 30, right: 0, left: 0, bottom: 0 };
-
-    // Get the height and width from the container element
-    const width = container.node().clientWidth;
-    const height = container.node().clientHeight;
-
-    // Inner section
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
-
-    const dataMap = data.reduce((obj, d) => {
-      const date = DateTime.fromJSDate(d.date, { zone: "utc" });
-      const dateStr = date.toISODate();
-      obj[dateStr] = d.amount;
-      return obj;
-    }, {});
-
-    const x = d3
-      .scaleTime()
-      .domain(d3.extent(data, (d) => d.date))
-      .range([0 + margin.left, width - margin.right]);
-
-    const y = d3
-      .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.amount)])
-      .nice()
-      .range([height - margin.top, 0 + margin.bottom]);
-
-    const svg = container
-      .append("svg")
-      .attr("viewBox", [0, 0, width, height])
-      .on("mousemove", focusMouseMove)
-      .on("mouseover", focusMouseOver)
-      .on("mouseout", focusMouseOut);
-
-    const chart = svg
-      .append("g")
-      .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-    /* GRADIENT AREA CHART */
-    const area = d3
+  createGradient() {
+    this.area = d3
       .area()
-      .curve(d3.curveBasis)
-      .x((d) => x(d.date))
-      .y1((d) => y(d.amount))
-      .y0((d) => y(0));
+      .curve(d3.curveLinear)
+      .x((d) => this.x(d.date))
+      .y1((d) => this.y(d.amount))
+      .y0((d) => this.y(0));
 
     const gradId = `${this.field}-grad`;
 
-    const gradient = chart
+    const gradient = this.chart
       .append("defs")
       .append("linearGradient")
       .attr("id", gradId) // defining an id
@@ -186,30 +186,70 @@ export default {
       .style("stop-color", "white")
       .style("stop-opacity", 0.0);
 
-    chart
+    this.chart
       .append("path")
-      .datum(data)
-      .attr("d", area)
+      .datum(this.dataByMonth)
+      .attr("class", "line-gradient")
+      .attr("d", this.area)
       .style("fill", `url(#${gradId})`); // assigning to defined id
-    /* END OF GRADIENT AREA CHART */
+  },
 
-    /* LINE CHART */
-    const line = d3
+  createLine() {
+    this.line = d3
       .line()
-      .curve(d3.curveBasis)
-      .x((d) => x(d.date))
-      .y((d) => y(d.amount));
+      .curve(d3.curveLinear)
+      .x((d) => this.x(d.date))
+      .y((d) => this.y(d.amount));
 
-    chart
+    this.chart
       .append("path")
-      .datum(data)
+      .datum(this.dataByMonth)
+      .attr("class", "line")
       .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", 1.5)
-      .attr("d", line);
-    /* END OF LINE CHART */
+      .attr("d", this.line);
+  },
 
-    const mouseLine = chart
+  createChart() {
+    const el = this.el;
+    const label = this.el.querySelector(".amount-label").innerText;
+    const container = d3.select(this.el.querySelector(".mini-chart"));
+    const margin = { top: 30, right: 0, left: 0, bottom: 0 };
+
+    // Get the height and width from the container element
+    const width = container.node().clientWidth;
+    const height = container.node().clientHeight;
+
+    // Inner section
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const dataMap = this.dataByMonth.reduce((obj, d) => {
+      const date = DateTime.fromJSDate(d.date, { zone: "utc" });
+      const dateStr = date.toISODate();
+      obj[dateStr] = d.amount;
+      return obj;
+    }, {});
+
+    // create X scale and set domain
+    this.x = d3.scaleTime().range([0 + margin.left, width - margin.right]);
+    this.setXDomain();
+
+    // create Y scale and set domain
+    this.y = d3.scaleLinear().range([height - margin.top, 0 + margin.bottom]);
+    this.setYDomain();
+
+    const svg = container.append("svg").attr("viewBox", [0, 0, width, height]);
+
+    this.chart = svg
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    this.createGradient();
+    this.createLine();
+
+    const mouseLine = this.chart
       .append("path") // create vertical line to follow mouse
       .attr("class", "mouse-line")
       .attr("stroke", "white")
@@ -224,30 +264,30 @@ export default {
     const tooltipDate = tooltipInner.append("strong");
     const tooltipValue = tooltipInner.append("div");
 
-    function focusMouseOut() {
+    const focusMouseOut = () => {
       const e = new CustomEvent("graphMouseOut");
       document.dispatchEvent(e);
-    }
+    };
 
-    function focusMouseOver(event) {
+    const focusMouseOver = (event) => {
       const e = new CustomEvent("graphMouseOver");
       document.dispatchEvent(e);
       mouseLine.attr("opacity", "1");
-    }
+    };
 
-    function focusMouseMove(event) {
+    const focusMouseMove = (event) => {
       const mouse = d3.pointer(event);
-      const nearestDate = x.invert(mouse[0]);
+      const nearestDate = this.x.invert(mouse[0]);
 
       const beginningOfMonth =
         DateTime.fromJSDate(nearestDate).startOf("month");
 
       const e = new CustomEvent("showTooltip", { detail: beginningOfMonth });
       document.dispatchEvent(e);
-    }
+    };
 
-    function setTooltipPosition(nearestDate) {
-      const nearestXCord = x(nearestDate.toJSDate());
+    const setTooltipPosition = (nearestDate) => {
+      const nearestXCord = this.x(nearestDate.toJSDate());
       const dateStr = nearestDate.toISODate();
       const value = dataMap[dateStr] || 0;
 
@@ -265,7 +305,7 @@ export default {
         .style("bottom", `${innerHeight + 10}px`)
         .style("left", `${nearestXCord - tooltipWidth / 2}px`)
         .style("display", null);
-    }
+    };
 
     function mouseOut() {
       mouseLine.attr("opacity", "0");
@@ -276,6 +316,11 @@ export default {
       mouseLine.attr("opacity", "1");
       tooltip.style("display", null);
     }
+
+    svg
+      .on("mousemove", focusMouseMove)
+      .on("mouseover", focusMouseOver)
+      .on("mouseout", focusMouseOut);
 
     return {
       setTooltipPosition,
