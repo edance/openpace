@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  # Phoenix app
+  app:
+    build:
+      context: .
+      dockerfile: ./dev_docker/Dockerfile
+      args:
+        HOST_USER_UID: ${HOST_USER_UID}
+        HOST_GROUP_GID: ${HOST_GROUP_GID}
+    container_name: openpace-app
+    volumes:
+      - .:/app/
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+
+  # Postgres
+  db:
+    image: postgres:latest
+    container_name: openpace-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
