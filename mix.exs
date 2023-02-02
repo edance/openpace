@@ -49,7 +49,7 @@ defmodule Squeeze.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.0"},
+      {:phoenix, "~> 1.6.11"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 0.5"},
       {:phoenix_ecto, "~> 4.4"},
@@ -60,8 +60,7 @@ defmodule Squeeze.Mixfile do
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:gettext, "~> 0.20"},
       {:ordinal, "~> 0.1.0"},
-      {:plug_cowboy, "~> 2.1"},
-      {:cowboy, "< 2.8.0", override: true},
+      {:plug_cowboy, "~> 2.5"},
       {:plug, "~> 1.7"},
       {:strava, git: "https://github.com/edance/strava.git", ref: "0942445666e7bab56d128343c36be0ef5bee468f"},
       {:timex, "~> 3.3"},
