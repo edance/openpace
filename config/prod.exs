@@ -14,6 +14,9 @@ config :squeeze, SqueezeWeb.Endpoint, cache_static_manifest: "priv/static/cache_
 # Do not print debug messages in production
 config :logger, level: :info
 
+# In application.ex, we allow fit decoder workers but not in production
+config :squeeze, :allow_fit_decoder, false
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

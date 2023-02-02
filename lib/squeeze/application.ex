@@ -5,6 +5,8 @@ defmodule Squeeze.Application do
 
   alias SqueezeWeb.Endpoint
 
+  @allow_fit_decoder Application.compile_env(:squeeze, :allow_fit_decoder)
+
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -34,7 +36,7 @@ defmodule Squeeze.Application do
       Squeeze.Scheduler
     ]
 
-    if Mix.env() == :dev do
+    if @allow_fit_decoder do
       base_children ++ [:poolboy.child_spec(:worker, fit_decoder_config())]
     else
       base_children
