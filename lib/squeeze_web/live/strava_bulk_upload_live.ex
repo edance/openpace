@@ -3,13 +3,24 @@ defmodule SqueezeWeb.StravaBulkUploadLive do
 
   alias Squeeze.SlugGenerator
   alias Squeeze.Strava.BulkImport
+  alias SqueezeWeb.Endpoint
+
+  @allow_strava_upload Application.compile_env(:squeeze, :allow_strava_upload)
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok,
-    socket
-    |> assign(:activity_count, 0)
-    |> allow_upload(:export, max_file_size: 500_000_000, accept: ~w(.zip), progress: &handle_progress/3, auto_upload: true, max_entries: 1)}
+    socket = if @allow_strava_upload do
+      socket
+      |> assign(:activity_count, 0)
+      |> allow_upload(:export, max_file_size: 500_000_000, accept: ~w(.zip), progress: &handle_progress/3, auto_upload: true, max_entries: 1)
+
+    else
+      # Redirect if not allowed
+      socket
+      |> redirect(to: Routes.overview_path(Endpoint, :index))
+    end
+
+    {:ok, socket}
   end
 
   defp handle_progress(:export, entry, socket) do
