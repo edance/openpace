@@ -20,4 +20,10 @@ defmodule Squeeze.Utils do
   def cast_float(nil), do: nil
   def cast_float(x) when is_integer(x), do: x * 1.0
   def cast_float(x), do: x
+
+  def sum_by(list, field) do
+    list
+    |> Enum.map(&(Map.get(&1, field)))
+    |> Enum.sum()
+  end
 end
