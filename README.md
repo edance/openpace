@@ -35,6 +35,28 @@ Documentation is hosted using ex_doc. And you can view the documentation [here](
 
 ## Development
 
+We provide several methods for running Openpace, pick the one that best fits your use case.
+
+### Docker
+
+Running Openpace using Docker is a great option for local usage in case you don't have Elixir installed.
+
+```shell
+git clone https://github.com/edance/openpace.git
+cd openpace
+
+# Copy the example env to your own file and edit it
+cp .env.example .env
+
+# Running with the default configuration
+docker compose up -d
+
+# Visit localhost:4000
+open http://localhost:4000
+```
+
+### Direct installation with Elixir
+
 You'll need to install Elixir v1.13 or later. I recommend installing using [asdf](https://github.com/asdf-vm/asdf) with `asdf install elixir`.
 
 ```shell
@@ -52,9 +74,28 @@ mix setup
 
 # Start Phoenix Server
 iex -S mix phx.server
+
+# Visit localhost:4000
+open http://localhost:4000
 ```
 
 You will then be able to sign in with `a@b.co` and the password `password`.
+
+### Import Strava Activities
+
+#### Option 1 (detailed activities with trackpoints and laps)
+
+* Create an account with an email (or sign in with `a@b.co` and password `psasword`)
+* Visit `/dashboard/strava-bulk-upload` and follow the instructions on the page
+
+You will be required to download your data from Strava and upload the zip file to this page.
+When completed, you'll have all of your activities as well as trackpoints and laps.
+
+#### Option 2 (summary activities without trackpoints and laps)
+
+Add the environment variables before and sign in with Strava.
+
+When fetching many activities from Strava, you will receive a list `SummaryActivity` which does not contain trackpoints or laps.
 
 ### Environment Variables
 
