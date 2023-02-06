@@ -71,6 +71,8 @@ defmodule Squeeze.Strava.BulkImport do
       activity_type: activity_type(activity),
       distance: distance(activity),
       duration: moving_time(activity),
+      moving_time: moving_time(activity),
+      elapsed_time: elapsed_time(activity),
       start_at: start_at(activity),
       start_at_local: start_at(activity),
       elevation_gain: to_float(activity["Elevation Gain"]),
@@ -90,6 +92,11 @@ defmodule Squeeze.Strava.BulkImport do
 
   defp moving_time(activity) do
     {duration, _} = activity["Moving Time"] |> Integer.parse()
+    duration
+  end
+
+  defp elapsed_time(activity) do
+    {duration, _} = activity["Elapsed Time"] |> Integer.parse()
     duration
   end
 
