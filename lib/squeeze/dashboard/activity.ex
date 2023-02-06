@@ -50,7 +50,9 @@ defmodule Squeeze.Dashboard.Activity do
     field :distance, :float # in meters
     field :distance_amount, :float
     field :distance_unit, Ecto.Enum, values: [m: 0, km: 1, mi: 2]
-    field :duration, Duration
+    field :duration, Duration # :duration field is deprecated
+    field :moving_time, Duration
+    field :elapsed_time, Duration
     field :start_at, :utc_datetime
     field :start_at_local, :naive_datetime
     field :polyline, :string

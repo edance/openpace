@@ -20,6 +20,8 @@ defmodule Squeeze.Strava.ActivityFormatter do
       activity_type: activity_type(strava_activity),
       distance: strava_activity.distance,
       duration: strava_activity.moving_time,
+      moving_time: strava_activity.moving_time,
+      elapsed_time: strava_activity.elapsed_time,
       start_at: strava_activity.start_date,
       start_at_local: strava_activity.start_date_local,
       elevation_gain: strava_activity.total_elevation_gain,

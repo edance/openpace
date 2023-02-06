@@ -16,6 +16,8 @@ defmodule Squeeze.FileParser.FitImport do
       activity_type: activity_type(data),
       distance: Map.get(session_msg(data), "total_distance"),
       duration: round(Map.get(session_msg(data), "total_elapsed_time")),
+      moving_time: round(Map.get(session_msg(data), "total_elapsed_time")), # TODO
+      elapsed_time: round(Map.get(session_msg(data), "total_elapsed_time")),
       start_at: start_at,
       start_at_local: Timex.shift(start_at, seconds: tz_offset_in_seconds(data)),
       elevation_gain: session_msg(data) |> Map.get("total_ascent") |> cast_float(),
