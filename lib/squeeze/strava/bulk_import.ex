@@ -38,24 +38,46 @@ defmodule Squeeze.Strava.BulkImport do
 
     case Dashboard.create_activity(user, data) do
       {:ok, activity} ->
-        Dashboard.create_laps(activity, data.laps)
+        create_laps(activity, data.laps)
         Dashboard.create_trackpoint_set(activity, data.trackpoints)
         activity
-      error -> error
+      {:error, _changeset} -> Logger.warn("Cannot create #{data[:name]}")
     end
   end
 
   defp load_data(filename) do
-    if String.contains?(filename, ".fit.gz") do
-      System.cmd("gzip", ["-d", filename])
-      full_file = Path.absname(String.replace(filename, ".gz", ""))
-      Squeeze.FileParser.FitImport.import_from_file(full_file)
-    else
-      %{
-        laps: [],
-        trackpoints: []
-      }
+    cond do
+      String.contains?(filename, ".fit.gz") ->
+        System.cmd("gzip", ["-d", filename])
+        full_file = Path.absname(String.replace(filename, ".gz", ""))
+        Squeeze.FileParser.FitImport.import_from_file(full_file)
+      String.contains?(filename, ".tcx") ->
+        Squeeze.FileParser.TcxImport.import_from_file(filename)
+      true -> %{laps: [], trackpoints: []}
     end
+  end
+
+  def create_laps(activity, laps) do
+    fields = ~w(
+      average_cadence
+      average_speed
+      distance
+      elapsed_time
+      end_index
+      lap_index
+      max_speed
+      moving_time
+      name
+      pace_zone
+      split
+      start_date
+      start_date_local
+      start_index
+      total_elevation_gain
+    )a
+
+    laps = laps |> Enum.map(fn lap -> Map.take(lap, fields) end)
+    Dashboard.create_laps(activity, laps)
   end
 
   def to_naive_datetime(t) do
@@ -69,10 +91,10 @@ defmodule Squeeze.Strava.BulkImport do
       name: activity["Activity Name"],
       type: activity["Activity Type"],
       activity_type: activity_type(activity),
-      distance: distance(activity),
-      duration: moving_time(activity),
-      moving_time: moving_time(activity),
-      elapsed_time: elapsed_time(activity),
+      distance: to_float(activity["Distance"]),
+      duration: to_int(activity["Moving Time"]),
+      moving_time: to_int(activity["Moving Time"]),
+      elapsed_time: to_int(activity["Elapsed Time"]),
       start_at: start_at(activity),
       start_at_local: start_at(activity),
       elevation_gain: to_float(activity["Elevation Gain"]),
@@ -81,34 +103,28 @@ defmodule Squeeze.Strava.BulkImport do
     }
   end
 
-  defp distance(activity) do
-    try  do
-      {distance, _} = activity["Distance"] |> List.last() |> Float.parse()
-      distance
-    rescue
-      _e -> 0.0
+  defp to_int(val) when is_list(val) do
+    val |> List.last() |> to_int()
+  end
+  defp to_int(val) do
+    case Integer.parse(val) do
+      :error -> 0.0
+      {num, _} -> num
     end
   end
 
-  defp moving_time(activity) do
-    {duration, _} = activity["Moving Time"] |> Integer.parse()
-    duration
+  defp to_float(val) when is_list(val) do
+    val |> List.last() |> to_float()
   end
-
-  defp elapsed_time(activity) do
-    {duration, _} = activity["Elapsed Time"] |> Integer.parse()
-    duration
+  defp to_float(val) do
+    case Float.parse(val) do
+      :error -> 0.0
+      {num, _} -> num
+    end
   end
 
   defp start_at(activity) do
     Timex.parse!(activity["Activity Date"], "%b %-d, %Y, %-I:%M:%S %p", :strftime)
-  end
-
-  defp to_float(num) do
-    case Float.parse(num) do
-      :error -> 0.0
-      {num, _} -> num
-    end
   end
 
   defp activity_type(activity) do
