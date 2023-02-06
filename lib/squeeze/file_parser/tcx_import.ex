@@ -51,7 +51,12 @@ defmodule Squeeze.FileParser.TcxImport do
   end
 
   defp activity_type(doc) do
-    xpath(doc, ~x"//Activity/@Sport"s)
+    case String.downcase(type(doc)) do
+      "running" -> :run
+      "cycling" -> :bike
+      "swimming" -> :swim
+      _sport -> :other
+    end
   end
 
   defp laps(doc) do
@@ -65,23 +70,30 @@ defmodule Squeeze.FileParser.TcxImport do
         average_cadence: sum_by(lap.trackpoints, :cadence) / trackpoint_count,
         average_speed: lap.distance / lap.elapsed_time,
         distance: lap.distance,
-        elapsed_time: lap.elapsed_time,
+        elapsed_time: round(lap.elapsed_time),
         lap_index: idx,
         max_speed: lap.max_speed,
-        moving_time: lap.elapsed_time, # TODO
+        moving_time: round(lap.elapsed_time), # TODO
         name: "Lap",
         split: idx + 1,
         start_date: start_date(lap.start_time),
         start_date_local: start_date_local(lap.start_time),
-        total_elevation_gain: 0 # TODO
+        total_elevation_gain: 0.0, # TODO
+        trackpoints: lap.trackpoints
       }
     end)
+  end
+
+  def to_naive_datetime(t) do
+    t
+    |> Timex.to_naive_datetime()
+    |> NaiveDateTime.truncate(:second)
   end
 
   defp start_date(time_str) do
     time_str
     |> Timex.parse!("{ISO:Extended:Z}")
-    |> Timex.to_naive_datetime()
+    |> to_naive_datetime()
   end
 
   defp start_date_local(time_str) do
@@ -89,7 +101,7 @@ defmodule Squeeze.FileParser.TcxImport do
     |> Timex.parse!("{ISO:Extended:Z}")
     |> Timex.format!("%FT%TZ", :strftime)
     |> Timex.parse!("{ISO:Extended:Z}")
-    |> Timex.to_naive_datetime()
+    |> to_naive_datetime()
   end
 
   defp laps_data(doc) do
