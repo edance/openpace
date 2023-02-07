@@ -24,6 +24,12 @@ defmodule SqueezeWeb.ActivityLive.Show do
   end
 
   @impl true
+  def handle_params(_params, _url, socket) do
+    trackpoints = socket.assigns.trackpoints
+    {:noreply, push_event(socket, "trackpoints", %{trackpoints: trackpoints})}
+  end
+
+  @impl true
   def handle_info(:fetch_detailed_info, socket) do
     user = socket.assigns.current_user
     existing_activity = socket.assigns.activity

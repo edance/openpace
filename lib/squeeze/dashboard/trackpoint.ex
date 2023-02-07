@@ -3,6 +3,8 @@ defmodule Squeeze.Dashboard.Trackpoint do
 
   use Ecto.Schema
 
+  @derive {Jason.Encoder, except: []}
+
   embedded_schema do
     field :altitude, :float
     field :cadence, :integer
