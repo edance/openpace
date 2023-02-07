@@ -1,6 +1,9 @@
 import * as d3 from "d3";
 import mapboxgl from "mapbox-gl";
 
+// Include the css for mapbox in the bundle
+import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
+
 mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
 
 export default {
