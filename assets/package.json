@@ -18,7 +18,7 @@
     "instantsearch.js": "^4.6.0",
     "jquery": "^3.4.0",
     "luxon": "^2.0.2",
-    "mapbox-gl": "^2.6.1",
+    "mapbox-gl": "^2.12.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view",
