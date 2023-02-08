@@ -93,7 +93,7 @@ When completed, you'll have all of your activities as well as trackpoints and la
 
 #### Option 2 (summary activities without trackpoints and laps)
 
-Add the environment variables before and sign in with Strava.
+Add the environment variables below and sign in with Strava.
 
 When fetching many activities from Strava, you will receive a list `SummaryActivity` which does not contain trackpoints or laps.
 
