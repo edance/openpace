@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-12">
-          <%= if coordinates?(assigns) do %>
+          <%= if show_map?(assigns) do %>
             <div id="activity-map"
                  class="activity-map"
                  phx-hook="ActivityMap"
@@ -61,7 +61,11 @@
       </div>
       <div class="row pt-4">
         <div class="col-12">
-          <%= live_component SqueezeWeb.Activities.ChartComponent, trackpoints: @trackpoints, current_user: @current_user %>
+          <div id="activity-lap-chart"
+               phx-hook="ActivityLapGraph"
+               phx-update="ignore"
+               style="width: 100%; height: 400px;"
+          ></div>
         </div>
       </div>
     </div>

@@ -25,8 +25,11 @@ defmodule SqueezeWeb.ActivityLive.Show do
 
   @impl true
   def handle_params(_params, _url, socket) do
-    trackpoints = socket.assigns.trackpoints
-    {:noreply, push_event(socket, "trackpoints", %{trackpoints: trackpoints})}
+    socket = socket
+    |> push_trackpoints()
+    |> push_laps()
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -40,6 +43,7 @@ defmodule SqueezeWeb.ActivityLive.Show do
       activity = Dashboard.get_detailed_activity_by_slug!(user, existing_activity.slug)
       socket = socket
       |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
+      |> push_trackpoints()
 
       {:noreply, socket}
     else
@@ -47,32 +51,25 @@ defmodule SqueezeWeb.ActivityLive.Show do
     end
   end
 
-  def name(%{activity: activity}) do
-    activity.name || activity.type
+  defp push_trackpoints(socket) do
+    push_event(socket, "trackpoints", %{trackpoints: socket.assigns.trackpoints})
   end
 
-  def date(%{activity: %{start_at: nil, planned_date: date}}) do
+  defp push_laps(socket) do
+    push_event(socket, "laps", %{laps: socket.assigns.activity.laps})
+  end
+
+  defp date(%{activity: %{start_at: nil, planned_date: date}}) do
     Timex.format!(date, "%b %-d, %Y ", :strftime)
   end
-  def date(%{activity: activity, current_user: user}) do
+  defp date(%{activity: activity, current_user: user}) do
     timezone = user.user_prefs.timezone
     activity.start_at
     |> Timex.to_datetime(timezone)
     |> Timex.format!("%b %-d, %Y %-I:%M %p ", :strftime)
   end
 
-  def distance(%{activity: activity, current_user: user}) do
-    Distances.to_float(activity.distance, user.user_prefs)
-  end
-
-  def distance?(%{trackpoints: trackpoints}) do
-    trackpoints
-    |> Enum.take(5)
-    |> Enum.map(&(&1.distance))
-    |> Enum.any?(&(!is_nil(&1)))
-  end
-
-  def elevation(%{activity: activity, current_user: user}) do
+  defp elevation(%{activity: activity, current_user: user}) do
     imperial = user.user_prefs.imperial
     value = activity.elevation_gain
     |> Distances.to_feet(imperial: imperial)
@@ -85,25 +82,21 @@ defmodule SqueezeWeb.ActivityLive.Show do
     end
   end
 
-  def coordinates?(%{trackpoints: trackpoints}) do
+  defp show_pace?(%{trackpoints: trackpoints, activity: activity}) do
+    !Enum.empty?(trackpoints) && activity.type == "Run"
+  end
+
+  defp trackpoints(%{trackpoint_set: nil}), do: []
+  defp trackpoints(%{trackpoint_set: set}), do: set.trackpoints
+
+  defp show_map?(%{activity: activity} = assigns) do
+    activity.polyline || coordinates?(assigns)
+  end
+
+  defp coordinates?(%{trackpoints: trackpoints}) do
     trackpoints
     |> Enum.take(5)
     |> Enum.map(&(&1.coordinates))
     |> Enum.any?(&(!is_nil(&1)))
   end
-
-  def show_splits?(%{trackpoints: trackpoints, activity: activity}) do
-    !Enum.empty?(trackpoints) && activity.type == "Run"
-  end
-
-  def show_pace?(%{trackpoints: trackpoints, activity: activity}) do
-    !Enum.empty?(trackpoints) && activity.type == "Run"
-  end
-
-  def trackpoints?(%{trackpoints: trackpoints}) do
-    !Enum.empty?(trackpoints)
-  end
-
-  defp trackpoints(%{trackpoint_set: nil}), do: []
-  defp trackpoints(%{trackpoint_set: set}), do: set.trackpoints
 end
