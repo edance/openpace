@@ -25,6 +25,8 @@ defmodule Squeeze.Dashboard.ActivityLap do
   )a
   @optional_fields ~w()a
 
+  @derive {Jason.Encoder, only: @required_fields ++ @optional_fields}
+
   schema "activity_laps" do
     field :average_cadence, :float
     field :average_speed, :float
