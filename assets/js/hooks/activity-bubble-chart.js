@@ -7,7 +7,7 @@ function velocityToFormattedPace(velocity, imperial = false) {
   const label = imperial ? "/mi" : "/km";
 
   const min = Math.floor(distance / 60 / velocity);
-  const sec = Math.round(distance / velocity - min * 60);
+  const sec = Math.round((distance / velocity - min) * 60);
 
   return `${min}:${pad(sec)}${label}`;
 }

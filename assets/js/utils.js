@@ -1,11 +1,11 @@
-import { colors } from './variables.js';
+import { colors } from "./variables.js";
 
 export function formatDate(date) {
   let month = date.getMonth() + 1,
-      day = date.getDate(),
-      year = date.getFullYear();
+    day = date.getDate(),
+    year = date.getFullYear();
 
-  return [year, pad(month), pad(day)].join('-');
+  return [year, pad(month), pad(day)].join("-");
 }
 
 export function pad(num) {
@@ -15,8 +15,8 @@ export function pad(num) {
 export function guessTimezone() {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
-  } catch(err) {
-    return 'America/New_York';
+  } catch (err) {
+    return "America/New_York";
   }
 }
 
@@ -37,8 +37,8 @@ export function calcFeet(distance, imperial, digits = 0) {
 export function roundTo(n, digits = 0) {
   var multiplicator = Math.pow(10, digits);
   n = parseFloat((n * multiplicator).toFixed(11));
-  var test =(Math.round(n) / multiplicator);
-  return +(test.toFixed(digits));
+  var test = Math.round(n) / multiplicator;
+  return +test.toFixed(digits);
 }
 
 export function formatNumber(num, decimals = 0) {
@@ -53,7 +53,7 @@ export function formatNumber(num, decimals = 0) {
 }
 
 export function loadScript(url) {
-  const script = document.createElement('script');
+  const script = document.createElement("script");
   script.src = url;
   script.async = true;
   const promise = new Promise((resolve, reject) => {
@@ -66,18 +66,18 @@ export function loadScript(url) {
 
 export function getFullMonths() {
   return [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 }
 
@@ -101,13 +101,15 @@ export function parseDistance(distanceStr) {
   }
 
   const distance = parseFloat(parts[1]);
-  if (isNaN(distance)) { return null; }
+  if (isNaN(distance)) {
+    return null;
+  }
 
-  if (['mi', 'mile', 'miles'].indexOf(parts[2]) !== -1) {
+  if (["mi", "mile", "miles"].indexOf(parts[2]) !== -1) {
     return 1609 * distance;
   }
 
-  if (['km', 'k'].indexOf(parts[2]) !== -1) {
+  if (["km", "k"].indexOf(parts[2]) !== -1) {
     return distance * 1000;
   }
 
@@ -116,11 +118,18 @@ export function parseDistance(distanceStr) {
 
 export function activityColor(type) {
   const map = {
-    'Run': colors['red'],
-    'Hike': colors['orange'],
-    'Ride': colors['blue'],
-    'Swim': colors['green'],
+    Run: colors["red"],
+    Hike: colors["orange"],
+    Ride: colors["blue"],
+    Swim: colors["green"],
   };
 
-  return map[type] || colors['yellow'];
+  return map[type] || colors["yellow"];
+}
+
+export function range(start, end, step = 1) {
+  const len = Math.floor((end - start) / step) + 1;
+  return Array(len)
+    .fill()
+    .map((_, idx) => start + idx * step);
 }
