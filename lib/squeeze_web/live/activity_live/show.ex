@@ -26,8 +26,7 @@ defmodule SqueezeWeb.ActivityLive.Show do
   @impl true
   def handle_params(_params, _url, socket) do
     socket = socket
-    |> push_trackpoints()
-    |> push_laps()
+    |> push_activity_events()
 
     {:noreply, socket}
   end
@@ -43,12 +42,18 @@ defmodule SqueezeWeb.ActivityLive.Show do
       activity = Dashboard.get_detailed_activity_by_slug!(user, existing_activity.slug)
       socket = socket
       |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
-      |> push_trackpoints()
+      |> push_activity_events()
 
       {:noreply, socket}
     else
       {:noreply, socket}
     end
+  end
+
+  defp push_activity_events(socket)  do
+    socket
+    |> push_trackpoints()
+    |> push_laps()
   end
 
   defp push_trackpoints(socket) do

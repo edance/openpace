@@ -76,6 +76,10 @@ export default {
     this.handleEvent("trackpoints", ({ trackpoints }) => {
       this.trackpoints = trackpoints;
 
+      if (!trackpoints?.length) {
+        return;
+      }
+
       const geojson = this.generateGeoJson();
 
       // Map coordinates to be handled by mapbox
@@ -93,6 +97,10 @@ export default {
         easing: () => 1, // disable animation
         padding: 20,
       });
+
+      if (map.isStyleLoaded()) {
+        map.addLayer(geojson);
+      }
 
       map.on("load", function () {
         map.addLayer(geojson);
