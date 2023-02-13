@@ -485,8 +485,8 @@ $table-dark-hover-bg:         rgba($white, .075) !default;
 $table-dark-border-color:     lighten(theme-color("default"), 7%) !default;
 $table-dark-color:            $white !default;
 
-$table-dark-head-bg:          lighten(theme-color("default"), 4%) !default;
-$table-dark-head-color:       lighten(theme-color("default"), 35%) !default;
+$table-dark-head-bg:          $gray-700 !default;
+$table-dark-head-color:       $white !default;
 $table-dark-action-color:     lighten(theme-color("default"), 35%) !default;
 
 

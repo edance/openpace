@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-header border-0">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h6 class="text-uppercase text-muted ls-1 mb-1">
+          Workout Analysis
+        </h6>
+        <h3 class="mb-0">
+          <%= gettext("Laps") %>
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div id="activity-lap-chart"
+         phx-hook="ActivityLapGraph"
+         phx-update="ignore"
+         data-imperial={"#{@user.user_prefs.imperial}"}
+         data-type={@activity.activity_type}
+         style="width: 100%; height: 400px;"
+    ></div>
+  </div>
+
+  <div class="table-responsive" style="height: 400px">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-dark bg-gray-dark">
+        <tr>
+          <th scope="col">
+            Lap
+          </th>
+          <th scope="col">
+            Distance
+          </th>
+          <th scope="col">
+            Pace
+            <%= if @user.user_prefs.imperial do %>
+              <div class="small">min/mi</div>
+            <% else %>
+              <div class="small">min/km</div>
+            <% end %>
+          </th>
+          <th scope="col">
+            Time
+          </th>
+          <th scope="col">
+            Cadence
+            <div class="small">steps/min</div>
+          </th>
+          <th scope="col">
+            Elevation
+            <%= if @user.user_prefs.imperial do %>
+              <div class="small">feet</div>
+            <% else %>
+              <div class="small">meters</div>
+            <% end %>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= for lap <- @activity.laps do %>
+          <tr>
+            <td><%= lap.split %></td>
+            <td><%= format_distance(lap.distance, @user.user_prefs) %></td>
+            <td><%= format_pace(%{distance: lap.distance, duration: lap.moving_time}, @user.user_prefs) %></td>
+            <td><%= format_duration(lap.moving_time) %></td>
+            <td><%= lap.average_cadence * 2 %></td>
+            <td><%= lap.total_elevation_gain %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

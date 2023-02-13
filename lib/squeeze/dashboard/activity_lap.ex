@@ -32,7 +32,6 @@ defmodule Squeeze.Dashboard.ActivityLap do
     field :average_speed, :float
     field :distance, :float
     field :elapsed_time, :integer
-    field :end_index, :integer
     field :lap_index, :integer
     field :max_speed, :float
     field :moving_time, :integer
@@ -41,8 +40,11 @@ defmodule Squeeze.Dashboard.ActivityLap do
     field :split, :integer
     field :start_date, :naive_datetime
     field :start_date_local, :naive_datetime
-    field :start_index, :integer
     field :total_elevation_gain, :float
+
+    # Start and end indices of the trackpoints in the lap
+    field :start_index, :integer
+    field :end_index, :integer
 
     belongs_to :activity, Activity
 
