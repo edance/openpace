@@ -103,6 +103,14 @@ export default {
         .selectAll("rect")
         .data(laps)
         .join("rect")
+        .on("mouseover", function (evt) {
+          evt.target.style.cursor = "pointer";
+          d3.select(this).transition().attr("fill-opacity", 1);
+        })
+        .on("mouseout", function (evt) {
+          d3.select(this).transition().attr("fill-opacity", 0.5);
+          evt.target.style.cursor = "inherit";
+        })
         .attr("fill", (d) => color(d.average_speed))
         .attr("fill-opacity", 0.5)
         .attr("x", (d, idx) => {
@@ -112,9 +120,18 @@ export default {
           );
           return x(values[idx]) + 1;
         })
+        .attr("y", (d, i) => y(maxPace + yPadding))
+        .attr("height", 0)
+        .attr("width", (d, i) => x(xValues[i]) - x(0) - 2);
+
+      // Animate the bars for fun
+      bars
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(800)
         .attr("y", (d, i) => y(yValues[i]))
         .attr("height", (d, i) => y(maxPace + yPadding) - y(yValues[i]))
-        .attr("width", (d, i) => x(xValues[i]) - x(0) - 2);
+        .delay((d, i) => i * 100);
     });
   },
 };
