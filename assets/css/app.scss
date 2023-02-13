@@ -169,3 +169,9 @@
 .segment-list {
   max-height: 500px;
 }
+
+// Add these rules to allow a vertically scrollable table with a sticky header
+.table-responsive {
+  overflow: auto;
+}
+.table-responsive thead th { position: sticky; top: 0; z-index: 1; }
