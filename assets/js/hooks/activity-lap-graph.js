@@ -98,6 +98,13 @@ export default {
         .attr("transform", `translate(${margin.left}, 0)`)
         .call(yAxis);
 
+      const mouseLine = svg
+        .append("path") // create vertical line to follow mouse
+        .attr("class", "mouse-line")
+        .attr("stroke", "white")
+        .attr("stroke-width", 2)
+        .attr("opacity", 0);
+
       const bars = svg
         .append("g")
         .selectAll("rect")
@@ -106,10 +113,20 @@ export default {
         .on("mouseover", function (evt) {
           evt.target.style.cursor = "pointer";
           d3.select(this).transition().attr("fill-opacity", 1);
+          mouseLine.transition().attr("opacity", 1);
         })
         .on("mouseout", function (evt) {
           d3.select(this).transition().attr("fill-opacity", 0.5);
           evt.target.style.cursor = "inherit";
+          mouseLine.transition().attr("opacity", 0);
+        })
+        .on("mousemove", function (evt) {
+          const barX = parseFloat(d3.select(this).attr("x"));
+          const barWidth = parseFloat(d3.select(this).attr("width"));
+          const barY = parseFloat(d3.select(this).attr("y"));
+          const posX = Math.round(barX + barWidth / 2);
+
+          mouseLine.attr("d", `M ${posX} 0 V ${barY}`);
         })
         .attr("fill", (d) => color(d.average_speed))
         .attr("fill-opacity", 0.5)
