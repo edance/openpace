@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: ['1.14.1']
+        elixir: ['1.14.2']
         otp: ['24.3']
     env:
       MIX_ENV: test
@@ -46,7 +46,7 @@ jobs:
     needs: dependencies
     strategy:
       matrix:
-        elixir: ['1.14.1']
+        elixir: ['1.14.2']
         otp: ['24.3']
     services:
       db:
