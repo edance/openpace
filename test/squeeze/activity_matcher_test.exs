@@ -13,8 +13,22 @@ defmodule Squeeze.ActivityMatcherTest do
 
     test "with planned activity on the same day", %{user: user, today: today, now: now} do
       attrs = build(:activity, start_at: now)
-      activity = insert(:planned_activity, planned_date: today, user: user, planned_distance: 1, planned_duration: 1)
-      insert(:planned_activity, status: :complete, planned_date: today, user: user, planned_distance: 1, planned_duration: 1)
+
+      activity =
+        insert(:planned_activity,
+          planned_date: today,
+          user: user,
+          planned_distance: 1,
+          planned_duration: 1
+        )
+
+      insert(:planned_activity,
+        status: :complete,
+        planned_date: today,
+        user: user,
+        planned_distance: 1,
+        planned_duration: 1
+      )
 
       assert ActivityMatcher.get_closest_activity(user, attrs).id == activity.id
     end
@@ -27,8 +41,17 @@ defmodule Squeeze.ActivityMatcherTest do
     end
 
     test "with distance match on the same day", %{user: user, today: today, now: now} do
-      [activity, _] = insert_pair(:planned_activity, planned_date: today, user: user, planned_duration: 1)
-      attrs = build(:activity, start_at: now, distance: activity.planned_distance, planned_duration: 1)
+      activity = insert(:planned_activity, planned_date: today, user: user, planned_duration: 1)
+      # Insert second activity with the same duration but different distance
+      insert(:planned_activity,
+        planned_date: today,
+        user: user,
+        planned_duration: 1,
+        planned_distance: activity.planned_distance + 1
+      )
+
+      attrs =
+        build(:activity, start_at: now, distance: activity.planned_distance, planned_duration: 1)
 
       assert ActivityMatcher.get_closest_activity(user, attrs).id == activity.id
     end
@@ -54,7 +77,7 @@ defmodule Squeeze.ActivityMatcherTest do
   end
 
   defp today(%{user: user}) do
-    now = Timex.now
+    now = Timex.now()
     today = TimeHelper.to_date(user, now)
     {:ok, now: now, today: today}
   end
