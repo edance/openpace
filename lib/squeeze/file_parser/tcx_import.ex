@@ -33,9 +33,9 @@ defmodule Squeeze.FileParser.TcxImport do
 
   defp polyline(trackpoints) do
     trackpoints
-    |> Enum.map(&(&1.coordinates))
+    |> Enum.map(& &1.coordinates)
     |> Enum.reject(&is_nil/1)
-    |> Enum.map(&({&1.lon, &1.lat}))
+    |> Enum.map(&{&1.lon, &1.lat})
     |> Polyline.encode()
   end
 
@@ -63,7 +63,7 @@ defmodule Squeeze.FileParser.TcxImport do
     doc
     |> laps_data()
     |> Enum.with_index()
-    |> Enum.map(fn({lap, idx}) ->
+    |> Enum.map(fn {lap, idx} ->
       trackpoint_count = length(lap.trackpoints)
 
       %{
@@ -73,12 +73,14 @@ defmodule Squeeze.FileParser.TcxImport do
         elapsed_time: round(lap.elapsed_time),
         lap_index: idx,
         max_speed: lap.max_speed,
-        moving_time: round(lap.elapsed_time), # TODO
+        # TODO moving time
+        moving_time: round(lap.elapsed_time),
         name: "Lap",
         split: idx + 1,
         start_date: start_date(lap.start_time),
         start_date_local: start_date_local(lap.start_time),
-        total_elevation_gain: 0.0, # TODO
+        # TODO elevation gain
+        total_elevation_gain: 0.0,
         trackpoints: lap.trackpoints
       }
     end)
@@ -105,7 +107,8 @@ defmodule Squeeze.FileParser.TcxImport do
   end
 
   defp laps_data(doc) do
-    doc |> xpath(
+    doc
+    |> xpath(
       ~x"//Lap"l,
       distance: ~x"./DistanceMeters/text()"f,
       elapsed_time: ~x"./TotalTimeSeconds/text()"f,
