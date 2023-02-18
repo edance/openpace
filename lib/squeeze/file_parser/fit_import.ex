@@ -16,7 +16,7 @@ defmodule Squeeze.FileParser.FitImport do
       activity_type: activity_type(data),
       distance: Map.get(session_msg(data), "total_distance"),
       duration: round(Map.get(session_msg(data), "total_elapsed_time")),
-      moving_time: round(Map.get(session_msg(data), "total_elapsed_time")), # TODO
+      moving_time: round(Map.get(session_msg(data), "total_elapsed_time")),
       elapsed_time: round(Map.get(session_msg(data), "total_elapsed_time")),
       start_at: start_at,
       start_at_local: Timex.shift(start_at, seconds: tz_offset_in_seconds(data)),
@@ -56,9 +56,9 @@ defmodule Squeeze.FileParser.FitImport do
 
   defp polyline(trackpoints) do
     trackpoints
-    |> Enum.map(&(&1.coordinates))
+    |> Enum.map(& &1.coordinates)
     |> Enum.reject(&is_nil/1)
-    |> Enum.map(&({&1.lon, &1.lat}))
+    |> Enum.map(&{&1.lon, &1.lat})
     |> Polyline.encode()
   end
 
@@ -85,30 +85,40 @@ defmodule Squeeze.FileParser.FitImport do
 
   defp laps(data) do
     tz_offset = tz_offset_in_seconds(data)
+    trackpoints = Map.get(data, "record_mesgs", [])
 
-    data
-    |> Map.get("lap_mesgs", [])
-    |> Enum.map(fn x ->
-      timestamp = Timex.parse!(x["start_time"], "{ISO:Extended:Z}")
+    trackpoints_by_timestamp =
+      trackpoints
+      |> Enum.with_index()
+      |> Enum.map(fn {tp, idx} -> {tp["timestamp"], idx} end)
+      |> Map.new()
 
-      %{
-        average_cadence: cast_float(x["avg_cadence"]),
-        average_speed: cast_float(x["avg_speed"]),
-        distance: cast_float(x["total_distance"]),
-        elapsed_time: round(x["total_elapsed_time"]),
-        start_index: 0,
-        end_index: 0,
-        lap_index: 0,
-        max_speed: cast_float(x["max_speed"]),
-        moving_time: round(x["total_elapsed_time"]),
-        name: x["event"],
-        pace_zone: 0,
-        split: x["message_index"],
-        start_date: timestamp |> to_naive_datetime(),
-        start_date_local: timestamp |> Timex.shift(seconds: tz_offset) |> to_naive_datetime(),
-        total_elevation_gain: cast_float(x["total_ascent"])
-      }
-    end)
+    {laps, _} =
+      data
+      |> Map.get("lap_mesgs", [])
+      |> Enum.map_reduce(0, fn lap, tkpt_idx ->
+        start_time = Timex.parse!(lap["start_time"], "{ISO:Extended:Z}")
+        end_idx = Map.get(trackpoints_by_timestamp, lap["timestamp"], length(trackpoints))
+
+        {%{
+           average_cadence: cast_float(lap["avg_cadence"]),
+           average_speed: cast_float(lap["avg_speed"]),
+           distance: cast_float(lap["total_distance"]),
+           elapsed_time: round(lap["total_elapsed_time"]),
+           start_index: tkpt_idx,
+           end_index: end_idx,
+           lap_index: lap["message_index"],
+           max_speed: cast_float(lap["max_speed"]),
+           moving_time: round(lap["total_elapsed_time"]),
+           name: lap["event"],
+           split: lap["message_index"] + 1,
+           start_date: start_time |> to_naive_datetime(),
+           start_date_local: start_time |> Timex.shift(seconds: tz_offset) |> to_naive_datetime(),
+           total_elevation_gain: cast_float(lap["total_ascent"])
+         }, end_idx + 1}
+      end)
+
+    laps
   end
 
   defp tz_offset_in_seconds(data) do
