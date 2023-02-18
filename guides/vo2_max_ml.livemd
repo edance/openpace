@@ -1,0 +1,1041 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# Linear Regression - Vo2 Max
+
+## Introduction
+
+I'm a fan of what is going on in the elixir community and I've been following when the newest stuff is released. When I saw Nx and the machine learning libraries that are coming out, I had to give it a try. I don't have any experience in ML beyond an entry level blog post. I've been combing over different tutorials and decided to try one on my own.
+
+Please note: the text and assumptions here are most likely not correct. I'm a beginner, teaching myself this stuff on the fly. Please create an issue on github or a PR to provide feedback. I'd love to learn more.
+
+Linear regression as the internet tells me is usually defined by a function like `y = mx + b`. There are inputs like `x` and targets like `y`. You can have multiple inputs and multiple outputs.
+
+My goal is to use linear regression to predict vo2max based on a race time. vo2max is a helpful tool to gauge fitness and help predict what race time you might be able to hit.
+
+In this example, I already have a function that returns a vo2max given a distance and a duration. So I know what the correct answer is. This function isn't linear so this is more of an example than something to use in production. You can learn more about this function in the `Squeeze.RacePredictor` module.
+
+A "race time" is really two different inputs: `distance` and `duration` (example a three hour marathon). A linear function to predict `vo2max` would look like this:
+
+```
+vo2_max = m * distance + n * duration + b
+```
+
+where `m`, `n`, and `b` are what we are trying to use ML to find. Let's get started.
+
+```elixir
+# List of all distances in Squeeze
+distances = Squeeze.Distances.distances()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[
+  %{distance: 5000, name: "5k"},
+  %{distance: 8000, name: "8k"},
+  %{distance: 10000, name: "10k"},
+  %{distance: 12000, name: "12k"},
+  %{distance: 15000, name: "15k"},
+  %{distance: 16090, name: "10 Mile"},
+  %{distance: 20000, name: "20k"},
+  %{distance: 21097, name: "Half Marathon"},
+  %{distance: 25000, name: "25k"},
+  %{distance: 30000, name: "30k"},
+  %{distance: 42195, name: "Marathon"},
+  %{distance: 50000, name: "50k"},
+  %{distance: 80450, name: "50 Mile"},
+  %{distance: 100000, name: "100k"},
+  %{distance: 16090, name: "100 Mile"}
+]
+```
+
+```elixir
+# Using our prebuilt function to calculate vo2_max for a 3-hour marathon
+distance = Squeeze.Distances.marathon_in_meters() # 42,195 meters
+duration = Squeeze.Duration.to_seconds(%{hours: 3, minutes: 0, seconds: 0}) # 
+vo2_max = Squeeze.RacePredictor.estimated_vo2max(distance, duration)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+53.52826876260377
+```
+
+```elixir
+test_input = Nx.tensor([distance, duration])
+test_target = Nx.tensor([vo2_max])
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  f32[1]
+  [53.52826690673828]
+>
+```
+
+```elixir
+vo2_max = 55
+predictions = Squeeze.RacePredictor.predict_all_race_times(vo2_max)
+predictions = Map.take(predictions, [15000, 21097, 42195])
+
+VegaLite.new()
+|> VegaLite.data_from_values(distance: Map.keys(predictions), duration: Map.values(predictions))
+|> VegaLite.mark(:line)
+|> VegaLite.encode_field(:x, "distance", type: :quantitative)
+|> VegaLite.encode_field(:y, "duration", type: :quantitative)
+```
+
+<!-- livebook:{"output":true} -->
+
+```vega-lite
+{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"values":[{"distance":15000,"duration":3509},{"distance":21097,"duration":5052},{"distance":42195,"duration":10552}]},"encoding":{"x":{"field":"distance","type":"quantitative"},"y":{"field":"duration","type":"quantitative"}},"mark":"line"}
+```
+
+```elixir
+distance = Squeeze.Distances.marathon_in_meters()
+vo2_maxs = 30..80
+
+durations =
+  vo2_maxs
+  |> Enum.map(&Squeeze.RacePredictor.predict_race_time(distance, &1))
+
+VegaLite.new()
+|> VegaLite.data_from_values(vo2_max: vo2_maxs, duration: durations)
+|> VegaLite.mark(:line)
+|> VegaLite.encode_field(:x, "vo2_max", type: :quantitative)
+|> VegaLite.encode_field(:y, "duration", type: :quantitative)
+```
+
+<!-- livebook:{"output":true} -->
+
+```vega-lite
+{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"values":[{"duration":17388,"vo2_max":30},{"duration":16940,"vo2_max":31},{"duration":16516,"vo2_max":32},{"duration":16113,"vo2_max":33},{"duration":15730,"vo2_max":34},{"duration":15365,"vo2_max":35},{"duration":15017,"vo2_max":36},{"duration":14686,"vo2_max":37},{"duration":14369,"vo2_max":38},{"duration":14066,"vo2_max":39},{"duration":13776,"vo2_max":40},{"duration":13498,"vo2_max":41},{"duration":13232,"vo2_max":42},{"duration":12976,"vo2_max":43},{"duration":12730,"vo2_max":44},{"duration":12494,"vo2_max":45},{"duration":12267,"vo2_max":46},{"duration":12048,"vo2_max":47},{"duration":11837,"vo2_max":48},{"duration":11634,"vo2_max":49},{"duration":11437,"vo2_max":50},{"duration":11248,"vo2_max":51},{"duration":11065,"vo2_max":52},{"duration":10889,"vo2_max":53},{"duration":10717,"vo2_max":54},{"duration":10552,"vo2_max":55},{"duration":10392,"vo2_max":56},{"duration":10237,"vo2_max":57},{"duration":10087,"vo2_max":58},{"duration":9941,"vo2_max":59},{"duration":9800,"vo2_max":60},{"duration":9663,"vo2_max":61},{"duration":9530,"vo2_max":62},{"duration":9406,"vo2_max":63},{"duration":9280,"vo2_max":64},{"duration":9158,"vo2_max":65},{"duration":9039,"vo2_max":66},{"duration":8924,"vo2_max":67},{"duration":8812,"vo2_max":68},{"duration":8702,"vo2_max":69},{"duration":8596,"vo2_max":70},{"duration":8492,"vo2_max":71},{"duration":8391,"vo2_max":72},{"duration":8292,"vo2_max":73},{"duration":8196,"vo2_max":74},{"duration":8103,"vo2_max":75},{"duration":8011,"vo2_max":76},{"duration":7922,"vo2_max":77},{"duration":7835,"vo2_max":78},{"duration":7750,"vo2_max":79},{"duration":7666,"vo2_max":80}]},"encoding":{"x":{"field":"vo2_max","type":"quantitative"},"y":{"field":"duration","type":"quantitative"}},"mark":"line"}
+```
+
+
+```elixir
+defmodule LinearReg do
+  import Nx.Defn
+
+  defn predict({m, b}, x) do
+    m * x + b
+  end
+end
+
+# 2 x 5 + 10 = 20
+LinearReg.predict({2, 10}, 5)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64
+  20
+>
+```
+
+```elixir
+input = Nx.tensor([distance, duration])
+# 
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64[2]
+  [42195, 10800]
+>
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+
+```elixir
+defmodule LinearReg do
+  import Nx.Defn
+
+  defn predict({m, b}, x) do
+    Nx.dot(m, x) + b
+  end
+
+  def loss({m, b}, x, y) do
+    predicted_y = predict({m, b}, x)
+
+    predicted_y
+    |> Nx.subtract(y)
+    |> Nx.power(2)
+    |> Nx.mean()
+  end
+end
+
+LinearReg.predict({3, 10}, 2)
+LinearReg.loss({3, 10}, 2, 16)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  f32
+  0.0
+>
+```
+
+```elixir
+vo2_max = 55
+predictions = Squeeze.RacePredictor.predict_all_race_times(vo2_max)
+
+predictions
+|> Enum.map(fn {distance, duration} ->
+  %{distance: distance, duration: duration, vo2_max: vo2_max}
+end)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[
+  %{distance: 5000, duration: 1104, vo2_max: 55},
+  %{distance: 8000, duration: 1805, vo2_max: 55},
+  %{distance: 10000, duration: 2283, vo2_max: 55},
+  %{distance: 12000, duration: 2768, vo2_max: 55},
+  %{distance: 15000, duration: 3509, vo2_max: 55},
+  %{distance: 16090, duration: 3781, vo2_max: 55},
+  %{distance: 20000, duration: 4772, vo2_max: 55},
+  %{distance: 21097, duration: 5052, vo2_max: 55},
+  %{distance: 25000, duration: 6058, vo2_max: 55},
+  %{distance: 30000, duration: 7359, vo2_max: 55},
+  %{distance: 42195, duration: 10552, vo2_max: 55},
+  %{distance: 50000, duration: 12593, vo2_max: 55},
+  %{distance: 80450, duration: 20480, vo2_max: 55},
+  %{distance: 100000, duration: 25498, vo2_max: 55}
+]
+```
+
+```elixir
+# inputs: duration, distance
+# outputs: vo2_max
+
+# vo2_max range
+data =
+  50..70
+  |> Enum.flat_map(fn vo2_max ->
+    predictions = Squeeze.RacePredictor.predict_all_race_times(vo2_max)
+
+    predictions
+    |> Enum.map(fn {distance, duration} ->
+      %{distance: distance, duration: duration, vo2_max: vo2_max}
+    end)
+  end)
+  |> Enum.shuffle()
+
+Kino.DataTable.new(data)
+```
+
+```elixir
+# Take 75% for training data
+amount = round(length(data) * 0.75)
+
+training_inputs =
+  data
+  |> Enum.take(amount)
+  |> Enum.map(&[[&1.distance, &1.duration]])
+  |> Enum.map(&Nx.tensor/1)
+  |> Nx.concatenate()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64[221][2]
+  [
+    [100000, 20943],
+    [10000, 2066],
+    [16090, 3781],
+    [25000, 5180],
+    [25000, 5965],
+    [20000, 4557],
+    [25000, 5047],
+    [15000, 3309],
+    [10000, 2248],
+    [80450, 21110],
+    [21097, 5133],
+    [15000, 3356],
+    [30000, 7854],
+    [42195, 11248],
+    [16090, 3723],
+    [42195, 10237],
+    [5000, 1039],
+    [12000, 2954],
+    [25000, 6155],
+    [16090, 3416],
+    [16090, 3842],
+    [16090, 3237],
+    [100000, 21446],
+    [25000, 5618],
+    [16090, 3667],
+    ...
+  ]
+>
+```
+
+```elixir
+train_max = Nx.reduce_max(training_inputs, axes: [0], keep_axes: true)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64[1][2]
+  [
+    [100000, 26687]
+  ]
+>
+```
+
+```elixir
+normalized_training_inputs =
+  training_inputs
+  |> Nx.divide(train_max)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  f32[221][2]
+  [
+    [1.0, 0.7847641110420227],
+    [0.10000000149011612, 0.07741597294807434],
+    [0.16089999675750732, 0.14167946577072144],
+    [0.25, 0.19410200417041779],
+    [0.25, 0.22351707518100739],
+    [0.20000000298023224, 0.17075729370117188],
+    [0.25, 0.18911829590797424],
+    [0.15000000596046448, 0.12399295717477798],
+    [0.10000000149011612, 0.0842357724905014],
+    [0.8044999837875366, 0.7910218238830566],
+    [0.21096999943256378, 0.19234083592891693],
+    [0.15000000596046448, 0.12575411796569824],
+    [0.30000001192092896, 0.2943005859851837],
+    [0.42195001244544983, 0.42147862911224365],
+    [0.16089999675750732, 0.13950613141059875],
+    [0.42195001244544983, 0.3835950195789337],
+    [0.05000000074505806, 0.038932815194129944],
+    [0.11999999731779099, 0.11069060117006302],
+    [0.25, 0.23063664138317108],
+    [0.16089999675750732, 0.12800240516662598],
+    [0.16089999675750732, 0.1439652293920517],
+    [0.16089999675750732, 0.1212950125336647],
+    [1.0, 0.803612232208252],
+    [0.25, 0.21051448583602905],
+    [0.16089999675750732, 0.13740772008895874],
+    ...
+  ]
+>
+```
+
+```elixir
+training_targets =
+  data
+  |> Enum.take(amount)
+  |> Enum.map(&[&1.vo2_max])
+  |> Nx.tensor()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64[221][1]
+  [
+    [70],
+    [62],
+    [55],
+    [66],
+    [56],
+    [58],
+    [68],
+    [59],
+    [56],
+    [53],
+    [54],
+    [58],
+    [51],
+    [51],
+    [56],
+    [57],
+    [59],
+    [51],
+    [54],
+    [62],
+    [54],
+    [66],
+    [68],
+    [60],
+    [57],
+    [58],
+    [70],
+    [62],
+    [52],
+    [60],
+    [63],
+    [50],
+    [52],
+    [67],
+    [59],
+    [69],
+    [70],
+    [55],
+    [61],
+    [60],
+    [67],
+    [56],
+    [67],
+    [66],
+    [52],
+    [70],
+    [66],
+    [59],
+    [50],
+    [51],
+    ...
+  ]
+>
+```
+
+```elixir
+defmodule LinearReg do
+  import Nx.Defn
+
+  defn predict({m, b}, x) do
+    (Nx.sum(m * x, axes: [1]) + b)
+    |> Nx.reshape({:auto, 1})
+  end
+
+  defn loss({m, b}, x, y) do
+    predicted_y = predict({m, b}, x)
+
+    (predicted_y - y)
+    |> Nx.power(2)
+    |> Nx.mean()
+  end
+
+  defn update({m, b} = params, x, y) do
+    {grad_m, grad_b} = grad(params, &loss(&1, x, y))
+
+    {
+      m - grad_m * 0.01,
+      b - grad_b * 0.01
+    }
+  end
+
+  def train(inputs, targets) do
+    epochs = 100
+    init_params = {Nx.tensor([0.1, 0.1]), 0.1}
+
+    for _ <- 1..epochs, reduce: init_params do
+      acc ->
+        update(acc, inputs, targets)
+    end
+  end
+end
+
+{m, b} = LinearReg.train(normalized_training_inputs, training_targets)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{#Nx.Tensor<
+   f32[2]
+   [12.218367576599121, 10.258807182312012]
+ >,
+ #Nx.Tensor<
+   f32
+   47.26334762573242
+ >}
+```
+
+```elixir
+[m1, m2] = m |> Nx.to_flat_list()
+b1 = b |> Nx.to_number()
+[n1, n2] = train_max |> Nx.reshape({2}) |> Nx.to_flat_list()
+distance / n1 * m1 + duration / n2 * m2 + b1
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+56.5705390994178
+```
+
+
+```elixir
+defmodule XOR do
+  require Axon
+
+  defp build_model(input_shape1, input_shape2) do
+    inp1 = Axon.input("x1", shape: input_shape1)
+    inp2 = Axon.input("x2", shape: input_shape2)
+
+    inp1
+    |> Axon.concatenate(inp2)
+    |> Axon.dense(8, activation: :tanh)
+    |> Axon.dense(1, activation: :sigmoid)
+  end
+
+  def batch do
+    x1 = Nx.tensor(for _ <- 1..32, do: [Enum.random(0..1)])
+    x2 = Nx.tensor(for _ <- 1..32, do: [Enum.random(0..1)])
+    y = Nx.logical_xor(x1, x2)
+    [{%{"x1" => x1, "x2" => x2}, y}]
+  end
+
+  defp train_model(model, data, epochs) do
+    model
+    |> Axon.Loop.trainer(:binary_cross_entropy, :sgd)
+    |> Axon.Loop.run(data, %{}, epochs: epochs, iterations: 1000)
+  end
+
+  def run do
+    model = build_model({nil, 1}, {nil, 1})
+    # data = Stream.repeatedly(&batch/0)
+    data = batch()
+
+    model_state = train_model(model, data, 1)
+
+    IO.inspect(
+      Axon.predict(model, model_state, %{"x1" => Nx.tensor([[0]]), "x2" => Nx.tensor([[1]])})
+    )
+  end
+end
+
+# XOR.run()
+
+XOR.batch()
+
+# Nx.to_batched(XOR.batch(), 32)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[
+  {%{
+     "x1" => #Nx.Tensor<
+       s64[32][1]
+       [
+         [0],
+         [0],
+         [0],
+         [0],
+         [1],
+         [1],
+         [1],
+         [1],
+         [0],
+         [1],
+         [1],
+         [1],
+         [1],
+         [0],
+         [0],
+         [1],
+         [0],
+         [0],
+         [0],
+         [1],
+         [1],
+         [0],
+         [0],
+         [1],
+         [0],
+         [1],
+         [0],
+         [0],
+         [0],
+         [1],
+         [1],
+         [0]
+       ]
+     >,
+     "x2" => #Nx.Tensor<
+       s64[32][1]
+       [
+         [1],
+         [1],
+         [1],
+         [0],
+         [1],
+         [1],
+         [0],
+         [0],
+         [0],
+         [1],
+         [0],
+         [0],
+         [1],
+         [1],
+         [0],
+         [0],
+         [1],
+         [1],
+         [1],
+         [1],
+         [1],
+         [1],
+         [1],
+         [0],
+         [1],
+         [1],
+         [1],
+         [1],
+         [0],
+         [1],
+         [0],
+         [0]
+       ]
+     >
+   },
+   #Nx.Tensor<
+     u8[32][1]
+     [
+       [1],
+       [1],
+       [1],
+       [0],
+       [0],
+       [0],
+       [1],
+       [1],
+       [0],
+       [0],
+       [1],
+       [1],
+       [0],
+       [1],
+       [0],
+       [1],
+       [1],
+       [1],
+       [1],
+       [0],
+       [0],
+       [1],
+       [1],
+       [1],
+       [1],
+       [0],
+       [1],
+       [1],
+       [0],
+       [0],
+       [1],
+       [0]
+     ]
+   >}
+]
+```
+
+```elixir
+defmodule CreditCardFraud do
+  alias Axon.Loop.State
+
+  # Download data with a Kaggle account: https://www.kaggle.com/mlg-ulb/creditcardfraud/
+  @fname "examples/structured/creditcard.csv"
+
+  def data() do
+    IO.puts("Loading #{@fname}")
+    df = Explorer.DataFrame.from_csv!(@fname, dtypes: [{"Time", :float}])
+
+    {train_df, test_df} = split_train_test(df, 0.8)
+
+    IO.puts("Training Samples: #{inspect(Explorer.DataFrame.n_rows(train_df))}")
+    IO.puts("Testing Samples: #{inspect(Explorer.DataFrame.n_rows(test_df))}")
+    IO.write("\n\n")
+
+    {train_features, train_targets} = split_features_targets(train_df)
+    {test_features, test_targets} = split_features_targets(test_df)
+
+    train_features = normalize_data(train_features)
+    test_features = normalize_data(test_features)
+
+    {
+      {df_to_tensor(train_features), df_to_tensor(train_targets)},
+      {df_to_tensor(test_features), df_to_tensor(test_targets)}
+    }
+  end
+
+  defp split_train_test(df, portion) do
+    num_examples = Explorer.DataFrame.n_rows(df)
+    num_train = ceil(portion * num_examples)
+    num_test = num_examples - num_train
+
+    {
+      Explorer.DataFrame.slice(df, 0, num_train),
+      Explorer.DataFrame.slice(df, num_train, num_test)
+    }
+  end
+
+  defp split_features_targets(df) do
+    features = Explorer.DataFrame.select(df, &(&1 == "Class"), :drop)
+    targets = Explorer.DataFrame.select(df, &(&1 == "Class"), :keep)
+    {features, targets}
+  end
+
+  defp normalize(name),
+    do: fn df -> Explorer.Series.divide(df[name], Explorer.Series.max(df[name])) end
+
+  defp normalize_data(df) do
+    df
+    |> Explorer.DataFrame.names()
+    |> Map.new(&{&1, normalize(&1)})
+    |> then(&Explorer.DataFrame.mutate(df, &1))
+  end
+
+  defp df_to_tensor(df) do
+    df
+    |> Explorer.DataFrame.names()
+    |> Enum.map(&(Explorer.Series.to_tensor(df[&1]) |> Nx.new_axis(-1)))
+    |> Nx.concatenate(axis: 1)
+  end
+
+  defp build_model(num_features) do
+    Axon.input("input", shape: {nil, num_features})
+    |> Axon.dense(256)
+    |> Axon.relu()
+    |> Axon.dense(256)
+    |> Axon.relu()
+    |> Axon.dropout(rate: 0.3)
+    |> Axon.dense(1)
+    |> Axon.sigmoid()
+  end
+
+  defp summarize(%State{metrics: metrics} = state) do
+    IO.write("\n\n")
+
+    legit_transactions_declined = Nx.to_number(metrics["fp"])
+    legit_transactions_accepted = Nx.to_number(metrics["tn"])
+    fraud_transactions_accepted = Nx.to_number(metrics["fn"])
+    fraud_transactions_declined = Nx.to_number(metrics["tp"])
+    total_fraud = fraud_transactions_declined + fraud_transactions_accepted
+    total_legit = legit_transactions_declined + legit_transactions_accepted
+
+    fraud_denial_percent = 100 * (fraud_transactions_declined / total_fraud)
+    legit_denial_percent = 100 * (legit_transactions_declined / total_legit)
+
+    IO.puts("Legit Transactions Declined: #{legit_transactions_declined}")
+    IO.puts("Fraudulent Transactions Caught: #{fraud_transactions_declined}")
+    IO.puts("Fraudulent Transactions Missed: #{fraud_transactions_accepted}")
+    IO.puts("Likelihood of catching fraud: #{fraud_denial_percent}%")
+    IO.puts("Likelihood of denying legit transaction: #{legit_denial_percent}%")
+
+    {:continue, state}
+  end
+
+  defp metrics(loop) do
+    loop
+    |> Axon.Loop.metric(:true_positives, "tp", :running_sum)
+    |> Axon.Loop.metric(:true_negatives, "tn", :running_sum)
+    |> Axon.Loop.metric(:false_positives, "fp", :running_sum)
+    |> Axon.Loop.metric(:false_negatives, "fn", :running_sum)
+  end
+
+  defp test_model(model, model_state, test_data) do
+    model
+    |> Axon.Loop.evaluator()
+    |> metrics()
+    |> Axon.Loop.handle(:epoch_completed, &summarize/1)
+    |> Axon.Loop.run(test_data, model_state, compiler: EXLA)
+  end
+
+  defp train_model(model, loss, optimizer, train_data) do
+    model
+    |> Axon.Loop.trainer(loss, optimizer)
+    |> Axon.Loop.run(train_data, %{}, epochs: 30, compiler: EXLA)
+  end
+
+  def run() do
+    {train, test} = data()
+    {train_inputs, train_targets} = train
+    {test_inputs, test_targets} = test
+
+    fraud = Nx.sum(train_targets) |> Nx.to_number()
+    legit = Nx.size(train_targets) - fraud
+
+    batched_train_inputs = Nx.to_batched_list(train_inputs, 2048)
+    batched_train_targets = Nx.to_batched_list(train_targets, 2048)
+    batched_train = Stream.zip(batched_train_inputs, batched_train_targets)
+
+    batched_test_inputs = Nx.to_batched_list(test_inputs, 2048)
+    batched_test_targets = Nx.to_batched_list(test_targets, 2048)
+    batched_test = Stream.zip(batched_test_inputs, batched_test_targets)
+
+    IO.puts("# of legit transactions (train): #{legit}")
+    IO.puts("# of fraudulent transactions (train): #{fraud}")
+    IO.puts("% fraudlent transactions (train): #{100 * (fraud / (legit + fraud))}%")
+    IO.write("\n\n")
+
+    model = build_model(30)
+
+    loss =
+      &Axon.Losses.binary_cross_entropy(
+        &1,
+        &2,
+        negative_weight: 1 / legit,
+        positive_weight: 1 / fraud,
+        reduction: :mean
+      )
+
+    optimizer = Axon.Optimizers.adam(1.0e-2)
+
+    model
+    |> train_model(loss, optimizer, batched_train)
+    |> then(&test_model(model, &1, batched_test))
+  end
+end
+
+CreditCardFraud.data()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+Loading examples/structured/creditcard.csv
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.ClockBroadcaster] Clock Producer catched up with past times and is now running in normal time
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.ExecutionBroadcaster] Scheduling job for execution #Reference<0.2000889646.1519648770.96259>
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.ExecutionBroadcaster] Scheduling job for execution #Reference<0.2000889646.1519648770.96269>
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.ExecutionBroadcaster] Scheduling job for execution #Reference<0.2000889646.1519648770.96277>
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Task for job #Reference<0.2000889646.1519648770.96259> started on node lp6egcqp-livebook_p26co5a2@merle
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Task for job #Reference<0.2000889646.1519648770.96269> started on node lp6egcqp-livebook_p26co5a2@merle
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Task for job #Reference<0.2000889646.1519648770.96277> started on node lp6egcqp-livebook_p26co5a2@merle
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Execute started for job #Reference<0.2000889646.1519648770.96259>
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Execute started for job #Reference<0.2000889646.1519648770.96269>
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Execute started for job #Reference<0.2000889646.1519648770.96277>
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.ClockBroadcaster] Clock Producer catched up with past times and is now running in normal time
+[debug] QUERY OK source="challenges" db=10.3ms queue=0.4ms idle=7.2e3ms
+SELECT c0."id", c0."activity_type", c0."challenge_type", c0."start_date", c0."end_date", c0."name", c0."timeline", c0."private", c0."recurring", c0."slug", c0."segment_id", c0."polyline", c0."description", c0."user_id", c0."inserted_at", c0."updated_at" FROM "challenges" AS c0 WHERE (c0."end_date" >= $1) AND (c0."end_date" <= $2) [~D[2022-08-31], ~D[2022-09-02]]
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Execution ended for job #Reference<0.2000889646.1519648770.96277>, which yielded result: :ok
+[debug] QUERY OK source="challenges" db=11.5ms queue=0.5ms idle=7199.7ms
+SELECT c0."id", c0."activity_type", c0."challenge_type", c0."start_date", c0."end_date", c0."name", c0."timeline", c0."private", c0."recurring", c0."slug", c0."segment_id", c0."polyline", c0."description", c0."user_id", c0."inserted_at", c0."updated_at" FROM "challenges" AS c0 WHERE (c0."start_date" >= $1) AND (c0."start_date" <= $2) [~D[2022-09-01], ~D[2022-09-03]]
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Execution ended for job #Reference<0.2000889646.1519648770.96259>, which yielded result: :ok
+[debug] QUERY OK source="challenges" db=14.8ms queue=0.5ms idle=7199.8ms
+SELECT c0."id", c0."activity_type", c0."challenge_type", c0."start_date", c0."end_date", c0."name", c0."timeline", c0."private", c0."recurring", c0."slug", c0."segment_id", c0."polyline", c0."description", c0."user_id", c0."inserted_at", c0."updated_at" FROM "challenges" AS c0 WHERE (c0."end_date" >= $1) AND (c0."end_date" <= $2) [~D[2022-09-01], ~D[2022-09-03]]
+[debug] [:"lp6egcqp-livebook_p26co5a2@merle"][Elixir.Quantum.Executor] Execution ended for job #Reference<0.2000889646.1519648770.96269>, which yielded result: :ok
+
+```
+
+```elixir
+input =
+  Nx.tensor([distance, duration])
+  |> Nx.divide(train_max)
+
+LinearReg.predict({m, b}, input)
+
+Nx.tensor([[0.1, 0.1], [1, 3]])
+|> Nx.multiply(Nx.tensor([2, 3]))
+
+Nx.tensor([[0.1, 0.1], [1, 3]])
+
+training_inputs
+|> Nx.multiply(Nx.tensor([1, 3]))
+|> Nx.sum(axes: [1])
+|> Nx.add(12)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64[221]
+  [162841, 16210, 27445, 40552, 42907, 33683, 40153, 24939, 16756, 143792, 36508, 25080, 53574, 75951, 27271, 72918, 8129, 20874, 43477, 26350, 27628, 25813, 164350, 41866, 27103, 86141, 7703, 41416, 28012, 50493, 19419, 146873, 26061, 19041, 138467, 7736, 33427, 73863, 8042, 137672, 40351, 36031, 82007, 12662, 13694, 47955, 32255, 172255, 17443, 44413, ...]
+>
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[info]     :alarm_handler: {:set, {:system_memory_high_watermark, []}}
+
+```
+
+```elixir
+training_targets =
+  data
+  |> Enum.take(amount)
+  |> Enum.map(&[&1.vo2_max])
+  |> Nx.tensor()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  s64[221][1]
+  [
+    [58],
+    [50],
+    [58],
+    [64],
+    [57],
+    [53],
+    [50],
+    [69],
+    [51],
+    [61],
+    [70],
+    [66],
+    [59],
+    [50],
+    [57],
+    [55],
+    [70],
+    [54],
+    [55],
+    [53],
+    [68],
+    [53],
+    [68],
+    [65],
+    [65],
+    [68],
+    [55],
+    [58],
+    [67],
+    [60],
+    [67],
+    [62],
+    [56],
+    [50],
+    [60],
+    [64],
+    [58],
+    [56],
+    [64],
+    [69],
+    [66],
+    [63],
+    [65],
+    [63],
+    [61],
+    [61],
+    [51],
+    [56],
+    [58],
+    [66],
+    ...
+  ]
+>
+```
+
+```elixir
+batched_train_inputs = Nx.to_batched(training_inputs, 48)
+batched_train_targets = Nx.to_batched(training_targets, 48)
+batched_train = Stream.zip(batched_train_inputs, batched_train_targets)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Function<71.108234003/2 in Stream.zip_with/2>
+```
+
+```elixir
+model =
+  Axon.input("input", shape: {nil, 2})
+  |> Axon.dense(1)
+
+model_state =
+  model
+  |> Axon.Loop.trainer(:mean_squared_error, :adam)
+  |> Axon.Loop.metric(:precision)
+  |> Axon.Loop.metric(:recall)
+  |> Axon.Loop.run(batched_train, %{}, epochs: 30)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+Epoch: 0, Batch: 0, loss: 0.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 1, Batch: 0, loss: 685646464.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 2, Batch: 0, loss: 679036032.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 3, Batch: 0, loss: 672518336.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 4, Batch: 0, loss: 666068096.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 5, Batch: 0, loss: 659678912.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 6, Batch: 0, loss: 653348672.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 7, Batch: 0, loss: 647076864.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 8, Batch: 0, loss: 640863488.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 9, Batch: 0, loss: 634708544.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 10, Batch: 0, loss: 628612032.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 11, Batch: 0, loss: 622574080.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 12, Batch: 0, loss: 616594688.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 13, Batch: 0, loss: 610673664.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 14, Batch: 0, loss: 604810880.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 15, Batch: 0, loss: 599006016.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 16, Batch: 0, loss: 593259008.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 17, Batch: 0, loss: 587569600.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 18, Batch: 0, loss: 581937472.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 19, Batch: 0, loss: 576362176.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 20, Batch: 0, loss: 570843328.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 21, Batch: 0, loss: 565380672.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 22, Batch: 0, loss: 559973824.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 23, Batch: 0, loss: 554622400.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 24, Batch: 0, loss: 549326016.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 25, Batch: 0, loss: 544084352.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 26, Batch: 0, loss: 538897024.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 27, Batch: 0, loss: 533763520.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 28, Batch: 0, loss: 528683488.0000000 precision: 0.0000000 recall: 0.0000000
+Epoch: 29, Batch: 0, loss: 523656608.0000000 precision: 0.0000000 recall: 0.0000000
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{
+  "dense_0" => %{
+    "bias" => #Nx.Tensor<
+      f32[1]
+      [-0.13958919048309326]
+    >,
+    "kernel" => #Nx.Tensor<
+      f32[2][1]
+      [
+        [0.7030420899391174],
+        [-1.0507920980453491]
+      ]
+    >
+  }
+}
+```
+
+```elixir
+first = Nx.take(normalized_training_inputs, 3)
+# Axon.predict(model, model_state, first)
+
+%{"dense_0" => %{"bias" => b, "kernel" => m}} = model_state
+
+Nx.dot(first, m)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#Nx.Tensor<
+  f32[1]
+  [-0.01924746297299862]
+>
+```
