@@ -60,30 +60,33 @@ defmodule Squeeze.FileParser.TcxImport do
   end
 
   defp laps(doc) do
-    doc
-    |> laps_data()
-    |> Enum.with_index()
-    |> Enum.map(fn {lap, idx} ->
-      trackpoint_count = length(lap.trackpoints)
+    {laps, _} =
+      doc
+      |> laps_data()
+      |> Enum.with_index()
+      |> Enum.map_reduce(0, fn {lap, idx}, trackpoint_idx ->
+        trackpoint_count = length(lap.trackpoints)
 
-      %{
-        average_cadence: sum_by(lap.trackpoints, :cadence) / trackpoint_count,
-        average_speed: lap.distance / lap.elapsed_time,
-        distance: lap.distance,
-        elapsed_time: round(lap.elapsed_time),
-        lap_index: idx,
-        max_speed: lap.max_speed,
-        # TODO moving time
-        moving_time: round(lap.elapsed_time),
-        name: "Lap",
-        split: idx + 1,
-        start_date: start_date(lap.start_time),
-        start_date_local: start_date_local(lap.start_time),
-        # TODO elevation gain
-        total_elevation_gain: 0.0,
-        trackpoints: lap.trackpoints
-      }
-    end)
+        {%{
+           average_cadence: sum_by(lap.trackpoints, :cadence) / trackpoint_count,
+           average_speed: lap.distance / lap.elapsed_time,
+           distance: lap.distance,
+           elapsed_time: round(lap.elapsed_time),
+           lap_index: idx,
+           start_index: trackpoint_idx,
+           end_index: trackpoint_idx + trackpoint_count,
+           max_speed: lap.max_speed,
+           moving_time: round(lap.elapsed_time),
+           name: "Lap",
+           split: idx + 1,
+           start_date: start_date(lap.start_time),
+           start_date_local: start_date_local(lap.start_time),
+           total_elevation_gain: 0.0,
+           trackpoints: lap.trackpoints
+         }, trackpoint_idx + trackpoint_count}
+      end)
+
+    laps
   end
 
   def to_naive_datetime(t) do
