@@ -52,6 +52,11 @@ export function formatNumber(num, decimals = 0) {
   return `${firstPart}.${parts.join("")}`;
 }
 
+export function formatDistance(distance, imperial, digits = 1) {
+  const label = imperial ? "mi" : "km";
+  return `${calcDistance(distance, imperial, digits)} ${label}`;
+}
+
 export function loadScript(url) {
   const script = document.createElement("script");
   script.src = url;

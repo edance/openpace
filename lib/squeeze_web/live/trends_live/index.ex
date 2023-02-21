@@ -9,9 +9,11 @@ defmodule SqueezeWeb.TrendsLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
-    socket = assign(socket,
-      years: Stats.years_active(user)
-    )
+
+    socket =
+      assign(socket,
+        years: Stats.years_active(user)
+      )
 
     if connected?(socket) do
       send(self(), :fetch_summaries)
@@ -23,6 +25,11 @@ defmodule SqueezeWeb.TrendsLive.Index do
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  @impl true
+  def handle_event("open-activity", %{"slug" => slug}, socket) do
+    {:noreply, push_redirect(socket, to: Routes.activity_path(socket, :show, slug))}
   end
 
   defp apply_action(socket, :show, %{"year" => year}) do
@@ -51,24 +58,23 @@ defmodule SqueezeWeb.TrendsLive.Index do
 
     user
     |> Dashboard.list_activity_summaries()
-    |> Enum.map(fn (a) ->
+    |> Enum.map(fn a ->
       a
-      |> Map.merge(
-        %{
-          distance: Distances.to_float(a.distance, imperial: imperial),
-          year: a.start_at_local.year,
-          month: a.start_at_local.month,
-          velocity: velocity(a),
-          pace: Velocity.to_float(velocity(a), imperial: imperial),
-          elevation_gain: Distances.to_feet(a.elevation_gain, imperial: imperial)
-        }
-      )
+      |> Map.merge(%{
+        distance: Distances.to_float(a.distance, imperial: imperial),
+        year: a.start_at_local.year,
+        month: a.start_at_local.month,
+        velocity: velocity(a),
+        pace: Velocity.to_float(velocity(a), imperial: imperial),
+        elevation_gain: Distances.to_feet(a.elevation_gain, imperial: imperial)
+      })
     end)
   end
 
   defp velocity(%{distance: nil}), do: 0.0
   defp velocity(%{duration: nil}), do: 0.0
   defp velocity(%{duration: 0}), do: 0.0
+
   defp velocity(%{distance: distance, duration: duration}) do
     distance / duration
   end
