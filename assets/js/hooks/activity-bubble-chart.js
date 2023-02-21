@@ -1,13 +1,15 @@
 import * as d3 from "d3";
 import RBush from "rbush";
-import { pad } from "../utils";
+import { pad, formatNumber } from "../utils";
 
 function velocityToFormattedPace(velocity, imperial = false) {
   const distance = imperial ? 1609 : 1000; // Mile or kilometer
   const label = imperial ? "/mi" : "/km";
 
-  const min = Math.floor(distance / 60 / velocity);
-  const sec = Math.round(distance / velocity - min * 60);
+  const totalSecs = Math.round(distance / velocity);
+
+  const min = Math.floor(totalSecs / 60);
+  const sec = totalSecs - min * 60;
 
   return `${min}:${pad(sec)}${label}`;
 }
@@ -21,6 +23,8 @@ function velocityToFormattedPace(velocity, imperial = false) {
  */
 export default {
   mounted() {
+    const hook = this;
+
     // set the dimensions and margins of the graph
     const margin = { top: 30, right: 30, left: 120, bottom: 30 };
     const container = d3.select(this.el);
@@ -147,10 +151,20 @@ export default {
         d3.interpolateMagma
       );
 
+      // Start all the bubbles at the median point
+      const dots = data.map((d) => {
+        return {
+          ...d,
+          x: x(median),
+          y: height / 2,
+        };
+      });
+
       // Force simulation with collision detection
       const simulation = d3
-        .forceSimulation(data)
-        .velocityDecay(0.2)
+        .forceSimulation(dots)
+        // .alpha(0.2)
+        // .velocityDecay(0.2)
         .force(
           "x",
           d3.forceX((d) => x(d.velocity))
@@ -170,6 +184,23 @@ export default {
 
       window.force = simulation;
 
+      // Create an html tooltip
+      const tooltip = container.append("div").attr("class", "tooltip show");
+      // Hide offscreen instead of display: none;
+      tooltip.style("top", "-99999px");
+      const tooltipInner = tooltip.append("div").attr("class", "tooltip-inner");
+      const tooltipTitle = tooltipInner.append("strong");
+      const tooltipValue = tooltipInner.append("div");
+
+      // Handle click and touch events to open activity
+      canvas.on("mousedown", function () {
+        if (!selectedNode) {
+          return;
+        }
+
+        hook.pushEvent("open-activity", { slug: selectedNode.slug });
+      });
+
       // Handle mousemove events
       canvas.on("mousemove", function (event) {
         const [x, y] = d3.pointer(event);
@@ -183,12 +214,36 @@ export default {
         });
 
         // Set the selected node if it exists
-        selectedNode = result[0]?.slug;
-
-        // console.log("selectedNode", result[0]);
+        selectedNode = result[0];
 
         // Change to pointer
         document.body.style.cursor = result[0] ? "pointer" : "auto";
+
+        // Update the tooltip
+        if (selectedNode) {
+          const { name, distance, velocity } = selectedNode;
+
+          // Set the information in the tooltip
+          tooltipTitle.text(name);
+          const formattedPace = velocityToFormattedPace(velocity, imperial);
+          const label = imperial ? "mi" : "km";
+          const formattedDistance = `${formatNumber(distance, 1)} ${label}`;
+
+          tooltipValue.html(`${formattedDistance} &middot; ${formattedPace}`);
+
+          // Calculate the tooltip size
+          const clientRect = tooltip.node().getBoundingClientRect();
+          const tooltipWidth = clientRect.width;
+          const tooltipHeight = clientRect.height;
+
+          tooltip
+            .style("top", `${y - tooltipHeight - 20}px`)
+            .style("left", `${x - tooltipWidth / 2}px`);
+        } else {
+          // Hide offscreen instead of display: none;
+          // Tooltip height/width is zero when display: none;
+          tooltip.style("top", "-99999px");
+        }
 
         // If the simulation has finished, then redraw
         // No need to redraw if we are still animating
@@ -202,12 +257,12 @@ export default {
         context.clearRect(0, 0, width, height);
         context.save();
 
-        for (const d of data) {
+        for (const d of dots) {
           context.beginPath();
           context.moveTo(d.x + r(d.distance), d.y);
           context.arc(d.x, d.y, r(d.distance), 0, 2 * Math.PI);
           context.fillStyle =
-            d.slug === selectedNode ? "#fff" : color(d.velocity);
+            d.slug === selectedNode?.slug ? "#fff" : color(d.velocity);
           context.fill();
         }
         context.restore();
@@ -217,7 +272,7 @@ export default {
         tree.clear();
 
         // Build bounding boxes for each node
-        const nodes = data.map((d) => {
+        const nodes = dots.map((d) => {
           return {
             ...d,
             minX: d.x - r(d.distance),
