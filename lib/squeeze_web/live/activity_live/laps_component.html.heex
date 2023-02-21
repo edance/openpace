@@ -43,10 +43,13 @@
           <th scope="col">
             Time
           </th>
-          <th scope="col">
-            Cadence
-            <div class="small">steps/min</div>
-          </th>
+          <%= if show_cadence?(assigns) do %>
+            <th scope="col">
+              Cadence
+              <div class="small">steps/min</div>
+            </th>
+          <% end %>
+
           <th scope="col">
             Elevation
             <%= if @user.user_prefs.imperial do %>
@@ -65,7 +68,11 @@
             <td><%= format_distance(lap.distance, @user.user_prefs) %></td>
             <td><%= format_pace(%{distance: lap.distance, duration: lap.moving_time}, @user.user_prefs) %></td>
             <td><%= format_duration(lap.moving_time) %></td>
-            <td><%= lap.average_cadence * 2 %></td>
+            <%= if show_cadence?(assigns) do %>
+              <td>
+                <%= lap.average_cadence * 2 %>
+              </td>
+            <% end %>
             <td><%= lap.total_elevation_gain %></td>
           </tr>
         <% end %>
