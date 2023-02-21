@@ -118,10 +118,9 @@ export function parseDistance(distanceStr) {
 
 export function activityColor(type) {
   const map = {
-    Run: colors["red"],
-    Hike: colors["orange"],
-    Ride: colors["blue"],
-    Swim: colors["green"],
+    run: colors["red"],
+    bike: colors["blue"],
+    swim: colors["green"],
   };
 
   return map[type] || colors["yellow"];

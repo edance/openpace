@@ -20,7 +20,7 @@ export default {
     const dataset = JSON.parse(this.el.dataset['summaries']);
     const imperial = JSON.parse(this.el.dataset['imperial']);
     const data = dataset.map((val, idx) => {
-      const types = val.activities.map(x => x.type).filter((v, i, a) => a.indexOf(v) === i);
+      const types = val.activities.map(x => x.activity_type).filter((v, i, a) => a.indexOf(v) === i);
 
       return {
         date: parse(val.date, 'yyyy-MM-dd', new Date()),

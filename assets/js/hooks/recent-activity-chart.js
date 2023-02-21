@@ -19,7 +19,7 @@ function lastXWeeks() {
 // Return only activity types that have a distance of gt 0
 function eligibleTypes(field, activities) {
   const sumByType = activities.reduce((obj, a) => {
-    obj[a.type] = (obj[a.type] || 0) + a[field];
+    obj[a.activity_type] = (obj[a.activity_type] || 0) + a[field];
     return obj;
   }, {});
   return Object.keys(sumByType).filter((x) => sumByType[x] > 0);
@@ -33,7 +33,7 @@ export default {
     }, {});
 
     const dateMap = this.activities
-          .filter(x => x.type === type)
+          .filter(x => x.activity_type === type)
           .reduce((obj, activity) => {
             const date = DateTime.fromISO(activity.start_at_local).startOf("week");
             const dateStr = date.toISODate();
