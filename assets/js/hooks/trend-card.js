@@ -87,7 +87,7 @@ export default {
 
     this.handleEvent("summaries", ({ summaries }) => {
       // Filter for only runs
-      this.data = summaries.filter((d) => d.type === "Run");
+      this.data = summaries.filter((d) => d.activity_type === "run");
 
       // Animate the sums of various activity related figures
       this.animateAmount();

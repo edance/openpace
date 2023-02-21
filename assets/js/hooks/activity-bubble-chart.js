@@ -63,7 +63,7 @@ export default {
     let selectedNode;
 
     this.handleEvent("summaries", ({ summaries }) => {
-      const data = summaries.filter((d) => d.type === "Run");
+      const data = summaries.filter((d) => d.activity_type === "run");
 
       // X range (velocity low to high)
       const x = d3
