@@ -24,46 +24,48 @@ defmodule Squeeze.Dashboard do
     Activity
     |> by_user(user)
     |> by_date_range(date_range)
-    |> order_by([a], [desc: a.start_at])
-    |> Repo.all
+    |> order_by([a], desc: a.start_at)
+    |> Repo.all()
     |> Repo.preload(:user)
   end
 
   def list_activity_summaries(%User{} = user) do
     # time_window = Timex.now() |> Timex.shift(years: -1)
 
-    query = from a in Activity,
-      where: a.status == :complete,
-      # where: a.start_at > ^time_window,
-      where: [user_id: ^user.id],
-      order_by: [desc: :start_at],
-      select: %{
-        slug: a.slug,
-        name: a.name,
-        distance: a.distance,
-        duration: a.duration,
-        elevation_gain: a.elevation_gain,
-        type: a.type,
-        workout_type: a.workout_type,
-        start_at_local: a.start_at_local
-      }
+    query =
+      from a in Activity,
+        where: a.status == :complete,
+        # where: a.start_at > ^time_window,
+        where: [user_id: ^user.id],
+        order_by: [desc: :start_at],
+        select: %{
+          slug: a.slug,
+          name: a.name,
+          distance: a.distance,
+          duration: a.duration,
+          elevation_gain: a.elevation_gain,
+          activity_type: a.activity_type,
+          workout_type: a.workout_type,
+          start_at_local: a.start_at_local
+        }
 
     Repo.all(query)
   end
 
   def list_activity_exports(%User{} = user) do
-    query = from a in Activity,
-      where: a.status == :complete,
-      where: [user_id: ^user.id],
-      order_by: [desc: :start_at],
-      select: %{
-        distance: a.distance,
-        duration: a.duration,
-        elevation_gain: a.elevation_gain,
-        type: a.type,
-        workout_type: a.workout_type,
-        start_at_local: a.start_at_local
-      }
+    query =
+      from a in Activity,
+        where: a.status == :complete,
+        where: [user_id: ^user.id],
+        order_by: [desc: :start_at],
+        select: %{
+          distance: a.distance,
+          duration: a.duration,
+          elevation_gain: a.elevation_gain,
+          type: a.type,
+          workout_type: a.workout_type,
+          start_at_local: a.start_at_local
+        }
 
     Repo.all(query)
   end
@@ -80,8 +82,8 @@ defmodule Squeeze.Dashboard do
   def recent_activities(%User{} = user, page \\ 1) do
     Activity
     |> by_user(user)
-    |> where([a], not(is_nil(a.start_at)))
-    |> order_by([a], [desc: a.start_at])
+    |> where([a], not is_nil(a.start_at))
+    |> order_by([a], desc: a.start_at)
     |> by_page(page)
     |> Repo.all()
     |> Repo.preload(:user)
@@ -128,10 +130,11 @@ defmodule Squeeze.Dashboard do
   end
 
   def fetch_activity_by_external_id(%User{} = user, external_id) do
-    activity = Activity
-    |> by_user(user)
-    |> Repo.get_by(external_id: external_id)
-    |> Repo.preload([:user])
+    activity =
+      Activity
+      |> by_user(user)
+      |> Repo.get_by(external_id: external_id)
+      |> Repo.preload([:user])
 
     if activity do
       {:ok, activity}
@@ -162,10 +165,11 @@ defmodule Squeeze.Dashboard do
 
   """
   def get_detailed_activity_by_slug!(%User{} = user, slug) do
-    query = from a in Activity,
-      where: a.slug == ^slug,
-      where: [user_id: ^user.id],
-      preload: [:user, :trackpoint_set, :laps]
+    query =
+      from a in Activity,
+        where: a.slug == ^slug,
+        where: [user_id: ^user.id],
+        preload: [:user, :trackpoint_set, :laps]
 
     Repo.one!(query)
   end
@@ -245,18 +249,23 @@ defmodule Squeeze.Dashboard do
   end
 
   def create_laps(%Activity{} = _activity, laps) do
-    laps = Enum.map(laps, fn(row) ->
-      now = Timex.now() |> Timex.to_naive_datetime() |> NaiveDateTime.truncate(:second)
-      row
-      |> Map.put(:inserted_at, now)
-      |> Map.put(:updated_at, now)
-    end)
+    laps =
+      Enum.map(laps, fn row ->
+        now = Timex.now() |> Timex.to_naive_datetime() |> NaiveDateTime.truncate(:second)
 
-    {count, _} = Repo.insert_all(
-      ActivityLap,
-      laps,
-      on_conflict: {:replace_all_except, [:id]}, conflict_target: [:split, :activity_id]
-    )
+        row
+        |> Map.put(:inserted_at, now)
+        |> Map.put(:updated_at, now)
+      end)
+
+    {count, _} =
+      Repo.insert_all(
+        ActivityLap,
+        laps,
+        on_conflict: {:replace_all_except, [:id]},
+        conflict_target: [:split, :activity_id]
+      )
+
     {:ok, count}
   end
 
@@ -267,16 +276,20 @@ defmodule Squeeze.Dashboard do
   defp by_date(query, date) do
     start_at = Timex.beginning_of_day(date) |> Timex.to_datetime()
     end_at = Timex.end_of_day(date) |> Timex.to_datetime()
+
     from q in query,
-      where: (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or (q.planned_date == ^date)
+      where:
+        (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or q.planned_date == ^date
   end
 
   defp by_date_range(query, date_range) do
     start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
     end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+
     from q in query,
-      where: (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or
-             (q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last)
+      where:
+        (q.start_at_local >= ^start_at and q.start_at_local <= ^end_at) or
+          (q.planned_date >= ^date_range.first and q.planned_date <= ^date_range.last)
   end
 
   defp by_page(query, page, page_size \\ 24) do
