@@ -13,12 +13,13 @@ defmodule SqueezeWeb.SettingsLive do
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
 
-    socket = assign(socket,
-      page_title: "Settings",
-      current_user: user,
-      syncing: false,
-      changeset: Accounts.change_user(user)
-    )
+    socket =
+      assign(socket,
+        page_title: "Settings",
+        current_user: user,
+        syncing: false,
+        changeset: Accounts.change_user(user)
+      )
 
     {:ok, socket}
   end
@@ -29,9 +30,11 @@ defmodule SqueezeWeb.SettingsLive do
 
     case Accounts.update_user(user, user_params) do
       {:ok, _} ->
-        socket = socket
-        |> put_flash(:info, gettext("Your preferences have been updated"))
-        |> redirect(to: Routes.dashboard_path(socket, :index))
+        socket =
+          socket
+          |> put_flash(:info, gettext("Your preferences have been updated"))
+          |> redirect(to: Routes.dashboard_path(socket, :index))
+
         {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->

@@ -20,8 +20,10 @@ defmodule SqueezeWeb.StravaIntegrationController do
     cond do
       user = Accounts.get_user_by_credential(credential_params) ->
         sign_in_and_redirect(conn, client, user, params)
+
       conn.assigns[:current_user] ->
         connect_and_redirect(conn, client, athlete, params)
+
       true ->
         create_user_and_redirect(conn, client, athlete, params)
     end
@@ -45,6 +47,8 @@ defmodule SqueezeWeb.StravaIntegrationController do
   end
 
   defp user_attrs(client, athlete, params) do
+    gender = if athlete.sex == "M", do: :male, else: :female
+
     attrs = %{
       first_name: athlete.firstname,
       last_name: athlete.lastname,
@@ -54,18 +58,22 @@ defmodule SqueezeWeb.StravaIntegrationController do
       country: athlete.country,
       user_prefs: %{
         imperial: athlete.country == "United States",
-        rename_activities: params["rename"] == "true"
+        rename_activities: params["rename"] == "true",
+        gender: gender
       }
     }
+
     attrs |> Map.merge(token_attrs(client))
   end
 
   defp connect_and_redirect(conn, client, athlete, params) do
     user = conn.assigns.current_user
     credential_params = credential_params(client, athlete)
+
     case Accounts.create_credential(user, credential_params) do
       {:ok, _credentials} ->
         redirect_user(conn, params)
+
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
@@ -76,6 +84,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
   defp sign_in_and_redirect(conn, client, user, params) do
     credential = Enum.find(user.credentials, &(&1.provider == "strava"))
     {:ok, _credential} = Accounts.update_credential(credential, token_attrs(client))
+
     conn
     |> Auth.sign_in(user)
     |> redirect_user(params)
@@ -88,6 +97,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
     with {:ok, user} <- Accounts.create_user(user_params),
          {:ok, _credentials} <- Accounts.create_credential(user, credential_params) do
       Reporter.report_new_user(user)
+
       conn
       |> Auth.sign_in(user)
       |> redirect_user(params)
