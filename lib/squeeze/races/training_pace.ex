@@ -12,29 +12,33 @@ defmodule Squeeze.Races.TrainingPace do
   embedded_schema do
     field :color, :string
     field :name, :string
-    field :long, :boolean # This only counts if the run has been marked "long"
-    field :speed, :float # meters per second
-    field :min_speed, :float # meters per second
-    field :max_speed, :float # meters per second
+    # This only counts if the run has been marked "long"
+    field :long, :boolean
+    # meters per second
+    field :speed, :float
+    # meters per second
+    field :min_speed, :float
+    # meters per second
+    field :max_speed, :float
   end
 
   def default_paces(distance, duration) do
     # Easy: MP + 1-2min (need to research more)
     # LR: 25-30% of weekly mileage
-    # Marathon pace: MP
-    # Strength/Tempo: MP - 10 sec
-    # 10k speed: Use race predictor
-    # 5k speed: Use race predictor
-    vo2_max = RacePredictor.estimated_vo2max(distance, duration)
-    marathon_speed = marathon_speed(distance, duration, vo2_max)
+    # Marathon pace: MP +/- 10 secs
+    # Strength/Tempo: MP - 10 secs through 88% of vo2max
+    # Interval pace: 95%-100% of vo2max
+    # Repetition pace: 105%-110% of vo2max
+    vo2max = RacePredictor.estimated_vo2max(distance, duration)
+    marathon_speed = marathon_speed(distance, duration, vo2max)
 
     [
-      easy_pace(marathon_speed, vo2_max),
-      long_pace(marathon_speed, vo2_max),
-      marathon_pace(marathon_speed, vo2_max),
-      tempo_pace(marathon_speed, vo2_max),
-      tenk_pace(marathon_speed, vo2_max),
-      fivek_pace(marathon_speed, vo2_max)
+      easy_pace(marathon_speed, vo2max),
+      long_pace(marathon_speed, vo2max),
+      marathon_pace(marathon_speed, vo2max),
+      tempo_pace(marathon_speed, vo2max),
+      interval_pace(marathon_speed, vo2max),
+      repetition_pace(marathon_speed, vo2max)
     ]
   end
 
@@ -55,7 +59,7 @@ defmodule Squeeze.Races.TrainingPace do
 
   # Easy: 1:30-2:30min on MP per mile
   # Moderate: 1-2min
-  def easy_pace(marathon_speed, _vo2_max) do
+  def easy_pace(marathon_speed, _vo2max) do
     %{
       color: Colors.green(),
       name: "Easy",
@@ -66,7 +70,7 @@ defmodule Squeeze.Races.TrainingPace do
   end
 
   # Long Run: 30sec-2min
-  def long_pace(marathon_speed, _vo2_max) do
+  def long_pace(marathon_speed, _vo2max) do
     %{
       color: Colors.teal(),
       name: "Long Run",
@@ -76,27 +80,50 @@ defmodule Squeeze.Races.TrainingPace do
     }
   end
 
-  def marathon_pace(marathon_speed, _vo2_max) do
+  def marathon_pace(marathon_speed, _vo2max) do
     %{
       color: Colors.blue(),
       name: "Marathon",
       long: false,
-      speed: marathon_speed
+      min_speed: adjust_pace_by_secs(marathon_speed, -10),
+      max_speed: adjust_pace_by_secs(marathon_speed, 10)
     }
   end
 
-  def tempo_pace(marathon_speed, _vo2_max) do
+  def tempo_pace(marathon_speed, vo2max) do
     %{
       color: Colors.yellow(),
       name: "Tempo",
       long: false,
-      speed: adjust_pace_by_secs(marathon_speed, -10)
+      min_speed: adjust_pace_by_secs(marathon_speed, -10),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.88)
     }
   end
 
-  def tenk_pace(_marathon_speed, vo2_max) do
+  def interval_pace(_marathon_speed, vo2max) do
+    %{
+      color: Colors.orange(),
+      name: "Interval",
+      long: false,
+      min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.95),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.0)
+    }
+  end
+
+  def repetition_pace(_marathon_speed, vo2max) do
+    %{
+      color: Colors.red(),
+      name: "Repeats",
+      long: false,
+      min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.05),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.1)
+    }
+  end
+
+  def tenk_pace(_marathon_speed, vo2max) do
     distance = 10_000
-    t = RacePredictor.predict_race_time(distance, vo2_max)
+    t = RacePredictor.predict_race_time(distance, vo2max)
+
     %{
       color: Colors.orange(),
       name: "10k",
@@ -105,9 +132,10 @@ defmodule Squeeze.Races.TrainingPace do
     }
   end
 
-  def fivek_pace(_marathon_speed, vo2_max) do
+  def fivek_pace(_marathon_speed, vo2max) do
     distance = 5_000
-    t = RacePredictor.predict_race_time(distance, vo2_max)
+    t = RacePredictor.predict_race_time(distance, vo2max)
+
     %{
       color: Colors.red(),
       name: "5k",
@@ -117,12 +145,12 @@ defmodule Squeeze.Races.TrainingPace do
   end
 
   # Base pace is your marathon pace or equivalent
-  defp marathon_speed(distance, duration, vo2_max) do
+  defp marathon_speed(distance, duration, vo2max) do
     if distance == marathon_in_meters() do
       distance / duration
     else
       distance = marathon_in_meters()
-      duration = RacePredictor.predict_race_time(distance, vo2_max)
+      duration = RacePredictor.predict_race_time(distance, vo2max)
       distance / duration
     end
   end
