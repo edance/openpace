@@ -1,12 +1,12 @@
 <div class="card mb-3 overflow-hidden">
   <div class="row no-gutters">
     <%= if @activity.polyline do %>
-      <div class="col-4 col-md-12 col-lg-4">
+      <div class="col-12 col-md-12 col-lg-4">
         <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: @activity.polyline) %>
       </div>
     <% end %>
 
-    <div class="col-8 col-md-12 col-lg-8">
+    <div class="col-12 col-md-12 col-lg-8">
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col">
@@ -19,13 +19,13 @@
 
         <div class="row pt-4">
           <%= if @activity.distance > 0 do %>
-            <div class="col-4">
+            <div class="col-4 mb-2">
               <div class="text-xs text-uppercase text-muted mb-0">Distance</div>
               <span class="h4 font-weight-bold mb-0"><%= format_distance(@activity.distance, @current_user.user_prefs) %></span>
             </div>
           <% end %>
 
-          <div class="col-4">
+          <div class="col-4 mb-2">
             <div class="text-xs text-uppercase text-muted mb-0">
               Time
             </div>
@@ -33,7 +33,7 @@
           </div>
 
           <%= if @activity.distance > 0 && String.contains?(@activity.type, "Run") do %>
-            <div class="col-4">
+            <div class="col-4 mb-2">
               <div class="text-xs text-uppercase text-muted mb-0">
                 Pace
               </div>
@@ -44,7 +44,7 @@
           <% end %>
 
           <%= if @activity.elevation_gain > 0 do %>
-            <div class="col-4">
+            <div class="col-4 mb-2">
               <div class="text-xs text-uppercase text-muted mb-0">
                 Elevation
               </div>
