@@ -1,13 +1,13 @@
 <!-- Page content -->
 <div class="position-relative py-5">
   <div class="container container-dashboard">
-    <%= live_component(SqueezeWeb.Dashboard.CardsComponent, id: "overview-cards", current_user: @current_user, current_streak: @current_streak, activity_summaries: @activity_summaries, race_goal: @race_goal) %>
+    <.live_component module={SqueezeWeb.Dashboard.CardsComponent} id="overview-cards" current_user={@current_user} current_streak={@current_streak} activity_summaries={@activity_summaries} race_goal={@race_goal} />
 
     <div class="row mt-5">
       <div class="col-xl-3 col-md-6 offset-md-6 order-last offset-xl-0 order-xl-first">
-        <%= live_component(SqueezeWeb.Dashboard.ProfileCardComponent, current_user: @current_user, ytd_run_stats: @ytd_run_stats) %>
+        <.live_component module={SqueezeWeb.Dashboard.ProfileCardComponent} id="profile-card" current_user={@current_user} ytd_run_stats={@ytd_run_stats} />
 
-        <%= live_component(SqueezeWeb.Dashboard.ChallengesCardComponent, id: "challenges-card", current_user: @current_user, challenges: @challenges) %>
+        <.live_component module={SqueezeWeb.Dashboard.ChallengesCardComponent} id="challenges-card" current_user={@current_user} challenges={@challenges} />
 
         <div class="card bg-gradient-default">
           <div class="card-header bg-transparent">
@@ -58,10 +58,10 @@
       </div>
 
       <div class="col-xl-5 col-md-6 mb-5 mb-xl-0">
-        <%= live_component(SqueezeWeb.Dashboard.RecentActivitiesCardComponent, id: "recent-activity-card", current_user: @current_user, activity_summaries: @activity_summaries, date: @date) %>
+        <.live_component module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent} id="recent-activity-card" current_user={@current_user} activity_summaries={@activity_summaries} date={@date} />
 
         <%= for activity <- @activities do %>
-          <%= live_component(SqueezeWeb.Dashboard.MiniActivityCardComponent, activity: activity, current_user: @current_user) %>
+          <.live_component module={SqueezeWeb.Dashboard.MiniActivityCardComponent} id={activity.slug} activity={activity} current_user={@current_user} />
         <% end %>
 
       </div>
@@ -85,9 +85,9 @@
           </div>
         <% end %>
 
-        <%= live_component(SqueezeWeb.Dashboard.MiniCalendarComponent, id: "mini-calendar-card", current_user: @current_user, activity_map: @activity_map) %>
+        <.live_component module={SqueezeWeb.Dashboard.MiniCalendarComponent} id="mini-calendar-card" current_user={@current_user} activity_map={@activity_map} />
 
-        <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
+        <.live_component module={SqueezeWeb.RaceLive.UpcomingRacesCard} id="upcoming-races" race_goals={@race_goals} current_user={@current_user} />
       </div>
     </div>
     <div class="row mt-5">
