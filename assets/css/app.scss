@@ -175,3 +175,17 @@
   overflow: auto;
 }
 .table-responsive thead th { position: sticky; top: 0; z-index: 1; }
+
+.svg-polyline-component {
+  height: 200px;
+
+  @include media-breakpoint-up(lg) {
+    height: 100%;
+  }
+
+  svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
