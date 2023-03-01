@@ -15,7 +15,7 @@ defmodule SqueezeWeb.RaceLive.UpcomingRacesCard do
     cyan
   )
 
-  def race_date(%{start_date: date}) do
+  def race_date(%{race_date: date}) do
     date
     |> Timex.format!("%B #{Ordinal.ordinalize(date.day)}, %Y", :strftime)
   end

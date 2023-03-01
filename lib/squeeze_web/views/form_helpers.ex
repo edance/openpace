@@ -8,8 +8,6 @@ defmodule SqueezeWeb.FormHelpers do
 
   import Phoenix.HTML
 
-  alias Squeeze.Duration
-
   map =
     &Enum.map(&1, fn i ->
       pre = if i < 10, do: "0"
@@ -70,20 +68,9 @@ defmodule SqueezeWeb.FormHelpers do
     end
   end
 
-  def duration_input(form, field, opts \\ []) do
-    default_opts = [
-      autocomplete: "off",
-      class: "time-input #{opts[:class]}",
-      placeholder: opts[:placeholder] || "hh:mm:ss",
-      value: Map.get(form.data, field) |> Duration.format()
-    ]
-
-    opts = Keyword.merge(opts, default_opts)
-    input(form, field, opts)
-  end
-
   def duration_select(form, field, opts \\ []) do
     id = "#{form.id}_duration_select_#{field}"
+
     content_tag(:div, id: id, class: "duration-select form-row", phx_hook: "DurationSelect") do
       [
         select_tag(form, field, :hours, opts),
@@ -131,8 +118,9 @@ defmodule SqueezeWeb.FormHelpers do
       |> Keyword.put(:name, field)
       |> Keyword.put(:prompt, field |> Atom.to_string())
 
-    class_list = "#{opts[:class]} slim-select"
+    class_list = "#{opts[:class]}"
     opts = Keyword.merge(opts, class: class_list)
+
     content_tag(:div, class: "col") do
       select(form, parent, @minsec, opts)
     end
