@@ -10,15 +10,18 @@ defmodule SqueezeWeb.RaceLive.Index do
     user = socket.assigns.current_user
     changeset = Races.change_race_goal(%RaceGoal{})
     activities = Races.list_race_activities(user)
+    prev_race_goals = Races.list_previous_race_goals(user)
     race_goals = Races.list_upcoming_race_goals(user)
 
-    socket = assign(socket,
-      activities: activities,
-      page_title: "Races",
-      current_user: user,
-      changeset: changeset,
-      race_goals: race_goals
-    )
+    socket =
+      assign(socket,
+        activities: activities,
+        page_title: "Races",
+        current_user: user,
+        changeset: changeset,
+        prev_race_goals: prev_race_goals,
+        race_goals: race_goals
+      )
 
     {:ok, socket}
   end
@@ -39,6 +42,7 @@ defmodule SqueezeWeb.RaceLive.Index do
 
   def format_start_at_local(start_at) do
     date = Ordinal.ordinalize(start_at.day)
+
     start_at
     |> Timex.format!("%a %b #{date}, %Y at %-I:%M %p", :strftime)
   end

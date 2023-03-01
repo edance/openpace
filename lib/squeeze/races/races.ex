@@ -45,10 +45,10 @@ defmodule Squeeze.Races do
   end
 
   def create_race_goal(%User{} = user, attrs \\ %{}) do
-    changeset = %RaceGoal{}
-    |> RaceGoal.changeset(attrs)
-    |> Changeset.cast_assoc(:race, with: &Race.changeset/2)
-    |> Changeset.put_change(:user_id, user.id)
+    changeset =
+      %RaceGoal{}
+      |> RaceGoal.changeset(attrs)
+      |> Changeset.put_change(:user_id, user.id)
 
     changeset
     |> Changeset.put_embed(:training_paces, default_paces(changeset))
@@ -56,20 +56,34 @@ defmodule Squeeze.Races do
   end
 
   def list_race_activities(%User{} = user) do
-    query = from a in Activity,
-      where: [user_id: ^user.id],
-      where: [workout_type: :race],
-      order_by: [desc: :start_at]
+    query =
+      from a in Activity,
+        where: [user_id: ^user.id],
+        where: [workout_type: :race],
+        order_by: [desc: :start_at]
 
     Repo.all(query)
   end
 
+  def list_previous_race_goals(%User{} = user) do
+    query =
+      from rg in RaceGoal,
+        join: r in assoc(rg, :race),
+        where: r.start_date <= ^today(user),
+        where: rg.user_id == ^user.id,
+        order_by: [asc: r.start_date]
+
+    query
+    |> Repo.all()
+    |> Repo.preload([:race, :activity])
+  end
+
   def next_race_goal(%User{} = user) do
-    query = from rg in RaceGoal,
-      join: r in assoc(rg, :race),
-      where: [user_id: ^user.id],
-      order_by: [asc: r.start_date],
-      limit: 1
+    query =
+      from rg in RaceGoal,
+        where: [user_id: ^user.id],
+        order_by: [asc: rg.race_date],
+        limit: 1
 
     query
     |> Repo.one()
@@ -77,11 +91,11 @@ defmodule Squeeze.Races do
   end
 
   def list_upcoming_race_goals(%User{} = user) do
-    query = from rg in RaceGoal,
-      join: r in assoc(rg, :race),
-      where: r.start_date >= ^today(user),
-      where: rg.user_id == ^user.id,
-      order_by: [asc: r.start_date]
+    query =
+      from rg in RaceGoal,
+        where: rg.race_date >= ^today(user),
+        where: rg.user_id == ^user.id,
+        order_by: [asc: rg.race_date]
 
     query
     |> Repo.all()
@@ -89,12 +103,13 @@ defmodule Squeeze.Races do
   end
 
   def list_race_goals(%User{} = user, %{first: first, last: last}) do
-    query = from rg in RaceGoal,
-      join: r in assoc(rg, :race),
-      where: r.start_date >= ^first,
-      where: r.start_date <= ^last,
-      where: rg.user_id == ^user.id,
-      order_by: [asc: r.start_date]
+    query =
+      from rg in RaceGoal,
+        join: r in assoc(rg, :race),
+        where: r.start_date >= ^first,
+        where: r.start_date <= ^last,
+        where: rg.user_id == ^user.id,
+        order_by: [asc: r.start_date]
 
     query
     |> Repo.all()
@@ -146,6 +161,7 @@ defmodule Squeeze.Races do
   defp default_paces(changeset) do
     distance = Changeset.get_change(changeset, :distance)
     duration = Changeset.get_change(changeset, :duration)
+
     if distance && duration do
       TrainingPace.default_paces(distance, duration)
     else

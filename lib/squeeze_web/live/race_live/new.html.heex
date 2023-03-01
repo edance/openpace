@@ -7,27 +7,25 @@
       </div>
       <!-- Card body -->
       <div class="card-body">
-        <%= inputs_for f, :race, fn r -> %>
-          <div class="form-group">
-            <%= label r, :name, class: "form-control-label" %>
-            <%= input r, :name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
+        <div class="form-group">
+          <%= label f, :race_name, class: "form-control-label" %>
+          <%= input f, :race_name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
+        </div>
+
+        <div class="form-group">
+          <%= label(f, :distance, class: "form-control-label") %>
+          <%= select(f, :distance, distances(), class: "distance-select form-control", placeholder: "Choose a distance") %>
+          <%= error_tag(f, :distance) %>
+        </div>
+
+        <div class="form-group">
+          <%= label(f, "Race Date", class: "form-control-label") %>
+          <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+            <%= text_input f, :race_date, class: "form-control date-picker d-none", data: [inline: true] %>
           </div>
 
-          <div class="form-group">
-            <%= label(f, :distance, class: "form-control-label") %>
-            <%= select(f, :distance, distances(), class: "distance-select form-control", placeholder: "Choose a distance") %>
-            <%= error_tag(f, :distance) %>
-          </div>
-
-          <div class="form-group">
-            <%= label(r, "Race Date", class: "form-control-label") %>
-            <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
-              <%= text_input r, :start_date, class: "form-control date-picker d-none", data: [inline: true] %>
-            </div>
-
-            <%= error_tag r, :start_date %>
-          </div>
-        <% end %>
+          <%= error_tag f, :race_date %>
+        </div>
       </div>
     </div>
 
@@ -54,6 +52,12 @@
           </label>
         </div>
 
+        <div class="form-group">
+          <%= label(f, :description, class: "form-control-label") %>
+          <%= textarea f, :description, placeholder: "Description", class: "form-control", rows: "10" %>
+          <%= error_tag(f, :description) %>
+        </div>
+
         <%= if @changeset.action do %>
           <div class="alert alert-danger">
             <p class="text-sm mb-0">
@@ -62,7 +66,7 @@
           </div>
         <% end %>
 
-        <div class="form-group mt-4">
+        <div class="form-group mt-6">
           <%= submit "Create Race", class: "btn btn-primary" %>
         </div>
       </div>

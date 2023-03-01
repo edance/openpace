@@ -72,7 +72,7 @@
             </h5>
             <span class="h2 font-weight-bold mb-0">
               <%= if @race_goal do %>
-                <%= format_ordinal_date(@race_goal.race.start_date) %>
+                <%= format_ordinal_date(@race_goal.race_date) %>
               <% else %>
                 Not Planned
               <% end %>
@@ -87,7 +87,7 @@
 
         <p class="mt-3 mb-0 text-muted text-sm">
           <%= if @race_goal do %>
-            <span class="text-nowrap">Race <%= relative_date(@current_user, @race_goal.race.start_date) %></span>
+            <span class="text-nowrap">Race <%= relative_date(@current_user, @race_goal.race_date) %></span>
           <% else %>
             <%= link("Plan a Race »", to: Routes.race_path(@socket, :new), class: "text-nowrap") %>
           <% end %>

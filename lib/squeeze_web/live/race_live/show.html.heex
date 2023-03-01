@@ -5,11 +5,11 @@
         <div class="row">
           <div class="col">
             <h1 class="display-3 mb-0">
-              <%= @race.name %>
+              <%= @race_goal.race_name %>
             </h1>
 
             <p class="mt-0">
-              <%= format_ordinal_date(@race.start_date) %> (<%= relative_date(@current_user, @race.start_date) %>)
+              <%= format_ordinal_date(@race_goal.race_date) %> (<%= relative_date(@current_user, @race_goal.race_date) %>)
             </p>
           </div>
           <div class="col-auto text-right">
