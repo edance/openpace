@@ -68,10 +68,9 @@ defmodule Squeeze.Races do
   def list_previous_race_goals(%User{} = user) do
     query =
       from rg in RaceGoal,
-        join: r in assoc(rg, :race),
-        where: r.start_date <= ^today(user),
+        where: rg.race_date <= ^today(user),
         where: rg.user_id == ^user.id,
-        order_by: [asc: r.start_date]
+        order_by: [asc: rg.race_date]
 
     query
     |> Repo.all()

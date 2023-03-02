@@ -28,6 +28,7 @@ defmodule SqueezeWeb.ConnCase do
       import Phoenix.ConnTest
       import SqueezeWeb.Router.Helpers
       import Squeeze.Factory
+      import Plug.HTML, only: [html_escape: 1]
 
       alias SqueezeWeb.Router.Helpers, as: Routes
 
@@ -58,15 +59,19 @@ defmodule SqueezeWeb.ConnCase do
   def sign_in_user(conn, user), do: Auth.sign_in(conn, user)
 
   defp put_auth_header(conn, nil), do: conn
+
   defp put_auth_header(conn, user) do
     {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
     conn
     |> Conn.put_req_header("authorization", "Bearer #{token}")
   end
 
   defp put_session_token(conn, nil), do: conn
+
   defp put_session_token(conn, user) do
     {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
     conn
     |> Phoenix.ConnTest.init_test_session(%{})
     |> Conn.put_session(:guardian_default_token, token)

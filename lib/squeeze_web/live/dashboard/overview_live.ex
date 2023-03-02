@@ -19,24 +19,29 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     activity_map = activity_map(summaries)
     race_goals = Races.list_upcoming_race_goals(user)
 
-    socket = assign(socket,
-      page_title: "Dashboard",
-      current_user: user,
-      activity_map: activity_map,
-      activity_summaries: summaries,
-      challenges: Challenges.list_current_challenges(user),
-      current_streak: Stats.current_activity_streak(user),
-      race_goal: List.first(race_goals),
-      race_goals: race_goals,
-      ytd_run_stats: Stats.ytd_run_summary(user)
-    )
+    socket =
+      assign(socket,
+        page_title: "Dashboard",
+        current_user: user,
+        activity_map: activity_map,
+        activity_summaries: summaries,
+        challenges: Challenges.list_current_challenges(user),
+        current_streak: Stats.current_activity_streak(user),
+        race_goal: List.first(race_goals),
+        race_goals: race_goals,
+        ytd_run_stats: Stats.ytd_run_summary(user)
+      )
 
     {:ok, socket}
   end
 
   @impl true
   def handle_event("load-week", params, socket) do
-    {:noreply, push_patch(socket, to: Routes.overview_path(socket, :index, date: params["date"]), replace: true)}
+    {:noreply,
+     push_patch(socket,
+       to: Routes.overview_path(socket, :index, date: params["date"]),
+       replace: true
+     )}
   end
 
   @impl true
@@ -51,11 +56,13 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       load_strava_history(user, credential)
     end
 
-    socket = assign(socket,
-      activities: activities,
-      syncing: sync_history?(params, socket),
-      date: date
-    )
+    socket =
+      assign(socket,
+        activities: activities,
+        syncing: sync_history?(params, socket),
+        date: date
+      )
+
     {:noreply, socket}
   end
 
@@ -76,12 +83,12 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   defp personal_records(%{current_user: user}) do
     user.user_prefs.personal_records
     |> Enum.reject(&(is_nil(&1.duration) || &1.duration == 0))
-    |> Enum.sort_by(&(&1.distance))
+    |> Enum.sort_by(& &1.distance)
   end
 
   defp activity_map(summaries) do
     summaries
-    |> Enum.reduce(%{}, fn(x, acc) ->
+    |> Enum.reduce(%{}, fn x, acc ->
       date = x.start_at_local |> Timex.to_date()
       list = Map.get(acc, date, [])
       Map.put(acc, date, [x | list])
@@ -89,6 +96,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   end
 
   defp parse_date(%User{} = user, nil), do: TimeHelper.today(user)
+
   defp parse_date(%User{} = user, date) do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date
@@ -98,6 +106,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
 
   defp load_strava_history(user, credential) do
     view = self()
+
     Task.start_link(fn ->
       HistoryLoader.load_recent(user, credential)
       send(view, :sync_finished)
