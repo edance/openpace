@@ -9,13 +9,11 @@ defmodule SqueezeWeb.RaceLive.Index do
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
     changeset = Races.change_race_goal(%RaceGoal{})
-    activities = Races.list_race_activities(user)
     prev_race_goals = Races.list_previous_race_goals(user)
     race_goals = Races.list_upcoming_race_goals(user)
 
     socket =
       assign(socket,
-        activities: activities,
         page_title: "Races",
         current_user: user,
         changeset: changeset,

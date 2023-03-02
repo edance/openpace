@@ -7,13 +7,14 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
   import Squeeze.Factory
 
   alias Squeeze.Accounts
+  alias Squeeze.Guardian.Plug
   # alias Squeeze.Dashboard
   # alias Squeeze.Dashboard.Activity
 
   describe "#request" do
     test "redirects to strava auth url", %{conn: conn} do
       Squeeze.Strava.MockAuth
-      |> expect(:authorize_url!, fn(_) -> "https://www.strava.com" end)
+      |> expect(:authorize_url!, fn _ -> "https://www.strava.com" end)
 
       conn = get(conn, "/integration/strava")
       assert redirected_to(conn) =~ ~r/https:\/\/www.strava.com/
@@ -25,7 +26,7 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
     test "creates a user and redirects if no user", %{conn: conn} do
       mock_get_token()
       athlete = build(:detailed_athlete)
-      Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn(_) -> athlete end)
+      Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn _ -> athlete end)
 
       post(conn, "/integration/strava/callback", code: "1234")
       credential = Accounts.get_credential("strava", athlete.id)
@@ -38,16 +39,16 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
       athlete = build(:detailed_athlete)
       insert(:credential, provider: "strava", uid: athlete.id)
 
-      Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn(_) -> athlete end)
+      Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn _ -> athlete end)
       conn = post(conn, "/integration/strava/callback", code: "1234")
 
-      assert conn.assigns.current_user.id != user.id
+      assert Plug.current_resource(conn).id != user.id
     end
 
     test "creates a credential for the user already signed in", %{conn: conn, user: user} do
       mock_get_token()
       athlete = build(:detailed_athlete)
-      Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn(_) -> athlete end)
+      Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn _ -> athlete end)
 
       post(conn, "/integration/strava/callback", code: "1234")
       {:ok, credential} = Accounts.fetch_credential_by_provider(user, "strava")
@@ -64,7 +65,7 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
 
   defp mock_get_token do
     Squeeze.Strava.MockAuth
-    |> expect(:get_token!, fn(_) ->
+    |> expect(:get_token!, fn _ ->
       %{token: %{access_token: "access_token", refresh_token: "refresh_token"}}
     end)
   end
@@ -72,6 +73,6 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
   defp setup_successful_mocks do
     mock_get_token()
 
-    Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn(_) -> build(:detailed_athlete) end)
+    Squeeze.Strava.MockAuth |> expect(:get_athlete!, fn _ -> build(:detailed_athlete) end)
   end
 end
