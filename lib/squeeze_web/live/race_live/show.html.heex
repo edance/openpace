@@ -22,53 +22,18 @@
         <div class="card">
         </div>
 
-        <div class="card">
-          <div class="card-body">
-            <ul>
-              <li>A - Training paces for the course - Automatically generated</li>
-              <li>A - Training plan for the marathon - Allow them to select from a list?</li>
-              <li>A - Personal Records for the marathon</li>
-              <li>B - Weekly effort - look in the Jeff Daniels book for formula</li>
-              <li>C - Map of the course</li>
-              <li>C - Elevation chart of the course</li>
-            </ul>
+        <%= if @activity do %>
+          <%= if show_map?(assigns) do %>
+            <div id="activity-map"
+                 class="activity-map"
+                 phx-hook="ActivityMap"
+                 phx-update="ignore"
+            >
+            </div>
+          <% end %>
 
-            <%= unless @race_goal.just_finish do %>
-              <div class="row pt-4">
-                <div class="col">
-                  <div class="text-xs text-uppercase text-muted mb-0">
-                    Distance
-                  </div>
-                  <span class="h4 font-weight-bold mb-0">
-                    <%= distance_name(@race_goal.distance, @current_user) %>
-                  </span>
-                </div>
-
-                <div class="col">
-                  <div class="text-xs text-uppercase text-muted mb-0">
-                    Goal
-                  </div>
-                  <span class="h4 font-weight-bold mb-0">
-                    <%= format_duration(@race_goal.duration) %>
-                  </span>
-                </div>
-
-                <div class="col">
-                  <div class="text-xs text-uppercase text-muted mb-0">
-                    Pace
-                  </div>
-                  <span class="h4 font-weight-bold mb-0">
-                    <%= if @race_goal.duration do %>
-                      <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
-                    <% else %>
-                      <%= gettext("N/A") %>
-                    <% end %>
-                  </span>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
+          <%= live_component(SqueezeWeb.ActivityLive.LapsComponent, user: @current_user, activity: @activity) %>
+        <% end %>
       </div>
 
       <div class="col-12 col-md-3">
@@ -76,16 +41,27 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h5 class="card-title text-uppercase text-muted mb-0">
-                  <%= gettext("Race Goal") %>
-                </h5>
-                <span class="h2 font-weight-bold mb-0">
-                  <%= if @race_goal.just_finish do %>
-                    <%= gettext("Finish") %>
-                  <% else %>
-                    <%= format_duration(@race_goal.duration) %>
-                  <% end %>
-                </span>
+                <%= if @activity do %>
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    <%= gettext("Race Results") %>
+                  </h5>
+
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= format_duration(@activity.duration) %>
+                  </span>
+                <% else %>
+
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    <%= gettext("Race Goal") %>
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= if @race_goal.just_finish do %>
+                      <%= gettext("Finish") %>
+                    <% else %>
+                      <%= format_duration(@race_goal.duration) %>
+                    <% end %>
+                  </span>
+                <% end %>
               </div>
               <div class="col-auto">
                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -108,10 +84,14 @@
                   Pace
                 </div>
                 <span class="h4 font-weight-bold mb-0">
-                  <%= if @race_goal.just_finish do %>
-                    <%= gettext("N/A") %>
+                  <%= if @activity do %>
+                    <%= format_pace(@activity, @current_user.user_prefs) %>
                   <% else %>
-                    <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                    <%= if @race_goal.duration do %>
+                      <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                    <% else %>
+                      <%= gettext("N/A") %>
+                    <% end %>
                   <% end %>
                 </span>
               </div>

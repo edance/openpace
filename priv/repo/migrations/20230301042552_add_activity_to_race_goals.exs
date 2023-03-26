@@ -6,6 +6,6 @@ defmodule Squeeze.Repo.Migrations.AddActivityToRaceGoals do
       add :activity_id, references(:activities, on_delete: :delete_all)
     end
 
-    create index(:race_goals, [:activity_id])
+    create unique_index(:race_goals, [:activity_id])
   end
 end
