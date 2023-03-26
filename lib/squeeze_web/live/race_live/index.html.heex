@@ -16,7 +16,12 @@
                   <div class="col">
                     <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "card-title" %>
                     <p class="text-sm text-muted mb-0">
-                      <%= format_ordinal_date(race_goal.race_date) %> · Race
+                      <%= if race_goal.activity do %>
+                        <%= format_start_at_local(race_goal.activity.start_at_local) %>
+                      <% else %>
+                        <%= format_ordinal_date(race_goal.race_date) %>
+                      <% end %>
+                      · Race
                     </p>
                   </div>
                 </div>

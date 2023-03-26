@@ -10,15 +10,16 @@ defmodule Squeeze.ChallengeFactory do
         {type, _} = Enum.random(Ecto.Enum.mappings(Challenge, :challenge_type))
         {timeline, _} = Enum.random(Ecto.Enum.mappings(Challenge, :timeline))
 
-        name = [timeline, type, :challenge]
-        |> Enum.map(&Atom.to_string/1)
-        |> Enum.map_join(" ", &String.capitalize/1)
+        name =
+          [timeline, type, :challenge]
+          |> Enum.map(&Atom.to_string/1)
+          |> Enum.map_join(" ", &String.capitalize/1)
 
         user = build(:user)
 
         %Challenge{
           activity_type: :run,
-          slug: sequence(:slug, &("#{&1}")),
+          slug: sequence(:slug, &"#{Squeeze.SlugGenerator.gen_slug()}#{&1}"),
           challenge_type: type,
           timeline: timeline,
           name: name,
@@ -32,8 +33,9 @@ defmodule Squeeze.ChallengeFactory do
       end
 
       def recurring_challenge_factory do
-        start_date = Timex.today() |>  Timex.beginning_of_week() |> Timex.to_date()
+        start_date = Timex.today() |> Timex.beginning_of_week() |> Timex.to_date()
         end_date = start_date |> Timex.end_of_week() |> Timex.to_date()
+
         struct!(
           challenge_factory(),
           %{
@@ -41,7 +43,7 @@ defmodule Squeeze.ChallengeFactory do
             timeline: :week,
             challenge_type: :distance,
             start_date: start_date,
-            end_date: end_date,
+            end_date: end_date
           }
         )
       end
@@ -51,13 +53,14 @@ defmodule Squeeze.ChallengeFactory do
           challenge_factory(),
           %{
             start_date: Date.forward(1),
-            end_date: Date.forward(10),
+            end_date: Date.forward(10)
           }
         )
       end
 
       def with_scores(%Challenge{} = challenge, count \\ 5) do
         scores = insert_list(count, :score, challenge: challenge)
+
         %{challenge | scores: scores}
       end
     end

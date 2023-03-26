@@ -24,11 +24,13 @@
 
         <%= if @activity do %>
           <%= if show_map?(assigns) do %>
-            <div id="activity-map"
-                 class="activity-map"
-                 phx-hook="ActivityMap"
-                 phx-update="ignore"
-            >
+            <div class="card overflow-hidden">
+              <div id="activity-map"
+                   class="activity-map"
+                   phx-hook="ActivityMap"
+                   phx-update="ignore"
+              >
+              </div>
             </div>
           <% end %>
 

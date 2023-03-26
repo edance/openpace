@@ -197,7 +197,7 @@ defmodule Squeeze.Dashboard do
 
   defp create_goal_if_race({:ok, %Activity{} = activity}) do
     if activity.workout_type == :race do
-      Races.create_race_goal_from_activity(activity)
+      Races.find_or_create_race_goal_from_activity(activity)
       {:ok, activity}
     else
       {:ok, activity}
