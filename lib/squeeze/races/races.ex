@@ -55,6 +55,17 @@ defmodule Squeeze.Races do
     |> Repo.insert_with_slug()
   end
 
+  def find_or_create_race_goal_from_activity(activity) do
+    date = Timex.to_date(activity.start_at_local)
+    race_goal = Repo.get_by(RaceGoal, user_id: activity.user_id, race_date: date)
+
+    if race_goal do
+      {:ok, race_goal}
+    else
+      create_race_goal_from_activity(activity)
+    end
+  end
+
   def create_race_goal_from_activity(activity) do
     attrs = %{
       race_name: activity.name,
