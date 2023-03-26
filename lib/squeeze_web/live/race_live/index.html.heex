@@ -5,7 +5,9 @@
         <div class="card mb-3 overflow-hidden">
           <div class="row no-gutters">
             <div class="col-md-4">
-              <%#= live_component(SqueezeWeb.SvgPolylineComponent, polyline: activity.polyline) %>
+              <%= if race_goal.activity do %>
+                <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: race_goal.activity.polyline) %>
+              <% end %>
             </div>
 
             <div class="col-md-8">

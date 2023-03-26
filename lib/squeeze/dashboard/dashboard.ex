@@ -7,6 +7,7 @@ defmodule Squeeze.Dashboard do
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
   alias Squeeze.Dashboard.{Activity, ActivityLap, TrackpointSet}
+  alias Squeeze.Races
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
 
@@ -191,7 +192,19 @@ defmodule Squeeze.Dashboard do
     |> Activity.changeset(attrs)
     |> Changeset.put_change(:user_id, user.id)
     |> Repo.insert_with_slug()
+    |> create_goal_if_race()
   end
+
+  defp create_goal_if_race({:ok, %Activity{} = activity}) do
+    if activity.workout_type == :race do
+      Races.create_race_goal_from_activity(activity)
+      {:ok, activity}
+    else
+      {:ok, activity}
+    end
+  end
+
+  defp create_goal_if_race(res), do: res
 
   @doc """
   Updates a activity.

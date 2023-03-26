@@ -35,7 +35,7 @@ defmodule Squeeze.Races do
   def get_race_goal!(slug) do
     RaceGoal
     |> Repo.get_by!(slug: slug)
-    |> Repo.preload([:race])
+    |> Repo.preload(activity: [:trackpoint_set, :laps])
   end
 
   def create_race(attrs \\ %{}) do
@@ -49,6 +49,25 @@ defmodule Squeeze.Races do
       %RaceGoal{}
       |> RaceGoal.changeset(attrs)
       |> Changeset.put_change(:user_id, user.id)
+
+    changeset
+    |> Changeset.put_embed(:training_paces, default_paces(changeset))
+    |> Repo.insert_with_slug()
+  end
+
+  def create_race_goal_from_activity(activity) do
+    attrs = %{
+      race_name: activity.name,
+      race_date: activity.start_at_local,
+      duration: activity.duration,
+      distance: activity.distance
+    }
+
+    changeset =
+      %RaceGoal{}
+      |> RaceGoal.changeset(attrs)
+      |> Changeset.put_change(:user_id, activity.user_id)
+      |> Changeset.put_change(:activity_id, activity.id)
 
     changeset
     |> Changeset.put_embed(:training_paces, default_paces(changeset))
@@ -70,7 +89,7 @@ defmodule Squeeze.Races do
       from rg in RaceGoal,
         where: rg.race_date <= ^today(user),
         where: rg.user_id == ^user.id,
-        order_by: [asc: rg.race_date]
+        order_by: [desc: rg.race_date]
 
     query
     |> Repo.all()

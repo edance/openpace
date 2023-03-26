@@ -29,12 +29,6 @@ defmodule SqueezeWeb.RaceLive.Index do
     user = socket.assigns.current_user
     Races.create_race_goal(user, params)
 
-    # with {:ok, race} <- Races.create_race(params),
-    #      {:ok, _goal} <- Races.create_race_goal(user, race) do
-    # end
-    # Save the race
-    # Add the user to the race
-    # Set a goal time
     {:noreply, socket}
   end
 

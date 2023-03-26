@@ -40,5 +40,6 @@ defmodule Squeeze.Races.RaceGoal do
     race_goal
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint(:activity_id)
   end
 end
