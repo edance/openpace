@@ -9,7 +9,7 @@ defmodule Squeeze.Races do
   alias Squeeze.Repo
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
   alias Squeeze.Races.{Race, RaceGoal, TrainingPace}
 
   @doc """

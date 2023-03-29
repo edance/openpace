@@ -1,10 +1,10 @@
-defmodule Squeeze.Dashboard.Activity do
+defmodule Squeeze.Activities.Activity do
   @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, Lap, TrackpointSet}
+  alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
   alias Squeeze.Distances
   alias Squeeze.Duration
 

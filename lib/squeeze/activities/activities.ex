@@ -1,12 +1,12 @@
-defmodule Squeeze.Dashboard do
+defmodule Squeeze.Activities do
   @moduledoc """
-  The Dashboard context.
+  The Activities context.
   """
 
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, Lap, TrackpointSet}
+  alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
   alias Squeeze.Races
   alias Squeeze.Repo
   alias Squeeze.TimeHelper

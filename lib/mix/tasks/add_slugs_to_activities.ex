@@ -2,7 +2,7 @@ defmodule Mix.Tasks.AddSlugsToActivities do
   use Mix.Task
   @moduledoc false
 
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
   alias Squeeze.Repo
 
   @doc false

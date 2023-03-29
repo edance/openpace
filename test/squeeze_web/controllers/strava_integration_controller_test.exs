@@ -8,8 +8,8 @@ defmodule SqueezeWeb.StravaIntegrationControllerTest do
 
   alias Squeeze.Accounts
   alias Squeeze.Guardian.Plug
-  # alias Squeeze.Dashboard
-  # alias Squeeze.Dashboard.Activity
+  # alias Squeeze.Activities
+  # alias Squeeze.Activities.Activity
 
   describe "#request" do
     test "redirects to strava auth url", %{conn: conn} do

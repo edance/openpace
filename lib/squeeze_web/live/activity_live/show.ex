@@ -3,14 +3,14 @@ defmodule SqueezeWeb.ActivityLive.Show do
   @moduledoc false
 
   alias Number.Delimit
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Distances
   alias Squeeze.Strava.ActivityLoader
 
   @impl true
   def mount(%{"slug" => slug}, _session, socket) do
     user = socket.assigns.current_user
-    activity = Dashboard.get_detailed_activity_by_slug!(user, slug)
+    activity = Activities.get_detailed_activity_by_slug!(user, slug)
 
     if connected?(socket) && !activity.trackpoint_set do
       send(self(), :fetch_detailed_info)
@@ -41,7 +41,7 @@ defmodule SqueezeWeb.ActivityLive.Show do
 
     if credential && existing_activity.external_id do
       ActivityLoader.update_or_create_activity(credential, existing_activity.external_id)
-      activity = Dashboard.get_detailed_activity_by_slug!(user, existing_activity.slug)
+      activity = Activities.get_detailed_activity_by_slug!(user, existing_activity.slug)
 
       socket =
         socket
