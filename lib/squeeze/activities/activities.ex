@@ -30,6 +30,20 @@ defmodule Squeeze.Activities do
     |> Repo.preload(:user)
   end
 
+  def list_laps(%User{} = user, date_range, _opts \\ []) do
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+
+    query =
+      from l in Lap,
+        join: a in assoc(l, :activity),
+        where: a.user_id == ^user.id,
+        where: a.activity_type == :run,
+        where: a.start_at_local >= ^start_at and a.start_at_local <= ^end_at
+
+    Repo.all(query)
+  end
+
   def list_activity_summaries(%User{} = user) do
     # time_window = Timex.now() |> Timex.shift(years: -1)
 

@@ -19,8 +19,18 @@
           </div>
         </div>
 
-        <div class="card">
-        </div>
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="">Training</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              Race Results
+            </a>
+          </li>
+        </ul>
+
+        <.live_component module={SqueezeWeb.Races.TrainingCardComponent} id="training-card" current_user={@current_user} activities={@activities} laps={@laps} />
 
         <%= if @activity do %>
           <%= if show_map?(assigns) do %>
@@ -33,8 +43,6 @@
               </div>
             </div>
           <% end %>
-
-          <%= live_component(SqueezeWeb.ActivityLive.LapsComponent, user: @current_user, activity: @activity) %>
         <% end %>
       </div>
 
