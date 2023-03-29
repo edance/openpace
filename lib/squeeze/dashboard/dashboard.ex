@@ -6,7 +6,7 @@ defmodule Squeeze.Dashboard do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, ActivityLap, TrackpointSet}
+  alias Squeeze.Dashboard.{Activity, Lap, TrackpointSet}
   alias Squeeze.Races
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
@@ -273,7 +273,7 @@ defmodule Squeeze.Dashboard do
 
     {count, _} =
       Repo.insert_all(
-        ActivityLap,
+        Lap,
         laps,
         on_conflict: {:replace_all_except, [:id]},
         conflict_target: [:split, :activity_id]
