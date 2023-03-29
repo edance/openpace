@@ -1,7 +1,7 @@
-defmodule Squeeze.Dashboard.ActivityTest do
+defmodule Squeeze.Activities.ActivityTest do
   use Squeeze.DataCase
 
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
   alias Squeeze.Repo
 
   import Squeeze.Factory

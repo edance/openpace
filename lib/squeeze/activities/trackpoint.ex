@@ -1,4 +1,4 @@
-defmodule Squeeze.Dashboard.Trackpoint do
+defmodule Squeeze.Activities.Trackpoint do
   @moduledoc false
 
   use Ecto.Schema

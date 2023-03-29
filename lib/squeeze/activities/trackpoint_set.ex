@@ -1,10 +1,10 @@
-defmodule Squeeze.Dashboard.TrackpointSet do
+defmodule Squeeze.Activities.TrackpointSet do
   @moduledoc false
 
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Squeeze.Dashboard.{Activity, Trackpoint}
+  alias Squeeze.Activities.{Activity, Trackpoint}
 
   @required_fields ~w()a
   @optional_fields ~w()a

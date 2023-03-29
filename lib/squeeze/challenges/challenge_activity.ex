@@ -5,7 +5,7 @@ defmodule Squeeze.Challenges.ChallengeActivity do
   import Ecto.Changeset
 
   alias Squeeze.Challenges.Challenge
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
 
   @required_fields ~w(amount)a
   @optional_fields ~w()a

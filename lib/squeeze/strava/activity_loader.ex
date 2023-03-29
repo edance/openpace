@@ -6,7 +6,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   alias Squeeze.Accounts.Credential
   alias Squeeze.ActivityMatcher
   alias Squeeze.Challenges.ScoreUpdater
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Notifications
   alias Squeeze.Repo
   alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}
@@ -32,7 +32,7 @@ defmodule Squeeze.Strava.ActivityLoader do
     activity = ActivityFormatter.format(strava_activity)
     case ActivityMatcher.get_closest_activity(user, activity) do
       nil ->
-        with {:ok, activity} <- Dashboard.create_activity(user, activity),
+        with {:ok, activity} <- Activities.create_activity(user, activity),
              {:ok, _} <- save_laps(activity, strava_activity.laps),
              {:ok, _} <- save_trackpoints(credential, activity) do
           Notifications.notify_new_activity(activity)
@@ -40,7 +40,7 @@ defmodule Squeeze.Strava.ActivityLoader do
           {:ok, activity}
         end
       existing_activity ->
-        with {:ok, activity} <- Dashboard.update_activity(existing_activity, activity),
+        with {:ok, activity} <- Activities.update_activity(existing_activity, activity),
              {:ok, _} <- save_laps(activity, strava_activity.laps),
              {:ok, _} <- save_trackpoints(credential, activity) do
           {:ok, activity}
@@ -58,7 +58,7 @@ defmodule Squeeze.Strava.ActivityLoader do
     case fetch_streams(strava_activity_id, credential) do
       {:ok, stream_set} ->
         trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set)
-        Dashboard.create_trackpoint_set(activity, trackpoints)
+        Activities.create_trackpoint_set(activity, trackpoints)
 
       {:error, %{status: 404}} -> {:ok, []} # Manually created activities do not have streams
     end
@@ -67,7 +67,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   defp save_laps(_, nil), do: {:ok, 0}
   defp save_laps(activity, laps) do
     laps = Enum.map(laps, &(format_lap(activity, &1)))
-    Dashboard.create_laps(activity, laps)
+    Activities.create_laps(activity, laps)
   end
 
   defp format_lap(activity, lap) do

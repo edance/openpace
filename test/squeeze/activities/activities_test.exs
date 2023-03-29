@@ -1,7 +1,7 @@
-defmodule Squeeze.DashboardTest do
+defmodule Squeeze.ActivitiesTest do
   use Squeeze.DataCase
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.TimeHelper
 
   import Squeeze.Factory
@@ -14,7 +14,7 @@ defmodule Squeeze.DashboardTest do
       today = TimeHelper.to_date(user, now)
       insert_pair(:planned_activity, planned_date: today)
       range = Date.range(Timex.shift(today, days: -1), Timex.shift(today, days: 1))
-      activities = Dashboard.list_activities(activity.user, range)
+      activities = Activities.list_activities(activity.user, range)
 
       assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity.id)
       assert length(activities) == 1
@@ -28,7 +28,7 @@ defmodule Squeeze.DashboardTest do
       insert(:activity, user: user, start_at: beginning_of_day)
       insert(:activity, user: user, start_at: end_of_day)
       insert(:activity, user: user, start_at: Timex.shift(end_of_day, minutes: 1))
-      activities = Dashboard.list_activities(user, Date.range(today, today))
+      activities = Activities.list_activities(user, Date.range(today, today))
       assert length(activities) == 2
     end
   end
@@ -37,7 +37,7 @@ defmodule Squeeze.DashboardTest do
     test "includes only the users activities" do
       activity1 = insert(:activity)
       activity2 = insert(:activity, start_at: activity1.start_at)
-      activities = Dashboard.recent_activities(activity1.user)
+      activities = Activities.recent_activities(activity1.user)
       assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
       refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
     end
@@ -52,7 +52,7 @@ defmodule Squeeze.DashboardTest do
       date = TimeHelper.today(user)
       activity1 = insert(:planned_activity, %{user: user, planned_date: date})
       activity2 = insert(:planned_activity, %{user: user, planned_date: Date.add(date, 1)})
-      activities = Dashboard.todays_activities(user)
+      activities = Activities.todays_activities(user)
       assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
       refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
     end
@@ -62,20 +62,20 @@ defmodule Squeeze.DashboardTest do
     test "returns the activity if found" do
       activity = insert(:activity)
       user = activity.user
-      assert activity.id == Dashboard.get_activity!(user, activity.id).id
+      assert activity.id == Activities.get_activity!(user, activity.id).id
     end
 
     test "raises error if activity does not belong to user" do
       activity = insert(:activity)
       user = insert(:user)
       assert_raise Ecto.NoResultsError, fn ->
-        Dashboard.get_activity!(user, activity.id) end
+        Activities.get_activity!(user, activity.id) end
     end
 
     test "raises error if activity does not exist" do
       user = insert(:user)
       assert_raise Ecto.NoResultsError, fn ->
-        Dashboard.get_activity!(user, "1234") end
+        Activities.get_activity!(user, "1234") end
     end
   end
 
@@ -83,20 +83,20 @@ defmodule Squeeze.DashboardTest do
     test "returns the activity if found" do
       activity = insert(:activity)
       user = activity.user
-      assert activity.id == Dashboard.get_detailed_activity_by_slug!(user, activity.slug).id
+      assert activity.id == Activities.get_detailed_activity_by_slug!(user, activity.slug).id
     end
 
     test "raises error if activity does not belong to user" do
       activity = insert(:activity)
       user = insert(:user)
       assert_raise Ecto.NoResultsError, fn ->
-        Dashboard.get_detailed_activity_by_slug!(user, activity.slug) end
+        Activities.get_detailed_activity_by_slug!(user, activity.slug) end
     end
 
     test "raises error if activity does not exist" do
       user = insert(:user)
       assert_raise Ecto.NoResultsError, fn ->
-        Dashboard.get_detailed_activity_by_slug!(user, "1234") end
+        Activities.get_detailed_activity_by_slug!(user, "1234") end
     end
   end
 
@@ -104,7 +104,7 @@ defmodule Squeeze.DashboardTest do
     test "creates a trackpoint set and trackpoints" do
       activity = insert(:activity)
       trackpoints = [%{distance: 0.0, time: 0}, %{distance: 10.0, time: 4}]
-      {:ok, set} = Dashboard.create_trackpoint_set(activity, trackpoints)
+      {:ok, set} = Activities.create_trackpoint_set(activity, trackpoints)
       assert length(set.trackpoints) == 2
       refute set.id == nil
       assert set.activity_id == activity.id

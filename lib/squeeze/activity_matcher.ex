@@ -4,7 +4,7 @@ defmodule Squeeze.ActivityMatcher do
   """
 
   alias Squeeze.Accounts.{User}
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
 
   @doc """
   Gets the closest activity for a user given an activity.
@@ -29,7 +29,7 @@ defmodule Squeeze.ActivityMatcher do
   def get_closest_activity(%User{} = user, %{} = activity) do
     date = Timex.to_date(activity.start_at_local)
     user
-    |> Dashboard.get_activities_by_date(date)
+    |> Activities.get_activities_by_date(date)
     |> Enum.filter(&(&1.type == activity.type))
     |> Enum.sort(fn(a, b) -> match_score(a, activity) > match_score(b, activity) end)
     |> List.first()

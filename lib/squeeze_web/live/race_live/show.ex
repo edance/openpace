@@ -2,7 +2,7 @@ defmodule SqueezeWeb.RaceLive.Show do
   use SqueezeWeb, :live_view
   @moduledoc false
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Distances
   alias Squeeze.RacePredictor
   alias Squeeze.Races
@@ -62,7 +62,7 @@ defmodule SqueezeWeb.RaceLive.Show do
 
     if credential && existing_activity.external_id do
       ActivityLoader.update_or_create_activity(credential, existing_activity.external_id)
-      activity = Dashboard.get_detailed_activity_by_slug!(user, existing_activity.slug)
+      activity = Activities.get_detailed_activity_by_slug!(user, existing_activity.slug)
 
       socket =
         socket

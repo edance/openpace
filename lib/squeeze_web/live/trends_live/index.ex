@@ -1,7 +1,7 @@
 defmodule SqueezeWeb.TrendsLive.Index do
   use SqueezeWeb, :live_view
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Distances
   alias Squeeze.Stats
   alias Squeeze.Velocity
@@ -57,7 +57,7 @@ defmodule SqueezeWeb.TrendsLive.Index do
     imperial = user.user_prefs.imperial
 
     user
-    |> Dashboard.list_activity_summaries()
+    |> Activities.list_activity_summaries()
     |> Enum.map(fn a ->
       a
       |> Map.merge(%{
