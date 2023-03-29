@@ -1,4 +1,4 @@
-defmodule Squeeze.Dashboard.ActivityLap do
+defmodule Squeeze.Dashboard.Lap do
   @moduledoc false
 
   use Ecto.Schema
