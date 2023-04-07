@@ -27,27 +27,29 @@ defmodule Squeeze.ActivityMatcher do
 
   """
   def get_closest_activity(%User{} = user, %{} = activity) do
+    case Activities.fetch_activity_by_external_id(activity.external_id) do
+      {:ok, activity} ->
+        activity
+
+      _ ->
+        get_closest_pending_activity(user, activity)
+    end
+  end
+
+  defp get_closest_pending_activity(user, activity) do
     date = Timex.to_date(activity.start_at_local)
+
     user
-    |> Activities.get_activities_by_date(date)
+    |> Activities.get_pending_activities_by_date(date)
     |> Enum.filter(&(&1.type == activity.type))
-    |> Enum.sort(fn(a, b) -> match_score(a, activity) > match_score(b, activity) end)
+    |> Enum.sort(fn a, b -> match_score(a, activity) > match_score(b, activity) end)
     |> List.first()
   end
 
   defp match_score(planned_activity, activity) do
     pending_score(planned_activity) +
-      external_score(planned_activity, activity) +
       distance_match(planned_activity, activity) +
       duration_match(planned_activity, activity)
-  end
-
-  defp external_score(planned_activity, activity) do
-    if planned_activity.external_id == activity.external_id do
-      100
-    else
-      0
-    end
   end
 
   defp pending_score(%{status: status}) when status == :pending, do: 1
@@ -62,8 +64,9 @@ defmodule Squeeze.ActivityMatcher do
   end
 
   defp percent_match(a, b)
-  when is_number(a) and a > 0 and is_number(b) and b > 0 do
+       when is_number(a) and a > 0 and is_number(b) and b > 0 do
     Enum.max([0, 1.0 - abs(a - b) / a])
   end
+
   defp percent_match(_, _), do: 0
 end
