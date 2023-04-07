@@ -30,7 +30,13 @@
           </li>
         </ul>
 
-        <.live_component module={SqueezeWeb.Races.TrainingCardComponent} id="training-card" current_user={@current_user} activities={@activities} laps={@laps} />
+        <.live_component
+          module={SqueezeWeb.Races.TrainingCardComponent}
+          id="training-card"
+          current_user={@current_user}
+          race_goal={@race_goal}
+          activities={@activities}
+          laps={@laps} />
 
         <%= if @activity do %>
           <%= if show_map?(assigns) do %>

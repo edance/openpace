@@ -31,4 +31,26 @@
   <div class="fdd"><%= length(@activities) %></div>
   <div class="fdd"><%= length(@laps) %></div>
   Test
+
+  <div class="card">
+    <div class="row">
+      <div class="col">Week</div>
+    </div>
+
+    <%= for {week, dates} <- @weeks do %>
+      <div class="row">
+        <div class="col">
+          Week: <%= week %>
+        </div>
+
+        <%= for date <- dates do %>
+          <div class="col">
+            <%= if @activity_map[date] do %>
+              Yes!
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
