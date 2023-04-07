@@ -2,7 +2,7 @@ defmodule SqueezeWeb.ActivityLive.Index do
   use SqueezeWeb, :live_view
   @moduledoc false
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
 
   @impl true
   def mount(_params, _session, socket) do
@@ -18,7 +18,7 @@ defmodule SqueezeWeb.ActivityLive.Index do
     page = params |> Map.get("page", "1") |> String.to_integer()
     socket = socket
     |> assign(:page, page)
-    |> assign(:activities, Dashboard.recent_activities(user, page))
+    |> assign(:activities, Activities.recent_activities(user, page))
 
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
@@ -33,10 +33,10 @@ defmodule SqueezeWeb.ActivityLive.Index do
   def handle_event("delete", %{"id" => id}, socket) do
     user = socket.assigns.current_user
     page = socket.assigns.page
-    activity = Dashboard.get_activity!(user, id)
-    {:ok, _} = Dashboard.delete_activity(activity)
+    activity = Activities.get_activity!(user, id)
+    {:ok, _} = Activities.delete_activity(activity)
 
-    {:noreply, assign(socket, :activities, Dashboard.recent_activities(user, page))}
+    {:noreply, assign(socket, :activities, Activities.recent_activities(user, page))}
   end
 
   def previous_page(%{page: 1}), do: nil

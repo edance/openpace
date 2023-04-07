@@ -2,7 +2,7 @@ defmodule SqueezeWeb.RaceLive.Show do
   use SqueezeWeb, :live_view
   @moduledoc false
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Distances
   alias Squeeze.RacePredictor
   alias Squeeze.Races
@@ -22,6 +22,8 @@ defmodule SqueezeWeb.RaceLive.Show do
     socket =
       assign(socket,
         page_title: race_goal.race_name,
+        activities: list_activities(user, race_goal),
+        laps: list_laps(user, race_goal),
         race_goal: race_goal,
         activity: activity,
         trackpoints: trackpoints(activity),
@@ -62,7 +64,7 @@ defmodule SqueezeWeb.RaceLive.Show do
 
     if credential && existing_activity.external_id do
       ActivityLoader.update_or_create_activity(credential, existing_activity.external_id)
-      activity = Dashboard.get_detailed_activity_by_slug!(user, existing_activity.slug)
+      activity = Activities.get_detailed_activity_by_slug!(user, existing_activity.slug)
 
       socket =
         socket
@@ -88,6 +90,7 @@ defmodule SqueezeWeb.RaceLive.Show do
       socket
       |> push_trackpoints()
       |> push_laps()
+      |> push_training_data()
     else
       socket
     end
@@ -101,6 +104,15 @@ defmodule SqueezeWeb.RaceLive.Show do
     push_event(socket, "laps", %{laps: socket.assigns.activity.laps})
   end
 
+  defp push_training_data(socket) do
+    data = %{
+      activities: socket.assigns.activities,
+      laps: socket.assigns.laps
+    }
+
+    push_event(socket, "training-data", data)
+  end
+
   defp vo2_max(%{distance: distance, duration: duration, activity: activity}) do
     cond do
       activity && activity.distance > 0 && activity.duration > 0 ->
@@ -112,6 +124,18 @@ defmodule SqueezeWeb.RaceLive.Show do
       true ->
         nil
     end
+  end
+
+  defp list_activities(user, %{race_date: end_date}) do
+    start_date = Timex.shift(end_date, weeks: -18)
+    range = Date.range(start_date, end_date)
+    Activities.list_activities(user, range)
+  end
+
+  defp list_laps(user, %{race_date: end_date}) do
+    start_date = Timex.shift(end_date, weeks: -18)
+    range = Date.range(start_date, end_date)
+    Activities.list_laps(user, range)
   end
 
   defp show_map?(%{activity: activity}) do

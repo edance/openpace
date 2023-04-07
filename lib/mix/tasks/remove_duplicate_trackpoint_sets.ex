@@ -3,7 +3,7 @@ defmodule Mix.Tasks.RemoveDuplicateTrackpointSets do
   @moduledoc false
 
   import Ecto.Query, warn: false
-  alias Squeeze.Dashboard.TrackpointSet
+  alias Squeeze.Activities.TrackpointSet
   alias Squeeze.Repo
 
   @doc false

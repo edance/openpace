@@ -7,8 +7,8 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
   import Squeeze.Factory
 
   alias Squeeze.Accounts
-  alias Squeeze.Dashboard
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities
+  alias Squeeze.Activities.Activity
 
   describe "GET /webhook/strava" do
     test "returns 400 with no challenge", %{conn: conn} do
@@ -45,7 +45,7 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
       conn = post(conn, "/webhook/strava", params)
       assert json_response(conn, 200) == %{}
       assert_raise Ecto.NoResultsError, fn ->
-        Dashboard.get_activity_by_external_id!(credential.user, activity.external_id) end
+        Activities.get_activity_by_external_id!(credential.user, activity.external_id) end
     end
 
     test "does not delete if found on strava", %{conn: conn, activity: activity, credential: credential} do
@@ -60,7 +60,7 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
       }
       conn = post(conn, "/webhook/strava", params)
       assert json_response(conn, 200) == %{}
-      {:ok, %Activity{}} = Dashboard.fetch_activity_by_external_id(credential.user, activity.external_id)
+      {:ok, %Activity{}} = Activities.fetch_activity_by_external_id(credential.user, activity.external_id)
     end
   end
 
@@ -85,7 +85,7 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
       }
       conn = post(conn, "/webhook/strava", params)
       assert json_response(conn, 200) == %{}
-      assert %Activity{} = Dashboard.get_activity_by_external_id!(credential.user, activity.external_id)
+      assert %Activity{} = Activities.get_activity_by_external_id!(credential.user, activity.external_id)
     end
 
     test "user updates an activity on strava", %{conn: conn, credential: credential, activity: activity} do
@@ -101,8 +101,8 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
       }
       conn = post(conn, "/webhook/strava", params)
       assert json_response(conn, 200) == %{}
-      assert %Activity{} = Dashboard.get_activity_by_external_id!(credential.user, activity.external_id)
-      assert length(Dashboard.recent_activities(credential.user)) == 1
+      assert %Activity{} = Activities.get_activity_by_external_id!(credential.user, activity.external_id)
+      assert length(Activities.recent_activities(credential.user)) == 1
     end
 
     test "user deactivates account on strava", %{conn: conn, credential: credential} do

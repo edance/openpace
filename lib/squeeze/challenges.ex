@@ -6,7 +6,7 @@ defmodule Squeeze.Challenges do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
   alias Squeeze.Utils

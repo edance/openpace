@@ -3,7 +3,7 @@ defmodule SqueezeWeb.StravaWebhookController do
   @moduledoc false
 
   alias Squeeze.Accounts
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Namer.RenamerJob
   alias Squeeze.Strava.{ActivityLoader, Client}
 
@@ -22,8 +22,8 @@ defmodule SqueezeWeb.StravaWebhookController do
 
     with {:ok, %{user: user}} <- Accounts.fetch_credential("strava", params["owner_id"]),
          {:error, %{status: 404}} <- fetch_strava_activity(user, object_id), # Check deleted on strava
-         {:ok, activity} <- Dashboard.fetch_activity_by_external_id(user, object_id) do
-      Dashboard.delete_activity(activity)
+         {:ok, activity} <- Activities.fetch_activity_by_external_id(user, object_id) do
+      Activities.delete_activity(activity)
       render(conn, "success.json")
     else
       _ ->

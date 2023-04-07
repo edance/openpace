@@ -4,7 +4,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Challenges
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Races
   alias Squeeze.Stats
   alias Squeeze.Strava.HistoryLoader
@@ -15,7 +15,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   @impl true
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
-    summaries = Dashboard.list_activity_summaries(user)
+    summaries = Activities.list_activity_summaries(user)
     activity_map = activity_map(summaries)
     race_goals = Races.list_upcoming_race_goals(user)
 
@@ -49,7 +49,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     user = socket.assigns.current_user
     date = parse_date(user, params["date"])
     dates = Date.range(Timex.beginning_of_week(date), Timex.end_of_week(date))
-    activities = Dashboard.list_activities(user, dates)
+    activities = Activities.list_activities(user, dates)
 
     if sync_history?(params, socket) do
       credential = Enum.find(user.credentials, &(&1.provider == "strava"))

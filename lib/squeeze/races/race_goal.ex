@@ -5,7 +5,7 @@ defmodule Squeeze.Races.RaceGoal do
   import Ecto.Changeset
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity}
+  alias Squeeze.Activities.{Activity}
   alias Squeeze.Duration
   alias Squeeze.Races.{TrainingPace, Race, RaceGoal}
 

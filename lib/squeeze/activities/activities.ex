@@ -1,12 +1,12 @@
-defmodule Squeeze.Dashboard do
+defmodule Squeeze.Activities do
   @moduledoc """
-  The Dashboard context.
+  The Activities context.
   """
 
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Dashboard.{Activity, ActivityLap, TrackpointSet}
+  alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
   alias Squeeze.Races
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
@@ -28,6 +28,20 @@ defmodule Squeeze.Dashboard do
     |> order_by([a], desc: a.start_at)
     |> Repo.all()
     |> Repo.preload(:user)
+  end
+
+  def list_laps(%User{} = user, date_range, _opts \\ []) do
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+
+    query =
+      from l in Lap,
+        join: a in assoc(l, :activity),
+        where: a.user_id == ^user.id,
+        where: a.activity_type == :run,
+        where: a.start_at_local >= ^start_at and a.start_at_local <= ^end_at
+
+    Repo.all(query)
   end
 
   def list_activity_summaries(%User{} = user) do
@@ -273,7 +287,7 @@ defmodule Squeeze.Dashboard do
 
     {count, _} =
       Repo.insert_all(
-        ActivityLap,
+        Lap,
         laps,
         on_conflict: {:replace_all_except, [:id]},
         conflict_target: [:split, :activity_id]

@@ -2,7 +2,7 @@ defmodule Squeeze.ActivityFactory do
   @moduledoc false
 
   alias Faker.{Date}
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
   import Squeeze.Utils, only: [random_float: 2]
 
   defmacro __using__(_opts) do

@@ -9,7 +9,7 @@ defmodule SqueezeWeb.CalendarLive do
 
   alias Squeeze.Accounts.User
   alias Squeeze.Calendar
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.Races
 
   @impl true
@@ -77,7 +77,7 @@ defmodule SqueezeWeb.CalendarLive do
 
   defp activities_by_date(user, dates) do
     user
-    |> Dashboard.list_activities(dates)
+    |> Activities.list_activities(dates)
     |> Enum.reduce(%{}, fn(x, acc) ->
       date = x.start_at_local |> Timex.to_date()
       list = Map.get(acc, date, [])

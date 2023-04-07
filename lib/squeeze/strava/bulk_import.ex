@@ -5,7 +5,7 @@ defmodule Squeeze.Strava.BulkImport do
 
   require Logger
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
   alias Squeeze.SlugGenerator
 
   def import_from_file(user, filename) do
@@ -24,7 +24,7 @@ defmodule Squeeze.Strava.BulkImport do
     |> CSV.decode(headers: true, escape_max_lines: 1000)
     |> Stream.map(fn row ->
       with {:ok, %{"Activity ID" => external_id} = csv_data} <- row,
-           {:error, :not_found} <- Dashboard.fetch_activity_by_external_id(user, external_id) do
+           {:error, :not_found} <- Activities.fetch_activity_by_external_id(user, external_id) do
         create_detailed_activity(user, csv_data, folder)
       else
         {:ok, activity} -> activity
@@ -36,10 +36,10 @@ defmodule Squeeze.Strava.BulkImport do
     data = load_data(Path.join([folder, csv_data["Filename"]]))
     data = Map.merge(activity_from_csv(csv_data), data)
 
-    case Dashboard.create_activity(user, data) do
+    case Activities.create_activity(user, data) do
       {:ok, activity} ->
         create_laps(activity, data.laps)
-        Dashboard.create_trackpoint_set(activity, data.trackpoints)
+        Activities.create_trackpoint_set(activity, data.trackpoints)
         activity
       {:error, _changeset} -> Logger.warn("Cannot create #{data[:name]}")
     end
@@ -77,7 +77,7 @@ defmodule Squeeze.Strava.BulkImport do
     )a
 
     laps = laps |> Enum.map(fn lap -> Map.take(lap, fields) end)
-    Dashboard.create_laps(activity, laps)
+    Activities.create_laps(activity, laps)
   end
 
   def to_naive_datetime(t) do

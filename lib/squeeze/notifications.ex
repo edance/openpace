@@ -8,7 +8,7 @@ defmodule Squeeze.Notifications do
   alias Squeeze.Accounts.User
   alias Squeeze.Challenges
   alias Squeeze.Challenges.{Challenge, Score}
-  alias Squeeze.Dashboard.Activity
+  alias Squeeze.Activities.Activity
   alias Squeeze.ExpoNotifications
   alias Squeeze.Repo
   alias Squeeze.TimeHelper

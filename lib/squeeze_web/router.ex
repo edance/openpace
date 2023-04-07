@@ -56,7 +56,7 @@ defmodule SqueezeWeb.Router do
   end
 
   # Redirects
-  redirect "/docs", "/docs/index.html", :permanent, preserve_query_string: true
+  redirect("/docs", "/docs/index.html", :permanent, preserve_query_string: true)
 
   scope "/integration", SqueezeWeb do
     # Use the default browser stack
@@ -179,7 +179,6 @@ defmodule SqueezeWeb.Router do
   scope "/export", SqueezeWeb do
     get "/users/:slug/activities.csv", ExportController, :activities
   end
-
 
   scope "/api", SqueezeWeb.Api, as: :api do
     pipe_through :api

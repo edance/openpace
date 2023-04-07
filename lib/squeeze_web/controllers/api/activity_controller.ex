@@ -2,7 +2,7 @@ defmodule SqueezeWeb.Api.ActivityController do
   use SqueezeWeb, :controller
   @moduledoc false
 
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
 
   action_fallback SqueezeWeb.Api.FallbackController
 
@@ -11,7 +11,7 @@ defmodule SqueezeWeb.Api.ActivityController do
     with {:ok, start_date} <- parse_date(start_date),
          {:ok, end_date} <- parse_date(end_date) do
       range = Date.range(start_date, end_date)
-      activities = Dashboard.list_activities(user, range)
+      activities = Activities.list_activities(user, range)
       render(conn, "activities.json", %{activities: activities})
     end
   end

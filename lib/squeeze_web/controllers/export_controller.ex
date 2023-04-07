@@ -3,7 +3,7 @@ defmodule SqueezeWeb.ExportController do
   @moduledoc false
 
   alias Squeeze.Accounts
-  alias Squeeze.Dashboard
+  alias Squeeze.Activities
 
   def activities(conn, %{"slug" => slug}) do
     user = Accounts.get_user_by_slug!(slug)
@@ -18,7 +18,7 @@ defmodule SqueezeWeb.ExportController do
   end
 
   defp render_csv_content(conn, user) do
-    csv_data = csv_content(Dashboard.list_activity_exports(user))
+    csv_data = csv_content(Activities.list_activity_exports(user))
 
     conn
     |> put_resp_content_type("text/csv")
