@@ -21,10 +21,11 @@ RUN apt-get update && \
             postgresql-client \
             nodejs \
             python3 \
-            python3-pip
+            python3-pip \
+            unzip
 
-# Install yarn
-RUN npm install -g yarn
+# Install bun
+RUN npm install -g bun
 
 # Create openpace user and group from host to avoid permission issues
 ARG HOST_GROUP_GID

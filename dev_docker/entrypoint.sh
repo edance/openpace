@@ -25,9 +25,9 @@ done
 mix ecto.create
 mix ecto.migrate
 
-# Install yarn packages
+# Install node_modules
 cd ${ASSETS_DIR}
-yarn install
+bun install
 cd ${APP_DIR}
 
 echo "Starting Phoenix server..."
