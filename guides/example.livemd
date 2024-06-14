@@ -1,0 +1,20 @@
+# Genetic Algorithm in Nx Example
+
+```elixir
+Mix.install([
+  {:exla, "~> 0.3.0"},
+  {:nx, "~> 0.3.0"},
+  {:scidata, "~> 0.1.0"},
+  {:axon, "~> 0.2.0"},
+  {:explorer, "~> 0.2.0"}
+])
+```
+
+## Setting Up the Data
+
+```elixir
+{:ok, response} =
+  :httpc.request(
+    "https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/download?datasetVersionNumber=3"
+  )
+```
