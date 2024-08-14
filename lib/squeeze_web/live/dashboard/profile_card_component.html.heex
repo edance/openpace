@@ -1,49 +1,42 @@
-<div class="card card-profile mt-5 d-none d-xl-block">
-  <div class="row justify-content-center">
-    <div class="col-lg-3 order-lg-2">
-      <div class="card-profile-image">
-        <%= if @current_user.avatar do %>
-          <img class="rounded-circle" alt={@current_user.first_name} src={@current_user.avatar} />
+<div class="pt-12 pb-6">
+  <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full overflow-hidden">
+      <%= if @current_user.avatar do %>
+        <img alt={@current_user.first_name} src={@current_user.avatar} />
         <% else %>
-          <span class="avatar rounded-circle">
-            <span class="iconify" data-icon="whh:profile" data-inline="false"></span>
-          </span>
+        <span class="iconify" data-icon="whh:profile" data-inline="false"></span>
         <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="card-body pt-6">
-    <div class="text-center">
-      <h5 class="h3">
-        <%= full_name(@current_user) %>
-      </h5>
-      <div class="h5 font-weight-300">
-        <%= gettext("Year Running Totals") %>
-      </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="card-profile-stats d-flex justify-content-center">
-          <div>
-            <span class="heading">
-              <%= @ytd_run_stats.count %>
-            </span>
-            <span class="description">Runs</span>
+    <div class="pt-12 px-6">
+      <div class="mt-4 text-center">
+        <h5 class="text-lg mb-1">
+          <%= full_name(@current_user) %>
+        </h5>
+
+        <div class="text-xs font-weight-300">
+          <%= gettext("Year Running Totals") %>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 mt-8 mb-12">
+        <div class="text-center">
+          <div class="text-lg font-semibold">
+            <%= @ytd_run_stats.count %>
           </div>
-          <div>
-            <span class="heading">
-              <%= total_distance(assigns) %>
-            </span>
-            <span class="description">Miles</span>
+          <span class="text-xs mt-0">Runs</span>
+        </div>
+        <div class="text-center">
+          <div class="text-lg font-semibold">
+            <%= total_distance(assigns) %>
           </div>
-          <div>
-            <span class="heading">
-              <%= total_hours(assigns) %>
-            </span>
-            <span class="description">Hours</span>
+          <span class="text-xs">Miles</span>
+        </div>
+        <div class="text-center">
+          <div class="text-lg font-semibold">
+            <%= total_hours(assigns) %>
           </div>
+          <span class="text-xs">Hours</span>
         </div>
       </div>
     </div>
