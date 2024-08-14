@@ -76,9 +76,12 @@ config :strava,
 
 config :squeeze, Squeeze.Scheduler,
   jobs: [
-    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_start, []}}, # Run every hour
-    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_ending, []}}, # Run every hour
-    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_ended, []}}, # Run every hour
+    # Run every hour
+    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_start, []}},
+    # Run every hour
+    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_ending, []}},
+    # Run every hour
+    {"0 * * * *", {Squeeze.Notifications, :batch_notify_challenge_ended, []}}
   ]
 
 config :algolia,
@@ -89,6 +92,17 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 
 config :slack, api_token: System.get_env("SLACK_TOKEN")
 
+config :tailwind,
+  version: "3.4.0",
+  default: [
+    args: ~w(
+    --config=tailwind.config.js
+    --input=css/app.css
+    --output=../priv/static/assets/app.css
+  ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

@@ -96,6 +96,7 @@ defmodule Squeeze.Mixfile do
       {:erlport, "~> 0.10.1"},
       {:poolboy, "~> 1.5"},
       {:sweet_xml, "~> 0.7.1"},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:ex_doc, "~> 0.27", runtime: false},
       {:distance, "~> 0.2.2", only: :dev},
       {:credo, "~> 1.6.1", only: [:dev, :test], runtime: false},
@@ -120,6 +121,7 @@ defmodule Squeeze.Mixfile do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      # "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
       "assets.deploy": [
         "cmd --cd assets bun install",
         "cmd --cd assets node build.js --deploy",
