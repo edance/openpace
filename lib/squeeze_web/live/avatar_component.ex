@@ -29,7 +29,7 @@ defmodule SqueezeWeb.AvatarComponent do
 
   def class_list(%{user: user} = assigns) do
     [
-      avatar_size(user),
+      avatar_size(assigns),
       bg_color(user),
       position(assigns),
       "rounded-full content-center overflow-hidden"
