@@ -25,25 +25,25 @@
                   <%= if @race_goal && !@race_goal.just_finish do %>
                     <%= if @improvement_amount > 0 do %>
                       <span class="text-emerald-500">
-                      <span class="iconify" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
-                      <%= number_to_percentage(@improvement_amount, precision: 1) %>
+                        <span class="iconify inline" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
+                        <%= number_to_percentage(@improvement_amount, precision: 1) %>
                       </span>
                       <span class="text-nowrap">
-                      <%= gettext("faster than PR") %>
+                        <%= gettext("faster than PR") %>
                       </span>
-                      <% else %>
-                      <span>
-                      <span class="iconify" data-icon="ant-design:caret-down-fill" data-inline="false"></span>
-                      <%= number_to_percentage(abs(@improvement_amount), precision: 1) %>
-                      </span>
-                      <span class="text-nowrap">
-                      <%= gettext("slower than PR") %>
-                      </span>
-                      <% end %>
                     <% else %>
-                    Current PR » <%= format_duration(@personal_record.duration) %>
+                      <span>
+                        <span class="iconify inline" data-icon="ant-design:caret-down-fill" data-inline="false"></span>
+                          <%= number_to_percentage(abs(@improvement_amount), precision: 1) %>
+                        </span>
+                      <span class="text-nowrap">
+                        <%= gettext("slower than PR") %>
+                      </span>
                     <% end %>
+                  <% else %>
+                    Current PR » <%= format_duration(@personal_record.duration) %>
                   <% end %>
+                <% end %>
 
                 <%= if is_nil(@race_goal) do %>
                   <%= live_redirect("Add a Race »", to: Routes.race_path(@socket, :new), class: "text-nowrap") %>
