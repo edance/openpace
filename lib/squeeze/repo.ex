@@ -30,7 +30,9 @@ defmodule Squeeze.Repo do
         else
           {:error, changeset}
         end
-      resp -> resp
+
+      resp ->
+        resp
     end
   end
 
@@ -61,7 +63,9 @@ defmodule Squeeze.Repo do
         else
           {:error, changeset}
         end
-      resp -> resp
+
+      resp ->
+        resp
     end
   end
 

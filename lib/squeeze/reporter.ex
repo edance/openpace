@@ -10,11 +10,13 @@ defmodule Squeeze.Reporter do
   # @slack_token Application.compile_env(:slack, :api_token)
 
   def report_new_user(%User{} = user) do
-    text = if user.user_prefs.rename_activities do
-      "Namer Sign Up: #{user.first_name} #{user.last_name}"
-    else
-      "Sign Up: #{user.first_name} #{user.last_name}"
-    end
+    text =
+      if user.user_prefs.rename_activities do
+        "Namer Sign Up: #{user.first_name} #{user.last_name}"
+      else
+        "Sign Up: #{user.first_name} #{user.last_name}"
+      end
+
     post_message(text)
   end
 

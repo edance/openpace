@@ -14,11 +14,13 @@ defmodule SqueezeWeb.RaceController do
 
   def subscribe(conn, %{"subscription" => subscription_params}) do
     attrs = Map.merge(subscription_params, %{"type" => "race"})
+
     case MailingList.create_subscription(attrs) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Thanks for subscribing! We'll keep you updated.")
         |> redirect(to: Routes.home_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_flash(:error, "Invalid email address")

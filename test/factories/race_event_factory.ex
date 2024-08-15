@@ -8,7 +8,7 @@ defmodule Squeeze.RaceEventFactory do
   defmacro __using__(_opts) do
     quote do
       def race_event_factory do
-        race = Enum.random(Distances.distances)
+        race = Enum.random(Distances.distances())
 
         %Event{
           name: race.name,

@@ -11,6 +11,7 @@ defmodule SqueezeWeb.Challenges.StaticMapComponent do
       show_pins: true,
       outline_color: "#FFFFFF"
     ]
+
     MapboxStaticMap.map_url(polyline, opts)
   end
 

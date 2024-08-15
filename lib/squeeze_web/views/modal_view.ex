@@ -17,9 +17,9 @@ defmodule SqueezeWeb.ModalView do
 
   def workout_types do
     [
-      "Race": "race",
+      Race: "race",
       "Long Run": "long_run",
-      "Workout": "workout"
+      Workout: "workout"
     ]
   end
 end

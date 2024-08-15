@@ -25,7 +25,7 @@ defmodule Squeeze.Billing do
   def get_default_payment_method(%User{} = user) do
     PaymentMethod
     |> by_user(user)
-    |> order_by([a], [desc: a.inserted_at])
+    |> order_by([a], desc: a.inserted_at)
     |> limit(1)
     |> Repo.one()
   end
@@ -37,9 +37,11 @@ defmodule Squeeze.Billing do
         |> User.payment_processor_changeset(%{customer_id: customer.id})
         |> Repo.update()
 
-      error -> error
+      error ->
+        error
     end
   end
+
   def find_or_create_external_customer(%User{} = user), do: {:ok, user}
 
   @doc """
@@ -53,17 +55,24 @@ defmodule Squeeze.Billing do
   """
   def start_free_trial(%User{subscription_id: nil} = user) do
     {:ok, customer} = @payment_processor.create_customer(Map.from_struct(user))
-    attrs = case get_default_plan() do
-      nil -> %{customer_id: customer.id}
-      plan ->
-        {:ok, subscription} = @payment_processor.create_subscription(
-          customer.id,
-          plan.provider_id,
-          @trial_period_days
-        )
-        {:ok, end_at} = DateTime.from_unix(subscription.trial_end)
-        %{trial_end: end_at, customer_id: customer.id, subscription_id: subscription.id}
-    end
+
+    attrs =
+      case get_default_plan() do
+        nil ->
+          %{customer_id: customer.id}
+
+        plan ->
+          {:ok, subscription} =
+            @payment_processor.create_subscription(
+              customer.id,
+              plan.provider_id,
+              @trial_period_days
+            )
+
+          {:ok, end_at} = DateTime.from_unix(subscription.trial_end)
+          %{trial_end: end_at, customer_id: customer.id, subscription_id: subscription.id}
+      end
+
     user
     |> User.payment_processor_changeset(attrs)
     |> Repo.update()
@@ -84,8 +93,11 @@ defmodule Squeeze.Billing do
   """
   def update_subscription_status(%{id: id, status: status}) do
     attrs = %{subscription_status: status}
+
     case get_user_by_subscription_id(id) do
-      nil -> {:error}
+      nil ->
+        {:error}
+
       user ->
         user
         |> User.payment_processor_changeset(attrs)
@@ -290,6 +302,7 @@ defmodule Squeeze.Billing do
   def cancel_subscription(%User{subscription_id: subscription_id} = user) do
     @payment_processor.cancel_subscription(subscription_id)
     attrs = %{subscription_status: :canceled, subscription_id: nil}
+
     user
     |> User.payment_processor_changeset(attrs)
     |> Repo.update()
@@ -307,7 +320,7 @@ defmodule Squeeze.Billing do
   def list_invoices(%User{} = user) do
     Invoice
     |> by_user(user)
-    |> order_by([a], [desc: a.due_date])
+    |> order_by([a], desc: a.due_date)
     |> Repo.all()
   end
 

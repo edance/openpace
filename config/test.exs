@@ -20,8 +20,7 @@ config :squeeze, Squeeze.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :squeeze, Squeeze.Mailer,
-  adapter: Bamboo.TestAdapter
+config :squeeze, Squeeze.Mailer, adapter: Bamboo.TestAdapter
 
 config :squeeze, :notification_provider, Squeeze.ExpoNotifications.MockNotificationProvider
 

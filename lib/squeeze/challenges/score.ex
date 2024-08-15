@@ -23,6 +23,9 @@ defmodule Squeeze.Challenges.Score do
   def changeset(score, attrs \\ %{}) do
     score
     |> cast(attrs, [:amount])
-    |> unique_constraint(:user, name: :scores_user_id_challenge_id_index, message: "already joined")
+    |> unique_constraint(:user,
+      name: :scores_user_id_challenge_id_index,
+      message: "already joined"
+    )
   end
 end

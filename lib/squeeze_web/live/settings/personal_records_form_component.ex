@@ -24,7 +24,8 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
   end
 
   def handle_event("hide_modal", _params, socket) do
-    :timer.sleep(:timer.seconds(1)) # Give time for animation to finish
+    # Give time for animation to finish
+    :timer.sleep(:timer.seconds(1))
     {:noreply, assign(socket, distance: nil)}
   end
 

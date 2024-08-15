@@ -18,11 +18,12 @@ defmodule Mix.Tasks.Setup.Subscriptions do
   def run(_) do
     Mix.Task.run("app.start")
     create_strava_subscription()
-    Mix.shell.info("Created strava webhook subscription")
+    Mix.shell().info("Created strava webhook subscription")
   end
 
   defp create_strava_subscription do
     url = "https://www.strava.com/api/v3/push_subscriptions"
+
     form = [
       client_id: Application.get_env(:strava, :client_id),
       client_secret: Application.get_env(:strava, :client_secret),

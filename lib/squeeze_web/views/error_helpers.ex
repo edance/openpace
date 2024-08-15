@@ -10,9 +10,9 @@ defmodule SqueezeWeb.ErrorHelpers do
   """
   def error_tag(form, field, opts \\ []) do
     class_list = "#{opts[:class]} invalid-feedback"
-    opts = Keyword.merge(opts, [class: class_list])
+    opts = Keyword.merge(opts, class: class_list)
 
-    Enum.map(Keyword.get_values(form.errors, field), fn (error) ->
+    Enum.map(Keyword.get_values(form.errors, field), fn error ->
       content_tag(:span, translate_error(error), opts)
     end)
   end

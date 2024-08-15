@@ -8,12 +8,13 @@ defmodule SqueezeWeb.ImageHelpers do
   def responsive_img(conn, image_path, opts \\ []) do
     urls = image_urls(conn, image_path)
     srcset = "#{urls.base1x} 1x, #{urls.base2x} 2x"
-    opts = Keyword.merge(opts, [src: urls.base1x, srcset: srcset])
+    opts = Keyword.merge(opts, src: urls.base1x, srcset: srcset)
     tag(:img, opts)
   end
 
   def responsive_picture(conn, image_path, opts \\ []) do
     urls = image_urls(conn, image_path)
+
     content_tag(:picture) do
       [
         tag(:source, srcset: "#{urls.webp1x} 1x, #{urls.webp2x} 2x", type: "image/webp"),
@@ -24,6 +25,7 @@ defmodule SqueezeWeb.ImageHelpers do
 
   defp image_urls(conn, image_path) do
     [path, extension] = String.split(image_path, ".")
+
     %{
       base1x: Helpers.static_path(conn, "#{path}@1x.#{extension}"),
       base2x: Helpers.static_path(conn, "#{path}@2x.#{extension}"),

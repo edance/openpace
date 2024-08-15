@@ -5,6 +5,7 @@ defmodule Squeeze.Repo.Migrations.DefaultToFreeSubscription do
 
   def up do
     statuses = Ecto.Enum.mappings(User, :subscription_status)
+
     alter table(:users) do
       modify :subscription_status, :integer, default: statuses[:free], null: false
     end
@@ -12,6 +13,7 @@ defmodule Squeeze.Repo.Migrations.DefaultToFreeSubscription do
 
   def down do
     statuses = Ecto.Enum.mappings(User, :subscription_status)
+
     alter table(:users) do
       modify :subscription_status, :integer, default: statuses[:active], null: false
     end

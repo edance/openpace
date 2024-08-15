@@ -10,14 +10,16 @@ defmodule Mix.Tasks.RemoveDuplicateTrackpointSets do
   def run(_) do
     Mix.Task.run("app.start")
 
-    subquery = from ts in TrackpointSet,
-      select: %{id: ts.id, row_number: row_number() |> over(:partition)},
-      windows: [partition: [partition_by: :activity_id, order_by: :id]]
+    subquery =
+      from ts in TrackpointSet,
+        select: %{id: ts.id, row_number: row_number() |> over(:partition)},
+        windows: [partition: [partition_by: :activity_id, order_by: :id]]
 
-    query = from ts in TrackpointSet,
-      join: s in subquery(subquery),
-      on: ts.id == s.id and s.row_number > 1,
-      select: ts.id
+    query =
+      from ts in TrackpointSet,
+        join: s in subquery(subquery),
+        on: ts.id == s.id and s.row_number > 1,
+        select: ts.id
 
     Repo.all(query)
     |> Enum.chunk_every(1000)

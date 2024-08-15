@@ -11,18 +11,22 @@ defmodule Squeeze.TimeHelperTest do
 
   describe "to_date/2" do
     test "with a DateTime returns a date based on the users timezone", %{user: user} do
-      datetime = Timex.beginning_of_day(Timex.now()) # UTC 00:00 of today
-      date = datetime |> Timex.shift(days: -1) |> Timex.to_date() # One day ago in New York
+      # UTC 00:00 of today
+      datetime = Timex.beginning_of_day(Timex.now())
+      # One day ago in New York
+      date = datetime |> Timex.shift(days: -1) |> Timex.to_date()
       assert TimeHelper.to_date(user, datetime) == date
     end
 
     test "with a NaiveDateTime returns a date based on the users timezone", %{user: user} do
-      datetime = Timex.beginning_of_day(Timex.now()) # UTC 00:00 of today
+      # UTC 00:00 of today
+      datetime = Timex.beginning_of_day(Timex.now())
       date = DateTime.to_date(datetime)
       time = DateTime.to_time(datetime)
       {:ok, naive_datetime} = NaiveDateTime.new(date, time)
+
       assert TimeHelper.to_date(user, naive_datetime) ==
-        TimeHelper.to_date(user, datetime)
+               TimeHelper.to_date(user, datetime)
     end
   end
 
@@ -31,10 +35,11 @@ defmodule Squeeze.TimeHelperTest do
       now = Timex.now()
       date = Timex.to_date(now)
 
-      datetime = date
-      |> Timex.to_datetime(user.user_prefs.timezone)
-      |> Timex.beginning_of_day()
-      |> Timex.to_datetime()
+      datetime =
+        date
+        |> Timex.to_datetime(user.user_prefs.timezone)
+        |> Timex.beginning_of_day()
+        |> Timex.to_datetime()
 
       assert TimeHelper.beginning_of_day(user, date) == datetime
     end

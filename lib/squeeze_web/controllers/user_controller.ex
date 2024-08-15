@@ -19,10 +19,13 @@ defmodule SqueezeWeb.UserController do
     case conn.assigns[:current_user] do
       nil ->
         changeset = Accounts.change_user(%User{})
+
         conn
         |> put_session(:registration_timestamp, Timex.now())
         |> render("new.html", changeset: changeset)
-      _ -> redirect(conn, to: Routes.dashboard_path(conn, :index))
+
+      _ ->
+        redirect(conn, to: Routes.dashboard_path(conn, :index))
     end
   end
 
@@ -30,11 +33,13 @@ defmodule SqueezeWeb.UserController do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
         Reporter.report_new_user(user)
+
         conn
         |> Auth.sign_in(user)
         |> send_welcome_email(user)
         |> put_flash(:info, "Signed up successfully.")
         |> redirect(to: Routes.dashboard_path(conn, :index))
+
       {:error, changeset} ->
         render_error(conn, changeset)
     end
@@ -42,11 +47,13 @@ defmodule SqueezeWeb.UserController do
 
   defp validate_honeypot(conn, _) do
     value = conn.params["user"][@honeypot_field]
+
     if is_nil(value) || String.trim(value) == "" do
       conn
     else
       Logger.warn("Spam user: Honeypot field")
       changeset = Accounts.change_user(%User{})
+
       conn
       |> put_flash(:error, "Sorry we can't process your request. Error code: 005")
       |> render_error(changeset)
@@ -57,11 +64,13 @@ defmodule SqueezeWeb.UserController do
   defp validate_timestamp(conn, _) do
     timestamp = get_session(conn, :registration_timestamp)
     diff = Timex.diff(Timex.now(), timestamp, :seconds)
+
     if diff >= 4 do
       conn
     else
       Logger.warn("Spam user: Timestamp validation")
       changeset = Accounts.change_user(%User{})
+
       conn
       |> put_flash(:error, "Sorry we can't process your request. Error code: 006")
       |> render_error(changeset)

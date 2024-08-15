@@ -12,15 +12,20 @@ defmodule SqueezeWeb.CalendarItemComponent do
     cond do
       String.contains?(activity.type, "Run") ->
         "ic:baseline-directions-run"
+
       String.contains?(activity.type, "Ride") ->
         "ic:baseline-directions-bike"
+
       String.contains?(activity.type, "Swim") ->
         "map:swimming"
-      true -> "map:gym"
+
+      true ->
+        "map:gym"
     end
   end
 
   def distance(%{distance: distance}, _) when distance == 0, do: nil
+
   def distance(activity, user) do
     if activity.distance_amount && activity.distance_unit do
       "#{activity.distance_amount} #{activity.distance_unit}"
@@ -31,11 +36,13 @@ defmodule SqueezeWeb.CalendarItemComponent do
 
   def pace(%{distance: distance}, _) when distance == 0, do: nil
   def pace(%{duration: duration}, _) when duration == 0, do: nil
+
   def pace(activity, user) do
     format_pace(activity, user.user_prefs)
   end
 
   def duration(%{duration: duration}) when duration == 0, do: nil
+
   def duration(%{duration: duration}) do
     format_duration(duration)
   end
@@ -51,10 +58,11 @@ defmodule SqueezeWeb.CalendarItemComponent do
 
   def ordered_activities(%{activities: activities}) do
     activities
-    |> Enum.sort_by(&(&1.start_at))
+    |> Enum.sort_by(& &1.start_at)
   end
 
   def formatted_start_at(%{activity: %{start_at: nil}}), do: nil
+
   def formatted_start_at(%{activity: activity, current_user: user}) do
     timezone = user.user_prefs.timezone
 

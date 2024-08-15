@@ -8,7 +8,7 @@ defmodule Squeeze.ActivitiesTest do
 
   describe "#list_activities/2" do
     test "includes only the users activities" do
-      now = Timex.now
+      now = Timex.now()
       [activity, _] = insert_pair(:activity, start_at: now)
       user = activity.user
       today = TimeHelper.to_date(user, now)
@@ -16,7 +16,7 @@ defmodule Squeeze.ActivitiesTest do
       range = Date.range(Timex.shift(today, days: -1), Timex.shift(today, days: 1))
       activities = Activities.list_activities(activity.user, range)
 
-      assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity.id)
+      assert activities |> Enum.map(& &1.id) |> Enum.member?(activity.id)
       assert length(activities) == 1
     end
 
@@ -38,8 +38,8 @@ defmodule Squeeze.ActivitiesTest do
       activity1 = insert(:activity)
       activity2 = insert(:activity, start_at: activity1.start_at)
       activities = Activities.recent_activities(activity1.user)
-      assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
-      refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
+      assert activities |> Enum.map(& &1.id) |> Enum.member?(activity1.id)
+      refute activities |> Enum.map(& &1.id) |> Enum.member?(activity2.id)
     end
 
     test "orders by most recent activities first" do
@@ -53,8 +53,8 @@ defmodule Squeeze.ActivitiesTest do
       activity1 = insert(:planned_activity, %{user: user, planned_date: date})
       activity2 = insert(:planned_activity, %{user: user, planned_date: Date.add(date, 1)})
       activities = Activities.todays_activities(user)
-      assert activities |> Enum.map(&(&1.id)) |> Enum.member?(activity1.id)
-      refute activities |> Enum.map(&(&1.id)) |> Enum.member?(activity2.id)
+      assert activities |> Enum.map(& &1.id) |> Enum.member?(activity1.id)
+      refute activities |> Enum.map(& &1.id) |> Enum.member?(activity2.id)
     end
   end
 
@@ -68,14 +68,18 @@ defmodule Squeeze.ActivitiesTest do
     test "raises error if activity does not belong to user" do
       activity = insert(:activity)
       user = insert(:user)
+
       assert_raise Ecto.NoResultsError, fn ->
-        Activities.get_activity!(user, activity.id) end
+        Activities.get_activity!(user, activity.id)
+      end
     end
 
     test "raises error if activity does not exist" do
       user = insert(:user)
+
       assert_raise Ecto.NoResultsError, fn ->
-        Activities.get_activity!(user, "1234") end
+        Activities.get_activity!(user, "1234")
+      end
     end
   end
 
@@ -89,14 +93,18 @@ defmodule Squeeze.ActivitiesTest do
     test "raises error if activity does not belong to user" do
       activity = insert(:activity)
       user = insert(:user)
+
       assert_raise Ecto.NoResultsError, fn ->
-        Activities.get_detailed_activity_by_slug!(user, activity.slug) end
+        Activities.get_detailed_activity_by_slug!(user, activity.slug)
+      end
     end
 
     test "raises error if activity does not exist" do
       user = insert(:user)
+
       assert_raise Ecto.NoResultsError, fn ->
-        Activities.get_detailed_activity_by_slug!(user, "1234") end
+        Activities.get_detailed_activity_by_slug!(user, "1234")
+      end
     end
   end
 

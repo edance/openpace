@@ -9,7 +9,6 @@ defmodule Squeeze.Setup.StripeSetupTest do
     setup [:setup_mocks]
 
     test "calls create_product and create_plan" do
-
       assert {:ok, _} = StripeSetup.setup()
     end
 
@@ -35,10 +34,10 @@ defmodule Squeeze.Setup.StripeSetupTest do
     }
 
     Squeeze.MockPaymentProcessor
-    |> expect(:create_product, fn(_) -> {:ok, product} end)
+    |> expect(:create_product, fn _ -> {:ok, product} end)
 
     Squeeze.MockPaymentProcessor
-    |> expect(:create_plan, fn(_) -> {:ok, plan} end)
+    |> expect(:create_plan, fn _ -> {:ok, plan} end)
 
     {:ok, []}
   end

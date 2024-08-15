@@ -8,6 +8,7 @@ defmodule SqueezeWeb.SearchController do
     case RaceSearch.search() do
       {:ok, results} ->
         render(conn, "index.html", results: results)
+
       _ ->
         render(conn, "index.html", results: [])
     end

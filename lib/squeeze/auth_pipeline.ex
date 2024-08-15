@@ -4,7 +4,8 @@ defmodule Squeeze.AuthPipeline do
   across all plugs.
   """
 
-  use Guardian.Plug.Pipeline, otp_app: :squeeze,
+  use Guardian.Plug.Pipeline,
+    otp_app: :squeeze,
     module: Squeeze.Guardian,
     error_handler: Squeeze.AuthErrorHandler
 

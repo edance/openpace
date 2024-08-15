@@ -17,10 +17,11 @@ defmodule Squeeze.RecurringChallengesTest do
 
       RecurringChallenges.find_and_create(now)
 
-      query = from c in Challenge,
-        where: c.start_date >= ^Timex.shift(start_date, days: 7),
-        where: c.end_date <= ^Timex.shift(end_date, days: 7),
-        where: c.timeline == :week
+      query =
+        from c in Challenge,
+          where: c.start_date >= ^Timex.shift(start_date, days: 7),
+          where: c.end_date <= ^Timex.shift(end_date, days: 7),
+          where: c.timeline == :week
 
       Repo.all(query)
 

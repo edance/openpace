@@ -21,7 +21,8 @@ defmodule SqueezeWeb.StravaWebhookController do
     object_id = params["object_id"]
 
     with {:ok, %{user: user}} <- Accounts.fetch_credential("strava", params["owner_id"]),
-         {:error, %{status: 404}} <- fetch_strava_activity(user, object_id), # Check deleted on strava
+         # Check deleted on strava
+         {:error, %{status: 404}} <- fetch_strava_activity(user, object_id),
          {:ok, activity} <- Activities.fetch_activity_by_external_id(user, object_id) do
       Activities.delete_activity(activity)
       render(conn, "success.json")
@@ -62,12 +63,13 @@ defmodule SqueezeWeb.StravaWebhookController do
 
   def fetch_strava_activity(user, activity_id) do
     user
-    |> Client.new
+    |> Client.new()
     |> @strava_activities.get_activity_by_id(activity_id)
   end
 
   defp validate_token(conn, _) do
     token = conn.params["hub.verify_token"]
+
     if token == challenge_token() do
       conn
     else
@@ -81,15 +83,16 @@ defmodule SqueezeWeb.StravaWebhookController do
     %{"owner_id" => strava_uid, "object_id" => activity_id} = params
     RenamerJob.perform(strava_uid, activity_id)
   end
+
   defp process_event(_), do: nil
 
-  defp render_bad_request(conn)  do
+  defp render_bad_request(conn) do
     conn
     |> put_status(:bad_request)
     |> render("400.json")
   end
 
-  defp log_event(conn, _)  do
+  defp log_event(conn, _) do
     body = Jason.encode!(conn.params)
     Squeeze.Logger.log_webhook_event(%{provider: "strava", body: body})
     conn

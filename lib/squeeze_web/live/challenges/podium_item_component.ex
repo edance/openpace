@@ -30,8 +30,10 @@ defmodule SqueezeWeb.Challenges.PodiumItemComponent do
     cond do
       Timex.after?(start_at, now) ->
         "Starts #{relative_time(start_at)}"
+
       Timex.before?(end_at, now) ->
         "Ended #{relative_time(end_at)}"
+
       true ->
         "Ends #{relative_time(end_at)}"
     end

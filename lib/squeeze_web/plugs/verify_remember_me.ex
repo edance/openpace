@@ -24,6 +24,7 @@ defmodule SqueezeWeb.Plug.VerifyRememberMe do
       conn
     else
       token = conn.req_cookies["guardian_default_token"]
+
       case Guardian.resource_from_token(token) do
         {:ok, user, _claims} -> Auth.sign_in(conn, user)
         _error -> conn

@@ -19,10 +19,15 @@ defmodule SqueezeWeb.Challenges.ListItemComponent do
     end_date = challenge.end_date
 
     cond do
-      Timex.after?(challenge.start_date, today) -> 0.0
-      Timex.before?(challenge.end_date, today) -> 100.0
+      Timex.after?(challenge.start_date, today) ->
+        0.0
+
+      Timex.before?(challenge.end_date, today) ->
+        100.0
+
       true ->
-        Timex.diff(today, start_date, :seconds) / Timex.diff(end_date, start_date, :seconds) * 100.0
+        Timex.diff(today, start_date, :seconds) / Timex.diff(end_date, start_date, :seconds) *
+          100.0
     end
   end
 
@@ -34,11 +39,12 @@ defmodule SqueezeWeb.Challenges.ListItemComponent do
     cond do
       Timex.after?(start_at, now) ->
         "Starts #{relative_time(start_at)}"
+
       Timex.before?(end_at, now) ->
         "Ended #{relative_time(end_at)}"
+
       true ->
         "Ends #{relative_time(end_at)}"
     end
   end
-
 end

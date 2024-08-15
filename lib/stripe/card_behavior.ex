@@ -4,5 +4,5 @@ defmodule Stripe.CardBehavior do
   """
 
   @callback create(map()) ::
-  {:ok, Stripe.Card.t()} | {:error, Stripe.Error.t()}
+              {:ok, Stripe.Card.t()} | {:error, Stripe.Error.t()}
 end

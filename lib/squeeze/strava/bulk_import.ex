@@ -41,7 +41,9 @@ defmodule Squeeze.Strava.BulkImport do
         create_laps(activity, data.laps)
         Activities.create_trackpoint_set(activity, data.trackpoints)
         activity
-      {:error, _changeset} -> Logger.warn("Cannot create #{data[:name]}")
+
+      {:error, _changeset} ->
+        Logger.warn("Cannot create #{data[:name]}")
     end
   end
 
@@ -51,9 +53,12 @@ defmodule Squeeze.Strava.BulkImport do
         System.cmd("gzip", ["-d", filename])
         full_file = Path.absname(String.replace(filename, ".gz", ""))
         Squeeze.FileParser.FitImport.import_from_file(full_file)
+
       String.contains?(filename, ".tcx") ->
         Squeeze.FileParser.TcxImport.import_from_file(filename)
-      true -> %{laps: [], trackpoints: []}
+
+      true ->
+        %{laps: [], trackpoints: []}
     end
   end
 
@@ -106,6 +111,7 @@ defmodule Squeeze.Strava.BulkImport do
   defp to_int(val) when is_list(val) do
     val |> List.last() |> to_int()
   end
+
   defp to_int(val) do
     case Integer.parse(val) do
       :error -> 0.0
@@ -116,6 +122,7 @@ defmodule Squeeze.Strava.BulkImport do
   defp to_float(val) when is_list(val) do
     val |> List.last() |> to_float()
   end
+
   defp to_float(val) do
     case Float.parse(val) do
       :error -> 0.0

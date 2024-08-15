@@ -16,10 +16,11 @@ defmodule SqueezeWeb.CalendarLive do
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
 
-    socket = assign(socket,
-      page_title: "Calendar",
-      current_user: user
-    )
+    socket =
+      assign(socket,
+        page_title: "Calendar",
+        current_user: user
+      )
 
     {:ok, socket}
   end
@@ -30,23 +31,25 @@ defmodule SqueezeWeb.CalendarLive do
     date = parse_date(user, params["date"])
     dates = Calendar.visible_dates(date, "month")
 
-    socket = assign(socket,
-      date: date,
-      dates: dates,
-      page_title: Timex.format!(date, "%B %Y", :strftime),
-      activities_by_date: activities_by_date(user, dates),
-      race_goals_by_date: race_goals_by_date(user, dates)
-    )
+    socket =
+      assign(socket,
+        date: date,
+        dates: dates,
+        page_title: Timex.format!(date, "%B %Y", :strftime),
+        activities_by_date: activities_by_date(user, dates),
+        race_goals_by_date: race_goals_by_date(user, dates)
+      )
 
     {:noreply, socket}
   end
 
   def date_label(date, user) do
-    class_names = if today(user) == date do
-      "date-label d-inline border-bottom border-primary"
-    else
-      "date-label"
-    end
+    class_names =
+      if today(user) == date do
+        "date-label d-inline border-bottom border-primary"
+      else
+        "date-label"
+      end
 
     content_tag(:div, class: class_names, data: [date: format_date(date)]) do
       date_label_content(date)
@@ -56,17 +59,17 @@ defmodule SqueezeWeb.CalendarLive do
   def weeks(%{dates: dates}) do
     dates
     |> Enum.with_index()
-    |> Enum.group_by(fn({_, idx}) -> div(idx, 7) end, fn({v, _}) -> v end)
+    |> Enum.group_by(fn {_, idx} -> div(idx, 7) end, fn {v, _} -> v end)
   end
 
   def activities_in_dates(dates, %{activities_by_date: activities_map}) do
     dates
-    |> Enum.flat_map(&(Map.get(activities_map, &1, [])))
+    |> Enum.flat_map(&Map.get(activities_map, &1, []))
   end
 
   def activities_in_dates(user, activities, dates) do
     activities
-    |> Enum.filter(&(Enum.member?(dates, activity_date(user, &1))))
+    |> Enum.filter(&Enum.member?(dates, activity_date(user, &1)))
   end
 
   def format_date(date), do: Timex.format!(date, "{YYYY}-{0M}-{0D}")
@@ -78,7 +81,7 @@ defmodule SqueezeWeb.CalendarLive do
   defp activities_by_date(user, dates) do
     user
     |> Activities.list_activities(dates)
-    |> Enum.reduce(%{}, fn(x, acc) ->
+    |> Enum.reduce(%{}, fn x, acc ->
       date = x.start_at_local |> Timex.to_date()
       list = Map.get(acc, date, [])
       Map.put(acc, date, [x | list])
@@ -87,7 +90,7 @@ defmodule SqueezeWeb.CalendarLive do
 
   def race_goals_by_date(user, dates) do
     Races.list_race_goals(user, dates)
-    |> Enum.reduce(%{}, fn(x, acc) ->
+    |> Enum.reduce(%{}, fn x, acc ->
       date = x.race.start_date |> Timex.to_date()
       list = Map.get(acc, date, [])
       Map.put(acc, date, [x | list])
@@ -95,6 +98,7 @@ defmodule SqueezeWeb.CalendarLive do
   end
 
   defp parse_date(%User{} = user, nil), do: today(user)
+
   defp parse_date(%User{} = user, date) do
     case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
       {:ok, date} -> date

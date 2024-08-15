@@ -24,6 +24,9 @@ defmodule Squeeze.Repo.Migrations.CreateActivityLaps do
     end
 
     create index(:activity_laps, [:activity_id])
-    create unique_index(:activity_laps, [:split, :activity_id], name: :activity_laps_split_activity_id_index)
+
+    create unique_index(:activity_laps, [:split, :activity_id],
+             name: :activity_laps_split_activity_id_index
+           )
   end
 end

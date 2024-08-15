@@ -31,11 +31,11 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
     end
 
     test "with an expired token", %{user: user} do
-      time = :erlang.system_time(:seconds) - 86_401 # One day, one sec ago
+      # One day, one sec ago
+      time = :erlang.system_time(:seconds) - 86_401
       link = PasswordLinkGenerator.create_link(user, time)
       %{"token" => token, "signature" => signature} = parse_query_params(link)
-      assert {:error, "Token has expired"} =
-        PasswordLinkGenerator.verify_link(token, signature)
+      assert {:error, "Token has expired"} = PasswordLinkGenerator.verify_link(token, signature)
     end
 
     test "with an invalid token", %{user: user} do
@@ -43,8 +43,7 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
       time = :erlang.system_time(:seconds) - 5
       token = create_token(user, time)
       %{"signature" => signature} = parse_query_params(link)
-      assert {:error, "Token not valid"} =
-        PasswordLinkGenerator.verify_link(token, signature)
+      assert {:error, "Token not valid"} = PasswordLinkGenerator.verify_link(token, signature)
     end
   end
 
@@ -68,7 +67,7 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
 
   defp sign_token(token) do
     :crypto.mac(:hmac, :sha256, secret_key(), token)
-    |> Base.url_encode64
+    |> Base.url_encode64()
   end
 
   defp secret_key do
@@ -77,6 +76,7 @@ defmodule Squeeze.PasswordLinkGeneratorTest do
 
   def parse_query_params(link) do
     %{query: query} = URI.parse(link)
+
     query
     |> URI.query_decoder()
     |> Map.new()

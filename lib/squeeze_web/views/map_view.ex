@@ -20,7 +20,7 @@ defmodule SqueezeWeb.MapView do
         type: "geojson",
         data: %{
           type: "FeatureCollection",
-          features: Enum.map(trackpoints, &(feature(&1, average_velocity(activity))))
+          features: Enum.map(trackpoints, &feature(&1, average_velocity(activity)))
         }
       },
       paint: paint()
@@ -30,14 +30,16 @@ defmodule SqueezeWeb.MapView do
 
   def markers(%{current_user: user, trackpoints: trackpoints}) do
     imperial = user.user_prefs.imperial
+
     trackpoints
     |> Enum.group_by(&Distances.to_int(&1.distance, imperial: imperial))
-    |> Enum.map(fn({_, v}) -> List.first(v) end)
+    |> Enum.map(fn {_, v} -> List.first(v) end)
     |> Enum.map(&map_coordinate/1)
     |> Jason.encode!()
   end
 
   def map_coordinate(%{coordinates: nil}), do: nil
+
   def map_coordinate(%{coordinates: coordinates}) do
     [coordinates["lon"], coordinates["lat"]]
   end

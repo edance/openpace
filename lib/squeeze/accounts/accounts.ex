@@ -20,21 +20,25 @@ defmodule Squeeze.Accounts do
   ```
   """
   def get_user_by_slug!(slug) do
-    query = from u in User,
-      where: u.slug == ^slug,
-      preload: [:credentials, :user_prefs]
+    query =
+      from u in User,
+        where: u.slug == ^slug,
+        preload: [:credentials, :user_prefs]
 
     Repo.one!(query)
   end
 
   def get_user_by_credential(%{provider: provider, uid: uid}) do
-    query = from u in User,
-      left_join: c in assoc(u, :credentials),
-      where: c.provider == ^provider and c.uid == ^uid
+    query =
+      from u in User,
+        left_join: c in assoc(u, :credentials),
+        where: c.provider == ^provider and c.uid == ^uid
+
     query
     |> Repo.one()
     |> Repo.preload([:credentials, :user_prefs])
   end
+
   def get_user_by_credential(_), do: nil
 
   @doc """
@@ -50,6 +54,7 @@ defmodule Squeeze.Accounts do
 
   """
   def get_user_by_email(email) when is_nil(email), do: nil
+
   def get_user_by_email(email) do
     User
     |> Repo.get_by(email: email)
@@ -69,13 +74,15 @@ defmodule Squeeze.Accounts do
 
   """
   def get_by_email(email) do
-    user = User
-    |> Repo.get_by(email: email)
-    |> Repo.preload([:credentials, :user_prefs])
+    user =
+      User
+      |> Repo.get_by(email: email)
+      |> Repo.preload([:credentials, :user_prefs])
 
     case user do
       nil ->
         {:error, :not_found}
+
       user ->
         {:ok, user}
     end
@@ -96,9 +103,10 @@ defmodule Squeeze.Accounts do
 
   """
   def get_user(id) do
-    user = User
-    |> Repo.get(id)
-    |> Repo.preload([:credentials, :user_prefs])
+    user =
+      User
+      |> Repo.get(id)
+      |> Repo.preload([:credentials, :user_prefs])
 
     case user do
       nil -> {:error, :not_found}
@@ -139,9 +147,10 @@ defmodule Squeeze.Accounts do
 
   """
   def create_user(attrs \\ %{user_prefs: %{}}) do
-    new_attrs = attrs
-    |> Utils.key_to_atom()
-    |> Map.put_new(:user_prefs, %{})
+    new_attrs =
+      attrs
+      |> Utils.key_to_atom()
+      |> Map.put_new(:user_prefs, %{})
 
     %User{}
     |> User.changeset(new_attrs)
@@ -150,9 +159,10 @@ defmodule Squeeze.Accounts do
   end
 
   def register_user(attrs \\ %{user_prefs: %{}}) do
-    new_attrs = attrs
-    |> Utils.key_to_atom()
-    |> Map.put_new(:user_prefs, %{})
+    new_attrs =
+      attrs
+      |> Utils.key_to_atom()
+      |> Map.put_new(:user_prefs, %{})
 
     %User{}
     |> User.registration_changeset(new_attrs)
@@ -230,9 +240,10 @@ defmodule Squeeze.Accounts do
   end
 
   def fetch_credential_by_provider(%User{} = user, provider) do
-    credential = Credential
-    |> Repo.get_by(provider: provider, user_id: user.id)
-    |> Repo.preload(user: [:user_prefs])
+    credential =
+      Credential
+      |> Repo.get_by(provider: provider, user_id: user.id)
+      |> Repo.preload(user: [:user_prefs])
 
     if credential do
       {:ok, credential}
@@ -265,6 +276,7 @@ defmodule Squeeze.Accounts do
   def get_credential(provider, uid) when is_integer(uid) do
     get_credential(provider, "#{uid}")
   end
+
   def get_credential(provider, uid) do
     Credential
     |> Repo.get_by(provider: provider, uid: uid)
@@ -325,15 +337,17 @@ defmodule Squeeze.Accounts do
   end
 
   def put_personal_record(%User{} = user, %{"distance" => distance} = personal_record_attrs)
-  when is_binary(distance) do
+      when is_binary(distance) do
     {distance, ""} = Float.parse(distance)
 
     put_personal_record(user, Map.put(personal_record_attrs, "distance", distance))
   end
+
   def put_personal_record(%User{} = user, %{"distance" => distance} = personal_record_attrs) do
-    prs = user.user_prefs.personal_records
-    |> Enum.reject(&(&1.distance == distance))
-    |> Enum.map(&Map.from_struct/1)
+    prs =
+      user.user_prefs.personal_records
+      |> Enum.reject(&(&1.distance == distance))
+      |> Enum.map(&Map.from_struct/1)
 
     user.user_prefs
     |> UserPrefs.changeset(%{personal_records: prs ++ [personal_record_attrs]})

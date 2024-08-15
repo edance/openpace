@@ -13,9 +13,8 @@ defmodule Squeeze.PaymentMethodFactory do
         %PaymentMethod{
           owner_name: owner,
           address_zip: Address.zip(),
-
           exp_month: Enum.random(1..12),
-          exp_year: Timex.today.year + Enum.random(1..6),
+          exp_year: Timex.today().year + Enum.random(1..6),
           last4: "#{Enum.random(1000..9999)}",
           stripe_id: "card_#{Lorem.characters(15)}",
           user: build(:user)

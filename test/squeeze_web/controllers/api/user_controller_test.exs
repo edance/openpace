@@ -24,7 +24,7 @@ defmodule SqueezeWeb.Api.UserControllerTest do
     test "with invalid params", %{conn: conn} do
       attrs = %{
         email: "test@example.com",
-        encrypted_password: "password",
+        encrypted_password: "password"
       }
 
       conn = conn |> post(api_user_path(conn, :create), attrs)
@@ -37,10 +37,12 @@ defmodule SqueezeWeb.Api.UserControllerTest do
     @tag :no_user
     test "with a valid password", %{conn: conn} do
       user = insert(:user)
+
       attrs = %{
         email: user.email,
         password: "password"
       }
+
       conn = conn |> post(api_user_path(conn, :signin), attrs)
 
       assert response = json_response(conn, 201)
@@ -51,10 +53,12 @@ defmodule SqueezeWeb.Api.UserControllerTest do
     @tag :no_user
     test "with an invalid password", %{conn: conn} do
       user = insert(:user)
+
       attrs = %{
         email: user.email,
         password: "badpassword"
       }
+
       conn = conn |> post(api_user_path(conn, :signin), attrs)
 
       assert json_response(conn, 401)

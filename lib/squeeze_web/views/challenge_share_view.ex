@@ -8,8 +8,12 @@ defmodule SqueezeWeb.ChallengeShareView do
     end_date = challenge.end_date
 
     cond do
-      Timex.diff(now, start_date) < 0 -> 0.0
-      Timex.diff(now, end_date) > 0 -> 1 * 100.0
+      Timex.diff(now, start_date) < 0 ->
+        0.0
+
+      Timex.diff(now, end_date) > 0 ->
+        1 * 100.0
+
       true ->
         Timex.diff(now, start_date, :seconds) / Timex.diff(end_date, start_date, :seconds) * 100.0
     end

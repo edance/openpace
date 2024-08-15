@@ -9,9 +9,10 @@ defmodule SqueezeWeb.Challenges.ShowLive do
     user = socket.assigns.current_user
     challenge = Challenges.get_challenge_by_slug!(slug)
 
-    socket = socket
-    |> assign(:current_user, user)
-    |> assign(challenge: challenge)
+    socket =
+      socket
+      |> assign(:current_user, user)
+      |> assign(challenge: challenge)
 
     {:ok, socket}
   end

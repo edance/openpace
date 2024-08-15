@@ -15,6 +15,7 @@ defmodule Squeeze.Guardian do
     sub = to_string(id)
     {:ok, sub}
   end
+
   def subject_for_token(_, _) do
     {:error, :reason_for_error}
   end
@@ -25,6 +26,7 @@ defmodule Squeeze.Guardian do
     # the resource id so here we'll rely on that to look it up.
     Accounts.get_user(id)
   end
+
   def resource_from_claims(_claims) do
     {:error, :reason_for_error}
   end
@@ -39,6 +41,7 @@ defmodule Squeeze.Guardian do
   defp check_password(%User{encrypted_password: nil}, _) do
     {:error, :unauthorized}
   end
+
   defp check_password(%User{} = user, password) do
     case Argon2.check_pass(user, password) do
       {:ok, user} -> {:ok, user}

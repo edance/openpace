@@ -21,7 +21,13 @@ defmodule Squeeze.ActivityLoaderTest do
       setup_mocks(context)
       distance = strava_activity.distance
       user = credential.user
-      insert(:activity, user: user, planned_distance: distance, planned_date: TimeHelper.today(user))
+
+      insert(:activity,
+        user: user,
+        planned_distance: distance,
+        planned_date: TimeHelper.today(user)
+      )
+
       assert {:ok, _} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
     end
 
@@ -31,7 +37,7 @@ defmodule Squeeze.ActivityLoaderTest do
       mock_activities(context)
 
       Squeeze.Strava.MockStreams
-      |> expect(:get_activity_streams, fn(_, _, _, _) -> {:error, %{status: 404}} end)
+      |> expect(:get_activity_streams, fn _, _, _, _ -> {:error, %{status: 404}} end)
 
       assert {:ok, _} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
     end
@@ -41,9 +47,10 @@ defmodule Squeeze.ActivityLoaderTest do
       mock_client(context)
 
       Squeeze.Strava.MockActivities
-      |> expect(:get_activity_by_id, fn(_, _) -> {:error, %{status: 404}} end)
+      |> expect(:get_activity_by_id, fn _, _ -> {:error, %{status: 404}} end)
 
-      assert {:error, _} = ActivityLoader.update_or_create_activity(credential, strava_activity.id)
+      assert {:error, _} =
+               ActivityLoader.update_or_create_activity(credential, strava_activity.id)
     end
   end
 
@@ -51,14 +58,14 @@ defmodule Squeeze.ActivityLoaderTest do
     {:ok, activity: build(:detailed_activity)}
   end
 
-  defp mock_client(_)  do
+  defp mock_client(_) do
     Squeeze.Strava.MockClient
-    |> expect(:new, 2, fn(_, _) -> %Tesla.Client{} end)
+    |> expect(:new, 2, fn _, _ -> %Tesla.Client{} end)
   end
 
   defp mock_activities(%{activity: activity}) do
     Squeeze.Strava.MockActivities
-    |> expect(:get_activity_by_id, fn(_, _) -> {:ok, activity} end)
+    |> expect(:get_activity_by_id, fn _, _ -> {:ok, activity} end)
   end
 
   defp setup_mocks(context) do
@@ -66,7 +73,8 @@ defmodule Squeeze.ActivityLoaderTest do
     mock_activities(context)
 
     Squeeze.Strava.MockStreams
-    |> expect(:get_activity_streams, fn(_, _, _, _) -> {:ok, %Strava.StreamSet{}} end)
+    |> expect(:get_activity_streams, fn _, _, _, _ -> {:ok, %Strava.StreamSet{}} end)
+
     {:ok, []}
   end
 

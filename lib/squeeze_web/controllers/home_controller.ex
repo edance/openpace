@@ -18,11 +18,13 @@ defmodule SqueezeWeb.HomeController do
 
   def subscribe(conn, %{"subscription" => subscription_params}) do
     attrs = Map.merge(subscription_params, %{"type" => "homepage"})
+
     case MailingList.create_subscription(attrs) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Thanks for signing up!")
         |> redirect(to: Routes.home_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_flash(:error, "Invalid email address")
@@ -32,7 +34,9 @@ defmodule SqueezeWeb.HomeController do
 
   defp redirect_registered_user(conn, _) do
     case conn.assigns[:current_user] do
-      nil -> conn
+      nil ->
+        conn
+
       _ ->
         conn
         |> redirect(to: Routes.dashboard_path(conn, :index))

@@ -35,22 +35,29 @@ defmodule Squeeze.Activities.Activity do
     field :name, :string
     field :activity_type, Ecto.Enum, values: [run: 0, bike: 1, swim: 2, other: 3]
     field :type, :string
-    field :workout_type, Ecto.Enum, values: [
-      race: 0, long_run: 1, workout: 2
-    ]
+
+    field :workout_type, Ecto.Enum,
+      values: [
+        race: 0,
+        long_run: 1,
+        workout: 2
+      ]
 
     # Planning Fields
-    field :planned_distance, :float # in meters
+    # in meters
+    field :planned_distance, :float
     field :planned_distance_amount, :float
     field :planned_distance_unit, Ecto.Enum, values: [m: 0, km: 1, mi: 2]
     field :planned_duration, Duration
     field :planned_date, :date
 
     # Fields for after activity is completed
-    field :distance, :float # in meters
+    # in meters
+    field :distance, :float
     field :distance_amount, :float
     field :distance_unit, Ecto.Enum, values: [m: 0, km: 1, mi: 2]
-    field :duration, Duration # :duration field is deprecated
+    # :duration field is deprecated
+    field :duration, Duration
     field :moving_time, Duration
     field :elapsed_time, Duration
     field :start_at, :utc_datetime
@@ -87,13 +94,17 @@ defmodule Squeeze.Activities.Activity do
   defp set_status(changeset) do
     planned_distance = get_field(changeset, :planned_distance)
     distance = get_field(changeset, :distance)
+
     cond do
       is_nil(distance) ->
         changeset
+
       is_nil(planned_distance) ->
         cast_status(changeset, :complete)
+
       percent_complete(planned_distance, distance) >= 0.95 ->
         cast_status(changeset, :complete)
+
       true ->
         cast_status(changeset, :partial)
     end

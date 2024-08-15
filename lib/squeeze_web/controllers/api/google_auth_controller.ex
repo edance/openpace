@@ -16,8 +16,10 @@ defmodule SqueezeWeb.Api.GoogleAuthController do
     cond do
       user = Accounts.get_user_by_credential(credential) ->
         render_token(conn, user)
+
       user = Accounts.get_user_by_email(user_params[:email]) ->
         render_token(conn, user)
+
       true ->
         create_user(conn, user_params)
     end

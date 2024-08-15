@@ -18,6 +18,7 @@ defmodule Squeeze.PasswordLinkGenerator do
   def verify_link(token, signature) do
     [timestamp, _] = parse_token(token)
     diff = :erlang.system_time(:seconds) - timestamp
+
     cond do
       diff > token_ttl() -> {:error, "Token has expired"}
       sign_token(token) == signature -> {:ok, true}
@@ -34,7 +35,7 @@ defmodule Squeeze.PasswordLinkGenerator do
 
   defp sign_token(token) do
     :crypto.mac(:hmac, :sha256, secret_key(), token)
-    |> Base.url_encode64
+    |> Base.url_encode64()
   end
 
   defp secret_key do
@@ -45,6 +46,7 @@ defmodule Squeeze.PasswordLinkGenerator do
 
   defp base_url do
     url = Application.get_env(:squeeze, SqueezeWeb.Endpoint)[:url]
+
     %URI{
       scheme: url[:scheme],
       host: url[:host],

@@ -9,7 +9,8 @@ defmodule SqueezeWeb.ExportControllerTest do
       insert_pair(:activity, user: user)
       conn = get(conn, export_path(conn, :activities, user.slug))
 
-      assert response(conn, 200) =~ "distance" # headers are included
+      # headers are included
+      assert response(conn, 200) =~ "distance"
       assert response_content_type(conn, :csv) =~ "charset=utf-8"
     end
 

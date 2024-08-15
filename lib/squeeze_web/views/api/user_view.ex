@@ -35,8 +35,10 @@ defmodule SqueezeWeb.Api.UserView do
       city: user.city,
       state: user.state,
       country: user.country,
-      credentials: render_many(user.credentials, SqueezeWeb.Api.UserView, "credential.json", as: :credential),
-      user_prefs: render_one(user.user_prefs, SqueezeWeb.Api.UserView, "user_prefs.json", as: :user_prefs)
+      credentials:
+        render_many(user.credentials, SqueezeWeb.Api.UserView, "credential.json", as: :credential),
+      user_prefs:
+        render_one(user.user_prefs, SqueezeWeb.Api.UserView, "user_prefs.json", as: :user_prefs)
     }
   end
 

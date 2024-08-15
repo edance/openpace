@@ -20,6 +20,7 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def hometown(%User{city: nil, state: nil}), do: nil
+
   def hometown(%User{city: city, state: state}) do
     "#{city}, #{state}"
   end
@@ -39,9 +40,10 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def format_elevation_gain(elevation_gain, %UserPrefs{imperial: imperial}) do
-    value = elevation_gain
-    |> Distances.to_feet(imperial: imperial)
-    |> Delimit.number_to_delimited(precision: 0)
+    value =
+      elevation_gain
+      |> Distances.to_feet(imperial: imperial)
+      |> Delimit.number_to_delimited(precision: 0)
 
     if imperial do
       "#{value} ft"
@@ -57,6 +59,7 @@ defmodule SqueezeWeb.FormatHelpers do
   defp relative_date(-1), do: "yesterday"
   defp relative_date(0), do: "today"
   defp relative_date(1), do: "tomorrow"
+
   defp relative_date(diff_in_days) when diff_in_days > 0 do
     case abs(diff_in_days) do
       x when x <= 14 -> "in #{format_plural(x, "day")}"
@@ -64,6 +67,7 @@ defmodule SqueezeWeb.FormatHelpers do
       x -> "in #{div(x, 7)} wks, #{format_plural(rem(x, 7), "day")}"
     end
   end
+
   defp relative_date(diff_in_days) do
     case abs(diff_in_days) do
       x when x <= 14 -> "#{format_plural(x, "day")} ago"
@@ -73,6 +77,7 @@ defmodule SqueezeWeb.FormatHelpers do
   end
 
   def relative_time(nil), do: nil
+
   def relative_time(time) do
     Timex.format!(time, "{relative}", :relative)
   end
@@ -81,6 +86,7 @@ defmodule SqueezeWeb.FormatHelpers do
   defp format_plural(count, suffix), do: "#{count} #{suffix}s"
 
   def format_pace(%{distance: distance}, _) when distance <= 0, do: "N/A"
+
   def format_pace(%{distance: distance, duration: duration}, %UserPrefs{} = user_prefs) do
     miles = Distances.to_float(distance, imperial: user_prefs.imperial)
     label = Distances.label(imperial: user_prefs.imperial)
@@ -101,6 +107,7 @@ defmodule SqueezeWeb.FormatHelpers do
 
   def format_date_with_time(start_at) do
     date = Ordinal.ordinalize(start_at.day)
+
     start_at
     |> Timex.format!("%a, %b #{date}, %Y at %-I:%M %p", :strftime)
   end
@@ -116,6 +123,7 @@ defmodule SqueezeWeb.FormatHelpers do
       "No Attempt"
     end
   end
+
   def format_score(challenge, amount) do
     case challenge.challenge_type do
       :distance -> Distances.format(amount)
@@ -147,5 +155,4 @@ defmodule SqueezeWeb.FormatHelpers do
       :segment -> "Time"
     end
   end
-
 end

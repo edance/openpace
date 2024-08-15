@@ -15,7 +15,6 @@ defmodule Squeeze.InvoiceFactory do
           provider_id: "invoice_#{Lorem.characters(15)}",
           status: Enum.random(["pending", "paid"]),
           due_date: date,
-
           user: build(:user)
         }
       end

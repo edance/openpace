@@ -25,7 +25,7 @@ defmodule Squeeze.Strava.StreamSetConverter do
     |> Enum.reject(&is_nil/1)
     |> List.zip()
     |> Enum.map(&Tuple.to_list/1)
-    |> Enum.map(fn(result) -> Enum.reduce(result, %{}, &Map.merge(&1, &2)) end)
+    |> Enum.map(fn result -> Enum.reduce(result, %{}, &Map.merge(&1, &2)) end)
     |> Enum.map(&map_to_trackpoint/1)
   end
 
@@ -51,6 +51,7 @@ defmodule Squeeze.Strava.StreamSetConverter do
   # }
   def map_to_trackpoint(%{latlng: latlng} = trackpoint) when length(latlng) == 2 do
     coordinates = %{lat: List.first(latlng), lon: List.last(latlng)}
+
     trackpoint
     |> Map.delete(:latlng)
     |> map_to_trackpoint()

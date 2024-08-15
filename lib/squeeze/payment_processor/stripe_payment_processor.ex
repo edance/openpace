@@ -17,6 +17,7 @@ defmodule Squeeze.StripePaymentProcessor do
         id: params[:id]
       }
     }
+
     Customer.create(attrs)
   end
 
@@ -26,6 +27,7 @@ defmodule Squeeze.StripePaymentProcessor do
       items: [%{plan: plan_id}],
       trial_period_days: trial_period_days
     }
+
     Subscription.create(params)
   end
 

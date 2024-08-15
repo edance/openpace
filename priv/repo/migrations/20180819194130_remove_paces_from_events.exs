@@ -3,6 +3,7 @@ defmodule Squeeze.Repo.Migrations.RemovePacesFromEvents do
 
   def up do
     drop index(:events, [:pace_id])
+
     alter table(:events) do
       remove :pace_id
     end

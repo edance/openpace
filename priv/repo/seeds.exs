@@ -18,14 +18,17 @@ user = insert(:user, email: "a@b.co")
 
 # Add upcoming races for the user
 pr = user.user_prefs.personal_records |> List.last()
-goal_duration = pr.duration - random_int(90, 5 * 60) # Race Goal 90 seconds to 5 minutes faster
+# Race Goal 90 seconds to 5 minutes faster
+goal_duration = pr.duration - random_int(90, 5 * 60)
 insert(:race_goal, distance: pr.distance, duration: goal_duration, user: user)
 
 # Add activities for the user (for the ninety days)
-(0..90)
+0..90
 |> Enum.map(fn i ->
-  if :rand.uniform() < (6 / 7) do # Running six random days a week
-    hour = Enum.random(6..12) # Run in the morning (but latest at noon)
+  # Running six random days a week
+  if :rand.uniform() < 6 / 7 do
+    # Run in the morning (but latest at noon)
+    hour = Enum.random(6..12)
     start_at = Timex.now() |> Timex.shift(days: -i) |> Timex.set(hour: hour)
     insert(:activity, start_at: start_at, user: user, external_id: nil)
   end

@@ -24,5 +24,6 @@ defmodule SqueezeWeb.LiveAuth do
       _ -> nil
     end
   end
+
   defp get_current_user(_), do: nil
 end

@@ -6,7 +6,8 @@ defmodule SqueezeWeb.Api.FollowControllerTest do
   describe "#followers" do
     test "returns the followers for the given user", %{conn: conn} do
       %{follower: user1, followee: user2} = _follow = insert(:follow)
-      insert(:user) # Additional unfollowed user
+      # Additional unfollowed user
+      insert(:user)
 
       conn = get(conn, api_follow_path(conn, :followers, user2.slug))
       assert [follower] = json_response(conn, 200)["followers"]
@@ -17,7 +18,8 @@ defmodule SqueezeWeb.Api.FollowControllerTest do
   describe "#following" do
     test "returns the following users for the given user", %{conn: conn} do
       %{follower: user1, followee: user2} = insert(:follow)
-      insert(:user) # Additional unfollowed user
+      # Additional unfollowed user
+      insert(:user)
 
       conn = get(conn, "/api/users/#{user1.slug}/following")
       assert [followee] = json_response(conn, 200)["following"]

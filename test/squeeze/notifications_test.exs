@@ -18,19 +18,21 @@ defmodule Squeeze.NotificationsTest do
     end
 
     test "only notifies for challenges starting today" do
-      now = Timex.now("America/New_York") |> Timex.set(hour: 9) # Today at 9 am
+      # Today at 9 am
+      now = Timex.now("America/New_York") |> Timex.set(hour: 9)
       challenge = insert(:challenge, start_date: Timex.shift(now, days: -1)) |> with_scores(1)
       [score] = challenge.scores
       insert(:push_token, user: score.user)
 
       Squeeze.ExpoNotifications.MockNotificationProvider
-      |> expect(:push_list, fn([%{to: "ABC"}]) -> {:ok, []} end)
+      |> expect(:push_list, fn [%{to: "ABC"}] -> {:ok, []} end)
 
       Notifications.batch_notify_challenge_start(now)
     end
 
     test "only notifies at 9am" do
-      now = Timex.now("America/New_York") |> Timex.set(hour: 8) # Today at 8 am
+      # Today at 8 am
+      now = Timex.now("America/New_York") |> Timex.set(hour: 8)
 
       Notifications.batch_notify_challenge_start(now)
     end
@@ -47,11 +49,12 @@ defmodule Squeeze.NotificationsTest do
     end
 
     test "only notifies for challenges ending today" do
-      now = Timex.now("America/New_York") |> Timex.set(hour: 9) # Today at 9 am
+      # Today at 9 am
+      now = Timex.now("America/New_York") |> Timex.set(hour: 9)
       insert(:challenge, end_date: Timex.shift(now, days: 1)) |> with_scores(1)
 
       Squeeze.ExpoNotifications.MockNotificationProvider
-      |> expect(:push_list, fn([%{to: "ABC"}]) -> {:ok, []} end)
+      |> expect(:push_list, fn [%{to: "ABC"}] -> {:ok, []} end)
 
       Notifications.batch_notify_challenge_start(now)
     end
@@ -68,11 +71,12 @@ defmodule Squeeze.NotificationsTest do
     end
 
     test "only notifies for challenges ended yesterday" do
-      now = Timex.now("America/New_York") |> Timex.set(hour: 9) # Today at 9 am
+      # Today at 9 am
+      now = Timex.now("America/New_York") |> Timex.set(hour: 9)
       insert(:challenge, end_date: now) |> with_scores(1)
 
       Squeeze.ExpoNotifications.MockNotificationProvider
-      |> expect(:push_list, fn([%{to: "ABC"}]) -> {:ok, []} end)
+      |> expect(:push_list, fn [%{to: "ABC"}] -> {:ok, []} end)
 
       Notifications.batch_notify_challenge_start(now)
     end

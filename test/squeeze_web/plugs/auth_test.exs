@@ -4,8 +4,9 @@ defmodule SqueezeWeb.Plug.AuthTest do
   alias SqueezeWeb.Plug.Auth
 
   test "gets authenticated user from session", %{conn: conn} do
-    conn = conn
-    |> call_auth_plug()
+    conn =
+      conn
+      |> call_auth_plug()
 
     assert assigned_current_user?(conn)
   end

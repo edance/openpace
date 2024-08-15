@@ -7,8 +7,11 @@ defmodule SqueezeWeb.ActivityLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
-    socket = socket
-    |> assign(:current_user, user)
+
+    socket =
+      socket
+      |> assign(:current_user, user)
+
     {:ok, socket}
   end
 
@@ -16,9 +19,11 @@ defmodule SqueezeWeb.ActivityLive.Index do
   def handle_params(params, _url, socket) do
     user = socket.assigns.current_user
     page = params |> Map.get("page", "1") |> String.to_integer()
-    socket = socket
-    |> assign(:page, page)
-    |> assign(:activities, Activities.recent_activities(user, page))
+
+    socket =
+      socket
+      |> assign(:page, page)
+      |> assign(:activities, Activities.recent_activities(user, page))
 
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end

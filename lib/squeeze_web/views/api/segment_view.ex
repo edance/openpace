@@ -4,7 +4,8 @@ defmodule SqueezeWeb.Api.SegmentView do
 
   def render("starred.json", %{segments: segments}) do
     %{
-      segments: render_many(segments, SqueezeWeb.Api.SegmentView, "summary_segment.json", as: :segment)
+      segments:
+        render_many(segments, SqueezeWeb.Api.SegmentView, "summary_segment.json", as: :segment)
     }
   end
 
@@ -45,7 +46,7 @@ defmodule SqueezeWeb.Api.SegmentView do
       private: segment.private,
       start_latlng: segment.start_latlng,
       state: segment.state,
-      polyline: segment.map.polyline,
+      polyline: segment.map.polyline
     }
   end
 end
