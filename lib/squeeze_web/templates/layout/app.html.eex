@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
   <head>
     <%= live_title_tag assigns[:page_title] || "Home", suffix: " · OpenPace" %>
     <%= render SqueezeWeb.SharedView, "head.html", assigns %>

@@ -5,11 +5,11 @@
           <div class="flex flex-row -mx-3">
             <div class="grow max-w-full px-3">
               <div>
-                <p class="mb-0 font-sans font-semibold uppercase dark:text-white dark:opacity-60 text-sm">
+                <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
                   <%= gettext("Current Goal") %>
-                </p>
+                </h6>
 
-                <h5 class="text-lg mb-2 font-bold dark:text-white">
+                <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
                   <%= if @race_goal do %>
                     <%= if @race_goal.just_finish do %>
                       <%= link(gettext("Finish"), to: Routes.race_path(@socket, :show, @race_goal.slug)) %>
@@ -20,7 +20,7 @@
                     <%= gettext("TBD") %>
                   <% end %>
                 </h5>
-                <p class="mb-0 dark:text-white dark:opacity-60 text-sm">
+                <p class="mb-0 text-gray-900 dark:text-white opacity-60 text-xs font-semibold">
                 <%= if @personal_record do %>
                   <%= if @race_goal && !@race_goal.just_finish do %>
                     <%= if @improvement_amount > 0 do %>
@@ -66,22 +66,22 @@
     </div>
 
     <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-      <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-2xl bg-clip-border">
+      <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
         <div class="flex-auto p-4">
           <div class="flex flex-row -mx-3">
             <div class="grow max-w-full px-3">
               <div>
-                <p class="mb-0 font-sans font-semibold uppercase dark:text-white dark:opacity-60 text-sm">
+                <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
                   <%= gettext("Race Date") %>
-                </p>
-                <h5 class="text-lg mb-2 font-bold dark:text-white">
+                </h6>
+                <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
                 <%= if @race_goal do %>
                   <%= format_ordinal_date(@race_goal.race_date) %>
                   <% else %>
                   Not Planned
                   <% end %>
                 </h5>
-                <p class="text-sm mb-0 dark:text-white dark:opacity-60">
+                <p class="text-xs font-semibold mb-0 text-gray-900 dark:text-white opacity-60">
                 <%= if @race_goal do %>
                   <span class="text-nowrap">Race <%= relative_date(@current_user, @race_goal.race_date) %></span>
                   <% else %>
@@ -101,15 +101,15 @@
     </div>
 
     <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-      <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-2xl bg-clip-border">
+      <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
         <div class="flex-auto p-4">
           <div class="flex flex-row -mx-3">
             <div class="grow max-w-full px-3">
               <div>
-                <p class="mb-0 font-sans font-semibold uppercase dark:text-white dark:opacity-60 text-sm">
-                <%= gettext("Latest Activity") %>
-                  </p>
-                <h5 class="text-lg mb-2 font-bold dark:text-white">
+                <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                  <%= gettext("Latest Activity") %>
+                </h6>
+                <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
                 <% latest_activity = latest_activity(assigns) %>
 
                 <%= if latest_activity do %>
@@ -118,7 +118,7 @@
                   <%= gettext("None") %>
                   <% end %>
                   </h5>
-                <p class="text-sm mb-0 dark:text-white dark:opacity-60">
+                <p class="mb-0 text-gray-900 dark:text-white opacity-60 text-xs font-semibold">
                 <%= if @current_streak > 0 do  %>
                   <span class="iconify text-red-600 mr-1 inline" data-icon="fa-solid:fire"></span>
                   <% else %>
@@ -139,18 +139,18 @@
     </div>
 
     <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
-      <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-2xl bg-clip-border">
+      <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
         <div class="flex-auto p-4">
           <div class="flex flex-row -mx-3">
             <div class="grow max-w-full px-3">
               <div>
-                <p class="mb-0 font-sans font-semibold uppercase dark:text-white dark:opacity-60 text-sm">
-                <%= gettext("Weekly Distance") %>
-                  </p>
-                <h5 class="text-lg mb-2 font-bold dark:text-white">
+                <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                  <%= gettext("Weekly Distance") %>
+                </h6>
+                <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
                 <%= weekly_distance(assigns) %>
                   </h5>
-                <p class="text-sm mb-0 dark:text-white dark:opacity-60">
+                <p class="mb-0 text-gray-900 dark:text-white opacity-60 text-xs font-semibold">
               <%= last_week_distance(assigns) %>&nbsp;
               <%= gettext("last week") %>
                 </p>

@@ -10,16 +10,16 @@
 
     <div class="pt-12 px-6">
       <div class="mt-4 text-center">
-        <h5 class="text-lg mb-1">
+        <h5 class="text-lg mb-1 text-gray-900 dark:text-white">
           <%= full_name(@current_user) %>
         </h5>
 
-        <div class="text-xs font-weight-300">
+        <div class="text-xs font-semibold text-gray-900 dark:text-white opacity-60">
           <%= gettext("Year Running Totals") %>
         </div>
       </div>
 
-      <div class="grid grid-cols-3 mt-8 mb-12">
+      <div class="grid grid-cols-3 mt-8 mb-12 text-gray-900 dark:text-white">
         <div class="text-center">
           <div class="text-lg font-semibold">
             <%= @ytd_run_stats.count %>

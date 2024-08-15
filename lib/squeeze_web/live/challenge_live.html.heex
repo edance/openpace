@@ -2,11 +2,11 @@
   <div class="col-span-12 lg:col-span-5">
     <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-4 sm:mb-6">
       <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
-        <h6 class="mb-0 uppercase dark:text-white dark:opacity-60 text-xs">
+        <h6 class="mb-0 uppercase text-gray-900 dark:text-white opacity-60 text-xs">
           <%= gettext("Recent Challenges") %>
         </h6>
 
-        <h2 class="mb-0 text-md">
+        <h2 class="mb-0 text-md text-gray-900 dark:text-white">
           <%= gettext("Challenges") %>
         </h2>
       </div>
@@ -16,23 +16,24 @@
         <%= if Enum.empty?(@challenges) do %>
           <p>No current challenges.</p>
         <% else %>
-          <!-- List group -->
-          <ul class="list-group list-group-flush list my--3">
-            <%= for challenge <- @challenges do %>
-              <%= live_component(SqueezeWeb.Challenges.ListItemComponent, current_user: @current_user, challenge: challenge) %>
-            <% end %>
-          </ul>
+          <table class="">
+            <tbody>
+              <%= for challenge <- @challenges do %>
+                <%= live_component(SqueezeWeb.Challenges.ListItemComponent, current_user: @current_user, challenge: challenge) %>
+              <% end %>
+            </tbody>
+          </table>
         <% end %>
       </div>
     </div>
 
     <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8">
       <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
-        <h6 class="mb-0 uppercase dark:text-white dark:opacity-60 text-xs">
+        <h6 class="mb-0 uppercase text-gray-900 dark:text-white opacity-60 text-xs">
           <%= gettext("Trophy Case") %>
         </h6>
 
-        <h2 class="mb-0 text-md">
+        <h2 class="mb-0 text-md text-gray-900 dark:text-white">
           <%= gettext("Podium Finishes") %>
         </h2>
       </div>
@@ -40,7 +41,7 @@
       <!-- Card body -->
       <div class="p-4 sm:p-6">
         <%= if Enum.empty?(@podium_finishes) do %>
-          <p class="text-sm">No podium finishes.</p>
+          <p class="text-sm text-gray-700 dark:text-white text-gray-900 dark:text-white font-semibold">No podium finishes.</p>
         <% else %>
           <!-- List group -->
           <ul class="list-group list-group-flush list my--3">
@@ -61,13 +62,14 @@
             <span class="iconify" data-icon="mdi:map-marker-distance" data-inline="false"></span>
           </div>
 
-          <h3 class="text-base font-semibold text-center mb-3">
+          <h3 class="text-base text-gray-900 dark:text-white font-semibold text-center mb-3">
             <%= gettext("Distance Challenge") %>
           </h3>
-          <p class="text-sm mb-4">
+          <p class="text-sm text-gray-700 dark:text-white mb-4">
             Go the distance! Challenge your friends to who can run the longest distance in a given amount of time.
           </p>
-          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "distance"), class: "btn btn-outline-light w-100") %>
+
+          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "distance"), class: "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20") %>
         </div>
       </div>
       <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg">
@@ -76,13 +78,13 @@
             <span class="iconify" data-icon="octicon:stopwatch-16" data-inline="false"></span>
           </div>
 
-          <h3 class="text-base font-semibold text-center mb-3">
+          <h3 class="text-base text-gray-900 dark:text-white font-semibold text-center mb-3">
             <%= gettext("Time Challenge") %>
           </h3>
-          <p class="text-sm mb-4">
+          <p class="text-sm text-gray-700 dark:text-white mb-4">
             For this challenge, time is on your side. You don't need to be fast to win. You just have to put in the time.
           </p>
-          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "time"), class: "btn btn-outline-light w-100") %>
+          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "distance"), class: "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20") %>
         </div>
       </div>
       <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg">
@@ -91,13 +93,13 @@
             <span class="iconify" data-icon="maki:mountain" data-inline="false"></span>
           </div>
 
-          <h3 class="text-base font-semibold text-center mb-3">
+          <h3 class="text-base text-gray-900 dark:text-white font-semibold text-center mb-3">
             <%= gettext("Climbing Challenge") %>
           </h3>
-          <p class="text-sm mb-4">
+          <p class="text-sm text-gray-700 dark:text-white mb-4">
             Run up that hill or mountain or whatever you can to get elevation. The runner with the most elevation gain wins this challenge.
           </p>
-          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "altitude"), class: "btn btn-outline-light w-100") %>
+          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "distance"), class: "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20") %>
         </div>
       </div>
       <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg">
@@ -106,13 +108,13 @@
             <span class="iconify" data-icon="ic:twotone-route" data-inline="false"></span>
           </div>
 
-          <h3 class="text-base font-semibold text-center mb-3">
+          <h3 class="text-base text-gray-900 dark:text-white font-semibold text-center mb-3">
             <%= gettext("Segment Challenge") %>
           </h3>
-          <p class="text-sm mb-4">
+          <p class="text-sm text-gray-700 dark:text-white mb-4">
             Pick your favorite Strava segment and race your friends. Whoever runs the segment the fastest will be declared the winner.
           </p>
-          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "segment"), class: "btn btn-outline-light w-100") %>
+          <%= live_redirect(gettext("Get Started"), to: Routes.challenge_path(@socket, :new, challenge_type: "distance"), class: "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20") %>
         </div>
       </div>
     </div>
