@@ -57,12 +57,12 @@
               <span><%= gettext("Settings") %></span>
               <% end %>
 
-            <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0") do %>
+            <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-1") do %>
               <span class="iconify inline" data-icon="heroicons-solid:refresh" data-inline="false"></span>
               <span><%= gettext("Rename Activities") %></span>
               <% end %>
 
-            <%= link(to: Routes.session_path(SqueezeWeb.Endpoint, :delete), method: :delete, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0") do %>
+            <%= link(to: Routes.session_path(SqueezeWeb.Endpoint, :delete), method: :delete, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-2") do %>
               <span class="iconify inline" data-icon="websymbol:logout" data-inline="false"></span>
               <span><%= gettext("Logout") %></span>
               <% end %>
