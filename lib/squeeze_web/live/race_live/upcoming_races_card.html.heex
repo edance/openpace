@@ -1,14 +1,13 @@
-<div class="card">
-  <div class="card-header bg-transparent">
-    <div class="row align-items-center">
-      <div class="col">
-        <h3 class="mb-0">
+<div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8">
+  <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+    <div class="flex">
+      <div class="grow">
+        <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
           <%= gettext("Upcoming Races") %>
         </h3>
       </div>
-
-      <div class="col text-right">
-        <%= live_redirect(gettext("Add a Race"), to: Routes.race_path(@socket, :new), class: "btn btn-sm btn-secondary") %>
+      <div class="flex-none">
+        <%= live_redirect(gettext("Add a Race"), to: Routes.race_path(@socket, :new), class: "relative inline-flex items-center rounded-md bg-white px-2 text-gray-900 py-1 text-xs font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600") %>
       </div>
     </div>
   </div>
