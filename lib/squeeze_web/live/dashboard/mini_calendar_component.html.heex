@@ -1,22 +1,19 @@
-<div class="card shadow">
-  <div class="card-header bg-transparent">
-    <div class="row align-items-center">
-      <div class="col">
-        <h6 class="text-uppercase text-muted ls-1 mb-1">
-          <%= gettext("Performance") %>
-        </h6>
-        <h2 class="mb-0">
-          <%= gettext("This Month") %>
-        </h2>
-      </div>
-    </div>
+<div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8">
+  <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+    <h6 class="mb-0 uppercase dark:text-white dark:opacity-60 text-xs">
+      <%= gettext("Performance") %>
+    </h6>
+
+    <h2 class="mb-0 text-md">
+      <%= gettext("This Month") %>
+    </h2>
   </div>
 
-  <div class="card-body">
-    <div class="row no-gutters mb-2">
+  <div class="p-4 sm:p-6">
+    <div class="grid grid-cols-7 mb-2">
       <%= for date <- Enum.take(dates(assigns), 7) do %>
-      <div class="col text-center">
-        <div class="text-uppercase small">
+      <div class="text-center">
+        <div class="uppercase text-xs">
           <%= date |> Timex.format!("%a", :strftime) |> String.first() %>
         </div>
       </div>
