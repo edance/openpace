@@ -1,18 +1,19 @@
-<div class="card shadow">
-  <div class="card-header border-0">
-    <div class="row align-items-center">
-      <div class="col">
-        <h3 class="mb-0">
+<div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8">
+  <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+    <div class="flex items-center">
+      <div class="grow">
+        <h2 class="text-md font-semibold leading-6 text-gray-900 dark:text-white">
           <%= gettext("Recent Activities") %>
-        </h3>
+        </h2>
       </div>
-      <div class="col text-right">
-        <select id="recent-activities-chart-type" name="" class="btn btn-sm btn-secondary">
+      <div class="flex inline">
+        <select id="recent-activities-chart-type" name="" class="mt-2 block w-full rounded-md border-0 py-1 px-2 pr-6 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 text-xs font-semibold">
           <option value="distance">Distance</option>
           <option value="duration">Time</option>
           <option value="elevation_gain">Elevation</option>
         </select>
-        <%= live_redirect(gettext("See all"), to: Routes.activity_index_path(@socket, :index), class: "btn btn-sm btn-primary d-none d-lg-inline-block") %>
+
+        <%= live_redirect(gettext("See All"), to: Routes.activity_index_path(@socket, :index), class: "inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex-none") %>
       </div>
     </div>
   </div>
