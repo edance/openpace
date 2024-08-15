@@ -1,8 +1,9 @@
 <% data = svg_path(@polyline) %>
-<div class="svg-polyline-component bg-gradient-default position-relative">
+<div class="bg-gradient-to-tl from-blue-950 to-slate-900 h-24 lg:h-full relative">
   <svg viewport="0 0 400 400"
        preserveAspectRatio="xMidYMid meet"
        viewBox={"#{data.x} #{data.y} #{data.width} #{data.height}"}
+    class="absolute top-0 left-0 w-full h-full"
   >
     <g>
       <path style={"stroke: white; stroke-width: #{data.stroke_width}; fill: none;"} d={data.path}></path>

@@ -1,10 +1,10 @@
 <!-- Page content -->
 <div class="position-relative py-5">
-  <div class="container container-dashboard">
+  <div class="container mx-auto">
     <.live_component module={SqueezeWeb.Dashboard.CardsComponent} id="overview-cards" current_user={@current_user} current_streak={@current_streak} activity_summaries={@activity_summaries} race_goal={@race_goal} />
 
-    <div class="row mt-5">
-      <div class="col-xl-3 col-md-6 offset-md-6 order-last offset-xl-0 order-xl-first">
+    <div class="grid grid-cols-12 mt-5 gap-4 md:gap-6">
+      <div class="xl:col-span-3 md:col-span-6 offset-md-6 order-last offset-xl-0 order-xl-first">
         <.live_component module={SqueezeWeb.Dashboard.ProfileCardComponent} id="profile-card" current_user={@current_user} ytd_run_stats={@ytd_run_stats} />
 
         <.live_component module={SqueezeWeb.Dashboard.ChallengesCardComponent} id="challenges-card" current_user={@current_user} challenges={@challenges} />
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="col-xl-5 col-md-6 mb-5 mb-xl-0">
+      <div class="xl:col-span-5 md:col-span-6 mb-5 mb-xl-0">
         <.live_component module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent} id="recent-activity-card" current_user={@current_user} activity_summaries={@activity_summaries} date={@date} />
 
         <%= for activity <- @activities do %>
@@ -66,7 +66,7 @@
 
       </div>
 
-      <div class="col-xl-4 col-md-6">
+      <div class="xl:col-span-4 md:col-span-6">
         <%= if !strava_integration?(assigns) do %>
           <div class="card bg-gradient-orange">
             <div class="card-body">
@@ -88,10 +88,6 @@
         <.live_component module={SqueezeWeb.Dashboard.MiniCalendarComponent} id="mini-calendar-card" current_user={@current_user} activity_map={@activity_map} />
 
         <.live_component module={SqueezeWeb.RaceLive.UpcomingRacesCard} id="upcoming-races" race_goals={@race_goals} current_user={@current_user} />
-      </div>
-    </div>
-    <div class="row mt-5">
-      <div class="col-xl-8 mb-5 mb-xl-0">
       </div>
     </div>
   </div>
