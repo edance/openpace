@@ -15,7 +15,7 @@ defmodule SqueezeWeb.AvatarComponent do
     cyan-500
   )
 
-  def avatar_size(%{size: size}), do: "avatar-#{size}"
+  def avatar_size(%{size: size}), do: "h-#{size} w-#{size}"
   def avatar_size(_), do: "h-8 w-8"
 
   def position(%{position: p}), do: "#{p}"

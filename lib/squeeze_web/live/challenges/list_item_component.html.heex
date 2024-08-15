@@ -1,30 +1,27 @@
-<li class="list-group-item px-0">
-  <div class="row">
-    <div class="col-auto">
-      <div class="text-xl">
-        <span class="iconify" data-icon={podium_icon(assigns)} data-inline="false"></span>
-      </div>
+<tr class="px-0">
+  <td class="p-2 h-full flex items-start">
+    <div class="text-xl w-6">
+      <span class="iconify h-6 w-6" data-icon={podium_icon(assigns)} data-inline="false"></span>
+    </div>
+  </td>
+
+  <td class="">
+    <%= live_redirect @challenge.name, to: Routes.challenge_path(@socket, :show, @challenge.slug) %>
+
+    <p class="mt-0 mb-1 text-xs">
+      <%= challenge_type(assigns) %> &middot;
+      <%= challenge_relative_date(assigns) %>
+    </p>
+
+    <div class="overflow-hidden rounded-full bg-gray-200">
+      <% percentage = remaining_percentage(assigns) %>
+      <div class="h-1 rounded-full bg-indigo-600" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={"width: #{percentage}%;"}></div>
     </div>
 
-    <div class="col">
-      <%= live_redirect @challenge.name, to: Routes.challenge_path(@socket, :show, @challenge.slug) %>
-
-      <p class="mt-0 mb-1 text-sm">
-        <%= challenge_type(assigns) %> &middot;
-        <%= challenge_relative_date(assigns) %>
-      </p>
-
-
-      <div class="progress progress-xs mb-2">
-        <% percentage = remaining_percentage(assigns) %>
-        <div class="progress-bar" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={"width: #{percentage}%;"}></div>
-      </div>
-
-      <div class="avatar-group d-flex mb-4">
-        <%= for score <- @challenge.scores do %>
-          <%= live_component(SqueezeWeb.AvatarComponent, user: score.user) %>
-        <% end %>
-      </div>
+    <div class="isolate flex -space-x-1 overflow-hidden mt-4">
+      <%= for score <- @challenge.scores do %>
+        <%= live_component(SqueezeWeb.AvatarComponent, user: score.user, size: "6") %>
+      <% end %>
     </div>
-  </div>
-</li>
+  </td>
+</tr>

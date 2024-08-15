@@ -17,11 +17,13 @@
     <%= if Enum.empty?(@challenges) do %>
       <p class="text-sm">You have no challenges.</p>
     <% else %>
-      <ul class="list-group list-group-flush list my--3">
-        <%= for challenge <- @challenges do %>
-          <%= live_component(SqueezeWeb.Challenges.ListItemComponent, current_user: @current_user, challenge: challenge) %>
-      <% end %>
-      </ul>
+      <table class="">
+        <tbody>
+          <%= for challenge <- @challenges do %>
+            <%= live_component(SqueezeWeb.Challenges.ListItemComponent, current_user: @current_user, challenge: challenge) %>
+          <% end %>
+        </tbody>
+      </table>
     <% end %>
   </div>
 </div>
