@@ -3,12 +3,13 @@
 
   <%= live_component(SqueezeWeb.NavbarComponent, id: "nav-bar", current_user: @current_user) %>
   <div class="main-content" id="panel">
-    <!-- Page Background -->
-    <div class="dashboard-bg">
+    <!-- TODO: Page Background -->
+    <div class="dashboard-bg hidden">
       <img class="waves" src={Routes.static_path(SqueezeWeb.Endpoint, "/images/waves.svg")} />
       <div class="fill bg-waves"></div>
     </div>
 
+    <!-- Page Content -->
     <%= @inner_content %>
   </div>
 </div>
