@@ -5,14 +5,14 @@ defmodule SqueezeWeb.RaceLive.UpcomingRacesCard do
   alias Squeeze.Distances
 
   @colors ~w(
-    blue
-    indigo
-    purple
-    red
-    orange
-    green
-    teal
-    cyan
+    bg-blue-500
+    bg-indigo-500
+    bg-purple-500
+    bg-red-500
+    bg-orange-500
+    bg-green-500
+    bg-teal-500
+    bg-cyan-500
   )
 
   def race_date(%{race_date: date}) do
@@ -22,8 +22,7 @@ defmodule SqueezeWeb.RaceLive.UpcomingRacesCard do
 
   def bg_color(model) do
     idx = rem(model.id, length(@colors))
-    color = Enum.at(@colors, idx)
-    "bg-gradient-#{color}"
+    Enum.at(@colors, idx)
   end
 
   def distance_name(distance, current_user) do

@@ -12,10 +12,38 @@
     </div>
   </div>
 
-  <div class="card-body">
+  <div class="px-4 sm:px-6">
     <%= if Enum.empty?(@race_goals) do %>
       <p>You have no upcoming races at this time.</p>
     <% else %>
+
+<div class="flow-root">
+  <ul role="list" class="-mb-8">
+        <%= for race_goal <- @race_goals do %>
+    <li>
+      <div class="relative pb-8">
+        <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+        <div class="relative flex space-x-3">
+          <div>
+            <span class={"flex h-10 w-10 items-center justify-center rounded-full text-white #{bg_color(race_goal)}"}>
+              <span class="h-5 w-5 text-white iconify" data-icon="gis:finish" data-inline="false"></span>
+            </span>
+          </div>
+          <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+            <div>
+                <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "font-semibold text-gray-800 dark:text-white" %>
+            </div>
+            <div class="whitespace-nowrap text-right text-sm text-gray-500">
+              <time datetime="2020-09-20">Sep 20</time>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+        <% end %>
+  </ul>
+</div>
+
       <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
         <%= for race_goal <- @race_goals do %>
           <div class="timeline-block">

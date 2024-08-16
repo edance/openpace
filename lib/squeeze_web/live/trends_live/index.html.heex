@@ -1,8 +1,8 @@
 <div class="relative">
-  <div class="container mx-auto">
+  <div class="container max-w-7xl mx-auto">
     <div class="flex items-center py-4">
         <div class="grow">
-          <h6 class="text-lg text-gray-800 dark:text-white inline-block mb-2">
+          <h6 class="text-lg font-semibold text-gray-800 dark:text-white inline-block mb-2">
             <%= gettext("Running Trends") %>
           </h6>
 
@@ -52,7 +52,7 @@
     </div>
   </div>
 
-<div class="container mx-auto">
+<div class="container max-w-7xl mx-auto">
   <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
       <div class="bg-gradient-to-tl from-blue-500 to-violet-500 rounded-lg"
            id="distance-card"
@@ -61,13 +61,13 @@
            phx-update="ignore"
       >
         <div class="p-4 sm:p-6">
-              <h5 class="text-xs uppercase opacity-75 mb-0 text-white">
+              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
                 <%= gettext("Total Distance") %>
               </h5>
               <span class="text-lg font-semibold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm amount-label">
+              <span class="mb-0 text-sm text-white amount-label">
                 <%= if @current_user.user_prefs.imperial do %>
                   <%= gettext("miles") %>
                 <% else %>
@@ -86,13 +86,13 @@
            phx-update="ignore"
       >
         <div class="p-4 sm:p-6">
-              <h5 class="text-xs uppercase opacity-75 mb-0 text-white">
+              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
                 <%= gettext("Total Duration") %>
               </h5>
               <span class="text-lg font-semibold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm amount-label">
+              <span class="mb-0 text-sm text-white amount-label">
                 <%= gettext("hours") %>
               </span>
               <div class="mini-chart relative" id="total-duration-chart" style="aspect-ratio: 4 / 1;">
@@ -107,13 +107,13 @@
            phx-update="ignore"
       >
         <div class="p-4 sm:p-6">
-              <h5 class="text-xs uppercase opacity-75 mb-0 text-white">
+              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
                 <%= gettext("Elevation Gain") %>
               </h5>
               <span class="text-lg font-semibold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm amount-label">
+              <span class="mb-0 text-sm text-white amount-label">
                 <%= if @current_user.user_prefs.imperial do %>
                   <%= gettext("feet") %>
                 <% else %>
@@ -132,13 +132,13 @@
            phx-update="ignore"
       >
         <div class="p-4 sm:p-6">
-              <h5 class="text-xs uppercase opacity-75 mb-0 text-white">
+              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
                 <%= gettext("Number of Runs") %>
               </h5>
               <span id="run-count" class="text-lg font-semibold mb-0 text-white total-amount">
                 0
               </span>
-              <span class="mb-0 text-sm amount-label">
+              <span class="mb-0 text-sm text-white amount-label">
                 <%= gettext("runs") %>
               </span>
 
@@ -149,147 +149,29 @@
     </div>
 
   <div class="grid grid-cols-12 gap-4 sm:gap-6 mt-4 sm:mt-6">
-    <div class="col-span-12 xl:col-span-3">
-      <div class="card">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-light uppercase ls-1 mb-1">
-                <%= gettext("Overview") %>
-              </h6>
-              <h5 class="h3 text-white mb-0">
-                <%= gettext("Yearly Summary") %>
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Page name</th>
-                <th scope="col">Visitors</th>
-                <th scope="col">Unique users</th>
-                <th scope="col">Bounce rate</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">
-                  /argon/
-                </th>
-                <td>
-                  4,569
-                </td>
-                <td>
-                  340
-                </td>
-                <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/index.html
-                </th>
-                <td>
-                  3,985
-                </td>
-                <td>
-                  319
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/charts.html
-                </th>
-                <td>
-                  3,513
-                </td>
-                <td>
-                  294
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/tables.html
-                </th>
-                <td>
-                  2,050
-                </td>
-                <td>
-                  147
-                </td>
-                <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/profile.html
-                </th>
-                <td>
-                  1,795
-                </td>
-                <td>
-                  190
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
     <div class="col-span-12 xl:col-span-9">
-      <div class="card">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-light uppercase ls-1 mb-1">
+      <.card>
+        <div>
+          <div class="flex border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+            <div class="grow">
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
                 <%= gettext("Activities") %>
               </h6>
-              <h5 class="h3 text-white mb-0">
-                <%= gettext("Running Bubbles") %>
-              </h5>
-            </div>
 
-            <div class="col">
-              <ul class="nav nav-pills justify-content-end">
-                <li class="nav-item mr-2 mr-md-0">
-                  <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                    <span class="d-none d-md-block">All</span>
-                    <span class="d-md-none">A</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                    <span class="d-none d-md-block">By Year</span>
-                    <span class="d-md-none">Y</span>
-                  </a>
-                </li>
-              </ul>
+              <h2 class="mb-0 text-md text-gray-800 dark:text-white">
+                <%= gettext("Running Bubbles") %>
+              </h2>
             </div>
           </div>
-        </div>
 
-        <!-- TODO: <div phx-hook="ActivityBubbleChart"
-             phx-update="ignore"
-             id="activity-bubble-chart"
-             data-imperial={"#{@current_user.user_prefs.imperial}"}
-             style="aspect-ratio: 2 / 1; position: relative;">
-        </div> -->
-      </div>
+          <div phx-hook="ActivityBubbleChart"
+            phx-update="ignore"
+            id="activity-bubble-chart"
+            data-imperial={"#{@current_user.user_prefs.imperial}"}
+            style="aspect-ratio: 2 / 1; position: relative;">
+          </div>
+        </div>
+      </.card>
 
     </div>
   </div>
