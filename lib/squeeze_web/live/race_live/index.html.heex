@@ -1,21 +1,21 @@
-<div class="container pt-4">
-  <div class="row">
-    <div class="col-lg-7">
-      <%= for race_goal <- @prev_race_goals do %>
-        <div class="card mb-3 overflow-hidden">
-          <div class="row no-gutters">
-            <div class="col-md-4">
+<div class="position-relative py-5">
+<div class="mx-auto container max-w-7xl pt-4 grid grid-cols-12 gap-4 sm:gap-6">
+    <div class="lg:col-span-7">
+      <%= for race_goal <- @prev_race_goals |> Enum.filter(fn x -> x.activity end) do %>
+        <.card>
+        <div class="grid grid-cols-12">
+          <div class="col-span-12 md:col-span-4">
               <%= if race_goal.activity do %>
                 <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: race_goal.activity.polyline) %>
               <% end %>
             </div>
 
-            <div class="col-md-8">
-              <div class="card-body">
+            <div class="md:col-span-8">
+              <div class="p-4 sm:p-6">
                 <div class="row align-items-center">
                   <div class="col">
-                    <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "card-title" %>
-                    <p class="text-sm text-muted mb-0">
+                    <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "text-gray-800 dark:text-white" %>
+                    <p class="text-sm text-gray-800 dark:text-white mb-0">
                       <%= if race_goal.activity do %>
                         <%= format_start_at_local(race_goal.activity.start_at_local) %>
                       <% else %>
@@ -27,40 +27,40 @@
                 </div>
 
                 <%= if race_goal.activity do %>
-                  <div class="row pt-4">
-                    <div class="col-3">
-                      <div class="text-xs text-uppercase text-muted mb-0">Distance</div>
-                      <span class="h4 font-weight-bold mb-0">
+                  <div class="grid grid-cols-4 pt-4">
+                    <div class="">
+                      <div class="text-gray-800 dark:text-white text-xs text-uppercase text-muted mb-0">Distance</div>
+                      <span class="text-gray-800 dark:text-white font-semibold mb-0">
                         <%= format_distance(race_goal.activity.distance, @current_user.user_prefs) %>
                       </span>
                     </div>
 
-                    <div class="col-3">
-                      <div class="text-xs text-uppercase text-muted mb-0">
+                    <div class="">
+                      <div class="text-gray-800 dark:text-white text-xs text-uppercase text-muted mb-0">
                         Time
                       </div>
-                      <span class="h4 font-weight-bold mb-0">
+                      <span class="text-gray-800 dark:text-white font-semibold mb-0">
                         <%= format_duration(race_goal.activity.duration) %>
                       </span>
                     </div>
 
                     <%= if race_goal.activity.distance > 0 do %>
-                      <div class="col-3">
-                        <div class="text-xs text-uppercase text-muted mb-0">
+                      <div class="">
+                        <div class="text-gray-800 dark:text-white text-xs text-uppercase text-muted mb-0">
                           Pace
                         </div>
-                        <span class="h4 font-weight-bold mb-0">
+                        <span class="text-gray-800 dark:text-white font-semibold mb-0">
                           <%= format_pace(race_goal.activity, @current_user.user_prefs) %>
                         </span>
                       </div>
                     <% end %>
 
                     <%= if race_goal.activity.elevation_gain > 0 do %>
-                      <div class="col-3">
-                        <div class="text-xs text-uppercase text-muted mb-0">
+                      <div class="">
+                        <div class="text-gray-800 dark:text-white text-xs text-uppercase text-muted mb-0">
                           Elevation
                         </div>
-                        <span class="h4 font-weight-bold mb-0">
+                        <span class="text-gray-800 dark:text-white font-semibold mb-0">
                           <%= format_elevation_gain(race_goal.activity.elevation_gain, @current_user.user_prefs) %>
                         </span>
                       </div>
@@ -70,12 +70,13 @@
               </div>
             </div>
           </div>
-        </div>
+        </.card>
       <% end %>
     </div>
 
-    <div class="col-lg-5">
+    <div class="lg:col-span-5">
       <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
     </div>
   </div>
 </div>
+

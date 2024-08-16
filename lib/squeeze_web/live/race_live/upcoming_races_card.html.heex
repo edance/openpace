@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div class="px-4 sm:px-6">
+  <div class="p-4 sm:p-6">
     <%= if Enum.empty?(@race_goals) do %>
       <p>You have no upcoming races at this time.</p>
     <% else %>
@@ -29,12 +29,54 @@
               <span class="h-5 w-5 text-white iconify" data-icon="gis:finish" data-inline="false"></span>
             </span>
           </div>
-          <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+          <div class="w-full">
+            <div>
             <div>
                 <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "font-semibold text-gray-800 dark:text-white" %>
-            </div>
-            <div class="whitespace-nowrap text-right text-sm text-gray-500">
-              <time datetime="2020-09-20">Sep 20</time>
+        </div>
+
+              <small class="text-gray-800 dark:text-white font-semibold opacity-60 ">
+                <%= race_date(race_goal) %> (<%= relative_date(@current_user, race_goal.race_date) %>)
+              </small>
+
+              <%= unless race_goal.just_finish do %>
+                <div class="grid grid-cols-3 pt-4">
+                  <div class="">
+                    <div class="text-xs uppercase text-gray-800 dark:text-white font-semibold opacity-60 mb-0">
+                      Distance
+                    </div>
+                    <span class="text-sm  mb-0">
+                      <%= distance_name(race_goal.distance, @current_user) %>
+                    </span>
+                  </div>
+
+                  <div class="">
+                    <div class="text-xs uppercase text-gray-800 dark:text-white font-semibold opacity-60 mb-0">
+                      Goal
+                    </div>
+                    <span class="text-sm  mb-0">
+                      <%= format_duration(race_goal.duration) %>
+                    </span>
+                  </div>
+
+                  <div class="">
+                    <div class="text-xs uppercase text-gray-800 dark:text-white font-semibold opacity-60 mb-0">
+                      Pace
+                    </div>
+                    <span class="text-sm  mb-0">
+                      <%= format_pace(%{distance: race_goal.distance, duration: race_goal.duration}, @current_user.user_prefs) %>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+
+          <span class={"inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-400/20 #{bg_color(race_goal)}"}>
+          <%= distance_name(race_goal.distance, @current_user) %>
+          </span>
+
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
@@ -44,61 +86,6 @@
   </ul>
 </div>
 
-      <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
-        <%= for race_goal <- @race_goals do %>
-          <div class="timeline-block">
-            <span class={"timeline-step text-white #{bg_color(race_goal)}"}>
-              <span class="iconify" data-icon="gis:finish" data-inline="false"></span>
-            </span>
-
-            <div class="timeline-content">
-              <h3 class="mb-0">
-                <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "card-title" %>
-              </h3>
-              <small class="text-muted font-weight-bold">
-                <%= race_date(race_goal) %> (<%= relative_date(@current_user, race_goal.race_date) %>)
-              </small>
-
-              <%= unless race_goal.just_finish do %>
-                <div class="row pt-4">
-                  <div class="col">
-                    <div class="text-xs text-uppercase text-muted mb-0">
-                      Distance
-                    </div>
-                    <span class="h4 font-weight-bold mb-0">
-                      <%= distance_name(race_goal.distance, @current_user) %>
-                    </span>
-                  </div>
-
-                  <div class="col">
-                    <div class="text-xs text-uppercase text-muted mb-0">
-                      Goal
-                    </div>
-                    <span class="h4 font-weight-bold mb-0">
-                      <%= format_duration(race_goal.duration) %>
-                    </span>
-                  </div>
-
-                  <div class="col">
-                    <div class="text-xs text-uppercase text-muted mb-0">
-                      Pace
-                    </div>
-                    <span class="h4 font-weight-bold mb-0">
-                      <%= format_pace(%{distance: race_goal.distance, duration: race_goal.duration}, @current_user.user_prefs) %>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="mt-3">
-                  <span class={"badge badge-pill text-white #{bg_color(race_goal)}"}>
-                    <%= distance_name(race_goal.distance, @current_user) %>
-                  </span>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
     <% end %>
   </div>
 </div>

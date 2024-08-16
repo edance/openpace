@@ -1,4 +1,23 @@
-$card-bg: #f7f7f7;
+
+/*!
+
+=========================================================
+* Argon Dashboard PRO - v1.2.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
+* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+
+* Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+
+// @import "bootstrap-stuff";
 
 .logo-img {
   width: 150px;
@@ -69,18 +88,6 @@ $card-bg: #f7f7f7;
 
 .bg-terrain {
   // background-image: url('/images/bg-terrain.jpg');
-}
-
-.calendar-row:nth-child(even) {
-  .calendar-item:nth-child(odd) {
-    background-color: lighten($card-bg, 5%);
-  }
-}
-
-.calendar-row:nth-child(odd) {
-  .calendar-item:nth-child(even) {
-    background-color: lighten($card-bg, 5%);
-  }
 }
 
 .calendar-item {

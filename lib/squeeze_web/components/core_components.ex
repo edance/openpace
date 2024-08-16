@@ -55,7 +55,7 @@ defmodule SqueezeWeb.CoreComponents do
 
   def card(assigns) do
     ~H"""
-    <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8">
+    <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden">
       <%= render_slot(@inner_block) %>
     </div>
     """
