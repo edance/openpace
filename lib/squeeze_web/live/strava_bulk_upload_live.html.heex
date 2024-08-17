@@ -36,7 +36,6 @@
 
         <%= for entry <- @uploads.export.entries do %>
           <article class="upload-entry mb-4">
-            
             <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
 
             <button

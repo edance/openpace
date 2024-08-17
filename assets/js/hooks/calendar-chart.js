@@ -5,9 +5,7 @@ import { colors, fonts } from "./../variables.js";
 import {
   activityColor,
   calcDistance,
-  calcFeet,
   hexToRGB,
-  roundTo,
   capitalize,
 } from "../utils";
 
@@ -25,6 +23,7 @@ function bubbleSize(activities) {
 
 export default {
   mounted() {
+    const isDarkMode = document.documentElement.classList.contains('dark');
     const dataset = JSON.parse(this.el.dataset["summaries"]);
     const imperial = JSON.parse(this.el.dataset["imperial"]);
     const data = dataset.map((val, idx) => {
@@ -94,16 +93,14 @@ export default {
             display: false,
           },
           datalabels: {
-            anchor: function (context) {
-              var value = context.dataset.data[context.dataIndex];
+            anchor: function (_context) {
               return "center";
             },
-            align: function (context) {
-              var value = context.dataset.data[context.dataIndex];
+            align: function (_context) {
               return "center";
             },
             color: function (_context) {
-              return "white";
+              return isDarkMode ? "white" : colors.black;
             },
             font: {
               weight: "bold",

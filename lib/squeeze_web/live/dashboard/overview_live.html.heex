@@ -10,8 +10,8 @@
       race_goal={@race_goal}
     />
 
-    <div class="grid grid-cols-12 mt-5 gap-4 md:gap-6">
-      <div class="xl:col-span-3 md:col-span-6 offset-md-6 order-last offset-xl-0 order-xl-first">
+    <div class="grid md:grid-cols-2 xl:grid-cols-12 mt-5 gap-4 md:gap-6">
+      <div class="xl:col-span-3 xl:order-first">
         <.live_component
           module={SqueezeWeb.Dashboard.ProfileCardComponent}
           id="profile-card"
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <div class="xl:col-span-5 md:col-span-6 mb-5 mb-xl-0">
+      <div class="xl:col-span-5 mb-5 mb-xl-0">
         <.live_component
           module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent}
           id="recent-activity-card"
@@ -99,7 +99,7 @@
         <% end %>
       </div>
 
-      <div class="xl:col-span-4 md:col-span-6">
+      <div class="xl:col-span-4">
         <%= if !strava_integration?(assigns) do %>
           <div class="card bg-gradient-orange">
             <div class="card-body">

@@ -16,7 +16,7 @@ module.exports = {
       }
     },
   },
-  // darkMode: 'selector',
+  darkMode: 'class',
   plugins: [
     require('@tailwindcss/forms'),
     plugin(({addVariant}) => addVariant('phx-no-feedback', ['&.phx-no-feedback', '.phx-no-feedback &'])),
