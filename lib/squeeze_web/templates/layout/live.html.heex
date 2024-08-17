@@ -4,14 +4,13 @@
     <div class="grow bg-[#e8e4fc] dark:bg-[#202546]"></div>
   </div>
 
-
   <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
   <%= live_component(SqueezeWeb.NavbarComponent, id: "nav-bar", current_user: @current_user) %>
 
   <div class="main-content" id="panel">
     <!-- Page Content -->
     <div class="relative z-10">
-    <%= @inner_content %>
+      <%= @inner_content %>
     </div>
   </div>
 </div>

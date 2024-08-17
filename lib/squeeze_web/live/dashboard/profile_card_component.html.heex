@@ -3,9 +3,9 @@
     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full overflow-hidden">
       <%= if @current_user.avatar do %>
         <img alt={@current_user.first_name} src={@current_user.avatar} />
-        <% else %>
+      <% else %>
         <span class="iconify" data-icon="whh:profile" data-inline="false"></span>
-        <% end %>
+      <% end %>
     </div>
 
     <div class="pt-12 px-6">

@@ -1,75 +1,93 @@
-<div class="container py-4">
-  <%= f = form_for @changeset, "#", [phx_submit: :save] %>
-  <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="mb-0">Race Information</h3>
-      </div>
-      <!-- Card body -->
-      <div class="card-body">
-        <div class="form-group">
-          <%= label f, :race_name, class: "form-control-label" %>
-          <%= input f, :race_name, placeholder: "Boston Marathon", class: "form-control", autocomplete: "off" %>
-        </div>
-
-        <div class="form-group">
-          <%= label(f, :distance, class: "form-control-label") %>
-          <%= select(f, :distance, distances(), class: "distance-select form-control", placeholder: "Choose a distance") %>
-          <%= error_tag(f, :distance) %>
-        </div>
-
-        <div class="form-group">
-          <%= label(f, "Race Date", class: "form-control-label") %>
-          <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
-            <%= text_input f, :race_date, class: "form-control date-picker d-none", data: [inline: true] %>
+<div class="position-relative py-5">
+  <div class="container max-w-7xl mx-auto">
+    <%= f = form_for(@changeset, "#", phx_submit: :save) %>
+    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+      <.card>
+        <div>
+          <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+              <%= gettext("Race Information") %>
+            </h3>
           </div>
+          <!-- Card body -->
+          <div class="p-4 sm:p-6">
+            <div class="form-group">
+              <%= label(f, :race_name, class: "form-control-label") %>
+              <%= input(f, :race_name,
+                placeholder: "Boston Marathon",
+                class: "form-control",
+                autocomplete: "off"
+              ) %>
+            </div>
 
-          <%= error_tag f, :race_date %>
-        </div>
-      </div>
-    </div>
+            <div class="form-group">
+              <%= label(f, :distance, class: "form-control-label") %>
+              <%= select(f, :distance, distances(),
+                class: "distance-select form-control",
+                placeholder: "Choose a distance"
+              ) %>
+              <%= error_tag(f, :distance) %>
+            </div>
 
-    <div class="card">
-      <div class="card-header">
-        <h3 class="mb-0">
-          Goal Information
-        </h3>
-      </div>
-      <!-- Card body -->
-      <div class="card-body">
-        <div class="form-group">
-          <%= label f, :duration, class: "form-control-label" do %>
-            Goal Time
-          <% end %>
-          <%= duration_select f, :duration, class: "form-control form-control" %>
-          <%= error_tag(f, :duration) %>
-        </div>
+            <div class="form-group">
+              <%= label(f, "Race Date", class: "form-control-label") %>
+              <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+                <!-- TODO: Add date picker -->
+              </div>
 
-        <div class="form-group">
-          <label class="form-check-label">
-            <%= checkbox(f, :just_finish) %>
-            My goal is to just finish
-          </label>
-        </div>
-
-        <div class="form-group">
-          <%= label(f, :description, class: "form-control-label") %>
-          <%= textarea f, :description, placeholder: "Description", class: "form-control", rows: "10" %>
-          <%= error_tag(f, :description) %>
-        </div>
-
-        <%= if @changeset.action do %>
-          <div class="alert alert-danger">
-            <p class="text-sm mb-0">
-              Oops, something went wrong! Please check the errors.
-            </p>
+              <%= error_tag(f, :race_date) %>
+            </div>
           </div>
-        <% end %>
-
-        <div class="form-group mt-6">
-          <%= submit "Create Race", class: "btn btn-primary" %>
         </div>
-      </div>
+      </.card>
+
+      <.card>
+        <div>
+          <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+              <%= gettext("Goal Information") %>
+            </h3>
+          </div>
+          <!-- Card body -->
+          <div class="p-4 sm:p-6">
+            <div class="form-group">
+              <%= label f, :duration, class: "form-control-label" do %>
+                Goal Time
+              <% end %>
+              <%= duration_select(f, :duration, class: "form-control form-control") %>
+              <%= error_tag(f, :duration) %>
+            </div>
+
+            <div class="form-group">
+              <label class="form-check-label">
+                <%= checkbox(f, :just_finish) %> My goal is to just finish
+              </label>
+            </div>
+
+            <div class="form-group">
+              <%= label(f, :description, class: "form-control-label") %>
+              <%= textarea(f, :description,
+                placeholder: "Description",
+                class: "form-control",
+                rows: "10"
+              ) %>
+              <%= error_tag(f, :description) %>
+            </div>
+
+            <%= if @changeset.action do %>
+              <div class="alert alert-danger">
+                <p class="text-sm mb-0">
+                  Oops, something went wrong! Please check the errors.
+                </p>
+              </div>
+            <% end %>
+
+            <div class="form-group mt-6">
+              <%= submit("Create Race", class: "btn btn-primary") %>
+            </div>
+          </div>
+        </div>
+      </.card>
     </div>
   </div>
 </div>

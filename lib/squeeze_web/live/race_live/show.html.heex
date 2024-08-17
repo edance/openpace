@@ -1,47 +1,57 @@
-<div class="pt-5 pb-8 mb-0">
-  <div class="container container-dashboard">
-    <div class="row">
-      <div class="col-12 col-md-9">
-        <div class="row">
-          <div class="col">
+<div class="position-relative pt-5 pb-8 mb-0">
+  <div class="container max-w-7xl mx-auto">
+    <div class="grid grid-cols-12">
+      <div class="col-span-12 md:col-span-9">
+        <div class="grid">
+          <div class="">
             <h1 class="display-3 mb-0">
               <%= @race_goal.race_name %>
             </h1>
 
             <p class="mt-0">
-              <%= format_ordinal_date(@race_goal.race_date) %> (<%= relative_date(@current_user, @race_goal.race_date) %>)
+              <%= format_ordinal_date(@race_goal.race_date) %> (<%= relative_date(
+                @current_user,
+                @race_goal.race_date
+              ) %>)
             </p>
           </div>
-          <div class="col-auto text-right">
-            <button class="mt-3 btn btn-sm btn-outline-danger" phx-click="delete" data-confirm="Are you sure?" >
+          <div class="text-right">
+            <button
+              class="mt-3 btn btn-sm btn-outline-danger"
+              phx-click="delete"
+              data-confirm="Are you sure?"
+            >
               Delete
             </button>
           </div>
         </div>
 
-        <div class="card">
-        </div>
+        <div class="card"></div>
 
         <%= if @activity do %>
           <%= if show_map?(assigns) do %>
             <div class="card overflow-hidden">
-              <div id="activity-map"
-                   class="activity-map"
-                   phx-hook="ActivityMap"
-                   phx-update="ignore"
+              <div
+                id="activity-map"
+                class="activity-map"
+                phx-hook="ActivityMap"
+                phx-update="ignore"
               >
               </div>
             </div>
           <% end %>
 
-          <%= live_component(SqueezeWeb.ActivityLive.LapsComponent, user: @current_user, activity: @activity) %>
+          <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
+            user: @current_user,
+            activity: @activity
+          ) %>
         <% end %>
       </div>
 
-      <div class="col-12 col-md-3">
+      <div class="col-span-12 md:col-span-3">
         <div class="card">
           <div class="card-body">
-            <div class="row">
+            <div class="grid grid-cols-12">
               <div class="col">
                 <%= if @activity do %>
                   <h5 class="card-title text-uppercase text-muted mb-0">
@@ -52,7 +62,6 @@
                     <%= format_duration(@activity.duration) %>
                   </span>
                 <% else %>
-
                   <h5 class="card-title text-uppercase text-muted mb-0">
                     <%= gettext("Race Goal") %>
                   </h5>
@@ -71,7 +80,7 @@
                 </div>
               </div>
             </div>
-            <div class="row pt-4">
+            <div class="grid grid-cols-12 pt-4">
               <div class="col-auto">
                 <div class="text-xs text-uppercase text-muted mb-0">
                   Distance
@@ -90,7 +99,10 @@
                     <%= format_pace(@activity, @current_user.user_prefs) %>
                   <% else %>
                     <%= if @race_goal.duration do %>
-                      <%= format_pace(%{distance: @race_goal.distance, duration: @race_goal.duration}, @current_user.user_prefs) %>
+                      <%= format_pace(
+                        %{distance: @race_goal.distance, duration: @race_goal.duration},
+                        @current_user.user_prefs
+                      ) %>
                     <% else %>
                       <%= gettext("N/A") %>
                     <% end %>
@@ -104,15 +116,14 @@
         <%= unless Enum.empty?(@paces) do %>
           <div class="card bg-gradient-default">
             <div class="card-header bg-transparent border-0">
-              <div class="row align-items-center">
+              <div class="grid grid-cols-12 align-items-center">
                 <div class="col">
                   <h3 class="mb-0">
                     <%= gettext("Training Paces") %>
                   </h3>
                 </div>
 
-                <div class="col text-right">
-                </div>
+                <div class="col text-right"></div>
               </div>
             </div>
 
@@ -124,7 +135,10 @@
                       <tr scope="row">
                         <td>
                           <div class="d-flex align-items-center">
-                            <div class="badge badge-circle text-white mr-2" style={"background: #{pace.color}"}>
+                            <div
+                              class="badge badge-circle text-white mr-2"
+                              style={"background: #{pace.color}"}
+                            >
                             </div>
                             <%= pace.name %>
                           </div>
@@ -133,8 +147,10 @@
                           <%= if pace.speed do %>
                             <%= format_speed(pace.speed, @current_user.user_prefs) %>
                           <% else %>
-                            <%= format_speed(pace.max_speed, @current_user.user_prefs) %> -
-                            <%= format_speed(pace.min_speed, @current_user.user_prefs) %>
+                            <%= format_speed(pace.max_speed, @current_user.user_prefs) %> - <%= format_speed(
+                              pace.min_speed,
+                              @current_user.user_prefs
+                            ) %>
                           <% end %>
                         </td>
                       </tr>
@@ -143,14 +159,13 @@
                 </table>
               </div>
             </div>
-
           </div>
         <% end %>
 
         <%= unless @race_goal.just_finish do %>
           <div class="card">
             <div class="card-header bg-transparent border-0">
-              <div class="row align-items-center">
+              <div class="grid grid-cols-12 align-items-center">
                 <div class="col">
                   <h3 class="mb-0">
                     <%= gettext("Equivalent Performances") %>
@@ -169,7 +184,7 @@
                           <%= distance_name(distance, @current_user) %>
                         </td>
                         <td>
-                          <%= if distance == @race_goal.distance && @race_goal.duration do  %>
+                          <%= if distance == @race_goal.distance && @race_goal.duration do %>
                             <%= format_duration(@race_goal.duration) %>
                           <% else %>
                             <%= format_duration(Map.get(@predictions, distance)) %>
@@ -181,7 +196,6 @@
                 </table>
               </div>
             </div>
-
           </div>
         <% end %>
       </div>

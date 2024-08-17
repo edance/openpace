@@ -6,16 +6,26 @@
   </td>
 
   <td class="pl-2">
-    <%= live_redirect @challenge.name, to: Routes.challenge_path(@socket, :show, @challenge.slug), class: "text-gray-900 dark:text-white font-semibold" %>
+    <%= live_redirect(@challenge.name,
+      to: Routes.challenge_path(@socket, :show, @challenge.slug),
+      class: "text-gray-900 dark:text-white font-semibold"
+    ) %>
 
     <p class="mt-0 mb-1 text-xs opacity-60 font-semibold">
-      <%= challenge_type(assigns) %> &middot;
-      <%= challenge_relative_date(assigns) %>
+      <%= challenge_type(assigns) %> &middot; <%= challenge_relative_date(assigns) %>
     </p>
 
     <div class="overflow-hidden rounded-full bg-gray-200">
       <% percentage = remaining_percentage(assigns) %>
-      <div class="h-1 rounded-full bg-indigo-600" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={"width: #{percentage}%;"}></div>
+      <div
+        class="h-1 rounded-full bg-indigo-600"
+        role="progressbar"
+        aria-valuenow={percentage}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style={"width: #{percentage}%;"}
+      >
+      </div>
     </div>
 
     <div class="isolate flex -space-x-1 overflow-hidden mt-4">

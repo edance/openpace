@@ -10,7 +10,6 @@
           </div>
         </div>
       </div>
-
       <!-- Card body -->
       <div class="card-body">
         <ol class="text-muted">
@@ -31,26 +30,30 @@
           </li>
         </ol>
 
-        <p class="mb-4">You will be able to download a zip file with all your activity data. Upload that file below.</p>
+        <p class="mb-4">
+          You will be able to download a zip file with all your activity data. Upload that file below.
+        </p>
 
         <%= for entry <- @uploads.export.entries do %>
           <article class="upload-entry mb-4">
+            
+            <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
 
-            <%# entry.progress will update automatically for in-flight entries %>
-            <progress value={entry.progress} max="100"> <%= entry.progress %>% </progress>
+            <button
+              class="btn btn-sm btn-secondary"
+              phx-click="cancel-upload"
+              phx-value-ref={entry.ref}
+              aria-label="cancel"
+            >
+              &times;
+            </button>
 
-            <%# a regular click event whose handler will invoke Phoenix.LiveView.cancel_upload/3 %>
-            <button class="btn btn-sm btn-secondary" phx-click="cancel-upload" phx-value-ref={entry.ref} aria-label="cancel">&times;</button>
-
-            <%# Phoenix.LiveView.Helpers.upload_errors/2 returns a list of error atoms %>
             <%= for err <- upload_errors(@uploads.export, entry) do %>
               <p class="alert alert-danger"><%= error_to_string(err) %></p>
             <% end %>
-
           </article>
         <% end %>
 
-        <%# Phoenix.LiveView.Helpers.upload_errors/1 returns a list of error atoms %>
         <%= for err <- upload_errors(@uploads.export) do %>
           <p class="alert alert-danger"><%= error_to_string(err) %></p>
         <% end %>
@@ -62,7 +65,7 @@
         <% end %>
 
         <form id="upload-form" phx-submit="save" phx-change="validate">
-          <%= live_file_input @uploads.export %>
+          <%= live_file_input(@uploads.export) %>
         </form>
       </div>
     </div>

@@ -8,93 +8,116 @@
   </div>
   <div class="card-body">
     <.form let={f} for={@changeset} phx-submit="save">
-    <%= inputs_for f, :user_prefs, fn p -> %>
-      <h6 class="heading-small text-muted mb-4"><%= gettext("User information") %></h6>
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="form-group focused">
-            <%= label(f, :first_name, class: "form-control-label") %>
-            <%= input(f, :first_name, class: "form-control form-control-alternative", placeholder: gettext("First name")) %>
-            <%= error_tag(f, :first_name) %>
+      <%= inputs_for f, :user_prefs, fn p -> %>
+        <h6 class="heading-small text-muted mb-4"><%= gettext("User information") %></h6>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group focused">
+              <%= label(f, :first_name, class: "form-control-label") %>
+              <%= input(f, :first_name,
+                class: "form-control form-control-alternative",
+                placeholder: gettext("First name")
+              ) %>
+              <%= error_tag(f, :first_name) %>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group focused">
+              <%= label(f, :last_name, class: "form-control-label") %>
+              <%= input(f, :last_name,
+                class: "form-control form-control-alternative",
+                placeholder: gettext("Last name")
+              ) %>
+              <%= error_tag(f, :last_name) %>
+            </div>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div class="form-group focused">
-            <%= label(f, :last_name, class: "form-control-label") %>
-            <%= input(f, :last_name, class: "form-control form-control-alternative", placeholder: gettext("Last name")) %>
-            <%= error_tag(f, :last_name) %>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="form-group focused">
-            <%= label(f, :city, class: "form-control-label") %>
-            <%= input(f, :city, class: "form-control form-control-alternative", placeholder: gettext("City")) %>
-            <%= error_tag(f, :city) %>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group focused">
+              <%= label(f, :city, class: "form-control-label") %>
+              <%= input(f, :city,
+                class: "form-control form-control-alternative",
+                placeholder: gettext("City")
+              ) %>
+              <%= error_tag(f, :city) %>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group focused">
+              <%= label(f, :state, class: "form-control-label") %>
+              <%= input(f, :state,
+                class: "form-control form-control-alternative",
+                placeholder: gettext("State/Region")
+              ) %>
+              <%= error_tag(f, :state) %>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group focused">
+              <%= label(f, :country, class: "form-control-label") %>
+              <%= input(f, :country,
+                class: "form-control form-control-alternative",
+                placeholder: gettext("Country")
+              ) %>
+              <%= error_tag(f, :country) %>
+            </div>
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="form-group focused">
-            <%= label(f, :state, class: "form-control-label") %>
-            <%= input(f, :state, class: "form-control form-control-alternative", placeholder: gettext("State/Region")) %>
-            <%= error_tag(f, :state) %>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="form-group focused">
-            <%= label(f, :country, class: "form-control-label") %>
-            <%= input(f, :country, class: "form-control form-control-alternative", placeholder: gettext("Country")) %>
-            <%= error_tag(f, :country) %>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="form-group focused mb-0">
-            <%= label(p, :birthdate, class: "form-control-label") %>
-            <%= date_input(p, :birthdate, class: "form-control form-control-alternative", placeholder: gettext("Birthday")) %>
-            <%= error_tag(p, :birthdate) %>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group focused mb-0">
+              <%= label(p, :birthdate, class: "form-control-label") %>
+              <%= date_input(p, :birthdate,
+                class: "form-control form-control-alternative",
+                placeholder: gettext("Birthday")
+              ) %>
+              <%= error_tag(p, :birthdate) %>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group focused mb-0">
+              <%= label(p, :gender, class: "form-control-label") %>
+              <%= select(p, :gender, gender_opts(), class: "form-control form-control-alternative") %>
+              <%= error_tag(p, :gender) %>
+            </div>
+          </div>
+          <div class="col-12">
+            <small class="form-text text-muted">
+              <%= gettext("We use this information to calculate max heart rate and effort.") %>
+            </small>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div class="form-group focused mb-0">
-            <%= label(p, :gender, class: "form-control-label") %>
-            <%= select(p, :gender, gender_opts(), class: "form-control form-control-alternative") %>
-            <%= error_tag(p, :gender) %>
-          </div>
-        </div>
-        <div class="col-12">
-          <small class="form-text text-muted">
-            <%= gettext("We use this information to calculate max heart rate and effort.") %>
-          </small>
-        </div>
-      </div>
 
-      <hr class="my-4">
+        <hr class="my-4" />
 
-      <h6 class="heading-small text-muted mb-4">Account Settings</h6>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group focused">
-            <%= label(p, :timezone, class: "form-control-label") %>
-            <%= select p, :timezone, time_zones(), class: "form-control form-control-alternative", phx_hook: "SlimSelect" %>
+        <h6 class="heading-small text-muted mb-4">Account Settings</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group focused">
+              <%= label(p, :timezone, class: "form-control-label") %>
+              <%= select(p, :timezone, time_zones(),
+                class: "form-control form-control-alternative",
+                phx_hook: "SlimSelect"
+              ) %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group focused">
+              <%= label(p, :imperial, "Units & Measurements", class: "form-control-label") %>
+              <%= select(p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true],
+                class: "form-control form-control-alternative"
+              ) %>
+            </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group focused">
-            <%= label(p, :imperial, "Units & Measurements", class: "form-control-label") %>
-            <%= select p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true], class: "form-control form-control-alternative" %>
-          </div>
-        </div>
-      </div>
 
-      <div class="mt-4">
-        <button class="btn btn-primary" type="submit">Save</button>
-      </div>
-    <% end %>
+        <div class="mt-4">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      <% end %>
     </.form>
   </div>
 </div>

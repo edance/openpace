@@ -7,12 +7,14 @@
         </h3>
       </div>
       <div class="flex-none">
-        <%= live_redirect(gettext("See All"), to: Routes.challenge_path(@socket, :index), class: "relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600") %>
+        <%= live_redirect(gettext("See All"),
+          to: Routes.challenge_path(@socket, :index),
+          class:
+            "relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        ) %>
       </div>
     </div>
   </div>
-
-
   <!-- Card body -->
   <div class="p-4 sm:p-6">
     <%= if Enum.empty?(@challenges) do %>
@@ -21,7 +23,10 @@
       <table class="">
         <tbody>
           <%= for challenge <- @challenges do %>
-            <%= live_component(SqueezeWeb.Challenges.ListItemComponent, current_user: @current_user, challenge: challenge) %>
+            <%= live_component(SqueezeWeb.Challenges.ListItemComponent,
+              current_user: @current_user,
+              challenge: challenge
+            ) %>
           <% end %>
         </tbody>
       </table>

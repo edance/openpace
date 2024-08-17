@@ -1,12 +1,14 @@
 <div class="position-relative py-5">
-<div class="mx-auto container max-w-7xl pt-4 grid grid-cols-12 gap-4 sm:gap-6">
+  <div class="mx-auto container max-w-7xl pt-4 grid grid-cols-12 gap-4 sm:gap-6">
     <div class="lg:col-span-7">
       <%= for race_goal <- @prev_race_goals |> Enum.filter(fn x -> x.activity end) do %>
         <.card>
-        <div class="grid grid-cols-12">
-          <div class="col-span-12 md:col-span-4">
+          <div class="grid grid-cols-12">
+            <div class="col-span-12 md:col-span-4">
               <%= if race_goal.activity do %>
-                <%= live_component(SqueezeWeb.SvgPolylineComponent, polyline: race_goal.activity.polyline) %>
+                <%= live_component(SqueezeWeb.SvgPolylineComponent,
+                  polyline: race_goal.activity.polyline
+                ) %>
               <% end %>
             </div>
 
@@ -14,7 +16,10 @@
               <div class="p-4 sm:p-6">
                 <div class="row align-items-center">
                   <div class="col">
-                    <%= live_redirect race_goal.race_name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "text-gray-800 dark:text-white" %>
+                    <%= live_redirect(race_goal.race_name,
+                      to: Routes.race_path(@socket, :show, race_goal.slug),
+                      class: "text-gray-800 dark:text-white"
+                    ) %>
                     <p class="text-sm text-gray-800 dark:text-white mb-0">
                       <%= if race_goal.activity do %>
                         <%= format_start_at_local(race_goal.activity.start_at_local) %>
@@ -29,7 +34,9 @@
                 <%= if race_goal.activity do %>
                   <div class="grid grid-cols-4 pt-4">
                     <div class="">
-                      <div class="text-gray-800 dark:text-white text-xs text-uppercase text-muted mb-0">Distance</div>
+                      <div class="text-gray-800 dark:text-white text-xs text-uppercase text-muted mb-0">
+                        Distance
+                      </div>
                       <span class="text-gray-800 dark:text-white font-semibold mb-0">
                         <%= format_distance(race_goal.activity.distance, @current_user.user_prefs) %>
                       </span>
@@ -61,7 +68,10 @@
                           Elevation
                         </div>
                         <span class="text-gray-800 dark:text-white font-semibold mb-0">
-                          <%= format_elevation_gain(race_goal.activity.elevation_gain, @current_user.user_prefs) %>
+                          <%= format_elevation_gain(
+                            race_goal.activity.elevation_gain,
+                            @current_user.user_prefs
+                          ) %>
                         </span>
                       </div>
                     <% end %>
@@ -75,8 +85,10 @@
     </div>
 
     <div class="lg:col-span-5">
-      <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard, race_goals: @race_goals, current_user: @current_user) %>
+      <%= live_component(SqueezeWeb.RaceLive.UpcomingRacesCard,
+        race_goals: @race_goals,
+        current_user: @current_user
+      ) %>
     </div>
   </div>
 </div>
-

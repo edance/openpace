@@ -23,6 +23,14 @@ defmodule SqueezeWeb.NavbarComponent do
   end
 
   def toggle_mobile_menu() do
-    JS.toggle(to: "#mobile-menu", in: {"transition ease-out duration-100", "transform opacity-0 scale-95", "transform opacity-100 scale-100"}, out: {"transition ease-out duration-100",  "transform opacity-100 scale-100", "transform opacity-0 scale-95"})
+    JS.toggle(
+      to: "#mobile-menu",
+      in:
+        {"transition ease-out duration-100", "transform opacity-0 scale-95",
+         "transform opacity-100 scale-100"},
+      out:
+        {"transition ease-out duration-100", "transform opacity-100 scale-100",
+         "transform opacity-0 scale-95"}
+    )
   end
 end

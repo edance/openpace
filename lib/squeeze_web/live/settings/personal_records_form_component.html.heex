@@ -26,8 +26,15 @@
               <%= formatted_pr(assigns, distance) %>
             </td>
             <td>
-              <a href="#" phx-click="show_modal" phx-value-distance={distance} phx-target={@myself}>
-                <%= if pr_at_distance(assigns, distance), do: gettext("Edit"), else: gettext("Add") %>
+              <a
+                href="#"
+                phx-click="show_modal"
+                phx-value-distance={distance}
+                phx-target={@myself}
+              >
+                <%= if pr_at_distance(assigns, distance),
+                  do: gettext("Edit"),
+                  else: gettext("Add") %>
               </a>
             </td>
           </tr>
@@ -36,18 +43,35 @@
     </table>
   </div>
 
-  <div class="card-footer">
-  </div>
-
+  <div class="card-footer"></div>
   <!-- Personal Record Modal -->
   <%= if @distance do %>
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" phx-hook="Modal">
+    <div
+      class="modal fade"
+      id="modal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalLabel"
+      aria-hidden="true"
+      phx-hook="Modal"
+    >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <.form let={f} for={:personal_record} phx-submit={JS.push("save", target: @myself) |> JS.dispatch("hide-modal", to: "#modal")}>
+          <.form
+            let={f}
+            for={:personal_record}
+            phx-submit={
+              JS.push("save", target: @myself) |> JS.dispatch("hide-modal", to: "#modal")
+            }
+          >
             <div class="modal-header">
               <h5 class="modal-title" id="modalLabel">Personal Record</h5>
-              <button type="button" class="close" phx-click={hide_modal(@myself)} aria-label="Close">
+              <button
+                type="button"
+                class="close"
+                phx-click={hide_modal(@myself)}
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -68,12 +92,17 @@
 
               <div class="form-group">
                 <%= label(f, :results_url, "Results URL", class: "form-control-label") %>
-                <%= input(f, :results_url, class: "form-control", placeholder: "https://runrace.com/1234") %>
+                <%= input(f, :results_url,
+                  class: "form-control",
+                  placeholder: "https://runrace.com/1234"
+                ) %>
                 <%= error_tag(f, :results_url) %>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary"  phx-click={hide_modal(@myself)}>Close</button>
+              <button type="button" class="btn btn-secondary" phx-click={hide_modal(@myself)}>
+                Close
+              </button>
               <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </.form>

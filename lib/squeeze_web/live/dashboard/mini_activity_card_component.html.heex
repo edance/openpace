@@ -8,18 +8,23 @@
 
     <div class="col-span-12 lg:col-span-8 text-gray-900 dark:text-white">
       <div class="p-4 sm:p-6">
-          <div class="">
-            <%= live_redirect @activity.name, to: Routes.activity_path(@socket, :show, @activity.slug), class: "card-title" %>
-            <p class="text-sm opacity-60 mb-0">
-              <%= format_date_with_time(@activity.start_at_local) %> · <%= @activity.type %>
-            </p>
-          </div>
+        <div class="">
+          <%= live_redirect(@activity.name,
+            to: Routes.activity_path(@socket, :show, @activity.slug),
+            class: "card-title"
+          ) %>
+          <p class="text-sm opacity-60 mb-0">
+            <%= format_date_with_time(@activity.start_at_local) %> · <%= @activity.type %>
+          </p>
+        </div>
 
         <div class="grid grid-cols-4 pt-4">
           <%= if @activity.distance > 0 do %>
             <div class="">
               <div class="text-xs uppercase opacity-60 mb-0">Distance</div>
-              <span class="h4 font-weight-bold mb-0"><%= format_distance(@activity.distance, @current_user.user_prefs) %></span>
+              <span class="h4 font-weight-bold mb-0">
+                <%= format_distance(@activity.distance, @current_user.user_prefs) %>
+              </span>
             </div>
           <% end %>
 
@@ -27,7 +32,9 @@
             <div class="text-xs uppercase opacity-60 mb-0">
               Time
             </div>
-            <span class="h4 font-weight-bold mb-0"><%= format_duration(@activity.duration) %></span>
+            <span class="h4 font-weight-bold mb-0">
+              <%= format_duration(@activity.duration) %>
+            </span>
           </div>
 
           <%= if @activity.distance > 0 && String.contains?(@activity.type, "Run") do %>

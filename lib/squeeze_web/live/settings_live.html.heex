@@ -14,7 +14,10 @@
               <%= link_item(@socket, @live_action, gettext("Rename Activities"), :namer) %>
             </li>
             <li class="nav-item">
-              <%= link(gettext("Billing"), to: Routes.billing_path(@socket, :portal), class: "nav-link") %>
+              <%= link(gettext("Billing"),
+                to: Routes.billing_path(@socket, :portal),
+                class: "nav-link"
+              ) %>
             </li>
           </ul>
         </div>
@@ -23,19 +26,33 @@
 
     <div class="col-md-6">
       <%= if @live_action == :general do %>
-        <%= live_component(SqueezeWeb.Settings.UserFormComponent, changeset: @changeset, current_user: @current_user) %>
+        <%= live_component(SqueezeWeb.Settings.UserFormComponent,
+          changeset: @changeset,
+          current_user: @current_user
+        ) %>
       <% end %>
 
       <%= if @live_action == :personal_records do %>
-        <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent, id: "pr-form", changeset: @changeset, current_user: @current_user, x: 1) %>
+        <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent,
+          id: "pr-form",
+          changeset: @changeset,
+          current_user: @current_user,
+          x: 1
+        ) %>
       <% end %>
 
       <%= if @live_action == :namer do %>
-        <%= live_component(SqueezeWeb.Settings.NamerCardComponent, changeset: @changeset, current_user: @current_user) %>
+        <%= live_component(SqueezeWeb.Settings.NamerCardComponent,
+          changeset: @changeset,
+          current_user: @current_user
+        ) %>
       <% end %>
 
       <%= if @live_action == :api do %>
-        <%= live_component(SqueezeWeb.Settings.ApiConfigComponent, changeset: @changeset, current_user: @current_user) %>
+        <%= live_component(SqueezeWeb.Settings.ApiConfigComponent,
+          changeset: @changeset,
+          current_user: @current_user
+        ) %>
       <% end %>
     </div>
 
@@ -64,7 +81,10 @@
           <p class="small"><%= membership_status(assigns) %></p>
 
           <%= if @current_user.subscription_status == :free do %>
-            <%= link(gettext("Subscribe"), to: Routes.billing_path(@socket, :checkout), class: "btn btn-info btn-sm") %>
+            <%= link(gettext("Subscribe"),
+              to: Routes.billing_path(@socket, :checkout),
+              class: "btn btn-info btn-sm"
+            ) %>
           <% end %>
         </div>
       </div>
@@ -104,7 +124,10 @@
                   </button>
                 <% end %>
               <% else %>
-                <%= link gettext("Connect to Strava"), to: Routes.strava_integration_path(@socket, :request), class: "btn btn-sm btn-outline-light" %>
+                <%= link(gettext("Connect to Strava"),
+                  to: Routes.strava_integration_path(@socket, :request),
+                  class: "btn btn-sm btn-outline-light"
+                ) %>
               <% end %>
             </div>
           </div>

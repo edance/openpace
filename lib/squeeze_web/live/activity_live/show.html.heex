@@ -20,12 +20,16 @@
               <div class="row pt-4">
                 <div class="mb-3 col-4 col-md-3">
                   <h5 class="card-title text-uppercase text-muted mb-0">Distance</h5>
-                  <span class="h2 font-weight-bold mb-0"><%= format_distance(@activity.distance, @current_user.user_prefs) %></span>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= format_distance(@activity.distance, @current_user.user_prefs) %>
+                  </span>
                 </div>
 
                 <div class="col-4 col-md-3">
                   <h5 class="card-title text-uppercase text-muted mb-0">Time</h5>
-                  <span class="h2 font-weight-bold mb-0"><%= format_duration(@activity.duration) %></span>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= format_duration(@activity.duration) %>
+                  </span>
                 </div>
 
                 <%= if show_pace?(assigns) do %>
@@ -51,10 +55,11 @@
 
           <div class="col-12">
             <%= if show_map?(assigns) do %>
-              <div id="activity-map"
-                   class="activity-map"
-                   phx-hook="ActivityMap"
-                   phx-update="ignore"
+              <div
+                id="activity-map"
+                class="activity-map"
+                phx-hook="ActivityMap"
+                phx-update="ignore"
               >
               </div>
             <% end %>
@@ -62,7 +67,10 @@
         </div>
       </div>
 
-      <%= live_component(SqueezeWeb.ActivityLive.LapsComponent, user: @current_user, activity: @activity) %>
+      <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
+        user: @current_user,
+        activity: @activity
+      ) %>
     </div>
   </div>
 </div>

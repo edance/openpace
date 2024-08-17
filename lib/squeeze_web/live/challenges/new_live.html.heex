@@ -1,132 +1,172 @@
-<div class="container py-4">
-  <.form let={f} for={@changeset} phx-submit="save">
-  <div class="row">
-    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <%= if @challenge_type == :segment do %>
-      <!-- Segment Select Card -->
-      <div class="card">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5 class="h3 mb-0">Pick a Segment</h5>
-            </div>
-            <div class="col text-right">
-              <div phx-click="reload" class="btn btn-sm btn-default">
-                Reload
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body segment-list overflow-auto">
-          <%= if @loading do %>
-          Loading Segments...
-          <% end %>
-
-          <%= if Enum.empty?(@segments) && !@loading do %>
-          <p>No Starred Segments</p>
-          <% end %>
-
-          <%= if !Enum.empty?(@segments) && !@loading do %>
-          <!-- List group -->
-          <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
-            <%= for segment <- @segments do %>
-            <li class="list-group-item px-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h4 class="mb-0">
-                    <a href={"https://www.strava.com/segments/#{segment.id}"} target="_blank">
-                      <%= segment.name %>
-                    </a>
-                  </h4>
-                  <small><%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %></small>
+<div class="position-relative py-5">
+  <div class="container max-w-7xl mx-auto">
+    <.form let={f} for={@changeset} phx-submit="save">
+      <div class="grid grid-cols-12">
+        <div class="md:col-span-8 offset-md-2 lg:col-span-6 offset-lg-3">
+          <%= if @challenge_type == :segment do %>
+            <!-- Segment Select Card -->
+            <.card>
+              <div class="card">
+                <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+                  <div class="flex">
+                    <div class="grow">
+                      <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                        <%= gettext("Pick a Segment") %>
+                      </h3>
+                    </div>
+                    <div class="flex-none">
+                      <button phx-click="reload" class="btn btn-sm btn-default">
+                        Reload
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-auto">
-                  <%= if @segment && @segment.id == segment.id do %>
-                  <button type="button" class="btn btn-sm btn-secondary active" phx-click="select_segment" phx-value-id={segment.id}>
-                    Select
-                  </button>
-                  <% else %>
-                  <button type="button" class="btn btn-sm btn-secondary" phx-click="select_segment" phx-value-id={segment.id}>
-                    Select
-                  </button>
+
+                <div class="px-4 sm:px-6 segment-list overflow-auto">
+                  <%= if @loading do %>
+                    Loading Segments...
+                  <% end %>
+
+                  <%= if Enum.empty?(@segments) && !@loading do %>
+                    <p>No Starred Segments</p>
+                  <% end %>
+
+                  <%= if !Enum.empty?(@segments) && !@loading do %>
+                    <!-- List group -->
+                    <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
+                      <%= for segment <- @segments do %>
+                        <li class="list-group-item px-0">
+                          <div class="grid grid-cols-12 items-center">
+                            <div class="col">
+                              <h4 class="mb-0">
+                                <a
+                                  href={"https://www.strava.com/segments/#{segment.id}"}
+                                  target="_blank"
+                                >
+                                  <%= segment.name %>
+                                </a>
+                              </h4>
+                              <small>
+                                <%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %>
+                              </small>
+                            </div>
+                            <div class="col-auto">
+                              <%= if @segment && @segment.id == segment.id do %>
+                                <button
+                                  type="button"
+                                  class="btn btn-sm btn-secondary active"
+                                  phx-click="select_segment"
+                                  phx-value-id={segment.id}
+                                >
+                                  Select
+                                </button>
+                              <% else %>
+                                <button
+                                  type="button"
+                                  class="btn btn-sm btn-secondary"
+                                  phx-click="select_segment"
+                                  phx-value-id={segment.id}
+                                >
+                                  Select
+                                </button>
+                              <% end %>
+                            </div>
+                          </div>
+                        </li>
+                      <% end %>
+                    </ul>
                   <% end %>
                 </div>
               </div>
-            </li>
-            <% end %>
-          </ul>
+            </.card>
           <% end %>
-        </div>
-      </div>
-      <% end %>
 
-      <%= if @segment do %>
-      <%= live_component(SqueezeWeb.Challenges.StaticMapComponent, changeset: @changeset, user: @current_user, segment: @segment) %>
-      <%= hidden_input f, :segment_id, value: @segment.id %>
-      <%= hidden_input f, :polyline, value: @segment.map.polyline %>
-      <% end %>
+          <%= if @segment do %>
+            <%= live_component(SqueezeWeb.Challenges.StaticMapComponent,
+              changeset: @changeset,
+              user: @current_user,
+              segment: @segment
+            ) %>
+            <%= hidden_input(f, :segment_id, value: @segment.id) %>
+            <%= hidden_input(f, :polyline, value: @segment.map.polyline) %>
+          <% end %>
+          <!-- Dates Card -->
+          <.card>
+            <div class="card">
+              <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                  Choose Dates
+                </h3>
+              </div>
+              <div class="px-4 sm:px-6">
+                <div class="form-group">
+                  <div
+                    id="date-range"
+                    class="d-flex justify-content-center pt-4"
+                    phx-update="ignore"
+                  >
+                    <!-- TODO: -->
+                  </div>
 
-      <!-- Dates Card -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="mb-0">Choose Dates</h3>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
-              <%= text_input f, :date_range, class: "form-control date-picker d-none", data: [range: true, inline: true] %>
+                  <%= error_tag(f, :start_date) %>
+                  <%= error_tag(f, :end_date) %>
+                </div>
+              </div>
             </div>
+          </.card>
+          <!-- General Info Card -->
+          <.card>
+            <div class="card">
+              <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                  General Information
+                </h3>
+              </div>
+              <!-- Card body -->
+              <div class="p-4 sm:p-6">
+                <div class="form-group">
+                  <%= label(f, :name, class: "form-control-label") %>
+                  <%= input(f, :name,
+                    placeholder: "Weekend Warriors",
+                    class: "form-control",
+                    autocomplete: "off"
+                  ) %>
+                  <%= error_tag(f, :name) %>
+                </div>
 
-            <%= error_tag f, :start_date %>
-            <%= error_tag f, :end_date %>
-          </div>
+                <div class="form-group">
+                  <%= textarea(f, :description,
+                    placeholder: "Description",
+                    class: "form-control",
+                    rows: "10"
+                  ) %>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-check-label">
+                    <%= checkbox(f, :public) %> Allow anyone to join this challenge
+                  </label>
+                </div>
+
+                <%= hidden_input(f, :activity_type) %>
+                <%= hidden_input(f, :challenge_type) %>
+
+                <%= if @changeset.action do %>
+                  <div class="alert alert-danger">
+                    <p class="text-sm mb-0">
+                      Oops, something went wrong! Please check the errors.
+                    </p>
+                  </div>
+                <% end %>
+
+                <div class="form-group">
+                  <%= submit("Create Challenge", class: "btn btn-primary") %>
+                </div>
+              </div>
+            </div>
+          </.card>
         </div>
       </div>
-
-      <!-- General Info Card -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="mb-0">
-            General Information
-          </h3>
-        </div>
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="form-group">
-            <%= label f, :name, class: "form-control-label" %>
-            <%= input f, :name, placeholder: "Weekend Warriors", class: "form-control", autocomplete: "off" %>
-            <%= error_tag f, :name %>
-          </div>
-
-          <div class="form-group">
-            <%= textarea f, :description, placeholder: "Description", class: "form-control", rows: "10" %>
-          </div>
-
-          <div class="form-group">
-            <label class="form-check-label">
-              <%= checkbox(f, :public) %>
-              Allow anyone to join this challenge
-            </label>
-          </div>
-
-          <%= hidden_input f, :activity_type %>
-          <%= hidden_input f, :challenge_type %>
-
-          <%= if @changeset.action do %>
-          <div class="alert alert-danger">
-            <p class="text-sm mb-0">
-              Oops, something went wrong! Please check the errors.
-            </p>
-          </div>
-          <% end %>
-
-          <div class="form-group">
-            <%= submit "Create Challenge", class: "btn btn-primary" %>
-          </div>
-        </div>
-      </div>
-    </div>
+    </.form>
   </div>
-  </.form>
- </div>
+</div>

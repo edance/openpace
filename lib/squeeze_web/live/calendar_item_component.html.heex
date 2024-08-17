@@ -5,7 +5,10 @@
     <% end %>
 
     <div class="small ml-2 d-none d-md-block">
-      <%= live_redirect activity.name || activity.type, to: Routes.activity_path(@socket, :show, activity.slug), class: "font-weight-bold d-block" %>
+      <%= live_redirect(activity.name || activity.type,
+        to: Routes.activity_path(@socket, :show, activity.slug),
+        class: "font-weight-bold d-block"
+      ) %>
 
       <span>
         <%= description(activity, @current_user) %>
@@ -22,8 +25,10 @@
 
     <div class="small ml-2">
       <div class="font-weight-bold">
-        <%= live_redirect race_goal.race.name, to: Routes.race_path(@socket, :show, race_goal.slug), class: "font-weight-bold d-block" %>
-        Race Day
+        <%= live_redirect(race_goal.race.name,
+          to: Routes.race_path(@socket, :show, race_goal.slug),
+          class: "font-weight-bold d-block"
+        ) %> Race Day
       </div>
     </div>
   </div>

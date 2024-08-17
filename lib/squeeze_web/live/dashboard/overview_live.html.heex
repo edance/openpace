@@ -1,13 +1,30 @@
 <!-- Page content -->
 <div class="position-relative py-5">
   <div class="container max-w-7xl mx-auto">
-    <.live_component module={SqueezeWeb.Dashboard.CardsComponent} id="overview-cards" current_user={@current_user} current_streak={@current_streak} activity_summaries={@activity_summaries} race_goal={@race_goal} />
+    <.live_component
+      module={SqueezeWeb.Dashboard.CardsComponent}
+      id="overview-cards"
+      current_user={@current_user}
+      current_streak={@current_streak}
+      activity_summaries={@activity_summaries}
+      race_goal={@race_goal}
+    />
 
     <div class="grid grid-cols-12 mt-5 gap-4 md:gap-6">
       <div class="xl:col-span-3 md:col-span-6 offset-md-6 order-last offset-xl-0 order-xl-first">
-        <.live_component module={SqueezeWeb.Dashboard.ProfileCardComponent} id="profile-card" current_user={@current_user} ytd_run_stats={@ytd_run_stats} />
+        <.live_component
+          module={SqueezeWeb.Dashboard.ProfileCardComponent}
+          id="profile-card"
+          current_user={@current_user}
+          ytd_run_stats={@ytd_run_stats}
+        />
 
-        <.live_component module={SqueezeWeb.Dashboard.ChallengesCardComponent} id="challenges-card" current_user={@current_user} challenges={@challenges} />
+        <.live_component
+          module={SqueezeWeb.Dashboard.ChallengesCardComponent}
+          id="challenges-card"
+          current_user={@current_user}
+          challenges={@challenges}
+        />
 
         <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg">
           <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
@@ -18,27 +35,33 @@
                 </h3>
               </div>
               <div class="flex-none">
-
-                <%= live_redirect(gettext("Edit"), to: Routes.settings_path(@socket, :personal_records), class: "relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600") %>
+                <%= live_redirect(gettext("Edit"),
+                  to: Routes.settings_path(@socket, :personal_records),
+                  class:
+                    "relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                ) %>
               </div>
             </div>
           </div>
 
-
           <%= if Enum.empty?(@current_user.user_prefs.personal_records) do %>
             <div class="p-4 sm:p-6">
               <p class="">
-                <%= live_redirect(gettext("Add a PR here."), to: Routes.settings_path(@socket, :personal_records)) %>
+                <%= live_redirect(gettext("Add a PR here."),
+                  to: Routes.settings_path(@socket, :personal_records)
+                ) %>
               </p>
             </div>
           <% else %>
-
             <div class="">
               <table class="w-full">
                 <tbody class="divide-y divide-white/5">
                   <%= for pr <- personal_records(assigns) do %>
                     <tr class="">
-                      <th scope="row" class="px-4 sm:px-6 py-3.5 text-left text-xs font-semibold text-gray-900 dark:text-white">
+                      <th
+                        scope="row"
+                        class="px-4 sm:px-6 py-3.5 text-left text-xs font-semibold text-gray-900 dark:text-white"
+                      >
                         <%= distance_name(pr.distance, imperial: @current_user.user_prefs.imperial) %>
                       </th>
                       <td class="whitespace-nowrap px-4 sm:px-6 py-4 text-xs text-gray-500 text-right dark:text-white">
@@ -58,12 +81,22 @@
       </div>
 
       <div class="xl:col-span-5 md:col-span-6 mb-5 mb-xl-0">
-        <.live_component module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent} id="recent-activity-card" current_user={@current_user} activity_summaries={@activity_summaries} date={@date} />
+        <.live_component
+          module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent}
+          id="recent-activity-card"
+          current_user={@current_user}
+          activity_summaries={@activity_summaries}
+          date={@date}
+        />
 
         <%= for activity <- @activities do %>
-          <.live_component module={SqueezeWeb.Dashboard.MiniActivityCardComponent} id={activity.slug} activity={activity} current_user={@current_user} />
+          <.live_component
+            module={SqueezeWeb.Dashboard.MiniActivityCardComponent}
+            id={activity.slug}
+            activity={activity}
+            current_user={@current_user}
+          />
         <% end %>
-
       </div>
 
       <div class="xl:col-span-4 md:col-span-6">
@@ -75,19 +108,35 @@
               </h3>
 
               <p class="text-sm text-white">
-                <%= gettext("In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us.") %>
+                <%= gettext(
+                  "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
+                ) %>
               </p>
 
               <%= link to: Routes.strava_integration_path(@socket, :request), class: "" do %>
-                <img alt="Connect to Strava" class="btn-strava" src={Routes.static_path(@socket, "/images/btn_strava.svg")} />
+                <img
+                  alt="Connect to Strava"
+                  class="btn-strava"
+                  src={Routes.static_path(@socket, "/images/btn_strava.svg")}
+                />
               <% end %>
             </div>
           </div>
         <% end %>
 
-        <.live_component module={SqueezeWeb.Dashboard.MiniCalendarComponent} id="mini-calendar-card" current_user={@current_user} activity_map={@activity_map} />
+        <.live_component
+          module={SqueezeWeb.Dashboard.MiniCalendarComponent}
+          id="mini-calendar-card"
+          current_user={@current_user}
+          activity_map={@activity_map}
+        />
 
-        <.live_component module={SqueezeWeb.RaceLive.UpcomingRacesCard} id="upcoming-races" race_goals={@race_goals} current_user={@current_user} />
+        <.live_component
+          module={SqueezeWeb.RaceLive.UpcomingRacesCard}
+          id="upcoming-races"
+          race_goals={@race_goals}
+          current_user={@current_user}
+        />
       </div>
     </div>
   </div>

@@ -1,152 +1,190 @@
 <div class="relative">
   <div class="container max-w-7xl mx-auto">
     <div class="flex items-center py-4">
-        <div class="grow">
-          <h6 class="text-lg font-semibold text-gray-800 dark:text-white inline-block mb-2">
-            <%= gettext("Running Trends") %>
-          </h6>
+      <div class="grow">
+        <h6 class="text-lg font-semibold text-gray-800 dark:text-white inline-block mb-2">
+          <%= gettext("Running Trends") %>
+        </h6>
 
-          <nav aria-label="breadcrumb" class="flex text-gray-800 dark:text-white">
-            <ol class="flex items-center space-x-4">
-              <li class="flex items-center text-sm">
-                <%= live_patch(gettext("Trends"), to: Routes.trends_path(@socket, :index), class: "text-gray-800 dark:text-white") %>
-              </li>
-              <li class="flex text-sm items-center" aria-current="page">
-                <%= if @year do %>
-                  <%= @year %> <%= gettext("Stats") %>
-                <% else %>
-                  <%= gettext("All Time") %>
+        <nav aria-label="breadcrumb" class="flex text-gray-800 dark:text-white">
+          <ol class="flex items-center space-x-4">
+            <li class="flex items-center text-sm">
+              <%= live_patch(gettext("Trends"),
+                to: Routes.trends_path(@socket, :index),
+                class: "text-gray-800 dark:text-white"
+              ) %>
+            </li>
+            <li class="flex text-sm items-center" aria-current="page">
+              <%= if @year do %>
+                <%= @year %> <%= gettext("Stats") %>
+              <% else %>
+                <%= gettext("All Time") %>
+              <% end %>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="flex-none text-right">
+        <span class="isolate inline-flex rounded-md shadow-sm">
+          <%= live_patch(gettext("All Time"),
+            to: Routes.trends_path(@socket, :index),
+            class:
+              "relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+          ) %>
+
+          <%= for year <- @years |> Enum.reverse() |> Enum.take(3) do %>
+            <%= live_patch(year,
+              to: Routes.trends_path(@socket, :show, year),
+              class:
+                "relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+            ) %>
+          <% end %>
+          <div class="relative -ml-px block">
+            <button
+              phx-click={JS.show(to: "#more-year-menu")}
+              phx-click-away={JS.hide(to: "#more-year-menu")}
+              type="button"
+              class="relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+              id="option-menu-button"
+              aria-expanded="true"
+              aria-haspopup="true"
+            >
+              <span class="sr-only">Open options</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <div
+              id="more-year-menu"
+              class="hidden absolute right-0 z-10 -mr-1 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="option-menu-button"
+              tabindex="-1"
+            >
+              <div class="py-1" role="none">
+                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                <%= for year <- @years |> Enum.reverse() |> Enum.slice(3..-1) do %>
+                  <%= live_patch(year,
+                    to: Routes.trends_path(@socket, :show, year),
+                    class: "block px-4 py-2 text-sm text-gray-700",
+                    role: "menuitem",
+                    tabindex: "-1"
+                  ) %>
                 <% end %>
-              </li>
-            </ol>
-          </nav>
-        </div>
-
-        <div class="flex-none text-right">
-          <span class="isolate inline-flex rounded-md shadow-sm">
-            <%= live_patch(gettext("All Time"), to: Routes.trends_path(@socket, :index), class: "relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10") %>
-
-            <%= for year <- @years |> Enum.reverse() |> Enum.take(3) do %>
-              <%= live_patch(year, to: Routes.trends_path(@socket, :show, year), class: "relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10") %>
-            <% end %>
-            <div class="relative -ml-px block">
-              <button phx-click={JS.show(to: "#more-year-menu")} phx-click-away={JS.hide(to: "#more-year-menu")} type="button" class="relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10" id="option-menu-button" aria-expanded="true" aria-haspopup="true">
-                <span class="sr-only">Open options</span>
-                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                </svg>
-              </button>
-
-              <div id="more-year-menu" class="hidden absolute right-0 z-10 -mr-1 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="option-menu-button" tabindex="-1">
-                <div class="py-1" role="none">
-                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                  <%= for year <- @years |> Enum.reverse() |> Enum.slice(3..-1) do %>
-                    <%= live_patch(year, to: Routes.trends_path(@socket, :show, year), class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1") %>
-                  <% end %>
-                </div>
               </div>
             </div>
-          </span>
-        </div>
+          </div>
+        </span>
       </div>
     </div>
   </div>
+</div>
 
 <div class="container max-w-7xl mx-auto">
   <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
-      <div class="bg-gradient-to-tl from-blue-500 to-violet-500 rounded-lg"
-           id="distance-card"
-           data-field="distance"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="p-4 sm:p-6">
-              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
-                <%= gettext("Total Distance") %>
-              </h5>
-              <span class="text-lg font-semibold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm text-white amount-label">
-                <%= if @current_user.user_prefs.imperial do %>
-                  <%= gettext("miles") %>
-                <% else %>
-                  <%= gettext("km") %>
-                <% end %>
-              </span>
-              <div class="mini-chart relative" id="total-distance-chart" style="aspect-ratio: 4 / 1;">
-              </div>
+    <div
+      class="bg-gradient-to-tl from-blue-500 to-violet-500 rounded-lg"
+      id="distance-card"
+      data-field="distance"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Total Distance") %>
+        </h5>
+        <span class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= if @current_user.user_prefs.imperial do %>
+            <%= gettext("miles") %>
+          <% else %>
+            <%= gettext("km") %>
+          <% end %>
+        </span>
+        <div class="mini-chart relative" id="total-distance-chart" style="aspect-ratio: 4 / 1;">
         </div>
-      </div>
-
-      <div class="bg-gradient-to-tl from-teal-500 to-blue-500 rounded-lg"
-           id="duration-card"
-           data-field="duration"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="p-4 sm:p-6">
-              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
-                <%= gettext("Total Duration") %>
-              </h5>
-              <span class="text-lg font-semibold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm text-white amount-label">
-                <%= gettext("hours") %>
-              </span>
-              <div class="mini-chart relative" id="total-duration-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-            </div>
-      </div>
-
-      <div class="bg-gradient-to-tl from-orange-500 to-red-500 rounded-lg"
-           id="elevation-card"
-           data-field="elevation_gain"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="p-4 sm:p-6">
-              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
-                <%= gettext("Elevation Gain") %>
-              </h5>
-              <span class="text-lg font-semibold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm text-white amount-label">
-                <%= if @current_user.user_prefs.imperial do %>
-                  <%= gettext("feet") %>
-                <% else %>
-                  <%= gettext("meters") %>
-                <% end %>
-              </span>
-              <div class="mini-chart relative" id="total-elevation-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-        </div>
-      </div>
-
-      <div class="bg-gradient-to-tl from-blue-950 to-slate-900 rounded-lg"
-           id="count-card"
-           data-field="count"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="p-4 sm:p-6">
-              <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
-                <%= gettext("Number of Runs") %>
-              </h5>
-              <span id="run-count" class="text-lg font-semibold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm text-white amount-label">
-                <%= gettext("runs") %>
-              </span>
-
-              <div class="mini-chart relative" id="run-count-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-            </div>
       </div>
     </div>
+
+    <div
+      class="bg-gradient-to-tl from-teal-500 to-blue-500 rounded-lg"
+      id="duration-card"
+      data-field="duration"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Total Duration") %>
+        </h5>
+        <span class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= gettext("hours") %>
+        </span>
+        <div class="mini-chart relative" id="total-duration-chart" style="aspect-ratio: 4 / 1;">
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-gradient-to-tl from-orange-500 to-red-500 rounded-lg"
+      id="elevation-card"
+      data-field="elevation_gain"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Elevation Gain") %>
+        </h5>
+        <span class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= if @current_user.user_prefs.imperial do %>
+            <%= gettext("feet") %>
+          <% else %>
+            <%= gettext("meters") %>
+          <% end %>
+        </span>
+        <div class="mini-chart relative" id="total-elevation-chart" style="aspect-ratio: 4 / 1;">
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-gradient-to-tl from-blue-950 to-slate-900 rounded-lg"
+      id="count-card"
+      data-field="count"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Number of Runs") %>
+        </h5>
+        <span id="run-count" class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= gettext("runs") %>
+        </span>
+
+        <div class="mini-chart relative" id="run-count-chart" style="aspect-ratio: 4 / 1;"></div>
+      </div>
+    </div>
+  </div>
 
   <div class="grid grid-cols-12 gap-4 sm:gap-6 mt-4 sm:mt-6">
     <div class="col-span-12 xl:col-span-9">
@@ -164,15 +202,16 @@
             </div>
           </div>
 
-          <div phx-hook="ActivityBubbleChart"
+          <div
+            phx-hook="ActivityBubbleChart"
             phx-update="ignore"
             id="activity-bubble-chart"
             data-imperial={"#{@current_user.user_prefs.imperial}"}
-            style="aspect-ratio: 2 / 1; position: relative;">
+            style="aspect-ratio: 2 / 1; position: relative;"
+          >
           </div>
         </div>
       </.card>
-
     </div>
   </div>
 </div>

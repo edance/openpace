@@ -1,9 +1,11 @@
 <%= if info_msg(@flash) do %>
-  <div class="alert alert-info alert-dismissible fixed-top container mt-4 fade show"
-      data-auto-hide="true"
-      role="alert"
-      phx-click="lv:clear-flash"
-      phx-value-key="info">
+  <div
+    class="alert alert-info alert-dismissible fixed-top container mt-4 fade show"
+    data-auto-hide="true"
+    role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="info"
+  >
     <%= info_msg(@flash) %>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -12,11 +14,13 @@
 <% end %>
 
 <%= if error_msg(@flash) do %>
-  <div class="alert alert-warning alert-dismissible fixed-top container mt-4 fade show"
-      data-auto-hide="true"
-      role="alert"
-      phx-click="lv:clear-flash"
-      phx-value-key="error">
+  <div
+    class="alert alert-warning alert-dismissible fixed-top container mt-4 fade show"
+    data-auto-hide="true"
+    role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="error"
+  >
     <%= error_msg(@flash) %>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

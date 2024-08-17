@@ -22,13 +22,28 @@
               <%= for activity <- @activities do %>
                 <tr id={"activity-#{activity.id}"} scope="row">
                   <td><%= activity.type %></td>
-                  <td><%= Timex.format!(activity.start_at_local, "%a, %b #{Ordinal.ordinalize(activity.start_at_local.day)}", :strftime) %></td>
-                  <td><%= live_redirect activity.name, to: Routes.activity_path(@socket, :show, activity.slug) %></td>
+                  <td>
+                    <%= Timex.format!(
+                      activity.start_at_local,
+                      "%a, %b #{Ordinal.ordinalize(activity.start_at_local.day)}",
+                      :strftime
+                    ) %>
+                  </td>
+                  <td>
+                    <%= live_redirect(activity.name,
+                      to: Routes.activity_path(@socket, :show, activity.slug)
+                    ) %>
+                  </td>
                   <td><%= format_distance(activity.distance, @current_user.user_prefs) %></td>
                   <td><%= format_duration(activity.duration) %></td>
 
                   <td>
-                    <button class="btn btn-sm btn-outline-danger" phx-click="delete" phx-value-id={activity.id} data-confirm="Are you sure?" >
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      phx-click="delete"
+                      phx-value-id={activity.id}
+                      data-confirm="Are you sure?"
+                    >
                       Delete
                     </button>
                   </td>
@@ -37,7 +52,6 @@
             </tbody>
           </table>
         </div>
-
         <!-- Pagination -->
         <div class="card-footer py-4">
           <nav aria-label="...">
@@ -50,7 +64,11 @@
                   <% end %>
 
                   <li class="page-item">
-                    <%= live_patch(previous_page(assigns), to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)), class: "page-link") %>
+                    <%= live_patch(previous_page(assigns),
+                      to:
+                        Routes.activity_index_path(@socket, :index, page: previous_page(assigns)),
+                      class: "page-link"
+                    ) %>
                   </li>
                 </li>
               <% else %>
@@ -68,7 +86,10 @@
 
               <%= if next_page(assigns) do %>
                 <li class="page-item">
-                  <%= live_redirect(next_page(assigns), to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)), class: "page-link") %>
+                  <%= live_redirect(next_page(assigns),
+                    to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)),
+                    class: "page-link"
+                  ) %>
                 </li>
 
                 <li class="page-item">
@@ -88,7 +109,6 @@
             </ul>
           </nav>
         </div>
-
       </div>
     </div>
   </div>

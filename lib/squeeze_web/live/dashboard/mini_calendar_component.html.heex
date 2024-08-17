@@ -12,23 +12,24 @@
   <div class="p-4 sm:p-6">
     <div class="grid grid-cols-7 mb-2">
       <%= for date <- Enum.take(dates(assigns), 7) do %>
-      <div class="text-center">
-        <div class="uppercase text-xs text-gray-800 dark:text-white">
-          <%= date |> Timex.format!("%a", :strftime) |> String.first() %>
+        <div class="text-center">
+          <div class="uppercase text-xs text-gray-800 dark:text-white">
+            <%= date |> Timex.format!("%a", :strftime) |> String.first() %>
+          </div>
         </div>
-      </div>
       <% end %>
     </div>
 
     <div class="row no-gutters mb-1">
-      <canvas id="calendar-chart"
-              aria-label="Mini Calendar of Activities"
-              role="img"
-              class="w-100"
-              phx-hook="CalendarChart"
-              style="aspect-ratio: 4 / 3;"
-              data-summaries={Jason.encode!(data(assigns))}
-              data-imperial={"#{@current_user.user_prefs.imperial}"}
+      <canvas
+        id="calendar-chart"
+        aria-label="Mini Calendar of Activities"
+        role="img"
+        class="w-100"
+        phx-hook="CalendarChart"
+        style="aspect-ratio: 4 / 3;"
+        data-summaries={Jason.encode!(data(assigns))}
+        data-imperial={"#{@current_user.user_prefs.imperial}"}
       >
       </canvas>
     </div>
