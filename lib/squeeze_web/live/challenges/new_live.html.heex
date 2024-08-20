@@ -32,45 +32,46 @@
                   <% end %>
 
                   <%= if !Enum.empty?(@segments) && !@loading do %>
-                    <!-- List group -->
-                    <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
+                    <ul role="list" class="divide-y divide-gray-100">
                       <%= for segment <- @segments do %>
-                        <li class="list-group-item px-0">
-                          <div class="grid grid-cols-12 items-center">
-                            <div class="col">
-                              <h4 class="mb-0">
+                        <li class="relative flex justify-between gap-x-6 py-5">
+                          <div class="flex min-w-0 gap-x-4">
+                            <div class="min-w-0 flex-auto">
+                              <p class="text-sm font-semibold leading-6 text-gray-900">
+                                  <%= segment.name %>
                                 <a
                                   href={"https://www.strava.com/segments/#{segment.id}"}
                                   target="_blank"
                                 >
-                                  <%= segment.name %>
+
+                <.icon icon="akar-icons:link-out" />
                                 </a>
-                              </h4>
-                              <small>
+                              </p>
+                              <p class="mt-1 flex text-xs leading-5 text-gray-500">
                                 <%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %>
-                              </small>
+                              </p>
                             </div>
-                            <div class="col-auto">
-                              <%= if @segment && @segment.id == segment.id do %>
-                                <button
-                                  type="button"
-                                  class="btn btn-sm btn-secondary active"
-                                  phx-click="select_segment"
-                                  phx-value-id={segment.id}
-                                >
-                                  Select
-                                </button>
-                              <% else %>
-                                <button
-                                  type="button"
-                                  class="btn btn-sm btn-secondary"
-                                  phx-click="select_segment"
-                                  phx-value-id={segment.id}
-                                >
-                                  Select
-                                </button>
-                              <% end %>
-                            </div>
+                          </div>
+                          <div class="flex shrink-0 items-center gap-x-4">
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-secondary active"
+                              phx-click="select_segment"
+                              phx-value-id={segment.id}
+                            >
+                              <svg
+                                class="h-5 w-5 flex-none text-gray-400"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </button>
                           </div>
                         </li>
                       <% end %>
@@ -160,7 +161,10 @@
                 <% end %>
 
                 <div class="form-group">
-                  <%= submit("Create Challenge", class: "btn btn-primary") %>
+              <%= submit(gettext("Create Challenge"),
+                class:
+                  "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              ) %>
                 </div>
               </div>
             </div>

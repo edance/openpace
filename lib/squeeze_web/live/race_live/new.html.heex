@@ -1,5 +1,5 @@
-<div class="position-relative py-5">
-  <div class="container max-w-7xl mx-auto">
+<div class="relative py-5">
+  <div class="container max-w-xl mx-auto">
     <%= f = form_for(@changeset, "#", phx_submit: :save) %>
     <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
       <.card>
@@ -11,28 +11,41 @@
           </div>
           <!-- Card body -->
           <div class="p-4 sm:p-6">
-            <div class="form-group">
-              <%= label(f, :race_name, class: "form-control-label") %>
+            <div class="mb-4">
+              <%= label(f, :race_name,
+                class: "block font-medium text-gray-700 dark:text-white mb-2"
+              ) %>
               <%= input(f, :race_name,
                 placeholder: "Boston Marathon",
-                class: "form-control",
+                class:
+                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
                 autocomplete: "off"
               ) %>
             </div>
 
-            <div class="form-group">
-              <%= label(f, :distance, class: "form-control-label") %>
+            <div class="mb-4">
+              <%= label(f, :distance,
+                class: "block font-medium text-gray-700 dark:text-white mb-2"
+              ) %>
               <%= select(f, :distance, distances(),
-                class: "distance-select form-control",
+                class:
+                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
                 placeholder: "Choose a distance"
               ) %>
               <%= error_tag(f, :distance) %>
             </div>
 
-            <div class="form-group">
-              <%= label(f, "Race Date", class: "form-control-label") %>
-              <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
+            <div class="mb-4">
+              <%= label(f, "Race Date",
+                class: "block font-medium text-gray-700 dark:text-white mb-2"
+              ) %>
+              <div id="date-range" class="flex justify-center pt-4" phx-update="ignore">
                 <!-- TODO: Add date picker -->
+                <%= date_input(f, :race_date,
+                  class:
+                    "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                  data: [inline: true]
+                ) %>
               </div>
 
               <%= error_tag(f, :race_date) %>
@@ -50,40 +63,56 @@
           </div>
           <!-- Card body -->
           <div class="p-4 sm:p-6">
-            <div class="form-group">
-              <%= label f, :duration, class: "form-control-label" do %>
+            <div class="mb-4">
+              <%= label f, :duration, class: "block font-medium text-gray-700 dark:text-white mb-2" do %>
                 Goal Time
               <% end %>
-              <%= duration_select(f, :duration, class: "form-control form-control") %>
+              <%= duration_select(f, :duration,
+                class:
+                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              ) %>
               <%= error_tag(f, :duration) %>
             </div>
 
-            <div class="form-group">
-              <label class="form-check-label">
-                <%= checkbox(f, :just_finish) %> My goal is to just finish
+            <div class="mb-4">
+              <label class="inline-flex items-center">
+                <%= checkbox(f, :just_finish,
+                  class:
+                    "form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                ) %>
+                <span class="ml-2 text-gray-700 dark:text-white">My goal is to just finish</span>
               </label>
             </div>
 
-            <div class="form-group">
-              <%= label(f, :description, class: "form-control-label") %>
+            <div class="mb-4">
+              <%= label(f, :description,
+                class: "block font-medium text-gray-700 dark:text-white mb-2"
+              ) %>
               <%= textarea(f, :description,
                 placeholder: "Description",
-                class: "form-control",
+                class:
+                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
                 rows: "10"
               ) %>
               <%= error_tag(f, :description) %>
             </div>
 
             <%= if @changeset.action do %>
-              <div class="alert alert-danger">
+              <div
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
                 <p class="text-sm mb-0">
                   Oops, something went wrong! Please check the errors.
                 </p>
               </div>
             <% end %>
 
-            <div class="form-group mt-6">
-              <%= submit("Create Race", class: "btn btn-primary") %>
+            <div class="mt-6">
+              <%= submit("Create Race",
+                class:
+                  "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              ) %>
             </div>
           </div>
         </div>

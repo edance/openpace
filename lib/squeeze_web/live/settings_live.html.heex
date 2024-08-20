@@ -1,137 +1,152 @@
-<div class="container container-dashboard pt-4 pb-8">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body">
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <%= link_item(@socket, @live_action, gettext("Account Settings"), :general) %>
-            </li>
-            <li class="nav-item">
-              <%= link_item(@socket, @live_action, gettext("Personal Records"), :personal_records) %>
-            </li>
-            <li class="nav-item">
-              <%= link_item(@socket, @live_action, gettext("Rename Activities"), :namer) %>
-            </li>
-            <li class="nav-item">
-              <%= link(gettext("Billing"),
-                to: Routes.billing_path(@socket, :portal),
-                class: "nav-link"
-              ) %>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <%= if @live_action == :general do %>
-        <%= live_component(SqueezeWeb.Settings.UserFormComponent,
-          changeset: @changeset,
-          current_user: @current_user
-        ) %>
-      <% end %>
-
-      <%= if @live_action == :personal_records do %>
-        <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent,
-          id: "pr-form",
-          changeset: @changeset,
-          current_user: @current_user,
-          x: 1
-        ) %>
-      <% end %>
-
-      <%= if @live_action == :namer do %>
-        <%= live_component(SqueezeWeb.Settings.NamerCardComponent,
-          changeset: @changeset,
-          current_user: @current_user
-        ) %>
-      <% end %>
-
-      <%= if @live_action == :api do %>
-        <%= live_component(SqueezeWeb.Settings.ApiConfigComponent,
-          changeset: @changeset,
-          current_user: @current_user
-        ) %>
-      <% end %>
-    </div>
-
-    <div class="col-md-3 mb-5 mb-xl-0">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0"><%= gettext("Account Info") %></h3>
+<div class="position-relative py-5">
+  <div class="container max-w-7xl mx-auto">
+    <div class="grid grid-cols-12">
+      <div class="md:col-span-3">
+        <.card>
+          <div class="">
+            <div class="p-4 sm:p-6">
+              <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                  <%= link_item(@socket, @live_action, gettext("Account Settings"), :general) %>
+                </li>
+                <li class="nav-item">
+                  <%= link_item(
+                    @socket,
+                    @live_action,
+                    gettext("Personal Records"),
+                    :personal_records
+                  ) %>
+                </li>
+                <li class="nav-item">
+                  <%= link_item(@socket, @live_action, gettext("Rename Activities"), :namer) %>
+                </li>
+                <li class="nav-item">
+                  <%= link(gettext("Billing"),
+                    to: Routes.billing_path(@socket, :portal),
+                    class: "nav-link"
+                  ) %>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <h4>Name</h4>
-
-          <p class="small"><%= full_name(@current_user) %></p>
-
-          <%= if @current_user.email do %>
-            <h4>Email</h4>
-
-            <p class="small"><%= @current_user.email %></p>
-          <% end %>
-
-          <h4>Membership Status</h4>
-
-          <p class="small"><%= membership_status(assigns) %></p>
-
-          <%= if @current_user.subscription_status == :free do %>
-            <%= link(gettext("Subscribe"),
-              to: Routes.billing_path(@socket, :checkout),
-              class: "btn btn-info btn-sm"
-            ) %>
-          <% end %>
-        </div>
+        </.card>
       </div>
 
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0"><%= gettext("Connections") %></h3>
+      <div class="md:col-span-6">
+        <%= if @live_action == :general do %>
+          <%= live_component(SqueezeWeb.Settings.UserFormComponent,
+            changeset: @changeset,
+            current_user: @current_user
+          ) %>
+        <% end %>
+
+        <%= if @live_action == :personal_records do %>
+          <%= live_component(SqueezeWeb.Settings.PersonalRecordsFormComponent,
+            id: "pr-form",
+            changeset: @changeset,
+            current_user: @current_user,
+            x: 1
+          ) %>
+        <% end %>
+
+        <%= if @live_action == :namer do %>
+          <%= live_component(SqueezeWeb.Settings.NamerCardComponent,
+            changeset: @changeset,
+            current_user: @current_user
+          ) %>
+        <% end %>
+
+        <%= if @live_action == :api do %>
+          <%= live_component(SqueezeWeb.Settings.ApiConfigComponent,
+            changeset: @changeset,
+            current_user: @current_user
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="md:col-span-3 mb-5 mb-xl-0">
+        <.card>
+          <div class="">
+            <div class="card-header border-0">
+              <div class="grid grid-cols-12 align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0"><%= gettext("Account Info") %></h3>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="row no-gutters">
-            <div class="col-auto">
-              <img src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")} />
-            </div>
-            <div class="col ml-2">
-              <%= if strava_integration?(assigns) do %>
-                <p class="mb-0"><%= gettext("Connected to %{provider}", provider: "Strava") %></p>
-              <% else %>
-                <%= gettext("Connect with %{provider}", provider: "Strava") %>
+            <div class="p-4 sm:p-6">
+              <h4>Name</h4>
+
+              <p class="small"><%= full_name(@current_user) %></p>
+
+              <%= if @current_user.email do %>
+                <h4>Email</h4>
+
+                <p class="small"><%= @current_user.email %></p>
               <% end %>
-              <p class="small text-muted">Automatically sync activities.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <%= if strava_integration?(assigns) do %>
-                <%= if @syncing do %>
-                  <button class="btn btn-sm btn-outline-light" disabled>
-                    <%= gettext("Syncing...") %>
-                  </button>
-                <% else %>
-                  <button class="btn btn-sm btn-outline-light" phx-click="sync">
-                    <%= gettext("Sync Activities") %>
-                  </button>
-                <% end %>
-              <% else %>
-                <%= link(gettext("Connect to Strava"),
-                  to: Routes.strava_integration_path(@socket, :request),
-                  class: "btn btn-sm btn-outline-light"
+
+              <h4>Membership Status</h4>
+
+              <p class="small"><%= membership_status(assigns) %></p>
+
+              <%= if @current_user.subscription_status == :free do %>
+                <%= link(gettext("Subscribe"),
+                  to: Routes.billing_path(@socket, :checkout),
+                  class: "btn btn-info btn-sm"
                 ) %>
               <% end %>
             </div>
           </div>
-        </div>
+        </.card>
+
+        <.card>
+          <div class="">
+            <div class="card-header border-0">
+              <div class="grid grid-cols-12 align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0"><%= gettext("Connections") %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 sm:p-6">
+              <div class="grid grid-cols-12 no-gutters">
+                <div class="col-auto">
+                  <img src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")} />
+                </div>
+                <div class="col ml-2">
+                  <%= if strava_integration?(assigns) do %>
+                    <p class="mb-0">
+                      <%= gettext("Connected to %{provider}", provider: "Strava") %>
+                    </p>
+                  <% else %>
+                    <%= gettext("Connect with %{provider}", provider: "Strava") %>
+                  <% end %>
+                  <p class="small text-muted">Automatically sync activities.</p>
+                </div>
+              </div>
+              <div class="grid grid-cols-12">
+                <div class="col">
+                  <%= if strava_integration?(assigns) do %>
+                    <%= if @syncing do %>
+                      <button class="btn btn-sm btn-outline-light" disabled>
+                        <%= gettext("Syncing...") %>
+                      </button>
+                    <% else %>
+                      <button class="btn btn-sm btn-outline-light" phx-click="sync">
+                        <%= gettext("Sync Activities") %>
+                      </button>
+                    <% end %>
+                  <% else %>
+                    <%= link(gettext("Connect to Strava"),
+                      to: Routes.strava_integration_path(@socket, :request),
+                      class: "btn btn-sm btn-outline-light"
+                    ) %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </.card>
       </div>
     </div>
   </div>

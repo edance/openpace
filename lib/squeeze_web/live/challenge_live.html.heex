@@ -97,7 +97,7 @@
               For this challenge, time is on your side. You don't need to be fast to win. You just have to put in the time.
             </p>
             <%= live_redirect(gettext("Get Started"),
-              to: Routes.challenge_path(@socket, :new, challenge_type: "distance"),
+              to: Routes.challenge_path(@socket, :new, challenge_type: "time"),
               class:
                 "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
             ) %>
@@ -116,7 +116,7 @@
               Run up that hill or mountain or whatever you can to get elevation. The runner with the most elevation gain wins this challenge.
             </p>
             <%= live_redirect(gettext("Get Started"),
-              to: Routes.challenge_path(@socket, :new, challenge_type: "distance"),
+              to: Routes.challenge_path(@socket, :new, challenge_type: "altitude"),
               class:
                 "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
             ) %>
@@ -135,7 +135,7 @@
               Pick your favorite Strava segment and race your friends. Whoever runs the segment the fastest will be declared the winner.
             </p>
             <%= live_redirect(gettext("Get Started"),
-              to: Routes.challenge_path(@socket, :new, challenge_type: "distance"),
+              to: Routes.challenge_path(@socket, :new, challenge_type: "segment"),
               class:
                 "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
             ) %>
