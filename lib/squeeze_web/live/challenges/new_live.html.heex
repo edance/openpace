@@ -1,34 +1,33 @@
-<div class="position-relative py-5">
+<div class="relative py-5">
   <div class="container max-w-7xl mx-auto">
     <.form let={f} for={@changeset} phx-submit="save">
       <div class="grid grid-cols-12">
-        <div class="md:col-span-8 offset-md-2 lg:col-span-6 offset-lg-3">
+        <div class="md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-4">
           <%= if @challenge_type == :segment do %>
             <!-- Segment Select Card -->
             <.card>
               <div class="card">
                 <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
-                  <div class="flex">
-                    <div class="grow">
-                      <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                        <%= gettext("Pick a Segment") %>
-                      </h3>
-                    </div>
-                    <div class="flex-none">
-                      <button phx-click="reload" class="btn btn-sm btn-default">
-                        Reload
-                      </button>
-                    </div>
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                      <%= gettext("Pick a Segment") %>
+                    </h3>
+                    <button
+                      phx-click="reload"
+                      class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Reload
+                    </button>
                   </div>
                 </div>
 
                 <div class="px-4 sm:px-6 segment-list overflow-auto">
                   <%= if @loading do %>
-                    Loading Segments...
+                    <p class="text-gray-700 dark:text-white">Loading Segments...</p>
                   <% end %>
 
                   <%= if Enum.empty?(@segments) && !@loading do %>
-                    <p>No Starred Segments</p>
+                    <p class="text-gray-700 dark:text-white">No Starred Segments</p>
                   <% end %>
 
                   <%= if !Enum.empty?(@segments) && !@loading do %>
@@ -38,13 +37,13 @@
                           <div class="flex min-w-0 gap-x-4">
                             <div class="min-w-0 flex-auto">
                               <p class="text-sm font-semibold leading-6 text-gray-900">
-                                  <%= segment.name %>
+                                <%= segment.name %>
                                 <a
                                   href={"https://www.strava.com/segments/#{segment.id}"}
                                   target="_blank"
+                                  class="inline-block ml-2 text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300"
                                 >
-
-                <.icon icon="akar-icons:link-out" />
+                                  <.icon icon="akar-icons:link-out" />
                                 </a>
                               </p>
                               <p class="mt-1 flex text-xs leading-5 text-gray-500">
@@ -55,7 +54,7 @@
                           <div class="flex shrink-0 items-center gap-x-4">
                             <button
                               type="button"
-                              class="btn btn-sm btn-secondary active"
+                              class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active"
                               phx-click="select_segment"
                               phx-value-id={segment.id}
                             >
@@ -100,12 +99,8 @@
                 </h3>
               </div>
               <div class="px-4 sm:px-6">
-                <div class="form-group">
-                  <div
-                    id="date-range"
-                    class="d-flex justify-content-center pt-4"
-                    phx-update="ignore"
-                  >
+                <div class="mb-4">
+                  <div id="date-range" class="flex justify-center pt-4" phx-update="ignore">
                     <!-- TODO: -->
                   </div>
 
@@ -125,27 +120,37 @@
               </div>
               <!-- Card body -->
               <div class="p-4 sm:p-6">
-                <div class="form-group">
-                  <%= label(f, :name, class: "form-control-label") %>
+                <div class="mb-4">
+                  <%= label(f, :name,
+                    class: "block font-medium text-gray-700 dark:text-white mb-2"
+                  ) %>
                   <%= input(f, :name,
                     placeholder: "Weekend Warriors",
-                    class: "form-control",
+                    class:
+                      "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
                     autocomplete: "off"
                   ) %>
                   <%= error_tag(f, :name) %>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-4">
                   <%= textarea(f, :description,
                     placeholder: "Description",
-                    class: "form-control",
+                    class:
+                      "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
                     rows: "10"
                   ) %>
                 </div>
 
-                <div class="form-group">
-                  <label class="form-check-label">
-                    <%= checkbox(f, :public) %> Allow anyone to join this challenge
+                <div class="mb-4">
+                  <label class="inline-flex items-center">
+                    <%= checkbox(f, :public,
+                      class:
+                        "form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                    ) %>
+                    <span class="ml-2 text-gray-700 dark:text-white">
+                      Allow anyone to join this challenge
+                    </span>
                   </label>
                 </div>
 
@@ -153,18 +158,21 @@
                 <%= hidden_input(f, :challenge_type) %>
 
                 <%= if @changeset.action do %>
-                  <div class="alert alert-danger">
+                  <div
+                    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                    role="alert"
+                  >
                     <p class="text-sm mb-0">
                       Oops, something went wrong! Please check the errors.
                     </p>
                   </div>
                 <% end %>
 
-                <div class="form-group">
-              <%= submit(gettext("Create Challenge"),
-                class:
-                  "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              ) %>
+                <div class="mt-6">
+                  <%= submit(gettext("Create Challenge"),
+                    class:
+                      "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  ) %>
                 </div>
               </div>
             </div>

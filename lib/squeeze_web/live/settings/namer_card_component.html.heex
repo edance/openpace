@@ -1,84 +1,62 @@
-<div class="card shadow">
-  <div class="card-header border-0">
-    <div class="row align-items-center">
-      <div class="col-8">
-        <h3 class="mb-0"><%= gettext("Namer Settings") %></h3>
+<.card title={gettext("Namer Settings")}>
+<div class="p-4 sm:p-6">
+  <.form let={f} for={@changeset} phx-submit="save">
+    <%= inputs_for f, :user_prefs, fn p -> %>
+      <div class="mb-4">
+        <div class="flex items-center">
+          <label class="inline-flex items-center">
+            <%= checkbox(p, :rename_activities, class: "form-checkbox h-5 w-5 text-blue-600 rounded") %>
+            <span class="ml-2">Rename Activities</span>
+          </label>
+        </div>
+        <p class="mt-2 text-sm text-gray-500">
+          Let OpenPace know if you'd like us to rename your activities.
+        </p>
       </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <.form let={f} for={@changeset} phx-submit="save">
-      <%= inputs_for f, :user_prefs, fn p -> %>
-        <div class="form-group">
-          <div class="d-flex">
-            <label class="custom-toggle">
-              <%= checkbox(p, :rename_activities) %>
-              <span class="custom-toggle-slider rounded-circle"></span>
-            </label>
-
-            <%= label(p, :rename_activities, class: "ml-2") do %>
-              Rename Activities
-            <% end %>
-          </div>
-          <small class="form-text text-muted">
-            Let OpenPace know if you'd like us to rename your activities.
-          </small>
+      <div class="mb-4">
+        <div class="flex items-center">
+          <label class="inline-flex items-center">
+            <%= checkbox(p, :emoji, class: "form-checkbox h-5 w-5 text-blue-600 rounded") %>
+            <span class="ml-2">Add Emoji to Title</span>
+          </label>
         </div>
-
-        <div class="form-group">
-          <div class="d-flex">
-            <label class="custom-toggle">
-              <%= checkbox(p, :emoji) %>
-              <span class="custom-toggle-slider rounded-circle"></span>
-            </label>
-
-            <%= label(p, :emoji, class: "ml-2") do %>
-              Add Emoji to Title
-            <% end %>
-          </div>
-          <small class="form-text text-muted">
-            Let OpenPace know if you would like us to add an emoji to the title of your activity.
-          </small>
+        <p class="mt-2 text-sm text-gray-500">
+          Let OpenPace know if you would like us to add an emoji to the title of your activity.
+        </p>
+      </div>
+      <div class="mb-4">
+        <%= label(p, :gender, "Emoji Gender", class: "block text-gray-600 text-sm font-medium mb-1") %>
+        <%= select(p, :gender, gender_opts(),
+          class: "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        ) %>
+        <p class="mt-2 text-sm text-gray-500">
+          Let us know what gender you would like to use for the emoji.
+        </p>
+      </div>
+      <div class="mb-4">
+        <div class="flex items-center">
+          <label class="inline-flex items-center">
+            <%= checkbox(p, :branding, class: "form-checkbox h-5 w-5 text-blue-600 rounded") %>
+            <span class="ml-2">Add Renamed by OpenPace</span>
+          </label>
         </div>
-
-        <div class="form-group">
-          <%= label(p, :gender, "Emoji Gender", class: "form-control-label") %>
-          <%= select(p, :gender, gender_opts(), class: "form-control") %>
-
-          <small class="form-text text-muted">
-            Let us know what gender you would like to use for the emoji.
-          </small>
-        </div>
-
-        <div class="form-group">
-          <div class="d-flex">
-            <label class="custom-toggle">
-              <%= checkbox(p, :branding) %>
-              <span class="custom-toggle-slider rounded-circle"></span>
-            </label>
-
-            <%= label(p, :branding, class: "ml-2") do %>
-              Add Renamed by OpenPace
-            <% end %>
-          </div>
-          <small class="form-text text-muted">
-            If 'renamed by OpenPace' should be added after your activity description.
-          </small>
-        </div>
-
-        <div class="form-group">
-          <%= label(p, :imperial, "Units & Measurements", class: "form-control-label") %>
-          <%= select(p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true],
-            class: "form-control form-control-alternative"
-          ) %>
-
-          <small class="form-text text-muted">
-            If your activity has a distance, we will display it in kilometers or miles depending on this preference.
-          </small>
-        </div>
-      <% end %>
-
-      <%= submit("Save", class: "btn btn-primary mt-4") %>
-    </.form>
-  </div>
+        <p class="mt-2 text-sm text-gray-500">
+          If 'renamed by OpenPace' should be added after your activity description.
+        </p>
+      </div>
+      <div class="mb-4">
+        <%= label(p, :imperial, "Units & Measurements", class: "block text-gray-600 text-sm font-medium mb-1") %>
+        <%= select(p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true],
+          class: "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        ) %>
+        <p class="mt-2 text-sm text-gray-500">
+          If your activity has a distance, we will display it in kilometers or miles depending on this preference.
+        </p>
+      </div>
+    <% end %>
+    <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-4" type="submit">
+      Save
+    </button>
+  </.form>
 </div>
+</.card>

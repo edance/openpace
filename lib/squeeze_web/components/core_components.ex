@@ -85,26 +85,28 @@ defmodule SqueezeWeb.CoreComponents do
   def card(assigns) do
     ~H"""
     <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden">
+      <%= if assigns[:title] do %>
+        <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+          <%= if assigns[:subtitle] do %>
+            <h6 class="mb-0 uppercase text-gray-900 dark:text-white opacity-60 text-xs">
+              <%= @subtitle %>
+            </h6>
+          <% end %>
+
+          <h2 class="mb-0 text-md text-gray-900 dark:text-white">
+            <%= @title %>
+          </h2>
+        </div>
+      <% end %>
+
       <%= render_slot(@inner_block) %>
-    </div>
-    """
-  end
-
-  def card_header(assigns) do
-    ~H"""
-    <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
-      <h6 class="mb-0 uppercase text-gray-900 dark:text-white opacity-60 text-xs"></h6>
-
-      <h2 class="mb-0 text-md text-gray-900 dark:text-white"></h2>
     </div>
     """
   end
 
   def icon(assigns) do
     ~H"""
-    <span 
-      class={[assigns[:class], "iconify"]}
-    data-icon={assigns.icon} data-inline="false" />
+    <span class={[assigns[:class], "iconify"]} data-icon={assigns.icon} data-inline="false" />
     """
   end
 end

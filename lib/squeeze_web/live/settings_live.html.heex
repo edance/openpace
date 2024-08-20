@@ -1,15 +1,15 @@
-<div class="position-relative py-5">
+<div class="relative py-5">
   <div class="container max-w-7xl mx-auto">
-    <div class="grid grid-cols-12">
+    <div class="grid grid-cols-12 gap-4">
       <div class="md:col-span-3">
         <.card>
-          <div class="">
-            <div class="p-4 sm:p-6">
-              <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
+          <div class="p-4 sm:p-6">
+            <nav class="flex flex-1 flex-col" aria-label="Sidebar">
+              <ul role="list" class="-mx-2 space-y-1">
+                <li>
                   <%= link_item(@socket, @live_action, gettext("Account Settings"), :general) %>
                 </li>
-                <li class="nav-item">
+                <li>
                   <%= link_item(
                     @socket,
                     @live_action,
@@ -17,17 +17,18 @@
                     :personal_records
                   ) %>
                 </li>
-                <li class="nav-item">
+                <li>
                   <%= link_item(@socket, @live_action, gettext("Rename Activities"), :namer) %>
                 </li>
-                <li class="nav-item">
+                <li>
                   <%= link(gettext("Billing"),
                     to: Routes.billing_path(@socket, :portal),
-                    class: "nav-link"
+                    class:
+                      "group flex gap-x-3 rounded-md p-2 pl-3 text-sm font-semibold leading-6 dark:text-white hover:bg-gray-100 hover:bg-gray-50 dark:hover:bg-white/5"
                   ) %>
                 </li>
               </ul>
-            </div>
+            </nav>
           </div>
         </.card>
       </div>
@@ -64,86 +65,76 @@
         <% end %>
       </div>
 
-      <div class="md:col-span-3 mb-5 mb-xl-0">
-        <.card>
-          <div class="">
-            <div class="card-header border-0">
-              <div class="grid grid-cols-12 align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0"><%= gettext("Account Info") %></h3>
-                </div>
-              </div>
-            </div>
-            <div class="p-4 sm:p-6">
-              <h4>Name</h4>
+      <div class="md:col-span-3 mb-5 md:mb-0">
+        <.card title={gettext("Account Info")}>
+          <div class="p-4 sm:p-6">
+            <h4 class="text-lg font-medium mb-1">Name</h4>
+            <p class="text-sm text-gray-600"><%= full_name(@current_user) %></p>
 
-              <p class="small"><%= full_name(@current_user) %></p>
+            <%= if @current_user.email do %>
+              <h4 class="text-lg font-medium mb-1">Email</h4>
+              <p class="text-sm text-gray-600"><%= @current_user.email %></p>
+            <% end %>
 
-              <%= if @current_user.email do %>
-                <h4>Email</h4>
+            <h4 class="text-lg font-medium mb-1">Membership Status</h4>
+            <p class="text-sm text-gray-600"><%= membership_status(assigns) %></p>
 
-                <p class="small"><%= @current_user.email %></p>
-              <% end %>
-
-              <h4>Membership Status</h4>
-
-              <p class="small"><%= membership_status(assigns) %></p>
-
-              <%= if @current_user.subscription_status == :free do %>
-                <%= link(gettext("Subscribe"),
-                  to: Routes.billing_path(@socket, :checkout),
-                  class: "btn btn-info btn-sm"
-                ) %>
-              <% end %>
-            </div>
+            <%= if @current_user.subscription_status == :free do %>
+              <%= link(gettext("Subscribe"),
+                to: Routes.billing_path(@socket, :checkout),
+                class:
+                  "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              ) %>
+            <% end %>
           </div>
         </.card>
 
-        <.card>
-          <div class="">
-            <div class="card-header border-0">
-              <div class="grid grid-cols-12 align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0"><%= gettext("Connections") %></h3>
-                </div>
+        <.card title={gettext("Connections")}>
+          <div class="p-4 sm:p-6">
+            <div class="grid grid-cols-12 items-center">
+              <div class="col-auto">
+                <img
+                  src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")}
+                  class="h-8"
+                />
+              </div>
+              <div class="col-span-10 ml-2">
+                <%= if strava_integration?(assigns) do %>
+                  <p class="mb-0 text-gray-600">
+                    <%= gettext("Connected to %{provider}", provider: "Strava") %>
+                  </p>
+                <% else %>
+                  <p class="text-gray-600">
+                    <%= gettext("Connect with %{provider}", provider: "Strava") %>
+                  </p>
+                <% end %>
+                <p class="text-sm text-gray-500">Automatically sync activities.</p>
               </div>
             </div>
-            <div class="p-4 sm:p-6">
-              <div class="grid grid-cols-12 no-gutters">
-                <div class="col-auto">
-                  <img src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")} />
-                </div>
-                <div class="col ml-2">
-                  <%= if strava_integration?(assigns) do %>
-                    <p class="mb-0">
-                      <%= gettext("Connected to %{provider}", provider: "Strava") %>
-                    </p>
-                  <% else %>
-                    <%= gettext("Connect with %{provider}", provider: "Strava") %>
-                  <% end %>
-                  <p class="small text-muted">Automatically sync activities.</p>
-                </div>
-              </div>
-              <div class="grid grid-cols-12">
-                <div class="col">
-                  <%= if strava_integration?(assigns) do %>
-                    <%= if @syncing do %>
-                      <button class="btn btn-sm btn-outline-light" disabled>
-                        <%= gettext("Syncing...") %>
-                      </button>
-                    <% else %>
-                      <button class="btn btn-sm btn-outline-light" phx-click="sync">
-                        <%= gettext("Sync Activities") %>
-                      </button>
-                    <% end %>
-                  <% else %>
-                    <%= link(gettext("Connect to Strava"),
-                      to: Routes.strava_integration_path(@socket, :request),
-                      class: "btn btn-sm btn-outline-light"
-                    ) %>
-                  <% end %>
-                </div>
-              </div>
+            <div class="mt-4">
+              <%= if strava_integration?(assigns) do %>
+                <%= if @syncing do %>
+                  <button
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-600 bg-gray-100 cursor-not-allowed"
+                    disabled
+                  >
+                    <%= gettext("Syncing...") %>
+                  </button>
+                <% else %>
+                  <button
+                    class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    phx-click="sync"
+                  >
+                    <%= gettext("Sync Activities") %>
+                  </button>
+                <% end %>
+              <% else %>
+                <%= link(gettext("Connect to Strava"),
+                  to: Routes.strava_integration_path(@socket, :request),
+                  class:
+                    "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                ) %>
+              <% end %>
             </div>
           </div>
         </.card>

@@ -65,7 +65,14 @@ defmodule SqueezeWeb.SettingsLive do
   end
 
   def link_item(socket, current_action, text, route_action) do
-    class_list = "nav-link#{if current_action == route_action, do: " active"}"
+    base =
+      "group flex gap-x-3 rounded-md p-2 pl-3 text-sm font-semibold leading-6 dark:text-white hover:bg-gray-100 hover:bg-gray-50 dark:hover:bg-white/5"
+
+    class_list =
+      if current_action == route_action,
+        do: "#{base} bg-gray-100 text-indigo-600 dark:bg-white/5",
+        else: "#{base} dark:text-white/90"
+
     Helpers.live_redirect(text, class: class_list, to: Routes.settings_path(socket, route_action))
   end
 

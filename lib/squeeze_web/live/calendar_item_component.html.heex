@@ -1,13 +1,13 @@
 <%= for activity <- ordered_activities(assigns) do %>
-  <div class="d-flex flex-wrap flex-lg-nowrap mb-2">
-    <%= live_redirect to: Routes.activity_path(@socket, :show, activity.slug), class: "flex-shrink-0 badge badge-circle text-white mb-1", style: "background: #{activity_color(activity.type)}" do %>
+  <div class="flex flex-wrap flex-lg:flex-nowrap mb-2">
+    <%= live_redirect to: Routes.activity_path(@socket, :show, activity.slug), class: "flex-shrink-0 bg-#{activity_color(activity.type)} rounded-full text-white mb-1 px-3 py-2", style: "" do %>
       <span class="iconify" data-icon={activity_icon(activity)} data-inline="false"></span>
     <% end %>
 
-    <div class="small ml-2 d-none d-md-block">
+    <div class="text-sm ml-2 hidden md:block">
       <%= live_redirect(activity.name || activity.type,
         to: Routes.activity_path(@socket, :show, activity.slug),
-        class: "font-weight-bold d-block"
+        class: "font-bold block"
       ) %>
 
       <span>
@@ -18,16 +18,16 @@
 <% end %>
 
 <%= for race_goal <- @race_goals do %>
-  <div class="d-flex flex-wrap flex-lg-nowrap mb-2">
-    <div class="flex-shrink-0 badge badge-circle bg-red text-white mb-1">
+  <div class="flex flex-wrap flex-lg:flex-nowrap mb-2">
+    <div class="flex-shrink-0 bg-red rounded-full text-white mb-1 px-3 py-2">
       <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
     </div>
 
-    <div class="small ml-2">
-      <div class="font-weight-bold">
+    <div class="text-sm ml-2">
+      <div class="font-bold">
         <%= live_redirect(race_goal.race.name,
           to: Routes.race_path(@socket, :show, race_goal.slug),
-          class: "font-weight-bold d-block"
+          class: "font-bold block"
         ) %> Race Day
       </div>
     </div>
