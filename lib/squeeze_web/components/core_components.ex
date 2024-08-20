@@ -109,4 +109,19 @@ defmodule SqueezeWeb.CoreComponents do
     <span class={[assigns[:class], "iconify"]} data-icon={assigns.icon} data-inline="false" />
     """
   end
+
+  def button(assigns) do
+    base =
+      "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
+    ~H"""
+    <button
+      class={[base, assigns[:class]]}
+      phx-click={assigns[:phx_click]}
+      phx-value={assigns[:phx_value]}
+    >
+      <%= render_slot(@inner_block) %>
+    </button>
+    """
+  end
 end
