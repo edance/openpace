@@ -25,7 +25,7 @@ defmodule Squeeze.Distances do
     %{name: "50k", distance: 50_000},
     %{name: "50 Mile", distance: @mile_in_meters * 50},
     %{name: "100k", distance: 100_000},
-    %{name: "100 Mile", distance: @mile_in_meters * 10}
+    %{name: "100 Mile", distance: @mile_in_meters * 100}
   ]
 
   def mile_in_meters, do: @mile_in_meters

@@ -1,59 +1,61 @@
 <%= if info_msg(@flash) do %>
-<div class="fixed bottom-10 right-10 z-50" data-auto-hide="true">
-  <div class="shadow max-w-96 rounded-md bg-blue-50 p-4"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"
+  <div class="fixed bottom-10 right-10 z-50" data-auto-hide="true">
+    <div
+      class="shadow max-w-96 rounded-md bg-blue-50 p-4"
+      phx-click="lv:clear-flash"
+      phx-value-key="info"
     >
-    <div class="flex">
-      <div class="">
-        <p class="text-sm font-medium text-indigo-800">
-          <%= info_msg(@flash) %>
-        </p>
-      </div>
-      <div class="ml-auto pl-3">
-        <div class="-mx-1.5 -my-1.5">
-          <button
-            type="button"
-            class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-blue-50"
+      <div class="flex">
+        <div class="">
+          <p class="text-sm font-medium text-indigo-800">
+            <%= info_msg(@flash) %>
+          </p>
+        </div>
+        <div class="ml-auto pl-3">
+          <div class="-mx-1.5 -my-1.5">
+            <button
+              type="button"
+              class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-blue-50"
             >
-            <span class="sr-only">Dismiss</span>
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
-          </button>
+              <span class="sr-only">Dismiss</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 <% end %>
 
 <%= if error_msg(@flash) do %>
-<div class="fixed bottom-10 right-10 z-50" data-auto-hide="true">
-  <div class="shadow max-w-96 rounded-md bg-red-50 p-4"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"
+  <div class="fixed bottom-10 right-10 z-50" data-auto-hide="true">
+    <div
+      class="shadow max-w-96 rounded-md bg-red-50 p-4"
+      phx-click="lv:clear-flash"
+      phx-value-key="error"
     >
-    <div class="flex">
-      <div class="">
-        <p class="text-sm font-medium text-red-800">
-          <%= error_msg(@flash) %>
-        </p>
-      </div>
-      <div class="ml-auto pl-3">
-        <div class="-mx-1.5 -my-1.5">
-          <button
-            type="button"
-            class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
+      <div class="flex">
+        <div class="">
+          <p class="text-sm font-medium text-red-800">
+            <%= error_msg(@flash) %>
+          </p>
+        </div>
+        <div class="ml-auto pl-3">
+          <div class="-mx-1.5 -my-1.5">
+            <button
+              type="button"
+              class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
             >
-            <span class="sr-only">Dismiss</span>
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
-          </button>
+              <span class="sr-only">Dismiss</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 <% end %>

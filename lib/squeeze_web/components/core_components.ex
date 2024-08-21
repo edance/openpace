@@ -121,12 +121,9 @@ defmodule SqueezeWeb.CoreComponents do
   end
 
   def button(assigns) do
-    base =
-      "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-
     ~H"""
     <button
-      class={[base, assigns[:class]]}
+      class={["inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", assigns[:class]]}
       phx-click={assigns[:phx_click]}
       phx-value={assigns[:phx_value]}
     >
@@ -135,42 +132,44 @@ defmodule SqueezeWeb.CoreComponents do
     """
   end
 
-  def duration_input(%{field: %{} = field} = assigns) do
+  def duration_input(assigns) do
+    IO.puts("Assigns: #{inspect(assigns)}")
+
+    # given a value in seconds, convert it to hours, minutes, and seconds
     assigns =
       assigns
-      |> assign(field: nil, id: assigns.id || field.id)
-      |> assign_new(:name, fn -> field.name end)
-      |> assign_new(:value, fn -> field.value end)
+      |> assign_new(:hours, fn -> safe_div(assigns.value, 3600) end)
+      |> assign_new(:minutes, fn -> safe_div(safe_rem(assigns.value, 3600), 60) end)
+      |> assign_new(:seconds, fn -> safe_rem(assigns.value, 60) end)
 
     ~H"""
     <div class="flex items-center space-x-2 max-w-48">
       <input
         type="number"
-        id={"#{@id}-hours"}
         min="0"
         max="99"
         placeholder="hr"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        value={@hours}
       />
       <span class="font-medium">:</span>
       <input
         type="number"
-        id={"#{@id}-minutes"}
         min="0"
         max="59"
         placeholder="min"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        value={@minutes}
       />
       <span class="font-medium">:</span>
       <input
         type="number"
-        id={"#{@id}-seconds"}
         min="0"
         max="59"
         placeholder="sec"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        value={@seconds}
       />
-      <input type="hidden" name={@name} id={@id} value={@value} />
     </div>
     """
   end
@@ -200,4 +199,10 @@ defmodule SqueezeWeb.CoreComponents do
     </div>
     """
   end
+
+  def safe_div(nil, _), do: nil
+  def safe_div(a, b), do: div(a, b)
+
+  def safe_rem(nil, _), do: nil
+  def safe_rem(a, b), do: rem(a, b)
 end

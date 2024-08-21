@@ -1,6 +1,6 @@
 <.card title={gettext("Namer Settings")}>
   <div class="p-4 sm:p-6">
-    <.form let={f} for={@changeset} phx-submit="save">
+    <.form :let={f} for={@changeset} phx-submit="save">
       <%= inputs_for f, :user_prefs, fn p -> %>
         <div class="mb-6">
           <div class="flex items-center">

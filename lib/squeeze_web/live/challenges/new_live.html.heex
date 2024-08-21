@@ -1,6 +1,6 @@
 <div class="relative py-5">
   <div class="container max-w-7xl mx-auto">
-    <.form let={f} for={@changeset} phx-submit="save">
+    <.form :let={f} for={@changeset} phx-submit="save">
       <div class="grid grid-cols-12">
         <div class="md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-4">
           <%= if @challenge_type == :segment do %>

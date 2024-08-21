@@ -45,7 +45,7 @@ defmodule SqueezeWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView, layout: {SqueezeWeb.LayoutView, "live.html"}
+      use Phoenix.LiveView, layout: {SqueezeWeb.LayoutView, :live}
 
       unquote(html_helpers())
     end
@@ -82,7 +82,6 @@ defmodule SqueezeWeb do
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
       import Phoenix.LiveView.Helpers
-      import SqueezeWeb.LiveHelpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
