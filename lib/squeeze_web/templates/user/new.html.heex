@@ -1,0 +1,42 @@
+<main>
+  <!-- Navbar -->
+  <%= render(SqueezeWeb.MenuView, "base-navbar.html", assigns) %>
+  <!-- Page content -->
+  <div class="container py-5 lg:pt-24 mx-auto">
+    <div class="w-full max-w-80 mx-auto">
+      <.card title={gettext("Sign up with")}>
+        <div class="p-4 sm:p-6">
+          <div class="text-center">
+            <%= link to: Routes.auth_path(@conn, :request, "google"), class: "shadow bg-white text-sm text-gray-800 font-semibold py-2 px-4 rounded-md flex items-center mb-2" do %>
+              <span class="mr-4">
+                <img class="w-6 h-6" src={Routes.static_path(@conn, "/images/google.svg")} />
+              </span>
+              <span>Google</span>
+            <% end %>
+          </div>
+          <div class="text-center">
+            <%= link to: Routes.strava_integration_path(@conn, :request), class: "shadow bg-white text-sm text-gray-800 font-semibold py-2 px-4 rounded-md flex items-center mb-2" do %>
+              <span class="mr-4">
+                <img
+                  src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")}
+                  class="h-6 w-6"
+                />
+              </span>
+              <span>Strava</span>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-6">
+          <div class="text-center text-muted mb-4">
+            <small class="text-xs font-semibold text-gray-500 dark:text-white/60">
+              <%= gettext("Or sign up with credentials") %>
+            </small>
+          </div>
+
+          <%= render("form.html", Map.put(assigns, :action, Routes.user_path(@conn, :register))) %>
+        </div>
+      </.card>
+    </div>
+  </div>
+</main>
