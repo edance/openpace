@@ -1,6 +1,3 @@
-// Import all of the original app.js components
-import '../css/app.scss';
-
 // Import dependencies
 import 'phoenix_html';
 

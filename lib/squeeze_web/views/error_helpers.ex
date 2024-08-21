@@ -13,14 +13,14 @@ defmodule SqueezeWeb.ErrorHelpers do
     opts = Keyword.merge(opts, class: class_list)
 
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), opts)
+      content_tag(:span, old_translate_error(error), opts)
     end)
   end
 
   @doc """
   Translates an error message using gettext.
   """
-  def translate_error({msg, opts}) do
+  def old_translate_error({msg, opts}) do
     # Because error messages were defined within Ecto, we must
     # call the Gettext module passing our Gettext backend. We
     # also use the "errors" domain as translations are placed
