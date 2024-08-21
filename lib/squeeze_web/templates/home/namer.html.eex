@@ -1,4 +1,0 @@
-<main>
-  <%= render "namer-hero.html", assigns %>
-  <%= render "namer-faq.html", assigns %>
-</main>

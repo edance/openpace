@@ -1,0 +1,55 @@
+<main>
+  <!-- Navbar -->
+  <%= render(SqueezeWeb.MenuView, "base-navbar.html", assigns) %>
+  <!-- Page content -->
+  <div class="">
+    <div class="container py-5 pt-lg-7">
+      <div class="flex justify-center">
+        <div class="w-full md:w-7/12 lg:w-4/12">
+          <div class="bg-white shadow-lg border-0">
+            <div class="bg-transparent p-6">
+              <h1 class="text-2xl">Welcome Back</h1>
+            </div>
+            <div class="px-6 py-6">
+              <div class="pb-5">
+                <div class="text-center">
+                  <%= link to: Routes.auth_path(@conn, :request, "google"), class: "bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-md flex items-center mb-2" do %>
+                    <span class="mr-2">
+                      <img src={Routes.static_path(@conn, "/images/google.svg")} />
+                    </span>
+                    <span>Google</span>
+                  <% end %>
+                </div>
+                <div class="text-center">
+                  <%= link to: Routes.strava_integration_path(@conn, :request), class: "" do %>
+                    <img
+                      alt="Connect to Strava"
+                      class="btn-strava"
+                      src={Routes.static_path(@conn, "/images/btn_strava@2x.png")}
+                    />
+                  <% end %>
+                </div>
+              </div>
+              <div class="text-center text-gray-500 mb-4">
+                <small><%= gettext("Or sign in with credentials") %></small>
+              </div>
+              <%= render("form.html", Map.put(assigns, :action, Routes.session_path(@conn, :new))) %>
+            </div>
+          </div>
+          <div class="flex justify-between mt-3 mb-6">
+            <div>
+              <%= link(to: Routes.forgot_password_path(@conn, :show), class: "text-indigo-600 hover:text-indigo-500") do %>
+                <small><%= gettext("Forgot password?") %></small>
+              <% end %>
+            </div>
+            <div>
+              <%= link(to: Routes.user_path(@conn, :new), class: "text-indigo-600 hover:text-indigo-500") do %>
+                <small><%= gettext("Create new account") %></small>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
