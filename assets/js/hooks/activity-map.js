@@ -3,6 +3,7 @@ import mapboxgl from "mapbox-gl";
 
 // Include the css for mapbox in the bundle
 import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
+import { isDarkMode } from "../utils";
 
 mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
 
@@ -47,6 +48,7 @@ export default {
           type: "FeatureCollection",
           features,
         },
+        tolerance: 0.00001
       },
       layout: {
         "line-join": "round",
@@ -63,7 +65,7 @@ export default {
     // Create a new map
     const map = new mapboxgl.Map({
       container: this.el,
-      style: "mapbox://styles/mapbox/dark-v9",
+      style: isDarkMode() ? "mapbox://styles/mapbox/dark-v9" : "mapbox://styles/mapbox/light-v10",
       cooperativeGestures: true, // Disable scroll
     });
 

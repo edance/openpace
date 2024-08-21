@@ -15,6 +15,16 @@ defmodule SqueezeWeb.CoreComponents do
   Icons are provided by [heroicons](https://heroicons.com). See `icon/1` for usage.
   """
   use Phoenix.Component
+  import SqueezeWeb.FormatHelpers
+
+  @colors [
+    "bg-gradient-to-tl from-blue-500 to-violet-500",
+    "bg-gradient-to-tl from-red-500 to-orange-500",
+    "bg-gradient-to-tl from-orange-500 to-yellow-500",
+    "bg-gradient-to-tl from-yellow-500 to-green-500",
+    "bg-gradient-to-tl from-green-500 to-teal-500",
+    "bg-gradient-to-tl from-teal-500 to-cyan-500"
+  ]
 
   def logo(assigns) do
     ~H"""
@@ -160,12 +170,33 @@ defmodule SqueezeWeb.CoreComponents do
         placeholder="sec"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
       />
-      <input
-        type="hidden"
-        name={@name}
-        id={@id}
-        value={Phoenix.HTML.Form.normalize_value("hidden", @value)}
-      />
+      <input type="hidden" name={@name} id={@id} value={@value} />
+    </div>
+    """
+  end
+
+  def avatar(assigns) do
+    base = "flex items-center justify-center rounded-full overflow-hidden"
+
+    assigns =
+      assigns
+      |> assign(class: "#{assigns[:class]} #{base}")
+      |> assign_new(:position, fn -> "relative" end)
+      |> assign_new(:size, fn -> "h-8 w-8" end)
+      |> assign_new(:bg_color, fn ->
+        idx = rem(assigns.user.id, length(@colors))
+        Enum.at(@colors, idx)
+      end)
+
+    ~H"""
+    <div class={[@class, @bg_color, @position, @size]}>
+      <span class="text-white font-semibold">
+        <%= initials(@user) %>
+      </span>
+
+      <%= if @user.avatar do %>
+        <img class="absolute top-0 bottom-0 right-0 left-0" alt={full_name(@user)} src={@user.avatar} />
+      <% end %>
     </div>
     """
   end

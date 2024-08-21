@@ -1,5 +1,9 @@
 import { colors } from "./variables.js";
 
+export function isDarkMode() {
+  return document.documentElement.classList.contains("dark");
+}
+
 export function formatDate(date) {
   let month = date.getMonth() + 1,
     day = date.getDate(),
