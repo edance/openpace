@@ -8,7 +8,7 @@ export default {
 
   addEventListeners() {
     this.selects.forEach(select => {
-      select.addEventListener('change', e => {
+      select.addEventListener('change', () => {
         let total = 0;
 
         this.selects.forEach(select => {

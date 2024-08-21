@@ -68,22 +68,34 @@
       <div class="md:col-span-3 mb-5 md:mb-0">
         <.card title={gettext("Account Info")}>
           <div class="p-4 sm:p-6">
-            <h4 class="text-lg font-medium mb-1">Name</h4>
-            <p class="text-sm text-gray-600"><%= full_name(@current_user) %></p>
+            <h4 class="text-xs uppercase mb-1 text-gray-800 dark:text-white">
+              <%= gettext("Name") %>
+            </h4>
+            <p class="text-sm text-gray-600 dark:text-white mb-4">
+              <%= full_name(@current_user) %>
+            </p>
 
             <%= if @current_user.email do %>
-              <h4 class="text-lg font-medium mb-1">Email</h4>
-              <p class="text-sm text-gray-600"><%= @current_user.email %></p>
+              <h4 class="text-xs uppercase mb-1 text-gray-800 dark:text-white">
+                <%= gettext("Email") %>
+              </h4>
+              <p class="text-sm text-gray-600 dark:text-white mb-4">
+                <%= @current_user.email %>
+              </p>
             <% end %>
 
-            <h4 class="text-lg font-medium mb-1">Membership Status</h4>
-            <p class="text-sm text-gray-600"><%= membership_status(assigns) %></p>
+            <h4 class="text-xs uppercase mb-1 text-gray-800 dark:text-white">
+              <%= gettext("Membership Status") %>
+            </h4>
+            <p class="text-sm text-gray-600 dark:text-white mb-4">
+              <%= membership_status(assigns) %>
+            </p>
 
             <%= if @current_user.subscription_status == :free do %>
               <%= link(gettext("Subscribe"),
                 to: Routes.billing_path(@socket, :checkout),
                 class:
-                  "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               ) %>
             <% end %>
           </div>
@@ -91,24 +103,24 @@
 
         <.card title={gettext("Connections")}>
           <div class="p-4 sm:p-6">
-            <div class="grid grid-cols-12 items-center">
-              <div class="col-auto">
-                <img
-                  src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")}
-                  class="h-8"
-                />
-              </div>
-              <div class="col-span-10 ml-2">
+            <div class="flex gap-x-2 items-center">
+              <img
+                src={Routes.static_path(SqueezeWeb.Endpoint, "/images/strava.png")}
+                class="h-8 w-8"
+              />
+              <div class="flex-1">
                 <%= if strava_integration?(assigns) do %>
-                  <p class="mb-0 text-gray-600">
+                  <p class="mb-0 text-gray-600 dark:text-white">
                     <%= gettext("Connected to %{provider}", provider: "Strava") %>
                   </p>
                 <% else %>
-                  <p class="text-gray-600">
+                  <p class="text-gray-600 dark:text-white">
                     <%= gettext("Connect with %{provider}", provider: "Strava") %>
                   </p>
                 <% end %>
-                <p class="text-sm text-gray-500">Automatically sync activities.</p>
+                <p class="text-sm text-gray-500 dark:text-white opacity-60">
+                  Automatically sync activities.
+                </p>
               </div>
             </div>
             <div class="mt-4">

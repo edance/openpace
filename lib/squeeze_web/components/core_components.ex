@@ -124,4 +124,49 @@ defmodule SqueezeWeb.CoreComponents do
     </button>
     """
   end
+
+  def duration_input(%{field: %{} = field} = assigns) do
+    assigns =
+      assigns
+      |> assign(field: nil, id: assigns.id || field.id)
+      |> assign_new(:name, fn -> field.name end)
+      |> assign_new(:value, fn -> field.value end)
+
+    ~H"""
+    <div class="flex items-center space-x-2 max-w-48">
+      <input
+        type="number"
+        id={"#{@id}-hours"}
+        min="0"
+        max="99"
+        placeholder="hr"
+        class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <span class="font-medium">:</span>
+      <input
+        type="number"
+        id={"#{@id}-minutes"}
+        min="0"
+        max="59"
+        placeholder="min"
+        class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <span class="font-medium">:</span>
+      <input
+        type="number"
+        id={"#{@id}-seconds"}
+        min="0"
+        max="59"
+        placeholder="sec"
+        class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <input
+        type="hidden"
+        name={@name}
+        id={@id}
+        value={Phoenix.HTML.Form.normalize_value("hidden", @value)}
+      />
+    </div>
+    """
+  end
 end

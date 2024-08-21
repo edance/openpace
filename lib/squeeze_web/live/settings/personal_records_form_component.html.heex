@@ -3,35 +3,34 @@
     <div class="">
       <div class="px-4 sm:px-6">
         <div class="-mx-4 sm:-mx-6 overflow-x-auto">
-          <table class="min-w-full text-sm divide-y divide-gray-200">
+          <table class="min-w-full text-sm divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="">
               <tr>
                 <th
                   scope="col"
-                  class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 uppercase tracking-wider"
                 >
                   Distance
                 </th>
                 <th
                   scope="col"
-                  class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 uppercase tracking-wider"
                 >
                   Personal Record
                 </th>
-                <th
-                  scope="col"
-                  class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                </th>
+                <th scope="col"></th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
               <%= for %{name: name, distance: distance} <- distances() do %>
                 <tr>
-                  <td scope="row" class="px-4 py-3 whitespace-nowrap">
+                  <td
+                    scope="row"
+                    class="px-4 py-3 whitespace-nowrap text-gray-800 dark:text-white"
+                  >
                     <%= name %>
                   </td>
-                  <td class="px-4 py-3 whitespace-nowrap">
+                  <td class="px-4 py-3 whitespace-nowrap text-gray-800 dark:text-white">
                     <%= formatted_pr(assigns, distance) %>
                   </td>
                   <td class="px-4 py-3 whitespace-nowrap">
@@ -40,7 +39,7 @@
                       phx-click="show_modal"
                       phx-value-distance={distance}
                       phx-target={@myself}
-                      class="text-blue-600 hover:text-blue-800"
+                      class="text-indigo-600 hover:text-indigo-800 dark:text-white/60 dark:hover:text-white"
                     >
                       <%= if pr_at_distance(assigns, distance),
                         do: gettext("Edit"),
@@ -92,10 +91,7 @@
                         <%= label(f, :duration,
                           class: "block text-gray-600 text-sm font-medium mb-1"
                         ) %>
-                        <%= duration_select(f, :duration,
-                          class:
-                            "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        ) %>
+                        <.duration_input field={f[:duration]} />
                       </div>
                       <div class="form-group">
                         <%= label(f, :results_url, "Results URL",
