@@ -6,11 +6,11 @@
           <%= gettext("Recent Activities") %>
         </h2>
       </div>
-      <div class="flex inline">
+      <div class="flex gap-2 items-center">
         <select
           id="recent-activities-chart-type"
           name=""
-          class="mt-2 block w-full rounded-md border-0 py-1 px-2 pr-6 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 text-xs font-semibold"
+          class="block w-full rounded-md border-0 py-1 px-2 pr-6 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 text-xs font-semibold"
         >
           <option value="distance">Distance</option>
           <option value="duration">Time</option>
@@ -20,7 +20,7 @@
         <%= live_redirect(gettext("See All"),
           to: Routes.activity_index_path(@socket, :index),
           class:
-            "inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex-none"
+            "block items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex-none"
         ) %>
       </div>
     </div>

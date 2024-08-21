@@ -8,14 +8,6 @@ defmodule SqueezeWeb.FormHelpers do
 
   import Phoenix.HTML
 
-  map =
-    &Enum.map(&1, fn i ->
-      pre = if i < 10, do: "0"
-      {"#{pre}#{i}", i}
-    end)
-
-  @minsec map.(0..59)
-
   def autocomplete(form, field, options, opts \\ []) do
     list_name = "autocomplete-#{:rand.uniform(1000)}"
 
@@ -110,19 +102,5 @@ defmodule SqueezeWeb.FormHelpers do
       "km",
       "m"
     ]
-  end
-
-  defp select_tag(form, parent, field, opts) do
-    opts =
-      opts
-      |> Keyword.put(:name, field)
-      |> Keyword.put(:prompt, field |> Atom.to_string())
-
-    class_list = "#{opts[:class]}"
-    opts = Keyword.merge(opts, class: class_list)
-
-    content_tag(:div, class: "col") do
-      select(form, parent, @minsec, opts)
-    end
   end
 end

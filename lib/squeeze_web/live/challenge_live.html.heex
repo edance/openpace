@@ -14,7 +14,9 @@
         <!-- Card body -->
         <div class="p-4 sm:p-6">
           <%= if Enum.empty?(@challenges) do %>
-            <p>No current challenges.</p>
+            <p class="text-sm text-gray-500 dark:text-white/80">
+              No current challenges.
+            </p>
           <% else %>
             <table class="">
               <tbody>
@@ -43,7 +45,7 @@
         <!-- Card body -->
         <div class="p-4 sm:p-6">
           <%= if Enum.empty?(@podium_finishes) do %>
-            <p class="text-sm text-gray-700 dark:text-white text-gray-900 dark:text-white font-semibold">
+            <p class="text-sm text-gray-500 dark:text-white/80">
               No podium finishes.
             </p>
           <% else %>
@@ -80,7 +82,7 @@
             <%= live_redirect(gettext("Get Started"),
               to: Routes.challenge_path(@socket, :new, challenge_type: "distance"),
               class:
-                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
+                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-slate-500"
             ) %>
           </div>
         </div>
@@ -99,7 +101,7 @@
             <%= live_redirect(gettext("Get Started"),
               to: Routes.challenge_path(@socket, :new, challenge_type: "time"),
               class:
-                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
+                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-slate-500"
             ) %>
           </div>
         </div>
@@ -118,7 +120,7 @@
             <%= live_redirect(gettext("Get Started"),
               to: Routes.challenge_path(@socket, :new, challenge_type: "altitude"),
               class:
-                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
+                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-slate-500"
             ) %>
           </div>
         </div>
@@ -137,7 +139,7 @@
             <%= live_redirect(gettext("Get Started"),
               to: Routes.challenge_path(@socket, :new, challenge_type: "segment"),
               class:
-                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-white/20"
+                "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-slate-500"
             ) %>
           </div>
         </div>

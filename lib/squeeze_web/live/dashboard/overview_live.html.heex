@@ -46,7 +46,7 @@
 
           <%= if Enum.empty?(@current_user.user_prefs.personal_records) do %>
             <div class="p-4 sm:p-6">
-              <p class="">
+              <p class="text-sm text-gray-500 dark:text-white/80">
                 <%= live_redirect(gettext("Add a PR here."),
                   to: Routes.settings_path(@socket, :personal_records)
                 ) %>
@@ -101,13 +101,13 @@
 
       <div class="xl:col-span-4">
         <%= if !strava_integration?(assigns) do %>
-          <div class="card bg-gradient-orange">
-            <div class="card-body">
-              <h3 class="text-white">
+          <div class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden">
+            <div class="p-4 sm:p-6">
+              <h3 class="font-semibold text-white">
                 <%= gettext("Sync Activities from Strava") %>
               </h3>
 
-              <p class="text-sm text-white">
+              <p class="text-sm text-white mb-2">
                 <%= gettext(
                   "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
                 ) %>

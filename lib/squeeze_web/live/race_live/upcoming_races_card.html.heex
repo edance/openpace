@@ -18,7 +18,9 @@
 
   <div class="p-4 sm:p-6">
     <%= if Enum.empty?(@race_goals) do %>
-      <p>You have no upcoming races at this time.</p>
+      <p class="text-sm text-gray-500 dark:text-white/80">
+        You have no upcoming races at this time.
+      </p>
     <% else %>
       <div class="flow-root">
         <ul role="list" class="-mb-8">
