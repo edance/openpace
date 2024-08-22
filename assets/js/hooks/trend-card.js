@@ -212,7 +212,6 @@ export default {
   },
 
   createChart() {
-    const el = this.el;
     const label = this.el.querySelector(".amount-label").innerText;
     const container = d3.select(this.el.querySelector(".mini-chart"));
     const margin = { top: 30, right: 0, left: 0, bottom: 0 };
@@ -258,9 +257,9 @@ export default {
 
     const tooltip = container
       .append("div")
-      .attr("class", "tooltip show")
+      .attr("class", "tooltip show absolute bg-gray-900 text-white rounded-lg shadow-lg px-2 py-1 flex items-center justify-center text-sm min-w-24")
       .style("display", "none");
-    const tooltipInner = tooltip.append("div").attr("class", "tooltip-inner");
+    const tooltipInner = tooltip.append("div");
     const tooltipDate = tooltipInner.append("strong");
     const tooltipValue = tooltipInner.append("div");
 
