@@ -100,7 +100,10 @@
               <div class="px-4 sm:px-6">
                 <div class="mb-4 min-h-96">
                   <div id="date-range" class="flex justify-center pt-4" phx-update="ignore">
-                    <%= text_input f, :date_range, class: "date-picker hidden", data: [range: "true", inline: "true"] %>
+                    <%= text_input(f, :date_range,
+                      class: "date-picker hidden",
+                      data: [range: "true", inline: "true"]
+                    ) %>
                   </div>
 
                   <%= error_tag(f, :start_date) %>
