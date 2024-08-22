@@ -9,7 +9,7 @@
               <div class="card">
                 <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
                   <div class="flex items-center justify-between">
-                    <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                    <h3 class="text-base font-semibold leading-6 text-gray-800 dark:text-white dark:text-white">
                       <%= gettext("Pick a Segment") %>
                     </h3>
                     <button
@@ -21,9 +21,13 @@
                   </div>
                 </div>
 
-                <div class="px-4 sm:px-6 segment-list overflow-auto">
+                <div class="px-4 sm:px-6 max-h-96 segment-list overflow-auto">
                   <%= if @loading do %>
-                    <p class="text-gray-700 dark:text-white">Loading Segments...</p>
+                    <div class="py-4 sm:py-6">
+                      <p class="text-sm text-gray-500 dark:text-white/60 dark:text-white/80">
+                        Loading Segments...
+                      </p>
+                    </div>
                   <% end %>
 
                   <%= if Enum.empty?(@segments) && !@loading do %>
@@ -36,7 +40,7 @@
                         <li class="relative flex justify-between gap-x-6 py-5">
                           <div class="flex min-w-0 gap-x-4">
                             <div class="min-w-0 flex-auto">
-                              <p class="text-sm font-semibold leading-6 text-gray-900">
+                              <p class="text-sm font-semibold leading-6 text-gray-800 dark:text-white">
                                 <%= segment.name %>
                                 <a
                                   href={"https://www.strava.com/segments/#{segment.id}"}
@@ -46,7 +50,7 @@
                                   <.icon icon="akar-icons:link-out" />
                                 </a>
                               </p>
-                              <p class="mt-1 flex text-xs leading-5 text-gray-500">
+                              <p class="mt-1 flex text-xs leading-5 text-gray-500 dark:text-white/60">
                                 <%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %>
                               </p>
                             </div>
@@ -91,17 +95,12 @@
             <%= hidden_input(f, :polyline, value: @segment.map.polyline) %>
           <% end %>
           <!-- Dates Card -->
-          <.card>
-            <div class="card">
-              <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
-                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                  Choose Dates
-                </h3>
-              </div>
+          <.card title={gettext("Choose Dates")}>
+            <div>
               <div class="px-4 sm:px-6">
-                <div class="mb-4">
+                <div class="mb-4 min-h-96">
                   <div id="date-range" class="flex justify-center pt-4" phx-update="ignore">
-                    <!-- TODO: -->
+                    <%= text_input f, :date_range, class: "date-picker hidden", data: [range: "true", inline: "true"] %>
                   </div>
 
                   <%= error_tag(f, :start_date) %>
@@ -111,13 +110,8 @@
             </div>
           </.card>
           <!-- General Info Card -->
-          <.card>
-            <div class="card">
-              <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
-                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                  General Information
-                </h3>
-              </div>
+          <.card title={gettext("General Information")}>
+            <div>
               <!-- Card body -->
               <div class="p-4 sm:p-6">
                 <div class="mb-4">
@@ -140,18 +134,6 @@
                       "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
                     rows: "10"
                   ) %>
-                </div>
-
-                <div class="mb-4">
-                  <label class="inline-flex items-center">
-                    <%= checkbox(f, :public,
-                      class:
-                        "form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
-                    ) %>
-                    <span class="ml-2 text-gray-700 dark:text-white">
-                      Allow anyone to join this challenge
-                    </span>
-                  </label>
                 </div>
 
                 <%= hidden_input(f, :activity_type) %>

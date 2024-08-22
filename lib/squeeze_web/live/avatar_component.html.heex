@@ -1,9 +1,0 @@
-<span class={class_list(assigns)}>
-  <span class="">
-    <%= initials(@user) %>
-  </span>
-
-  <%= if @user.avatar do %>
-    <img class="absolute top-0 bottom-0 right-0 left-0" alt={full_name(@user)} src={@user.avatar} />
-  <% end %>
-</span>

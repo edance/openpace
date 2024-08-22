@@ -1,11 +1,11 @@
-<tr class="px-0 text-gray-900 dark:text-white">
-  <td class="p-2 h-full flex items-start">
+<tr class="px-0 my-5 text-gray-900 dark:text-white">
+  <td class="pt-4 h-full flex items-start">
     <div class="text-xl w-6">
       <span class="iconify h-6 w-6" data-icon={podium_icon(assigns)} data-inline="false"></span>
     </div>
   </td>
 
-  <td class="pl-2">
+  <td class="pl-4 pb-2">
     <%= live_redirect(@challenge.name,
       to: Routes.challenge_path(@socket, :show, @challenge.slug),
       class: "text-gray-900 dark:text-white font-semibold"
@@ -28,9 +28,9 @@
       </div>
     </div>
 
-    <div class="isolate flex -space-x-1 overflow-hidden mt-4">
+    <div class="isolate flex -space-x-1 overflow-hidden mt-2">
       <%= for score <- @challenge.scores do %>
-        <%= live_component(SqueezeWeb.AvatarComponent, user: score.user, size: "6") %>
+        <.avatar user={score.user} size="h-6 w-6" />
       <% end %>
     </div>
   </td>

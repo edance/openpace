@@ -89,7 +89,7 @@ defmodule SqueezeWeb.CoreComponents do
 
   attr :title, :string
   attr :subtitle, :string
-  slot :inner_block, required: true
+  slot(:inner_block, required: true)
 
   def card(assigns) do
     ~H"""
@@ -122,7 +122,10 @@ defmodule SqueezeWeb.CoreComponents do
   def button(assigns) do
     ~H"""
     <button
-      class={["inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", assigns[:class]]}
+      class={[
+        "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+        assigns[:class]
+      ]}
       phx-click={assigns[:phx_click]}
       phx-value={assigns[:phx_value]}
     >
@@ -177,6 +180,7 @@ defmodule SqueezeWeb.CoreComponents do
   attr :class, :string, default: ""
   attr :size, :string, default: "h-8 w-8"
   attr :position, :string, default: "relative"
+
   def avatar(assigns) do
     base = "flex items-center justify-center rounded-full overflow-hidden"
 
@@ -249,7 +253,7 @@ defmodule SqueezeWeb.CoreComponents do
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
 
-  slot :inner_block
+  slot(:inner_block)
 
   def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
@@ -352,7 +356,7 @@ defmodule SqueezeWeb.CoreComponents do
   Renders a label.
   """
   attr :for, :string, default: nil
-  slot :inner_block, required: true
+  slot(:inner_block, required: true)
 
   def label(assigns) do
     ~H"""
@@ -365,7 +369,7 @@ defmodule SqueezeWeb.CoreComponents do
   @doc """
   Generates a generic error message.
   """
-  slot :inner_block, required: true
+  slot(:inner_block, required: true)
 
   def error(assigns) do
     ~H"""

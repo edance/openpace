@@ -100,7 +100,7 @@
             >
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">Open user menu</span>
-              <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user) %>
+              <.avatar user={@current_user} />
             </button>
           </div>
 
