@@ -5,8 +5,8 @@
         <h6 class="text-gray-500 dark:text-white text-sm font-medium mb-4">
           <%= gettext("User information") %>
         </h6>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-6">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
             <div class="mb-4">
               <%= label(f, :first_name,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -19,7 +19,7 @@
               <%= error_tag(f, :first_name) %>
             </div>
           </div>
-          <div class="col-span-6">
+          <div>
             <div class="mb-4">
               <%= label(f, :last_name,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -34,8 +34,8 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-4">
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
             <div class="mb-4">
               <%= label(f, :city,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -48,7 +48,7 @@
               <%= error_tag(f, :city) %>
             </div>
           </div>
-          <div class="col-span-4">
+          <div >
             <div class="mb-4">
               <%= label(f, :state,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -61,7 +61,7 @@
               <%= error_tag(f, :state) %>
             </div>
           </div>
-          <div class="col-span-4">
+          <div >
             <div class="mb-4">
               <%= label(f, :country,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -76,8 +76,8 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-6">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
             <div class="mb-0">
               <%= label(p, :birthdate,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -90,7 +90,7 @@
               <%= error_tag(p, :birthdate) %>
             </div>
           </div>
-          <div class="col-span-6">
+          <div>
             <div class="mb-0">
               <%= label(p, :gender,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -102,7 +102,7 @@
               <%= error_tag(p, :gender) %>
             </div>
           </div>
-          <div class="col-span-12">
+          <div class="md:col-span-2">
             <p class="mt-2 text-xs text-gray-500 dark:text-white/80">
               <%= gettext("We use this information to calculate max heart rate and effort.") %>
             </p>
@@ -112,8 +112,8 @@
         <hr class="my-6" />
 
         <h6 class="text-gray-500 dark:text-white text-sm font-medium mb-4">Account Settings</h6>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-6">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
             <div class="mb-4">
               <%= label(p, :timezone,
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
@@ -124,7 +124,7 @@
               ) %>
             </div>
           </div>
-          <div class="col-span-6">
+          <div>
             <div class="mb-4">
               <%= label(p, :imperial, "Units & Measurements",
                 class: "block text-gray-600 dark:text-white/60 text-sm font-medium mb-1"
