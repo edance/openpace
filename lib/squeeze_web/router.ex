@@ -161,15 +161,6 @@ defmodule SqueezeWeb.Router do
     get "/invite/:slug", ChallengeShareController, :show
   end
 
-  scope "/races", SqueezeWeb do
-    pipe_through :browser
-
-    get "/", SearchController, :index
-    get "/:region", RegionSearchController, :index
-    get "/:region/:slug", RaceController, :show
-    post "/:region/:slug", RaceController, :subscribe
-  end
-
   scope "/sitemap", SqueezeWeb do
     pipe_through :xml
 
