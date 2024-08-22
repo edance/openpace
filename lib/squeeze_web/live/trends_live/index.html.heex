@@ -1,316 +1,217 @@
-<div class="header pb-6">
-  <div class="container container-dashboard">
-    <div class="header-body">
-      <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-          <h6 class="h2 text-white d-inline-block mb-0">
-            <%= gettext("Running Trends") %>
-          </h6>
+<div class="relative">
+  <div class="container max-w-7xl mx-auto">
+    <div class="flex items-center py-4">
+      <div class="grow">
+        <h6 class="text-lg font-semibold text-gray-800 dark:text-white inline-block mb-2">
+          <%= gettext("Running Trends") %>
+        </h6>
 
-          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-              <li class="breadcrumb-item">
-                <%= live_patch(gettext("Trends"), to: Routes.trends_path(@socket, :index)) %>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">
-                <%= if @year do %>
-                  <%= @year %> <%= gettext("Stats") %>
-                <% else %>
-                  <%= gettext("All Time") %>
-                <% end %>
-              </li>
-            </ol>
-          </nav>
-        </div>
-        <div class="col-lg-6 col-5 text-right">
-          <div class="btn-group btn-group-sm" role="group" aria-label="Select a year">
-            <%= live_patch(gettext("All Time"), to: Routes.trends_path(@socket, :index), class: "btn btn-secondary") %>
+        <nav aria-label="breadcrumb" class="flex text-gray-800 dark:text-white">
+          <ol class="flex items-center space-x-4">
+            <li class="flex items-center text-sm">
+              <%= live_patch(gettext("Trends"),
+                to: Routes.trends_path(@socket, :index),
+                class: "text-gray-800 dark:text-white"
+              ) %>
+            </li>
+            <li class="flex text-sm items-center" aria-current="page">
+              <%= if @year do %>
+                <%= @year %> <%= gettext("Stats") %>
+              <% else %>
+                <%= gettext("All Time") %>
+              <% end %>
+            </li>
+          </ol>
+        </nav>
+      </div>
 
-            <%= for year <- @years |> Enum.reverse() |> Enum.take(3) do %>
-              <%= live_patch(year, to: Routes.trends_path(@socket, :show, year), class: "btn btn-secondary") %>
-            <% end %>
+      <div class="flex-none text-right">
+        <span class="isolate inline-flex rounded-md shadow-sm">
+          <%= live_patch(gettext("All Time"),
+            to: Routes.trends_path(@socket, :index),
+            class:
+              "relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+          ) %>
 
-            <div class="btn-group btn-group-sm" role="group">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                More
-              </button>
-              <div class="dropdown-menu">
+          <%= for year <- @years |> Enum.reverse() |> Enum.take(3) do %>
+            <%= live_patch(year,
+              to: Routes.trends_path(@socket, :show, year),
+              class:
+                "relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+            ) %>
+          <% end %>
+          <div class="relative -ml-px block">
+            <button
+              phx-click={JS.show(to: "#more-year-menu")}
+              phx-click-away={JS.hide(to: "#more-year-menu")}
+              type="button"
+              class="relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+              id="option-menu-button"
+              aria-expanded="true"
+              aria-haspopup="true"
+            >
+              <span class="sr-only">Open options</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <div
+              id="more-year-menu"
+              class="hidden absolute right-0 z-10 -mr-1 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="option-menu-button"
+              tabindex="-1"
+            >
+              <div class="py-1" role="none">
+                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                 <%= for year <- @years |> Enum.reverse() |> Enum.slice(3..-1) do %>
-                  <%= live_patch(year, to: Routes.trends_path(@socket, :show, year), class: "dropdown-item") %>
+                  <%= live_patch(year,
+                    to: Routes.trends_path(@socket, :show, year),
+                    class: "block px-4 py-2 text-sm text-gray-700",
+                    role: "menuitem",
+                    tabindex: "-1"
+                  ) %>
                 <% end %>
               </div>
             </div>
-
           </div>
-        </div>
+        </span>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container container-dashboard mt--6">
-  <div class="row">
-    <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-primary border-0"
-           id="distance-card"
-           data-field="distance"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0 text-white">
-                <%= gettext("Total Distance") %>
-              </h5>
-              <span class="h2 font-weight-bold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm amount-label">
-                <%= if @current_user.user_prefs.imperial do %>
-                  <%= gettext("miles") %>
-                <% else %>
-                  <%= gettext("km") %>
-                <% end %>
-              </span>
-              <div class="mini-chart position-relative" id="total-distance-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-            </div>
-          </div>
+<div class="container max-w-7xl mx-auto">
+  <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
+    <div
+      class="bg-gradient-to-tl from-blue-500 to-violet-500 rounded-lg"
+      id="distance-card"
+      data-field="distance"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Total Distance") %>
+        </h5>
+        <span class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= if @current_user.user_prefs.imperial do %>
+            <%= gettext("miles") %>
+          <% else %>
+            <%= gettext("km") %>
+          <% end %>
+        </span>
+        <div class="mini-chart relative" id="total-distance-chart" style="aspect-ratio: 4 / 1;">
         </div>
       </div>
     </div>
 
-    <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-info border-0"
-           id="duration-card"
-           data-field="duration"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0 text-white">
-                <%= gettext("Total Duration") %>
-              </h5>
-              <span class="h2 font-weight-bold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm amount-label">
-                <%= gettext("hours") %>
-              </span>
-              <div class="mini-chart position-relative" id="total-duration-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-            </div>
-          </div>
+    <div
+      class="bg-gradient-to-tl from-teal-500 to-blue-500 rounded-lg"
+      id="duration-card"
+      data-field="duration"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Total Duration") %>
+        </h5>
+        <span class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= gettext("hours") %>
+        </span>
+        <div class="mini-chart relative" id="total-duration-chart" style="aspect-ratio: 4 / 1;">
         </div>
       </div>
     </div>
 
-    <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-danger border-0"
-           id="elevation-card"
-           data-field="elevation_gain"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0 text-white">
-                <%= gettext("Elevation Gain") %>
-              </h5>
-              <span class="h2 font-weight-bold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm amount-label">
-                <%= if @current_user.user_prefs.imperial do %>
-                  <%= gettext("feet") %>
-                <% else %>
-                  <%= gettext("meters") %>
-                <% end %>
-              </span>
-              <div class="mini-chart position-relative" id="total-elevation-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-            </div>
-          </div>
+    <div
+      class="bg-gradient-to-tl from-orange-500 to-red-500 rounded-lg"
+      id="elevation-card"
+      data-field="elevation_gain"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Elevation Gain") %>
+        </h5>
+        <span class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= if @current_user.user_prefs.imperial do %>
+            <%= gettext("feet") %>
+          <% else %>
+            <%= gettext("meters") %>
+          <% end %>
+        </span>
+        <div class="mini-chart relative" id="total-elevation-chart" style="aspect-ratio: 4 / 1;">
         </div>
       </div>
     </div>
 
-    <div class="col-xl-3 col-md-6">
-      <div class="card bg-gradient-default border-0"
-           id="count-card"
-           data-field="count"
-           phx-hook="TrendCard"
-           phx-update="ignore"
-      >
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0 text-white">
-                <%= gettext("Number of Runs") %>
-              </h5>
-              <span id="run-count" class="h2 font-weight-bold mb-0 text-white total-amount">
-                0
-              </span>
-              <span class="mb-0 text-sm amount-label">
-                <%= gettext("runs") %>
-              </span>
+    <div
+      class="bg-gradient-to-tl from-blue-950 to-slate-900 rounded-lg"
+      id="count-card"
+      data-field="count"
+      phx-hook="TrendCard"
+      phx-update="ignore"
+    >
+      <div class="p-4 sm:p-6">
+        <h5 class="text-xs font-semibold uppercase opacity-75 mb-0 text-white">
+          <%= gettext("Number of Runs") %>
+        </h5>
+        <span id="run-count" class="text-lg font-semibold mb-0 text-white total-amount">
+          0
+        </span>
+        <span class="mb-0 text-sm text-white amount-label">
+          <%= gettext("runs") %>
+        </span>
 
-              <div class="mini-chart position-relative" id="run-count-chart" style="aspect-ratio: 4 / 1;">
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="mini-chart relative" id="run-count-chart" style="aspect-ratio: 4 / 1;"></div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xl-3">
-      <div class="card">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-light text-uppercase ls-1 mb-1">
-                <%= gettext("Overview") %>
-              </h6>
-              <h5 class="h3 text-white mb-0">
-                <%= gettext("Yearly Summary") %>
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Page name</th>
-                <th scope="col">Visitors</th>
-                <th scope="col">Unique users</th>
-                <th scope="col">Bounce rate</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">
-                  /argon/
-                </th>
-                <td>
-                  4,569
-                </td>
-                <td>
-                  340
-                </td>
-                <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/index.html
-                </th>
-                <td>
-                  3,985
-                </td>
-                <td>
-                  319
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/charts.html
-                </th>
-                <td>
-                  3,513
-                </td>
-                <td>
-                  294
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/tables.html
-                </th>
-                <td>
-                  2,050
-                </td>
-                <td>
-                  147
-                </td>
-                <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/profile.html
-                </th>
-                <td>
-                  1,795
-                </td>
-                <td>
-                  190
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-9">
-      <div class="card">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-light text-uppercase ls-1 mb-1">
+  <div class="grid grid-cols-12 gap-4 sm:gap-6 mt-4 sm:mt-6">
+    <div class="col-span-12 xl:col-span-9">
+      <.card>
+        <div>
+          <div class="flex border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+            <div class="grow">
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
                 <%= gettext("Activities") %>
               </h6>
-              <h5 class="h3 text-white mb-0">
-                <%= gettext("Running Bubbles") %>
-              </h5>
-            </div>
 
-            <div class="col">
-              <ul class="nav nav-pills justify-content-end">
-                <li class="nav-item mr-2 mr-md-0">
-                  <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                    <span class="d-none d-md-block">All</span>
-                    <span class="d-md-none">A</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                    <span class="d-none d-md-block">By Year</span>
-                    <span class="d-md-none">Y</span>
-                  </a>
-                </li>
-              </ul>
+              <h2 class="mb-0 text-md text-gray-800 dark:text-white">
+                <%= gettext("Running Bubbles") %>
+              </h2>
             </div>
           </div>
-        </div>
 
-        <div phx-hook="ActivityBubbleChart"
-             phx-update="ignore"
-             id="activity-bubble-chart"
-             data-imperial={"#{@current_user.user_prefs.imperial}"}
-             style="aspect-ratio: 2 / 1; position: relative;">
+          <div
+            phx-hook="ActivityBubbleChart"
+            phx-update="ignore"
+            id="activity-bubble-chart"
+            data-imperial={"#{@current_user.user_prefs.imperial}"}
+            style="aspect-ratio: 2 / 1; position: relative;"
+          >
+          </div>
         </div>
-      </div>
-
+      </.card>
     </div>
   </div>
 </div>

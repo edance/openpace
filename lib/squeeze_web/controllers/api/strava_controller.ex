@@ -12,9 +12,9 @@ defmodule SqueezeWeb.Api.StravaController do
     client = get_token!(code)
     athlete = get_athlete!(client)
     params = credential_params(client, athlete)
+
     with {:ok, credential} <- Accounts.create_credential(user, params),
          {:ok, _} <- Accounts.update_user(user, user_params(athlete)) do
-
       load_activity_history(credential)
 
       conn

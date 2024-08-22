@@ -6,11 +6,12 @@ defmodule SqueezeWeb.Challenges.StaticMapComponent do
 
   def map_url(polyline) do
     opts = [
-      height: 300,
-      width: 500,
+      height: 450,
+      width: 800,
       show_pins: true,
       outline_color: "#FFFFFF"
     ]
+
     MapboxStaticMap.map_url(polyline, opts)
   end
 

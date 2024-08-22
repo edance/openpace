@@ -1,132 +1,169 @@
-<div class="container py-4">
-  <.form let={f} for={@changeset} phx-submit="save">
-  <div class="row">
-    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <%= if @challenge_type == :segment do %>
-      <!-- Segment Select Card -->
-      <div class="card">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5 class="h3 mb-0">Pick a Segment</h5>
-            </div>
-            <div class="col text-right">
-              <div phx-click="reload" class="btn btn-sm btn-default">
-                Reload
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body segment-list overflow-auto">
-          <%= if @loading do %>
-          Loading Segments...
-          <% end %>
-
-          <%= if Enum.empty?(@segments) && !@loading do %>
-          <p>No Starred Segments</p>
-          <% end %>
-
-          <%= if !Enum.empty?(@segments) && !@loading do %>
-          <!-- List group -->
-          <ul class="list-group list-group-flush list my--3" data-toggle="buttons">
-            <%= for segment <- @segments do %>
-            <li class="list-group-item px-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h4 class="mb-0">
-                    <a href={"https://www.strava.com/segments/#{segment.id}"} target="_blank">
-                      <%= segment.name %>
-                    </a>
-                  </h4>
-                  <small><%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %></small>
+<div class="relative py-5">
+  <div class="container max-w-7xl mx-auto">
+    <.form :let={f} for={@changeset} phx-submit="save">
+      <div class="grid grid-cols-12">
+        <div class="md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-4">
+          <%= if @challenge_type == :segment do %>
+            <!-- Segment Select Card -->
+            <.card>
+              <div class="card">
+                <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-base font-semibold leading-6 text-gray-800 dark:text-white dark:text-white">
+                      <%= gettext("Pick a Segment") %>
+                    </h3>
+                    <button
+                      phx-click="reload"
+                      class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Reload
+                    </button>
+                  </div>
                 </div>
-                <div class="col-auto">
-                  <%= if @segment && @segment.id == segment.id do %>
-                  <button type="button" class="btn btn-sm btn-secondary active" phx-click="select_segment" phx-value-id={segment.id}>
-                    Select
-                  </button>
-                  <% else %>
-                  <button type="button" class="btn btn-sm btn-secondary" phx-click="select_segment" phx-value-id={segment.id}>
-                    Select
-                  </button>
+
+                <div class="px-4 sm:px-6 max-h-96 segment-list overflow-auto">
+                  <%= if @loading do %>
+                    <div class="py-4 sm:py-6">
+                      <p class="text-sm text-gray-500 dark:text-white/60 dark:text-white/80">
+                        Loading Segments...
+                      </p>
+                    </div>
+                  <% end %>
+
+                  <%= if Enum.empty?(@segments) && !@loading do %>
+                    <p class="text-gray-700 dark:text-white">No Starred Segments</p>
+                  <% end %>
+
+                  <%= if !Enum.empty?(@segments) && !@loading do %>
+                    <ul role="list" class="divide-y divide-gray-100">
+                      <%= for segment <- @segments do %>
+                        <li class="relative flex justify-between gap-x-6 py-5">
+                          <div class="flex min-w-0 gap-x-4">
+                            <div class="min-w-0 flex-auto">
+                              <p class="text-sm font-semibold leading-6 text-gray-800 dark:text-white">
+                                <%= segment.name %>
+                                <a
+                                  href={"https://www.strava.com/segments/#{segment.id}"}
+                                  target="_blank"
+                                  class="inline-block ml-2 text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300"
+                                >
+                                  <.icon icon="akar-icons:link-out" />
+                                </a>
+                              </p>
+                              <p class="mt-1 flex text-xs leading-5 text-gray-500 dark:text-white/60">
+                                <%= format_distance(segment.distance, @current_user.user_prefs) %> - <%= segment.city %>, <%= segment.state %>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="flex shrink-0 items-center gap-x-4">
+                            <button
+                              type="button"
+                              class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 active"
+                              phx-click="select_segment"
+                              phx-value-id={segment.id}
+                            >
+                              <svg
+                                class="h-5 w-5 flex-none text-gray-400"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                  clip-rule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </li>
+                      <% end %>
+                    </ul>
                   <% end %>
                 </div>
               </div>
-            </li>
-            <% end %>
-          </ul>
+            </.card>
           <% end %>
-        </div>
-      </div>
-      <% end %>
 
-      <%= if @segment do %>
-      <%= live_component(SqueezeWeb.Challenges.StaticMapComponent, changeset: @changeset, user: @current_user, segment: @segment) %>
-      <%= hidden_input f, :segment_id, value: @segment.id %>
-      <%= hidden_input f, :polyline, value: @segment.map.polyline %>
-      <% end %>
+          <%= if @segment do %>
+            <%= live_component(SqueezeWeb.Challenges.StaticMapComponent,
+              changeset: @changeset,
+              user: @current_user,
+              segment: @segment
+            ) %>
+            <%= hidden_input(f, :segment_id, value: @segment.id) %>
+            <%= hidden_input(f, :polyline, value: @segment.map.polyline) %>
+          <% end %>
+          <!-- Dates Card -->
+          <.card title={gettext("Choose Dates")}>
+            <div>
+              <div class="px-4 sm:px-6">
+                <div class="mb-4 min-h-96">
+                  <div id="date-range" class="flex justify-center pt-4" phx-update="ignore">
+                    <%= text_input(f, :date_range,
+                      class: "date-picker hidden",
+                      data: [range: "true", inline: "true"]
+                    ) %>
+                  </div>
 
-      <!-- Dates Card -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="mb-0">Choose Dates</h3>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <div id="date-range" class="d-flex justify-content-center pt-4" phx-update="ignore">
-              <%= text_input f, :date_range, class: "form-control date-picker d-none", data: [range: true, inline: true] %>
+                  <%= error_tag(f, :start_date) %>
+                  <%= error_tag(f, :end_date) %>
+                </div>
+              </div>
             </div>
+          </.card>
+          <!-- General Info Card -->
+          <.card title={gettext("General Information")}>
+            <div>
+              <!-- Card body -->
+              <div class="p-4 sm:p-6">
+                <div class="mb-4">
+                  <%= label(f, :name,
+                    class: "block font-medium text-gray-700 dark:text-white mb-2"
+                  ) %>
+                  <%= input(f, :name,
+                    placeholder: "Weekend Warriors",
+                    class:
+                      "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                    autocomplete: "off"
+                  ) %>
+                  <%= error_tag(f, :name) %>
+                </div>
 
-            <%= error_tag f, :start_date %>
-            <%= error_tag f, :end_date %>
-          </div>
+                <div class="mb-4">
+                  <%= textarea(f, :description,
+                    placeholder: "Description",
+                    class:
+                      "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                    rows: "10"
+                  ) %>
+                </div>
+
+                <%= hidden_input(f, :activity_type) %>
+                <%= hidden_input(f, :challenge_type) %>
+
+                <%= if @changeset.action do %>
+                  <div
+                    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                    role="alert"
+                  >
+                    <p class="text-sm mb-0">
+                      Oops, something went wrong! Please check the errors.
+                    </p>
+                  </div>
+                <% end %>
+
+                <div class="mt-6">
+                  <%= submit(gettext("Create Challenge"),
+                    class:
+                      "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  ) %>
+                </div>
+              </div>
+            </div>
+          </.card>
         </div>
       </div>
-
-      <!-- General Info Card -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="mb-0">
-            General Information
-          </h3>
-        </div>
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="form-group">
-            <%= label f, :name, class: "form-control-label" %>
-            <%= input f, :name, placeholder: "Weekend Warriors", class: "form-control", autocomplete: "off" %>
-            <%= error_tag f, :name %>
-          </div>
-
-          <div class="form-group">
-            <%= textarea f, :description, placeholder: "Description", class: "form-control", rows: "10" %>
-          </div>
-
-          <div class="form-group">
-            <label class="form-check-label">
-              <%= checkbox(f, :public) %>
-              Allow anyone to join this challenge
-            </label>
-          </div>
-
-          <%= hidden_input f, :activity_type %>
-          <%= hidden_input f, :challenge_type %>
-
-          <%= if @changeset.action do %>
-          <div class="alert alert-danger">
-            <p class="text-sm mb-0">
-              Oops, something went wrong! Please check the errors.
-            </p>
-          </div>
-          <% end %>
-
-          <div class="form-group">
-            <%= submit "Create Challenge", class: "btn btn-primary" %>
-          </div>
-        </div>
-      </div>
-    </div>
+    </.form>
   </div>
-  </.form>
- </div>
+</div>

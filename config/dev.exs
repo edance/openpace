@@ -24,7 +24,8 @@ config :squeeze, SqueezeWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "dA6nIjOH8yCstzjGAqA7DgTk9rEP9XVNZUewZmL06T2pSn+kbVIkpwBh5I5oep+1",
   watchers: [
-    node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)]
+    node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)],
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

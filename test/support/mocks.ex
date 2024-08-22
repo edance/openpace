@@ -1,5 +1,7 @@
 # Notification Mock
-Mox.defmock(Squeeze.ExpoNotifications.MockNotificationProvider, for: Squeeze.ExpoNotifications.NotificationProvider)
+Mox.defmock(Squeeze.ExpoNotifications.MockNotificationProvider,
+  for: Squeeze.ExpoNotifications.NotificationProvider
+)
 
 # Strava Mocks
 Mox.defmock(Squeeze.Strava.MockActivities, for: Strava.ActivitiesBehavior)

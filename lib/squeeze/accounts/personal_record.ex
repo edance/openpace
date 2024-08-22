@@ -32,6 +32,6 @@ defmodule Squeeze.Accounts.PersonalRecord do
 
   def default_distances do
     distances()
-    |> Enum.map(&(%PersonalRecord{distance: &1.distance}))
+    |> Enum.map(&%PersonalRecord{distance: &1.distance})
   end
 end

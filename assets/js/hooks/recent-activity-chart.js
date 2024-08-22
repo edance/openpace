@@ -93,6 +93,7 @@ export default {
   },
 
   mounted() {
+    const isDarkMode = document.documentElement.classList.contains('dark');
     this.activities = JSON.parse(this.el.dataset["summaries"]);
     this.imperial = JSON.parse(this.el.dataset["imperial"]);
     this.currentDate = DateTime.fromISO(this.el.dataset["currentDate"]);
@@ -142,7 +143,7 @@ export default {
             labels: {
               boxWidth: 6,
               usePointStyle: true,
-              color: "white",
+              color: isDarkMode ? "white" : colors.black,
               padding: 15,
             },
           },
@@ -154,7 +155,7 @@ export default {
               display: false,
             },
             ticks: {
-              color: "white",
+              color: isDarkMode ? "white" : colors.black,
             },
           },
           y: {
@@ -163,7 +164,7 @@ export default {
               display: false,
             },
             ticks: {
-              color: "white",
+              color: isDarkMode ? "white" : colors.black,
               callback: (value, index, ticks) => {
                 if (this.field === "distance") {
                   const label = this.imperial ? "mi" : "km";

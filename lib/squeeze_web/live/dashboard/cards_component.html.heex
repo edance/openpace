@@ -1,161 +1,211 @@
-<div class="row">
-  <div class="col-xl-3 col-md-6">
-    <div class="card card-stats mb-4 mb-xl-0">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0">
-              <%= gettext("Current Goal") %>
-            </h5>
-            <span class="h2 font-weight-bold mb-0">
-              <%= if @race_goal do %>
-                <%= if @race_goal.just_finish do %>
-                  <%= link(gettext("Finish"), to: Routes.race_path(@socket, :show, @race_goal.slug)) %>
+<div class="flex flex-wrap -mx-3">
+  <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+    <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
+      <div class="flex-auto p-4">
+        <div class="flex flex-row -mx-3">
+          <div class="grow max-w-full px-3">
+            <div>
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                <%= gettext("Current Goal") %>
+              </h6>
+
+              <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
+                <%= if @race_goal do %>
+                  <%= if @race_goal.just_finish do %>
+                    <%= link(gettext("Finish"),
+                      to: Routes.race_path(@socket, :show, @race_goal.slug)
+                    ) %>
+                  <% else %>
+                    <%= link(format_duration(@race_goal.duration),
+                      to: Routes.race_path(@socket, :show, @race_goal.slug)
+                    ) %>
+                  <% end %>
                 <% else %>
-                  <%= link(format_duration(@race_goal.duration), to: Routes.race_path(@socket, :show, @race_goal.slug)) %>
+                  <%= gettext("TBD") %>
                 <% end %>
-              <% else %>
-                <%= gettext("TBD") %>
-              <% end %>
-            </span>
+              </h5>
+              <p class="mb-0 text-gray-900 dark:text-white opacity-60 text-xs font-semibold">
+                <%= if @personal_record do %>
+                  <%= if @race_goal && !@race_goal.just_finish do %>
+                    <%= if @improvement_amount > 0 do %>
+                      <span class="text-emerald-500">
+                        <span
+                          class="iconify inline"
+                          data-icon="ant-design:caret-up-fill"
+                          data-inline="false"
+                        >
+                        </span>
+                        <%= number_to_percentage(@improvement_amount, precision: 1) %>
+                      </span>
+                      <span class="text-nowrap">
+                        <%= gettext("faster than PR") %>
+                      </span>
+                    <% else %>
+                      <span>
+                        <span
+                          class="iconify inline"
+                          data-icon="ant-design:caret-down-fill"
+                          data-inline="false"
+                        >
+                        </span>
+                        <%= number_to_percentage(abs(@improvement_amount), precision: 1) %>
+                      </span>
+                      <span class="text-nowrap">
+                        <%= gettext("slower than PR") %>
+                      </span>
+                    <% end %>
+                  <% else %>
+                    Current PR » <%= format_duration(@personal_record.duration) %>
+                  <% end %>
+                <% end %>
+
+                <%= if is_nil(@race_goal) do %>
+                  <%= live_redirect("Add a Race »",
+                    to: Routes.race_path(@socket, :new),
+                    class: "text-nowrap"
+                  ) %>
+                <% end %>
+
+                <%= if is_nil(@personal_record) && @race_goal do %>
+                  <%= live_redirect("Add a PR »",
+                    to: Routes.settings_path(@socket, :personal_records),
+                    class: "text-nowrap"
+                  ) %>
+                <% end %>
+              </p>
+            </div>
           </div>
-          <div class="col-auto">
-            <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-              <span class="iconify" data-icon="ps:trophy" data-inline="false"></span>
+          <div class="px-3 text-right flex-none">
+            <div class="flex w-12 h-12 items-center justify-center text-center rounded-full bg-gradient-to-tl from-blue-500 to-violet-500">
+              <span class="iconify h-6 w-6 text-white" data-icon="ps:trophy" data-inline="false">
+              </span>
             </div>
           </div>
         </div>
-
-        <p class="mt-3 mb-0 text-muted text-sm">
-          <%= if @personal_record do %>
-            <%= if @race_goal && !@race_goal.just_finish do %>
-              <%= if @improvement_amount > 0 do %>
-                <span class="text-success">
-                  <span class="iconify" data-icon="ant-design:caret-up-fill" data-inline="false"></span>
-                  <%= number_to_percentage(@improvement_amount, precision: 1) %>
-                </span>
-                <span class="text-nowrap">
-                  <%= gettext("faster than PR") %>
-                </span>
-              <% else %>
-                <span>
-                  <span class="iconify" data-icon="ant-design:caret-down-fill" data-inline="false"></span>
-                  <%= number_to_percentage(abs(@improvement_amount), precision: 1) %>
-                </span>
-                <span class="text-nowrap">
-                  <%= gettext("slower than PR") %>
-                </span>
-              <% end %>
-            <% else %>
-              Current PR » <%= format_duration(@personal_record.duration) %>
-            <% end %>
-          <% end %>
-
-          <%= if is_nil(@race_goal) do %>
-            <%= live_redirect("Add a Race »", to: Routes.race_path(@socket, :new), class: "text-nowrap") %>
-          <% end %>
-
-          <%= if is_nil(@personal_record) && @race_goal do %>
-            <%= live_redirect("Add a PR »", to: Routes.settings_path(@socket, :personal_records), class: "text-nowrap") %>
-          <% end %>
-        </p>
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-md-6">
-    <div class="card card-stats mb-4 mb-xl-0">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0">
-              <%= gettext("Race Date") %>
-            </h5>
-            <span class="h2 font-weight-bold mb-0">
-              <%= if @race_goal do %>
-                <%= format_ordinal_date(@race_goal.race_date) %>
-              <% else %>
-                Not Planned
-              <% end %>
-            </span>
+
+  <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+    <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
+      <div class="flex-auto p-4">
+        <div class="flex flex-row -mx-3">
+          <div class="grow max-w-full px-3">
+            <div>
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                <%= gettext("Race Date") %>
+              </h6>
+              <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
+                <%= if @race_goal do %>
+                  <%= format_ordinal_date(@race_goal.race_date) %>
+                <% else %>
+                  Not Planned
+                <% end %>
+              </h5>
+              <p class="text-xs font-semibold mb-0 text-gray-900 dark:text-white opacity-60">
+                <%= if @race_goal do %>
+                  <span class="text-nowrap">
+                    Race <%= relative_date(@current_user, @race_goal.race_date) %>
+                  </span>
+                <% else %>
+                  <%= link("Plan a Race »",
+                    to: Routes.race_path(@socket, :new),
+                    class: "text-nowrap"
+                  ) %>
+                <% end %>
+              </p>
+            </div>
           </div>
-          <div class="col-auto">
-            <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-              <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
+          <div class="px-3 text-right flex-none">
+            <div class="flex items-center justify-center w-12 h-12 text-center rounded-full bg-gradient-to-tl from-red-600 to-orange-600">
+              <span
+                class="iconify w-full h-6 w-6 text-white"
+                data-icon="ic:baseline-today"
+                data-inline="false"
+              >
+              </span>
             </div>
           </div>
         </div>
-
-        <p class="mt-3 mb-0 text-muted text-sm">
-          <%= if @race_goal do %>
-            <span class="text-nowrap">Race <%= relative_date(@current_user, @race_goal.race_date) %></span>
-          <% else %>
-            <%= link("Plan a Race »", to: Routes.race_path(@socket, :new), class: "text-nowrap") %>
-          <% end %>
-        </p>
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-md-6">
-    <div class="card card-stats mb-4 mb-xl-0">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0">
-              <%= gettext("Latest Activity") %>
-            </h5>
-            <span class="h2 font-weight-bold mb-0">
-              <% latest_activity = latest_activity(assigns) %>
 
-              <%= if latest_activity do %>
-                <%= link(activity_name(assigns), to: Routes.activity_path(@socket, :show, latest_activity.slug)) %>
-              <% else %>
-                <%= gettext("None") %>
-              <% end %>
-            </span>
+  <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+    <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
+      <div class="flex-auto p-4">
+        <div class="flex flex-row -mx-3">
+          <div class="grow max-w-full px-3">
+            <div>
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                <%= gettext("Latest Activity") %>
+              </h6>
+              <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
+                <% latest_activity = latest_activity(assigns) %>
+
+                <%= if latest_activity do %>
+                  <%= link(activity_name(assigns),
+                    to: Routes.activity_path(@socket, :show, latest_activity.slug)
+                  ) %>
+                <% else %>
+                  <%= gettext("None") %>
+                <% end %>
+              </h5>
+              <p class="mb-0 text-gray-900 dark:text-white opacity-60 text-xs font-semibold">
+                <%= if @current_streak > 0 do %>
+                  <span class="iconify text-red-600 mr-1 inline" data-icon="fa-solid:fire"></span>
+                <% else %>
+                  <span class="iconify mr-1 inline" data-icon="fa-solid:fire"></span>
+                <% end %>
+                <%= gettext("%{streak_count} day streak",
+                  streak_count: format_number(@current_streak)
+                ) %>
+              </p>
+            </div>
           </div>
-          <div class="col-auto">
-            <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-              <span class="iconify" data-icon="ic:baseline-directions-run" data-inline="false"></span>
+          <div class="px-3 text-right flex-none">
+            <div class="flex items-center justify-center w-12 h-12 text-center rounded-full bg-gradient-to-tl from-emerald-500 to-teal-400">
+              <span
+                class="iconify w-full h-6 w-6 text-white"
+                data-icon="ic:baseline-directions-run"
+                data-inline="false"
+              >
+              </span>
             </div>
           </div>
         </div>
-
-        <p class="mt-3 mb-0 text-muted text-sm">
-          <%= if @current_streak > 0 do  %>
-            <span class="iconify text-red mr-1" data-icon="fa-solid:fire"></span>
-          <% else %>
-            <span class="iconify mr-1" data-icon="fa-solid:fire"></span>
-          <% end %>
-          <%= gettext("%{streak_count} day streak", streak_count: format_number(@current_streak)) %>
-        </p>
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-md-6">
-    <div class="card card-stats mb-4 mb-xl-0">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0">
-              <%= gettext("Weekly Distance") %>
-            </h5>
-            <span class="h2 font-weight-bold mb-0">
-              <%= weekly_distance(assigns) %>
-            </span>
+
+  <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+    <div class="relative flex flex-col min-w-0 bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg bg-clip-border">
+      <div class="flex-auto p-4">
+        <div class="flex flex-row -mx-3">
+          <div class="grow max-w-full px-3">
+            <div>
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                <%= gettext("Weekly Distance") %>
+              </h6>
+              <h5 class="text-lg mb-2 font-bold text-gray-900 dark:text-white">
+                <%= weekly_distance(assigns) %>
+              </h5>
+              <p class="mb-0 text-gray-900 dark:text-white opacity-60 text-xs font-semibold">
+                <%= last_week_distance(assigns) %>&nbsp; <%= gettext("last week") %>
+              </p>
+            </div>
           </div>
-          <div class="col-auto">
-            <div class="icon icon-shape bg-gradient-teal text-white rounded-circle shadow">
-              <span class="iconify" data-icon="gridicons:line-graph" data-inline="false"></span>
+          <div class="px-3 text-right flex-none">
+            <div class="flex items-center justify-center w-12 h-12 text-center rounded-full bg-gradient-to-tl from-orange-500 to-yellow-500">
+              <span
+                class="iconify w-full h-6 w-6 text-white"
+                data-icon="gridicons:line-graph"
+                data-inline="false"
+              >
+              </span>
             </div>
           </div>
         </div>
-
-        <p class="mt-3 mb-0 text-muted text-sm">
-          <span class="text-nowrap">
-            <%= last_week_distance(assigns) %>&nbsp;
-            <%= gettext("last week") %>
-          </span>
-        </p>
       </div>
     </div>
   </div>

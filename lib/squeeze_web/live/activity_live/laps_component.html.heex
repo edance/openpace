@@ -1,82 +1,107 @@
-<div class="card">
-  <div class="card-header border-0">
-    <div class="row align-items-center">
-      <div class="col-8">
-        <h6 class="text-uppercase text-muted ls-1 mb-1">
-          Workout Analysis
-        </h6>
-        <h3 class="mb-0">
-          <%= gettext("Laps") %>
-        </h3>
-      </div>
+<.card title={gettext("Laps")} subtitle={gettext("Workout Analysis")}>
+  <div class="p-4 sm:p-6">
+    <div
+      id="activity-lap-chart"
+      phx-hook="ActivityLapGraph"
+      phx-update="ignore"
+      data-imperial={"#{@user.user_prefs.imperial}"}
+      data-type={@activity.activity_type}
+      style="width: 100%; height: 400px;"
+    >
+    </div>
+
+    <div class="-mx-4 sm:-mx-6 overflow-x-auto max-h-96">
+      <table class="min-w-full text-sm divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="">
+          <tr>
+            <th
+              scope="col"
+              class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+            >
+              <%= gettext("Lap") %>
+            </th>
+            <th
+              scope="col"
+              class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+            >
+              <%= gettext("Distance") %>
+            </th>
+            <th
+              scope="col"
+              class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+            >
+              <%= gettext("Pace") %>
+            </th>
+            <th
+              scope="col"
+              class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+            >
+              <%= gettext("Time") %>
+            </th>
+            <%= if show_cadence?(assigns) do %>
+              <th
+                scope="col"
+                class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+              >
+                <%= gettext("Cadence") %>
+                <div class="small">
+                  <%= gettext("steps/min") %>
+                </div>
+              </th>
+            <% end %>
+            <th
+              scope="col"
+              class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+            >
+              <%= gettext("Elevation") %>
+              <%= if @user.user_prefs.imperial do %>
+                <div class="small">
+                  <%= gettext("feet") %>
+                </div>
+              <% else %>
+                <div class="small">
+                  <%= gettext("meters") %>
+                </div>
+              <% end %>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%= for lap <- @activity.laps do %>
+            <tr>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                <%= lap.split %>
+              </td>
+
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                <%= format_distance(lap.distance, @user.user_prefs) %>
+              </td>
+
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                <%= format_pace(
+                  %{distance: lap.distance, duration: lap.moving_time},
+                  @user.user_prefs
+                ) %>
+              </td>
+
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                <%= format_duration(lap.moving_time) %>
+              </td>
+
+              <%= if show_cadence?(assigns) do %>
+                <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                  <%= lap.average_cadence * 2 %>
+                </td>
+              <% end %>
+
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                <%= lap.total_elevation_gain %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div class="card-body">
-    <div id="activity-lap-chart"
-         phx-hook="ActivityLapGraph"
-         phx-update="ignore"
-         data-imperial={"#{@user.user_prefs.imperial}"}
-         data-type={@activity.activity_type}
-         style="width: 100%; height: 400px;"
-    ></div>
-  </div>
-
-  <div class="table-responsive" style="height: 400px">
-    <table class="table align-items-center table-flush">
-      <thead class="thead-dark bg-gray-dark">
-        <tr>
-          <th scope="col">
-            Lap
-          </th>
-          <th scope="col">
-            Distance
-          </th>
-          <th scope="col">
-            Pace
-            <%= if @user.user_prefs.imperial do %>
-              <div class="small">min/mi</div>
-            <% else %>
-              <div class="small">min/km</div>
-            <% end %>
-          </th>
-          <th scope="col">
-            Time
-          </th>
-          <%= if show_cadence?(assigns) do %>
-            <th scope="col">
-              Cadence
-              <div class="small">steps/min</div>
-            </th>
-          <% end %>
-
-          <th scope="col">
-            Elevation
-            <%= if @user.user_prefs.imperial do %>
-              <div class="small">feet</div>
-            <% else %>
-              <div class="small">meters</div>
-            <% end %>
-          </th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <%= for lap <- @activity.laps do %>
-          <tr>
-            <td><%= lap.split %></td>
-            <td><%= format_distance(lap.distance, @user.user_prefs) %></td>
-            <td><%= format_pace(%{distance: lap.distance, duration: lap.moving_time}, @user.user_prefs) %></td>
-            <td><%= format_duration(lap.moving_time) %></td>
-            <%= if show_cadence?(assigns) do %>
-              <td>
-                <%= lap.average_cadence * 2 %>
-              </td>
-            <% end %>
-            <td><%= lap.total_elevation_gain %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+</.card>

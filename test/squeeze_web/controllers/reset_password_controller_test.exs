@@ -8,10 +8,14 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
     @tag :no_user
     test "with valid token and signature", %{conn: conn} do
       user = insert(:user)
-      link = user
-      |> PasswordLinkGenerator.create_link()
-      conn = conn
-      |> get(link)
+
+      link =
+        user
+        |> PasswordLinkGenerator.create_link()
+
+      conn =
+        conn
+        |> get(link)
 
       assert html_response(conn, 200) =~ "Please reset your password below"
     end
@@ -19,8 +23,10 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
     @tag :no_user
     test "with an expired token", %{conn: conn} do
       user = insert(:user)
-      conn = conn
-      |> get(expired_link(user))
+
+      conn =
+        conn
+        |> get(expired_link(user))
 
       assert get_flash(conn, :error) == "Token has expired"
       assert redirected_to(conn) == home_path(conn, :index)
@@ -29,8 +35,10 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
     @tag :no_user
     test "with an invalid token", %{conn: conn} do
       user = insert(:user)
-      conn = conn
-      |> get(invalid_link(user))
+
+      conn =
+        conn
+        |> get(invalid_link(user))
 
       assert get_flash(conn, :error) == "Token not valid"
       assert redirected_to(conn) == home_path(conn, :index)
@@ -47,8 +55,9 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
 
       assert get_flash(conn, :info) == "Password was reset"
       assert redirected_to(conn) == session_path(conn, :new)
+
       refute user.encrypted_password ==
-        Accounts.get_user!(user.id).encrypted_password
+               Accounts.get_user!(user.id).encrypted_password
     end
 
     @tag :no_user
@@ -73,7 +82,8 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
   end
 
   defp expired_link(user) do
-    time = :erlang.system_time(:seconds) - 86_401 # One day and one second
+    # One day and one second
+    time = :erlang.system_time(:seconds) - 86_401
     PasswordLinkGenerator.create_link(user, time)
   end
 
@@ -81,11 +91,14 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
     link = PasswordLinkGenerator.create_link(user)
     time = :erlang.system_time(:seconds) - 5
     %{query: query, path: path} = URI.parse(link)
-    query = query
-    |> URI.query_decoder()
-    |> Map.new()
-    |> Map.put("token", create_token(user, time))
-    |> URI.encode_query()
+
+    query =
+      query
+      |> URI.query_decoder()
+      |> Map.new()
+      |> Map.put("token", create_token(user, time))
+      |> URI.encode_query()
+
     "#{path}?#{query}"
   end
 

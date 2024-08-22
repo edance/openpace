@@ -36,17 +36,16 @@ defmodule Squeeze.ExpoNotifications do
     ]
 
     @type t :: %__MODULE__{
-      to: String.t(),
-      title: String.t(),
-      body: String.t()
-    }
+            to: String.t(),
+            title: String.t(),
+            body: String.t()
+          }
   end
 
   defmodule NotificationProvider do
     @moduledoc false
-    @callback push_list(
-      [NotificationMessage.t()]
-    ) :: {:ok, [NotificationMessage.t()] | {:error, Tesla.Env.t()}}
+    @callback push_list([NotificationMessage.t()]) ::
+                {:ok, [NotificationMessage.t()] | {:error, Tesla.Env.t()}}
   end
 
   defmodule DefaultNotificationProvider do

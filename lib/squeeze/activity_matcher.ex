@@ -28,10 +28,11 @@ defmodule Squeeze.ActivityMatcher do
   """
   def get_closest_activity(%User{} = user, %{} = activity) do
     date = Timex.to_date(activity.start_at_local)
+
     user
     |> Activities.get_activities_by_date(date)
     |> Enum.filter(&(&1.type == activity.type))
-    |> Enum.sort(fn(a, b) -> match_score(a, activity) > match_score(b, activity) end)
+    |> Enum.sort(fn a, b -> match_score(a, activity) > match_score(b, activity) end)
     |> List.first()
   end
 
@@ -62,8 +63,9 @@ defmodule Squeeze.ActivityMatcher do
   end
 
   defp percent_match(a, b)
-  when is_number(a) and a > 0 and is_number(b) and b > 0 do
+       when is_number(a) and a > 0 and is_number(b) and b > 0 do
     Enum.max([0, 1.0 - abs(a - b) / a])
   end
+
   defp percent_match(_, _), do: 0
 end

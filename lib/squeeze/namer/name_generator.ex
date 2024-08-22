@@ -9,7 +9,6 @@ defmodule Squeeze.Namer.NameGenerator do
   alias Squeeze.Namer.EmojiFormatter
   alias Squeeze.Namer.RelativeTimeFormatter
 
-
   @doc """
   Returns the name for the activity
 

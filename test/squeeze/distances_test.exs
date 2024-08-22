@@ -6,12 +6,14 @@ defmodule Squeeze.DistancesTest do
   alias Squeeze.Distances
 
   test "mile_in_meters" do
-    assert Distances.mile_in_meters == 1609
+    assert Distances.mile_in_meters() == 1609
   end
 
   test '#distances' do
-    %{name: name, distance: distance} = Distances.distances
-    |> List.first()
+    %{name: name, distance: distance} =
+      Distances.distances()
+      |> List.first()
+
     assert is_binary(name)
     assert is_integer(distance)
   end

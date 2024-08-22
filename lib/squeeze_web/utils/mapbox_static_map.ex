@@ -45,9 +45,12 @@ defmodule SqueezeWeb.MapboxStaticMap do
 
   defp make_outline_path(coords, opts) do
     case Keyword.get(opts, :outline_color, nil) do
-      nil -> nil
+      nil ->
+        nil
+
       color ->
-        stroke_width = Keyword.get(opts, :stroke_width, 4) + 2 # one pixel padding on each side
+        # one pixel padding on each side
+        stroke_width = Keyword.get(opts, :stroke_width, 4) + 2
         color = color |> String.replace("#", "")
         "path-#{stroke_width}+#{color}(#{Polyline.encode(coords)})"
     end
@@ -68,7 +71,9 @@ defmodule SqueezeWeb.MapboxStaticMap do
     # format from https://docs.mapbox.com/api/maps/#path
     paths
     |> Enum.zip(spectrum_colors)
-    |> Enum.map_join(",", fn {path, color} -> "path-#{stroke_width}+#{color}(#{Polyline.encode(path)})" end)
+    |> Enum.map_join(",", fn {path, color} ->
+      "path-#{stroke_width}+#{color}(#{Polyline.encode(path)})"
+    end)
   end
 
   defp make_pins(coords, opts) do
@@ -80,10 +85,13 @@ defmodule SqueezeWeb.MapboxStaticMap do
       {lon1, lat1} = List.first(coords)
       {lon2, lat2} = List.last(coords)
 
-      Enum.join([
-        "pin-s-a+#{rgb_to_hex_str(color_a)}(#{lon1},#{lat1})",
-        "pin-s-b+#{rgb_to_hex_str(color_b)}(#{lon2},#{lat2})"
-      ], ",")
+      Enum.join(
+        [
+          "pin-s-a+#{rgb_to_hex_str(color_a)}(#{lon1},#{lat1})",
+          "pin-s-b+#{rgb_to_hex_str(color_b)}(#{lon2},#{lat2})"
+        ],
+        ","
+      )
     else
       nil
     end
@@ -101,11 +109,13 @@ defmodule SqueezeWeb.MapboxStaticMap do
   end
 
   defp dec_to_hex(dec) do
-    pad = if dec < 16 do
-      "0"
-    else
-      ""
-    end
+    pad =
+      if dec < 16 do
+        "0"
+      else
+        ""
+      end
+
     "#{pad}#{Integer.to_string(dec, 16)}"
   end
 
@@ -124,7 +134,7 @@ defmodule SqueezeWeb.MapboxStaticMap do
     |> String.replace("#", "")
     |> String.graphemes()
     |> Enum.chunk_every(2)
-    |> Enum.map(fn ([a, b])  -> hex_to_dec("#{a}#{b}") end)
+    |> Enum.map(fn [a, b] -> hex_to_dec("#{a}#{b}") end)
   end
 
   defp create_spectrum(start_rgb, end_rgb, steps) do
@@ -132,9 +142,9 @@ defmodule SqueezeWeb.MapboxStaticMap do
     [e_red, e_green, e_blue] = end_rgb
 
     Enum.map(0..steps, fn i ->
-      r = round(((e_red - s_red) * i) / steps) + s_red
-      g = round(((e_green - s_green) * i) / steps) + s_green
-      b = round(((e_blue - s_blue) * i) / steps) + s_blue
+      r = round((e_red - s_red) * i / steps) + s_red
+      g = round((e_green - s_green) * i / steps) + s_green
+      b = round((e_blue - s_blue) * i / steps) + s_blue
       rgb_to_hex_str([r, g, b])
     end)
   end

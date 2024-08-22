@@ -6,7 +6,7 @@ defmodule SqueezeWeb.Dashboard.MiniCalendarComponent do
 
   def data(%{activity_map: activity_map} = assigns) do
     dates(assigns)
-    |> Enum.map(fn(date) ->
+    |> Enum.map(fn date ->
       %{
         date: date,
         activities: Map.get(activity_map, date, [])

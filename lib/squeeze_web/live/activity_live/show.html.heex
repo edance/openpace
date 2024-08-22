@@ -1,68 +1,82 @@
-<div class="container-dashboard container pt-4 pb-8">
-  <div class="row">
-    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <div class="card overflow-hidden">
-        <div class="row no-gutters">
-          <div class="col-12">
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col-auto">
-                  <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user, size: "lg") %>
+<div class="relative py-5">
+  <div class="container max-w-2xl mx-auto">
+    <div class="w-full">
+      <.card>
+        <div class="flex flex-wrap">
+          <div class="w-full">
+            <div class="p-6">
+              <div class="flex items-center">
+                <div class="mr-4">
+                  <.avatar user={@current_user} size="h-12 w-12" />
                 </div>
-                <div class="col ml--2">
-                  <h1 class="h3 mb-0"><%= @activity.name %></h1>
-                  <p class="text-sm text-muted mb-0">
+                <div class="flex-1 ml-2">
+                  <h1 class="text-xl text-gray-800 dark:text-white font-semibold mb-0">
+                    <%= @activity.name %>
+                  </h1>
+                  <p class="text-sm text-gray-500 dark:text-white/60 mb-0">
                     <%= date(assigns) %> · <%= @activity.type %>
                   </p>
                 </div>
               </div>
 
-              <div class="row pt-4">
-                <div class="mb-3 col-4 col-md-3">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Distance</h5>
-                  <span class="h2 font-weight-bold mb-0"><%= format_distance(@activity.distance, @current_user.user_prefs) %></span>
+              <div class="mt-4 grid grid-cols-4">
+                <div class="">
+                  <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                    <%= gettext("Distance") %>
+                  </h6>
+                  <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+                    <%= format_distance(@activity.distance, @current_user.user_prefs) %>
+                  </h5>
                 </div>
-
-                <div class="col-4 col-md-3">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Time</h5>
-                  <span class="h2 font-weight-bold mb-0"><%= format_duration(@activity.duration) %></span>
+                <div class="">
+                  <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                    <%= gettext("Time") %>
+                  </h6>
+                  <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+                    <%= format_duration(@activity.duration) %>
+                  </h5>
                 </div>
-
                 <%= if show_pace?(assigns) do %>
-                  <div class="col-4 col-md-3">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Pace</h5>
-                    <span class="h2 font-weight-bold mb-0">
+                  <div class="">
+                    <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                      <%= gettext("Pace") %>
+                    </h6>
+                    <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
                       <%= format_pace(@activity, @current_user.user_prefs) %>
-                    </span>
+                    </h5>
                   </div>
                 <% end %>
-
                 <%= if @activity.elevation_gain > 0 do %>
-                  <div class="col-4 col-md-3">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Elevation</h5>
-                    <span class="h2 font-weight-bold mb-0">
+                  <div class="">
+                    <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                      <%= gettext("Elevation") %>
+                    </h6>
+                    <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
                       <%= elevation(assigns) %>
-                    </span>
+                    </h5>
                   </div>
                 <% end %>
               </div>
             </div>
           </div>
-
-          <div class="col-12">
+          <div class="w-full">
             <%= if show_map?(assigns) do %>
-              <div id="activity-map"
-                   class="activity-map"
-                   phx-hook="ActivityMap"
-                   phx-update="ignore"
+              <div
+                id="activity-map"
+                class="activity-map"
+                phx-hook="ActivityMap"
+                phx-update="ignore"
               >
               </div>
             <% end %>
           </div>
         </div>
-      </div>
+      </.card>
 
-      <%= live_component(SqueezeWeb.ActivityLive.LapsComponent, user: @current_user, activity: @activity) %>
+      <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
+        user: @current_user,
+        activity: @activity
+      ) %>
     </div>
   </div>
 </div>

@@ -1,44 +1,70 @@
 <!-- Page content -->
 <div class="position-relative py-5">
-  <div class="container container-dashboard">
-    <.live_component module={SqueezeWeb.Dashboard.CardsComponent} id="overview-cards" current_user={@current_user} current_streak={@current_streak} activity_summaries={@activity_summaries} race_goal={@race_goal} />
+  <div class="container max-w-7xl mx-auto">
+    <.live_component
+      module={SqueezeWeb.Dashboard.CardsComponent}
+      id="overview-cards"
+      current_user={@current_user}
+      current_streak={@current_streak}
+      activity_summaries={@activity_summaries}
+      race_goal={@race_goal}
+    />
 
-    <div class="row mt-5">
-      <div class="col-xl-3 col-md-6 offset-md-6 order-last offset-xl-0 order-xl-first">
-        <.live_component module={SqueezeWeb.Dashboard.ProfileCardComponent} id="profile-card" current_user={@current_user} ytd_run_stats={@ytd_run_stats} />
+    <div class="grid md:grid-cols-2 xl:grid-cols-12 mt-5 gap-4 md:gap-6">
+      <div class="xl:col-span-3 xl:order-first">
+        <.live_component
+          module={SqueezeWeb.Dashboard.ProfileCardComponent}
+          id="profile-card"
+          current_user={@current_user}
+          ytd_run_stats={@ytd_run_stats}
+        />
 
-        <.live_component module={SqueezeWeb.Dashboard.ChallengesCardComponent} id="challenges-card" current_user={@current_user} challenges={@challenges} />
+        <.live_component
+          module={SqueezeWeb.Dashboard.ChallengesCardComponent}
+          id="challenges-card"
+          current_user={@current_user}
+          challenges={@challenges}
+        />
 
-        <div class="card bg-gradient-default">
-          <div class="card-header bg-transparent">
-            <div class="row">
-              <div class="col">
-                <h3 class="mb-0 text-white">
+        <div class="bg-slate-50 shadow-xl dark:bg-midnight dark:shadow-dark-xl rounded-lg">
+          <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+            <div class="flex">
+              <div class="grow">
+                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
                   <%= gettext("Personal Records") %>
                 </h3>
               </div>
-
-              <div class="col-auto text-right">
-                <%= live_redirect(gettext("Edit"), to: Routes.settings_path(@socket, :personal_records), class: "btn btn-sm btn-primary") %>
+              <div class="flex-none">
+                <%= live_redirect(gettext("Edit"),
+                  to: Routes.settings_path(@socket, :personal_records),
+                  class:
+                    "relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                ) %>
               </div>
             </div>
           </div>
+
           <%= if Enum.empty?(@current_user.user_prefs.personal_records) do %>
-            <div class="card-body">
-              <p class="text-muted">
-                <%= live_redirect(gettext("Add a PR here."), to: Routes.settings_path(@socket, :personal_records)) %>
+            <div class="p-4 sm:p-6">
+              <p class="text-sm text-gray-500 dark:text-white/80">
+                <%= live_redirect(gettext("Add a PR here."),
+                  to: Routes.settings_path(@socket, :personal_records)
+                ) %>
               </p>
             </div>
           <% else %>
-            <div class="table-responsive">
-              <table class="table table-dark table-sm table-striped">
-                <tbody>
+            <div class="">
+              <table class="w-full">
+                <tbody class="divide-y divide-white/5">
                   <%= for pr <- personal_records(assigns) do %>
-                    <tr>
-                      <th scope="row">
+                    <tr class="">
+                      <th
+                        scope="row"
+                        class="px-4 sm:px-6 py-3.5 text-left text-xs font-semibold text-gray-900 dark:text-white"
+                      >
                         <%= distance_name(pr.distance, imperial: @current_user.user_prefs.imperial) %>
                       </th>
-                      <td>
+                      <td class="whitespace-nowrap px-4 sm:px-6 py-4 text-xs text-gray-500 text-right dark:text-white">
                         <%= if pr.duration do %>
                           <%= format_duration(pr.duration) %>
                         <% else %>
@@ -50,48 +76,67 @@
                 </tbody>
               </table>
             </div>
-
-            <div class="card-footer bg-transparent">
-            </div>
           <% end %>
         </div>
       </div>
 
-      <div class="col-xl-5 col-md-6 mb-5 mb-xl-0">
-        <.live_component module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent} id="recent-activity-card" current_user={@current_user} activity_summaries={@activity_summaries} date={@date} />
+      <div class="xl:col-span-5 mb-5 mb-xl-0">
+        <.live_component
+          module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent}
+          id="recent-activity-card"
+          current_user={@current_user}
+          activity_summaries={@activity_summaries}
+          date={@date}
+        />
 
         <%= for activity <- @activities do %>
-          <.live_component module={SqueezeWeb.Dashboard.MiniActivityCardComponent} id={activity.slug} activity={activity} current_user={@current_user} />
+          <.live_component
+            module={SqueezeWeb.Dashboard.MiniActivityCardComponent}
+            id={activity.slug}
+            activity={activity}
+            current_user={@current_user}
+          />
         <% end %>
-
       </div>
 
-      <div class="col-xl-4 col-md-6">
+      <div class="xl:col-span-4">
         <%= if !strava_integration?(assigns) do %>
-          <div class="card bg-gradient-orange">
-            <div class="card-body">
-              <h3 class="text-white">
+          <div class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden">
+            <div class="p-4 sm:p-6">
+              <h3 class="font-semibold text-white">
                 <%= gettext("Sync Activities from Strava") %>
               </h3>
 
-              <p class="text-sm text-white">
-                <%= gettext("In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us.") %>
+              <p class="text-sm text-white mb-2">
+                <%= gettext(
+                  "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
+                ) %>
               </p>
 
               <%= link to: Routes.strava_integration_path(@socket, :request), class: "" do %>
-                <img alt="Connect to Strava" class="btn-strava" src={Routes.static_path(@socket, "/images/btn_strava.svg")} />
+                <img
+                  alt="Connect to Strava"
+                  class="btn-strava"
+                  src={Routes.static_path(@socket, "/images/btn_strava.svg")}
+                />
               <% end %>
             </div>
           </div>
         <% end %>
 
-        <.live_component module={SqueezeWeb.Dashboard.MiniCalendarComponent} id="mini-calendar-card" current_user={@current_user} activity_map={@activity_map} />
+        <.live_component
+          module={SqueezeWeb.Dashboard.MiniCalendarComponent}
+          id="mini-calendar-card"
+          current_user={@current_user}
+          activity_map={@activity_map}
+        />
 
-        <.live_component module={SqueezeWeb.RaceLive.UpcomingRacesCard} id="upcoming-races" race_goals={@race_goals} current_user={@current_user} />
-      </div>
-    </div>
-    <div class="row mt-5">
-      <div class="col-xl-8 mb-5 mb-xl-0">
+        <.live_component
+          module={SqueezeWeb.RaceLive.UpcomingRacesCard}
+          id="upcoming-races"
+          race_goals={@race_goals}
+          current_user={@current_user}
+        />
       </div>
     </div>
   </div>

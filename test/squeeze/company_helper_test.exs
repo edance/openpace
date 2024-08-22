@@ -9,6 +9,6 @@ defmodule Squeeze.CompanyHelperTest do
 
   test "#team_email/0" do
     assert CompanyHelper.team_email() ==
-      {"The OpenPace Team", "team@openpace.co"}
+             {"The OpenPace Team", "team@openpace.co"}
   end
 end

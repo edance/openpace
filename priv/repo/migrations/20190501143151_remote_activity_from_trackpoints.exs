@@ -3,6 +3,7 @@ defmodule Squeeze.Repo.Migrations.RemoteActivityFromTrackpoints do
 
   def up do
     drop index(:trackpoints, [:activity_id])
+
     alter table(:trackpoints) do
       remove :activity_id
     end

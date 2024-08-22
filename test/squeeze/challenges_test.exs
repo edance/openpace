@@ -11,7 +11,7 @@ defmodule Squeeze.ChallengesTest do
     test "includes only the users challenge" do
       [score, _] = insert_pair(:score)
       challenges = Challenges.list_challenges(score.user)
-      assert Enum.map(challenges, &(&1.id)) == [score.challenge_id]
+      assert Enum.map(challenges, & &1.id) == [score.challenge_id]
     end
   end
 
@@ -23,7 +23,8 @@ defmodule Squeeze.ChallengesTest do
 
     test "raises error if challenge not found" do
       assert_raise Ecto.NoResultsError, fn ->
-        Challenges.get_challenge_by_slug!("abc") end
+        Challenges.get_challenge_by_slug!("abc")
+      end
     end
   end
 
@@ -34,8 +35,11 @@ defmodule Squeeze.ChallengesTest do
 
     test "includes challenges that start at the end of the day" do
       today = today()
-      challenge = insert(:challenge, start_date: today, end_date: today)
-      |> with_scores(1)
+
+      challenge =
+        insert(:challenge, start_date: today, end_date: today)
+        |> with_scores(1)
+
       [score] = challenge.scores
 
       end_of_day = today |> Timex.end_of_day()
@@ -48,8 +52,11 @@ defmodule Squeeze.ChallengesTest do
 
     test "excludes challenges that start at after end_date" do
       today = today()
-      challenge = insert(:challenge, start_date: today, end_date: today)
-      |> with_scores(1)
+
+      challenge =
+        insert(:challenge, start_date: today, end_date: today)
+        |> with_scores(1)
+
       [score] = challenge.scores
 
       start_of_tomorrow = today |> Timex.shift(days: 1) |> Timex.beginning_of_day()
@@ -61,8 +68,11 @@ defmodule Squeeze.ChallengesTest do
 
     test "excludes challenges that start at before start_date" do
       today = Timex.today()
-      challenge = insert(:challenge, start_date: today, end_date: today)
-      |> with_scores(1)
+
+      challenge =
+        insert(:challenge, start_date: today, end_date: today)
+        |> with_scores(1)
+
       [score] = challenge.scores
 
       start_of_yesterday = today |> Timex.shift(days: -1) |> Timex.beginning_of_day()

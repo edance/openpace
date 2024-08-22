@@ -14,10 +14,12 @@ defmodule SqueezeWeb.ForgotPasswordController do
         conn
         |> put_flash(:error, "Email not found in our systems")
         |> render("show.html")
+
       user ->
         user
         |> Email.reset_password_email(PasswordLinkGenerator.create_link(user))
         |> Mailer.deliver_now()
+
         conn
         |> put_flash(:info, "Link sent to email")
         |> redirect(to: Routes.home_path(conn, :index))

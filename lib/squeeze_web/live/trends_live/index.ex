@@ -5,6 +5,7 @@ defmodule SqueezeWeb.TrendsLive.Index do
   alias Squeeze.Distances
   alias Squeeze.Stats
   alias Squeeze.Velocity
+  alias Phoenix.LiveView.JS
 
   @impl true
   def mount(_params, _session, socket) do

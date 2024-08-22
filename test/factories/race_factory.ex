@@ -10,12 +10,14 @@ defmodule Squeeze.RaceFactory do
       def race_factory do
         city = Address.city()
         state = Address.state_abbr()
-        race = Enum.random(Distances.distances)
+        race = Enum.random(Distances.distances())
         name = "#{city} #{race.name}"
-        slug = name
-        |> String.downcase()
-        |> String.split()
-        |> Enum.join("-")
+
+        slug =
+          name
+          |> String.downcase()
+          |> String.split()
+          |> Enum.join("-")
 
         %Race{
           name: name,
@@ -24,7 +26,7 @@ defmodule Squeeze.RaceFactory do
           content: Lorem.paragraph(6),
           state: state,
           external_id: sequence(:external_id, &"#{&1}"),
-          start_date: Date.forward(100),
+          start_date: Date.forward(100)
         }
       end
 

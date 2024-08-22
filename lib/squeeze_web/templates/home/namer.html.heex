@@ -1,0 +1,107 @@
+<main>
+  <!-- Navbar -->
+  <%= render(SqueezeWeb.MenuView, "base-navbar.html", assigns) %>
+
+  <section class="py-8 md:py-16 mb-8">
+    <div class="mx-auto max-w-7xl container">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="mb-6">
+            <h1 class="text-5xl text-gray-800 mb-4">
+              Emojify Your Activities
+            </h1>
+
+            <p class="mb-4 text-gray-500">
+              Automatically updates activity names to include information, like distance and emojis. It's free - just click the button below to get started!
+            </p>
+            <%= link to: Routes.strava_integration_path(@conn, :request, rename: true) do %>
+              <img
+                alt="Connect to Strava"
+                class="w-48 mb-4"
+                src={Routes.static_path(@conn, "/images/btn_strava@2x.png")}
+              />
+            <% end %>
+          </div>
+          <div class="order-first md:order-last">
+            <div class="bg-white shadow">
+              <div class="p-4">
+                <div class="relative">
+                  <img
+                    class="w-full"
+                    src={Routes.static_path(@conn, "/images/namer-example.jpg")}
+                  />
+                  <div class="absolute bottom-4 left-4 bg-white px-2 py-1 rounded-sm text-sm">
+                    Morning Run
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-24 sm:pt-32 lg:px-8 lg:py-40">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div class="lg:col-span-5">
+          <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">
+            Frequently asked questions
+          </h2>
+        </div>
+        <div class="mt-10 lg:col-span-7 lg:mt-0">
+          <dl class="space-y-10">
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                How does this work?
+              </dt>
+              <dd class="mt-2 text-base leading-7 text-gray-600">
+                Connect Namer with Strava and we'll handle the rest. After your run, yoga session, or other activity, we'll rename it to include info like distance, time, and of course, emojis.
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                ‍What does it cost?
+              </dt>
+              <dd class="mt-2 text-base leading-7 text-gray-600">
+                Namer is free! If you like the project, feel free to enable branding so you can help spread the Namer word. Also, check out OpenPace to help train for your next big race.
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                ‍Can I customize the emojis?
+              </dt>
+              <dd class="mt-2 text-base leading-7 text-gray-600">
+                Not yet! There are a few feature requests and OpenPace is just one me working away on little running hacks. If you like the project and want to contribute, Namer is open source! Check out the source code <a
+                  target="_blank"
+                  href="https://github.com/edance/openpace"
+                >here</a>.
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                What data do you store?
+              </dt>
+              <dd class="mt-2 text-base leading-7 text-gray-600">
+                We store user information, like your name and profile picture and activity data. We do not store your email address. This means no emails from us!
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                ‍How do I delete my account?
+              </dt>
+              <dd class="mt-2 text-base leading-7 text-gray-600">
+                If you'd like to stop using Namer just go to your Strava Apps page. You'll see "OpenPace" listed. Click 'Revoke Access' and you're all set - this removes all your information from OpenPace.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

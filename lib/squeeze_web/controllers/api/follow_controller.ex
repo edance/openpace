@@ -28,6 +28,7 @@ defmodule SqueezeWeb.Api.FollowController do
         conn
         |> put_status(:created)
         |> render("follow.json", follow: follow)
+
       {:error, :follow, changeset, _} ->
         conn
         |> put_status(:unprocessable_entity)

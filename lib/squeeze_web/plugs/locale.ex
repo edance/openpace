@@ -17,9 +17,12 @@ defmodule SqueezeWeb.Plug.Locale do
 
   def call(conn, _opts) do
     case locale_from_params(conn) || locale_from_cookies(conn) || locale_from_header(conn) do
-      nil     -> conn
-      locale  ->
+      nil ->
+        conn
+
+      locale ->
         Gettext.put_locale(SqueezeWeb.Gettext, locale)
+
         conn
         |> persist_locale(locale)
     end

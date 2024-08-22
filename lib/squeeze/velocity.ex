@@ -18,12 +18,15 @@ defmodule Squeeze.Velocity do
   5.20 # minutes per kilometer
   """
   def to_float(velocity, _) when velocity == 0, do: 0.0
+
   def to_float(velocity, imperial: true) do
     round_velocity(Distances.mile_in_meters() / 60 / velocity)
   end
+
   def to_float(velocity, imperial: false) do
     round_velocity(1_000 / 60 / velocity)
   end
+
   def to_float(velocity), do: to_float(velocity, imperial: false)
 
   defp round_velocity(num), do: Float.round(num, 2)

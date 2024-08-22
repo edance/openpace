@@ -94,21 +94,24 @@ defmodule Squeeze.BillingTest do
     setup [:create_payment_method]
 
     test "returns the payment_method if found",
-      %{payment_method: payment_method, user: user} do
+         %{payment_method: payment_method, user: user} do
       assert payment_method.id ==
-        Billing.get_payment_method!(user, payment_method.id).id
+               Billing.get_payment_method!(user, payment_method.id).id
     end
 
     test "raises error if payment_method does not belong to user",
-      %{payment_method: payment_method} do
+         %{payment_method: payment_method} do
       user = insert(:user)
+
       assert_raise Ecto.NoResultsError, fn ->
-        Billing.get_payment_method!(user, payment_method.id) end
+        Billing.get_payment_method!(user, payment_method.id)
+      end
     end
 
     test "raises error if payment_method does not exist", %{user: user} do
       assert_raise Ecto.NoResultsError, fn ->
-        Billing.get_payment_method!(user, "1234") end
+        Billing.get_payment_method!(user, "1234")
+      end
     end
   end
 
@@ -130,24 +133,22 @@ defmodule Squeeze.BillingTest do
     setup [:create_payment_method]
 
     test "with valid attrs updates the payment method",
-      %{payment_method: payment_method} do
+         %{payment_method: payment_method} do
       attrs = %{owner_name: "some updated name"}
-      assert {:ok, payment_method} =
-        Billing.update_payment_method(payment_method, attrs)
+      assert {:ok, payment_method} = Billing.update_payment_method(payment_method, attrs)
       assert payment_method.owner_name == "some updated name"
     end
 
     test "with invalid attrs returns error changeset",
-      %{payment_method: payment_method} do
+         %{payment_method: payment_method} do
       assert {:error, %Ecto.Changeset{}} =
-        Billing.update_payment_method(payment_method, %{stripe_id: nil})
+               Billing.update_payment_method(payment_method, %{stripe_id: nil})
     end
 
     test "cannot update the user_id", %{payment_method: payment_method} do
       user = insert(:user)
       attrs = %{user_id: user.id}
-      assert {:ok, payment_method} =
-        Billing.update_payment_method(payment_method, attrs)
+      assert {:ok, payment_method} = Billing.update_payment_method(payment_method, attrs)
       refute payment_method.user_id == user.id
     end
   end
@@ -156,10 +157,11 @@ defmodule Squeeze.BillingTest do
     payment_method = insert(:payment_method)
     user = payment_method.user
 
-    assert {:ok, %PaymentMethod{}} =
-      Billing.delete_payment_method(payment_method)
+    assert {:ok, %PaymentMethod{}} = Billing.delete_payment_method(payment_method)
+
     assert_raise Ecto.NoResultsError, fn ->
-      Billing.get_payment_method!(user, payment_method.id) end
+      Billing.get_payment_method!(user, payment_method.id)
+    end
   end
 
   test "change_payment_method/1 returns a payment_method changeset" do
@@ -229,8 +231,9 @@ defmodule Squeeze.BillingTest do
 
   defp mock_create_customer(_) do
     customer = %{id: "customer_123456789"}
+
     Squeeze.MockPaymentProcessor
-    |> expect(:create_customer, fn(_) -> {:ok, customer} end)
+    |> expect(:create_customer, fn _ -> {:ok, customer} end)
 
     {:ok, []}
   end
@@ -242,7 +245,7 @@ defmodule Squeeze.BillingTest do
     }
 
     Squeeze.MockPaymentProcessor
-    |> expect(:create_subscription, fn(_, _, _) -> {:ok, subscription} end)
+    |> expect(:create_subscription, fn _, _, _ -> {:ok, subscription} end)
 
     {:ok, []}
   end
@@ -251,7 +254,7 @@ defmodule Squeeze.BillingTest do
     subscription = %{id: "sub_123456789"}
 
     Squeeze.MockPaymentProcessor
-    |> expect(:cancel_subscription, fn(_) -> {:ok, subscription} end)
+    |> expect(:cancel_subscription, fn _ -> {:ok, subscription} end)
 
     {:ok, []}
   end

@@ -9,6 +9,7 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   def index(conn, %{"start_date" => start_date, "end_date" => end_date}) do
     user = conn.assigns.current_user
+
     with {:ok, start_date} <- parse_date(start_date),
          {:ok, end_date} <- parse_date(end_date) do
       challenges = Challenges.list_challenges(user, start_date, end_date)
@@ -40,6 +41,7 @@ defmodule SqueezeWeb.Api.ChallengeController do
   def join(conn, %{"id" => slug}) do
     user = conn.assigns.current_user
     challenge = Challenges.get_challenge_by_slug!(slug)
+
     with {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
       Notifications.notify_user_joined(challenge, user)
       send_resp(conn, :no_content, "")
@@ -54,9 +56,9 @@ defmodule SqueezeWeb.Api.ChallengeController do
 
   def create(conn, %{"challenge" => params}) do
     user = conn.assigns.current_user
+
     with {:ok, challenge} <- Challenges.create_challenge(user, params),
          {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
-
       challenge = Challenges.get_challenge_by_slug!(challenge.slug)
 
       conn

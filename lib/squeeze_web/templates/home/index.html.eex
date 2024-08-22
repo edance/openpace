@@ -1,8 +1,0 @@
-<%= render "_schema.html", assigns %>
-
-<main>
-  <%= render "_hero.html", assigns %>
-  <%= render "_dashboard.html", assigns %>
-  <%= render "_open-source.html", assigns %>
-  <%= render "_footer-cta.html", assigns %>
-</main>

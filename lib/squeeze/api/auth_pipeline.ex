@@ -1,7 +1,8 @@
 defmodule Squeeze.Api.AuthPipeline do
   @moduledoc false
 
-  use Guardian.Plug.Pipeline, otp_app: :squeeze,
+  use Guardian.Plug.Pipeline,
+    otp_app: :squeeze,
     module: Squeeze.Guardian,
     error_handler: Squeeze.Api.AuthErrorHandler
 

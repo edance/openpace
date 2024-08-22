@@ -10,11 +10,13 @@ defmodule SqueezeWeb.ChallengeLive do
   def mount(_params, %{"guardian_default_token" => token}, socket) do
     {:ok, user, _claims} = Guardian.resource_from_token(token)
     date = TimeHelper.today(user) |> Timex.shift(days: -3)
-    socket = socket
-    |> assign(page_title: "Challenges")
-    |> assign(current_user: user)
-    |> assign(challenges: Challenges.list_challenges(user, ends_after: date))
-    |> assign(podium_finishes: Challenges.podium_finishes(user))
+
+    socket =
+      socket
+      |> assign(page_title: "Challenges")
+      |> assign(current_user: user)
+      |> assign(challenges: Challenges.list_challenges(user, ends_after: date))
+      |> assign(podium_finishes: Challenges.podium_finishes(user))
 
     {:ok, socket}
   end

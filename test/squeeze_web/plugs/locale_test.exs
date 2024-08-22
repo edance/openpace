@@ -4,30 +4,33 @@ defmodule SqueezeWeb.Plug.LocaleTest do
   alias SqueezeWeb.Plug.Locale
 
   test "sets the locale from params", %{conn: conn} do
-    conn = conn
-    |> setup_conn()
-    |> add_locale_param("en")
-    |> call_locale_plug()
+    conn =
+      conn
+      |> setup_conn()
+      |> add_locale_param("en")
+      |> call_locale_plug()
 
     assert Gettext.get_locale(SqueezeWeb.Gettext) == "en"
     assert persisted_locale?(conn)
   end
 
   test "sets the locale from cookie", %{conn: conn} do
-    conn = conn
-    |> setup_conn()
-    |> add_locale_cookie("en")
-    |> call_locale_plug()
+    conn =
+      conn
+      |> setup_conn()
+      |> add_locale_cookie("en")
+      |> call_locale_plug()
 
     assert Gettext.get_locale(SqueezeWeb.Gettext) == "en"
     assert persisted_locale?(conn)
   end
 
   test "sets the locale from headers", %{conn: conn} do
-    conn = conn
-    |> setup_conn()
-    |> add_locale_header("en")
-    |> call_locale_plug()
+    conn =
+      conn
+      |> setup_conn()
+      |> add_locale_header("en")
+      |> call_locale_plug()
 
     assert Gettext.get_locale(SqueezeWeb.Gettext) == "en"
     assert persisted_locale?(conn)

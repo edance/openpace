@@ -19,7 +19,7 @@ defmodule Squeeze.Challenges.RecurringChallenges do
     recurring
   )a
 
-  def find_and_create(datetime \\ Timex.now) do
+  def find_and_create(datetime \\ Timex.now()) do
     list_recurring_challenges_ending_today(datetime)
     |> Enum.each(&create_new_challenge/1)
   end
@@ -27,17 +27,18 @@ defmodule Squeeze.Challenges.RecurringChallenges do
   def create_new_challenge(challenge) do
     slug = SlugGenerator.gen_slug()
 
-    changeset = %Challenge{}
-    |> Challenge.changeset(challenge_attrs(challenge))
-    |> Changeset.put_change(:slug, slug)
-    |> Changeset.put_change(:user_id, challenge.user_id)
+    changeset =
+      %Challenge{}
+      |> Challenge.changeset(challenge_attrs(challenge))
+      |> Changeset.put_change(:slug, slug)
+      |> Changeset.put_change(:user_id, challenge.user_id)
 
     Multi.new()
     |> Multi.insert(:challenge, changeset)
-    |> Multi.insert_all(:scores, Score, fn(%{challenge: new_challenge}) ->
+    |> Multi.insert_all(:scores, Score, fn %{challenge: new_challenge} ->
       Challenges.list_users(challenge)
-      |> Enum.map(&(score_attrs(new_challenge, &1)))
-      end)
+      |> Enum.map(&score_attrs(new_challenge, &1))
+    end)
     |> Repo.transaction()
   end
 
@@ -49,10 +50,12 @@ defmodule Squeeze.Challenges.RecurringChallenges do
 
   def score_attrs(%Challenge{} = challenge, user) do
     now = Timex.now() |> Timex.to_naive_datetime() |> NaiveDateTime.truncate(:second)
-    amount = case challenge.challenge_type do
-               :segment -> nil
-               _ -> 0.0
-             end
+
+    amount =
+      case challenge.challenge_type do
+        :segment -> nil
+        _ -> 0.0
+      end
 
     %{
       user_id: user.id,
@@ -87,6 +90,7 @@ defmodule Squeeze.Challenges.RecurringChallenges do
 
   def challenge_dates(%{timeline: :month} = challenge) do
     date = challenge.start_date |> Timex.shift(months: 1)
+
     %{
       start_date: date,
       end_date: Timex.end_of_month(date)
@@ -95,9 +99,11 @@ defmodule Squeeze.Challenges.RecurringChallenges do
 
   defp list_recurring_challenges_ending_today(datetime) do
     today = datetime |> Timex.to_date()
-    query = from p in Challenge,
-      where: p.end_date == ^today,
-      where: p.recurring == true
+
+    query =
+      from p in Challenge,
+        where: p.end_date == ^today,
+        where: p.recurring == true
 
     Repo.all(query)
   end

@@ -8,14 +8,15 @@ defmodule SqueezeWeb.SvgPolylineComponent do
   use SqueezeWeb, :live_component
 
   def svg_path(nil), do: nil
+
   def svg_path(polyline) do
     coords = Polyline.decode(polyline)
     points = coords |> Enum.map(&coord_to_point/1)
-    min_x = points |> Enum.map(&(&1.x)) |> Enum.min()
-    min_y = points |> Enum.map(&(&1.y)) |> Enum.min()
-    max_x = points |> Enum.map(&(&1.x)) |> Enum.max()
-    max_y = points |> Enum.map(&(&1.y)) |> Enum.max()
-    svg_path = points |> Enum.map_join(" ", &("#{&1.x},#{&1.y}"))
+    min_x = points |> Enum.map(& &1.x) |> Enum.min()
+    min_y = points |> Enum.map(& &1.y) |> Enum.min()
+    max_x = points |> Enum.map(& &1.x) |> Enum.max()
+    max_y = points |> Enum.map(& &1.y) |> Enum.max()
+    svg_path = points |> Enum.map_join(" ", &"#{&1.x},#{&1.y}")
 
     max_width_or_height = Enum.max([max_x - min_x, max_y - min_y])
 
@@ -40,7 +41,10 @@ defmodule SqueezeWeb.SvgPolylineComponent do
   def coord_to_point({lon, lat}) do
     %{
       x: (lon + 180) * (256 / 360),
-      y: (256 / 2) - (256 * :math.log(:math.tan((:math.pi() / 4) + ((lat * :math.pi() / 180) / 2))) / (2 * :math.pi()))
+      y:
+        256 / 2 -
+          256 * :math.log(:math.tan(:math.pi() / 4 + lat * :math.pi() / 180 / 2)) /
+            (2 * :math.pi())
     }
   end
 end

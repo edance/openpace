@@ -19,15 +19,17 @@ defmodule SqueezeWeb.RaceViewTest do
     race = build(:race) |> with_events()
     datetime = first_datetime(race)
     date = Ordinal.ordinalize(datetime.day)
+
     assert RaceView.date(%{race: race}) =~
-      Timex.format!(datetime, "%a %b #{date}, %Y", :strftime)
+             Timex.format!(datetime, "%a %b #{date}, %Y", :strftime)
   end
 
   test "time/1" do
     race = build(:race) |> with_events()
     datetime = first_datetime(race)
+
     assert RaceView.time(%{race: race}) ==
-      Timex.format!(datetime, "%-I:%M %p ", :strftime)
+             Timex.format!(datetime, "%-I:%M %p ", :strftime)
   end
 
   describe "start_at/1" do
@@ -50,6 +52,6 @@ defmodule SqueezeWeb.RaceViewTest do
   end
 
   defp first_datetime(race) do
-    race.events |> Enum.map(&(&1.start_at)) |> Enum.min()
+    race.events |> Enum.map(& &1.start_at) |> Enum.min()
   end
 end

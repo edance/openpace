@@ -8,6 +8,5 @@ defmodule Squeeze.Repo.Migrations.CreateSubscriptions do
 
       timestamps()
     end
-
   end
 end

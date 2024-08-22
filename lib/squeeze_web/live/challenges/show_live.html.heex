@@ -1,57 +1,62 @@
-<div class="container pt-4">
-  <div class="row">
-    <div class="col-12 col-md-6">
-      <%= live_component(SqueezeWeb.Challenges.PodiumCardComponent, challenge: @challenge, current_user: @current_user) %>
-    </div>
+<div class="position-relative py-5">
+  <div class="container max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-4 sm:gap-6">
+      <%= live_component(SqueezeWeb.Challenges.PodiumCardComponent,
+        challenge: @challenge,
+        current_user: @current_user
+      ) %>
 
-    <div class="col-12 col-md-6">
-      <div class="card mb-8">
-        <!-- Card header -->
-        <div class="card-header border-0">
-          <h3 class="mb-0">Leaderboard</h3>
-        </div>
-        <!-- Light table -->
-        <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">
-                  <%= challenge_label(assigns) %>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="list">
-
-              <%= for {score, idx} <- Enum.with_index(@challenge.scores) do %>
+      <.card title={gettext("Leaderboard")}>
+        <div class="px-4 sm:px-6">
+          <div class="-mx-4 sm:-mx-6 overflow-x-auto">
+            <table class="min-w-full text-sm divide-y divide-gray-200 dark:divide-gray-700">
+              <thead class="">
                 <tr>
-                  <th scope="row">
-                    <%= idx + 1 %>
+                  <th
+                    scope="col"
+                    class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                  >
+                    #
                   </th>
-                  <td scope="row">
-                    <div class="media align-items-center">
-                      <%= live_component(SqueezeWeb.AvatarComponent, user: score.user) %>
-
-                      <div class="media-body ml-2">
-                        <span class="name mb-0 text-sm">
-                          <%= score.user.first_name %> <%= score.user.last_name %>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="budget text-right">
-                    <%= format_score(@challenge, score.amount) %>
-                  </td>
+                  <th
+                    scope="col"
+                    class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                  >
+                    <%= gettext("Name") %>
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                  >
+                    <%= challenge_label(assigns) %>
+                  </th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                <%= for {score, idx} <- Enum.with_index(@challenge.scores) do %>
+                  <tr>
+                    <th class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white text-left">
+                      <%= idx + 1 %>
+                    </th>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                      <div class="flex items-center">
+                        <.avatar user={score.user} />
+
+                        <div class="ml-2 text-sm">
+                          <%= score.user.first_name %> <%= score.user.last_name %>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                      <%= format_score(@challenge, score.amount) %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <!-- Card footer -->
-        <div class="card-footer py-4">
-        </div>
-      </div>
+      </.card>
     </div>
   </div>
 </div>

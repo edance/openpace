@@ -17,7 +17,9 @@ defmodule SqueezeWeb.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :squeeze, gzip: true,
+    at: "/",
+    from: :squeeze,
+    gzip: true,
     only: ~w(assets docs fonts images favicon.ico robots.txt .well-known),
     content_types: %{"apple-app-site-association" => "application/json"}
 

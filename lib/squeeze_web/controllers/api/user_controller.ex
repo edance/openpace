@@ -17,7 +17,6 @@ defmodule SqueezeWeb.Api.UserController do
   def create(conn, user_params) do
     with {:ok, %User{} = user} <- Accounts.register_user(user_params),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
-
       user = Repo.preload(user, [:credentials, :user_prefs])
 
       conn
@@ -38,6 +37,7 @@ defmodule SqueezeWeb.Api.UserController do
 
   def update(conn, %{"user" => user_params}) do
     user = conn.assigns.current_user
+
     with {:ok, _} <- Accounts.update_user(user, user_params) do
       send_resp(conn, :no_content, "")
     end

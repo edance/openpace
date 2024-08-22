@@ -29,14 +29,15 @@ defmodule SqueezeWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/squeeze_web/templates",
-                        namespace: SqueezeWeb
+      use Phoenix.View,
+        root: "lib/squeeze_web/templates",
+        namespace: SqueezeWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1, get_csrf_token: 0]
 
       # Include shared imports and aliases for views
-      unquote(view_helpers())
+      unquote(html_helpers())
 
       import Squeeze.CompanyHelper
     end
@@ -44,9 +45,9 @@ defmodule SqueezeWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView, layout: {SqueezeWeb.LayoutView, "live.html"}
+      use Phoenix.LiveView, layout: {SqueezeWeb.LayoutView, :live}
 
-      unquote(view_helpers())
+      unquote(html_helpers())
     end
   end
 
@@ -54,7 +55,7 @@ defmodule SqueezeWeb do
     quote do
       use Phoenix.LiveComponent
 
-      unquote(view_helpers())
+      unquote(html_helpers())
     end
   end
 
@@ -74,22 +75,27 @@ defmodule SqueezeWeb do
     end
   end
 
-  defp view_helpers do
+  defp html_helpers do
     quote do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
       import Phoenix.LiveView.Helpers
-      import SqueezeWeb.LiveHelpers
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      # Core UI components and translation
+      import SqueezeWeb.CoreComponents
+      import SqueezeWeb.Gettext
+
+      # Shortcut for generating JS commands
+      alias Phoenix.LiveView.JS
+
       import SqueezeWeb.FormHelpers
       import SqueezeWeb.FormatHelpers
       import SqueezeWeb.ErrorHelpers
-      import SqueezeWeb.Gettext
       import SqueezeWeb.HoneypotInput
       import SqueezeWeb.ImageHelpers
       alias SqueezeWeb.Router.Helpers, as: Routes

@@ -10,6 +10,7 @@ defmodule Squeeze.Setup.StripeSetup do
   def setup do
     product = create_product()
     plan = create_plan(product)
+
     attrs = %{
       name: product.name,
       amount: plan.amount,
@@ -17,6 +18,7 @@ defmodule Squeeze.Setup.StripeSetup do
       interval: plan.interval,
       default: true
     }
+
     Billing.create_plan(attrs)
   end
 
@@ -25,18 +27,21 @@ defmodule Squeeze.Setup.StripeSetup do
       name: "Membership",
       type: "service"
     }
+
     {:ok, product} = @payment_processor.create_product(attrs)
     product
   end
 
   defp create_plan(%{id: product_id}) do
     cost_in_cents = 595
+
     attrs = %{
       currency: "usd",
       interval: "month",
       product: product_id,
       amount: cost_in_cents
     }
+
     {:ok, plan} = @payment_processor.create_plan(attrs)
     plan
   end

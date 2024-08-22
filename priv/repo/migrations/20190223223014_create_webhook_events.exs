@@ -9,6 +9,5 @@ defmodule Squeeze.Repo.Migrations.CreateWebhookEvents do
 
       timestamps()
     end
-
   end
 end

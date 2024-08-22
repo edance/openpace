@@ -10,6 +10,8 @@ defmodule Squeeze.Repo.Migrations.CreateUserChallenge do
     create index(:user_challenge, [:user_id])
     create index(:user_challenge, [:challenge_id])
 
-    create unique_index(:user_challenge, [:user_id, :challenge_id], name: :user_id_challenge_id_unique_index)
+    create unique_index(:user_challenge, [:user_id, :challenge_id],
+             name: :user_id_challenge_id_unique_index
+           )
   end
 end

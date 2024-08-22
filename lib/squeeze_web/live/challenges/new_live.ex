@@ -20,10 +20,11 @@ defmodule SqueezeWeb.Challenges.NewLive do
       send(self(), :fetch_segments)
     end
 
-    socket = socket
-    |> assign(loading: true, segments: [], segment: nil)
-    |> assign(changeset: changeset)
-    |> assign(challenge_type: type)
+    socket =
+      socket
+      |> assign(loading: true, segments: [], segment: nil)
+      |> assign(changeset: changeset)
+      |> assign(challenge_type: type)
 
     {:ok, socket}
   end
@@ -46,9 +47,9 @@ defmodule SqueezeWeb.Challenges.NewLive do
 
     with {:ok, challenge} <- Challenges.create_challenge(user, params),
          {:ok, _} <- Challenges.add_user_to_challenge(user, challenge) do
-
-      socket = socket
-      |> redirect(to: Routes.challenge_path(Endpoint, :show, challenge.slug))
+      socket =
+        socket
+        |> redirect(to: Routes.challenge_path(Endpoint, :show, challenge.slug))
 
       {:noreply, socket}
     else
@@ -76,19 +77,23 @@ defmodule SqueezeWeb.Challenges.NewLive do
 
     case get_strava_segment(credential, id) do
       {:ok, segment} ->
-        socket = socket
-        |> assign(segment: segment)
+        socket =
+          socket
+          |> assign(segment: segment)
 
         {:noreply, socket}
-      _ -> {:noreply, socket}
+
+      _ ->
+        {:noreply, socket}
     end
   end
 
   defp get_strava_segments(credential) do
     opts = [
       per_page: 50,
-      page: 1,
+      page: 1
     ]
+
     Client.new(credential)
     |> @strava_segments.get_logged_in_athlete_starred_segments(opts)
   end

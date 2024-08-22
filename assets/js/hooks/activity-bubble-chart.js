@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import RBush from "rbush";
 import { pad, formatNumber } from "../utils";
+import { colors } from "./../variables.js";
 
 function velocityToFormattedPace(velocity, imperial = false) {
   const distance = imperial ? 1609 : 1000; // Mile or kilometer
@@ -24,6 +25,8 @@ function velocityToFormattedPace(velocity, imperial = false) {
 export default {
   mounted() {
     const hook = this;
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const currentColor = isDarkMode ? "white" : colors.black
 
     // set the dimensions and margins of the graph
     const margin = { top: 30, right: 30, left: 120, bottom: 30 };
@@ -90,7 +93,7 @@ export default {
               .attr("x", width - margin.right)
               .attr("y", 20)
               .attr("font-weight", "bold")
-              .attr("fill", "currentColor")
+              .attr("fill", currentColor)
               .attr("text-anchor", "end")
               .text("Running Faster →")
           );
@@ -127,7 +130,7 @@ export default {
         .attr("x2", x(median))
         .attr("y1", margin.top)
         .attr("y2", height - margin.bottom)
-        .attr("stroke", "#ccc");
+        .attr("stroke", currentColor);
 
       // Add median text
       const medianText = svg
@@ -135,7 +138,7 @@ export default {
         .attr("x", x(median) + 5)
         .attr("y", height - margin.bottom + 0)
         .attr("font-weight", "bold")
-        .attr("fill", "currentColor")
+        .attr("fill", currentColor)
         .attr("font-size", "11px")
         .text(`Median pace: ${velocityToFormattedPace(median, imperial)}`);
 

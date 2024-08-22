@@ -6,9 +6,10 @@ defmodule SqueezeWeb.ActivityChartView do
 
   def altitude(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
+
     trackpoints
     |> filter_by_field(:altitude)
-    |> Enum.map(&(Distances.to_feet(&1, imperial: imperial)))
+    |> Enum.map(&Distances.to_feet(&1, imperial: imperial))
     |> smooth()
     |> Jason.encode!()
   end
@@ -23,9 +24,10 @@ defmodule SqueezeWeb.ActivityChartView do
 
   def distance(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
+
     trackpoints
     |> filter_by_field(:distance)
-    |> Enum.map(&(Distances.to_float(&1, imperial: imperial)))
+    |> Enum.map(&Distances.to_float(&1, imperial: imperial))
     |> smooth()
     |> Jason.encode!()
   end
@@ -46,23 +48,24 @@ defmodule SqueezeWeb.ActivityChartView do
 
   def velocity(%{trackpoints: trackpoints, current_user: user}) do
     imperial = user.user_prefs.imperial
+
     trackpoints
     |> filter_by_field(:velocity)
-    |> Enum.map(&(Velocity.to_float(&1, imperial: imperial)))
+    |> Enum.map(&Velocity.to_float(&1, imperial: imperial))
     |> smooth()
     |> Jason.encode!()
   end
 
   def filter_by_field(trackpoints, field) do
     trackpoints
-    |> Enum.filter(&(&1.moving))
-    |> Enum.map(&(Map.get(&1, field)))
+    |> Enum.filter(& &1.moving)
+    |> Enum.map(&Map.get(&1, field))
     |> Enum.reject(&is_nil/1)
   end
 
   defp smooth(points) do
     points
     |> SMA.sma(15)
-    |> Enum.map(&(Float.round(&1, 2)))
+    |> Enum.map(&Float.round(&1, 2))
   end
 end

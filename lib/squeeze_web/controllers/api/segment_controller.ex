@@ -14,13 +14,13 @@ defmodule SqueezeWeb.Api.SegmentController do
 
     with {:ok, credential} <- Accounts.fetch_credential_by_provider(user, "strava"),
          {:ok, segments} <- get_strava_segments(credential, params) do
-
       render(conn, "starred.json", %{segments: segments})
     end
   end
 
   def show(conn, %{"id" => id}) do
     user = conn.assigns.current_user
+
     with {id, ""} <- Integer.parse(id),
          {:ok, credential} <- Accounts.fetch_credential_by_provider(user, "strava"),
          {:ok, segment} <- get_strava_segment(credential, id) do
@@ -31,8 +31,9 @@ defmodule SqueezeWeb.Api.SegmentController do
   defp get_strava_segments(credential, params) do
     opts = [
       per_page: params[:per_page] || 50,
-      page: params[:page] || 1,
+      page: params[:page] || 1
     ]
+
     Client.new(credential)
     |> @strava_segments.get_logged_in_athlete_starred_segments(opts)
   end

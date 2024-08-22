@@ -5,6 +5,7 @@ defmodule SqueezeWeb.HoneypotInput do
 
   def honeypot_input(form, field, opts \\ []) do
     opts = opts ++ input_opts()
+
     [
       text_input(form, field, opts)
     ]

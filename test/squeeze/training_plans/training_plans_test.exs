@@ -24,8 +24,10 @@ defmodule Squeeze.TrainingPlansTest do
     test "raises error if plan does not belong to user" do
       plan = insert(:training_plan)
       user = insert(:user)
+
       assert_raise Ecto.NoResultsError, fn ->
-        TrainingPlans.get_plan!(user, plan.id) end
+        TrainingPlans.get_plan!(user, plan.id)
+      end
     end
   end
 

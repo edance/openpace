@@ -1,4 +1,4 @@
-defmodule SqueezeWeb.BillingController  do
+defmodule SqueezeWeb.BillingController do
   use SqueezeWeb, :controller
   @moduledoc false
 
@@ -6,6 +6,7 @@ defmodule SqueezeWeb.BillingController  do
 
   def portal(conn, _params) do
     user = conn.assigns.current_user
+
     with {:ok, user} <- Billing.find_or_create_external_customer(user),
          {:ok, session} <- create_stripe_portal(conn, user) do
       redirect(conn, external: session.url)
@@ -19,6 +20,7 @@ defmodule SqueezeWeb.BillingController  do
 
   def checkout(conn, _params) do
     user = conn.assigns.current_user
+
     with {:ok, user} <- Billing.find_or_create_external_customer(user),
          {:ok, session} <- create_stripe_session(conn, user) do
       redirect(conn, external: session.url)
@@ -65,6 +67,7 @@ defmodule SqueezeWeb.BillingController  do
       lookup_keys: [pricing_version],
       expand: ["data.product"]
     }
+
     case Stripe.Price.list(opts) do
       {:ok, list} -> List.first(list.data)
       _ -> nil

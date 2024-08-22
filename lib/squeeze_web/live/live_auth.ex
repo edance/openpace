@@ -3,6 +3,7 @@ defmodule SqueezeWeb.LiveAuth do
   Assign current_user from the session token.
   """
   import Phoenix.LiveView
+  import Phoenix.Component, only: [assign_new: 3]
 
   alias Squeeze.Guardian
 
@@ -24,5 +25,6 @@ defmodule SqueezeWeb.LiveAuth do
       _ -> nil
     end
   end
+
   defp get_current_user(_), do: nil
 end

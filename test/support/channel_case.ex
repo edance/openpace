@@ -29,9 +29,11 @@ defmodule SqueezeWeb.ChannelCase do
 
   setup tags do
     :ok = Sandbox.checkout(Squeeze.Repo)
+
     unless tags[:async] do
       Sandbox.mode(Squeeze.Repo, {:shared, self()})
     end
+
     :ok
   end
 end

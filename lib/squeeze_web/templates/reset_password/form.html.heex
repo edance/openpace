@@ -1,0 +1,11 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <div class="mb-6">
+    <.input type="password" field={f[:email]} placeholder={gettext("Password")} />
+  </div>
+
+  <div class="text-center">
+    <.button class="w-full">
+      <%= gettext("Update Password") %>
+    </.button>
+  </div>
+<% end %>

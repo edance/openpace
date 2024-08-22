@@ -17,8 +17,10 @@ defmodule Squeeze.Namer.ActivityRenamer do
   end
 
   def rename(_, %DetailedActivity{manual: true} = activity), do: activity
+
   def rename(user, %DetailedActivity{device_name: device_name} = activity) do
-    if device_name && device_name =~ "Strava" do # Skip all Strava Apps
+    # Skip all Strava Apps
+    if device_name && device_name =~ "Strava" do
       activity
     else
       rename_activity(user, activity)

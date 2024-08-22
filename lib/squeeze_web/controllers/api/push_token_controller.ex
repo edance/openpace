@@ -8,6 +8,7 @@ defmodule SqueezeWeb.Api.PushTokenController do
 
   def create(conn, %{"token" => token}) do
     user = conn.assigns.current_user
+
     with {:ok, push_token} <- Notifications.create_push_token(user, token) do
       conn
       |> put_status(:created)

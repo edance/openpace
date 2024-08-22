@@ -56,7 +56,7 @@ defmodule SqueezeWeb.Router do
   end
 
   # Redirects
-  redirect "/docs", "/docs/index.html", :permanent, preserve_query_string: true
+  redirect("/docs", "/docs/index.html", :permanent, preserve_query_string: true)
 
   scope "/integration", SqueezeWeb do
     # Use the default browser stack
@@ -161,15 +161,6 @@ defmodule SqueezeWeb.Router do
     get "/invite/:slug", ChallengeShareController, :show
   end
 
-  scope "/races", SqueezeWeb do
-    pipe_through :browser
-
-    get "/", SearchController, :index
-    get "/:region", RegionSearchController, :index
-    get "/:region/:slug", RaceController, :show
-    post "/:region/:slug", RaceController, :subscribe
-  end
-
   scope "/sitemap", SqueezeWeb do
     pipe_through :xml
 
@@ -179,7 +170,6 @@ defmodule SqueezeWeb.Router do
   scope "/export", SqueezeWeb do
     get "/users/:slug/activities.csv", ExportController, :activities
   end
-
 
   scope "/api", SqueezeWeb.Api, as: :api do
     pipe_through :api

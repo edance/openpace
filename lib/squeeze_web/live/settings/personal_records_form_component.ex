@@ -2,10 +2,9 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
   use SqueezeWeb, :live_component
   @moduledoc false
 
-  alias Phoenix.LiveView.JS
   alias Squeeze.Accounts
 
-  import Squeeze.Distances, only: [distances: 0, distance_name: 2]
+  import Squeeze.Distances, only: [distances: 0]
 
   @impl true
   def update(assigns, socket) do
@@ -16,16 +15,17 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
   end
 
   @impl true
-  def handle_event("show_modal", %{"distance" => distance}, socket) do
+  def handle_event("edit_pr", %{"distance" => distance}, socket) do
     case Float.parse(distance) do
       {distance, ""} -> {:noreply, assign(socket, :distance, distance)}
       _ -> {:noreply, socket}
     end
   end
 
-  def handle_event("hide_modal", _params, socket) do
-    :timer.sleep(:timer.seconds(1)) # Give time for animation to finish
-    {:noreply, assign(socket, distance: nil)}
+  @impl true
+  def handle_event("save_pr", stuff, socket) do
+    IO.inspect(stuff)
+    {:noreply, socket}
   end
 
   @impl true
@@ -41,6 +41,13 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
     |> Enum.find(&(&1.distance == distance))
   end
 
+  def pr_duration_at_distance(assigns, distance) do
+    case pr_at_distance(assigns, distance) do
+      nil -> nil
+      pr -> pr.duration
+    end
+  end
+
   def formatted_pr(assigns, distance) do
     case pr_at_distance(assigns, distance) do
       nil -> "--"
@@ -53,10 +60,5 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
       id: "user_user_prefs_personal_records_#{idx}_#{field}",
       name: "user[user_prefs][personal_records][#{idx}][#{field}]"
     ]
-  end
-
-  defp hide_modal(target) do
-    JS.push("hide_modal", target: target)
-    |> JS.dispatch("hide-modal", to: "#modal")
   end
 end

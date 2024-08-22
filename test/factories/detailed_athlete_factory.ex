@@ -8,7 +8,7 @@ defmodule Squeeze.DetailedAthleteFactory do
     quote do
       def detailed_athlete_factory do
         %DetailedAthlete{
-          id: sequence(:external_id, &(&1)),
+          id: sequence(:external_id, & &1),
           firstname: Person.first_name(),
           lastname: Person.last_name(),
           profile: ""

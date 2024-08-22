@@ -12,9 +12,10 @@ defmodule SqueezeWeb.RaceLive.New do
     changeset = Races.change_race_goal(%RaceGoal{})
     user = socket.assigns.current_user
 
-    socket = socket
-    |> assign(current_user: user)
-    |> assign(changeset: changeset)
+    socket =
+      socket
+      |> assign(current_user: user)
+      |> assign(changeset: changeset)
 
     {:ok, socket}
   end
@@ -22,19 +23,22 @@ defmodule SqueezeWeb.RaceLive.New do
   @impl true
   def handle_event("save", %{"race_goal" => params}, socket) do
     user = socket.assigns.current_user
+
     case Races.create_race_goal(user, params) do
       {:ok, _race} ->
-        socket = socket
-        |> redirect(to: Routes.race_path(socket, :index))
+        socket =
+          socket
+          |> redirect(to: Routes.race_path(socket, :index))
 
         {:noreply, socket}
+
       {:error, %Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
 
   def distances do
-    Distances.distances
-    |> Enum.map(fn(x) -> {x.name, x.distance} end)
+    Distances.distances()
+    |> Enum.map(fn x -> {x.name, x.distance} end)
   end
 end

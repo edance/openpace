@@ -9,16 +9,22 @@ defmodule SqueezeWeb.StravaBulkUploadLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = if @allow_strava_upload do
-      socket
-      |> assign(:activity_count, 0)
-      |> allow_upload(:export, max_file_size: 500_000_000, accept: ~w(.zip), progress: &handle_progress/3, auto_upload: true, max_entries: 1)
-
-    else
-      # Redirect if not allowed
-      socket
-      |> redirect(to: Routes.overview_path(Endpoint, :index))
-    end
+    socket =
+      if @allow_strava_upload do
+        socket
+        |> assign(:activity_count, 0)
+        |> allow_upload(:export,
+          max_file_size: 500_000_000,
+          accept: ~w(.zip),
+          progress: &handle_progress/3,
+          auto_upload: true,
+          max_entries: 1
+        )
+      else
+        # Redirect if not allowed
+        socket
+        |> redirect(to: Routes.overview_path(Endpoint, :index))
+      end
 
     {:ok, socket}
   end
@@ -74,9 +80,10 @@ defmodule SqueezeWeb.StravaBulkUploadLive do
 
   defp process_file(user, path) do
     view = self()
+
     Task.start_link(fn ->
       BulkImport.import_from_file(user, path)
-      |> Enum.map(fn (_) ->
+      |> Enum.map(fn _ ->
         send(view, :activity_uploaded)
       end)
     end)

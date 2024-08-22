@@ -1,10 +1,7 @@
 import flatpickr  from 'flatpickr';
-// import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
-
-import { u } from 'umbrellajs';
 
 function load() {
-  u('.date-picker').each((el) => {
+  document.querySelectorAll('.date-picker').forEach((el) => {
     const options = {
       inline: el.dataset["inline"],
     };

@@ -7,6 +7,6 @@ defmodule SqueezeWeb.SearchView do
   def title(_page, _), do: "Search For Your Next Race"
 
   def states do
-    Regions.states
+    Regions.states()
   end
 end

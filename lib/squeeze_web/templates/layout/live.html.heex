@@ -1,14 +1,16 @@
-<div class="main-content">
+<div class="main-content relative">
+  <div class="z-0 absolute flex flex-col top-0 bottom-0 min-h-dvh w-full">
+    <.wave_svg class="w-full" />
+    <div class="grow bg-[#e8e4fc] dark:bg-[#202546]"></div>
+  </div>
+
   <%= live_component(SqueezeWeb.FlashComponent, flash: @flash) %>
-
   <%= live_component(SqueezeWeb.NavbarComponent, id: "nav-bar", current_user: @current_user) %>
-  <div class="main-content" id="panel">
-    <!-- Page Background -->
-    <div class="dashboard-bg">
-      <img class="waves" src={Routes.static_path(SqueezeWeb.Endpoint, "/images/waves.svg")} />
-      <div class="fill bg-waves"></div>
-    </div>
 
-    <%= @inner_content %>
+  <div class="main-content" id="panel">
+    <!-- Page Content -->
+    <div class="relative z-10">
+      <%= @inner_content %>
+    </div>
   </div>
 </div>

@@ -1,0 +1,105 @@
+<main role="main">
+  <!-- Navbar -->
+  <%= render(SqueezeWeb.MenuView, "base-navbar.html", assigns) %>
+
+  <div class="pt-6 pb-8 mb-0">
+    <div class="container max-w-3xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-4 sm:gap-6">
+        <.card title={@challenge.name} subtitle={gettext("Challenge Details")}>
+          <div class="p-4 sm:p-6">
+            <p class="mt-0 mb-4">
+              <strong>Starts:</strong> <%= relative_time(@challenge.start_date) %>
+              <br />
+              <strong>Ends:</strong> <%= relative_time(@challenge.end_date) %>
+            </p>
+
+            <div class="overflow-hidden rounded-full bg-gray-200 mb-4">
+              <% percentage = remaining_percentage(assigns) %>
+              <div
+                class="h-1 rounded-full bg-indigo-600"
+                role="progressbar"
+                aria-valuenow={percentage}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={"width: #{percentage}%;"}
+              >
+              </div>
+            </div>
+
+            <p>
+              <%= if @current_user do %>
+                <%= link(gettext("Join Challenge »"),
+                  to: Routes.challenge_path(@conn, :join, @challenge.slug),
+                  class:
+                    "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                  method: :put
+                ) %>
+              <% else %>
+                <a
+                  class="btn btn-primary"
+                  href={"openpace:///invite/#{@challenge.slug}"}
+                  role="button"
+                >
+                  Join Challenge »
+                </a>
+              <% end %>
+            </p>
+          </div>
+        </.card>
+        <div>
+          <.card title={gettext("Leaderboard")}>
+            <div class="px-4 sm:px-6">
+              <div class="-mx-4 sm:-mx-6 overflow-x-auto">
+                <table class="min-w-full text-sm divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead class="">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                      >
+                        <%= gettext("Name") %>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                      >
+                        <%= challenge_label(assigns) %>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    <%= for {score, idx} <- Enum.with_index(@challenge.scores) do %>
+                      <tr>
+                        <th class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white text-left">
+                          <%= idx + 1 %>
+                        </th>
+                        <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                          <div class="flex items-center">
+                            <.avatar user={score.user} />
+
+                            <div class="ml-2 text-sm">
+                              <%= score.user.first_name %> <%= score.user.last_name %>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                          <%= format_score(@challenge, score.amount) %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </.card>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

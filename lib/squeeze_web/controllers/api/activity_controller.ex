@@ -8,6 +8,7 @@ defmodule SqueezeWeb.Api.ActivityController do
 
   def index(conn, %{"start_date" => start_date, "end_date" => end_date}) do
     user = conn.assigns.current_user
+
     with {:ok, start_date} <- parse_date(start_date),
          {:ok, end_date} <- parse_date(end_date) do
       range = Date.range(start_date, end_date)

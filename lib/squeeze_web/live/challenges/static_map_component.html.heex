@@ -1,14 +1,20 @@
-<div class="card">
-  <!-- Card image -->
-  <img class="card-img-top" src={map_url(@segment.map.polyline)} alt={"#{@segment.name} route"}>
+<.card>
+  <div>
+    <!-- Card image -->
+    <img
+      class="aspect-video w-full"
+      src={map_url(@segment.map.polyline)}
+      alt={"#{@segment.name} route"}
+    />
+    <!-- Card body -->
+    <div class="p-4 sm:p-6">
+      <h4 class="mb-0 text-lg text-gray-800 dark:text-white">
+        <%= @segment.name %>
+      </h4>
 
-  <!-- Card body -->
-  <div class="card-body">
-    <h4 class="mb-0">
-      <%= @segment.name %>
-    </h4>
-    <small>
-      <%= description(@user, @segment) %>
-    </small>
+      <p class="text-sm text-gray-500 dark:text-white/60">
+        <%= description(@user, @segment) %>
+      </p>
+    </div>
   </div>
-</div>
+</.card>

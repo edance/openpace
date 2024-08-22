@@ -1,0 +1,53 @@
+<%= form_for @changeset, @action, [class: "ui form", as: :user], fn f -> %>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="">
+      <%= input(f, :first_name,
+        class:
+          "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
+        placeholder: gettext("First name")
+      ) %>
+      <%= error_tag(f, :first_name) %>
+    </div>
+    <div class="">
+      <%= input(f, :last_name,
+        class:
+          "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
+        placeholder: gettext("Last name")
+      ) %>
+      <%= error_tag(f, :last_name) %>
+    </div>
+
+    <div class="md:col-span-2">
+      <%= input(f, :email,
+        placeholder: gettext("Email"),
+        class:
+          "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      ) %>
+      <%= error_tag(f, :email) %>
+    </div>
+
+    <%= honeypot_input(f, :website, placeholder: gettext("Website")) %>
+
+    <div class="md:col-span-2">
+      <%= input(f, :encrypted_password,
+        placeholder: gettext("Password"),
+        value: "",
+        type: "password",
+        class:
+          "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      ) %>
+      <%= error_tag(f, :encrypted_password) %>
+    </div>
+  </div>
+
+  <%= inputs_for f, :user_prefs, fn p -> %>
+    <%= hidden_input(p, :timezone, class: "timezone-hidden-input") %>
+    <%= hidden_input(p, :imperial, class: "imperial-hidden-input") %>
+  <% end %>
+
+  <div class="py-4">
+    <.button class="w-full">
+      <%= gettext("Sign Up") %>
+    </.button>
+  </div>
+<% end %>

@@ -23,7 +23,7 @@ defmodule Squeeze.Utils do
 
   def sum_by(list, field) do
     list
-    |> Enum.map(&(Map.get(&1, field)))
+    |> Enum.map(&Map.get(&1, field))
     |> Enum.sum()
   end
 end

@@ -57,13 +57,13 @@ defmodule SqueezeWeb.FormatHelpersTest do
     end
 
     test "returns day count if less than two weeks",
-      %{user: user, today: today} do
+         %{user: user, today: today} do
       date = Timex.shift(today, days: 14)
       assert FormatHelpers.relative_date(user, date) == "in 14 days"
     end
 
     test "returns week and day count if over than two weeks",
-      %{user: user, today: today} do
+         %{user: user, today: today} do
       date = Timex.shift(today, days: 15)
       assert FormatHelpers.relative_date(user, date) == "in 2 wks, 1 day"
     end
@@ -81,7 +81,7 @@ defmodule SqueezeWeb.FormatHelpersTest do
 
   describe "#relative_time" do
     test "returns Timex.format with relative" do
-      now = Timex.now
+      now = Timex.now()
       relative_time = FormatHelpers.relative_time(now)
       assert relative_time == Timex.format!(now, "{relative}", :relative)
     end
@@ -95,7 +95,7 @@ defmodule SqueezeWeb.FormatHelpersTest do
     end
 
     test "with valid distance and metric user_prefs",
-      %{activity: activity, user_prefs: user_prefs} do
+         %{activity: activity, user_prefs: user_prefs} do
       user_prefs = %{user_prefs | imperial: false}
       assert FormatHelpers.format_pace(activity, user_prefs) == "4:20/km"
     end
@@ -118,9 +118,12 @@ defmodule SqueezeWeb.FormatHelpersTest do
 
   defp build_activity(_) do
     attrs = %{
-      distance: 2 * 1609, # 2 miles in meters
-      duration: 14 * 60 # 14 minutes in seconds
+      # 2 miles in meters
+      distance: 2 * 1609,
+      # 14 minutes in seconds
+      duration: 14 * 60
     }
+
     {:ok, activity: build(:activity, attrs)}
   end
 end

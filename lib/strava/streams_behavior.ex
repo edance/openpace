@@ -4,9 +4,9 @@ defmodule Strava.StreamsBehavior do
   """
 
   @callback get_activity_streams(
-    Tesla.Env.client(),
-    integer(),
-    list(String.t()),
-    boolean()
-  ) :: {:ok, Strava.StreamSet.t()} | {:error, Tesla.Env.t()}
+              Tesla.Env.client(),
+              integer(),
+              list(String.t()),
+              boolean()
+            ) :: {:ok, Strava.StreamSet.t()} | {:error, Tesla.Env.t()}
 end

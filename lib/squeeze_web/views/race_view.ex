@@ -18,13 +18,13 @@ defmodule SqueezeWeb.RaceView do
 
   def dates(%{race: race}) do
     race.result_summaries
-    |> Enum.map(&(&1.start_date))
+    |> Enum.map(& &1.start_date)
     |> Enum.uniq()
   end
 
   def grouped_results(%{race: race}) do
     race.result_summaries
-    |> Enum.group_by(&(&1.distance_name))
+    |> Enum.group_by(& &1.distance_name)
   end
 
   def format_finishers(%{finisher_count: count}) do
@@ -33,6 +33,7 @@ defmodule SqueezeWeb.RaceView do
 
   def date(assigns) do
     start_at = start_at(assigns)
+
     start_at
     |> Timex.format!("%a %b #{Ordinal.ordinalize(start_at.day)}, %Y", :strftime)
   end
@@ -45,7 +46,7 @@ defmodule SqueezeWeb.RaceView do
 
   def start_at(%{race: race}) do
     race.events
-    |> Enum.map(&(&1.start_at))
+    |> Enum.map(& &1.start_at)
     |> Enum.min(fn -> nil end)
   end
 

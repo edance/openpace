@@ -17,62 +17,68 @@ defmodule Squeeze.Challenges do
   def list_current_challenges(%User{} = user) do
     today = TimeHelper.today(user)
 
-    query = from p in Challenge,
-      join: s in assoc(p, :scores),
-      where: p.end_date >= ^today,
-      where: s.user_id == ^user.id,
-      preload: [scores: ^five_scores_query()]
+    query =
+      from p in Challenge,
+        join: s in assoc(p, :scores),
+        where: p.end_date >= ^today,
+        where: s.user_id == ^user.id,
+        preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
   end
 
-  def list_challenges(%User{} = user, [ends_after: after_date]) do
-    query = from p in Challenge,
-      join: s in assoc(p, :scores),
-      where: p.end_date >= ^after_date,
-      where: s.user_id == ^user.id,
-      order_by: p.start_date,
-      preload: [scores: ^five_scores_query()]
+  def list_challenges(%User{} = user, ends_after: after_date) do
+    query =
+      from p in Challenge,
+        join: s in assoc(p, :scores),
+        where: p.end_date >= ^after_date,
+        where: s.user_id == ^user.id,
+        order_by: p.start_date,
+        preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
   end
 
   def list_challenges(%User{} = user, start_date, end_date) do
-    query = from p in Challenge,
-      join: s in assoc(p, :scores),
-      where: p.start_date >= ^start_date,
-      where: p.end_date <= ^end_date,
-      where: s.user_id == ^user.id,
-      preload: [scores: ^five_scores_query()]
+    query =
+      from p in Challenge,
+        join: s in assoc(p, :scores),
+        where: p.start_date >= ^start_date,
+        where: p.end_date <= ^end_date,
+        where: s.user_id == ^user.id,
+        preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
   end
 
   def list_matched_challenges(%Activity{} = activity) do
-    query = from c in Challenge,
-      join: s in assoc(c, :scores),
-      where: s.user_id == ^activity.user_id,
-      where: c.start_date <= ^activity.start_at_local,
-      where: c.end_date >= ^activity.start_at_local,
-      where: c.activity_type == ^activity.activity_type,
-      preload: [scores: ^five_scores_query()]
+    query =
+      from c in Challenge,
+        join: s in assoc(c, :scores),
+        where: s.user_id == ^activity.user_id,
+        where: c.start_date <= ^activity.start_at_local,
+        where: c.end_date >= ^activity.start_at_local,
+        where: c.activity_type == ^activity.activity_type,
+        preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
   end
 
   def list_challenges(%User{} = user) do
-    query = from p in Challenge,
-      join: s in assoc(p, :scores),
-      where: s.user_id == ^user.id,
-      preload: [scores: ^five_scores_query()]
+    query =
+      from p in Challenge,
+        join: s in assoc(p, :scores),
+        where: s.user_id == ^user.id,
+        preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
   end
 
   def get_challenge_by_slug!(slug) do
-    query = from p in Challenge,
-      where: p.slug == ^slug,
-      preload: [scores: ^five_scores_query()]
+    query =
+      from p in Challenge,
+        where: p.slug == ^slug,
+        preload: [scores: ^five_scores_query()]
 
     Repo.one!(query)
   end
@@ -82,16 +88,26 @@ defmodule Squeeze.Challenges do
 
     podium_query =
       from c in Score,
-      select: %{challenge_id: c.challenge_id, user_id: c.user_id, row_number: row_number() |> over(:challenges_partition)},
-      windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score, asc: :inserted_at]]]
+        select: %{
+          challenge_id: c.challenge_id,
+          user_id: c.user_id,
+          row_number: row_number() |> over(:challenges_partition)
+        },
+        windows: [
+          challenges_partition: [
+            partition_by: :challenge_id,
+            order_by: [desc: :score, asc: :inserted_at]
+          ]
+        ]
 
-    query = from c in Challenge,
-      join: r in subquery(podium_query),
-      on: c.id == r.challenge_id and r.row_number <= 3,
-      where: r.user_id == ^user.id,
-      where: c.end_date < ^today,
-      order_by: [desc: :end_date],
-      preload: [scores: ^five_scores_query()]
+    query =
+      from c in Challenge,
+        join: r in subquery(podium_query),
+        on: c.id == r.challenge_id and r.row_number <= 3,
+        where: r.user_id == ^user.id,
+        where: c.end_date < ^today,
+        order_by: [desc: :end_date],
+        preload: [scores: ^five_scores_query()]
 
     Repo.all(query)
   end
@@ -99,8 +115,13 @@ defmodule Squeeze.Challenges do
   defp five_scores_query do
     ranking_query =
       from c in Score,
-      select: %{id: c.id, row_number: row_number() |> over(:challenges_partition)},
-      windows: [challenges_partition: [partition_by: :challenge_id, order_by: [desc: :score, asc: :inserted_at]]]
+        select: %{id: c.id, row_number: row_number() |> over(:challenges_partition)},
+        windows: [
+          challenges_partition: [
+            partition_by: :challenge_id,
+            order_by: [desc: :score, asc: :inserted_at]
+          ]
+        ]
 
     from c in Score,
       join: r in subquery(ranking_query),
@@ -110,47 +131,52 @@ defmodule Squeeze.Challenges do
   end
 
   def current_leader(%Challenge{} = challenge) do
-    query = from u in User,
-      join: s in assoc(u, :scores),
-      where: s.challenge_id == ^challenge.id,
-      order_by: [desc: s.score, asc: s.inserted_at],
-      limit: 1
+    query =
+      from u in User,
+        join: s in assoc(u, :scores),
+        where: s.challenge_id == ^challenge.id,
+        order_by: [desc: s.score, asc: s.inserted_at],
+        limit: 1
 
     Repo.one(query)
   end
 
   def list_users(%Challenge{} = challenge, opts \\ [limit: 100]) do
-    query = from u in User,
-      join: s in assoc(u, :scores),
-      where: s.challenge_id == ^challenge.id,
-      limit: ^opts[:limit],
-      preload: [:user_prefs]
+    query =
+      from u in User,
+        join: s in assoc(u, :scores),
+        where: s.challenge_id == ^challenge.id,
+        limit: ^opts[:limit],
+        preload: [:user_prefs]
 
     Repo.all(query)
   end
 
   def list_scores(%Challenge{} = challenge, opts \\ [limit: 100]) do
-    query = from s in Score,
-      where: s.challenge_id == ^challenge.id,
-      order_by: [desc: :score, asc: :inserted_at],
-      limit: ^opts[:limit],
-      preload: [:user]
+    query =
+      from s in Score,
+        where: s.challenge_id == ^challenge.id,
+        order_by: [desc: :score, asc: :inserted_at],
+        limit: ^opts[:limit],
+        preload: [:user]
 
     Repo.all(query)
   end
 
   def get_score!(%User{} = user, %Challenge{} = challenge) do
-    query = from s in Score,
-      where: s.challenge_id == ^challenge.id,
-      where: s.user_id == ^user.id
+    query =
+      from s in Score,
+        where: s.challenge_id == ^challenge.id,
+        where: s.user_id == ^user.id
 
     Repo.one!(query)
   end
 
   def in_challenge?(%User{} = user, %Challenge{} = challenge) do
-    query = from s in Score,
-      where: s.challenge_id == ^challenge.id,
-      where: s.user_id == ^user.id
+    query =
+      from s in Score,
+        where: s.challenge_id == ^challenge.id,
+        where: s.user_id == ^user.id
 
     Repo.exists?(query)
   end
@@ -159,15 +185,16 @@ defmodule Squeeze.Challenges do
     attrs = attrs |> Utils.key_to_atom()
     range = Map.get(attrs, :date_range, "")
 
-    attrs = if String.contains?(range, " to ") do
-      [start_date, end_date] = String.split(range, " to ")
+    attrs =
+      if String.contains?(range, " to ") do
+        [start_date, end_date] = String.split(range, " to ")
 
-      attrs
-      |> Map.put_new(:start_date, start_date)
-      |> Map.put_new(:end_date, end_date)
-    else
-      attrs
-    end
+        attrs
+        |> Map.put_new(:start_date, start_date)
+        |> Map.put_new(:end_date, end_date)
+      else
+        attrs
+      end
 
     %Challenge{}
     |> Challenge.changeset(attrs)
@@ -188,11 +215,12 @@ defmodule Squeeze.Challenges do
   end
 
   def list_challenge_activities(%Challenge{} = challenge) do
-    query = from a in ChallengeActivity,
-      where: a.challenge_id == ^challenge.id,
-      order_by: [desc: :inserted_at],
-      preload: [activity: :user],
-      limit: 50
+    query =
+      from a in ChallengeActivity,
+        where: a.challenge_id == ^challenge.id,
+        order_by: [desc: :inserted_at],
+        preload: [activity: :user],
+        limit: 50
 
     Repo.all(query)
   end
@@ -217,7 +245,8 @@ defmodule Squeeze.Challenges do
     Challenge.changeset(challenge, %{})
   end
 
-  def ranking_score(%Challenge{challenge_type: :segment}, nil), do: -31_622_400.0 # default to 1 year
+  # default to 1 year
+  def ranking_score(%Challenge{challenge_type: :segment}, nil), do: -31_622_400.0
   def ranking_score(%Challenge{challenge_type: :segment}, amount), do: amount * -1.0
   def ranking_score(%Challenge{}, amount), do: amount
 end

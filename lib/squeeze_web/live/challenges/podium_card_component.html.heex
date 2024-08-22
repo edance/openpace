@@ -1,33 +1,19 @@
-<div class="card">
-  <div class="card-header bg-transparent">
-    <div class="row align-items-center">
-      <div class="col">
-        <h6 class="text-uppercase text-light ls-1 mb-1">
-          <%= gettext("Challenge Details") %>
-        </h6>
-
-        <h1 class="h2 mb-0">
-          <%= @challenge.name %>
-        </h1>
-      </div>
-    </div>
-  </div>
-
+<.card title={@challenge.name} subtitle={gettext("Challenge Details")}>
   <!-- Card body -->
-  <div class="card-body">
-    <div class="row align-items-end">
+  <div class="p-4 sm:p-6">
+    <div class="grid grid-cols-3 gap-4 md:gap-6 items-end">
       <%= for idx <- [0, 1, 2] do %>
         <% score = Enum.at(@challenge.scores, idx) %>
 
         <div class={podium_order(idx)}>
           <%= if score do %>
             <div class="text-center">
-              <%= live_component(SqueezeWeb.AvatarComponent, user: score.user, size: avatar_size(idx)) %>
+              <.avatar class="mx-auto mb-1" size={avatar_size(idx)} user={score.user} />
 
-              <h5 class="h3">
+              <h5 class="text-base font-semibold text-gray-800 dark:text-white">
                 <%= full_name(score.user) %>
               </h5>
-              <div class="h5 font-weight-300">
+              <div class="text-gray-500 dark:text-white/60 text-sm">
                 <%= Ordinal.ordinalize(idx + 1) %> Place
               </div>
             </div>
@@ -36,32 +22,45 @@
       <% end %>
     </div>
 
-    <div class="row my-4">
-      <div class="col-md-8">
-        <p class="mt-0 mb-1 text-sm">
-          <%= challenge_type(assigns) %> &middot;
-          <%= format_ordinal_date(@challenge.start_date) %> - <%= format_ordinal_date(@challenge.end_date) %>
+    <div class="grid grid-cols-12 my-4">
+      <div class="md:col-span-8">
+        <p class="mb-1 text-sm text-gray-800 dark:text-white">
+          <span class="font-semibold">
+            <%= challenge_type(assigns) %>
+          </span>
+          &middot; <%= format_ordinal_date(@challenge.start_date) %> - <%= format_ordinal_date(
+            @challenge.end_date
+          ) %>
         </p>
 
-
-        <div class="progress progress-xs mb-2">
+        <div class="overflow-hidden rounded-full bg-gray-200 mb-2">
           <% percentage = remaining_percentage(assigns) %>
-          <div class="progress-bar" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={"width: #{percentage}%;"}></div>
+          <div
+            class="h-1 rounded-full bg-indigo-600"
+            role="progressbar"
+            aria-valuenow={percentage}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style={"width: #{percentage}%;"}
+          >
+          </div>
         </div>
 
-        <p class="mt-0 mb-1 text-sm">
+        <p class="mb-1 text-sm text-gray-500 dark:text-white/60">
           <%= challenge_relative_date(assigns) %>
         </p>
       </div>
     </div>
 
-    <h5>Share Link</h5>
-    <div class="copy-input input-group mb-3">
-      <input type="text" class="form-control" value={Routes.challenge_share_url(SqueezeWeb.Endpoint, :show, @challenge.slug)} placeholder="Share Link">
-
-      <!-- <div class="input-group-append"> -->
-      <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button> -->
-      <!-- </div> -->
+    <h5 class="text-base text-gray-800 dark:text-white">Share Link</h5>
+    <div class="max-w-96 mb-3">
+      <.input
+        type="text"
+        name="share_link"
+        class="form-control"
+        value={Routes.challenge_share_url(SqueezeWeb.Endpoint, :show, @challenge.slug)}
+        placeholder="Share Link"
+      />
     </div>
   </div>
-</div>
+</.card>

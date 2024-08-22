@@ -7,12 +7,14 @@
     </div>
 
     <div class="col">
-      <%= live_redirect @challenge.name, to: Routes.challenge_path(@socket, :show, @challenge.slug) %>
+      <%= live_redirect(@challenge.name,
+        to: Routes.challenge_path(@socket, :show, @challenge.slug)
+      ) %>
 
       <p class="mt-0 mb-1 text-sm">
-        <%= podium_finish(assigns) %> &middot;
-        <%= challenge_type(assigns) %> &middot;
-        <%= challenge_relative_date(assigns) %>
+        <%= podium_finish(assigns) %> &middot; <%= challenge_type(assigns) %> &middot; <%= challenge_relative_date(
+          assigns
+        ) %>
       </p>
     </div>
   </div>

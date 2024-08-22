@@ -13,11 +13,13 @@ defmodule Squeeze.AuthErrorHandler do
     |> Controller.redirect(to: Routes.session_path(conn, :new))
     |> halt()
   end
+
   def auth_error(conn, {:already_authenticated, _reason}, _opts) do
     conn
     |> Controller.redirect(to: Routes.overview_path(conn, :index))
     |> halt()
   end
+
   def auth_error(conn, _error, _opts) do
     conn
     |> clear_session()

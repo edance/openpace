@@ -5,7 +5,8 @@ defmodule Squeeze.Distances do
 
   alias Number.Delimit
 
-  @mile_in_meters 1_609 # 1 mile == 1609 meters
+  # 1 mile == 1609 meters
+  @mile_in_meters 1_609
   @half_marathon_in_meters 21_097
   @marathon_in_meters 42_195
 
@@ -24,7 +25,7 @@ defmodule Squeeze.Distances do
     %{name: "50k", distance: 50_000},
     %{name: "50 Mile", distance: @mile_in_meters * 50},
     %{name: "100k", distance: 100_000},
-    %{name: "100 Mile", distance: @mile_in_meters * 10}
+    %{name: "100 Mile", distance: @mile_in_meters * 100}
   ]
 
   def mile_in_meters, do: @mile_in_meters
@@ -32,21 +33,23 @@ defmodule Squeeze.Distances do
   def marathon_in_meters, do: @marathon_in_meters
 
   def to_feet(nil, _), do: 0
-  def to_feet(distance, [imperial: false]), do: distance
-  def to_feet(distance, [imperial: _]), do: round_distance(distance * 3.28)
+  def to_feet(distance, imperial: false), do: distance
+  def to_feet(distance, imperial: _), do: round_distance(distance * 3.28)
 
   def to_float(nil, _), do: 0.0
-  def to_float(distance, [imperial: true]), do: round_distance(distance / mile_in_meters())
-  def to_float(distance, [imperial: _]), do: round_distance(distance / 1_000)
+  def to_float(distance, imperial: true), do: round_distance(distance / mile_in_meters())
+  def to_float(distance, imperial: _), do: round_distance(distance / 1_000)
 
   def to_int(nil, _), do: 0
-  def to_int(distance, [imperial: true]), do: trunc(distance / mile_in_meters())
-  def to_int(distance, [imperial: _]), do: trunc(distance / 1_000)
+  def to_int(distance, imperial: true), do: trunc(distance / mile_in_meters())
+  def to_int(distance, imperial: _), do: trunc(distance / 1_000)
 
   def format(distance), do: format(distance, imperial: true)
+
   def format(distance, opts) do
-    d = to_float(distance, opts)
-    |> Delimit.number_to_delimited(precision: 2)
+    d =
+      to_float(distance, opts)
+      |> Delimit.number_to_delimited(precision: 2)
 
     "#{d} #{label(opts)}"
   end
@@ -54,7 +57,8 @@ defmodule Squeeze.Distances do
   def distances, do: @distances
 
   def distance_name(distance, opts) do
-      dist_obj = Enum.find(@distances, &(&1.distance == distance))
+    dist_obj = Enum.find(@distances, &(&1.distance == distance))
+
     if dist_obj do
       dist_obj.name
     else
@@ -73,19 +77,23 @@ defmodule Squeeze.Distances do
   def parse({distance, "m"}), do: {:ok, distance}
   def parse({distance, "k"}), do: {:ok, distance * 1000}
   def parse({distance, "km"}), do: {:ok, distance * 1000}
+
   def parse({multiplier, "x" <> rest}) do
     case parse(rest) do
       {:ok, distance} -> {:ok, multiplier * distance}
       {:error} -> {:error}
     end
   end
+
   def parse({_distance, ""}), do: {:error}
+
   def parse(str) when is_binary(str) do
     str
     |> remove_whitespace()
     |> Integer.parse()
     |> parse()
   end
+
   def parse(_), do: {:error}
 
   defp remove_whitespace(str) do
@@ -94,6 +102,6 @@ defmodule Squeeze.Distances do
 
   defp round_distance(num), do: Float.round(num, 2)
 
-  def label([imperial: true]), do: "mi"
-  def label([imperial: _]), do: "km"
+  def label(imperial: true), do: "mi"
+  def label(imperial: _), do: "km"
 end

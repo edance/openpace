@@ -1,86 +1,169 @@
-<nav class="navbar navbar-dark navbar-expand-lg">
-  <div class="container container-dashboard">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="relative z-20">
+  <div class="mx-auto max-w-7xl container">
+    <div class="relative flex h-16 items-center justify-between">
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <!-- Mobile menu button-->
+        <button
+          phx-click={toggle_mobile_menu()}
+          type="button"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="absolute -inset-0.5"></span>
+          <span class="sr-only">Open main menu</span>
+          <!--
+          Icon when menu is closed.
 
-    <%= live_redirect(to: Routes.overview_path(@socket, :index), class: "navbar-brand") do %>
-      <img class="logo-img" src={Routes.static_path(SqueezeWeb.Endpoint, "/images/logo-white.svg")} />
-    <% end %>
+          Menu open: "hidden", Menu closed: "block"
+          -->
+          <svg
+            class="block h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+          <!--
+          Icon when menu is open.
 
-    <%= if @current_user do %>
-      <div class="dropdown nav-item order-md-3 pr-0">
-      <a class="nav-link dropdown-toggle align-items-center media" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <%= live_component(SqueezeWeb.AvatarComponent, user: @current_user) %>
-
-        <div class="media-body ml-2 d-none d-lg-block">
-          <span class="mb-0"><%= full_name(@current_user) %></span>
-        </div>
-      </a>
-
-      <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <%= if show_bulk_import_link?() do %>
-          <%= live_redirect(to: Routes.strava_bulk_upload_path(SqueezeWeb.Endpoint, :index), class: "dropdown-item") do %>
-            <span class="iconify" data-icon="uil:file-import" data-inline="false"></span>
-            <span><%= gettext("Bulk Import") %></span>
+          Menu open: "block", Menu closed: "hidden"
+          -->
+          <svg
+            class="hidden h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex flex-shrink-0 items-center">
+          <%= live_redirect to: Routes.overview_path(SqueezeWeb.Endpoint, :index) do %>
+            <.logo class="h-8 w-36 mr-2 fill-gray-800 dark:fill-white" />
           <% end %>
-        <% end %>
-
-        <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :general), class: "dropdown-item") do %>
-          <span class="iconify" data-icon="fa-regular:user-circle" data-inline="false"></span>
-          <span><%= gettext("Settings") %></span>
-        <% end %>
-
-        <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "dropdown-item") do %>
-          <span class="iconify" data-icon="heroicons-solid:refresh" data-inline="false"></span>
-          <span><%= gettext("Rename Activities") %></span>
-        <% end %>
-
-        <%= link(to: Routes.billing_path(@socket, :portal), class: "dropdown-item") do %>
-          <span class="iconify" data-icon="fa-regular:credit-card" data-inline="false"></span>
-          <span><%= gettext("Billing") %></span>
-        <% end %>
-
-        <div class="dropdown-divider"></div>
-
-        <%= link class: "dropdown-item", to: Routes.session_path(SqueezeWeb.Endpoint, :delete), method: :delete do %>
-          <span class="iconify" data-icon="websymbol:logout" data-inline="false"></span>
-          <span><%= gettext("Logout") %></span>
-        <% end %>
-      </div>
-      </div>
-    <% end %>
-
-    <!-- Collapse -->
-    <div class="collapse navbar-collapse order-md-2" id="nav-collapse">
-      <!-- Navigation -->
-      <ul class="navbar-nav ml-4 mt-2 mt-lg-0 mr-auto">
-        <li class="nav-item">
-          <%= live_redirect gettext("Dashboard"), to: Routes.overview_path(SqueezeWeb.Endpoint, :index), class: "nav-link" %>
-        </li>
-
-        <li class="nav-item">
-          <%= live_redirect gettext("Challenges"), to: Routes.challenge_path(@socket, :index), class: "nav-link" %>
-        </li>
-
-        <li class="nav-item">
-          <%= live_redirect gettext("Trends"), to: Routes.trends_path(@socket, :index), class: "nav-link" %>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            <%= gettext("Training") %>
-          </a>
-          <div class="dropdown-menu">
-            <%= live_redirect gettext("Calendar"), to: Routes.calendar_path(@socket, :index), class: "dropdown-item" %>
-            <%= live_redirect gettext("Races"), to: Routes.race_path(@socket, :index), class: "dropdown-item" %>
+        </div>
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
+            <%= live_redirect(gettext("Dashboard"),
+              to: Routes.overview_path(SqueezeWeb.Endpoint, :index),
+              class:
+                "rounded-md px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+            ) %>
+            <%= live_redirect(gettext("Challenges"),
+              to: Routes.challenge_path(@socket, :index),
+              class:
+                "rounded-md px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+            ) %>
+            <%= live_redirect(gettext("Trends"),
+              to: Routes.trends_path(@socket, :index),
+              class:
+                "rounded-md px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+            ) %>
+            <%= live_redirect(gettext("Calendar"),
+              to: Routes.calendar_path(@socket, :index),
+              class:
+                "rounded-md px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+            ) %>
+            <%= live_redirect(gettext("Races"),
+              to: Routes.race_path(@socket, :index),
+              class:
+                "rounded-md px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+            ) %>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <!-- Profile dropdown -->
+        <div class="relative ml-3">
+          <div>
+            <button
+              phx-click={show_user_dropdown()}
+              phx-click-away={hide_user_dropdown()}
+              type="button"
+              class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              id="user-menu-button"
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              <span class="absolute -inset-1.5"></span>
+              <span class="sr-only">Open user menu</span>
+              <.avatar user={@current_user} />
+            </button>
+          </div>
 
-      <%= if @current_user.subscription_status == :free do %>
-        <%= live_redirect gettext("Start Trial"), to: Routes.billing_path(@socket, :checkout), class: "btn btn-primary btn-sm d-none d-lg-inline-block" %>
-      <% end %>
+          <div
+            id="user-dropdown-menu"
+            class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="user-menu-button"
+            tabindex="-1"
+          >
+            <!-- Active: "bg-gray-100", Not Active: "" -->
+            <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :general), class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0") do %>
+              <span class="iconify inline" data-icon="fa-regular:user-circle" data-inline="false">
+              </span>
+              <span><%= gettext("Settings") %></span>
+            <% end %>
+
+            <%= live_redirect(to: Routes.settings_path(SqueezeWeb.Endpoint, :namer), class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-1") do %>
+              <span class="iconify inline" data-icon="heroicons-solid:refresh" data-inline="false">
+              </span>
+              <span><%= gettext("Rename Activities") %></span>
+            <% end %>
+
+            <%= link(to: Routes.session_path(SqueezeWeb.Endpoint, :delete), method: :delete, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-2") do %>
+              <span class="iconify inline" data-icon="websymbol:logout" data-inline="false">
+              </span>
+              <span><%= gettext("Logout") %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <div class="hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
+      <a
+        href="#"
+        class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+        aria-current="page"
+      >
+        Dashboard
+      </a>
+      <a
+        href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      >
+        Team
+      </a>
+      <a
+        href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      >
+        Projects
+      </a>
+      <a
+        href="#"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      >
+        Calendar
+      </a>
     </div>
   </div>
 </nav>

@@ -19,13 +19,13 @@ defmodule Squeeze.OAuth1 do
     ]
 
     @type t :: %__MODULE__{
-      consumer_key: String.t(),
-      consumer_secret: String.t(),
-      token: nil | String.t(),
-      token_secret: nil | String.t(),
-      verifier: nil | String.t(),
-      method: :hmac_sha1 | :rsa_sha1 | :plaintext
-    }
+            consumer_key: String.t(),
+            consumer_secret: String.t(),
+            token: nil | String.t(),
+            token_secret: nil | String.t(),
+            verifier: nil | String.t(),
+            method: :hmac_sha1 | :rsa_sha1 | :plaintext
+          }
   end
 
   @type params :: [{String.t(), String.Chars.t()}]
@@ -61,8 +61,9 @@ defmodule Squeeze.OAuth1 do
       oauth_signature_method: signature_method(creds.method),
       oauth_timestamp: timestamp(),
       oauth_version: "1.0"
-    ] ++ maybe_put_token(params, creds.token)
-    ++ maybe_put_verifier(params, creds.verifier)
+    ] ++
+      maybe_put_token(params, creds.token) ++
+      maybe_put_verifier(params, creds.verifier)
   end
 
   @spec signature(String.t(), URI.t() | String.t(), params, Credentials.t()) :: binary

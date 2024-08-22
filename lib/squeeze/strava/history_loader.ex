@@ -17,14 +17,14 @@ defmodule Squeeze.Strava.HistoryLoader do
 
   def load_recent(%User{} = user, %Credential{} = credential) do
     create_activities(user, credential)
-    Accounts.update_credential(credential, %{sync_at: Timex.now})
+    Accounts.update_credential(credential, %{sync_at: Timex.now()})
   end
 
   defp create_activities(user, credential) do
     credential
     |> activity_stream
     |> Stream.map(&ActivityFormatter.format/1)
-    |> Stream.each(fn(a) -> Activities.create_activity(user, a) end)
+    |> Stream.each(fn a -> Activities.create_activity(user, a) end)
     |> Enum.to_list()
   end
 
@@ -42,6 +42,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   end
 
   defp query(%{sync_at: nil}), do: []
+
   defp query(%{sync_at: sync_at}) do
     [after: DateTime.to_unix(sync_at)]
   end
