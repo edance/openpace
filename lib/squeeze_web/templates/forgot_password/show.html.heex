@@ -1,0 +1,20 @@
+<main>
+  <!-- Navbar -->
+  <%= render SqueezeWeb.MenuView, "base-navbar.html", assigns %>
+
+  <!-- Page content -->
+  <div class="container py-5 lg:pt-24 mx-auto">
+    <div class="w-full max-w-80 mx-auto">
+      <.card title={gettext("Forgot Your Password?")}>
+        <div class="p-4 sm:p-6">
+            <p class="text-sm text-gray-500 dark:text-white/60 mb-4">
+              <%= gettext("No worries! We will help you reset it.") %>
+            </p>
+
+            <%= render "form.html", Map.put(assigns, :action, Routes.forgot_password_path(@conn, :request)) %>
+          </div>
+
+        </.card>
+  </div>
+  </div>
+</main>
