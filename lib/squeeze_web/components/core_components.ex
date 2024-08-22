@@ -178,7 +178,7 @@ defmodule SqueezeWeb.CoreComponents do
 
   attr :user, :map, required: true
   attr :class, :string, default: ""
-  attr :size, :string, default: "h-8 w-8"
+  attr :size, :integer, default: 32
   attr :position, :string, default: "relative"
 
   def avatar(assigns) do
@@ -193,8 +193,8 @@ defmodule SqueezeWeb.CoreComponents do
       end)
 
     ~H"""
-    <div class={[@class, @bg_color, @position, @size]}>
-      <span class="text-white font-semibold">
+    <div class={[@class, @bg_color, @position]} style={"height: #{@size}px; width: #{@size}px;"}>
+      <span class="text-white font-semibold" style={"font-size: #{@size / 2}px;"}>
         <%= initials(@user) %>
       </span>
 

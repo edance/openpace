@@ -30,7 +30,7 @@
 
     <div class="isolate flex -space-x-1 overflow-hidden mt-2">
       <%= for score <- @challenge.scores do %>
-        <.avatar user={score.user} size="h-6 w-6" />
+        <.avatar user={score.user} size={24} />
       <% end %>
     </div>
   </td>
