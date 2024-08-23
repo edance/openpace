@@ -6,8 +6,8 @@ defmodule Squeeze.Social do
   import Ecto.Query, warn: false
   alias Ecto.{Changeset, Multi}
   alias Squeeze.Accounts.User
-  alias Squeeze.Social.Follow
   alias Squeeze.Repo
+  alias Squeeze.Social.Follow
 
   @doc """
   Returns the list of follows.

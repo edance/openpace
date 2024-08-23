@@ -6,14 +6,13 @@ defmodule Squeeze.Notifications do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias Squeeze.Accounts.User
+  alias Squeeze.Activities.Activity
   alias Squeeze.Challenges
   alias Squeeze.Challenges.{Challenge, Score}
-  alias Squeeze.Activities.Activity
   alias Squeeze.ExpoNotifications
+  alias Squeeze.Notifications.PushToken
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
-
-  alias Squeeze.Notifications.{PushToken}
 
   def batch_notify_challenge_start(datetime \\ Timex.now()) do
     list_challenges_starting_soon(datetime)

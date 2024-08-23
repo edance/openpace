@@ -1,7 +1,7 @@
 defmodule Squeeze.InvoiceFactory do
   @moduledoc false
 
-  alias Faker.{Lorem}
+  alias Faker.Lorem
   alias Squeeze.Billing.Invoice
 
   defmacro __using__(_opts) do

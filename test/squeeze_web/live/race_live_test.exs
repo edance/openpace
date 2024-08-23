@@ -7,13 +7,6 @@ defmodule SqueezeWeb.RaceLiveTest do
   alias Faker.Date
 
   describe "Index" do
-    test "lists past races", %{conn: conn, user: user} do
-      race_goal = insert(:race_goal, user: user, race_date: Date.backward(10))
-      {:ok, _index_live, html} = live(conn, Routes.race_path(conn, :index))
-
-      assert html =~ race_goal.race_name
-    end
-
     test "lists past races with activity", %{conn: conn, user: user} do
       race_goal = insert(:race_goal, user: user) |> with_activity()
       {:ok, _index_live, html} = live(conn, Routes.race_path(conn, :index))

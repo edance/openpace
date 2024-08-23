@@ -3,7 +3,7 @@ defmodule Squeeze.Notifications.PushToken do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Accounts.{User}
+  alias Squeeze.Accounts.User
 
   schema "push_tokens" do
     field :token, :string

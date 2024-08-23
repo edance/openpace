@@ -6,7 +6,7 @@ defmodule Squeeze.Social.Follow do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Squeeze.Accounts.{User}
+  alias Squeeze.Accounts.User
 
   @required_fields ~w()a
   @optional_fields ~w(pending)a

@@ -32,7 +32,7 @@ defmodule Squeeze.FitDecoder do
 
   @timeout 10_000
 
-  def start_link() do
+  def start_link do
     GenServer.start_link(__MODULE__, nil)
   end
 

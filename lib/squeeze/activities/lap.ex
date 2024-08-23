@@ -4,7 +4,7 @@ defmodule Squeeze.Activities.Lap do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Squeeze.Activities.{Activity}
+  alias Squeeze.Activities.Activity
 
   @required_fields ~w(
     average_cadence

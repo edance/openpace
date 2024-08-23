@@ -4,7 +4,7 @@ defmodule SqueezeWeb.NavbarComponent do
 
   alias Phoenix.LiveView.JS
 
-  def show_user_dropdown() do
+  def show_user_dropdown do
     JS.show(
       to: "#user-dropdown-menu",
       transition:
@@ -13,7 +13,7 @@ defmodule SqueezeWeb.NavbarComponent do
     )
   end
 
-  def hide_user_dropdown() do
+  def hide_user_dropdown do
     JS.hide(
       to: "#user-dropdown-menu",
       transition:
@@ -22,7 +22,7 @@ defmodule SqueezeWeb.NavbarComponent do
     )
   end
 
-  def toggle_mobile_menu() do
+  def toggle_mobile_menu do
     JS.toggle(
       to: "#mobile-menu",
       in:

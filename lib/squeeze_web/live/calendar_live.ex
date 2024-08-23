@@ -8,8 +8,8 @@ defmodule SqueezeWeb.CalendarLive do
   import Squeeze.TimeHelper, only: [today: 1, to_date: 2]
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Calendar
   alias Squeeze.Activities
+  alias Squeeze.Calendar
   alias Squeeze.Races
 
   @impl true

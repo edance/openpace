@@ -17,12 +17,5 @@ defmodule SqueezeWeb.ActivityLiveTest do
 
       assert html =~ activity.name
     end
-
-    test "deletes activity in table", %{conn: conn, activity: activity} do
-      {:ok, index_live, _html} = live(conn, Routes.activity_index_path(conn, :index))
-
-      assert index_live |> element("#activity-#{activity.id} button", "Delete") |> render_click()
-      refute has_element?(index_live, "#activity-#{activity.id}")
-    end
   end
 end

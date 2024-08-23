@@ -5,7 +5,7 @@ defmodule Squeeze.TrainingPlans.Plan do
   import Ecto.Changeset
 
   alias Squeeze.Accounts.User
-  alias Squeeze.TrainingPlans.{Event}
+  alias Squeeze.TrainingPlans.Event
 
   @required_fields ~w(name week_count)a
   @optional_fields ~w(experience_level description)a
