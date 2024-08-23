@@ -3,7 +3,7 @@ defmodule Squeeze.RaceGoalFactory do
 
   alias Faker.{Address, Date}
   alias Squeeze.Distances
-  alias Squeeze.Races.{TrainingPace, RaceGoal}
+  alias Squeeze.Races.{RaceGoal, TrainingPace}
   import Squeeze.Utils, only: [random_float: 2]
 
   defmacro __using__(_opts) do
@@ -54,10 +54,7 @@ defmodule Squeeze.RaceGoalFactory do
       end
 
       defp race_distance do
-        Distances.distances()
-        # Half or greater
-        |> Enum.filter(&(&1.distance >= 21_097))
-        |> Enum.random()
+        Distances.distances() |> Enum.filter(&(&1.distance >= 21_097)) |> Enum.random()
       end
     end
   end

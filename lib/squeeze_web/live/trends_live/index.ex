@@ -1,11 +1,11 @@
 defmodule SqueezeWeb.TrendsLive.Index do
   use SqueezeWeb, :live_view
 
+  alias Phoenix.LiveView.JS
   alias Squeeze.Activities
   alias Squeeze.Distances
   alias Squeeze.Stats
   alias Squeeze.Velocity
-  alias Phoenix.LiveView.JS
 
   @impl true
   def mount(_params, _session, socket) do

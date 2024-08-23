@@ -7,7 +7,7 @@ defmodule Squeeze.Namer.ActivityRenamer do
   alias Squeeze.Namer.DescriptionGenerator
   alias Squeeze.Namer.NameGenerator
   alias Squeeze.Strava.Activities
-  alias Strava.{DetailedActivity}
+  alias Strava.DetailedActivity
 
   def rename(user, activity_id) when is_binary(activity_id) or is_integer(activity_id) do
     case Activities.get_activity_by_id(user, activity_id) do

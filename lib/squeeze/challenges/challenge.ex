@@ -3,7 +3,7 @@ defmodule Squeeze.Challenges.Challenge do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Squeeze.Accounts.{User}
+  alias Squeeze.Accounts.User
   alias Squeeze.Challenges.{ChallengeActivity, Score}
 
   @required_fields ~w(

@@ -4,9 +4,9 @@ defmodule Squeeze.Strava.ActivityLoader do
   """
 
   alias Squeeze.Accounts.Credential
+  alias Squeeze.Activities
   alias Squeeze.ActivityMatcher
   alias Squeeze.Challenges.ScoreUpdater
-  alias Squeeze.Activities
   alias Squeeze.Notifications
   alias Squeeze.Repo
   alias Squeeze.Strava.{ActivityFormatter, Client, StreamSetConverter}

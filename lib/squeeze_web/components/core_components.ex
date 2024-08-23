@@ -17,6 +17,8 @@ defmodule SqueezeWeb.CoreComponents do
   use Phoenix.Component
   import SqueezeWeb.FormatHelpers
 
+  alias Phoenix.HTML.{Form, FormField}
+
   @colors [
     "bg-gradient-to-tl from-blue-500 to-violet-500",
     "bg-gradient-to-tl from-red-500 to-orange-500",
@@ -135,8 +137,6 @@ defmodule SqueezeWeb.CoreComponents do
   end
 
   def duration_input(assigns) do
-    IO.puts("Assigns: #{inspect(assigns)}")
-
     # given a value in seconds, convert it to hours, minutes, and seconds
     assigns =
       assigns
@@ -240,7 +240,7 @@ defmodule SqueezeWeb.CoreComponents do
     values: ~w(checkbox color date datetime-local email file hidden month number password
                range radio search select tel text textarea time url week)
 
-  attr :field, Phoenix.HTML.FormField,
+  attr :field, FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
   attr :errors, :list, default: []
@@ -267,7 +267,7 @@ defmodule SqueezeWeb.CoreComponents do
   def input(%{type: "checkbox"} = assigns) do
     assigns =
       assign_new(assigns, :checked, fn ->
-        Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
+        Form.normalize_value("checkbox", assigns[:value])
       end)
 
     ~H"""
@@ -395,9 +395,9 @@ defmodule SqueezeWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(LagomWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(SqueezeWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(LagomWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(SqueezeWeb.Gettext, "errors", msg, opts)
     end
   end
 

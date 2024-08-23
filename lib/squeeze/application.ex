@@ -24,7 +24,7 @@ defmodule Squeeze.Application do
   end
 
   # Define workers and child supervisors to be supervised
-  def children() do
+  def children do
     base_children = [
       # Start the Ecto repository
       Squeeze.Repo,

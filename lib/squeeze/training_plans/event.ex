@@ -3,7 +3,7 @@ defmodule Squeeze.TrainingPlans.Event do
 
   use Ecto.Schema
 
-  alias Squeeze.TrainingPlans.{Plan}
+  alias Squeeze.TrainingPlans.Plan
 
   schema "training_events" do
     field :name, :string

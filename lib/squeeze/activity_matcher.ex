@@ -3,7 +3,7 @@ defmodule Squeeze.ActivityMatcher do
   This module matches new activities to existing activities.
   """
 
-  alias Squeeze.Accounts.{User}
+  alias Squeeze.Accounts.User
   alias Squeeze.Activities
 
   @doc """

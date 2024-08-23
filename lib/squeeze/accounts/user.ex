@@ -5,7 +5,7 @@ defmodule Squeeze.Accounts.User do
   import Ecto.Changeset
 
   alias Squeeze.Accounts.{Credential, User, UserPrefs}
-  alias Squeeze.Challenges.{Score}
+  alias Squeeze.Challenges.Score
 
   @registration_fields ~w(first_name last_name email encrypted_password)a
   @payment_processor_fields ~w(customer_id subscription_id subscription_status trial_end)a

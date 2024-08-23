@@ -2,10 +2,10 @@ defmodule Squeeze.Challenges.ScoreUpdater do
   @moduledoc false
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Challenges
-  alias Squeeze.Challenges.{Challenge, Score}
   alias Squeeze.Activities
   alias Squeeze.Activities.Activity
+  alias Squeeze.Challenges
+  alias Squeeze.Challenges.{Challenge, Score}
   alias Squeeze.Notifications
   alias Squeeze.Repo
   alias Squeeze.Strava

@@ -7,6 +7,7 @@ defmodule Squeeze.Strava.BulkImport do
 
   alias Squeeze.Activities
   alias Squeeze.SlugGenerator
+  alias Squeeze.FileParser.{FitImport, TcxImport}
 
   def import_from_file(user, filename) do
     Logger.info("[#{__MODULE__}] starting import of #{filename}")
@@ -52,10 +53,10 @@ defmodule Squeeze.Strava.BulkImport do
       String.contains?(filename, ".fit.gz") ->
         System.cmd("gzip", ["-d", filename])
         full_file = Path.absname(String.replace(filename, ".gz", ""))
-        Squeeze.FileParser.FitImport.import_from_file(full_file)
+        FitImport.import_from_file(full_file)
 
       String.contains?(filename, ".tcx") ->
-        Squeeze.FileParser.TcxImport.import_from_file(filename)
+        TcxImport.import_from_file(filename)
 
       true ->
         %{laps: [], trackpoints: []}

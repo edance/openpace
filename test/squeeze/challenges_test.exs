@@ -114,7 +114,7 @@ defmodule Squeeze.ChallengesTest do
     end
   end
 
-  defp today() do
+  defp today do
     Timex.today("America/New_York")
   end
 end

@@ -124,7 +124,7 @@ defmodule Squeeze.Mixfile do
       "assets.deploy": [
         "tailwind default --minify",
         "cmd --cd assets bun install",
-        "cmd --cd assets node build.js --deploy",
+        "cmd --cd assets bun build.js --deploy",
         "phx.digest"
       ]
     ]

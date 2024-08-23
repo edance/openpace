@@ -3,8 +3,8 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   @moduledoc false
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Challenges
   alias Squeeze.Activities
+  alias Squeeze.Challenges
   alias Squeeze.Races
   alias Squeeze.Stats
   alias Squeeze.Strava.HistoryLoader

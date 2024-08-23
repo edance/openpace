@@ -23,8 +23,7 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
   end
 
   @impl true
-  def handle_event("save_pr", stuff, socket) do
-    IO.inspect(stuff)
+  def handle_event("save_pr", _stuff, socket) do
     {:noreply, socket}
   end
 

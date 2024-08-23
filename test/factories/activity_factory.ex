@@ -1,7 +1,7 @@
 defmodule Squeeze.ActivityFactory do
   @moduledoc false
 
-  alias Faker.{Date}
+  alias Faker.Date
   alias Squeeze.Activities.Activity
   import Squeeze.Utils, only: [random_float: 2]
 

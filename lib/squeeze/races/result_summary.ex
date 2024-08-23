@@ -4,7 +4,7 @@ defmodule Squeeze.Races.ResultSummary do
   use Ecto.Schema
 
   alias Squeeze.Duration
-  alias Squeeze.Races.{Race}
+  alias Squeeze.Races.Race
 
   schema "race_result_summaries" do
     field :distance, :float

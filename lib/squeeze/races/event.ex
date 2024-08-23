@@ -3,7 +3,7 @@ defmodule Squeeze.Races.Event do
 
   use Ecto.Schema
 
-  alias Squeeze.Races.{Race}
+  alias Squeeze.Races.Race
 
   # @required_fields ~w(name slug city state country)a
   # @optional_fields ~w(content url)a
