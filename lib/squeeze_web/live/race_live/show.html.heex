@@ -1,7 +1,7 @@
 <div class="relative pt-5 pb-8 mb-0">
-  <div class="container max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-12 gap-4 sm:gap-6">
-      <div class="md:col-span-9">
+  <div class="container max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6">
+      <div class="lg:col-span-9">
         <div class="mb-4 sm:mb-6">
           <h1 class="text-2xl font-semibold text-gray-800 dark:text-white mb-0">
             <%= @race_goal.race_name %>
@@ -35,7 +35,7 @@
         <% end %>
       </div>
 
-      <div class="md:col-span-3">
+      <div class="lg:col-span-3">
         <.card>
           <div class="p-4 sm:p-6">
             <div class="flex flex-row">
@@ -45,14 +45,14 @@
                     <%= gettext("Race Results") %>
                   </h5>
 
-                  <span class="text-lg font-semibold mb-0">
+                  <span class="text-lg font-semibold text-gray-600 dark:text-white/80 mb-0">
                     <%= format_duration(@activity.duration) %>
                   </span>
                 <% else %>
                   <h5 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-sm">
                     <%= gettext("Race Goal") %>
                   </h5>
-                  <span class="text-lg font-semibold mb-0">
+                  <span class="text-lg font-semibold text-gray-600 dark:text-white/80 mb-0">
                     <%= if @race_goal.just_finish do %>
                       <%= gettext("Finish") %>
                     <% else %>

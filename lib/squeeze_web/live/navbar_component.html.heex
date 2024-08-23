@@ -1,5 +1,5 @@
 <nav class="relative z-20">
-  <div class="mx-auto max-w-7xl container">
+  <div class="mx-auto max-w-7xl px-4 container">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
@@ -139,31 +139,31 @@
   <div class="hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
-      <a
-        href="#"
-        class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-        aria-current="page"
-      >
-        Dashboard
-      </a>
-      <a
-        href="#"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-      >
-        Team
-      </a>
-      <a
-        href="#"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-      >
-        Projects
-      </a>
-      <a
-        href="#"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-      >
-        Calendar
-      </a>
+      <%= live_redirect(gettext("Dashboard"),
+        to: Routes.overview_path(SqueezeWeb.Endpoint, :index),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
+      <%= live_redirect(gettext("Challenges"),
+        to: Routes.challenge_path(@socket, :index),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
+      <%= live_redirect(gettext("Trends"),
+        to: Routes.trends_path(@socket, :index),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
+      <%= live_redirect(gettext("Calendar"),
+        to: Routes.calendar_path(@socket, :index),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
+      <%= live_redirect(gettext("Races"),
+        to: Routes.race_path(@socket, :index),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
     </div>
   </div>
 </nav>
