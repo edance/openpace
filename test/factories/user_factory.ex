@@ -16,7 +16,12 @@ defmodule Squeeze.UserFactory do
           |> :erlang.md5()
           |> Base.encode16(case: :lower)
 
-        avatar = "https://www.gravatar.com/avatar/#{hash}?s=300&d=identicon"
+        avatar =
+          if Enum.random([true, false]) do
+            "https://www.gravatar.com/avatar/#{hash}?s=300&d=identicon"
+          else
+            nil
+          end
 
         %User{
           first_name: Person.first_name(),

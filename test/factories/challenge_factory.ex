@@ -3,6 +3,7 @@ defmodule Squeeze.ChallengeFactory do
 
   alias Faker.Date
   alias Squeeze.Challenges.Challenge
+  import Squeeze.Utils, only: [random_float: 2]
 
   defmacro __using__(_opts) do
     quote do
@@ -59,7 +60,20 @@ defmodule Squeeze.ChallengeFactory do
       end
 
       def with_scores(%Challenge{} = challenge, count \\ 5) do
-        scores = insert_list(count, :score, challenge: challenge)
+        amount_max =
+          case challenge.challenge_type do
+            # 100 miles
+            :distance -> 100 * 1609
+            # 100 hours
+            :time -> 100 * 60 * 60
+            # 300 meters
+            :altitude -> 300
+            # 1 hour
+            _ -> 60 * 60
+          end
+
+        scores =
+          insert_list(count, :score, challenge: challenge, amount: random_float(1, amount_max))
 
         %{challenge | scores: scores}
       end

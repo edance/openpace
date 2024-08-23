@@ -57,9 +57,9 @@ defmodule SqueezeWeb.Challenges.PodiumCardComponent do
     end
   end
 
-  def avatar_size(0), do: "w-16 h-16"
-  def avatar_size(1), do: "w-10 h-10"
-  def avatar_size(_), do: "w-8 h-8"
+  def avatar_size(0), do: 64
+  def avatar_size(1), do: 40
+  def avatar_size(_), do: 32
 
   def podium_order(0), do: "order-2"
   def podium_order(1), do: "order-1"
