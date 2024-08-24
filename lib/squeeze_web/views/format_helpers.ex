@@ -15,6 +15,9 @@ defmodule SqueezeWeb.FormatHelpers do
 
   def full_name(%User{} = user), do: User.full_name(user)
 
+  def initials(%User{first_name: nil}), do: nil
+  def initials(%User{last_name: nil}), do: nil
+
   def initials(%User{first_name: first_name, last_name: last_name}) do
     "#{String.at(first_name, 0)}#{String.at(last_name, 0)}"
   end

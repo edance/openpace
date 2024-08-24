@@ -12,12 +12,9 @@
                     <h3 class="text-base font-semibold leading-6 text-gray-800 dark:text-white dark:text-white">
                       <%= gettext("Pick a Segment") %>
                     </h3>
-                    <button
-                      phx-click="reload"
-                      class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
+                    <.button phx-click="reload">
                       Reload
-                    </button>
+                    </.button>
                   </div>
                 </div>
 
@@ -31,7 +28,11 @@
                   <% end %>
 
                   <%= if Enum.empty?(@segments) && !@loading do %>
-                    <p class="text-gray-700 dark:text-white">No Starred Segments</p>
+                    <div class="py-4 sm:py-6">
+                      <p class="text-sm text-gray-500 dark:text-white/60 dark:text-white/80">
+                        <%= gettext("No Starred Segments") %>
+                      </p>
+                    </div>
                   <% end %>
 
                   <%= if !Enum.empty?(@segments) && !@loading do %>
@@ -118,25 +119,22 @@
               <!-- Card body -->
               <div class="p-4 sm:p-6">
                 <div class="mb-4">
-                  <%= label(f, :name,
-                    class: "block font-medium text-gray-700 dark:text-white mb-2"
-                  ) %>
-                  <%= input(f, :name,
-                    placeholder: "Weekend Warriors",
-                    class:
-                      "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-                    autocomplete: "off"
-                  ) %>
-                  <%= error_tag(f, :name) %>
+                  <!-- Turn this into new <.input /> component -->
+                  <.input
+                    field={f[:name]}
+                    label={gettext("Name")}
+                    placeholder={gettext("Weekend Warriors")}
+                  />
                 </div>
 
                 <div class="mb-4">
-                  <%= textarea(f, :description,
-                    placeholder: "Description",
-                    class:
-                      "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-                    rows: "10"
-                  ) %>
+                  <!-- Turn this into new <.input type="textarea" /> component -->
+                  <.input
+                    field={f[:description]}
+                    label={gettext("Description")}
+                    placeholder={gettext("Description")}
+                    type="textarea"
+                  />
                 </div>
 
                 <%= hidden_input(f, :activity_type) %>
@@ -154,10 +152,9 @@
                 <% end %>
 
                 <div class="mt-6">
-                  <%= submit(gettext("Create Challenge"),
-                    class:
-                      "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  ) %>
+                  <.button>
+                    <%= gettext("Create Challenge") %>
+                  </.button>
                 </div>
               </div>
             </div>

@@ -272,7 +272,7 @@ defmodule SqueezeWeb.CoreComponents do
 
     ~H"""
     <div phx-feedback-for={@name}>
-      <label class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+      <label class="flex items-center gap-2 text-sm leading-6 text-indigo-600">
         <input type="hidden" name={@name} value="false" />
         <input
           type="checkbox"
@@ -280,10 +280,12 @@ defmodule SqueezeWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+          class="rounded border-zinc-300 text-indigo-600 focus:ring-0"
           {@rest}
         />
-        <%= @label %>
+        <span class="text-gray-800 dark:text-white text-sm">
+          <%= @label %>
+        </span>
       </label>
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
@@ -297,7 +299,7 @@ defmodule SqueezeWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="mt-2 block w-full rounded-md border border-gray-300 text-gray-800 dark:text-white bg-white dark:bg-white/10 dark:focus:bg-gray-700 shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -317,7 +319,7 @@ defmodule SqueezeWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "mt-2 block w-full rounded-lg text-gray-800 dark:text-white bg-white dark:bg-white/10 focus:ring-0 sm:text-sm sm:leading-6",
           "min-h-[6rem] phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
@@ -340,7 +342,7 @@ defmodule SqueezeWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "mt-2 block w-full rounded-lg text-gray-800 dark:text-white bg-white dark:bg-white/10 focus:ring-0 sm:text-sm sm:leading-6",
           "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
@@ -360,7 +362,7 @@ defmodule SqueezeWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class="block text-sm font-semibold leading-6 text-gray-500 dark:text-white/60">
       <%= render_slot(@inner_block) %>
     </label>
     """
@@ -373,8 +375,8 @@ defmodule SqueezeWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="mt-2 flex gap-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
-      <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
+    <p class="mt-2 flex gap-1 text-sm items-center leading-6 text-rose-600 phx-no-feedback:hidden">
+      <.icon icon="zondicons:exclamation-outline" class="h-4 w-4 flex-none" />
       <%= render_slot(@inner_block) %>
     </p>
     """

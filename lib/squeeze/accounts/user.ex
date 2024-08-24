@@ -66,8 +66,8 @@ defmodule Squeeze.Accounts.User do
     |> cast(attrs, fields)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
-    |> validate_length(:first_name, max: 50)
-    |> validate_length(:last_name, max: 50)
+    |> validate_length(:first_name, min: 1, max: 50)
+    |> validate_length(:last_name, min: 1, max: 50)
     |> put_registered()
   end
 
