@@ -12,42 +12,27 @@
           <!-- Card body -->
           <div class="p-4 sm:p-6">
             <div class="mb-4">
-              <%= label(f, :race_name,
-                class: "block font-medium text-gray-700 dark:text-white mb-2"
-              ) %>
-              <%= input(f, :race_name,
-                placeholder: "Boston Marathon",
-                class:
-                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white/5 block w-full sm:text-sm border-gray-300 rounded-md",
-                autocomplete: "off"
-              ) %>
+              <.input
+                type="text"
+                field={f[:race_name]}
+                label={gettext("Race Name")}
+                placeholder="Boston Marathon"
+                autocomplete="off"
+              />
             </div>
 
             <div class="mb-4">
-              <%= label(f, :distance,
-                class: "block font-medium text-gray-700 dark:text-white mb-2"
-              ) %>
-              <%= select(f, :distance, distances(),
-                class:
-                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-                placeholder: "Choose a distance"
-              ) %>
-              <%= error_tag(f, :distance) %>
+              <.input
+                type="select"
+                field={f[:distance]}
+                label={gettext("Distance")}
+                placeholder="Choose a distance"
+                options={distances()}
+              />
             </div>
 
             <div class="mb-4">
-              <%= label(f, "Race Date",
-                class: "block font-medium text-gray-700 dark:text-white mb-2"
-              ) %>
-              <div id="date-range" class="flex justify-center pt-4" phx-update="ignore">
-                <%= date_input(f, :race_date,
-                  class:
-                    "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-                  data: [inline: true]
-                ) %>
-              </div>
-
-              <%= error_tag(f, :race_date) %>
+              <.input type="date" field={f[:race_date]} label={gettext("Race Date")} />
             </div>
           </div>
         </div>
@@ -74,26 +59,21 @@
             </div>
 
             <div class="mb-4">
-              <label class="inline-flex items-center">
-                <%= checkbox(f, :just_finish,
-                  class:
-                    "form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
-                ) %>
-                <span class="ml-2 text-gray-700 dark:text-white">My goal is to just finish</span>
-              </label>
+              <.input
+                type="checkbox"
+                field={f[:just_finish]}
+                label={gettext("My goal is to just finish")}
+              />
             </div>
 
             <div class="mb-4">
-              <%= label(f, :description,
-                class: "block font-medium text-gray-700 dark:text-white mb-2"
-              ) %>
-              <%= textarea(f, :description,
-                placeholder: "Description",
-                class:
-                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-                rows: "10"
-              ) %>
-              <%= error_tag(f, :description) %>
+              <.input
+                type="textarea"
+                field={f[:description]}
+                label={gettext("Description")}
+                placeholder="Description"
+                rows="10"
+              />
             </div>
 
             <%= if @changeset.action do %>
