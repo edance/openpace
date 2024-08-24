@@ -1,22 +1,12 @@
 <%= form_for @conn, @action, [as: :session, class: ""], fn f -> %>
   <div class="mb-4">
     <div class="flex">
-      <%= text_input(f, :email,
-        placeholder: gettext("Email"),
-        class:
-          "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white/5 block w-full sm:text-sm border-gray-300 rounded-md"
-      ) %>
-      <%= error_tag(f, :email) %>
+      <.input field={f[:email]} placeholder={gettext("Email")} />
     </div>
   </div>
   <div class="mb-4">
     <div class="flex">
-      <%= password_input(f, :password,
-        placeholder: gettext("Password"),
-        class:
-          "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white/5 block w-full sm:text-sm border-gray-300 rounded-md"
-      ) %>
-      <%= error_tag(f, :password) %>
+      <.input field={f[:password]} placeholder={gettext("Password")} type="password" value="" />
     </div>
   </div>
   <div class="text-center mb-4">
