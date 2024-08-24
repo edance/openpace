@@ -136,7 +136,7 @@
             <p class="text-sm text-gray-700 dark:text-white mb-4">
               Pick your favorite Strava segment and race your friends. Whoever runs the segment the fastest will be declared the winner.
             </p>
-            <%= live_redirect(gettext("Get Started"),
+            "dark:bg-white/20" <%= live_redirect(gettext("Get Started"),
               to: Routes.challenge_path(@socket, :new, challenge_type: "segment"),
               class:
                 "rounded-md bg-slate-700 dark:bg-white/10 px-2.5 py-1.5 text-sm text-gray-700 dark:text-white font-semibold text-white shadow-sm hover:bg-slate-500"

@@ -4,12 +4,11 @@
       <%= inputs_for f, :user_prefs, fn p -> %>
         <div class="mb-6">
           <div class="flex items-center">
-            <label class="inline-flex items-center">
-              <%= checkbox(p, :rename_activities,
-                class: "form-checkbox h-5 w-5 text-indigo-600 rounded"
-              ) %>
-              <span class="ml-2 text-gray-800 dark:text-white text-sm">Rename Activities</span>
-            </label>
+            <.input
+              type="checkbox"
+              label={gettext("Rename Activities")}
+              field={p[:rename_activities]}
+            />
           </div>
           <p class="mt-2 text-xs text-gray-500 dark:text-white/60">
             Let OpenPace know if you'd like us to rename your activities.
@@ -17,48 +16,45 @@
         </div>
         <div class="mb-6">
           <div class="flex items-center">
-            <label class="inline-flex items-center">
-              <%= checkbox(p, :emoji, class: "form-checkbox h-5 w-5 text-indigo-600 rounded") %>
-              <span class="ml-2 text-gray-800 dark:text-white text-sm">Add Emoji to Title</span>
-            </label>
+            <.input type="checkbox" label={gettext("Add Emoji to Title")} field={p[:emoji]} />
           </div>
           <p class="mt-2 text-xs text-gray-500 dark:text-white/60">
             Let OpenPace know if you would like us to add an emoji to the title of your activity.
           </p>
         </div>
         <div class="mb-6">
-          <%= label(p, :gender, "Emoji Gender",
-            class: "block text-gray-600 dark:text-white/60 text-xs font-medium mb-1"
-          ) %>
-          <%= select(p, :gender, gender_opts(),
-            class:
-              "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
-          ) %>
+          <.input
+            label={gettext("Emoji Gender")}
+            field={p[:gender]}
+            prompt={gettext("Emoji Gender")}
+            type="select"
+            options={gender_opts()}
+          />
           <p class="mt-2 text-xs text-gray-500 dark:text-white/60">
             Let us know what gender you would like to use for the emoji.
           </p>
         </div>
         <div class="mb-6">
           <div class="flex items-center">
-            <label class="inline-flex items-center">
-              <%= checkbox(p, :branding, class: "form-checkbox h-5 w-5 text-indigo-600 rounded") %>
-              <span class="ml-2 text-gray-800 dark:text-white text-sm">
-                Add Renamed by OpenPace
-              </span>
-            </label>
+            <.input
+              type="checkbox"
+              label={gettext("Add Renamed by OpenPace")}
+              field={p[:branding]}
+            />
           </div>
           <p class="mt-2 text-xs text-gray-500 dark:text-white/60">
             If 'renamed by OpenPace' should be added after your activity description.
           </p>
         </div>
         <div class="mb-8">
-          <%= label(p, :imperial, "Units & Measurements",
-            class: "block text-gray-600 dark:text-white/60 text-xs font-medium mb-1"
-          ) %>
-          <%= select(p, :imperial, ["Meters & Kilometers": false, "Feet & Miles": true],
-            class:
-              "block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-xs"
-          ) %>
+          <.input
+            label={gettext("Units & Measurements")}
+            field={p[:imperial]}
+            prompt={gettext("Units & Measurements")}
+            type="select"
+            options={["Meters & Kilometers": false, "Feet & Miles": true]}
+          />
+
           <p class="mt-2 text-xs text-gray-500 dark:text-white/60">
             If your activity has a distance, we will display it in kilometers or miles depending on this preference.
           </p>

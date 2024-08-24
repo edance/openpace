@@ -81,22 +81,21 @@
   <div class="hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" -->
-
-            <%= link("Namer",
-              to: "/namer",
-              class:
-        "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-            ) %>
-            <%= link(gettext("Sign Up"),
-              to: Routes.user_path(@conn, :new),
-              class:
-        "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-            ) %>
-            <%= link(gettext("Log In"),
-              to: Routes.session_path(@conn, :new),
-              class:
-        "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-            ) %>
+      <%= link("Namer",
+        to: "/namer",
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
+      <%= link(gettext("Sign Up"),
+        to: Routes.user_path(@conn, :new),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
+      <%= link(gettext("Log In"),
+        to: Routes.session_path(@conn, :new),
+        class:
+          "block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+      ) %>
     </div>
   </div>
 </nav>
