@@ -182,7 +182,7 @@ defmodule SqueezeWeb.CoreComponents do
   attr :position, :string, default: "relative"
 
   def avatar(assigns) do
-    base = "flex items-center justify-center rounded-full overflow-hidden"
+    base = "avatar flex items-center justify-center rounded-full overflow-hidden border-gray-300"
 
     assigns =
       assigns
@@ -191,9 +191,15 @@ defmodule SqueezeWeb.CoreComponents do
         idx = rem(assigns.user.id, length(@colors))
         Enum.at(@colors, idx)
       end)
+      |> assign_new(:border_size, fn ->
+        if assigns.size < 48, do: 2, else: 4
+      end)
 
     ~H"""
-    <div class={[@class, @bg_color, @position]} style={"height: #{@size}px; width: #{@size}px;"}>
+    <div
+      class={[@class, @bg_color, @position]}
+      style={"height: #{@size}px; width: #{@size}px; border-width: #{@border_size}px;"}
+    >
       <span class="text-white font-semibold" style={"font-size: #{@size / 2}px;"}>
         <%= initials(@user) %>
       </span>

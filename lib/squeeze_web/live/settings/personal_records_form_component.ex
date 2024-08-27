@@ -23,13 +23,9 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
   end
 
   @impl true
-  def handle_event("save_pr", _stuff, socket) do
-    {:noreply, socket}
-  end
-
-  @impl true
   def handle_event("save", %{"personal_record" => pr}, socket) do
     user = socket.assigns.current_user
+    require IEx; IEx.pry
     Accounts.put_personal_record(user, pr)
     user = Accounts.get_user!(user.id)
     {:noreply, assign(socket, current_user: user, distance: nil)}
@@ -59,5 +55,25 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
       id: "user_user_prefs_personal_records_#{idx}_#{field}",
       name: "user[user_prefs][personal_records][#{idx}][#{field}]"
     ]
+  end
+
+  def pr_form(assigns) do
+    ~H"""
+    <.form :let={f} :if={@distance} for={%{}} as={:personal_record} phx-submit="save" phx-target={@target}>
+      <.input
+        field={f[:distance]}
+        type="hidden"
+        value={@distance}
+      />
+
+      <.duration_input label={gettext("Race Time")} value={@value} />
+
+      <.input field={f[:results_url]} label={gettext("Results URL")} />
+
+      <.button type="submit">
+        <%= gettext("Save") %>
+      </.button>
+    </.form>
+    """
   end
 end
