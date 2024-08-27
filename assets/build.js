@@ -1,10 +1,12 @@
 const { sassPlugin } = require('esbuild-sass-plugin');
+const fs = require('fs');
 
 const esbuild = require('esbuild');
 
 const args = process.argv.slice(2);
 const watch = args.includes('--watch');
 const deploy = args.includes('--deploy');
+const metafile = args.includes('--metafile');
 
 const loader = {
   // Add loaders for images/fonts/etc, e.g. { '.svg': 'file' }
@@ -41,7 +43,20 @@ if (deploy) {
   };
 }
 
+if (metafile) {
+  opts = {
+    ...opts,
+    metafile: true,
+  };
+}
+
 const promise = esbuild.build(opts);
+
+if (metafile) {
+  promise.then(result => {
+    fs.writeFileSync('metafile.json', JSON.stringify(result.metafile));
+  });
+}
 
 if (watch) {
   promise.then(_result => {

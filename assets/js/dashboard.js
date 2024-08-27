@@ -1,9 +1,6 @@
 // Import dependencies
 import 'phoenix_html';
 
-// Import bootstrap and required libraries
-import './bootstrap';
-
 // Import base components
 import './components/base';
 
