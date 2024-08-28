@@ -43,21 +43,17 @@
           </h2>
         </div>
         <!-- Card body -->
-        <div class="p-4 sm:p-6">
+        <div class="px-4 sm:px-6 pb-4 sm:pb-6">
           <%= if Enum.empty?(@podium_finishes) do %>
-            <p class="text-sm text-gray-500 dark:text-white/80">
+            <p class="pt-4 sm:pt-6 text-sm text-gray-500 dark:text-white/80">
               No podium finishes.
             </p>
           <% else %>
-            <!-- List group -->
-            <ul class="list-group list-group-flush list my--3">
+            <div>
               <%= for challenge <- @podium_finishes do %>
-                <%= live_component(SqueezeWeb.Challenges.PodiumItemComponent,
-                  current_user: @current_user,
-                  challenge: challenge
-                ) %>
+                <.podium_item challenge={challenge} socket={@socket} current_user={@current_user} />
               <% end %>
-            </ul>
+            </div>
           <% end %>
         </div>
       </div>
