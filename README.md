@@ -15,8 +15,6 @@ From a developer standpoint, it features:
 
   * Sync's all fitness data from [Strava](https://github.com/slashdotdash/strava) including activities, GPS, heart rate, pace information.
 
-  * Dashboard based off of the [Argon Dashboard by Creative Tim](https://www.creative-tim.com/product/argon-dashboard) using [Bootstrap 4](https://getbootstrap.com)
-
   * Canvas charts provided by [Chart.js](https://chartjs.org) using [Phoenix LiveView hooks](https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook)
 
   * Maps using [Mapbox GL](https://mapbox.com)

@@ -81,13 +81,65 @@
       </div>
 
       <div class="xl:col-span-5 mb-5 mb-xl-0">
-        <.live_component
-          module={SqueezeWeb.Dashboard.RecentActivitiesCardComponent}
-          id="recent-activity-card"
-          current_user={@current_user}
-          activity_summaries={@activity_summaries}
-          date={@date}
-        />
+        <.card>
+          <div class="border-b border-gray-200 dark:border-slate-700 px-4 py-5 sm:px-6">
+            <div class="flex items-center">
+              <div class="grow">
+                <h2 class="text-md font-semibold leading-6 text-gray-900 dark:text-white">
+                  <%= gettext("Recent Activities") %>
+                </h2>
+              </div>
+              <div class="flex gap-2 items-center">
+                <select
+                  id="recent-activities-chart-type"
+                  name=""
+                  class="block w-full rounded-md border-0 py-1 px-2 pr-6 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 text-xs font-semibold"
+                >
+                  <option value="distance">Distance</option>
+                  <option value="duration">Time</option>
+                  <option value="elevation_gain">Elevation</option>
+                </select>
+
+                <%= live_redirect(gettext("See All"),
+                  to: Routes.activity_index_path(@socket, :index),
+                  class:
+                    "block items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex-none"
+                ) %>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 sm:p-6">
+            <div class="chart-container position-relative w-100" style="height: 30vh;">
+              <canvas
+                id="recent-activities-chart"
+                aria-label="Recent Activities Chart"
+                role="img"
+                phx-hook="RecentActivityChart"
+                data-summaries={Jason.encode!(@activity_summaries)}
+                data-imperial={"#{@current_user.user_prefs.imperial}"}
+                data-current-date={@date}
+                phx-update="ignore"
+              >
+              </canvas>
+            </div>
+
+            <div class="flex gap-2 pt-4">
+              <%= for activity_type <- ["Run", "Ride", "Swim", "Other"] do %>
+                <div class="flex items-center gap-1">
+                  <div
+                    class="inline-flex rounded-full h-4 w-4 opacity-50"
+                    style={"background: #{Colors.activity_color(activity_type)};"}
+                  >
+                  </div>
+                  <div class="inline-flex text-gray-500 dark:text-white/60 text-xs">
+                    <%= activity_type %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </.card>
 
         <%= for activity <- @activities do %>
           <.live_component
@@ -100,29 +152,30 @@
       </div>
 
       <div class="xl:col-span-4">
-        <%= if !strava_integration?(assigns) do %>
-          <div class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden">
-            <div class="p-4 sm:p-6">
-              <h3 class="font-semibold text-white">
-                <%= gettext("Sync Activities from Strava") %>
-              </h3>
+        <div
+          :if={strava_integration?(assigns)}
+          class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden"
+        >
+          <div class="p-4 sm:p-6">
+            <h3 class="font-semibold text-white">
+              <%= gettext("Sync Activities from Strava") %>
+            </h3>
 
-              <p class="text-sm text-white mb-2">
-                <%= gettext(
-                  "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
-                ) %>
-              </p>
+            <p class="text-sm text-white mb-2">
+              <%= gettext(
+                "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
+              ) %>
+            </p>
 
-              <%= link to: Routes.strava_integration_path(@socket, :request), class: "" do %>
-                <img
-                  alt="Connect to Strava"
-                  class="btn-strava"
-                  src={Routes.static_path(@socket, "/images/btn_strava.svg")}
-                />
-              <% end %>
-            </div>
+            <%= link to: Routes.strava_integration_path(@socket, :request), class: "" do %>
+              <img
+                alt="Connect to Strava"
+                class="btn-strava"
+                src={Routes.static_path(@socket, "/images/btn_strava.svg")}
+              />
+            <% end %>
           </div>
-        <% end %>
+        </div>
 
         <.live_component
           module={SqueezeWeb.Dashboard.MiniCalendarComponent}
