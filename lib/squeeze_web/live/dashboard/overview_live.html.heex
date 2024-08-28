@@ -153,7 +153,7 @@
 
       <div class="xl:col-span-4">
         <div
-          :if={strava_integration?(assigns)}
+          :if={!strava_integration?(assigns)}
           class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden"
         >
           <div class="p-4 sm:p-6">
