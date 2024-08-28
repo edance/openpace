@@ -138,15 +138,7 @@ export default {
               },
             },
           },
-          legend: {
-            position: "bottom",
-            labels: {
-              boxWidth: 6,
-              usePointStyle: true,
-              color: isDarkMode ? "white" : colors.black,
-              padding: 15,
-            },
-          },
+          legend: false,
         },
         scales: {
           x: {

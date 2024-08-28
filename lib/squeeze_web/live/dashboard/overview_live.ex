@@ -5,6 +5,7 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
   alias Squeeze.Accounts.User
   alias Squeeze.Activities
   alias Squeeze.Challenges
+  alias Squeeze.Colors
   alias Squeeze.Races
   alias Squeeze.Stats
   alias Squeeze.Strava.HistoryLoader
