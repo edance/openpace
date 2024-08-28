@@ -7,6 +7,8 @@ defmodule Squeeze.Duration do
 
   @match ~r/^(?<hour>\d{1,2}):(?<min>\d{1,2}):?(?<sec>\d{0,2})$/
 
+  alias Squeeze.Utils
+
   def cast(str) when is_binary(str) do
     case Regex.named_captures(@match, str) do
       nil ->
@@ -17,6 +19,18 @@ defmodule Squeeze.Duration do
              {:ok, minutes} <- parse_integer(min_str),
              {:ok, seconds} <- parse_integer(sec_str),
              do: cast_to_secs(hours, minutes, seconds)
+    end
+  end
+
+  def cast(map) when is_map(map) do
+    # Convert string or atom map to atom map
+    map = Utils.key_to_atom(map)
+
+    with {:ok, hours} <- Map.get(map, :hour, nil) |> parse_integer(),
+         {:ok, minutes} <- Map.get(map, :min, nil) |> parse_integer(),
+         {:ok, seconds} <- Map.get(map, :sec, nil) |> parse_integer() do
+      number = 60 * 60 * (hours || 0) + 60 * (minutes || 0) + (seconds || 0)
+      cast(number)
     end
   end
 
@@ -60,6 +74,7 @@ defmodule Squeeze.Duration do
   end
 
   defp parse_integer(""), do: {:ok, nil}
+  defp parse_integer(nil), do: {:ok, nil}
 
   defp parse_integer(str) when is_binary(str) do
     case Integer.parse(str) do
