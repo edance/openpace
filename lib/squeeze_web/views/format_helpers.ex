@@ -91,9 +91,10 @@ defmodule SqueezeWeb.FormatHelpers do
   def format_pace(%{distance: distance}, _) when distance <= 0, do: "N/A"
 
   def format_pace(%{distance: distance, duration: duration}, %UserPrefs{} = user_prefs) do
-    miles = Distances.to_float(distance, imperial: user_prefs.imperial)
+    distance_unit = if user_prefs.imperial, do: Distances.mile_in_meters(), else: 1_000
+    unit_amount = distance / distance_unit
     label = Distances.label(imperial: user_prefs.imperial)
-    pace = trunc(duration / miles)
+    pace = trunc(duration / unit_amount)
     "#{format_duration(pace)}/#{label}"
   end
 
