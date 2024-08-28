@@ -1,42 +1,59 @@
 <main>
   <!-- Navbar -->
   <%= render(SqueezeWeb.MenuView, "base-navbar.html", assigns) %>
-
-  <section class="py-8 md:py-16 mb-8">
-    <div class="mx-auto max-w-7xl container">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="mb-6">
-            <h1 class="text-5xl text-gray-800 mb-4">
-              Emojify Your Activities
-            </h1>
-
-            <p class="mb-4 text-gray-500">
-              Automatically updates activity names to include information, like distance and emojis. It's free - just click the button below to get started!
-            </p>
-            <%= link to: Routes.strava_integration_path(@conn, :request, rename: true) do %>
-              <img
-                alt="Connect to Strava"
-                class="w-48 mb-4"
-                src={Routes.static_path(@conn, "/images/btn_strava@2x.png")}
-              />
-            <% end %>
+  <section class="relative isolate">
+    <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
+      <div class="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
+        <div class="flex">
+          <div class="relative flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+            <span class="font-semibold text-indigo-600">
+              We're open source!
+            </span>
+            <span class="h-4 w-px bg-gray-900/10" aria-hidden="true"></span>
+            <a
+              href="https://github.com/edance/openpace"
+              target="_blank"
+              class="flex items-center gap-x-1"
+            >
+              <span class="absolute inset-0" aria-hidden="true"></span>
+              View on Github
+              <svg
+                class="-mr-2 h-5 w-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
           </div>
-          <div class="order-first md:order-last">
-            <div class="bg-white shadow">
-              <div class="p-4">
-                <div class="relative">
-                  <img
-                    class="w-full"
-                    src={Routes.static_path(@conn, "/images/namer-example.jpg")}
-                  />
-                  <div class="absolute bottom-4 left-4 bg-white px-2 py-1 rounded-sm text-sm">
-                    Morning Run
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+        <h1 class="mt-10 max-w-lg text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          Emojify Your Activities
+        </h1>
+        <p class="mt-6 text-lg leading-8 text-gray-600">
+          Automatically updates activity names to include information, like distance and emojis. It's free - just click the button below to get started!
+        </p>
+        <div class="mt-10 flex items-center gap-x-6">
+          <%= link to: Routes.strava_integration_path(@conn, :request, rename: true) do %>
+            <img
+              alt="Connect to Strava"
+              class="w-48 mb-4"
+              src={Routes.static_path(@conn, "/images/btn_strava@2x.png")}
+            />
+          <% end %>
+        </div>
+      </div>
+      <div class="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
+        <div class="mx-auto max-w-2xl">
+          <img
+            class="w-full max-w-[486px] h-auto"
+            src={Routes.static_path(@conn, "/images/namer.gif")}
+          />
         </div>
       </div>
     </div>
