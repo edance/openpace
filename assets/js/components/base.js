@@ -9,4 +9,3 @@ import './imperial-hidden-input';
 import './modal';
 import './timezone-hidden-input';
 import './time-input';
-import './typewriter';
