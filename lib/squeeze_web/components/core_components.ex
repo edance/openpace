@@ -152,6 +152,7 @@ defmodule SqueezeWeb.CoreComponents do
         max="99"
         placeholder="hr"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        name={@field.name <> "[hour]"}
         value={@hours}
       />
       <span class="font-medium">:</span>
@@ -161,6 +162,7 @@ defmodule SqueezeWeb.CoreComponents do
         max="59"
         placeholder="min"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        name={@field.name <> "[min]"}
         value={@minutes}
       />
       <span class="font-medium">:</span>
@@ -170,6 +172,7 @@ defmodule SqueezeWeb.CoreComponents do
         max="59"
         placeholder="sec"
         class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        name={@field.name <> "[sec]"}
         value={@seconds}
       />
     </div>
