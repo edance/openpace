@@ -97,7 +97,13 @@ defmodule SqueezeWeb.FormatHelpersTest do
     test "with valid distance and metric user_prefs",
          %{activity: activity, user_prefs: user_prefs} do
       user_prefs = %{user_prefs | imperial: false}
-      assert FormatHelpers.format_pace(activity, user_prefs) == "4:20/km"
+      assert FormatHelpers.format_pace(activity, user_prefs) == "4:21/km"
+    end
+
+    # We had a problem with rounding small distances down to zero and then div by zero
+    test "with a very small distance", %{activity: activity, user_prefs: user_prefs} do
+      activity = %{activity | distance: 1}
+      assert FormatHelpers.format_pace(activity, user_prefs) != "N/A"
     end
 
     test "with a distance of 0", %{activity: activity, user_prefs: user_prefs} do
