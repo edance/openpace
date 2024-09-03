@@ -10,4 +10,6 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
+fitparser = "0.7.0"
 rustler = "0.34.0"
+
