@@ -60,19 +60,6 @@ defmodule SqueezeWeb.FormHelpers do
     end
   end
 
-  def duration_select(form, field, opts \\ []) do
-    id = "#{form.id}_duration_select_#{field}"
-
-    content_tag(:div, id: id, class: "duration-select form-row", phx_hook: "DurationSelect") do
-      [
-        text_input(form, :hours, opts),
-        text_input(form, :minutes, opts),
-        text_input(form, :seconds, opts),
-        hidden_input(form, field)
-      ]
-    end
-  end
-
   def distance_input(form, field) when is_atom(field) do
     distance_input(form, Atom.to_string(field))
   end

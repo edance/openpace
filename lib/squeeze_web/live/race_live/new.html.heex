@@ -1,101 +1,95 @@
 <div class="relative py-5">
   <div class="container max-w-xl mx-auto">
-    <%= f = form_for(@changeset, "#", phx_submit: :save) %>
-    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-      <.card>
-        <div>
-          <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-              <%= gettext("Race Information") %>
-            </h3>
-          </div>
-          <!-- Card body -->
-          <div class="p-4 sm:p-6">
-            <div class="mb-4">
-              <.input
-                type="text"
-                field={f[:race_name]}
-                label={gettext("Race Name")}
-                placeholder="Boston Marathon"
-                autocomplete="off"
-              />
+    <.form :let={f} for={@changeset} phx-submit="save">
+      <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+        <.card>
+          <div>
+            <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+              <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                <%= gettext("Race Information") %>
+              </h3>
             </div>
-
-            <div class="mb-4">
-              <.input
-                type="select"
-                field={f[:distance]}
-                label={gettext("Distance")}
-                placeholder="Choose a distance"
-                options={distances()}
-              />
-            </div>
-
-            <div class="mb-4">
-              <.input type="date" field={f[:race_date]} label={gettext("Race Date")} />
-            </div>
-          </div>
-        </div>
-      </.card>
-
-      <.card>
-        <div>
-          <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-              <%= gettext("Goal Information") %>
-            </h3>
-          </div>
-          <!-- Card body -->
-          <div class="p-4 sm:p-6">
-            <div class="mb-4">
-              <%= label f, :duration, class: "block font-medium text-gray-700 dark:text-white mb-2" do %>
-                Goal Time
-              <% end %>
-              <%= duration_select(f, :duration,
-                class:
-                  "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-              ) %>
-              <%= error_tag(f, :duration) %>
-            </div>
-
-            <div class="mb-4">
-              <.input
-                type="checkbox"
-                field={f[:just_finish]}
-                label={gettext("My goal is to just finish")}
-              />
-            </div>
-
-            <div class="mb-4">
-              <.input
-                type="textarea"
-                field={f[:description]}
-                label={gettext("Description")}
-                placeholder="Description"
-                rows="10"
-              />
-            </div>
-
-            <%= if @changeset.action do %>
-              <div
-                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                role="alert"
-              >
-                <p class="text-sm mb-0">
-                  Oops, something went wrong! Please check the errors.
-                </p>
+            <!-- Card body -->
+            <div class="p-4 sm:p-6">
+              <div class="mb-4">
+                <.input
+                  type="text"
+                  field={f[:race_name]}
+                  label={gettext("Race Name")}
+                  placeholder="Boston Marathon"
+                  autocomplete="off"
+                />
               </div>
-            <% end %>
 
-            <div class="mt-6">
-              <%= submit("Create Race",
-                class:
-                  "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              ) %>
+              <div class="mb-4">
+                <.input
+                  type="select"
+                  field={f[:distance]}
+                  label={gettext("Distance")}
+                  placeholder="Choose a distance"
+                  options={distances()}
+                />
+              </div>
+
+              <div class="mb-4">
+                <.input type="date" field={f[:race_date]} label={gettext("Race Date")} />
+              </div>
             </div>
           </div>
-        </div>
-      </.card>
-    </div>
+        </.card>
+
+        <.card>
+          <div>
+            <div class="border-b border-gray-200 dark:border-white/5 px-4 py-5 sm:px-6">
+              <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                <%= gettext("Goal Information") %>
+              </h3>
+            </div>
+            <!-- Card body -->
+            <div class="p-4 sm:p-6">
+              <div class="mb-4">
+                <.input field={f[:duration]} type="duration" label={gettext("Goal Time")} />
+              </div>
+
+              <div class="mb-4">
+                <.input
+                  type="checkbox"
+                  field={f[:just_finish]}
+                  label={gettext("My goal is to just finish")}
+                />
+              </div>
+
+              <div class="mb-4">
+                <.input
+                  type="textarea"
+                  field={f[:description]}
+                  label={gettext("Description")}
+                  placeholder="Description"
+                  rows="10"
+                />
+              </div>
+
+              <%= if @changeset.action do %>
+                <div
+                  class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                  role="alert"
+                >
+                  <p class="text-sm mb-0">
+                    Oops, something went wrong! Please check the errors.
+                  </p>
+                </div>
+              <% end %>
+
+              <div class="mt-6">
+                <%= submit("Create Race",
+                  class:
+                    "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                ) %>
+              </div>
+            </div>
+          </div>
+        </.card>
+      </div>
+    </.form>
   </div>
 </div>
