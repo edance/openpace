@@ -136,49 +136,6 @@ defmodule SqueezeWeb.CoreComponents do
     """
   end
 
-  def duration_input(assigns) do
-    # given a value in seconds, convert it to hours, minutes, and seconds
-    assigns =
-      assigns
-      |> assign_new(:hours, fn -> safe_div(assigns.value, 3600) end)
-      |> assign_new(:minutes, fn -> safe_div(safe_rem(assigns.value, 3600), 60) end)
-      |> assign_new(:seconds, fn -> safe_rem(assigns.value, 60) end)
-
-    ~H"""
-    <div class="flex items-center space-x-2 max-w-48">
-      <input
-        type="number"
-        min="0"
-        max="99"
-        placeholder="hr"
-        class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        name={@field.name <> "[hour]"}
-        value={@hours}
-      />
-      <span class="font-medium">:</span>
-      <input
-        type="number"
-        min="0"
-        max="59"
-        placeholder="min"
-        class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        name={@field.name <> "[min]"}
-        value={@minutes}
-      />
-      <span class="font-medium">:</span>
-      <input
-        type="number"
-        min="0"
-        max="59"
-        placeholder="sec"
-        class="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        name={@field.name <> "[sec]"}
-        value={@seconds}
-      />
-    </div>
-    """
-  end
-
   attr :user, :map, required: true
   attr :class, :string, default: ""
   attr :size, :integer, default: 32
@@ -247,7 +204,7 @@ defmodule SqueezeWeb.CoreComponents do
   attr :type, :string,
     default: "text",
     values: ~w(checkbox color date datetime-local email file hidden month number password
-               range radio search select tel text textarea time url week)
+               range radio search select tel text textarea time url week duration)
 
   attr :field, FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
@@ -336,6 +293,52 @@ defmodule SqueezeWeb.CoreComponents do
         {@rest}
       ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
       <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  def input(%{type: "duration"} = assigns) do
+    # given a value in seconds, convert it to hours, minutes, and seconds
+    assigns =
+      assigns
+      |> assign_new(:hours, fn -> safe_div(assigns.value, 3600) end)
+      |> assign_new(:minutes, fn -> safe_div(safe_rem(assigns.value, 3600), 60) end)
+      |> assign_new(:seconds, fn -> safe_rem(assigns.value, 60) end)
+
+    ~H"""
+    <div phx-feedback-for={@name}>
+      <.label for={@id}><%= @label %></.label>
+      <div class="flex items-center space-x-2 max-w-60">
+        <input
+          type="number"
+          min="0"
+          max="99"
+          placeholder="hr"
+          class="mt-2 block w-full rounded-lg text-gray-800 dark:text-white bg-white dark:bg-white/10 focus:ring-0 sm:text-sm sm:leading-6"
+          name={@name <> "[hour]"}
+          value={@hours}
+        />
+        <span class="font-medium">:</span>
+        <input
+          type="number"
+          min="0"
+          max="59"
+          placeholder="min"
+          class="mt-2 block w-full rounded-lg text-gray-800 dark:text-white bg-white dark:bg-white/10 focus:ring-0 sm:text-sm sm:leading-6"
+          name={@name <> "[min]"}
+          value={@minutes}
+        />
+        <span class="font-medium">:</span>
+        <input
+          type="number"
+          min="0"
+          max="59"
+          placeholder="sec"
+          class="mt-2 block w-full rounded-lg text-gray-800 dark:text-white bg-white dark:bg-white/10 focus:ring-0 sm:text-sm sm:leading-6"
+          name={@name <> "[sec]"}
+          value={@seconds}
+        />
+      </div>
     </div>
     """
   end
