@@ -168,6 +168,7 @@ defmodule Squeeze.FileParser.FitImport do
   defp coordinates(record) do
     lat = record["position_lat"] |> cast_float()
     lon = record["position_long"] |> cast_float()
+
     if lat && lon do
       %{
         lat: lat / 11_930_465,

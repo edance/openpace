@@ -94,7 +94,6 @@ defmodule Squeeze.Mixfile do
       {:redirect, "~> 0.4.0"},
       {:csv, "~> 3.0"},
       {:rustler, "~> 0.34.0"},
-      {:erlport, "~> 0.11.0"},
       {:poolboy, "~> 1.5"},
       {:sweet_xml, "~> 0.7.1"},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
