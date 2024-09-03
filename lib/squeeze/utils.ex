@@ -29,6 +29,18 @@ defmodule Squeeze.Utils do
 
   def cast_float(x), do: x
 
+  def cast_int(nil), do: nil
+  def cast_int(x) when is_float(x), do: round(x)
+
+  def cast_int(x) when is_binary(x) do
+    case Integer.parse(x) do
+      {int, _} -> int
+      _ -> nil
+    end
+  end
+
+  def cast_int(x), do: x
+
   def sum_by(list, field) do
     list
     |> Enum.map(&Map.get(&1, field))
