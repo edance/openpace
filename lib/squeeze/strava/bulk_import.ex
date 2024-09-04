@@ -7,7 +7,7 @@ defmodule Squeeze.Strava.BulkImport do
 
   alias Squeeze.Activities
   alias Squeeze.SlugGenerator
-  alias Squeeze.FileParser.{FitImport, TcxImport}
+  alias Squeeze.FileParser.FitImport
 
   def import_from_file(user, filename) do
     Logger.info("[#{__MODULE__}] starting import of #{filename}")
@@ -21,75 +21,64 @@ defmodule Squeeze.Strava.BulkImport do
 
     # Read the activities.csv
     # Create a stream to create activities, trackpoints, and laps
+    Logger.info("[#{__MODULE__}] importing summary activities...")
+
     File.stream!(Path.join([folder, "activities.csv"]))
     |> CSV.decode(headers: true, escape_max_lines: 1000)
     |> Stream.map(fn row ->
-      with {:ok, %{"Activity ID" => external_id} = csv_data} <- row,
-           {:error, :not_found} <- Activities.fetch_activity_by_external_id(user, external_id) do
-        create_detailed_activity(user, csv_data, folder)
-      else
-        {:ok, activity} -> activity
-      end
+      {:ok, csv_data} = row
+      create_summary_activity(user, csv_data)
     end)
+    |> Stream.run()
+
+    # Import the detailed activity from fit files
+    Logger.info("[#{__MODULE__}] importing detailed activities...")
+
+    File.stream!(Path.join([folder, "activities.csv"]))
+    |> CSV.decode(headers: true, escape_max_lines: 1000)
+    |> Stream.map(fn row ->
+      {:ok, csv_data} = row
+      create_detailed_activity(user, csv_data, folder)
+    end)
+  end
+
+  defp create_summary_activity(user, csv_data) do
+    data = activity_from_csv(csv_data)
+
+    case Activities.create_activity(user, data) do
+      {:ok, activity} -> activity
+      {:error, _changeset} -> Logger.warn("Cannot create #{data[:name]}")
+    end
   end
 
   defp create_detailed_activity(user, csv_data, folder) do
     data = load_data(Path.join([folder, csv_data["Filename"]]))
-    data = Map.merge(activity_from_csv(csv_data), data)
-
-    case Activities.create_activity(user, data) do
-      {:ok, activity} ->
-        create_laps(activity, data.laps)
-        Activities.create_trackpoint_set(activity, data.trackpoints)
-        activity
-
-      {:error, _changeset} ->
-        Logger.warn("Cannot create #{data[:name]}")
-    end
+    activity = Activities.get_activity_by_external_id!(user, csv_data["Activity ID"])
+    # Activities.update_activity(activity, %{polyline: data.polyline})
+    Activities.create_laps(activity, data.laps)
+    Activities.create_trackpoint_set(activity, data.trackpoints)
   end
 
   defp load_data(filename) do
+    Logger.info("[#{__MODULE__}] loading data from #{filename}")
+
     cond do
       String.contains?(filename, ".fit.gz") ->
-        System.cmd("gzip", ["-d", filename])
+        gunzip(filename)
         full_file = Path.absname(String.replace(filename, ".gz", ""))
         FitImport.import_from_file(full_file)
 
       String.contains?(filename, ".tcx") ->
-        TcxImport.import_from_file(filename)
+        Logger.info("[#{__MODULE__}] skipping tcx files...")
+        %{laps: [], trackpoints: []}
 
       true ->
         %{laps: [], trackpoints: []}
     end
   end
 
-  def create_laps(activity, laps) do
-    fields = ~w(
-      average_cadence
-      average_speed
-      distance
-      elapsed_time
-      end_index
-      lap_index
-      max_speed
-      moving_time
-      name
-      pace_zone
-      split
-      start_date
-      start_date_local
-      start_index
-      total_elevation_gain
-    )a
-
-    laps = laps |> Enum.map(fn lap -> Map.take(lap, fields) end)
-    Activities.create_laps(activity, laps)
-  end
-
-  def to_naive_datetime(t) do
-    t
-    |> Timex.to_naive_datetime()
-    |> NaiveDateTime.truncate(:second)
+  defp gunzip(filename) do
+    System.cmd("gzip", ["-d", filename])
   end
 
   defp activity_from_csv(activity) do

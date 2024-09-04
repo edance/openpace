@@ -111,22 +111,22 @@ defmodule Squeeze.FileParser.FitImport do
 
       %{
         average_cadence:
-          map_get_by_priority(lap, ["avg_running_cadence", "avg_cadence"]) |> cast_int(),
+          map_get_by_priority(lap, ["avg_running_cadence", "avg_cadence"]) |> cast_float(),
         average_speed:
           map_get_by_priority(lap, ["enhanced_avg_speed", "avg_speed"]) |> cast_float(),
         distance: cast_float(lap["total_distance"]),
-        elapsed_time: cast_float(lap["total_elapsed_time"]),
+        elapsed_time: cast_int(lap["total_elapsed_time"]),
         # TODO: This should be the start index of the lap
         start_index: 0,
         # TODO: This should be the end index of the lap
         end_index: 0,
         lap_index: cast_int(lap["message_index"]),
         max_speed: map_get_by_priority(lap, ["enhanced_max_speed", "max_speed"]) |> cast_float(),
-        moving_time: cast_float(lap["total_elapsed_time"]),
+        moving_time: cast_int(lap["total_elapsed_time"]),
         name: lap["event"],
         split: cast_int(lap["message_index"]) + 1,
         start_date: start_time |> to_naive_datetime(),
-        start_date_local: start_time,
+        start_date_local: start_time |> to_naive_datetime(),
         total_elevation_gain: cast_float(lap["total_ascent"])
       }
     end)
