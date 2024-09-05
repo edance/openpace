@@ -27,7 +27,6 @@ defmodule Squeeze.FileParser.FitImport do
       moving_time: session_data |> Map.get("total_elapsed_time") |> cast_int(),
       elapsed_time: session_data |> Map.get("total_elapsed_time") |> cast_int(),
       start_at: start_at,
-      # TODO: This should be the local time
       start_at_local: start_at,
       elevation_gain: session_data |> Map.get("total_ascent") |> cast_float(),
       polyline: polyline(trackpoints),
@@ -113,9 +112,7 @@ defmodule Squeeze.FileParser.FitImport do
           map_get_by_priority(lap, ["enhanced_avg_speed", "avg_speed"]) |> cast_float(),
         distance: cast_float(lap["total_distance"]),
         elapsed_time: cast_int(lap["total_elapsed_time"]),
-        # TODO: This should be the start index of the lap
         start_index: 0,
-        # TODO: This should be the end index of the lap
         end_index: 0,
         lap_index: cast_int(lap["message_index"]),
         max_speed: map_get_by_priority(lap, ["enhanced_max_speed", "max_speed"]) |> cast_float(),

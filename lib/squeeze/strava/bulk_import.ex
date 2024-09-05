@@ -6,8 +6,8 @@ defmodule Squeeze.Strava.BulkImport do
   require Logger
 
   alias Squeeze.Activities
-  alias Squeeze.SlugGenerator
   alias Squeeze.FileParser.FitImport
+  alias Squeeze.SlugGenerator
 
   def import_from_file(user, filename) do
     Logger.info("[#{__MODULE__}] starting import of #{filename}")

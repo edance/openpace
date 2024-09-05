@@ -12,13 +12,31 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.12.3-erlang-23.3-debian-bullseye-20210902-slim
 #
-ARG ELIXIR_VERSION=1.14.2
-ARG OTP_VERSION=24.3.4.8
-ARG DEBIAN_VERSION=buster-20230109-slim
+#
+ARG ELIXIR_VERSION=1.14.5
+ARG OTP_VERSION=24.2.2
+ARG DEBIAN_VERSION=bookworm-20240904-slim
 
+ARG RUST_VERSION=1.80.1
+
+ARG RUST_IMAGE="rust:${RUST_VERSION}"
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
+# Use a rust image to compile the Rust code
+# 
+FROM ${RUST_IMAGE} as rust
+# install build dependencies
+RUN apt-get update -y && apt-get install -y build-essential git \
+    && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+workdir /app
+COPY native/rust_fit ./
+RUN cargo rustc --release 
+
+
+# Use the elixir image to build the release
+#
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
@@ -66,6 +84,9 @@ COPY assets assets
 # compile assets
 RUN mix assets.deploy
 
+# Copy the compiled Rust code
+COPY --from=rust /app/target/release/librust_fit.so priv/native/librust_fit.so
+
 # Compile the release
 RUN mix compile
 
@@ -80,6 +101,7 @@ RUN mix release
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
+#
 FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
