@@ -2,12 +2,7 @@ import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { parse } from "date-fns";
 import { colors, fonts } from "./../variables.js";
-import {
-  activityColor,
-  calcDistance,
-  hexToRGB,
-  capitalize,
-} from "../utils";
+import { activityColor, calcDistance, hexToRGB, capitalize } from "../utils";
 
 function bubbleSize(activities) {
   const minBubble = 10;
@@ -23,7 +18,7 @@ function bubbleSize(activities) {
 
 export default {
   mounted() {
-    const isDarkMode = document.documentElement.classList.contains('dark');
+    const isDarkMode = document.documentElement.classList.contains("dark");
     const dataset = JSON.parse(this.el.dataset["summaries"]);
     const imperial = JSON.parse(this.el.dataset["imperial"]);
     const data = dataset.map((val, idx) => {

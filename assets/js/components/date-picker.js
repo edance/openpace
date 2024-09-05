@@ -1,7 +1,7 @@
-import flatpickr  from 'flatpickr';
+import flatpickr from "flatpickr";
 
 function load() {
-  document.querySelectorAll('.date-picker').forEach((el) => {
+  document.querySelectorAll(".date-picker").forEach((el) => {
     const options = {
       inline: el.dataset["inline"],
     };

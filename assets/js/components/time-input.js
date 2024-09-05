@@ -1,28 +1,28 @@
-import { u } from 'umbrellajs';
+import { u } from "umbrellajs";
 
 const formatValue = (value) => {
-  const arr = value.replace(/^0+/, '').split('').reverse();
+  const arr = value.replace(/^0+/, "").split("").reverse();
 
   if (arr.length < 4) {
     const remaining = 4 - arr.length;
 
     for (let i = 0; i < remaining; i++) {
-      arr.push('0');
+      arr.push("0");
     }
   }
 
   if (arr.length > 4) {
-    arr.splice(4, 0, ':');
+    arr.splice(4, 0, ":");
   }
 
-  arr.splice(2, 0, ':');
+  arr.splice(2, 0, ":");
 
-  return arr.reverse().join('');
-}
+  return arr.reverse().join("");
+};
 
 const stripValue = (value) => {
-  return value.replace(/[^0-9\.]+/g, '');
-}
+  return value.replace(/[^0-9\.]+/g, "");
+};
 
 const handleKeyDown = (e) => {
   const keyCode = e.keyCode;
@@ -31,7 +31,7 @@ const handleKeyDown = (e) => {
 
   // Backspace
   if (keyCode === 8) {
-    value = value.slice(0, value.length -1);
+    value = value.slice(0, value.length - 1);
   }
 
   // 0-9 only
@@ -43,8 +43,8 @@ const handleKeyDown = (e) => {
 };
 
 function init() {
-  u('.time-input').handle('keydown', handleKeyDown);
-};
+  u(".time-input").handle("keydown", handleKeyDown);
+}
 
 window.addEventListener("phx:page-loading-stop", init);
 window.addEventListener("load", init);

@@ -257,7 +257,10 @@ export default {
 
     const tooltip = container
       .append("div")
-      .attr("class", "tooltip show absolute bg-gray-900 text-white rounded-lg shadow-lg px-2 py-1 flex items-center justify-center text-sm min-w-24")
+      .attr(
+        "class",
+        "tooltip show absolute bg-gray-900 text-white rounded-lg shadow-lg px-2 py-1 flex items-center justify-center text-sm min-w-24"
+      )
       .style("display", "none");
     const tooltipInner = tooltip.append("div");
     const tooltipDate = tooltipInner.append("strong");

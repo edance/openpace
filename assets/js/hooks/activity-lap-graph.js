@@ -1,10 +1,15 @@
 import * as d3 from "d3";
-import { calcDistance, range, pad, roundTo } from "../utils";
-
-function velocityToPace(velocity, imperial) {
-  const distance = imperial ? 1609 : 1000; // Mile or kilometer
-  return distance / 60 / velocity;
-}
+import {
+  calcDistance,
+  range,
+  pad,
+  roundTo,
+  isDarkMode,
+  formatDistance,
+  formatVelocity,
+  formatDuration,
+} from "../utils";
+import { colors, fonts } from "./../variables.js";
 
 export default {
   // Returns speed (kph/mph) or pace (min/km or min/mile)
@@ -41,13 +46,27 @@ export default {
     const width = this.el.clientWidth;
     const height = this.el.clientHeight;
 
+    container.attr("style", "position: relative;");
+
     // Create the svg and append it to the container
     const svg = container
       .append("svg")
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height])
-      .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+      .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+      .attr("class", "text-gray-800 dark:text-white")
+      .style("font-family", fonts.base);
+
+    // Create a div for the tooltip and hide it initially
+    const tooltip = container
+      .append("div")
+      .attr("class", "absolute text-sm bg-white shadow-md rounded px-2 py-1")
+      .style("opacity", 0)
+      .style("top", "0");
+
+    const tooltipHeader = tooltip.append("div").attr("class", "font-bold");
+    const tooltipBody = tooltip.append("div");
 
     this.handleEvent("laps", ({ laps }) => {
       if (!laps?.length) {
@@ -73,12 +92,6 @@ export default {
         .domain([minPace - yPadding, maxPace + yPadding])
         .range([margin.top, height - margin.bottom]);
 
-      // Color range (faster is yellow, slower is black)
-      const color = d3.scaleSequential(
-        d3.extent(laps, (d) => d.average_speed),
-        d3.interpolateMagma
-      );
-
       const xAxis = (g) => g.call(d3.axisBottom(x));
       svg
         .append("g")
@@ -96,15 +109,17 @@ export default {
       svg
         .append("g")
         .attr("transform", `translate(${margin.left}, 0)`)
+        .style("font-family", fonts.base)
         .call(yAxis);
 
       const mouseLine = svg
         .append("path") // create vertical line to follow mouse
         .attr("class", "mouse-line")
-        .attr("stroke", "white")
-        .attr("stroke-width", 2)
+        .attr("stroke", isDarkMode() ? "white" : colors.black)
+        .attr("stroke-width", 1)
         .attr("opacity", 0);
 
+      // Create the lap bars
       const bars = svg
         .append("g")
         .selectAll("rect")
@@ -114,41 +129,71 @@ export default {
           evt.target.style.cursor = "pointer";
           d3.select(this).transition().attr("fill-opacity", 1);
           mouseLine.transition().attr("opacity", 1);
+          tooltip.transition().style("opacity", 1);
         })
         .on("mouseout", function (evt) {
           d3.select(this).transition().attr("fill-opacity", 0.5);
           evt.target.style.cursor = "inherit";
           mouseLine.transition().attr("opacity", 0);
+          tooltip.transition().style("opacity", 0);
         })
-        .on("mousemove", function (evt) {
-          const barX = parseFloat(d3.select(this).attr("x"));
-          const barWidth = parseFloat(d3.select(this).attr("width"));
-          const barY = parseFloat(d3.select(this).attr("y"));
-          const posX = Math.round(barX + barWidth / 2);
+        .on("mousemove", (evt) => {
+          // get d3 object from event
+          const elem = d3.select(evt.target);
+
+          const barX = parseFloat(elem.attr("x"));
+          const barWidth = parseFloat(elem.attr("width"));
+          const barY = parseFloat(elem.attr("y"));
+          let posX = Math.round(barX + barWidth / 2);
 
           mouseLine.attr("d", `M ${posX} 0 V ${barY}`);
+          const data = elem.data()[0];
+
+          tooltipHeader.html(`Lap: ${data.split}`);
+
+          const tooltipFeatures = [
+            formatDistance(data.distance, this.imperial, 2),
+            formatVelocity(
+              data.average_speed,
+              this.imperial,
+              this.activityType
+            ),
+            formatDuration(data.elapsed_time),
+          ];
+
+          tooltipBody.html(tooltipFeatures.join(" &middot; "));
+
+          const tooltipWidth = tooltip.node().getBoundingClientRect().width;
+          posX = posX - tooltipWidth / 2;
+
+          const svgWidth = svg.node().getBoundingClientRect().width;
+          if (posX + tooltipWidth > svgWidth) {
+            tooltip.style("left", "auto").style("right", "0");
+          } else {
+            tooltip.style("left", posX + "px").style("right", "auto");
+          }
         })
-        .attr("fill", (d) => color(d.average_speed))
+        .attr("class", "fill-indigo-500 dark:fill-indigo-400")
         .attr("fill-opacity", 0.5)
-        .attr("x", (d, idx) => {
+        .attr("x", (_, idx) => {
           let values = [0, ...xValues];
-          values = values.map((value, index) =>
+          values = values.map((_, index) =>
             values.slice(0, index + 1).reduce((a, b) => a + b)
           );
           return x(values[idx]) + 1;
         })
-        .attr("y", (d, i) => y(maxPace + yPadding))
+        .attr("y", () => y(maxPace + yPadding))
         .attr("height", 0)
-        .attr("width", (d, i) => x(xValues[i]) - x(0) - 2);
+        .attr("width", (_, i) => x(xValues[i]) - x(0) - 2);
 
       // Animate the bars for fun
       bars
         .transition()
         .ease(d3.easeLinear)
         .duration(800)
-        .attr("y", (d, i) => y(yValues[i]))
-        .attr("height", (d, i) => y(maxPace + yPadding) - y(yValues[i]))
-        .delay((d, i) => i * 100);
+        .attr("y", (_, i) => y(yValues[i]))
+        .attr("height", (_, i) => y(maxPace + yPadding) - y(yValues[i]))
+        .delay((_, i) => i * 100);
     });
   },
 };

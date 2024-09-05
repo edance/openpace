@@ -1,4 +1,4 @@
-import 'datalist-polyfill';
+import "datalist-polyfill";
 
 const setInitialValue = (input) => {
   const options = $(input.list.options).filter((idx, x) => {
@@ -14,10 +14,10 @@ const setInitialValue = (input) => {
 
 const updateHiddenValue = (e) => {
   const input = e.target,
-        list = input.getAttribute('list'),
-        options = document.querySelectorAll('#' + list + ' option'),
-        hiddenInput = document.getElementById(list + '-hidden'),
-        inputValue = input.value;
+    list = input.getAttribute("list"),
+    options = document.querySelectorAll("#" + list + " option"),
+    hiddenInput = document.getElementById(list + "-hidden"),
+    inputValue = input.value;
 
   hiddenInput.value = inputValue;
 
@@ -25,15 +25,15 @@ const updateHiddenValue = (e) => {
     const option = options[i];
 
     if (option.innerText === inputValue) {
-      hiddenInput.value = option.getAttribute('data-value');
+      hiddenInput.value = option.getAttribute("data-value");
       break;
     }
   }
 };
 
 function init() {
-  $('input[list]').each((_, el) => setInitialValue(el));
-  $('input[list]').on('input', updateHiddenValue);
+  $("input[list]").each((_, el) => setInitialValue(el));
+  $("input[list]").on("input", updateHiddenValue);
 }
 
 window.addEventListener("load", init);

@@ -4,28 +4,30 @@
 // import '../css/app.scss';
 
 // Import dependencies
-import 'phoenix_html';
+import "phoenix_html";
 
 // Import bootstrap and required libraries
-import './bootstrap';
+import "./bootstrap";
 
 // Import base components
-import './components/base';
+import "./components/base";
 
 // Fonts
-import './fonts';
+import "./fonts";
 
 // Live View
-import {Socket} from "phoenix";
+import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 
 // Import only hooks not used on the dashboard
-import hooks from './hooks/base';
+import hooks from "./hooks/base";
 
-const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+const csrfToken = document
+  .querySelector("meta[name='csrf-token']")
+  .getAttribute("content");
 const liveSocket = new LiveSocket("/live", Socket, {
   hooks,
-  params: {_csrf_token: csrfToken}
+  params: { _csrf_token: csrfToken },
 });
 
 // Connect if there are any LiveViews on the page
