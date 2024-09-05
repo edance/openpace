@@ -1,11 +1,11 @@
-<div class="col p-2 d-none d-md-block">
-  <div class="small mb-2">
+<div class="col p-2 hidden md:block">
+  <div class="text-sm text-gray-800 dark:text-white mb-2">
     Summary
   </div>
 
   <%= unless Enum.empty?(@activities) do %>
     <div class="h2">
-      <span class="text-green">
+      <span class="text-xl text-gray-500 dark:text-white/60">
         <%= completed_distance(assigns) %><%= distance_label(assigns) %>
       </span>
     </div>
