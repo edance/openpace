@@ -3,19 +3,6 @@ defmodule Squeeze.Colors do
   Color codes for different activities and gradients.
   """
 
-  @colors ~w(
-    blue
-    indigo
-    purple
-    pink
-    red
-    orange
-    yellow
-    green
-    teal
-    cyan
-  )
-
   def blue, do: "#5e72e4"
   def indigo, do: "#5603ad"
   def purple, do: "#8965e0"
