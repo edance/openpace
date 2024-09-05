@@ -37,10 +37,4 @@ defmodule Squeeze.Colors do
       true -> yellow()
     end
   end
-
-  def gradient_class_by_id(id) do
-    idx = rem(id, length(@colors))
-    color = Enum.at(@colors, idx)
-    "bg-gradient-#{color}"
-  end
 end
