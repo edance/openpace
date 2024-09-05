@@ -15,8 +15,13 @@ config :squeeze, SqueezeWeb.Endpoint, cache_static_manifest: "priv/static/cache_
 config :logger, level: :info
 
 # In application.ex, we allow fit decoder workers but not in production
-config :squeeze, :allow_fit_decoder, false
 config :squeeze, :allow_strava_upload, false
+
+# Using rustler and a precompiled NIF in the build
+config :squeeze, Squeeze.RustFit,
+  crate: :rust_fit,
+  skip_compilation?: true,
+  load_from: {:squeeze, "priv/native/librust_fit"}
 
 # ## SSL Support
 #

@@ -261,7 +261,7 @@ defmodule Squeeze.Activities do
     |> Repo.insert(on_conflict: :replace_all, conflict_target: :activity_id)
   end
 
-  def create_laps(%Activity{} = _activity, laps) do
+  def create_laps(%Activity{} = activity, laps) do
     laps =
       Enum.map(laps, fn row ->
         now = Timex.now() |> Timex.to_naive_datetime() |> NaiveDateTime.truncate(:second)
@@ -269,6 +269,7 @@ defmodule Squeeze.Activities do
         row
         |> Map.put(:inserted_at, now)
         |> Map.put(:updated_at, now)
+        |> Map.put(:activity_id, activity.id)
       end)
 
     {count, _} =

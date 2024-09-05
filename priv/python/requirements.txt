@@ -1,1 +1,0 @@
-garmin-fit-sdk==21.101.0

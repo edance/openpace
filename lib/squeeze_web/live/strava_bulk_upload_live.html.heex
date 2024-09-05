@@ -1,18 +1,9 @@
-<div class="container py-2">
-  <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-    <div class="card">
-      <div class="card-header bg-transparent">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="mb-0">
-              <%= gettext("Strava Bulk Upload") %>
-            </h2>
-          </div>
-        </div>
-      </div>
+<div class="position-relative py-5">
+  <div class="container max-w-3xl mx-auto px-4">
+    <.card title={gettext("Strava Bulk Upload")}>
       <!-- Card body -->
-      <div class="card-body">
-        <ol class="text-muted">
+      <div class="p-4 sm:p-6">
+        <ol class="px-4 sm:px-6 list-decimal text-gray-500 dark:text-white/60">
           <li>
             Log into the account on Strava.com from which you wish to bulk export data.
           </li>
@@ -30,7 +21,7 @@
           </li>
         </ol>
 
-        <p class="mb-4">
+        <p class="my-4 text-gray-500 dark:text-white/60">
           You will be able to download a zip file with all your activity data. Upload that file below.
         </p>
 
@@ -64,9 +55,9 @@
         <% end %>
 
         <form id="upload-form" phx-submit="save" phx-change="validate">
-          <%= live_file_input(@uploads.export) %>
+          <.live_file_input upload={@uploads.export} />
         </form>
       </div>
-    </div>
+    </.card>
   </div>
 </div>

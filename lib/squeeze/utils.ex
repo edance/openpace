@@ -19,7 +19,27 @@ defmodule Squeeze.Utils do
 
   def cast_float(nil), do: nil
   def cast_float(x) when is_integer(x), do: x * 1.0
+
+  def cast_float(x) when is_binary(x) do
+    case Float.parse(x) do
+      {float, _} -> float
+      _ -> nil
+    end
+  end
+
   def cast_float(x), do: x
+
+  def cast_int(nil), do: nil
+  def cast_int(x) when is_float(x), do: round(x)
+
+  def cast_int(x) when is_binary(x) do
+    case Integer.parse(x) do
+      {int, _} -> int
+      _ -> nil
+    end
+  end
+
+  def cast_int(x), do: x
 
   def sum_by(list, field) do
     list

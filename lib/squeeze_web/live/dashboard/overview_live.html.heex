@@ -153,7 +153,30 @@
 
       <div class="xl:col-span-4">
         <div
-          :if={!strava_integration?(assigns)}
+          :if={allow_strava_upload?()}
+          class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden"
+        >
+          <div class="p-4 sm:p-6">
+            <h3 class="font-semibold text-white">
+              <%= gettext("Bulk Import Activities from Strava") %>
+            </h3>
+
+            <p class="text-sm text-white mb-4">
+              <%= gettext(
+                "In order to keep your dashboard up-to-date, we recommend connecting to Strava. This way all of your runs, rides, whatever will be synced with us."
+              ) %>
+            </p>
+
+            <%= live_redirect(gettext("Import Activities"),
+              to: Routes.strava_bulk_upload_path(@socket, :index),
+              class:
+                "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            ) %>
+          </div>
+        </div>
+
+        <div
+          :if={!strava_integration?(assigns) && !allow_strava_upload?()}
           class="bg-gradient-to-tl from-orange-600 to-yellow-600 shadow-xl dark:shadow-dark-xl rounded-lg mb-8 overflow-hidden"
         >
           <div class="p-4 sm:p-6">

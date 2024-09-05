@@ -5,12 +5,10 @@ defmodule SqueezeWeb.StravaBulkUploadLive do
   alias Squeeze.Strava.BulkImport
   alias SqueezeWeb.Endpoint
 
-  @allow_strava_upload Application.compile_env(:squeeze, :allow_strava_upload)
-
   @impl true
   def mount(_params, _session, socket) do
     socket =
-      if @allow_strava_upload do
+      if allow_strava_upload?() do
         socket
         |> assign(:activity_count, 0)
         |> allow_upload(:export,
@@ -64,6 +62,10 @@ defmodule SqueezeWeb.StravaBulkUploadLive do
   def handle_info(:activity_uploaded, socket) do
     socket = assign(socket, activity_count: socket.assigns.activity_count + 1)
     {:noreply, socket}
+  end
+
+  defp allow_strava_upload? do
+    Application.fetch_env!(:squeeze, :allow_strava_upload)
   end
 
   defp copy_file_to_tmp(path) do

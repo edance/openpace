@@ -3,36 +3,40 @@ defmodule Squeeze.FileParser.FitImport do
   Parses FIT files and returns metadata like distance, duration, trackpoints, and laps.
   """
 
-  import Squeeze.Utils, only: [cast_float: 1]
+  import Squeeze.Utils, only: [cast_float: 1, cast_int: 1]
 
   def import_from_file(filename) do
-    {:ok, result} = Squeeze.FitDecoder.call(filename)
-    data = Jason.decode!(result)
-    start_at = start_at(data)
-    trackpoints = trackpoints(data)
+    records = Squeeze.RustFit.parse_fit_file(filename)
+
+    session_data =
+      records
+      |> Enum.find(&(&1.kind == "session"))
+      |> Map.get(:fields, [])
+      |> Enum.reduce(%{}, fn {key, value}, acc ->
+        Map.put(acc, key, value)
+      end)
+
+    start_at = start_at(session_data)
+    trackpoints = trackpoints(records, start_at)
 
     %{
-      type: type(data),
-      activity_type: activity_type(data),
-      distance: Map.get(session_msg(data), "total_distance"),
-      duration: round(Map.get(session_msg(data), "total_elapsed_time")),
-      moving_time: round(Map.get(session_msg(data), "total_elapsed_time")),
-      elapsed_time: round(Map.get(session_msg(data), "total_elapsed_time")),
+      type: type(session_data),
+      activity_type: activity_type(session_data),
+      distance: session_data |> Map.get("total_distance") |> cast_float(),
+      duration: session_data |> Map.get("total_elapsed_time") |> cast_int(),
+      moving_time: session_data |> Map.get("total_elapsed_time") |> cast_int(),
+      elapsed_time: session_data |> Map.get("total_elapsed_time") |> cast_int(),
       start_at: start_at,
-      start_at_local: Timex.shift(start_at, seconds: tz_offset_in_seconds(data)),
-      elevation_gain: session_msg(data) |> Map.get("total_ascent") |> cast_float(),
+      start_at_local: start_at,
+      elevation_gain: session_data |> Map.get("total_ascent") |> cast_float(),
       polyline: polyline(trackpoints),
       trackpoints: trackpoints,
-      laps: laps(data)
+      laps: laps(records)
     }
   end
 
-  defp session_msg(data) do
-    data["session_mesgs"] |> List.first()
-  end
-
-  defp type(data) do
-    case Map.get(session_msg(data), "sport") do
+  defp type(session_data) do
+    case Map.get(session_data, "sport") do
       "running" -> "Run"
       "cycling" -> "Ride"
       "swimming" -> "Swim"
@@ -40,8 +44,8 @@ defmodule Squeeze.FileParser.FitImport do
     end
   end
 
-  defp activity_type(data) do
-    case Map.get(session_msg(data), "sport") do
+  defp activity_type(session_data) do
+    case Map.get(session_data, "sport") do
       "running" -> :run
       "cycling" -> :bike
       "swimming" -> :swim
@@ -49,9 +53,9 @@ defmodule Squeeze.FileParser.FitImport do
     end
   end
 
-  defp start_at(data) do
-    start_time = Map.get(session_msg(data), "start_time")
-    Timex.parse!(start_time, "{ISO:Extended:Z}")
+  defp start_at(session_data) do
+    start_str = Map.get(session_data, "start_time")
+    parse_timestamp(start_str)
   end
 
   defp polyline(trackpoints) do
@@ -62,73 +66,64 @@ defmodule Squeeze.FileParser.FitImport do
     |> Polyline.encode()
   end
 
-  defp trackpoints(data) do
-    start_at = start_at(data)
+  defp trackpoints(records, start_at) do
+    records
+    |> Enum.filter(&(&1.kind == "record"))
+    |> Enum.map(fn record ->
+      obj =
+        record
+        |> Map.get(:fields, [])
+        |> Enum.reduce(%{}, fn {key, value}, acc ->
+          Map.put(acc, key, value)
+        end)
 
-    data
-    |> Map.get("record_mesgs", [])
-    |> Enum.map(fn x ->
-      timestamp = Timex.parse!(x["timestamp"], "{ISO:Extended:Z}")
+      timestamp = parse_timestamp(obj["timestamp"])
 
       %{
-        altitude: x["altitude"],
-        cadence: x["cadence"],
-        coordinates: coordinates(x),
-        distance: x["distance"],
-        heartrate: x["heart_rate"],
-        velocity: x["speed"],
+        altitude: map_get_by_priority(obj, ["enhanced_altitude", "altitude"]) |> cast_float(),
+        cadence: cast_int(obj["cadence"]),
+        coordinates: coordinates(obj),
+        distance: cast_float(obj["distance"]),
+        heartrate: cast_int(obj["heart_rate"]),
+        velocity: map_get_by_priority(obj, ["enhanced_speed", "speed"]) |> cast_float(),
         moving: true,
         time: Timex.diff(timestamp, start_at, :seconds)
       }
     end)
   end
 
-  defp laps(data) do
-    tz_offset = tz_offset_in_seconds(data)
-    trackpoints = Map.get(data, "record_mesgs", [])
+  defp laps(records) do
+    records
+    |> Enum.filter(&(&1.kind == "lap"))
+    |> Enum.map(fn obj ->
+      lap =
+        obj
+        |> Map.get(:fields, [])
+        |> Enum.reduce(%{}, fn {key, value}, acc ->
+          Map.put(acc, key, value)
+        end)
 
-    trackpoints_by_timestamp =
-      trackpoints
-      |> Enum.with_index()
-      |> Enum.map(fn {tp, idx} -> {tp["timestamp"], idx} end)
-      |> Map.new()
+      start_time = parse_timestamp(lap["start_time"])
 
-    {laps, _} =
-      data
-      |> Map.get("lap_mesgs", [])
-      |> Enum.map_reduce(0, fn lap, tkpt_idx ->
-        start_time = Timex.parse!(lap["start_time"], "{ISO:Extended:Z}")
-        end_idx = Map.get(trackpoints_by_timestamp, lap["timestamp"], length(trackpoints))
-
-        {%{
-           average_cadence: cast_float(lap["avg_cadence"]),
-           average_speed: cast_float(lap["avg_speed"]),
-           distance: cast_float(lap["total_distance"]),
-           elapsed_time: round(lap["total_elapsed_time"]),
-           start_index: tkpt_idx,
-           end_index: end_idx,
-           lap_index: lap["message_index"],
-           max_speed: cast_float(lap["max_speed"]),
-           moving_time: round(lap["total_elapsed_time"]),
-           name: lap["event"],
-           split: lap["message_index"] + 1,
-           start_date: start_time |> to_naive_datetime(),
-           start_date_local: start_time |> Timex.shift(seconds: tz_offset) |> to_naive_datetime(),
-           total_elevation_gain: cast_float(lap["total_ascent"])
-         }, end_idx + 1}
-      end)
-
-    laps
-  end
-
-  defp tz_offset_in_seconds(data) do
-    # Calculate the local timezone
-    # For some reason fit epoch is offset slightly
-    fit_epoch_offset = 631_065_600
-    activity_msg = data["activity_mesgs"] |> List.first()
-    timestamp = Timex.parse!(activity_msg["timestamp"], "{ISO:Extended:Z}")
-    local_ts = Timex.from_unix(activity_msg["local_timestamp"] + fit_epoch_offset)
-    Timex.diff(local_ts, timestamp, :seconds)
+      %{
+        average_cadence:
+          map_get_by_priority(lap, ["avg_running_cadence", "avg_cadence"]) |> cast_float(),
+        average_speed:
+          map_get_by_priority(lap, ["enhanced_avg_speed", "avg_speed"]) |> cast_float(),
+        distance: cast_float(lap["total_distance"]),
+        elapsed_time: cast_int(lap["total_elapsed_time"]),
+        start_index: 0,
+        end_index: 0,
+        lap_index: cast_int(lap["message_index"]),
+        max_speed: map_get_by_priority(lap, ["enhanced_max_speed", "max_speed"]) |> cast_float(),
+        moving_time: cast_int(lap["total_elapsed_time"]),
+        name: lap["event"],
+        split: cast_int(lap["message_index"]) + 1,
+        start_date: start_time |> to_naive_datetime(),
+        start_date_local: start_time |> to_naive_datetime(),
+        total_elevation_gain: cast_float(lap["total_ascent"])
+      }
+    end)
   end
 
   defp to_naive_datetime(datetime) do
@@ -137,14 +132,36 @@ defmodule Squeeze.FileParser.FitImport do
     |> NaiveDateTime.truncate(:second)
   end
 
-  defp coordinates(record_msg) do
-    if record_msg["position_long"] && record_msg["position_lat"] do
+  defp parse_timestamp(timestamp) do
+    with {:error, _} <- Timex.parse(timestamp, "{ISO:Extended:Z}"),
+         {:ok, timestamp} <- Timex.parse(timestamp, "{YYYY}-{M}-{D} {h24}:{m}:{s} {Z:}") do
+      timestamp
+    else
+      {:ok, timestamp} -> timestamp
+      {:error, _} -> nil
+    end
+  end
+
+  defp coordinates(record) do
+    lat = record["position_lat"] |> cast_float()
+    lon = record["position_long"] |> cast_float()
+
+    if lat && lon do
       %{
-        lat: record_msg["position_lat"] / 11_930_465,
-        lon: record_msg["position_long"] / 11_930_465
+        lat: lat / 11_930_465,
+        lon: lon / 11_930_465
       }
     else
       nil
     end
   end
+
+  def map_get_by_priority(map, [key | rest]) do
+    case Map.get(map, key) do
+      nil -> map_get_by_priority(map, rest)
+      value -> value
+    end
+  end
+
+  def map_get_by_priority(_, []), do: nil
 end

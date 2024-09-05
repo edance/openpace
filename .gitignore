@@ -50,3 +50,9 @@ npm-debug.log
 
 # Python cache
 /priv/python/__pycache__
+
+# Ignore complied Rust library
+/priv/native/
+
+# Ignore Rust build artifacts
+/native/target/
