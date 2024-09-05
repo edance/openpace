@@ -25,8 +25,8 @@ function velocityToFormattedPace(velocity, imperial = false) {
 export default {
   mounted() {
     const hook = this;
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const currentColor = isDarkMode ? "white" : colors.black
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    const currentColor = isDarkMode ? "white" : colors.black;
 
     // set the dimensions and margins of the graph
     const margin = { top: 30, right: 30, left: 120, bottom: 30 };

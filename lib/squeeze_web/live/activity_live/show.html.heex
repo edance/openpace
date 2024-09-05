@@ -1,5 +1,5 @@
 <div class="relative py-5">
-  <div class="container max-w-2xl mx-auto px-4">
+  <div class="container max-w-5xl mx-auto px-4">
     <div class="w-full">
       <.card>
         <div class="flex flex-wrap">
@@ -19,7 +19,7 @@
                 </div>
               </div>
 
-              <div class="mt-4 grid grid-cols-4">
+              <div class="mt-4 flex gap-x-6 xl:gap-x-16">
                 <div class="">
                   <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
                     <%= gettext("Distance") %>
@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full">
+          <div class="w-full relative">
             <%= if show_map?(assigns) do %>
               <div
                 id="activity-map"

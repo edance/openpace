@@ -1,30 +1,30 @@
 export default {
   mounted() {
-    this.input = this.el.querySelector('input');
-    this.selects = this.el.querySelectorAll('select');
+    this.input = this.el.querySelector("input");
+    this.selects = this.el.querySelectorAll("select");
     this.setInitialValue();
     this.addEventListeners();
   },
 
   addEventListeners() {
-    this.selects.forEach(select => {
-      select.addEventListener('change', () => {
+    this.selects.forEach((select) => {
+      select.addEventListener("change", () => {
         let total = 0;
 
-        this.selects.forEach(select => {
+        this.selects.forEach((select) => {
           const value = parseInt(select.value, 10);
 
           if (isNaN(value)) {
             return;
           }
 
-          if (select.name.indexOf('seconds') !== -1) {
+          if (select.name.indexOf("seconds") !== -1) {
             total += value;
           }
-          if (select.name.indexOf('minutes') !== -1) {
+          if (select.name.indexOf("minutes") !== -1) {
             total += value * 60;
           }
-          if (select.name.indexOf('hours') !== -1) {
+          if (select.name.indexOf("hours") !== -1) {
             total += value * 60 * 60;
           }
         });
@@ -40,16 +40,16 @@ export default {
       return;
     }
 
-    this.selects.forEach(select => {
-      if (select.name.indexOf('seconds') !== -1) {
+    this.selects.forEach((select) => {
+      if (select.name.indexOf("seconds") !== -1) {
         select.value = value % 60;
       }
-      if (select.name.indexOf('minutes') !== -1) {
-        select.value = Math.floor(value / 60 % 60);
+      if (select.name.indexOf("minutes") !== -1) {
+        select.value = Math.floor((value / 60) % 60);
       }
-      if (select.name.indexOf('hours') !== -1) {
-        select.value = Math.floor(value / 60 / 60 % 60);
+      if (select.name.indexOf("hours") !== -1) {
+        select.value = Math.floor((value / 60 / 60) % 60);
       }
     });
-  }
-}
+  },
+};

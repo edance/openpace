@@ -12,6 +12,36 @@ export function formatDate(date) {
   return [year, pad(month), pad(day)].join("-");
 }
 
+export function formatDuration(duration) {
+  const hours = Math.floor(duration / 3600);
+  const minutes = Math.floor((duration % 3600) / 60);
+  const seconds = duration % 60;
+
+  if (hours > 0) {
+    return `${hours}:${pad(minutes)}:${pad(seconds)}`;
+  }
+
+  return `${minutes}:${pad(seconds)}`;
+}
+
+export function formatVelocity(speed, imperial, activityType) {
+  const distance = imperial ? 1609 : 1000; // Mile or kilometer
+
+  if (activityType === "run") {
+    const value = distance / 60 / speed;
+
+    const min = Math.floor(value);
+    const sec = Math.round((value - min) * 60);
+    const label = imperial ? "/mi" : "/km";
+
+    return `${min}:${pad(sec)}${label}`;
+  }
+
+  const value = (speed * 60 * 60) / distance;
+  const label = imperial ? "mph" : "kph";
+  return `${roundTo(value, 1)}${label}`;
+}
+
 export function pad(num) {
   return num < 10 ? `0${num}` : num;
 }
@@ -58,7 +88,9 @@ export function formatNumber(num, decimals = 0) {
 
 export function formatDistance(distance, imperial, digits = 1) {
   const label = imperial ? "mi" : "km";
-  return `${calcDistance(distance, imperial, digits)} ${label}`;
+  const distanceInUnits = calcDistance(distance, imperial, digits);
+
+  return `${distanceInUnits.toFixed(digits)} ${label}`;
 }
 
 export function loadScript(url) {

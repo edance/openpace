@@ -21,6 +21,10 @@ export default {
     const features = this.trackpoints.slice(1).map((tp2) => {
       const velocity = (tp2.velocity + tp1.velocity) / 2;
 
+      if (!tp1.coordinates || !tp2.coordinates) {
+        return {};
+      }
+
       const feature = {
         properties: {
           color: color(velocity),
@@ -48,7 +52,7 @@ export default {
           type: "FeatureCollection",
           features,
         },
-        tolerance: 0.00001
+        tolerance: 0.00001,
       },
       layout: {
         "line-join": "round",
@@ -65,7 +69,9 @@ export default {
     // Create a new map
     const map = new mapboxgl.Map({
       container: this.el,
-      style: isDarkMode() ? "mapbox://styles/mapbox/dark-v9" : "mapbox://styles/mapbox/light-v10",
+      style: isDarkMode()
+        ? "mapbox://styles/mapbox/dark-v9"
+        : "mapbox://styles/mapbox/light-v10",
       cooperativeGestures: true, // Disable scroll
     });
 
@@ -85,9 +91,16 @@ export default {
       const geojson = this.generateGeoJson();
 
       // Map coordinates to be handled by mapbox
-      const coords = trackpoints.map((tp) => {
-        return [tp.coordinates.lon, tp.coordinates.lat];
-      });
+      const coords = trackpoints
+        .map((tp) => {
+          // if tp.coordinates is undefined, return an null
+          if (!tp.coordinates) {
+            return null;
+          }
+
+          return [tp.coordinates.lon, tp.coordinates.lat];
+        })
+        .filter((c) => c !== null);
 
       // Calculate the bounds of the map
       const bounds = coords.reduce(function (bounds, coord) {

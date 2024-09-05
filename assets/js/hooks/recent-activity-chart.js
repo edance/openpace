@@ -93,7 +93,7 @@ export default {
   },
 
   mounted() {
-    const isDarkMode = document.documentElement.classList.contains('dark');
+    const isDarkMode = document.documentElement.classList.contains("dark");
     this.activities = JSON.parse(this.el.dataset["summaries"]);
     this.imperial = JSON.parse(this.el.dataset["imperial"]);
     this.currentDate = DateTime.fromISO(this.el.dataset["currentDate"]);
