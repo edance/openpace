@@ -27,7 +27,14 @@ defmodule Squeeze.Strava.BulkImport do
     |> CSV.decode(headers: true, escape_max_lines: 1000)
     |> Stream.map(fn row ->
       {:ok, csv_data} = row
-      create_summary_activity(user, csv_data)
+
+      case create_summary_activity(user, csv_data) do
+        {:ok, activity} ->
+          activity
+
+        {:error, _} ->
+          Logger.error("Error creating activity")
+      end
     end)
     |> Stream.run()
 
@@ -44,17 +51,13 @@ defmodule Squeeze.Strava.BulkImport do
 
   defp create_summary_activity(user, csv_data) do
     data = activity_from_csv(csv_data)
-
-    case Activities.create_activity(user, data) do
-      {:ok, activity} -> activity
-      {:error, _changeset} -> Logger.warn("Cannot create #{data[:name]}")
-    end
+    Activities.create_activity(user, data)
   end
 
   defp create_detailed_activity(user, csv_data, folder) do
     data = load_data(Path.join([folder, csv_data["Filename"]]))
     activity = Activities.get_activity_by_external_id!(user, csv_data["Activity ID"])
-    # Activities.update_activity(activity, %{polyline: data.polyline})
+    Activities.update_activity(activity, %{polyline: data.polyline})
     Activities.create_laps(activity, data.laps)
     Activities.create_trackpoint_set(activity, data.trackpoints)
   end
@@ -70,10 +73,10 @@ defmodule Squeeze.Strava.BulkImport do
 
       String.contains?(filename, ".tcx") ->
         Logger.info("[#{__MODULE__}] skipping tcx files...")
-        %{laps: [], trackpoints: []}
+        %{laps: [], trackpoints: [], polyline: nil}
 
       true ->
-        %{laps: [], trackpoints: []}
+        %{laps: [], trackpoints: [], polyline: nil}
     end
   end
 

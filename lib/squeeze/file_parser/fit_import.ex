@@ -82,12 +82,9 @@ defmodule Squeeze.FileParser.FitImport do
 
       %{
         altitude: map_get_by_priority(obj, ["enhanced_altitude", "altitude"]) |> cast_float(),
-        # integer 
         cadence: cast_int(obj["cadence"]),
         coordinates: coordinates(obj),
-        # float
         distance: cast_float(obj["distance"]),
-        # integer
         heartrate: cast_int(obj["heart_rate"]),
         velocity: map_get_by_priority(obj, ["enhanced_speed", "speed"]) |> cast_float(),
         moving: true,

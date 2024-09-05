@@ -77,10 +77,6 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
     params["sync"] && strava_integration?(socket.assigns)
   end
 
-  defp strava_integration?(%{current_user: user}) do
-    Enum.any?(user.credentials, &(&1.provider == "strava"))
-  end
-
   defp personal_records(%{current_user: user}) do
     user.user_prefs.personal_records
     |> Enum.reject(&(is_nil(&1.duration) || &1.duration == 0))
@@ -112,5 +108,13 @@ defmodule SqueezeWeb.Dashboard.OverviewLive do
       HistoryLoader.load_recent(user, credential)
       send(view, :sync_finished)
     end)
+  end
+
+  defp strava_integration?(%{current_user: user}) do
+    Enum.any?(user.credentials, &(&1.provider == "strava"))
+  end
+
+  defp allow_strava_upload? do
+    Application.fetch_env!(:squeeze, :allow_strava_upload)
   end
 end
