@@ -54,6 +54,16 @@ export function guessTimezone() {
   }
 }
 
+export function velocityToPace(speed, imperial) {
+  const distance = imperial ? 1609 : 1000; // Mile or kilometer
+  return distance / 60 / speed;
+}
+
+export function paceToVelocity(pace, imperial) {
+  const distance = imperial ? 1609 : 1000; // Mile or kilometer
+  return distance / 60 / pace;
+}
+
 export function calcDistance(distance, imperial, digits = 0) {
   if (imperial) {
     return roundTo(distance / 1609, digits);
