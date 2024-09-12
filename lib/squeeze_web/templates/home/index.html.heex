@@ -19,19 +19,18 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl text-center">
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Unlock Your Running Potential
+              Run Your Fastest Marathon
             </h1>
             <p class="mt-6 text-lg leading-8 text-gray-600">
-              Sync your Strava data, create personalized training plans, and dive deep into your performance - all in one intuitive dashboard.
+              Open-source tools for runners to hit new personal bests and analyze performance.
             </p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
-              <%= link to: Routes.strava_integration_path(@conn, :request), class: "" do %>
-                <img
-                  alt="Connect to Strava"
-                  class="btn-strava"
-                  src={Routes.static_path(@conn, "/images/btn_strava_orange.svg")}
-                />
+              <%= link to: Routes.user_path(@conn, :new), class: "rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600" do %>
+                Get Started
               <% end %>
+              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+                Learn more <span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
           <div class="mt-16 flow-root sm:mt-24">
@@ -56,6 +55,395 @@
           style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"
         >
         </div>
+      </div>
+    </div>
+    <!-- Features Section -->
+    <section
+      id="features"
+      aria-label="Features for running your books"
+      class="relative overflow-hidden pb-28 pt-20 sm:py-32"
+    >
+      <img
+        alt=""
+        loading="lazy"
+        width="2245"
+        height="1636"
+        decoding="async"
+        data-nimg="1"
+        class="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
+        style="color:transparent"
+        src="/_next/static/media/background-features.5f7a9ac9.jpg"
+      />
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+        <div class="max-w-2xl md:mx-auto md:text-center">
+          <h2 class="text-base font-semibold leading-7 text-violet-600">Run faster</h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Everything you need to run your best&nbsp;marathon
+          </p>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum pulvinar et feugiat blandit at. In mi viverra elit nunc.
+          </p>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 items-center gap-y-2 pt-10 sm:gap-y-6 md:mt-20 lg:grid-cols-12 lg:pt-0">
+          <div class="-mx-4 flex overflow-x-auto pb-4 sm:mx-0 sm:overflow-visible sm:pb-0 lg:col-span-5">
+            <div
+              class="relative z-10 flex gap-x-4 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal"
+              role="tablist"
+              aria-orientation="vertical"
+            >
+              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10">
+                <h3>
+                  <button
+                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-600"
+                    id="headlessui-tabs-tab-:R9d9afja:"
+                    role="tab"
+                    type="button"
+                    aria-selected="true"
+                    tabindex="0"
+                    data-headlessui-state="selected"
+                    aria-controls="headlessui-tabs-panel-:R1l9afja:"
+                    data-selected=""
+                  >
+                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Run Analytics
+                  </button>
+                </h3>
+                <p class="mt-2 hidden text-sm lg:block">
+                  A deep dive into your recent run. Show your pace, cadence, and heart rate on the one graph with a linked elevation chart.
+                </p>
+              </div>
+              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 hover:bg-white/10 lg:hover:bg-white/5">
+                <h3>
+                  <button
+                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-100 hover:text-white lg:text-white"
+                    id="headlessui-tabs-tab-:Rad9afja:"
+                    role="tab"
+                    type="button"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-headlessui-state=""
+                    aria-controls="headlessui-tabs-panel-:R2l9afja:"
+                  >
+                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Trends
+                  </button>
+                </h3>
+                <p class="mt-2 hidden text-sm lg:block text-blue-100 group-hover:text-white">
+                  See how your pace, cadence, and heart rate have changed over time. Compare your performance to previous runs.
+                </p>
+              </div>
+              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 hover:bg-white/10 lg:hover:bg-white/5">
+                <h3>
+                  <button
+                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-100 hover:text-white lg:text-white"
+                    id="headlessui-tabs-tab-:Rbd9afja:"
+                    role="tab"
+                    type="button"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-headlessui-state=""
+                    aria-controls="headlessui-tabs-panel-:R3l9afja:"
+                  >
+                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Training Calendar
+                  </button>
+                </h3>
+                <p class="mt-2 hidden text-sm lg:block text-blue-100 group-hover:text-white">
+                  Plan your training schedule with a calendar view. Add your workouts and see your progress over time.
+                </p>
+              </div>
+              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 hover:bg-white/10 lg:hover:bg-white/5">
+                <h3>
+                  <button
+                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-100 hover:text-white lg:text-white"
+                    id="headlessui-tabs-tab-:Rcd9afja:"
+                    role="tab"
+                    type="button"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-headlessui-state=""
+                    aria-controls="headlessui-tabs-panel-:R4l9afja:"
+                  >
+                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Challenge Friends
+                  </button>
+                </h3>
+                <p class="mt-2 hidden text-sm lg:block text-blue-100 group-hover:text-white">
+                  Compete with your friends on the leaderboard. See who has run the most miles this week.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-7">
+            <div
+              id="headlessui-tabs-panel-:R1l9afja:"
+              role="tabpanel"
+              tabindex="0"
+              data-headlessui-state="selected"
+              aria-labelledby="headlessui-tabs-tab-:R9d9afja:"
+              style=""
+              data-selected=""
+            >
+              <div class="relative sm:px-6 lg:hidden">
+                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
+                </div>
+                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
+                  Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.
+                </p>
+              </div>
+              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+                <img
+                  alt=""
+                  fetchpriority="high"
+                  width="2174"
+                  height="1464"
+                  decoding="async"
+                  data-nimg="1"
+                  class="w-full"
+                  style="color:transparent"
+                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=3840&amp;q=75 3840w"
+                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=3840&amp;q=75"
+                />
+              </div>
+            </div>
+            <div
+              id="headlessui-tabs-panel-:R2l9afja:"
+              role="tabpanel"
+              tabindex="-1"
+              style="display: none;"
+              data-headlessui-state=""
+              aria-labelledby="headlessui-tabs-tab-:Rad9afja:"
+              hidden=""
+            >
+              <div class="relative sm:px-6 lg:hidden">
+                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
+                </div>
+                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
+                  All of your receipts organized into one place, as long as you don't mind typing in the data by hand.
+                </p>
+              </div>
+              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+                <img
+                  alt=""
+                  fetchpriority="high"
+                  width="2174"
+                  height="1464"
+                  decoding="async"
+                  data-nimg="1"
+                  class="w-full"
+                  style="color:transparent"
+                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=3840&amp;q=75 3840w"
+                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=3840&amp;q=75"
+                />
+              </div>
+            </div>
+            <div
+              id="headlessui-tabs-panel-:R3l9afja:"
+              role="tabpanel"
+              tabindex="-1"
+              style="display: none;"
+              data-headlessui-state=""
+              aria-labelledby="headlessui-tabs-tab-:Rbd9afja:"
+              hidden=""
+            >
+              <div class="relative sm:px-6 lg:hidden">
+                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
+                </div>
+                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
+                  We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.
+                </p>
+              </div>
+              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+                <img
+                  alt=""
+                  fetchpriority="high"
+                  width="2174"
+                  height="1464"
+                  decoding="async"
+                  data-nimg="1"
+                  class="w-full"
+                  style="color:transparent"
+                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=3840&amp;q=75 3840w"
+                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=3840&amp;q=75"
+                />
+              </div>
+            </div>
+            <div
+              id="headlessui-tabs-panel-:R4l9afja:"
+              role="tabpanel"
+              tabindex="-1"
+              style="display: none;"
+              data-headlessui-state=""
+              aria-labelledby="headlessui-tabs-tab-:Rcd9afja:"
+              hidden=""
+            >
+              <div class="relative sm:px-6 lg:hidden">
+                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
+                </div>
+                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
+                  Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.
+                </p>
+              </div>
+              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+                <img
+                  alt=""
+                  fetchpriority="high"
+                  width="2174"
+                  height="1464"
+                  decoding="async"
+                  data-nimg="1"
+                  class="w-full"
+                  style="color:transparent"
+                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=3840&amp;q=75 3840w"
+                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=3840&amp;q=75"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Testimonial section -->
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-xl text-center">
+          <h2 class="text-lg font-semibold leading-8 tracking-tight text-violet-600">
+            Testimonials
+          </h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            We have worked with thousands of amazing people
+          </p>
+        </div>
+        <div class="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
+          <div class="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] lg:columns-3">
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    “Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.”
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Leslie Alexander</div>
+                    <div class="text-gray-600">@lesliealexander</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+            <!-- More testimonials... -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Mission and stats section -->
+    <div class="bg-white py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our mission</h2>
+          <div class="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
+            <div class="lg:w-full lg:max-w-2xl lg:flex-auto">
+              <p class="text-xl leading-8 text-gray-600">
+                Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam eget aliquam. Quisque id at vitae feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget. Eleifend egestas fringilla sapien.
+              </p>
+              <p class="mt-10 max-w-xl text-base leading-7 text-gray-700">
+                Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id.
+              </p>
+            </div>
+            <div class="lg:flex lg:flex-auto lg:justify-center">
+              <dl class="w-64 space-y-8 xl:w-80">
+                <div class="flex flex-col-reverse gap-y-4">
+                  <dt class="text-base leading-7 text-gray-600">Transactions every 24 hours</dt>
+                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">44 million</dd>
+                </div>
+                <div class="flex flex-col-reverse gap-y-4">
+                  <dt class="text-base leading-7 text-gray-600">Assets under holding</dt>
+                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">
+                    $119 trillion
+                  </dd>
+                </div>
+                <div class="flex flex-col-reverse gap-y-4">
+                  <dt class="text-base leading-7 text-gray-600">New users annually</dt>
+                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">46,000</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FAQ section -->
+    <div class="bg-white">
+      <div class="mx-auto max-w-7xl px-6 py-24 sm:pt-32 lg:px-8 lg:py-40">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+          <div class="lg:col-span-5">
+            <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">
+              Frequently asked questions
+            </h2>
+            <p class="mt-4 text-base leading-7 text-gray-600">
+              Can’t find the answer you’re looking for? Reach out to our
+              <a href="#" class="font-semibold text-violet-600 hover:text-violet-500">
+                customer support
+              </a>
+              team.
+            </p>
+          </div>
+          <div class="mt-10 lg:col-span-7 lg:mt-0">
+            <dl class="space-y-10">
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  How do you make holy water?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.
+                </dd>
+              </div>
+              <!-- More questions... -->
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Newsletter section -->
+    <div class="bg-white py-16 sm:py-24 lg:py-32">
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
+        <div class="max-w-xl text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:col-span-7">
+          <h2 class="inline sm:block lg:inline xl:block">Want product news and updates?</h2>
+          <p class="inline sm:block lg:inline xl:block">Sign up for our newsletter.</p>
+        </div>
+
+        <%= form_for @changeset, Routes.home_path(@conn, :subscribe), [class: "w-full max-w-md lg:col-span-5 lg:pt-2"], fn f -> %>
+          <div class="flex gap-x-4">
+            <label for="email-address" class="sr-only">Email address</label>
+            <.input
+              field={f[:email]}
+              placeholder={gettext("Enter your email")}
+              type="email"
+              autocomplete="email"
+              required
+              class="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6"
+            />
+            <.button
+              type="submit"
+              class="flex-none rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
+            >
+              Subscribe
+            </.button>
+          </div>
+          <p class="mt-4 text-sm leading-6 text-gray-900">
+            We care about your data. Read our <%= link("privacy policy",
+              to: Routes.page_path(SqueezeWeb.Endpoint, :privacy_policy),
+              class: "font-semibold text-violet-600 hover:text-violet-500",
+              target: "_blank"
+            ) %>.
+          </p>
+        <% end %>
       </div>
     </div>
   </main>

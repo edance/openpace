@@ -1,7 +1,0 @@
-<span class="avatar avatar-sm rounded-circle">
-  <%= if @current_user.avatar do %>
-    <img src="<%= @current_user.avatar %>"/>
-  <% else %>
-    <span class="iconify" data-icon="whh:profile" data-inline="false"></span>
-  <% end %>
-</span>
