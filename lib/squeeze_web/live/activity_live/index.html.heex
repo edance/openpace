@@ -1,141 +1,202 @@
 <!-- Page content -->
 <div class="position-relative py-5">
   <div class="container max-w-7xl mx-auto">
-    <!-- Table -->
-    <.card title={gettext("Activities")}>
-      <div class="px-4 sm:px-6">
-        <div class="-mx-4 sm:-mx-6 overflow-x-auto">
-          <table class="min-w-full text-sm divide-y divide-gray-200 dark:divide-gray-700">
-            <thead class="">
-              <tr>
-                <th
-                  scope="col"
-                  class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+    <div class="grid grid-cols-3 gap-x-4">
+      <div>
+        <.card>
+          <div class="p-4 sm:p-6">
+            <.form for={%{}} phx-change="filter">
+              <div class="w-full mb-4">
+                <label
+                  for="name"
+                  class="block text-sm font-semibold leading-6 text-gray-500 dark:text-white/60"
                 >
-                  Sport
-                </th>
-                <th
-                  scope="col"
-                  class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
-                >
-                  Date
-                </th>
-                <th
-                  scope="col"
-                  class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
-                >
-                  Distance
-                </th>
-                <th
-                  scope="col"
-                  class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
-                >
-                  Duration
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-              <%= for activity <- @activities do %>
-                <tr id={"activity-#{activity.id}"} scope="row">
-                  <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
-                    <%= activity.type %>
-                  </td>
-                  <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
-                    <%= Timex.format!(
-                      activity.start_at_local,
-                      "%a, %b #{Ordinal.ordinalize(activity.start_at_local.day)}",
-                      :strftime
-                    ) %>
-                  </td>
-                  <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
-                    <%= live_redirect(activity.name,
-                      to: Routes.activity_path(@socket, :show, activity.slug)
-                    ) %>
-                  </td>
-                  <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
-                    <%= format_distance(activity.distance, @current_user.user_prefs) %>
-                  </td>
-                  <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
-                    <%= format_duration(activity.duration) %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-        <!-- Pagination -->
-        <nav class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pb-6 px-4 sm:px-6 -mx-4 sm:-mx-6">
-          <div class="-mt-px flex w-0 flex-1">
-            <%= if previous_page(assigns) do %>
-              <%= live_patch(to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)), class: "inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white") do %>
-                <svg
-                  class="mr-3 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z"
-                    clip-rule="evenodd"
+                  <%= gettext("Search") %>
+                </label>
+                <div class="relative">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <svg
+                      class="h-5 w-5 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    name="query"
+                    class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Search"
+                    type="search"
                   />
-                </svg>
-                Previous
-              <% end %>
-            <% end %>
-          </div>
-          <div class="hidden md:-mt-px md:flex">
-            <%= if previous_page(assigns) do %>
-              <%= live_redirect(previous_page(assigns),
-                to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)),
-                class:
-                  "inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white"
-              ) %>
-            <% end %>
-            <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 dark:text-white/60 hover:text-gray-700 dark:hover:text-white hover:border-gray-300" -->
-            <a
-              href="#"
-              class="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600 dark:text-indigo-400"
-              aria-current="page"
-            >
-              <%= @page %> <span class="sr-only">(current)</span>
-            </a>
+                </div>
+              </div>
+              <div class="mb-4">
+                <.input
+                  name="activity_type"
+                  value=""
+                  prompt={gettext("Select an activity type")}
+                  label={gettext("Activity Type")}
+                  type="select"
+                  options={activity_types()}
+                />
+              </div>
 
-            <%= if next_page(assigns) do %>
-              <%= live_redirect(next_page(assigns),
-                to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)),
-                class:
-                  "inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white"
-              ) %>
-            <% end %>
+              <.input
+                name="workout_type"
+                value=""
+                prompt={gettext("Select a workout type")}
+                label={gettext("Workout Type")}
+                type="select"
+                options={workout_types()}
+              />
+            </.form>
           </div>
-          <div class="-mt-px flex w-0 flex-1 justify-end">
-            <%= if next_page(assigns) do %>
-              <%= live_patch(to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)), class: "inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white") do %>
-                Next
-                <svg
-                  class="ml-3 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              <% end %>
-            <% end %>
-          </div>
-        </nav>
+        </.card>
       </div>
-    </.card>
+      <!-- Table -->
+      <div class="col-span-2">
+        <.card title={ngettext("%{count} Activity", "%{count} Activities", @total)}>
+          <div class="px-4 sm:px-6">
+            <div class="-mx-4 sm:-mx-6 overflow-x-auto">
+              <table class="min-w-full text-sm divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                    >
+                      Sport
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                    >
+                      Distance
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-white/60 dark:text-white/60 uppercase tracking-wider"
+                    >
+                      Duration
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                  <%= for activity <- @activities do %>
+                    <tr id={"activity-#{activity.id}"} scope="row">
+                      <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                        <%= activity.type %>
+                      </td>
+                      <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                        <%= Timex.format!(
+                          activity.start_at_local,
+                          "%a, %b #{Ordinal.ordinalize(activity.start_at_local.day)}",
+                          :strftime
+                        ) %>
+                      </td>
+                      <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                        <%= live_redirect(activity.name,
+                          to: Routes.activity_path(@socket, :show, activity.slug)
+                        ) %>
+                      </td>
+                      <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                        <%= format_distance(activity.distance, @current_user.user_prefs) %>
+                      </td>
+                      <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-800 dark:text-white">
+                        <%= format_duration(activity.duration) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination -->
+            <nav class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pb-6 px-4 sm:px-6 -mx-4 sm:-mx-6">
+              <div class="-mt-px flex w-0 flex-1">
+                <%= if previous_page(assigns) do %>
+                  <%= live_patch(to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)), class: "inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white") do %>
+                    <svg
+                      class="mr-3 h-5 w-5 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    Previous
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="hidden md:-mt-px md:flex">
+                <%= if previous_page(assigns) do %>
+                  <%= live_redirect(previous_page(assigns),
+                    to: Routes.activity_index_path(@socket, :index, page: previous_page(assigns)),
+                    class:
+                      "inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white"
+                  ) %>
+                <% end %>
+                <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 dark:text-white/60 hover:text-gray-700 dark:hover:text-white hover:border-gray-300" -->
+                <a
+                  href="#"
+                  class="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600 dark:text-indigo-400"
+                  aria-current="page"
+                >
+                  <%= @page %> <span class="sr-only">(current)</span>
+                </a>
+
+                <%= if next_page(assigns) do %>
+                  <%= live_redirect(next_page(assigns),
+                    to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)),
+                    class:
+                      "inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white"
+                  ) %>
+                <% end %>
+              </div>
+              <div class="-mt-px flex w-0 flex-1 justify-end">
+                <%= if next_page(assigns) do %>
+                  <%= live_patch(to: Routes.activity_index_path(@socket, :index, page: next_page(assigns)), class: "inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 dark:text-white/60 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white") do %>
+                    Next
+                    <svg
+                      class="ml-3 h-5 w-5 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  <% end %>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+        </.card>
+      </div>
+    </div>
   </div>
 </div>

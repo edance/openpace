@@ -30,6 +30,16 @@ defmodule Squeeze.Activities do
     |> Repo.preload(:user)
   end
 
+  def filter_activities(%User{} = user, filters, page, per_page) do
+    Activity
+    |> by_user(user)
+    |> filter_by_name(filters)
+    |> filter_by_activity_type(filters)
+    |> filter_by_workout_type(filters)
+    |> order_by([a], desc: a.start_at)
+    |> paginate(page, per_page)
+  end
+
   def list_activity_summaries(%User{} = user) do
     # time_window = Timex.now() |> Timex.shift(years: -1)
 
@@ -313,5 +323,44 @@ defmodule Squeeze.Activities do
 
   defp status(query, status) do
     from q in query, where: [status: ^status]
+  end
+
+  defp filter_by_name(query, %{"query" => search_query})
+       when is_binary(search_query) and search_query != "" do
+    where(query, [a], ilike(a.name, ^"%#{search_query}%"))
+  end
+
+  defp filter_by_name(query, _), do: query
+
+  defp filter_by_activity_type(query, %{"activity_type" => activity_type})
+       when is_binary(activity_type) and activity_type != "" do
+    where(query, [a], a.activity_type == ^activity_type)
+  end
+
+  defp filter_by_activity_type(query, _), do: query
+
+  defp filter_by_workout_type(query, %{"workout_type" => workout_type})
+       when is_binary(workout_type) and workout_type != "" do
+    where(query, [a], a.workout_type == ^workout_type)
+  end
+
+  defp filter_by_workout_type(query, _), do: query
+
+  defp paginate(query, page, per_page) do
+    total_count = Repo.aggregate(query, :count, :id)
+
+    items =
+      query
+      |> limit(^per_page)
+      |> offset(^((page - 1) * per_page))
+      |> Repo.all()
+
+    %{
+      activities: items,
+      page: page,
+      per_page: per_page,
+      total: total_count,
+      total_pages: ceil(total_count / per_page)
+    }
   end
 end
