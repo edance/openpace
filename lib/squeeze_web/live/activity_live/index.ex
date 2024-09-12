@@ -3,6 +3,7 @@ defmodule SqueezeWeb.ActivityLive.Index do
   @moduledoc false
 
   alias Squeeze.Activities
+  alias Squeeze.Activities.Activity
 
   @impl true
   def mount(_params, _session, socket) do
@@ -20,10 +21,11 @@ defmodule SqueezeWeb.ActivityLive.Index do
     user = socket.assigns.current_user
     page = params |> Map.get("page", "1") |> String.to_integer()
 
+    results = Activities.filter_activities(user, %{}, page, 24)
+
     socket =
       socket
-      |> assign(:page, page)
-      |> assign(:activities, Activities.recent_activities(user, page))
+      |> assign(results)
 
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
@@ -44,9 +46,35 @@ defmodule SqueezeWeb.ActivityLive.Index do
     {:noreply, assign(socket, :activities, Activities.recent_activities(user, page))}
   end
 
+  @impl true
+  def handle_event("filter", filter_params, socket) do
+    page = socket.assigns.page
+    result = Activities.filter_activities(socket.assigns.current_user, filter_params, page, 24)
+    {:noreply, assign(socket, result)}
+  end
+
   def previous_page(%{page: 1}), do: nil
   def previous_page(%{page: page}), do: page - 1
 
   def next_page(%{activities: activities}) when length(activities) < 24, do: nil
   def next_page(%{page: page}), do: page + 1
+
+  defp activity_types do
+    Activity
+    |> Ecto.Enum.mappings(:activity_type)
+    |> Enum.map(fn {k, _} -> {format_option(k), k} end)
+  end
+
+  defp workout_types do
+    Activity
+    |> Ecto.Enum.mappings(:workout_type)
+    |> Enum.map(fn {k, _} -> {format_option(k), k} end)
+  end
+
+  defp format_option(opt) do
+    opt
+    |> Atom.to_string()
+    |> String.replace("_", " ")
+    |> String.capitalize()
+  end
 end
