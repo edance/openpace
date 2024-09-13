@@ -88,6 +88,7 @@ defmodule SqueezeWeb do
 
       # Core UI components and translation
       import SqueezeWeb.CoreComponents
+      import SqueezeWeb.CloudflareImageHelpers
       import SqueezeWeb.Gettext
 
       # Shortcut for generating JS commands

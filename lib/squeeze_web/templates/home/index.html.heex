@@ -35,11 +35,11 @@
           </div>
           <div class="mt-16 flow-root sm:mt-24">
             <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <img
+              <.cloudflare_img
                 src={Routes.static_path(SqueezeWeb.Endpoint, "/images/home/overview.jpg")}
                 alt="Openpace Dashboard"
-                width="2432"
-                height="1442"
+                width={2432}
+                height={1442}
                 class="rounded-md shadow-2xl ring-1 ring-gray-900/10"
               />
             </div>
@@ -58,247 +58,104 @@
       </div>
     </div>
     <!-- Features Section -->
-    <section
-      id="features"
-      aria-label="Features for running your books"
-      class="relative overflow-hidden pb-28 pt-20 sm:py-32"
-    >
-      <img
-        alt=""
-        loading="lazy"
-        width="2245"
-        height="1636"
-        decoding="async"
-        data-nimg="1"
-        class="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
-        style="color:transparent"
-        src="/_next/static/media/background-features.5f7a9ac9.jpg"
-      />
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
-        <div class="max-w-2xl md:mx-auto md:text-center">
-          <h2 class="text-base font-semibold leading-7 text-violet-600">Run faster</h2>
+    <section class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-600">
+            Powerful Tools for Runners
+          </h2>
           <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Everything you need to run your best&nbsp;marathon
+            Everything you need to reach your running goals
           </p>
           <p class="mt-6 text-lg leading-8 text-gray-600">
-            Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum pulvinar et feugiat blandit at. In mi viverra elit nunc.
+            OpenPace provides a comprehensive set of features to help you track, analyze, and improve your running performance.
           </p>
         </div>
-
-        <div class="mt-16 grid grid-cols-1 items-center gap-y-2 pt-10 sm:gap-y-6 md:mt-20 lg:grid-cols-12 lg:pt-0">
-          <div class="-mx-4 flex overflow-x-auto pb-4 sm:mx-0 sm:overflow-visible sm:pb-0 lg:col-span-5">
-            <div
-              class="relative z-10 flex gap-x-4 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal"
-              role="tablist"
-              aria-orientation="vertical"
-            >
-              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10">
-                <h3>
-                  <button
-                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-600"
-                    id="headlessui-tabs-tab-:R9d9afja:"
-                    role="tab"
-                    type="button"
-                    aria-selected="true"
-                    tabindex="0"
-                    data-headlessui-state="selected"
-                    aria-controls="headlessui-tabs-panel-:R1l9afja:"
-                    data-selected=""
-                  >
-                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Run Analytics
-                  </button>
-                </h3>
-                <p class="mt-2 hidden text-sm lg:block">
-                  A deep dive into your recent run. Show your pace, cadence, and heart rate on the one graph with a linked elevation chart.
-                </p>
-              </div>
-              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 hover:bg-white/10 lg:hover:bg-white/5">
-                <h3>
-                  <button
-                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-100 hover:text-white lg:text-white"
-                    id="headlessui-tabs-tab-:Rad9afja:"
-                    role="tab"
-                    type="button"
-                    aria-selected="false"
-                    tabindex="-1"
-                    data-headlessui-state=""
-                    aria-controls="headlessui-tabs-panel-:R2l9afja:"
-                  >
-                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Trends
-                  </button>
-                </h3>
-                <p class="mt-2 hidden text-sm lg:block text-blue-100 group-hover:text-white">
-                  See how your pace, cadence, and heart rate have changed over time. Compare your performance to previous runs.
-                </p>
-              </div>
-              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 hover:bg-white/10 lg:hover:bg-white/5">
-                <h3>
-                  <button
-                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-100 hover:text-white lg:text-white"
-                    id="headlessui-tabs-tab-:Rbd9afja:"
-                    role="tab"
-                    type="button"
-                    aria-selected="false"
-                    tabindex="-1"
-                    data-headlessui-state=""
-                    aria-controls="headlessui-tabs-panel-:R3l9afja:"
-                  >
-                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Training Calendar
-                  </button>
-                </h3>
-                <p class="mt-2 hidden text-sm lg:block text-blue-100 group-hover:text-white">
-                  Plan your training schedule with a calendar view. Add your workouts and see your progress over time.
-                </p>
-              </div>
-              <div class="group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6 hover:bg-white/10 lg:hover:bg-white/5">
-                <h3>
-                  <button
-                    class="font-display text-lg ui-not-focus-visible:outline-none text-blue-100 hover:text-white lg:text-white"
-                    id="headlessui-tabs-tab-:Rcd9afja:"
-                    role="tab"
-                    type="button"
-                    aria-selected="false"
-                    tabindex="-1"
-                    data-headlessui-state=""
-                    aria-controls="headlessui-tabs-panel-:R4l9afja:"
-                  >
-                    <span class="absolute inset-0 rounded-full lg:rounded-l-xl lg:rounded-r-none"></span>Challenge Friends
-                  </button>
-                </h3>
-                <p class="mt-2 hidden text-sm lg:block text-blue-100 group-hover:text-white">
-                  Compete with your friends on the leaderboard. See who has run the most miles this week.
-                </p>
-              </div>
+        <div class="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
+          <!-- Dashboard -->
+          <div class="lg:flex lg:items-center lg:space-x-10">
+            <div class="lg:w-1/2">
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">Dashboard</h3>
+              <p class="mt-6 text-lg leading-8 text-gray-600">
+                Get a quick overview of your running progress with our intuitive dashboard. View your weekly distance, current goals, recent activities, and upcoming races at a glance. The dashboard keeps you motivated by showing your running streak and comparing your current week's performance to the previous week.
+              </p>
+            </div>
+            <div class="mt-10 lg:mt-0 lg:w-1/2">
+              <img
+                src="/path/to/dashboard-screenshot.jpg"
+                alt="OpenPace Dashboard"
+                class="rounded-xl shadow-xl ring-1 ring-gray-400/10"
+              />
             </div>
           </div>
-          <div class="lg:col-span-7">
-            <div
-              id="headlessui-tabs-panel-:R1l9afja:"
-              role="tabpanel"
-              tabindex="0"
-              data-headlessui-state="selected"
-              aria-labelledby="headlessui-tabs-tab-:R9d9afja:"
-              style=""
-              data-selected=""
-            >
-              <div class="relative sm:px-6 lg:hidden">
-                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
-                </div>
-                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
-                  Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.
-                </p>
-              </div>
-              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                <img
-                  alt=""
-                  fetchpriority="high"
-                  width="2174"
-                  height="1464"
-                  decoding="async"
-                  data-nimg="1"
-                  class="w-full"
-                  style="color:transparent"
-                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=3840&amp;q=75 3840w"
-                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpayroll.517af4e7.png&amp;w=3840&amp;q=75"
-                />
-              </div>
+          <!-- Calendar -->
+          <div class="lg:flex lg:items-center lg:space-x-10 lg:flex-row-reverse">
+            <div class="lg:w-1/2">
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">Training Calendar</h3>
+              <p class="mt-6 text-lg leading-8 text-gray-600">
+                Visualize your training schedule with our comprehensive calendar view. Track your weekly distance or duration, see all activities broken down by month, and keep an eye on how many weeks are left until your next race. The calendar automatically updates as you complete runs, making it easy to stay on top of your training plan.
+              </p>
             </div>
-            <div
-              id="headlessui-tabs-panel-:R2l9afja:"
-              role="tabpanel"
-              tabindex="-1"
-              style="display: none;"
-              data-headlessui-state=""
-              aria-labelledby="headlessui-tabs-tab-:Rad9afja:"
-              hidden=""
-            >
-              <div class="relative sm:px-6 lg:hidden">
-                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
-                </div>
-                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
-                  All of your receipts organized into one place, as long as you don't mind typing in the data by hand.
-                </p>
-              </div>
-              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                <img
-                  alt=""
-                  fetchpriority="high"
-                  width="2174"
-                  height="1464"
-                  decoding="async"
-                  data-nimg="1"
-                  class="w-full"
-                  style="color:transparent"
-                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=3840&amp;q=75 3840w"
-                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexpenses.3f331919.png&amp;w=3840&amp;q=75"
-                />
-              </div>
+            <div class="mt-10 lg:mt-0 lg:w-1/2">
+              <img
+                src="/path/to/calendar-screenshot.jpg"
+                alt="OpenPace Training Calendar"
+                class="rounded-xl shadow-xl ring-1 ring-gray-400/10"
+              />
             </div>
-            <div
-              id="headlessui-tabs-panel-:R3l9afja:"
-              role="tabpanel"
-              tabindex="-1"
-              style="display: none;"
-              data-headlessui-state=""
-              aria-labelledby="headlessui-tabs-tab-:Rbd9afja:"
-              hidden=""
-            >
-              <div class="relative sm:px-6 lg:hidden">
-                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
-                </div>
-                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
-                  We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.
-                </p>
-              </div>
-              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                <img
-                  alt=""
-                  fetchpriority="high"
-                  width="2174"
-                  height="1464"
-                  decoding="async"
-                  data-nimg="1"
-                  class="w-full"
-                  style="color:transparent"
-                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=3840&amp;q=75 3840w"
-                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvat-returns.7402820f.png&amp;w=3840&amp;q=75"
-                />
-              </div>
+          </div>
+          <!-- Challenges -->
+          <div class="lg:flex lg:items-center lg:space-x-10">
+            <div class="lg:w-1/2">
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">Challenges</h3>
+              <p class="mt-6 text-lg leading-8 text-gray-600">
+                Stay motivated and push your limits with our diverse challenge system. Compete with friends in distance, duration, elevation gain, or Strava segment challenges. Create custom date-range challenges to keep your training exciting and goal-oriented. Whether you're aiming for a new distance record or conquering hills, our challenges feature has you covered.
+              </p>
             </div>
-            <div
-              id="headlessui-tabs-panel-:R4l9afja:"
-              role="tabpanel"
-              tabindex="-1"
-              style="display: none;"
-              data-headlessui-state=""
-              aria-labelledby="headlessui-tabs-tab-:Rcd9afja:"
-              hidden=""
-            >
-              <div class="relative sm:px-6 lg:hidden">
-                <div class="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl">
-                </div>
-                <p class="relative mx-auto max-w-2xl text-base text-white sm:text-center">
-                  Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.
-                </p>
-              </div>
-              <div class="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                <img
-                  alt=""
-                  fetchpriority="high"
-                  width="2174"
-                  height="1464"
-                  decoding="async"
-                  data-nimg="1"
-                  class="w-full"
-                  style="color:transparent"
-                  sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-                  srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=640&amp;q=75 640w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=750&amp;q=75 750w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=828&amp;q=75 828w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=3840&amp;q=75 3840w"
-                  src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Freporting.2ad6f065.png&amp;w=3840&amp;q=75"
-                />
-              </div>
+            <div class="mt-10 lg:mt-0 lg:w-1/2">
+              <img
+                src="/path/to/challenges-screenshot.jpg"
+                alt="OpenPace Challenges"
+                class="rounded-xl shadow-xl ring-1 ring-gray-400/10"
+              />
+            </div>
+          </div>
+          <!-- Run Analytics -->
+          <div class="lg:flex lg:items-center lg:space-x-10 lg:flex-row-reverse">
+            <div class="lg:w-1/2">
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">Run Analytics</h3>
+              <p class="mt-6 text-lg leading-8 text-gray-600">
+                Dive deep into your performance with our advanced run analytics. Visualize your pace, cadence, and heart rate on interactive graphs. Explore your route on a color-coded map showing your pace variations. Analyze your splits, elevation profile, and even historical weather data for each run. Our detailed analytics help you understand your performance and identify areas for improvement.
+              </p>
+            </div>
+            <div class="mt-10 lg:mt-0 lg:w-1/2">
+              <img
+                src="/path/to/run-analytics-screenshot.jpg"
+                alt="OpenPace Run Analytics"
+                class="rounded-xl shadow-xl ring-1 ring-gray-400/10"
+              />
+            </div>
+          </div>
+          <!-- Trends -->
+          <div class="lg:flex lg:items-center lg:space-x-10">
+            <div class="lg:w-1/2">
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">Trends and Insights</h3>
+              <p class="mt-6 text-lg leading-8 text-gray-600">
+                Gain valuable insights into your long-term progress with our trends feature. View your running statistics over time, including distance, pace, and elevation gain. Analyze your performance across different seasons and years. Identify patterns in your training and see how consistent effort leads to improvement. Our trends analysis helps you make data-driven decisions to optimize your training.
+              </p>
+            </div>
+            <div class="mt-10 lg:mt-0 lg:w-1/2">
+              <.cloudflare_img
+                src="/images/home/overview.jpg"
+                height={100}
+                width={100}
+                class="rounded-xl shadow-xl ring-1 ring-gray-400/10"
+              />
+              <img
+                src="/path/to/trends-screenshot.jpg"
+                alt="OpenPace Trends and Insights"
+                class="rounded-xl shadow-xl ring-1 ring-gray-400/10"
+              />
             </div>
           </div>
         </div>
@@ -321,18 +178,207 @@
               <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
                 <blockquote class="text-gray-900">
                   <p>
-                    “Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.”
+                    "OpenPace has revolutionized my marathon training. The detailed analytics help me understand my progress like never before."
                   </p>
                 </blockquote>
                 <figcaption class="mt-6 flex items-center gap-x-4">
                   <img
                     class="h-10 w-10 rounded-full bg-gray-50"
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src="/api/placeholder/40/40"
                     alt=""
                   />
                   <div>
-                    <div class="font-semibold text-gray-900">Leslie Alexander</div>
-                    <div class="text-gray-600">@lesliealexander</div>
+                    <div class="font-semibold text-gray-900">Emma Runner</div>
+                    <div class="text-gray-600">@emmarunner</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "I love the challenge feature! Competing with friends keeps me motivated to run consistently."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Alex Pacer</div>
+                    <div class="text-gray-600">@alexpacer</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "As a data nerd and runner, OpenPace gives me all the stats I crave. It's like Strava, but open-source and customizable."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">David Analyzer</div>
+                    <div class="text-gray-600">@datarunner</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "The training calendar is a game-changer. I can easily track my mileage and see how I'm progressing towards my race day."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Sarah Tracker</div>
+                    <div class="text-gray-600">@sarahtracker</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "OpenPace's dashboard gives me a quick overview of my running week. It's the first thing I check every morning."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Mike Dashboard</div>
+                    <div class="text-gray-600">@mikedash</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "Being able to analyze my pace zones has really helped me improve my race times. Thanks, OpenPace!"
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Lisa Speedster</div>
+                    <div class="text-gray-600">@lisaspeed</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "I appreciate how OpenPace is constantly evolving. The developer is so responsive to feature requests from the community."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Tom Developer</div>
+                    <div class="text-gray-600">@tomdev</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "The GitHub integration is fantastic. As a developer myself, I love being able to contribute to the project I use daily."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Jenny Coder</div>
+                    <div class="text-gray-600">@jennycode</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "OpenPace's elevation gain challenges have turned me into a mountain goat! I'm tackling hills I never would have before."
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Chris Hillclimber</div>
+                    <div class="text-gray-600">@chrishill</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <figure class="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
+                <blockquote class="text-gray-900">
+                  <p>
+                    "The simplicity of OpenPace combined with its powerful features makes it my go-to running app. Plus, it's free and open-source!"
+                  </p>
+                </blockquote>
+                <figcaption class="mt-6 flex items-center gap-x-4">
+                  <img
+                    class="h-10 w-10 rounded-full bg-gray-50"
+                    src="/api/placeholder/40/40"
+                    alt=""
+                  />
+                  <div>
+                    <div class="font-semibold text-gray-900">Rachel Opensource</div>
+                    <div class="text-gray-600">@rachelopen</div>
                   </div>
                 </figcaption>
               </figure>
@@ -346,31 +392,46 @@
     <div class="bg-white py-32">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our mission</h2>
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Our mission
+          </h2>
           <div class="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
             <div class="lg:w-full lg:max-w-2xl lg:flex-auto">
               <p class="text-xl leading-8 text-gray-600">
-                Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam eget aliquam. Quisque id at vitae feugiat egestas ac. Diam nulla orci at in viverra scelerisque eget. Eleifend egestas fringilla sapien.
+                As a passionate runner and developer, I created OpenPace to extend the features of popular running tools like Strava in an open-source environment. My mission is to provide runners with powerful, customizable analytics and training tools that are freely accessible and community-driven.
               </p>
               <p class="mt-10 max-w-xl text-base leading-7 text-gray-700">
-                Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id.
+                OpenPace is a labor of love - a side project built by
+                <a
+                  href="https://evandancer.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-semibold text-violet-600 hover:text-violet-500"
+                >
+                  me
+                </a>
+                with the goal of empowering runners to achieve their personal bests. By making the codebase open source, I hope to foster a community where runners and developers alike can contribute, innovate, and shape the future of running technology together.
               </p>
             </div>
             <div class="lg:flex lg:flex-auto lg:justify-center">
               <dl class="w-64 space-y-8 xl:w-80">
                 <div class="flex flex-col-reverse gap-y-4">
-                  <dt class="text-base leading-7 text-gray-600">Transactions every 24 hours</dt>
-                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">44 million</dd>
+                  <dt class="text-base leading-7 text-gray-600">Active users</dt>
+                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">1,000+</dd>
                 </div>
                 <div class="flex flex-col-reverse gap-y-4">
-                  <dt class="text-base leading-7 text-gray-600">Assets under holding</dt>
+                  <dt class="text-base leading-7 text-gray-600">Github stars</dt>
                   <dd class="text-5xl font-semibold tracking-tight text-gray-900">
-                    $119 trillion
+                    100+
                   </dd>
                 </div>
                 <div class="flex flex-col-reverse gap-y-4">
-                  <dt class="text-base leading-7 text-gray-600">New users annually</dt>
-                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">46,000</dd>
+                  <dt class="text-base leading-7 text-gray-600">
+                    Miles logged
+                  </dt>
+                  <dd class="text-5xl font-semibold tracking-tight text-gray-900">
+                    1 million+
+                  </dd>
                 </div>
               </dl>
             </div>
@@ -387,21 +448,120 @@
               Frequently asked questions
             </h2>
             <p class="mt-4 text-base leading-7 text-gray-600">
-              Can’t find the answer you’re looking for? Reach out to our
-              <a href="#" class="font-semibold text-violet-600 hover:text-violet-500">
-                customer support
+              Can’t find the answer you’re looking for? Reach out to
+              <a
+                href="mailto:evan@openpace.co"
+                class="font-semibold text-violet-600 hover:text-violet-500"
+              >
+                me (Evan)
               </a>
-              team.
+              for help.
             </p>
           </div>
           <div class="mt-10 lg:col-span-7 lg:mt-0">
             <dl class="space-y-10">
               <div>
                 <dt class="text-base font-semibold leading-7 text-gray-900">
-                  How do you make holy water?
+                  What is OpenPace?
                 </dt>
                 <dd class="mt-2 text-base leading-7 text-gray-600">
-                  You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.
+                  OpenPace is an open-source web application designed to help runners improve their marathon performance. It provides tools for analyzing race performance, tracking progress, and setting goals.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Is OpenPace free to use?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  Yes, OpenPace is an open-source project and is free to use. However, some premium features may require a subscription.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  How do I get started with OpenPace?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  To get started, create an account on our website and sync your running data from Strava.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  What kind of analytics does OpenPace provide?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  OpenPace offers detailed run analytics, including pace, cadence, heart rate, and elevation charts. It also provides weekly distance summaries, goal tracking, and race performance analysis.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Does OpenPace offer training plans?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  Currently, OpenPace does not provide custom training plans, but it's a feature we're considering for the future.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Can I create and join challenges with friends?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  Yes, OpenPace supports various types of challenges, including distance, duration, elevation gain, and Strava segment challenges.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Is OpenPace available as a mobile app?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  Currently, OpenPace is a web application. A mobile app is not available at this time but may be considered for future development.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  How secure is my data on OpenPace?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  We take data security seriously. Your data is encrypted and stored securely. For more details, please refer to our privacy policy.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Can I contribute to the OpenPace project?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  Yes! OpenPace is open-source, and we welcome contributions. Check out our GitHub repository for more information on how to get involved.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Can I delete my account and data?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  Yes, you can request account deletion from your account settings. This will remove all your personal data from our systems.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  I've encountered a bug. How do I report it?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  You can report bugs by opening an issue on our GitHub repository or contacting our support team.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  How can I request a new feature?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  We welcome feature requests! You can submit ideas through our GitHub repository or contact us directly through our website.
+                </dd>
+              </div>
+              <div>
+                <dt class="text-base font-semibold leading-7 text-gray-900">
+                  Is there a community forum for OpenPace users?
+                </dt>
+                <dd class="mt-2 text-base leading-7 text-gray-600">
+                  While we don't currently have a dedicated forum, you can join discussions and get support through our GitHub repository or social media channels.
                 </dd>
               </div>
               <!-- More questions... -->
@@ -431,7 +591,7 @@
             />
             <.button
               type="submit"
-              class="flex-none rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
+              class="flex-none rounded-md bg-violet-600 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
             >
               Subscribe
             </.button>
