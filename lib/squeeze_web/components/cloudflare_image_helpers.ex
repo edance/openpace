@@ -14,6 +14,7 @@ defmodule SqueezeWeb.CloudflareImageHelpers do
   attr :src, :string, required: true
   attr :height, :integer, required: true
   attr :width, :integer, required: true
+  attr :alt, :string, required: true
   attr :cloudflare_opts, :list, default: []
   attr :class, :string, default: ""
 
@@ -26,7 +27,7 @@ defmodule SqueezeWeb.CloudflareImageHelpers do
       |> assign(:src, generate_url(src, options))
 
     ~H"""
-    <img src={@src} height={@height} width={@width} class={@class} />
+    <img src={@src} alt={@alt} height={@height} width={@width} class={@class} />
     """
   end
 
