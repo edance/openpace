@@ -1,6 +1,10 @@
 defmodule SqueezeWeb.CloudflareImageHelpers do
   use Phoenix.Component
 
+  @moduledoc """
+  A component to generate Cloudflare image tags with the given image_id and options.
+  """
+
   @doc """
   Generates an image tag with the given image_id and options.
   ## Examples
@@ -32,18 +36,20 @@ defmodule SqueezeWeb.CloudflareImageHelpers do
   end
 
   defp generate_url(src, options) do
-    if Mix.env() == :prod do
-      variant = build_variant(options)
-      "/cdn-cgi/image/#{variant}#{src}"
-    else
-      src
+    case System.get_env("PHX_HOST") do
+      nil ->
+        src
+
+      # If we have a defined host, we generate the Cloudflare URL
+      _ ->
+        variant = build_variant(options)
+        "/cdn-cgi/image/#{variant}#{src}"
     end
   end
 
   defp build_variant(options) do
     options
-    |> Enum.map(&transform_option/1)
-    |> Enum.join(",")
+    |> Enum.map_join(",", &transform_option/1)
     |> case do
       # Default variant if no options are specified
       "" -> "public"
