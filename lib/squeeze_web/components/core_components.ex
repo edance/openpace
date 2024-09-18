@@ -265,7 +265,7 @@ defmodule SqueezeWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="lock w-full rounded-md border border-gray-300 text-gray-800 dark:text-white bg-white dark:bg-white/10 dark:focus:bg-gray-700 shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="block w-full rounded-md border border-gray-300 text-gray-800 dark:text-white bg-white dark:bg-white/10 dark:focus:bg-gray-700 shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
