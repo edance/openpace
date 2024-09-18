@@ -65,11 +65,13 @@ defmodule SqueezeWeb.Settings.PersonalRecordsFormComponent do
       as={:personal_record}
       phx-submit="save"
       phx-target={@target}
-      class="px-4"
+      class="px-4 w-full max-w-md"
     >
       <.input field={f[:distance]} type="hidden" value={@distance} />
 
-      <.input field={f[:duration]} type="duration" label={gettext("Race Time")} value={@value} />
+      <div class="mb-2">
+        <.input field={f[:duration]} type="duration" label={gettext("Race Time")} value={@value} />
+      </div>
 
       <.input field={f[:results_url]} label={gettext("Results URL")} />
 
