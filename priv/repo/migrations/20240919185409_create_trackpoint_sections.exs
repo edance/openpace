@@ -7,9 +7,16 @@ defmodule Squeeze.Repo.Migrations.CreateTrackpointSections do
       add :duration, :integer
       add :velocity, :float
 
+      add :heartrate, :integer
+      add :cadence, :integer
+      add :power, :integer
+
+      add :section_index, :integer, null: false
+
       add :activity_id, references(:activities, on_delete: :delete_all)
     end
 
     create index(:trackpoint_sections, [:activity_id])
+    create unique_index(:trackpoint_sections, [:section_index, :activity_id])
   end
 end

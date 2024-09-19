@@ -41,6 +41,18 @@ defmodule Squeeze.Utils do
 
   def cast_int(x), do: x
 
+  def safe_avg(a, b) when is_nil(a) or is_nil(b), do: nil
+  def safe_avg(a, b), do: (a + b) / 2
+
+  def safe_diff(a, b) when is_nil(a) or is_nil(b), do: nil
+  def safe_diff(a, b), do: a - b
+
+  def safe_div(nil, _), do: nil
+  def safe_div(a, b), do: div(a, b)
+
+  def safe_rem(nil, _), do: nil
+  def safe_rem(a, b), do: rem(a, b)
+
   def sum_by(list, field) do
     list
     |> Enum.map(&Map.get(&1, field))

@@ -9,13 +9,28 @@ defmodule Squeeze.Activities.TrackpointSection do
     field :duration, :integer
     field :velocity, :float
 
+    field :heartrate, :integer
+    field :cadence, :integer
+    field :power, :integer
+
+    field :section_index, :integer
+
     belongs_to :activity, Activity
   end
 
   @doc false
   def changeset(trackpoint_section, attrs) do
     trackpoint_section
-    |> cast(attrs, [:distance, :duration, :velocity])
-    |> validate_required([:distance, :duration, :velocity])
+    |> cast(attrs, [
+      :distance,
+      :duration,
+      :velocity,
+      :heartrate,
+      :cadence,
+      :power,
+      :section_index,
+      :activity_id
+    ])
+    |> validate_required([:section_index])
   end
 end

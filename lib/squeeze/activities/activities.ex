@@ -13,6 +13,8 @@ defmodule Squeeze.Activities do
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
 
+  import Squeeze.Utils, only: [cast_float: 1, cast_int: 1, safe_avg: 2, safe_diff: 2]
+
   @doc """
   Returns the list of activities by user in a date range.
 
@@ -278,23 +280,28 @@ defmodule Squeeze.Activities do
   def create_trackpoint_sections(%TrackpointSet{} = trackpoint_set) do
     %{activity_id: activity_id, trackpoints: [start | rest]} = trackpoint_set
 
-    {sections, _} =
-      Enum.map_reduce(rest, start, fn cur, prev ->
+    sections =
+      rest
+      |> Enum.map_reduce(start, fn cur, prev ->
         section = %{
-          velocity: (prev.velocity + cur.velocity) / 2,
-          distance: cur.distance - prev.distance,
-          duration: cur.time - prev.time,
+          velocity: safe_avg(cur.velocity, prev.velocity) |> cast_float(),
+          distance: safe_diff(cur.distance, prev.distance) |> cast_float(),
+          duration: safe_diff(cur.time, prev.time) |> cast_int(),
+          heartrate: safe_avg(cur.heartrate, prev.heartrate) |> cast_int(),
+          cadence: safe_avg(cur.cadence, prev.cadence) |> cast_int(),
           activity_id: activity_id
         }
 
         {section, cur}
       end)
+      |> elem(0)
+      |> Enum.with_index(fn section, idx -> Map.put(section, :section_index, idx) end)
 
     Multi.new()
     |> Multi.run(:section_count, fn repo, _ ->
       sections
       |> Enum.chunk_every(100)
-      |> Enum.each(&repo.insert_all(TrackpointSection, &1))
+      |> Enum.each(&repo.insert_all(TrackpointSection, &1, on_conflict: :nothing))
 
       {:ok, length(sections)}
     end)
