@@ -4,7 +4,9 @@ defmodule Squeeze.Activities do
   """
 
   import Ecto.Query, warn: false
+  alias Squeeze.Activities.TrackpointSection
   alias Ecto.Changeset
+  alias Ecto.Multi
   alias Squeeze.Accounts.User
   alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
   alias Squeeze.Races
@@ -269,6 +271,34 @@ defmodule Squeeze.Activities do
     |> Changeset.put_change(:activity_id, activity.id)
     |> Changeset.put_embed(:trackpoints, trackpoints)
     |> Repo.insert(on_conflict: :replace_all, conflict_target: :activity_id)
+  end
+
+  def create_trackpoint_sections(%TrackpointSet{trackpoints: []}), do: {:ok, 0}
+
+  def create_trackpoint_sections(%TrackpointSet{} = trackpoint_set) do
+    %{activity_id: activity_id, trackpoints: [start | rest]} = trackpoint_set
+
+    {sections, _} =
+      Enum.map_reduce(rest, start, fn cur, prev ->
+        section = %{
+          velocity: (prev.velocity + cur.velocity) / 2,
+          distance: cur.distance - prev.distance,
+          duration: cur.time - prev.time,
+          activity_id: activity_id
+        }
+
+        {section, cur}
+      end)
+
+    Multi.new()
+    |> Multi.run(:section_count, fn repo, _ ->
+      sections
+      |> Enum.chunk_every(100)
+      |> Enum.each(&repo.insert_all(TrackpointSection, &1))
+
+      {:ok, length(sections)}
+    end)
+    |> Repo.transaction()
   end
 
   def create_laps(%Activity{} = activity, laps) do
