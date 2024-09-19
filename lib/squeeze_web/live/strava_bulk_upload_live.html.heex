@@ -27,10 +27,17 @@
 
         <%= for entry <- @uploads.export.entries do %>
           <article class="upload-entry mb-4">
-            <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
+            <progress
+              value={entry.progress}
+              max="100"
+              class="h-2 rounded-full w-full progress-unfilled:bg-gray-400 progress-filled:bg-indigo-600"
+            >
+              <%= entry.progress %>%
+            </progress>
 
             <button
-              class="btn btn-sm btn-secondary"
+              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              ,
               phx-click="cancel-upload"
               phx-value-ref={entry.ref}
               aria-label="cancel"
@@ -49,13 +56,16 @@
         <% end %>
 
         <%= if @activity_count > 0 do %>
-          <p class="mb-4">
+          <p class="mb-4 text-gray-900 dark:text-white">
             <%= @activity_count %> Activities uploaded
           </p>
         <% end %>
 
         <form id="upload-form" phx-submit="save" phx-change="validate">
-          <.live_file_input upload={@uploads.export} />
+          <.live_file_input
+            class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 dark:text-white"
+            upload={@uploads.export}
+          />
         </form>
       </div>
     </.card>
