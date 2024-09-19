@@ -83,7 +83,7 @@ You will then be able to sign in with `a@b.co` and the password `password`.
 
 #### Option 1 (detailed activities with trackpoints and laps)
 
-* Create an account with an email (or sign in with `a@b.co` and password `psasword`)
+* Create an account with an email (or sign in with `a@b.co` and password `password`)
 * Visit `/dashboard/strava-bulk-upload` and follow the instructions on the page
 
 You will be required to download your data from Strava and upload the zip file to this page.

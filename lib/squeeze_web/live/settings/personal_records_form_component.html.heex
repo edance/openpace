@@ -30,14 +30,13 @@
                     else: gettext("Add") %>
                 </a>
               </div>
-
-              <.pr_form
-                :if={distance == @distance}
-                distance={@distance}
-                value={pr_duration_at_distance(assigns, @distance)}
-                target={@myself}
-              />
             </div>
+            <.pr_form
+              :if={distance == @distance}
+              distance={@distance}
+              value={pr_duration_at_distance(assigns, @distance)}
+              target={@myself}
+            />
           </div>
         <% end %>
       </div>
