@@ -26,18 +26,16 @@
       </div>
 
       <div class="flex-none text-right">
-        <span class="isolate inline-flex rounded-md shadow-sm">
+        <span class="relative z-10 isolate inline-flex rounded-md shadow-sm">
           <%= live_patch(gettext("All Time"),
             to: Routes.trends_path(@socket, :index),
-            class:
-              "relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+            class: [btn_group_class(@year == nil), "rounded-l-md"]
           ) %>
 
           <%= for year <- @years |> Enum.reverse() |> Enum.take(3) do %>
             <%= live_patch(year,
               to: Routes.trends_path(@socket, :show, year),
-              class:
-                "relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+              class: btn_group_class(@year == year)
             ) %>
           <% end %>
           <div class="relative -ml-px block">
@@ -73,7 +71,7 @@
                 <%= for year <- @years |> Enum.reverse() |> Enum.slice(3..-1) do %>
                   <%= live_patch(year,
                     to: Routes.trends_path(@socket, :show, year),
-                    class: "block px-4 py-2 text-sm text-gray-700",
+                    class: btn_dropdown_class(@year == year),
                     role: "menuitem",
                     tabindex: "-1"
                   ) %>
