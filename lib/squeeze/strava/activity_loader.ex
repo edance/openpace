@@ -100,7 +100,7 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   defp fetch_streams(id, credential) do
     client = Client.new(credential)
-    streams = "altitude,cadence,distance,time,moving,heartrate,latlng,velocity_smooth"
+    streams = StreamSetConverter.streams() |> Enum.join(",")
     @strava_streams.get_activity_streams(client, id, streams, true)
   end
 end

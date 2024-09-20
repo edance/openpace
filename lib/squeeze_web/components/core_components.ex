@@ -16,6 +16,7 @@ defmodule SqueezeWeb.CoreComponents do
   """
   use Phoenix.Component
   import SqueezeWeb.FormatHelpers
+  import Squeeze.Utils, only: [safe_div: 2, safe_rem: 2]
 
   alias Phoenix.HTML.{Form, FormField}
 
@@ -414,10 +415,4 @@ defmodule SqueezeWeb.CoreComponents do
       Gettext.dgettext(SqueezeWeb.Gettext, "errors", msg, opts)
     end
   end
-
-  defp safe_div(nil, _), do: nil
-  defp safe_div(a, b), do: div(a, b)
-
-  defp safe_rem(nil, _), do: nil
-  defp safe_rem(a, b), do: rem(a, b)
 end

@@ -41,33 +41,25 @@ defmodule Squeeze.Strava.StreamSetConverter do
   end
 
   # %{
-  #   altitude: 49.0,
-  #   cadence: 57,
-  #   heartrate: 88,
-  #   latlng: [37.778892, -122.43865],
+  #   altitude: 77.2,
+  #   cadence: 58,
+  #   distance: 0.0,
+  #   grade_smooth: 3.3,
+  #   heartrate: 110,
   #   moving: false,
+  #   temp: 26,
   #   time: 0,
-  #   velocity_smooth: 0.0
+  #   velocity_smooth: 0.0,
+  #   watts: 119
   # }
   def map_to_trackpoint(%{latlng: latlng} = trackpoint) when length(latlng) == 2 do
     coordinates = %{lat: List.first(latlng), lon: List.last(latlng)}
+    velocity = velocity(trackpoint)
 
     trackpoint
     |> Map.delete(:latlng)
-    |> map_to_trackpoint()
-    |> Map.merge(%{coordinates: coordinates})
-  end
-
-  def map_to_trackpoint(trackpoint) do
-    %{
-      altitude: trackpoint[:altitude],
-      cadence: trackpoint[:cadence],
-      distance: trackpoint[:distance],
-      heartrate: trackpoint[:heartrate],
-      moving: trackpoint[:moving],
-      time: trackpoint[:time],
-      velocity: velocity(trackpoint)
-    }
+    |> Map.delete(:velocity_smooth)
+    |> Map.merge(%{coordinates: coordinates, velocity: velocity})
   end
 
   defp velocity(%{velocity_smooth: 0}), do: 0.0

@@ -28,6 +28,9 @@ defmodule Squeeze.Activities.Activity do
     elevation_gain
     external_id
     polyline
+    type
+    moving_time
+    elapsed_time
   )a
 
   schema "activities" do

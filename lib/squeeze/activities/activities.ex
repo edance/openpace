@@ -5,11 +5,14 @@ defmodule Squeeze.Activities do
 
   import Ecto.Query, warn: false
   alias Ecto.Changeset
+  alias Ecto.Multi
   alias Squeeze.Accounts.User
-  alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
+  alias Squeeze.Activities.{Activity, Lap, TrackpointSection, TrackpointSet}
   alias Squeeze.Races
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
+
+  import Squeeze.Utils, only: [cast_float: 1, cast_int: 1, safe_avg: 2, safe_diff: 2]
 
   @doc """
   Returns the list of activities by user in a date range.
@@ -269,6 +272,40 @@ defmodule Squeeze.Activities do
     |> Changeset.put_change(:activity_id, activity.id)
     |> Changeset.put_embed(:trackpoints, trackpoints)
     |> Repo.insert(on_conflict: :replace_all, conflict_target: :activity_id)
+  end
+
+  def create_trackpoint_sections(%TrackpointSet{trackpoints: []}), do: {:ok, 0}
+
+  def create_trackpoint_sections(%TrackpointSet{} = trackpoint_set) do
+    %{activity_id: activity_id, trackpoints: [start | rest]} = trackpoint_set
+
+    sections =
+      rest
+      |> Enum.map_reduce(start, fn cur, prev ->
+        section = %{
+          velocity: safe_avg(cur.velocity, prev.velocity) |> cast_float(),
+          distance: safe_diff(cur.distance, prev.distance) |> cast_float(),
+          duration: safe_diff(cur.time, prev.time) |> cast_int(),
+          heartrate: safe_avg(cur.heartrate, prev.heartrate) |> cast_int(),
+          cadence: safe_avg(cur.cadence, prev.cadence) |> cast_int(),
+          activity_id: activity_id
+        }
+
+        {section, cur}
+      end)
+      |> elem(0)
+      |> Enum.reject(&is_nil/1)
+      |> Enum.with_index(fn section, idx -> Map.put(section, :section_index, idx) end)
+
+    Multi.new()
+    |> Multi.run(:section_count, fn repo, _ ->
+      sections
+      |> Enum.chunk_every(100)
+      |> Enum.each(&repo.insert_all(TrackpointSection, &1, on_conflict: :nothing))
+
+      {:ok, length(sections)}
+    end)
+    |> Repo.transaction()
   end
 
   def create_laps(%Activity{} = activity, laps) do
