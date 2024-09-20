@@ -32,8 +32,8 @@ defmodule Squeeze.Strava.BulkImport do
         {:ok, activity} ->
           activity
 
-        {:error, _} ->
-          Logger.error("Error creating activity")
+        {:error, _x} ->
+          Logger.error("[#{__MODULE__}] error creating activity for #{csv_data["Activity ID"]}")
       end
     end)
     |> Stream.run()
@@ -102,18 +102,26 @@ defmodule Squeeze.Strava.BulkImport do
   end
 
   defp to_int(val) when is_list(val) do
-    val |> List.last() |> to_int()
+    # Find the last non-empty value
+    val
+    |> Enum.reverse()
+    |> Enum.find(&(&1 != ""))
+    |> to_int()
   end
 
   defp to_int(val) do
     case Integer.parse(val) do
-      :error -> 0.0
+      :error -> 0
       {num, _} -> num
     end
   end
 
   defp to_float(val) when is_list(val) do
-    val |> List.last() |> to_float()
+    # Find the last non-empty value
+    val
+    |> Enum.reverse()
+    |> Enum.find(&(&1 != ""))
+    |> to_float()
   end
 
   defp to_float(val) do

@@ -295,6 +295,7 @@ defmodule Squeeze.Activities do
         {section, cur}
       end)
       |> elem(0)
+      |> Enum.reject(&is_nil/1)
       |> Enum.with_index(fn section, idx -> Map.put(section, :section_index, idx) end)
 
     Multi.new()
