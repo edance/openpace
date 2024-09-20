@@ -6,6 +6,7 @@ defmodule Squeeze.Reporter do
 
   alias Slack.Web.Chat
   alias Squeeze.Accounts.User
+  alias Squeeze.MailingList.Subscription
 
   # @slack_token Application.compile_env(:slack, :api_token)
 
@@ -17,6 +18,11 @@ defmodule Squeeze.Reporter do
         "Sign Up: #{user.first_name} #{user.last_name}"
       end
 
+    post_message(text)
+  end
+
+  def report_new_subscriber(%Subscription{} = subscription) do
+    text = "New Subscriber: #{subscription.email}"
     post_message(text)
   end
 

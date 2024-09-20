@@ -1,4 +1,5 @@
 defmodule SqueezeWeb.HomeController do
+  alias Squeeze.Reporter
   use SqueezeWeb, :controller
   @moduledoc false
 
@@ -20,7 +21,9 @@ defmodule SqueezeWeb.HomeController do
     attrs = Map.merge(subscription_params, %{"type" => "homepage"})
 
     case MailingList.create_subscription(attrs) do
-      {:ok, _} ->
+      {:ok, subscription} ->
+        Reporter.report_new_subscriber(subscription)
+
         conn
         |> put_flash(:info, "Thanks for signing up!")
         |> redirect(to: Routes.home_path(conn, :index))
