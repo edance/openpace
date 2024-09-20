@@ -79,4 +79,20 @@ defmodule SqueezeWeb.TrendsLive.Index do
   defp velocity(%{distance: distance, duration: duration}) do
     distance / duration
   end
+
+  def btn_group_class(active) do
+    if active do
+      "relative inline-flex items-center bg-indigo-500 text-white px-3 py-2 text-sm font-semibold ring-1 ring-inset ring-indigo-500 hover:bg-indigo-700 focus:z-10"
+    else
+      "relative inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+    end
+  end
+
+  def btn_dropdown_class(active) do
+    if active do
+      "block px-4 py-2 text-sm text-white bg-indigo-500"
+    else
+      "block px-4 py-2 text-sm text-gray-700"
+    end
+  end
 end
