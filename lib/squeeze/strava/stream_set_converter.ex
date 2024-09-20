@@ -40,8 +40,8 @@ defmodule Squeeze.Strava.StreamSetConverter do
     end
   end
 
-  # %{      
-  #   altitude: 77.2, 
+  # %{
+  #   altitude: 77.2,
   #   cadence: 58,
   #   distance: 0.0,
   #   grade_smooth: 3.3,

@@ -4,11 +4,10 @@ defmodule Squeeze.Activities do
   """
 
   import Ecto.Query, warn: false
-  alias Squeeze.Activities.TrackpointSection
   alias Ecto.Changeset
   alias Ecto.Multi
   alias Squeeze.Accounts.User
-  alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
+  alias Squeeze.Activities.{Activity, Lap, TrackpointSection, TrackpointSet}
   alias Squeeze.Races
   alias Squeeze.Repo
   alias Squeeze.TimeHelper

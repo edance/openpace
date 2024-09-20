@@ -1,4 +1,9 @@
 defmodule Squeeze.Activities.TrackpointSection do
+  @moduledoc """
+    TrackpointSection is a schema that represents a segment between two trackpoints.
+    This is useful for calculating time or distance in pace zones.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
