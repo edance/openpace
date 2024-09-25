@@ -13,19 +13,28 @@
               @race_goal.race_date
             ) %>)
           </p>
+
+          <.link
+            patch={Routes.race_path(@socket, :edit, @race_goal.slug)}
+            phx-click={JS.push_focus()}
+          >
+            <.button>Edit</.button>
+          </.link>
         </div>
 
         <%= if @activity do %>
           <%= if show_map?(assigns) do %>
-            <.card>
-              <div
-                id="activity-map"
-                class="activity-map"
-                phx-hook="ActivityMap"
-                phx-update="ignore"
-              >
-              </div>
-            </.card>
+            <div class="w-full relative">
+              <.card>
+                <div
+                  id="activity-map"
+                  class="activity-map"
+                  phx-hook="ActivityMap"
+                  phx-update="ignore"
+                >
+                </div>
+              </.card>
+            </div>
           <% end %>
 
           <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
@@ -175,3 +184,14 @@
     </div>
   </div>
 </div>
+
+<.modal
+  :if={@live_action == :edit}
+  id="race-modal"
+  show
+  on_cancel={JS.patch(Routes.race_path(@socket, :show, @race_goal.slug))}
+>
+  <div>
+    Nice
+  </div>
+</.modal>
