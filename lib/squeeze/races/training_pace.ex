@@ -4,8 +4,10 @@ defmodule Squeeze.Races.TrainingPace do
   """
 
   use Ecto.Schema
+  import Ecto.Changeset
 
   alias Squeeze.Colors
+  alias Squeeze.Races.TrainingPace
   alias Squeeze.RacePredictor
   import Squeeze.Distances, only: [marathon_in_meters: 0, mile_in_meters: 0]
 
@@ -20,6 +22,13 @@ defmodule Squeeze.Races.TrainingPace do
     field :min_speed, :float
     # meters per second
     field :max_speed, :float
+  end
+
+  @doc false
+  def changeset(%TrainingPace{} = pace, attrs) do
+    pace
+    |> cast(attrs, [:color, :name, :long, :speed, :min_speed, :max_speed])
+    |> validate_required([:color, :name, :long])
   end
 
   def default_paces(distance, duration) do

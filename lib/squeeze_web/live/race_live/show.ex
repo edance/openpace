@@ -8,6 +8,8 @@ defmodule SqueezeWeb.RaceLive.Show do
   alias Squeeze.Races
   alias Squeeze.Strava.ActivityLoader
 
+  embed_templates "components/*"
+
   @impl true
   def mount(%{"slug" => slug}, _session, socket) do
     user = socket.assigns.current_user

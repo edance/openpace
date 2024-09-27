@@ -470,7 +470,7 @@ defmodule SqueezeWeb.CoreComponents do
             phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
             phx-key="escape"
             phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-            class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+            class="relative transform overflow-hidden rounded-lg bg-white dark:bg-red-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
           >
             <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
               <button
