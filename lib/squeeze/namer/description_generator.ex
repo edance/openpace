@@ -3,7 +3,7 @@ defmodule Squeeze.Namer.DescriptionGenerator do
   This module converts an activity into Morning, Afternoon, Evening, and Night
   """
 
-  @branding_text "Renamed with openpace.co/namer"
+  @branding_text "Renamed with OpenPace Namer"
 
   def generate_description(%{user_prefs: %{branding: true}}, %{description: description}) do
     [
