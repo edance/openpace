@@ -1,0 +1,31 @@
+<div>
+  <!-- tailwind grid with 7 columns -->
+  <div class="grid grid-cols-7">
+    <!-- Iterate through all dates in the Date.range -->
+    <%= for date <- @block_range do %>
+      <div class="date">
+        <h2><%= date |> Timex.format!("{WDshort}, {Mshort} {D}") %></h2>
+        <!-- Iterate through all activities for the current date -->
+        <%= for activity <- @past_activities do %>
+          <%= if activity.start_at_local |> Timex.to_date() == date do %>
+            <div class="w-full flex flex-col items-center">
+              <!-- use tailwind to make a circle the size of the activity distance -->
+              <div
+                class="rounded-full bg-blue-500 flex items-center justify-center text-white dark:bg-blue-400 dark:text-black dark:bg-opacity-50"
+                style={"width: #{bubble_size(activity.distance)}px; height: #{bubble_size(activity.distance)}px;"}
+              >
+                <span class="text-xs">
+                  <%= format_distance(activity.distance, @current_user.user_prefs) %>
+                </span>
+              </div>
+
+              <div class="text-xs text-gray-800 dark:text-white font-semibold opacity-60">
+                <%= activity.name %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

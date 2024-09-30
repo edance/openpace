@@ -97,6 +97,8 @@ defmodule SqueezeWeb.Router do
       live "/races/new", RaceLive.New, :new, as: :race
       live "/races/:slug", RaceLive.Show, :show, as: :race
       live "/races/:slug/edit", RaceLive.Show, :edit, as: :race
+      live "/races/:slug/results", RaceLive.Show, :results, as: :race
+      live "/races/:slug/stats", RaceLive.Show, :stats, as: :race
 
       live "/settings", SettingsLive, :general
       live "/settings/namer", SettingsLive, :namer

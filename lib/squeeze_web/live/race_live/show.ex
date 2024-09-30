@@ -6,6 +6,7 @@ defmodule SqueezeWeb.RaceLive.Show do
   alias Squeeze.Distances
   alias Squeeze.RacePredictor
   alias Squeeze.Races
+  alias Squeeze.Races.RaceGoal
   alias Squeeze.Strava.ActivityLoader
 
   embed_templates "components/*"
@@ -23,6 +24,8 @@ defmodule SqueezeWeb.RaceLive.Show do
 
     socket =
       assign(socket,
+        block_range: block_range(user, race_goal),
+        past_activities: past_activities(user, race_goal),
         page_title: race_goal.race_name,
         race_goal: race_goal,
         activity: activity,
@@ -77,6 +80,23 @@ defmodule SqueezeWeb.RaceLive.Show do
     end
   end
 
+  def block_range(_user, %RaceGoal{} = race_goal) do
+    race_date = race_goal.race_date
+
+    # 18 weeks before minus 1 day
+    start_date = Timex.shift(race_date, days: 18 * -7 + 1)
+
+    case Date.day_of_week(start_date) do
+      1 -> Date.range(start_date, race_date)
+      x -> Date.range(Date.add(start_date, -(x - 1)), race_date)
+    end
+  end
+
+  def past_activities(user, %RaceGoal{} = race_goal) do
+    range = block_range(user, race_goal)
+    Activities.list_activities(user, range)
+  end
+
   def distance_name(distance, current_user) do
     Distances.distance_name(distance, imperial: current_user.user_prefs.imperial)
   end
@@ -124,5 +144,30 @@ defmodule SqueezeWeb.RaceLive.Show do
 
   defp predictions(vo2_max) do
     RacePredictor.predict_all_race_times(vo2_max)
+  end
+
+  def bubble_size(distance) do
+    # max bubble size is 50
+    # min bubble size is 10
+    # 5k is 10
+    # 40k is 50
+    # return number
+    min = 50
+    max = 100
+
+    cond do
+      is_nil(distance) -> min
+      distance < 5_000 -> min
+      distance > 40_000 -> max
+      true -> (distance - 5_000) / 35_000 * (max - min) + min
+    end
+  end
+
+  defp tab_class(active) do
+    if active do
+      "bg-indigo-100 text-indigo-700 rounded-md px-3 py-2 text-sm font-medium hover:text-gray-700"
+    else
+      "rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700"
+    end
   end
 end

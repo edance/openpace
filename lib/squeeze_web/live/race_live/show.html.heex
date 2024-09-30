@@ -27,26 +27,22 @@
           </div>
         </div>
 
-        <%= if show_map?(assigns) do %>
-          <.card>
-            <div class="relative">
-              <div
-                id="activity-map"
-                class="aspect-video"
-                phx-hook="ActivityMap"
-                phx-update="ignore"
-              >
-              </div>
-            </div>
-          </.card>
-        <% end %>
+        <.tabs socket={@socket} race_goal={@race_goal} live_action={@live_action} />
 
-        <%= if @activity do %>
-          <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
-            user: @current_user,
-            activity: @activity
-          ) %>
-        <% end %>
+        <.block
+          :if={@live_action == :show}
+          past_activities={@past_activities}
+          race_goal={@race_goal}
+          current_user={@current_user}
+          block_range={@block_range}
+        />
+
+        <.results
+          :if={@live_action == :results}
+          activity={@activity}
+          current_user={@current_user}
+        />
+        <.stats :if={@live_action == :stats} />
       </div>
 
       <div class="lg:col-span-3">

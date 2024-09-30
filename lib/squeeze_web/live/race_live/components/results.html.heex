@@ -1,0 +1,17 @@
+<div>
+  <%= if show_map?(assigns) do %>
+    <.card>
+      <div class="relative">
+        <div id="activity-map" class="aspect-video" phx-hook="ActivityMap" phx-update="ignore">
+        </div>
+      </div>
+    </.card>
+  <% end %>
+
+  <%= if @activity do %>
+    <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
+      user: @current_user,
+      activity: @activity
+    ) %>
+  <% end %>
+</div>
