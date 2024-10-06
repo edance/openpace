@@ -27,22 +27,12 @@
           </div>
         </div>
 
-        <.tabs socket={@socket} race_goal={@race_goal} live_action={@live_action} />
-
         <.block
-          :if={@live_action == :show}
           past_activities={@past_activities}
           race_goal={@race_goal}
           current_user={@current_user}
           block_range={@block_range}
         />
-
-        <.results
-          :if={@live_action == :results}
-          activity={@activity}
-          current_user={@current_user}
-        />
-        <.stats :if={@live_action == :stats} />
       </div>
 
       <div class="lg:col-span-3">

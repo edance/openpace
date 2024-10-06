@@ -136,6 +136,32 @@ defmodule SqueezeWeb.RaceLive.Show do
     end
   end
 
+  defp weeks(%{block_range: dates}) do
+    dates
+    |> Enum.with_index()
+    |> Enum.group_by(fn {_, idx} -> div(idx, 7) + 1 end, fn {v, _} -> v end)
+  end
+
+  defp weekly_distance(activities, dates) do
+    dates
+    |> Enum.map(&distance_on_date(activities, &1))
+    |> Enum.sum()
+  end
+
+  defp activities_on_date(activities, date) do
+    activities
+    |> Enum.filter(&(&1.activity_type == :run))
+    |> Enum.filter(&(Timex.to_date(&1.start_at_local) == date))
+  end
+
+  defp distance_on_date(activities, date) do
+    activities
+    |> Enum.filter(&(&1.activity_type == :run))
+    |> Enum.filter(&(Timex.to_date(&1.start_at_local) == date))
+    |> Enum.map(& &1.distance)
+    |> Enum.sum()
+  end
+
   defp show_map?(%{activity: activity}) do
     activity && activity.polyline
   end
@@ -160,14 +186,6 @@ defmodule SqueezeWeb.RaceLive.Show do
       distance < 5_000 -> min
       distance > 40_000 -> max
       true -> (distance - 5_000) / 35_000 * (max - min) + min
-    end
-  end
-
-  defp tab_class(active) do
-    if active do
-      "bg-indigo-100 text-indigo-700 rounded-md px-3 py-2 text-sm font-medium hover:text-gray-700"
-    else
-      "rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700"
     end
   end
 end

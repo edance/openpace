@@ -19,7 +19,6 @@ defmodule SqueezeWeb.CoreComponents do
   alias Phoenix.HTML.{Form, FormField}
   alias Phoenix.LiveView.JS
   import SqueezeWeb.FormatHelpers
-  import SqueezeWeb.Gettext
   import Squeeze.Utils, only: [safe_div: 2, safe_rem: 2]
 
   @colors [
