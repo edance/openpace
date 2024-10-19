@@ -2,12 +2,14 @@ defmodule SqueezeWeb.RaceLive.Show do
   use SqueezeWeb, :live_view
   @moduledoc false
 
+  alias Number.Delimit
   alias Squeeze.Activities
   alias Squeeze.Distances
   alias Squeeze.RacePredictor
   alias Squeeze.Races
   alias Squeeze.Races.RaceGoal
   alias Squeeze.Strava.ActivityLoader
+  alias Squeeze.TimeHelper
 
   embed_templates "components/*"
 
@@ -17,6 +19,8 @@ defmodule SqueezeWeb.RaceLive.Show do
     race_goal = Races.get_race_goal!(slug)
     activity = race_goal.activity
     vo2_max = vo2_max(race_goal)
+    range = block_range(user, race_goal)
+    trackpoint_sections = Activities.list_trackpoint_sections(user, range)
 
     if connected?(socket) && activity && !activity.trackpoint_set do
       send(self(), :fetch_detailed_info)
@@ -24,7 +28,7 @@ defmodule SqueezeWeb.RaceLive.Show do
 
     socket =
       assign(socket,
-        block_range: block_range(user, race_goal),
+        block_range: range,
         past_activities: past_activities(user, race_goal),
         page_title: race_goal.race_name,
         race_goal: race_goal,
@@ -33,7 +37,8 @@ defmodule SqueezeWeb.RaceLive.Show do
         paces: race_goal.training_paces,
         predictions: predictions(vo2_max),
         vo2_max: vo2_max,
-        current_user: user
+        current_user: user,
+        trackpoint_sections: trackpoint_sections
       )
 
     {:ok, socket}
@@ -89,6 +94,21 @@ defmodule SqueezeWeb.RaceLive.Show do
     case Date.day_of_week(start_date) do
       1 -> Date.range(start_date, race_date)
       x -> Date.range(Date.add(start_date, -(x - 1)), race_date)
+    end
+  end
+
+  defp elevation(%{activity: activity, current_user: user}) do
+    imperial = user.user_prefs.imperial
+
+    value =
+      activity.elevation_gain
+      |> Distances.to_feet(imperial: imperial)
+      |> Delimit.number_to_delimited(precision: 0)
+
+    if imperial do
+      "#{value} ft"
+    else
+      "#{value} m"
     end
   end
 
@@ -150,14 +170,12 @@ defmodule SqueezeWeb.RaceLive.Show do
 
   defp activities_on_date(activities, date) do
     activities
-    |> Enum.filter(&(&1.activity_type == :run))
-    |> Enum.filter(&(Timex.to_date(&1.start_at_local) == date))
+    |> Enum.filter(&(&1.activity_type == :run && Timex.to_date(&1.start_at_local) == date))
   end
 
   defp distance_on_date(activities, date) do
     activities
-    |> Enum.filter(&(&1.activity_type == :run))
-    |> Enum.filter(&(Timex.to_date(&1.start_at_local) == date))
+    |> activities_on_date(date)
     |> Enum.map(& &1.distance)
     |> Enum.sum()
   end
@@ -172,14 +190,70 @@ defmodule SqueezeWeb.RaceLive.Show do
     RacePredictor.predict_all_race_times(vo2_max)
   end
 
+  def date_bubble(assigns) do
+    assigns =
+      assigns
+      |> assign(:activities, activities_on_date(assigns.past_activities, assigns.date))
+      |> assign(:distance, distance_on_date(assigns.past_activities, assigns.date))
+      |> assign_new(:past, fn ->
+        Timex.before?(assigns.date, TimeHelper.today(assigns.current_user))
+      end)
+
+    ~H"""
+    <div class="text-center w-full relative">
+      <.bubble distance={@distance} activities={@activities} />
+
+      <div :if={@distance > 0} class="text-xs text-gray-700 mt-1">
+        <%= format_distance(@distance, @current_user.user_prefs) %>
+      </div>
+
+      <div
+        :if={@distance <= 0 && @date == TimeHelper.today(@current_user)}
+        class="text-xs text-red-700 mt-1"
+      >
+        <%= gettext("Today") %>
+      </div>
+
+      <div :if={@distance <= 0 && @past} class="text-xs text-gray-700 mt-1">
+        Rest
+      </div>
+    </div>
+    """
+  end
+
+  def bubble(assigns) do
+    assigns =
+      assigns
+      |> assign(:size, bubble_size(assigns.distance))
+      |> assign(:color, bubble_color(assigns.activities))
+
+    ~H"""
+    <div
+      class={["rounded-full mx-auto bg-opacity-50", @color]}
+      style={"width: #{@size}px; height: #{@size}px;"}
+    >
+    </div>
+    """
+  end
+
+  def bubble_color(activities) do
+    cond do
+      Enum.empty?(activities) -> "bg-gray-500"
+      Enum.any?(activities, &(&1.workout_type == :race)) -> "bg-red-500"
+      Enum.any?(activities, &(&1.workout_type == :long_run)) -> "bg-green-500"
+      Enum.any?(activities, &(&1.workout_type == :workout)) -> "bg-yellow-500"
+      true -> "bg-blue-500"
+    end
+  end
+
   def bubble_size(distance) do
     # max bubble size is 50
     # min bubble size is 10
     # 5k is 10
     # 40k is 50
     # return number
-    min = 50
-    max = 100
+    min = 10
+    max = 50
 
     cond do
       is_nil(distance) -> min

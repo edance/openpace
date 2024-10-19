@@ -103,6 +103,21 @@ defmodule Squeeze.Activities do
     |> Repo.preload(:user)
   end
 
+  def list_trackpoint_sections(%User{} = user, date_range) do
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+
+    query =
+      from ts in TrackpointSection,
+        join: a in assoc(ts, :activity),
+        where: a.status == :complete,
+        where: a.user_id == ^user.id,
+        where: a.type == "Run",
+        where: a.start_at_local >= ^start_at and a.start_at_local <= ^end_at
+
+    Repo.all(query)
+  end
+
   def todays_activities(%User{} = user) do
     get_activities_by_date(user, TimeHelper.today(user))
   end

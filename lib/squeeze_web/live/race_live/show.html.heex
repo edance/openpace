@@ -2,30 +2,12 @@
   <div class="container max-w-7xl mx-auto px-4">
     <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6">
       <div class="lg:col-span-9">
-        <div class="mb-4 sm:mb-6 flex">
-          <div>
-            <h1 class="text-2xl font-semibold text-gray-800 dark:text-white mb-0">
-              <%= @race_goal.race_name %>
-            </h1>
-
-            <p class="text-sm text-gray-500 dark:text-white/60 mt-0">
-              <%= format_ordinal_date(@race_goal.race_date) %> (<%= relative_date(
-                @current_user,
-                @race_goal.race_date
-              ) %>)
-            </p>
-          </div>
-
-          <div class="ml-auto">
-            <.link
-              patch={Routes.race_path(@socket, :edit, @race_goal.slug)}
-              phx-click={JS.push_focus()}
-              class="relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              <%= gettext("Edit") %>
-            </.link>
-          </div>
-        </div>
+        <.results
+          socket={@socket}
+          activity={@activity}
+          race_goal={@race_goal}
+          current_user={@current_user}
+        />
 
         <.block
           past_activities={@past_activities}
@@ -36,76 +18,6 @@
       </div>
 
       <div class="lg:col-span-3">
-        <.card>
-          <div class="p-4 sm:p-6">
-            <div class="flex flex-row">
-              <div class="grow max-w-full">
-                <%= if @activity do %>
-                  <h5 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-sm">
-                    <%= gettext("Race Results") %>
-                  </h5>
-
-                  <span class="text-lg font-semibold text-gray-600 dark:text-white/80 mb-0">
-                    <%= format_duration(@activity.duration) %>
-                  </span>
-                <% else %>
-                  <h5 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-sm">
-                    <%= gettext("Race Goal") %>
-                  </h5>
-                  <span class="text-lg font-semibold text-gray-600 dark:text-white/80 mb-0">
-                    <%= if @race_goal.just_finish do %>
-                      <%= gettext("Finish") %>
-                    <% else %>
-                      <%= format_duration(@race_goal.duration) %>
-                    <% end %>
-                  </span>
-                <% end %>
-              </div>
-              <div class="flex-none">
-                <div class="flex w-12 h-12 items-center justify-center text-center rounded-full bg-gradient-to-tl from-blue-500 to-violet-500">
-                  <span
-                    class="iconify h-6 w-6 text-white"
-                    data-icon="ps:trophy"
-                    data-inline="false"
-                  >
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 pt-4">
-              <div>
-                <div class="text-xs uppercase text-gray-500 dark:text-white/60 mb-0">
-                  Distance
-                </div>
-                <span class="text-base font-semibold text-gray-600 dark:text-white/80 mb-0">
-                  <%= distance_name(@race_goal.distance, @current_user) %>
-                </span>
-              </div>
-
-              <div class="">
-                <div class="text-xs uppercase text-gray-500 dark:text-white/60 mb-0">
-                  Pace
-                </div>
-                <span class="text-base font-semibold text-gray-600 dark:text-white/80 mb-0">
-                  <%= if @activity do %>
-                    <%= format_pace(@activity, @current_user.user_prefs) %>
-                  <% else %>
-                    <%= if @race_goal.duration do %>
-                      <%= format_pace(
-                        %{distance: @race_goal.distance, duration: @race_goal.duration},
-                        @current_user.user_prefs
-                      ) %>
-                    <% else %>
-                      <%= gettext("N/A") %>
-                    <% end %>
-                  <% end %>
-                </span>
-              </div>
-            </div>
-          </div>
-        </.card>
-
         <%= unless Enum.empty?(@paces) do %>
           <div class="bg-gradient-to-tl from-blue-950 to-slate-900 rounded-lg mb-8 overflow-hidden">
             <div class="p-4 sm:p-6">

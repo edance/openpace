@@ -1,17 +1,117 @@
-<div>
-  <%= if show_map?(assigns) do %>
-    <.card>
-      <div class="relative">
-        <div id="activity-map" class="aspect-video" phx-hook="ActivityMap" phx-update="ignore">
+<.card>
+  <div class="flex flex-wrap">
+    <div class="w-full">
+      <div class="p-6">
+        <div class="flex items-center">
+          <div class="mr-4">
+            <.avatar user={@current_user} size={48} />
+          </div>
+          <div class="flex-1 ml-2">
+            <h1 class="text-xl text-gray-800 dark:text-white font-semibold mb-0">
+              <%= @race_goal.race_name %>
+            </h1>
+            <p class="text-sm text-gray-500 dark:text-white/60 mb-0">
+              <%= format_ordinal_date(@race_goal.race_date) %> (<%= relative_date(
+                @current_user,
+                @race_goal.race_date
+              ) %>)
+            </p>
+          </div>
+
+          <div class="ml-auto">
+            <.link
+              patch={Routes.race_path(@socket, :edit, @race_goal.slug)}
+              phx-click={JS.push_focus()}
+              class="relative inline-flex items-center rounded-md bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              <%= gettext("Edit") %>
+            </.link>
+          </div>
+        </div>
+
+        <div :if={!@activity} class="mt-4 flex gap-x-6 xl:gap-x-16">
+          <div class="">
+            <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+              <%= gettext("Distance") %>
+            </h6>
+            <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+              <%= distance_name(@race_goal.distance, @current_user) %>
+            </h5>
+          </div>
+          <div class="">
+            <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+              <%= gettext("Goal Time") %>
+            </h6>
+            <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+              <%= if @race_goal.just_finish do %>
+                <%= gettext("Finish") %>
+              <% else %>
+                <%= format_duration(@race_goal.duration) %>
+              <% end %>
+            </h5>
+          </div>
+          <div class="">
+            <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+              <%= gettext("Pace") %>
+            </h6>
+            <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+              <%= if @race_goal.duration do %>
+                <%= format_pace(
+                  %{distance: @race_goal.distance, duration: @race_goal.duration},
+                  @current_user.user_prefs
+                ) %>
+              <% else %>
+                <%= gettext("N/A") %>
+              <% end %>
+            </h5>
+          </div>
+        </div>
+
+        <div :if={@activity} class="mt-4 flex gap-x-6 xl:gap-x-16">
+          <div class="">
+            <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+              <%= gettext("Distance") %>
+            </h6>
+            <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+              <%= format_distance(@activity.distance, @current_user.user_prefs) %>
+            </h5>
+          </div>
+          <div class="">
+            <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+              <%= gettext("Time") %>
+            </h6>
+            <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+              <%= format_duration(@activity.duration) %>
+            </h5>
+          </div>
+          <%= if true do %>
+            <div class="">
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                <%= gettext("Pace") %>
+              </h6>
+              <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+                <%= format_pace(@activity, @current_user.user_prefs) %>
+              </h5>
+            </div>
+          <% end %>
+          <%= if @activity.elevation_gain > 0 do %>
+            <div class="">
+              <h6 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-xs">
+                <%= gettext("Elevation") %>
+              </h6>
+              <h5 class="text-lg mb-2 font-semibold text-gray-900 dark:text-white">
+                <%= elevation(assigns) %>
+              </h5>
+            </div>
+          <% end %>
         </div>
       </div>
-    </.card>
-  <% end %>
-
-  <%= if @activity do %>
-    <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
-      user: @current_user,
-      activity: @activity
-    ) %>
-  <% end %>
-</div>
+    </div>
+    <div class="w-full relative">
+      <%= if show_map?(assigns) do %>
+        <div id="activity-map" class="aspect-video" phx-hook="ActivityMap" phx-update="ignore">
+        </div>
+      <% end %>
+    </div>
+  </div>
+</.card>

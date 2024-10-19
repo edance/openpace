@@ -7,8 +7,9 @@ defmodule Squeeze.Races.TrainingPace do
   import Ecto.Changeset
 
   alias Squeeze.Colors
-  alias Squeeze.Races.TrainingPace
   alias Squeeze.RacePredictor
+  alias Squeeze.Races.TrainingPace
+
   import Squeeze.Distances, only: [marathon_in_meters: 0, mile_in_meters: 0]
 
   embedded_schema do
