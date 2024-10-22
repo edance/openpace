@@ -5,9 +5,30 @@ defmodule Squeeze.Stats do
 
   import Ecto.Query, warn: false
   alias Squeeze.Accounts.User
-  alias Squeeze.Activities.Activity
+  alias Squeeze.Activities.{Activity, TrackpointSection}
+  alias Squeeze.Races.TrainingPace
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
+
+  def data_for_training_pace(%User{} = user, %TrainingPace{} = pace, date_range) do
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+
+    query =
+      from ts in TrackpointSection,
+        join: a in assoc(ts, :activity),
+        where: a.status == :complete,
+        where: a.user_id == ^user.id,
+        where: a.type == "Run",
+        where: a.start_at_local >= ^start_at and a.start_at_local <= ^end_at,
+        where: ts.velocity >= ^pace.min_speed and ts.velocity < ^pace.max_speed,
+        select: %{
+          distance: fragment("coalesce(?, 0)", sum(ts.distance)),
+          duration: fragment("coalesce(?, 0)", sum(ts.duration))
+        }
+
+    Repo.one(query)
+  end
 
   def ytd_run_summary(%User{} = user) do
     time_window =

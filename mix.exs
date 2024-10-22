@@ -7,7 +7,6 @@ defmodule Squeeze.Mixfile do
       version: "0.0.1",
       elixir: "~> 1.14.2",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -53,15 +52,17 @@ defmodule Squeeze.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.11"},
+      {:phoenix, "~> 1.7"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 0.5"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.7"},
       {:postgrex, ">= 0.0.0"},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_live_view, "~> 0.18.18"},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_dashboard, "~> 0.7.2"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:phoenix_html, "~> 3.0"},
       {:gettext, "~> 0.20"},
       {:ordinal, "~> 0.1.0"},
       {:plug_cowboy, "~> 2.5"},

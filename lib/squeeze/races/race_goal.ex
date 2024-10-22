@@ -17,6 +17,7 @@ defmodule Squeeze.Races.RaceGoal do
   @optional_fields ~w(
     duration
     just_finish
+    description
   )a
 
   schema "race_goals" do
@@ -26,6 +27,7 @@ defmodule Squeeze.Races.RaceGoal do
     field :distance, :float
     field :duration, Duration
     field :just_finish, :boolean
+    field :description, :string
 
     embeds_many :training_paces, TrainingPace
 

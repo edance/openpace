@@ -34,6 +34,8 @@ defmodule SqueezeWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint SqueezeWeb.Endpoint
+
+      use SqueezeWeb, :verified_routes
     end
   end
 

@@ -65,6 +65,11 @@ defmodule SqueezeWeb.RaceLive.Show do
   end
 
   @impl true
+  def handle_info({SqueezeWeb.RaceLive.RaceGoalForm, {:saved, race_goal}}, socket) do
+    {:noreply, socket |> assign(:race_goal, race_goal)}
+  end
+
+  @impl true
   def handle_info(:fetch_detailed_info, socket) do
     user = socket.assigns.current_user
     existing_activity = socket.assigns.activity

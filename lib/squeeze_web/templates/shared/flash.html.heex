@@ -1,5 +1,5 @@
-<% info_msg = get_flash(@conn, :info) %>
-<% error_msg = get_flash(@conn, :error) %>
+<% info_msg = Phoenix.Flash.get(@flash, :info) %>
+<% error_msg = Phoenix.Flash.get(@flash, :error) %>
 
 <%= if info_msg do %>
   <div class="fixed bottom-10 right-10 z-50" data-auto-hide="true">

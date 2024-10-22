@@ -88,9 +88,16 @@
   </div>
 </div>
 
-<.live_component
-  :if={@live_action == :edit}
-  module={SqueezeWeb.RaceLive.PaceForm}
-  id="pace-form"
-  race_goal={@race_goal}
-/>
+<.modal
+  :if={@live_action in [:edit]}
+  id="race-goal-modal"
+  show
+  on_cancel={JS.patch(~p"/dashboard/races/#{@race_goal.slug}")}
+>
+  <.live_component
+    module={SqueezeWeb.RaceLive.RaceGoalForm}
+    id="race-goal-form"
+    race_goal={@race_goal}
+    patch={~p"/dashboard/races/#{@race_goal.slug}"}
+  />
+</.modal>
