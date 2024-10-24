@@ -130,6 +130,25 @@ defmodule SqueezeWeb.StravaWebhookControllerTest do
       assert length(Activities.recent_activities(credential.user)) == 1
     end
 
+    test "when activity is not found on strava", %{
+      conn: conn,
+      credential: credential,
+      activity: activity
+    } do
+      Squeeze.Strava.MockActivities
+      |> expect(:get_activity_by_id, fn _, _ -> {:error, %{status: 404}} end)
+
+      params = %{
+        "aspect_type" => "update",
+        "object_type" => "activity",
+        "object_id" => activity.external_id,
+        "owner_id" => credential.uid
+      }
+
+      conn = post(conn, "/webhook/strava", params)
+      assert json_response(conn, 404)
+    end
+
     test "user deactivates account on strava", %{conn: conn, credential: credential} do
       params = %{
         "updates" => %{"authorized" => "false"},

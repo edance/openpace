@@ -118,6 +118,8 @@ defmodule SqueezeWeb.Router do
   end
 
   scope "/webhook", SqueezeWeb do
+    pipe_through :api
+
     get "/strava", StravaWebhookController, :challenge
     post "/strava", StravaWebhookController, :webhook
 
