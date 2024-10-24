@@ -54,12 +54,19 @@ defmodule Squeeze.Strava.StreamSetConverter do
   # }
   def map_to_trackpoint(%{latlng: latlng} = trackpoint) when length(latlng) == 2 do
     coordinates = %{lat: List.first(latlng), lon: List.last(latlng)}
-    velocity = velocity(trackpoint)
 
     trackpoint
     |> Map.delete(:latlng)
+    |> Map.merge(%{coordinates: coordinates})
+    |> map_to_trackpoint()
+  end
+
+  def map_to_trackpoint(trackpoint) do
+    velocity = velocity(trackpoint)
+
+    trackpoint
     |> Map.delete(:velocity_smooth)
-    |> Map.merge(%{coordinates: coordinates, velocity: velocity})
+    |> Map.merge(%{velocity: velocity})
   end
 
   defp velocity(%{velocity_smooth: 0}), do: 0.0
