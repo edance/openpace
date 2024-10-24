@@ -20,7 +20,7 @@ defmodule SqueezeWeb.Endpoint do
     at: "/",
     from: :squeeze,
     gzip: true,
-    only: ~w(assets docs fonts images favicon.ico robots.txt .well-known),
+    only: SqueezeWeb.static_paths(),
     content_types: %{"apple-app-site-association" => "application/json"}
 
   # Code reloading can be explicitly enabled under the

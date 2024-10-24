@@ -10,14 +10,13 @@
     <%= csrf_meta_tag() %>
 
     <%= live_title_tag(assigns[:page_title] || "Dashboard", suffix: " · OpenPace") %>
-
+    <!-- TODO: async stylesheet
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"
       rel="stylesheet"
-    />
-
+    />-->
     <link
       phx-track-static
       href={Routes.static_path(SqueezeWeb.Endpoint, "/images/favicon.png")}

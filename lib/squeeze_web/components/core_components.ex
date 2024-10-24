@@ -15,10 +15,11 @@ defmodule SqueezeWeb.CoreComponents do
   Icons are provided by [heroicons](https://heroicons.com). See `icon/1` for usage.
   """
   use Phoenix.Component
-  import SqueezeWeb.FormatHelpers
-  import Squeeze.Utils, only: [safe_div: 2, safe_rem: 2]
 
   alias Phoenix.HTML.{Form, FormField}
+  alias Phoenix.LiveView.JS
+  import SqueezeWeb.FormatHelpers
+  import Squeeze.Utils, only: [safe_div: 2, safe_rem: 2]
 
   @colors [
     "bg-gradient-to-tl from-blue-500 to-violet-500",
@@ -268,6 +269,7 @@ defmodule SqueezeWeb.CoreComponents do
         name={@name}
         class="block w-full rounded-md border border-gray-300 text-gray-800 dark:text-white bg-white dark:bg-white/10 dark:focus:bg-gray-700 shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
+        value={@value}
         {@rest}
       >
         <option :if={@prompt} value=""><%= @prompt %></option>
@@ -414,5 +416,135 @@ defmodule SqueezeWeb.CoreComponents do
     else
       Gettext.dgettext(SqueezeWeb.Gettext, "errors", msg, opts)
     end
+  end
+
+  @doc """
+  Renders a modal.
+
+  ## Examples
+
+      <.modal id="confirm-modal">
+        This is a modal.
+      </.modal>
+
+  JS commands may be passed to the `:on_cancel` to configure
+  the closing/cancel event, for example:
+
+      <.modal id="confirm" on_cancel={JS.navigate(~p"/posts")}>
+        This is another modal.
+      </.modal>
+
+  """
+  attr :id, :string, required: true
+  attr :show, :boolean, default: false
+  attr :on_cancel, JS, default: %JS{}
+  slot(:inner_block, required: true)
+
+  def modal(assigns) do
+    ~H"""
+    <div
+      id={@id}
+      phx-mounted={@show && show_modal(@id)}
+      phx-remove={hide_modal(@id)}
+      data-cancel={JS.exec(@on_cancel, "phx-remove")}
+      class="relative z-50 hidden"
+    >
+      <div
+        id={"#{@id}-bg"}
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        aria-hidden="true"
+      />
+
+      <div
+        class="fixed inset-0 overflow-y-auto"
+        aria-labelledby={"#{@id}-title"}
+        aria-describedby={"#{@id}-description"}
+        role="dialog"
+        aria-modal="true"
+        tabindex="0"
+      >
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <!-- focus wrap here -->
+          <.focus_wrap
+            id={"#{@id}-container"}
+            phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
+            phx-key="escape"
+            phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
+            class="relative transform overflow-hidden rounded-lg bg-white dark:bg-red-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+          >
+            <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+              <button
+                phx-click={JS.exec("data-cancel", to: "##{@id}")}
+                type="button"
+                class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                <span class="sr-only">Close</span>
+                <svg
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div id={"#{@id}-content"}>
+              <%= render_slot(@inner_block) %>
+            </div>
+          </.focus_wrap>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  ## JS Commands
+
+  def show(js \\ %JS{}, selector) do
+    JS.show(js,
+      to: selector,
+      transition:
+        {"transition-all transform ease-out duration-300",
+         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
+         "opacity-100 translate-y-0 sm:scale-100"}
+    )
+  end
+
+  def hide(js \\ %JS{}, selector) do
+    JS.hide(js,
+      to: selector,
+      time: 200,
+      transition:
+        {"transition-all transform ease-in duration-200",
+         "opacity-100 translate-y-0 sm:scale-100",
+         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
+    )
+  end
+
+  def show_modal(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.show(to: "##{id}")
+    |> JS.show(
+      to: "##{id}-bg",
+      transition: {"transition-all transform ease-out duration-300", "opacity-0", "opacity-100"}
+    )
+    |> show("##{id}-container")
+    |> JS.add_class("overflow-hidden", to: "body")
+    |> JS.focus_first(to: "##{id}-content")
+  end
+
+  def hide_modal(js \\ %JS{}, id) do
+    js
+    |> JS.hide(
+      to: "##{id}-bg",
+      transition: {"transition-all transform ease-in duration-200", "opacity-100", "opacity-0"}
+    )
+    |> hide("##{id}-container")
+    |> JS.hide(to: "##{id}", transition: {"block", "block", "hidden"})
+    |> JS.remove_class("overflow-hidden", to: "body")
+    |> JS.pop_focus()
   end
 end

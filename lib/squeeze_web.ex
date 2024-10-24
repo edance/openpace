@@ -17,6 +17,8 @@ defmodule SqueezeWeb do
   and import those modules here.
   """
 
+  def static_paths, do: ~w(assets docs fonts images favicon.ico robots.txt .well-known)
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: SqueezeWeb
@@ -24,6 +26,8 @@ defmodule SqueezeWeb do
       import SqueezeWeb.Gettext
 
       alias SqueezeWeb.Router.Helpers, as: Routes
+
+      unquote(verified_routes())
     end
   end
 
@@ -34,7 +38,7 @@ defmodule SqueezeWeb do
         namespace: SqueezeWeb
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 2, view_module: 1, get_csrf_token: 0]
+      import Phoenix.Controller, only: [view_module: 1, get_csrf_token: 0]
 
       # Include shared imports and aliases for views
       unquote(html_helpers())
@@ -94,12 +98,24 @@ defmodule SqueezeWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      # Routes generation with the ~p sigil
+      unquote(verified_routes())
+
       import SqueezeWeb.FormHelpers
       import SqueezeWeb.FormatHelpers
       import SqueezeWeb.ErrorHelpers
       import SqueezeWeb.HoneypotInput
       import SqueezeWeb.ImageHelpers
       alias SqueezeWeb.Router.Helpers, as: Routes
+    end
+  end
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: SqueezeWeb.Endpoint,
+        router: SqueezeWeb.Router,
+        statics: SqueezeWeb.static_paths()
     end
   end
 

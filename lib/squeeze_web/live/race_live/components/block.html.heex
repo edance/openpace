@@ -1,0 +1,43 @@
+<.card title={gettext("Training Block")} subtitle="18 weeks">
+  <div class="p-4 sm:p-6 overflow-y-auto" style="max-height: 800px;">
+    <div class="grid grid-cols-8">
+      <div class="uppercase text-xs">Week</div>
+      <div class="uppercase text-xs text-center">Mon</div>
+      <div class="uppercase text-xs text-center">Tue</div>
+      <div class="uppercase text-xs text-center">Wed</div>
+      <div class="uppercase text-xs text-center">Thu</div>
+      <div class="uppercase text-xs text-center">Fri</div>
+      <div class="uppercase text-xs text-center">Sat</div>
+      <div class="uppercase text-xs text-center">Sun</div>
+    </div>
+
+    <%= for {week, dates} <- weeks(assigns) |> Enum.reverse() do %>
+      <div class="grid grid-cols-8">
+        <div class="pb-4">
+          <h5 class="mb-0 uppercase text-gray-800 dark:text-white opacity-60 text-sm">
+            Week <%= week %> <br />
+            <%= dates |> List.first() |> Timex.format!("{Mshort} {D}") %> - <%= dates
+            |> List.last()
+            |> Timex.format!("{Mshort} {D}") %>
+          </h5>
+          <span class="text-lg font-semibold text-gray-600 dark:text-white/80 mb-0">
+            <%= format_distance(
+              weekly_distance(@past_activities, dates),
+              @current_user.user_prefs
+            ) %>
+          </span>
+        </div>
+
+        <%= for date <- dates do %>
+          <div class="flex items-center">
+            <.date_bubble
+              date={date}
+              current_user={@current_user}
+              past_activities={@past_activities}
+            />
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</.card>
