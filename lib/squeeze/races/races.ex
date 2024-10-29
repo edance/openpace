@@ -35,6 +35,7 @@ defmodule Squeeze.Races do
   def get_race_goal!(slug) do
     RaceGoal
     |> Repo.get_by!(slug: slug)
+    |> Repo.preload([:training_paces])
     |> Repo.preload(activity: [:trackpoint_set, :laps])
   end
 
@@ -51,7 +52,7 @@ defmodule Squeeze.Races do
       |> Changeset.put_change(:user_id, user.id)
 
     changeset
-    |> Changeset.put_embed(:training_paces, default_paces(changeset))
+    |> Changeset.put_assoc(:training_paces, default_paces(changeset))
     |> Repo.insert_with_slug()
   end
 
@@ -196,6 +197,8 @@ defmodule Squeeze.Races do
   defp default_paces(changeset) do
     distance = Changeset.get_change(changeset, :distance)
     duration = Changeset.get_change(changeset, :duration)
+    require IEx
+    IEx.pry()
 
     if distance && duration do
       TrainingPace.default_paces(distance, duration)

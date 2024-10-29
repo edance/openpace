@@ -8,28 +8,31 @@ defmodule Squeeze.Races.TrainingPace do
 
   alias Squeeze.Colors
   alias Squeeze.RacePredictor
-  alias Squeeze.Races.TrainingPace
+  alias Squeeze.Races.{RaceGoal, TrainingPace}
+  alias Squeeze.Velocity
 
   import Squeeze.Distances, only: [marathon_in_meters: 0, mile_in_meters: 0]
 
-  embedded_schema do
+  schema "training_paces" do
     field :color, :string
     field :name, :string
-    # This only counts if the run has been marked "long"
-    field :long, :boolean
     # meters per second
-    field :speed, :float
+    field :min_speed, Velocity
     # meters per second
-    field :min_speed, :float
-    # meters per second
-    field :max_speed, :float
+    field :max_speed, Velocity
+
+    belongs_to :race_goal, RaceGoal
+
+    timestamps()
   end
 
   @doc false
   def changeset(%TrainingPace{} = pace, attrs) do
     pace
-    |> cast(attrs, [:color, :name, :long, :speed, :min_speed, :max_speed])
-    |> validate_required([:color, :name, :long])
+    |> cast(attrs, [:color, :name, :min_speed, :max_speed])
+    |> validate_required([:color, :name, :min_speed, :max_speed])
+    |> validate_number(:min_speed, greater_than_or_equal_to: 0)
+    |> validate_number(:max_speed, greater_than: :min_speed)
   end
 
   def default_paces(distance, duration) do
@@ -73,7 +76,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.green(),
       name: "Easy",
-      long: false,
       min_speed: adjust_pace_by_secs(marathon_speed, 150),
       max_speed: adjust_pace_by_secs(marathon_speed, 60)
     }
@@ -84,7 +86,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.teal(),
       name: "Long Run",
-      long: true,
       min_speed: adjust_pace_by_secs(marathon_speed, 120),
       max_speed: adjust_pace_by_secs(marathon_speed, 30)
     }
@@ -94,7 +95,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.blue(),
       name: "Marathon",
-      long: false,
       min_speed: adjust_pace_by_secs(marathon_speed, -10),
       max_speed: adjust_pace_by_secs(marathon_speed, 10)
     }
@@ -104,7 +104,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.yellow(),
       name: "Tempo",
-      long: false,
       min_speed: adjust_pace_by_secs(marathon_speed, -10),
       max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.88)
     }
@@ -114,7 +113,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.orange(),
       name: "Interval",
-      long: false,
       min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.95),
       max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.0)
     }
@@ -124,7 +122,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.red(),
       name: "Repeats",
-      long: false,
       min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.05),
       max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.1)
     }
@@ -137,7 +134,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.orange(),
       name: "10k",
-      long: false,
       speed: distance / t
     }
   end
@@ -149,7 +145,6 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.red(),
       name: "5k",
-      long: false,
       speed: distance / t
     }
   end

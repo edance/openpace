@@ -41,14 +41,10 @@
                           </div>
                         </td>
                         <td class="whitespace-nowrap px-4 sm:px-6 py-4 text-xs text-right text-white/60">
-                          <%= if pace.speed do %>
-                            <%= format_speed(pace.speed, @current_user.user_prefs) %>
-                          <% else %>
-                            <%= format_speed(pace.max_speed, @current_user.user_prefs) %> - <%= format_speed(
-                              pace.min_speed,
-                              @current_user.user_prefs
-                            ) %>
-                          <% end %>
+                          <%= format_speed(pace.max_speed, @current_user.user_prefs) %> - <%= format_speed(
+                            pace.min_speed,
+                            @current_user.user_prefs
+                          ) %>
                         </td>
                       </tr>
                     <% end %>
