@@ -5,12 +5,15 @@ defmodule SqueezeWeb.ActivityLive.Show do
   alias Number.Delimit
   alias Squeeze.Activities
   alias Squeeze.Distances
+  alias Squeeze.Races
+  alias Squeeze.Stats
   alias Squeeze.Strava.ActivityLoader
 
   @impl true
   def mount(%{"slug" => slug}, _session, socket) do
     user = socket.assigns.current_user
     activity = Activities.get_detailed_activity_by_slug!(user, slug)
+    race_goal = Races.nearest_race_goal(user, activity.start_at_local)
 
     if connected?(socket) && !activity.trackpoint_set do
       send(self(), :fetch_detailed_info)
@@ -19,6 +22,9 @@ defmodule SqueezeWeb.ActivityLive.Show do
     socket =
       socket
       |> assign(page_title: activity.name)
+      |> assign(race_goal: race_goal)
+      |> assign(pace_bands: pace_bands(activity, race_goal))
+      |> assign(trackpoint_sections: activity.trackpoint_sections)
       |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
 
     {:ok, socket}
@@ -57,7 +63,14 @@ defmodule SqueezeWeb.ActivityLive.Show do
   defp push_activity_events(socket) do
     socket
     |> push_trackpoints()
+    |> push_trackpoint_sections()
     |> push_laps()
+  end
+
+  defp push_trackpoint_sections(socket) do
+    push_event(socket, "trackpoint_sections", %{
+      trackpoint_sections: socket.assigns.trackpoint_sections
+    })
   end
 
   defp push_trackpoints(socket) do
@@ -111,5 +124,11 @@ defmodule SqueezeWeb.ActivityLive.Show do
     |> Enum.take(5)
     |> Enum.map(& &1.coordinates)
     |> Enum.any?(&(!is_nil(&1)))
+  end
+
+  defp pace_bands(_, nil), do: nil
+
+  defp pace_bands(activity, race_goal) do
+    Stats.pace_bands_for_activity(activity, race_goal)
   end
 end

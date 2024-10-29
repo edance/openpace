@@ -9,7 +9,7 @@ defmodule Squeeze.Races do
   alias Squeeze.Repo
 
   alias Squeeze.Accounts.User
-  alias Squeeze.Activities.{Activity, TrackpointSection}
+  alias Squeeze.Activities.Activity
   alias Squeeze.Races.{Race, RaceGoal, TrainingPace}
 
   @doc """
@@ -126,6 +126,36 @@ defmodule Squeeze.Races do
     |> Repo.preload(:race)
   end
 
+  def nearest_race_goal(%User{} = user, date \\ nil) do
+    date = date || today(user)
+
+    # First attempt to get future goals
+    future_goals_query =
+      from rg in RaceGoal,
+        where: rg.race_date >= ^date,
+        where: rg.user_id == ^user.id,
+        order_by: [asc: rg.race_date],
+        limit: 1
+
+    # Fallback query for past goals
+    past_goals_query =
+      from rg in RaceGoal,
+        where: rg.race_date < ^date,
+        where: rg.user_id == ^user.id,
+        order_by: [desc: rg.race_date],
+        limit: 1
+
+    from(
+      rg in subquery(
+        from(r in subquery(future_goals_query),
+          union_all: ^past_goals_query
+        )
+      ),
+      limit: 1
+    )
+    |> Repo.one()
+  end
+
   def list_upcoming_race_goals(%User{} = user) do
     query =
       from rg in RaceGoal,
@@ -138,18 +168,25 @@ defmodule Squeeze.Races do
     |> Repo.preload(:race)
   end
 
+  def list_race_goals(%User{} = user) do
+    query =
+      from rg in RaceGoal,
+        where: rg.user_id == ^user.id,
+        order_by: [asc: rg.race_date]
+
+    Repo.all(query)
+  end
+
   def list_race_goals(%User{} = user, %{first: first, last: last}) do
     query =
       from rg in RaceGoal,
-        join: r in assoc(rg, :race),
-        where: r.start_date >= ^first,
-        where: r.start_date <= ^last,
+        where: rg.race_date >= ^first,
+        where: rg.race_date <= ^last,
         where: rg.user_id == ^user.id,
-        order_by: [asc: r.start_date]
+        order_by: [asc: rg.race_date]
 
     query
     |> Repo.all()
-    |> Repo.preload(:race)
   end
 
   @doc """
@@ -208,62 +245,6 @@ defmodule Squeeze.Races do
     |> RaceGoal.changeset(%{})
     |> Changeset.put_assoc(:training_paces, paces)
     |> Repo.update()
-  end
-
-  def pace_durations_for_race_goal(%RaceGoal{} = goal) do
-    date_range = block_range(goal)
-    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
-    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
-
-    filtered_activities =
-      from(a in Activity,
-        where:
-          a.user_id == ^goal.user_id and
-            a.start_at_local >= ^start_at and
-            a.start_at_local <= ^end_at and
-            a.status == :complete and
-            a.type == "Run",
-        select: a.id
-      )
-
-    filtered_trackpoints =
-      from(ts in TrackpointSection,
-        join: fa in subquery(filtered_activities),
-        on: ts.activity_id == fa.id
-      )
-
-    from(tp in TrainingPace,
-      left_join: ts in subquery(filtered_trackpoints),
-      on:
-        ts.velocity >= tp.min_speed and
-          ts.velocity <= tp.max_speed,
-      where: tp.race_goal_id == ^goal.id,
-      group_by: [tp.id],
-      order_by: tp.min_speed,
-      select: %{
-        id: tp.id,
-        pace_name: min(tp.name),
-        pace_color: min(tp.color),
-        min_speed: min(tp.min_speed),
-        max_speed: min(tp.max_speed),
-        total_distance: coalesce(sum(ts.distance), 0),
-        total_duration: coalesce(sum(ts.duration), 0),
-        activity_count: count(fragment("DISTINCT ?", ts.activity_id))
-      }
-    )
-    |> Repo.all()
-  end
-
-  def block_range(%RaceGoal{} = race_goal) do
-    race_date = race_goal.race_date
-
-    # 18 weeks before minus 1 day
-    start_date = Timex.shift(race_date, days: 18 * -7 + 1)
-
-    case Date.day_of_week(start_date) do
-      1 -> Date.range(start_date, race_date)
-      x -> Date.range(Date.add(start_date, -(x - 1)), race_date)
-    end
   end
 
   defp default_paces(changeset) do

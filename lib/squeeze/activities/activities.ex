@@ -66,6 +66,28 @@ defmodule Squeeze.Activities do
     Repo.all(query)
   end
 
+  def list_activity_summaries(%User{} = user, date_range) do
+    query =
+      from a in Activity,
+        where: a.status == :complete,
+        where: [user_id: ^user.id],
+        order_by: [desc: :start_at],
+        select: %{
+          slug: a.slug,
+          name: a.name,
+          distance: a.distance,
+          duration: a.duration,
+          elevation_gain: a.elevation_gain,
+          activity_type: a.activity_type,
+          workout_type: a.workout_type,
+          start_at_local: a.start_at_local
+        }
+
+    query
+    |> by_date_range(date_range)
+    |> Repo.all()
+  end
+
   def list_activity_exports(%User{} = user) do
     query =
       from a in Activity,
@@ -198,7 +220,7 @@ defmodule Squeeze.Activities do
       from a in Activity,
         where: a.slug == ^slug,
         where: [user_id: ^user.id],
-        preload: [:user, :trackpoint_set, :laps]
+        preload: [:user, :trackpoint_set, :laps, :trackpoint_sections]
 
     Repo.one!(query)
   end
@@ -233,7 +255,7 @@ defmodule Squeeze.Activities do
     end
   end
 
-  defp create_goal_if_race({:ok, %Activity{} = activity}) do
+  def create_goal_if_race({:ok, %Activity{} = activity}) do
     if activity.workout_type == :race do
       Races.find_or_create_race_goal_from_activity(activity)
       {:ok, activity}
@@ -242,7 +264,7 @@ defmodule Squeeze.Activities do
     end
   end
 
-  defp create_goal_if_race(res), do: res
+  def create_goal_if_race(res), do: res
 
   @doc """
   Updates a activity.

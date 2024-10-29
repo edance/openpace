@@ -9,6 +9,18 @@ defmodule Squeeze.Activities.TrackpointSection do
 
   alias Squeeze.Activities.Activity
 
+  @derive {Jason.Encoder,
+           only: [
+             :distance,
+             :duration,
+             :velocity,
+             :heartrate,
+             :cadence,
+             :power,
+             :section_index,
+             :activity_id
+           ]}
+
   schema "trackpoint_sections" do
     field :distance, :float
     field :duration, :integer

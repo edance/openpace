@@ -9,6 +9,28 @@
           current_user={@current_user}
         />
 
+        <div class="grid grid-cols-2 gap-4">
+          <.card title={gettext("Weekly Build")}>
+            <canvas
+              id="weekly-distance-chart"
+              class="aspect-video w-full"
+              phx-hook="WeeklyActivityChart"
+              phx-update="ignore"
+              data-imperial={"#{@current_user.user_prefs.imperial}"}
+            />
+          </.card>
+
+          <.card title={gettext("Pace Distribution")}>
+            <canvas
+              id="pace-chart"
+              class="aspect-video w-full"
+              phx-hook="PaceChart"
+              phx-update="ignore"
+              data-imperial={"#{@current_user.user_prefs.imperial}"}
+            />
+          </.card>
+        </div>
+
         <.block
           past_activities={@past_activities}
           race_goal={@race_goal}

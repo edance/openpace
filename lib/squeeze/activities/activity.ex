@@ -4,7 +4,7 @@ defmodule Squeeze.Activities.Activity do
   use Ecto.Schema
   import Ecto.Changeset
   alias Squeeze.Accounts.User
-  alias Squeeze.Activities.{Activity, Lap, TrackpointSet}
+  alias Squeeze.Activities.{Activity, Lap, TrackpointSection, TrackpointSet}
   alias Squeeze.Distances
   alias Squeeze.Duration
 
@@ -80,6 +80,7 @@ defmodule Squeeze.Activities.Activity do
 
     has_one :trackpoint_set, TrackpointSet
     has_many :laps, Lap
+    has_many :trackpoint_sections, TrackpointSection
 
     timestamps()
   end
