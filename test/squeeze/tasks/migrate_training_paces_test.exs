@@ -3,9 +3,9 @@ defmodule Squeeze.Tasks.MigrateTrainingPacesTest do
 
   import Squeeze.Factory
 
+  alias Squeeze.Races.TrainingPace
   alias Squeeze.Repo
   alias Squeeze.Tasks.MigrateTrainingPaces
-  alias Squeeze.Races.TrainingPace
 
   describe "#run" do
     test "creates default training paces for race_goals" do

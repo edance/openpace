@@ -11,7 +11,7 @@ defmodule Squeeze.Tasks.MigrateTrainingPaces do
   @doc """
     Run the migration task
   """
-  def run() do
+  def run do
     from(rg in RaceGoal,
       where: not is_nil(rg.duration),
       preload: [:training_paces]
