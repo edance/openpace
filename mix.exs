@@ -56,7 +56,7 @@ defmodule Squeeze.Mixfile do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 0.5"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.7"},
+      {:ecto_sql, "~> 3.12"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_live_view, "~> 0.18.18"},
