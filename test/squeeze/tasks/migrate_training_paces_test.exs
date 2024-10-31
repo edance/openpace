@@ -5,7 +5,6 @@ defmodule Squeeze.Tasks.MigrateTrainingPacesTest do
 
   alias Squeeze.Repo
   alias Squeeze.Tasks.MigrateTrainingPaces
-  alias Squeeze.Races.RaceGoal
   alias Squeeze.Races.TrainingPace
 
   describe "#run" do

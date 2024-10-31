@@ -36,9 +36,8 @@ defmodule Squeeze.Races.TrainingPace do
     |> validate_max_speed_greater_than_min_speed()
   end
 
-  def default_paces(%{duration: nil}) do
-    []
-  end
+  def default_paces(%{duration: nil}), do: []
+  def default_paces(%{duration: 0}), do: []
 
   def default_paces(%{distance: distance, duration: duration}) do
     # Easy: MP + 1-2min (need to research more)

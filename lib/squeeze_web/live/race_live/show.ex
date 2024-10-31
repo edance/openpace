@@ -149,15 +149,10 @@ defmodule SqueezeWeb.RaceLive.Show do
   end
 
   defp vo2_max(%{distance: distance, duration: duration, activity: activity}) do
-    cond do
-      activity && activity.distance > 0 && activity.duration > 0 ->
-        RacePredictor.estimated_vo2max(activity.distance, activity.duration)
-
-      distance > 0 && duration > 0 ->
-        RacePredictor.estimated_vo2max(distance, duration)
-
-      true ->
-        nil
+    if activity && activity.distance > 0 && activity.duration > 0 do
+      RacePredictor.estimated_vo2max(activity.distance, activity.duration)
+    else
+      RacePredictor.estimated_vo2max(distance, duration)
     end
   end
 

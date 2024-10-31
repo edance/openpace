@@ -16,6 +16,9 @@ defmodule Squeeze.RacePredictor do
   iex> estimated_vo2max(5000, 1080) # 18 minute 5k
   56.319480966731284
   """
+  def estimated_vo2max(_, 0), do: nil
+  def estimated_vo2max(_, nil), do: nil
+
   def estimated_vo2max(distance, duration) do
     min = duration / 60.0
 
