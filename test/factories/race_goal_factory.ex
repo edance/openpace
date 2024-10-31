@@ -8,11 +8,12 @@ defmodule Squeeze.RaceGoalFactory do
 
   defmacro __using__(_opts) do
     quote do
-      def race_goal_factory do
+      def race_goal_factory(attrs) do
         %{distance: distance, name: distance_name} = race_distance()
         # random pace between 5-9 min/miles
         pace = random_float(5, 9)
-        duration = round(distance / 1609 * pace * 60)
+        duration = Map.get(attrs, :duration, round(distance / 1609 * pace * 60))
+        paces = TrainingPace.default_paces(%{distance: distance, duration: duration})
 
         %RaceGoal{
           race_name: "#{Address.city()} #{distance_name}",
@@ -22,13 +23,11 @@ defmodule Squeeze.RaceGoalFactory do
           just_finish: false,
           # Up to 18 weeks away
           race_date: Date.forward(18 * 7),
-          training_paces: TrainingPace.default_paces(distance, duration),
+          training_paces: paces,
           user: build(:user)
         }
-      end
-
-      def just_finish_goal(%RaceGoal{} = race_goal) do
-        %{race_goal | just_finish: true, duration: nil, training_paces: []}
+        |> merge_attributes(attrs)
+        |> evaluate_lazy_attributes()
       end
 
       def with_activity(%RaceGoal{} = race_goal) do
@@ -41,7 +40,7 @@ defmodule Squeeze.RaceGoalFactory do
         }
 
         activity = insert(:activity, attrs)
-        paces = TrainingPace.default_paces(distance, duration)
+        paces = TrainingPace.default_paces(%{distance: distance, duration: duration})
         race_date = Timex.to_date(activity.start_at_local)
 
         %{

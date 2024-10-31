@@ -29,7 +29,7 @@ defmodule Squeeze.Races.RaceGoal do
     field :just_finish, :boolean
     field :description, :string
 
-    embeds_many :training_paces, TrainingPace
+    has_many :training_paces, TrainingPace
 
     belongs_to :activity, Activity
     belongs_to :user, User
@@ -41,7 +41,7 @@ defmodule Squeeze.Races.RaceGoal do
   def changeset(%RaceGoal{} = race_goal, attrs) do
     race_goal
     |> cast(attrs, @required_fields ++ @optional_fields)
-    |> cast_embed(:training_paces, with: &TrainingPace.changeset/2)
+    |> cast_assoc(:training_paces, with: &TrainingPace.changeset/2)
     |> validate_required(@required_fields)
     |> unique_constraint(:activity_id)
   end

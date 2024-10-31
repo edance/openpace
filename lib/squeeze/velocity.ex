@@ -3,7 +3,29 @@ defmodule Squeeze.Velocity do
   This module defines the distances used in forms.
   """
 
+  @behaviour Ecto.Type
+
   alias Squeeze.Distances
+
+  def cast(number) do
+    Ecto.Type.cast(:float, number)
+  end
+
+  def dump(number) do
+    Ecto.Type.dump(:float, number)
+  end
+
+  def load(number) do
+    Ecto.Type.load(:float, number)
+  end
+
+  def type do
+    Ecto.Type.type(:float)
+  end
+
+  def embed_as(_), do: :self
+
+  def equal?(left, right), do: left == right
 
   @doc """
   Takes velocity in meters per second and converts it to either minutes per
