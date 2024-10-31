@@ -88,7 +88,7 @@ defmodule Squeeze.Races do
       |> Changeset.put_change(:activity_id, activity.id)
 
     changeset
-    |> Changeset.put_embed(:training_paces, default_paces(changeset))
+    |> Changeset.put_assoc(:training_paces, default_paces(changeset))
     |> Repo.insert_with_slug()
   end
 
@@ -194,6 +194,22 @@ defmodule Squeeze.Races do
     Race.changeset(race, %{})
   end
 
+  def create_training_pace(%RaceGoal{} = race_goal, attrs) do
+    %TrainingPace{}
+    |> TrainingPace.changeset(attrs)
+    |> Changeset.put_change(:race_goal_id, race_goal.id)
+    |> Repo.insert()
+  end
+
+  def create_default_paces(%RaceGoal{} = race_goal) do
+    paces = TrainingPace.default_paces(race_goal)
+
+    race_goal
+    |> RaceGoal.changeset(%{})
+    |> Changeset.put_assoc(:training_paces, paces)
+    |> Repo.update()
+  end
+
   def pace_durations_for_race_goal(%RaceGoal{} = goal) do
     date_range = block_range(goal)
     start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
@@ -253,11 +269,9 @@ defmodule Squeeze.Races do
   defp default_paces(changeset) do
     distance = Changeset.get_change(changeset, :distance)
     duration = Changeset.get_change(changeset, :duration)
-    require IEx
-    IEx.pry()
 
     if distance && duration do
-      TrainingPace.default_paces(distance, duration)
+      TrainingPace.default_paces(%{distance: distance, duration: duration})
     else
       []
     end

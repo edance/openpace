@@ -32,10 +32,15 @@ defmodule Squeeze.Races.TrainingPace do
     |> cast(attrs, [:color, :name, :min_speed, :max_speed])
     |> validate_required([:color, :name, :min_speed, :max_speed])
     |> validate_number(:min_speed, greater_than_or_equal_to: 0)
-    |> validate_number(:max_speed, greater_than: :min_speed)
+    |> validate_number(:max_speed, greater_than: 0)
+    |> validate_max_speed_greater_than_min_speed()
   end
 
-  def default_paces(distance, duration) do
+  def default_paces(%{duration: nil}) do
+    []
+  end
+
+  def default_paces(%{distance: distance, duration: duration}) do
     # Easy: MP + 1-2min (need to research more)
     # LR: 25-30% of weekly mileage
     # Marathon pace: MP +/- 10 secs
@@ -157,6 +162,23 @@ defmodule Squeeze.Races.TrainingPace do
       distance = marathon_in_meters()
       duration = RacePredictor.predict_race_time(distance, vo2max)
       distance / duration
+    end
+  end
+
+  defp validate_max_speed_greater_than_min_speed(changeset) do
+    min_speed = get_field(changeset, :min_speed)
+    max_speed = get_field(changeset, :max_speed)
+
+    case {min_speed, max_speed} do
+      {min, max} when max > min ->
+        changeset
+
+      _ ->
+        add_error(
+          changeset,
+          :max_speed,
+          "must be greater than minimum speed"
+        )
     end
   end
 end

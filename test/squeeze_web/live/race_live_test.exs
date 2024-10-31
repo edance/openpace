@@ -31,7 +31,7 @@ defmodule SqueezeWeb.RaceLiveTest do
     end
 
     test "displays race goal with just finish", %{conn: conn, user: user} do
-      race_goal = insert(:race_goal, user: user) |> just_finish_goal()
+      race_goal = insert(:race_goal, user: user, just_finish: true, duration: nil)
       {:ok, _show_live, html} = live(conn, Routes.race_path(conn, :show, race_goal.slug))
 
       assert html =~ race_goal.race_name
