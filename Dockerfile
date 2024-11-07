@@ -24,21 +24,29 @@ ARG RUST_IMAGE="rust:${RUST_VERSION}"
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-# Use a rust image to compile the Rust code
-# 
-FROM ${RUST_IMAGE} as rust
-# install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
-    && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-workdir /app
+FROM ${RUNNER_IMAGE} AS rust
+# Redeclare the ARG to make it available in this stage
+ARG RUST_VERSION
+
+# Install build dependencies
+RUN apt-get update -y && apt-get install -y curl build-essential git pkg-config
+
+# Install Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain ${RUST_VERSION}
+
+# Clean up
+RUN apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+ENV PATH="/root/.cargo/bin:${PATH}"
+WORKDIR /app
 COPY native/rust_fit ./
 RUN cargo rustc --release 
 
 
 # Use the elixir image to build the release
 #
-FROM ${BUILDER_IMAGE} as builder
+FROM ${BUILDER_IMAGE} AS builder
 
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential git curl unzip
@@ -82,11 +90,11 @@ COPY lib lib
 
 COPY assets assets
 
-# compile assets
-RUN mix assets.deploy
-
 # Copy the compiled Rust code
 COPY --from=rust /app/target/release/librust_fit.so priv/native/librust_fit.so
+
+# compile assets
+RUN mix assets.deploy
 
 # Compile the release
 RUN mix compile
@@ -111,9 +119,9 @@ RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 local
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 WORKDIR "/app"
 RUN chown nobody /app
@@ -128,9 +136,6 @@ USER nobody
 
 CMD ["/app/bin/server"]
 # Appended by flyctl
-ENV ECTO_IPV6 true
-ENV ERL_AFLAGS "-proto_dist inet6_tcp"
+ENV ECTO_IPV6=true
+ENV ERL_AFLAGS="-proto_dist inet6_tcp"
 
-# Appended by flyctl
-ENV ECTO_IPV6 true
-ENV ERL_AFLAGS "-proto_dist inet6_tcp"
