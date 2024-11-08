@@ -82,7 +82,7 @@ defmodule Squeeze.Mixfile do
       {:argon2_elixir, "~> 2.0"},
       {:number, "~> 1.0.0"},
       {:tesla, "~> 1.5.0"},
-      {:hackney, "~> 1.18.1"},
+      {:hackney, "~> 1.18"},
       {:jason, "~> 1.4"},
       {:sma, "~> 0.1"},
       {:html_sanitize_ex, "~> 1.4.0"},
