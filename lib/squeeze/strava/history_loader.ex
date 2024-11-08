@@ -16,7 +16,7 @@ defmodule Squeeze.Strava.HistoryLoader do
   end
 
   def load_recent(%User{} = user, %Credential{} = credential) do
-    create_activities(user, credential)
+    create_or_update_activities(user, credential)
     Accounts.update_credential(credential, %{sync_at: Timex.now()})
   end
 
@@ -26,14 +26,14 @@ defmodule Squeeze.Strava.HistoryLoader do
 
   def load_all(%User{} = user, %Credential{} = credential) do
     credential = Map.put(credential, :sync_at, nil)
-    create_activities(user, credential)
+    create_or_update_activities(user, credential)
   end
 
-  defp create_activities(user, credential) do
+  defp create_or_update_activities(user, credential) do
     credential
     |> activity_stream
     |> Stream.map(&ActivityFormatter.format/1)
-    |> Stream.each(fn a -> Activities.create_activity(user, a) end)
+    |> Stream.each(fn a -> Activities.create_or_update_activity(user, a) end)
     |> Enum.to_list()
   end
 

@@ -223,6 +223,16 @@ defmodule Squeeze.Activities do
     |> create_goal_if_race()
   end
 
+  def create_or_update_activity(%User{} = user, attrs \\ %{}) do
+    case fetch_activity_by_external_id(user, attrs.external_id) do
+      {:ok, activity} ->
+        update_activity(activity, attrs)
+
+      _ ->
+        create_activity(user, attrs)
+    end
+  end
+
   defp create_goal_if_race({:ok, %Activity{} = activity}) do
     if activity.workout_type == :race do
       Races.find_or_create_race_goal_from_activity(activity)
