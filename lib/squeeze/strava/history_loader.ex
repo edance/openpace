@@ -20,6 +20,15 @@ defmodule Squeeze.Strava.HistoryLoader do
     Accounts.update_credential(credential, %{sync_at: Timex.now()})
   end
 
+  def load_all(%Credential{} = credential) do
+    load_all(credential.user, credential)
+  end
+
+  def load_all(%User{} = user, %Credential{} = credential) do
+    credential = Map.put(credential, :sync_at, nil)
+    create_activities(user, credential)
+  end
+
   defp create_activities(user, credential) do
     credential
     |> activity_stream
