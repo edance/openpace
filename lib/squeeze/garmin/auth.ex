@@ -7,6 +7,7 @@ defmodule Squeeze.Garmin.Auth do
 
   def get_user!(opts) do
     url = "https://healthapi.garmin.com/wellness-api/rest/user/id"
+
     opts
     |> Client.new()
     |> Client.get!(url)
@@ -21,6 +22,7 @@ defmodule Squeeze.Garmin.Auth do
 
   def request_token!(opts \\ []) do
     url = "https://connectapi.garmin.com/oauth-service/oauth/request_token"
+
     opts
     |> Client.new()
     |> Client.post!(url, [])
@@ -30,6 +32,7 @@ defmodule Squeeze.Garmin.Auth do
 
   def get_token!(opts \\ []) do
     url = "https://connectapi.garmin.com/oauth-service/oauth/access_token"
+
     opts
     |> Client.new()
     |> Client.post!(url, [])

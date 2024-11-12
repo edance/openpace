@@ -1,19 +1,21 @@
 defmodule Squeeze.Fitbit.ActivityLoader do
   @moduledoc false
 
+  alias Squeeze.Activities
   alias Squeeze.Accounts.Credential
   alias Squeeze.ActivityMatcher
-  alias Squeeze.Dashboard
 
   def update_or_create_activity(%Credential{} = credential, fitbit_activity) do
     user = credential.user
     activity = map_activity(fitbit_activity)
 
     case ActivityMatcher.get_closest_activity(user, activity) do
-      nil -> Dashboard.create_activity(user, activity)
+      nil ->
+        Activities.create_activity(user, activity)
+
       existing_activity ->
         activity = %{activity | name: existing_activity.name}
-        Dashboard.update_activity(existing_activity, activity)
+        Activities.update_activity(existing_activity, activity)
     end
   end
 
@@ -41,6 +43,7 @@ defmodule Squeeze.Fitbit.ActivityLoader do
       _ -> distance
     end
   end
+
   def distance(_), do: 0
 
   def duration(%{"duration" => duration}), do: trunc(duration / 1000)
