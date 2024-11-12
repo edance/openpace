@@ -28,8 +28,16 @@ defmodule Squeeze.Strava.ActivityFormatter do
       external_id: "#{strava_activity.id}",
       planned_date: Timex.to_date(strava_activity.start_date_local),
       polyline: polyline(strava_activity),
-      workout_type: workout_type(strava_activity)
+      workout_type: workout_type(strava_activity),
+      raw_data: strava_activity |> convert_to_map()
     }
+  end
+
+  def convert_to_map(strava_activity) do
+    # Ugly workaround to convert a struct to a map
+    strava_activity
+    |> Poison.encode!()
+    |> Poison.decode!()
   end
 
   defp polyline(%{map: nil}), do: nil
