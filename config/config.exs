@@ -68,10 +68,21 @@ config :squeeze, Squeeze.OAuth2.Google,
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
   redirect_uri: "http://localhost:4000/auth/google/callback"
 
+# config :squeeze, Squeeze.OAuth2.Fitbit,
+#   client_id: System.get_env("FITBIT_CLIENT_ID"),
+#   client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
+#   redirect_uri: "http://localhost:4000/integration/fitbit/callback",
+#   webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
+
 config :strava,
   client_id: System.get_env("STRAVA_CLIENT_ID"),
   client_secret: System.get_env("STRAVA_CLIENT_SECRET"),
   webhook_challenge: System.get_env("STRAVA_WEBHOOK_TOKEN")
+
+# config :squeeze, Squeeze.Garmin,
+#   consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
+#   consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
+#   redirect_uri: "http://localhost:4000/integration/garmin/callback"
 
 config :squeeze, Squeeze.Scheduler,
   jobs: [
