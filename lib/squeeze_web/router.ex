@@ -69,6 +69,10 @@ defmodule SqueezeWeb.Router do
     get "/garmin", GarminIntegrationController, :request
     get "/garmin/callback", GarminIntegrationController, :callback
     post "/garmin/callback", GarminIntegrationController, :callback
+
+    get "/fitbit", FitbitIntegrationController, :request
+    get "/fitbit/callback", FitbitIntegrationController, :callback
+    post "/fitbit/callback", FitbitIntegrationController, :callback
   end
 
   scope "/auth", SqueezeWeb do

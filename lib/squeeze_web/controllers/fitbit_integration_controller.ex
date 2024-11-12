@@ -43,12 +43,12 @@ defmodule SqueezeWeb.FitbitIntegrationController do
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.home_path(conn, :index))
     end
   end
 
   defp sign_in_and_redirect(conn, user, credential_params) do
-    credential = Enum.find(user.credentials, &(&1.provider == "garmin"))
+    credential = Enum.find(user.credentials, &(&1.provider == "fitbit"))
     {:ok, _credential} = Accounts.update_credential(credential, credential_params)
 
     conn
@@ -77,16 +77,10 @@ defmodule SqueezeWeb.FitbitIntegrationController do
 
   defp user_attrs(_credential_params) do
     %{
-      first_name: "TBD",
-      last_name: "TBD",
-      avatar: "TBD",
-      city: "TBD",
-      state: "TBD",
-      country: "TBD",
       user_prefs: %{
         imperial: false,
         rename_activities: false,
-        gender: :male
+        gender: :prefer_not_to_say
       }
     }
   end

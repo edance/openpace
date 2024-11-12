@@ -45,18 +45,13 @@ defmodule SqueezeWeb.GarminIntegrationController do
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
+  # Garmin no longer allows you to get user profile data
   defp user_attrs(_credential_params) do
     %{
-      first_name: "TBD",
-      last_name: "TBD",
-      avatar: "TBD",
-      city: "TBD",
-      state: "TBD",
-      country: "TBD",
       user_prefs: %{
         imperial: false,
         rename_activities: false,
-        gender: :male
+        gender: :prefer_not_to_say
       }
     }
   end
@@ -71,7 +66,7 @@ defmodule SqueezeWeb.GarminIntegrationController do
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.home_path(conn, :index))
     end
   end
 
