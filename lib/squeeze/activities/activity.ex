@@ -31,6 +31,7 @@ defmodule Squeeze.Activities.Activity do
     type
     moving_time
     elapsed_time
+    raw_data
   )a
 
   schema "activities" do
@@ -38,6 +39,7 @@ defmodule Squeeze.Activities.Activity do
     field :name, :string
     field :activity_type, Ecto.Enum, values: [run: 0, bike: 1, swim: 2, other: 3]
     field :type, :string
+    field :raw_data, :map
 
     field :workout_type, Ecto.Enum,
       values: [
