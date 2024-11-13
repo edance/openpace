@@ -36,9 +36,10 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     user = conn.assigns.current_user
 
     case Accounts.create_credential(user, credential_params) do
-      {:ok, _credentials} ->
-        setup_integration(conn, user)
-        redirect_current_user(conn, credential_params)
+      {:ok, credential} ->
+        conn
+        # |> setup_integration(credential)
+        |> redirect_current_user(credential_params)
 
       _ ->
         conn
@@ -60,11 +61,11 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     user_params = user_attrs(credential_params)
 
     with {:ok, user} <- Accounts.create_user(user_params),
-         {:ok, _credentials} <- Accounts.create_credential(user, credential_params) do
+         {:ok, credential} <- Accounts.create_credential(user, credential_params) do
       Reporter.report_new_user(user)
-      setup_integration(conn, user)
 
       conn
+      # |> setup_integration(credential)
       |> Auth.sign_in(user)
       |> redirect_current_user(credential_params)
     else
@@ -75,14 +76,39 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     end
   end
 
-  defp user_attrs(_credential_params) do
+  defp user_attrs(credential_params) do
+    {:ok, user_data} =
+      credential_params.access_token
+      |> Fitbit.Client.new()
+      |> Fitbit.Client.get_logged_in_user()
+
     %{
+      first_name: user_data["firstName"],
+      last_name: user_data["lastName"],
+      avatar: user_data["avatar"],
       user_prefs: %{
-        imperial: false,
+        imperial: user_data["distanceUnit"] == "en_US",
         rename_activities: false,
-        gender: :prefer_not_to_say
+        gender: parse_gender_str(user_data["gender"]),
+        birthdate: parse_date_str(user_data["dateOfBirth"]),
+        timezone: user_data["timezone"]
       }
     }
+  end
+
+  defp parse_gender_str(str) do
+    case str do
+      "MALE" -> :male
+      "FEMALE" -> :female
+      _ -> :prefer_not_to_say
+    end
+  end
+
+  defp parse_date_str(date) do
+    case Timex.parse(date, "{YYYY}-{0M}-{0D}") do
+      {:ok, date} -> date |> Timex.to_date()
+      {:error, _} -> nil
+    end
   end
 
   defp redirect_current_user(conn, credential) do
@@ -93,10 +119,17 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
-  defp setup_integration(conn, client) do
-    user = conn.assigns.current_user
-    url = "/1/user/-/activities/apiSubscriptions/#{user.id}.json"
-    Fitbit.Client.post!(client, url)
+  defp setup_integration(conn, credential) do
+    client = Fitbit.Client.new(credential)
+
+    case Fitbit.Client.create_subscription(client, credential.user_id) do
+      {:ok, _} ->
+        conn
+
+      {:error, reason} ->
+        conn
+        |> put_flash(:error, "Failed to setup subscription: #{reason}")
+    end
   end
 
   def load_history(%{provider: "fitbit", uid: id}) do
