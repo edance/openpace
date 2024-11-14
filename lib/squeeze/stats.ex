@@ -6,29 +6,9 @@ defmodule Squeeze.Stats do
   import Ecto.Query, warn: false
   alias Squeeze.Accounts.User
   alias Squeeze.Activities.{Activity, TrackpointSection}
-  alias Squeeze.Races.TrainingPace
+  alias Squeeze.Races.{RaceGoal, TrainingPace}
   alias Squeeze.Repo
   alias Squeeze.TimeHelper
-
-  def data_for_training_pace(%User{} = user, %TrainingPace{} = pace, date_range) do
-    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
-    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
-
-    query =
-      from ts in TrackpointSection,
-        join: a in assoc(ts, :activity),
-        where: a.status == :complete,
-        where: a.user_id == ^user.id,
-        where: a.type == "Run",
-        where: a.start_at_local >= ^start_at and a.start_at_local <= ^end_at,
-        where: ts.velocity >= ^pace.min_speed and ts.velocity < ^pace.max_speed,
-        select: %{
-          distance: fragment("coalesce(?, 0)", sum(ts.distance)),
-          duration: fragment("coalesce(?, 0)", sum(ts.duration))
-        }
-
-    Repo.one(query)
-  end
 
   def ytd_run_summary(%User{} = user) do
     time_window =
@@ -119,6 +99,90 @@ defmodule Squeeze.Stats do
       end)
     else
       0
+    end
+  end
+
+  def pace_bands_for_activity(%Activity{} = activity, %RaceGoal{} = goal) do
+    filtered_trackpoints =
+      from(ts in TrackpointSection,
+        where: ts.activity_id == ^activity.id
+      )
+
+    from(tp in TrainingPace,
+      left_join: ts in subquery(filtered_trackpoints),
+      on:
+        ts.velocity >= tp.min_speed and
+          ts.velocity <= tp.max_speed,
+      where: tp.race_goal_id == ^goal.id,
+      group_by: [tp.id],
+      order_by: tp.min_speed,
+      select: %{
+        id: tp.id,
+        pace_name: min(tp.name),
+        pace_color: min(tp.color),
+        min_speed: min(tp.min_speed),
+        max_speed: min(tp.max_speed),
+        total_distance: coalesce(sum(ts.distance), 0),
+        total_duration: coalesce(sum(ts.duration), 0),
+        activity_count: count(fragment("DISTINCT ?", ts.activity_id))
+      }
+    )
+    |> Repo.all()
+  end
+
+  def pace_bands_for_race_goal(%RaceGoal{} = goal) do
+    date_range = block_range(goal)
+    start_at = Timex.beginning_of_day(date_range.first) |> Timex.to_datetime()
+    end_at = Timex.end_of_day(date_range.last) |> Timex.to_datetime()
+
+    filtered_activities =
+      from(a in Activity,
+        where:
+          a.user_id == ^goal.user_id and
+            a.start_at_local >= ^start_at and
+            a.start_at_local <= ^end_at and
+            a.status == :complete and
+            a.type == "Run",
+        select: a.id
+      )
+
+    filtered_trackpoints =
+      from(ts in TrackpointSection,
+        join: fa in subquery(filtered_activities),
+        on: ts.activity_id == fa.id
+      )
+
+    from(tp in TrainingPace,
+      left_join: ts in subquery(filtered_trackpoints),
+      on:
+        ts.velocity >= tp.min_speed and
+          ts.velocity <= tp.max_speed,
+      where: tp.race_goal_id == ^goal.id,
+      group_by: [tp.id],
+      order_by: tp.min_speed,
+      select: %{
+        id: tp.id,
+        pace_name: min(tp.name),
+        pace_color: min(tp.color),
+        min_speed: min(tp.min_speed),
+        max_speed: min(tp.max_speed),
+        total_distance: coalesce(sum(ts.distance), 0),
+        total_duration: coalesce(sum(ts.duration), 0),
+        activity_count: count(fragment("DISTINCT ?", ts.activity_id))
+      }
+    )
+    |> Repo.all()
+  end
+
+  def block_range(%RaceGoal{} = race_goal) do
+    race_date = race_goal.race_date
+
+    # 18 weeks before minus 1 day
+    start_date = Timex.shift(race_date, days: 18 * -7 + 1)
+
+    case Date.day_of_week(start_date) do
+      1 -> Date.range(start_date, race_date)
+      x -> Date.range(Date.add(start_date, -(x - 1)), race_date)
     end
   end
 

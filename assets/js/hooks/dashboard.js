@@ -7,6 +7,9 @@ import Modal from "./modal";
 import RecentActivityChart from "./recent-activity-chart";
 import SlimSelect from "./slim-select";
 import TrendCard from "./trend-card";
+import PaceChart from "./pace-chart";
+
+import WeeklyActivityChart from "./weekly-activity-chart";
 
 export default {
   ActivityBubbleChart,
@@ -15,7 +18,9 @@ export default {
   CalendarChart,
   DurationSelect,
   Modal,
+  PaceChart,
   RecentActivityChart,
   SlimSelect,
   TrendCard,
+WeeklyActivityChart
 };

@@ -1,4 +1,5 @@
 defmodule SqueezeWeb.RaceLive.Show do
+  alias Squeeze.Stats
   use SqueezeWeb, :live_view
   @moduledoc false
 
@@ -20,7 +21,6 @@ defmodule SqueezeWeb.RaceLive.Show do
     activity = race_goal.activity
     vo2_max = vo2_max(race_goal)
     range = block_range(user, race_goal)
-    trackpoint_sections = Activities.list_trackpoint_sections(user, range)
 
     if connected?(socket) && activity && !activity.trackpoint_set do
       send(self(), :fetch_detailed_info)
@@ -35,10 +35,10 @@ defmodule SqueezeWeb.RaceLive.Show do
         activity: activity,
         trackpoints: trackpoints(activity),
         paces: race_goal.training_paces,
+        pace_bands: Stats.pace_bands_for_race_goal(race_goal),
         predictions: predictions(vo2_max),
         vo2_max: vo2_max,
-        current_user: user,
-        trackpoint_sections: trackpoint_sections
+        current_user: user
       )
 
     {:ok, socket}
@@ -49,6 +49,8 @@ defmodule SqueezeWeb.RaceLive.Show do
     socket =
       socket
       |> push_activity_events()
+      |> push_pace_bands()
+      |> push_recent_activities()
 
     {:noreply, socket}
   end
@@ -119,7 +121,7 @@ defmodule SqueezeWeb.RaceLive.Show do
 
   def past_activities(user, %RaceGoal{} = race_goal) do
     range = block_range(user, race_goal)
-    Activities.list_activities(user, range)
+    Activities.list_activity_summaries(user, range)
   end
 
   def distance_name(distance, current_user) do
@@ -138,6 +140,17 @@ defmodule SqueezeWeb.RaceLive.Show do
     else
       socket
     end
+  end
+
+  defp push_pace_bands(socket) do
+    push_event(socket, "pace_bands", %{
+      pace_bands: socket.assigns.pace_bands,
+      paces: socket.assigns.paces
+    })
+  end
+
+  defp push_recent_activities(socket) do
+    push_event(socket, "recent_activities", %{activities: socket.assigns.past_activities})
   end
 
   defp push_trackpoints(socket) do
@@ -203,7 +216,7 @@ defmodule SqueezeWeb.RaceLive.Show do
     <div class="text-center w-full relative">
       <.bubble distance={@distance} activities={@activities} />
 
-      <div :if={@distance > 0} class="text-xs text-gray-700 mt-1">
+      <div :if={@distance > 0} class="text-xs text-gray-700 dark:text-gray-200 mt-1">
         <%= format_distance(@distance, @current_user.user_prefs) %>
       </div>
 
@@ -214,7 +227,7 @@ defmodule SqueezeWeb.RaceLive.Show do
         <%= gettext("Today") %>
       </div>
 
-      <div :if={@distance <= 0 && @past} class="text-xs text-gray-700 mt-1">
+      <div :if={@distance <= 0 && @past} class="text-xs text-gray-700 dark:text-gray-200 mt-1">
         Rest
       </div>
     </div>

@@ -13,6 +13,14 @@ defmodule Squeeze.Races.TrainingPace do
 
   import Squeeze.Distances, only: [marathon_in_meters: 0, mile_in_meters: 0]
 
+  @derive {Jason.Encoder,
+           only: [
+             :color,
+             :name,
+             :min_speed,
+             :max_speed
+           ]}
+
   schema "training_paces" do
     field :color, :string
     field :name, :string
@@ -99,8 +107,8 @@ defmodule Squeeze.Races.TrainingPace do
     %{
       color: Colors.blue(),
       name: "Marathon",
-      min_speed: adjust_pace_by_secs(marathon_speed, -10),
-      max_speed: adjust_pace_by_secs(marathon_speed, 10)
+      min_speed: adjust_pace_by_secs(marathon_speed, 10),
+      max_speed: adjust_pace_by_secs(marathon_speed, -10)
     }
   end
 
