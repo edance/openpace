@@ -20,13 +20,13 @@
 
 <%= for race_goal <- @race_goals do %>
   <div class="flex flex-wrap lg:flex-nowrap mb-2">
-    <div class="flex-shrink-0 bg-red rounded-full text-white mb-1 px-3 py-2">
+    <div class="bg-green-600 rounded-full text-white mb-1 h-8 w-8 flex items-center justify-center flex-none">
       <.icon icon="ps:trophy" />
     </div>
 
     <div class="text-sm ml-2">
       <div class="text-sm text-gray-800 dark:text-white block">
-        <%= live_redirect(race_goal.race.name,
+        <%= live_redirect(race_goal.race_name,
           to: Routes.race_path(@socket, :show, race_goal.slug),
           class: "font-bold block"
         ) %> Race Day

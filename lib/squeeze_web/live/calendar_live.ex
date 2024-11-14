@@ -91,7 +91,7 @@ defmodule SqueezeWeb.CalendarLive do
   def race_goals_by_date(user, dates) do
     Races.list_race_goals(user, dates)
     |> Enum.reduce(%{}, fn x, acc ->
-      date = x.race.start_date |> Timex.to_date()
+      date = x.race_date |> Timex.to_date()
       list = Map.get(acc, date, [])
       Map.put(acc, date, [x | list])
     end)
