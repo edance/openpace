@@ -31,6 +31,8 @@ config :squeeze, :strava_streams, Squeeze.Strava.MockStreams
 
 config :squeeze, :payment_processor, Squeeze.MockPaymentProcessor
 
+config :squeeze, :garmin_auth, Squeeze.Garmin.MockAuth
+
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: "1",
   client_secret: "123456789",

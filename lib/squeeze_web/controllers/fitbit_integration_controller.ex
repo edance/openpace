@@ -38,7 +38,7 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     case Accounts.create_credential(user, credential_params) do
       {:ok, credential} ->
         conn
-        # |> setup_integration(credential)
+        |> setup_integration(credential)
         |> redirect_current_user(credential_params)
 
       _ ->
@@ -65,7 +65,7 @@ defmodule SqueezeWeb.FitbitIntegrationController do
       Reporter.report_new_user(user)
 
       conn
-      # |> setup_integration(credential)
+      |> setup_integration(credential)
       |> Auth.sign_in(user)
       |> redirect_current_user(credential_params)
     else
@@ -119,17 +119,18 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
-  defp setup_integration(conn, credential) do
-    client = Fitbit.Client.new(credential)
-
-    case Fitbit.Client.create_subscription(client, credential.user_id) do
-      {:ok, _} ->
-        conn
-
-      {:error, reason} ->
-        conn
-        |> put_flash(:error, "Failed to setup subscription: #{reason}")
-    end
+  defp setup_integration(conn, _credential) do
+    #   client = Fitbit.Client.new(credential)
+    #
+    #   case Fitbit.Client.create_subscription(client, credential.user_id) do
+    #     {:ok, _} ->
+    #       conn
+    #
+    #     {:error, reason} ->
+    #       conn
+    #       |> put_flash(:error, "Failed to setup subscription: #{reason}")
+    #   end
+    conn
   end
 
   def load_history(%{provider: "fitbit", uid: id}) do

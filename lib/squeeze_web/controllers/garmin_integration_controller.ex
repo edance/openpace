@@ -11,18 +11,21 @@ defmodule SqueezeWeb.GarminIntegrationController do
   alias SqueezeWeb.Plug.Auth
 
   def request(conn, _) do
-    params = Garmin.Auth.request_token!()
+    params = auth_module().request_token!()
 
     conn
     |> put_session(:garmin_token_secret, params["oauth_token_secret"])
-    |> redirect(external: Garmin.Auth.authorize_url!(params))
+    |> redirect(external: auth_module().authorize_url!(params))
   end
 
   def callback(conn, %{"oauth_token" => token, "oauth_verifier" => verifier}) do
     token_secret = get_session(conn, :garmin_token_secret)
     opts = [verifier: verifier, token: token, token_secret: token_secret]
-    %{"oauth_token" => token, "oauth_token_secret" => token_secret} = Garmin.Auth.get_token!(opts)
-    %{"userId" => uid} = Garmin.Auth.get_user!(token: token, token_secret: token_secret)
+
+    %{"oauth_token" => token, "oauth_token_secret" => token_secret} =
+      auth_module().get_token!(opts)
+
+    %{"userId" => uid} = auth_module().get_user!(token: token, token_secret: token_secret)
     credential_params = %{provider: "garmin", token: token, token_secret: token_secret, uid: uid}
 
     cond do
@@ -35,6 +38,10 @@ defmodule SqueezeWeb.GarminIntegrationController do
       true ->
         create_user_and_redirect(conn, credential_params)
     end
+  end
+
+  def auth_module do
+    Application.get_env(:squeeze, :garmin_auth, Garmin.Auth)
   end
 
   defp redirect_current_user(conn, credential) do

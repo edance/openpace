@@ -11,3 +11,6 @@ Mox.defmock(Squeeze.Strava.MockStreams, for: Strava.StreamsBehavior)
 
 # Payment Processor Mock
 Mox.defmock(Squeeze.MockPaymentProcessor, for: Squeeze.PaymentProcessor)
+
+# Garmin Mocks
+Mox.defmock(Squeeze.Garmin.AuthMock, for: Squeeze.Garmin.AuthBehaviour)

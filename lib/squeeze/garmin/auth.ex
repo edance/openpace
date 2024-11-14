@@ -1,5 +1,9 @@
 defmodule Squeeze.Garmin.Auth do
-  @moduledoc false
+  @moduledoc """
+  Garmin authentication integration.
+  """
+
+  @behaviour Squeeze.Garmin.AuthBehaviour
 
   alias Squeeze.Garmin.Client
 
