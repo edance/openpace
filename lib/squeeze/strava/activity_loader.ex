@@ -58,14 +58,15 @@ defmodule Squeeze.Strava.ActivityLoader do
   end
 
   defp save_trackpoints(credential, %{external_id: strava_activity_id} = activity) do
-    case fetch_streams(strava_activity_id, credential) do
-      {:ok, stream_set} ->
-        trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set)
-        Activities.create_trackpoint_set(activity, trackpoints)
-
+    with {:ok, stream_set} <- fetch_streams(strava_activity_id, credential),
+         trackpoints = StreamSetConverter.convert_stream_set_to_trackpoints(stream_set),
+         {:ok, trackpoint_set} <- Activities.create_trackpoint_set(activity, trackpoints),
+         {:ok, _} <- Activities.create_trackpoint_sections(trackpoint_set) do
+      {:ok, trackpoint_set}
+    else
       # Manually created activities do not have streams
-      {:error, %{status: 404}} ->
-        {:ok, []}
+      {:error, %{status: 404}} -> {:ok, []}
+      error -> error
     end
   end
 
