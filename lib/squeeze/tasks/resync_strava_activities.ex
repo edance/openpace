@@ -6,6 +6,7 @@ defmodule Squeeze.Tasks.ResyncStravaActivities do
   import Ecto.Query, warn: false
   alias Squeeze.Accounts.Credential
   alias Squeeze.Repo
+  alias Squeeze.Strava.HistoryLoader
 
   @doc """
     Run the task
@@ -21,6 +22,6 @@ defmodule Squeeze.Tasks.ResyncStravaActivities do
   end
 
   defp resync_activities(%Credential{} = credential) do
-    Squeeze.Strava.HistoryLoader.load_all(credential)
+    HistoryLoader.load_all(credential)
   end
 end
