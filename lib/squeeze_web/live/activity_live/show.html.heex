@@ -73,6 +73,19 @@
         </div>
       </.card>
 
+      <.card>
+        <div class="p-4">
+          <div
+            id="activity-metrics"
+            phx-hook="ActivityMetricsGraph"
+            phx-update="ignore"
+            data-imperial={"#{@current_user.user_prefs.imperial}"}
+            style="width: 100%; height: 500px;"
+          >
+          </div>
+        </div>
+      </.card>
+
       <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
         user: @current_user,
         activity: @activity

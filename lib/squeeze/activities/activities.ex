@@ -220,7 +220,7 @@ defmodule Squeeze.Activities do
       from a in Activity,
         where: a.slug == ^slug,
         where: [user_id: ^user.id],
-        preload: [:user, :trackpoint_set, :laps, :trackpoint_sections]
+        preload: [:user, :trackpoint_set, :laps]
 
     Repo.one!(query)
   end

@@ -24,7 +24,6 @@ defmodule SqueezeWeb.ActivityLive.Show do
       |> assign(page_title: activity.name)
       |> assign(race_goal: race_goal)
       |> assign(pace_bands: pace_bands(activity, race_goal))
-      |> assign(trackpoint_sections: activity.trackpoint_sections)
       |> assign(activity: activity, trackpoints: trackpoints(activity), current_user: user)
 
     {:ok, socket}
@@ -63,14 +62,7 @@ defmodule SqueezeWeb.ActivityLive.Show do
   defp push_activity_events(socket) do
     socket
     |> push_trackpoints()
-    |> push_trackpoint_sections()
     |> push_laps()
-  end
-
-  defp push_trackpoint_sections(socket) do
-    push_event(socket, "trackpoint_sections", %{
-      trackpoint_sections: socket.assigns.trackpoint_sections
-    })
   end
 
   defp push_trackpoints(socket) do
