@@ -9,6 +9,8 @@ defmodule SqueezeWeb.ActivityLive.Show do
   alias Squeeze.Stats
   alias Squeeze.Strava.ActivityLoader
 
+  embed_templates "components/*"
+
   @impl true
   def mount(%{"slug" => slug}, _session, socket) do
     user = socket.assigns.current_user
@@ -70,8 +72,14 @@ defmodule SqueezeWeb.ActivityLive.Show do
   end
 
   defp push_laps(socket) do
-    push_event(socket, "laps", %{laps: socket.assigns.activity.laps})
+    push_event(socket, "laps", %{
+      training_paces: training_paces(socket.assigns.race_goal),
+      laps: socket.assigns.activity.laps
+    })
   end
+
+  defp training_paces(nil), do: nil
+  defp training_paces(race_goal), do: race_goal.training_paces
 
   defp date(%{activity: %{start_at: nil, planned_date: date}}) do
     Timex.format!(date, "%b %-d, %Y ", :strftime)
@@ -110,6 +118,19 @@ defmodule SqueezeWeb.ActivityLive.Show do
   defp show_map?(%{activity: activity} = assigns) do
     activity.polyline || coordinates?(assigns)
   end
+
+  def show_cadence?(%{activity: %{laps: laps}}) do
+    case List.first(laps) do
+      nil ->
+        false
+
+      lap ->
+        cadence = Map.get(lap, :average_cadence)
+        !is_nil(cadence) && cadence > 0
+    end
+  end
+
+  def show_cadence?(_), do: false
 
   defp coordinates?(%{trackpoints: trackpoints}) do
     trackpoints

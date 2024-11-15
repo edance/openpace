@@ -154,6 +154,7 @@ defmodule Squeeze.Races do
       limit: 1
     )
     |> Repo.one()
+    |> Repo.preload(:training_paces)
   end
 
   def list_upcoming_race_goals(%User{} = user) do

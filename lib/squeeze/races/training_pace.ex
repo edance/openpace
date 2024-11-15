@@ -48,6 +48,26 @@ defmodule Squeeze.Races.TrainingPace do
   def default_paces(%{duration: 0}), do: []
 
   def default_paces(%{distance: distance, duration: duration}) do
+    # Z1: Recovery/Easy (60-72% max HR)
+    # Z2: Aerobic/Base (72-82% max HR)
+    # Z3: Tempo (82-87% max HR)
+    # Z4: Threshold (87-92% max HR)
+    # Z5: VO2 Max (92-97% max HR)
+    # Z6: Anaerobic (97-100% max HR)
+    vo2max = RacePredictor.estimated_vo2max(distance, duration)
+    marathon_speed = marathon_speed(distance, duration, vo2max)
+
+    [
+      zone_1(marathon_speed, vo2max),
+      zone_2(marathon_speed, vo2max),
+      zone_3(marathon_speed, vo2max),
+      zone_4(marathon_speed, vo2max),
+      zone_5(marathon_speed, vo2max),
+      zone_6(marathon_speed, vo2max)
+    ]
+  end
+
+  def prev_default_paces(%{distance: distance, duration: duration}) do
     # Easy: MP + 1-2min (need to research more)
     # LR: 25-30% of weekly mileage
     # Marathon pace: MP +/- 10 secs
@@ -187,5 +207,59 @@ defmodule Squeeze.Races.TrainingPace do
           "must be greater than minimum speed"
         )
     end
+  end
+
+  defp zone_1(marathon_speed, _vo2max) do
+    %{
+      color: Colors.blue(),
+      name: "Z1",
+      min_speed: adjust_pace_by_secs(marathon_speed, 180),
+      max_speed: adjust_pace_by_secs(marathon_speed, 120)
+    }
+  end
+
+  defp zone_2(marathon_speed, _vo2max) do
+    %{
+      color: Colors.green(),
+      name: "Z2",
+      min_speed: adjust_pace_by_secs(marathon_speed, 120),
+      max_speed: adjust_pace_by_secs(marathon_speed, 60)
+    }
+  end
+
+  defp zone_3(marathon_speed, vo2max) do
+    %{
+      color: Colors.yellow(),
+      name: "Z3",
+      min_speed: adjust_pace_by_secs(marathon_speed, 60),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.82)
+    }
+  end
+
+  defp zone_4(_marathon_speed, vo2max) do
+    %{
+      color: Colors.orange(),
+      name: "Z4",
+      min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.82),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.89)
+    }
+  end
+
+  defp zone_5(_marathon_speed, vo2max) do
+    %{
+      color: Colors.red(),
+      name: "Z5",
+      min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.89),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.95)
+    }
+  end
+
+  defp zone_6(_marathon_speed, vo2max) do
+    %{
+      color: Colors.purple(),
+      name: "Z6",
+      min_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 0.95),
+      max_speed: RacePredictor.velocity_at_vo2max_percentage(vo2max, 1.0)
+    }
   end
 end

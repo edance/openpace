@@ -86,10 +86,7 @@
         </div>
       </.card>
 
-      <%= live_component(SqueezeWeb.ActivityLive.LapsComponent,
-        user: @current_user,
-        activity: @activity
-      ) %>
+      <.laps user={@current_user} activity={@activity} />
     </div>
   </div>
 </div>

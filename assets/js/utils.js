@@ -42,13 +42,10 @@ export function formatVelocity(speed, imperial, activityType) {
   const distance = imperial ? 1609 : 1000; // Mile or kilometer
 
   if (activityType === "run") {
-    const value = distance / 60 / speed;
+    const value = Math.round(distance / speed); // time in seconds
 
-    const min = Math.floor(value);
-    const sec = Math.round((value - min) * 60);
     const label = imperial ? "/mi" : "/km";
-
-    return `${min}:${pad(sec)}${label}`;
+    return formatDuration(value) + label;
   }
 
   const value = (speed * 60 * 60) / distance;
