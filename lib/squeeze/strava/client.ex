@@ -16,7 +16,9 @@ defmodule Squeeze.Strava.Client do
   def new(%Credential{provider: "strava"} = credential) do
     Strava.Client.new(credential.access_token,
       refresh_token: credential.refresh_token,
-      token_refreshed: &Accounts.update_credential(credential, Map.from_struct(&1.token))
+      token_refreshed: fn token ->
+        Accounts.update_credential(credential, Map.from_struct(token))
+      end
     )
   end
 end

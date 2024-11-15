@@ -2,7 +2,7 @@ defmodule Squeeze.Tasks.CreateTrackpointSections do
   @moduledoc """
   Task module for batch processing TrackpointSets to create trackpoint sections.
   This module is designed to process existing TrackpointSets and generate corresponding
-  trackpoint sections in batches of 100 records at a time.
+  trackpoint sections in batches.
   """
 
   import Ecto.Query, warn: false
@@ -12,17 +12,26 @@ defmodule Squeeze.Tasks.CreateTrackpointSections do
 
   require Logger
 
+  @default_batch_size 100
+
   @doc """
   Starts the batch processing of all TrackpointSets.
 
+  ## Options
+    * `:batch_size` - The number of records to process in each batch. Defaults to #{@default_batch_size}
+
   Returns `{:ok}` when all records have been processed.
 
-  ## Example
-
+  ## Examples
       iex> CreateTrackpointSections.run()
       {:ok}
+
+      iex> CreateTrackpointSections.run(batch_size: 50)
+      {:ok}
   """
-  def run do
+  def run(opts \\ []) do
+    batch_size = Keyword.get(opts, :batch_size, @default_batch_size)
+
     query =
       from t in TrackpointSet,
         left_join: s in TrackpointSection,
@@ -33,16 +42,16 @@ defmodule Squeeze.Tasks.CreateTrackpointSections do
 
     Logger.info("Processing #{total_count} TrackpointSets to create TrackpointSections")
 
-    result = process_in_batches(query, total_count)
+    result = process_in_batches(query, total_count, batch_size)
     System.stop(0)
     result
   end
 
-  defp process_in_batches(query, total_count, page \\ 0, processed_count \\ 0) do
+  defp process_in_batches(query, total_count, batch_size, page \\ 0, processed_count \\ 0) do
     sets =
       query
-      |> limit(100)
-      |> offset(^page * 100)
+      |> limit(^batch_size)
+      |> offset(^(page * batch_size))
       |> Repo.all()
 
     if sets == [] do
@@ -58,7 +67,7 @@ defmodule Squeeze.Tasks.CreateTrackpointSections do
       sets
       |> Enum.each(&Activities.create_trackpoint_sections/1)
 
-      process_in_batches(query, total_count, page + 1, new_processed_count)
+      process_in_batches(query, total_count, batch_size, page + 1, new_processed_count)
     end
   end
 end
