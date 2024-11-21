@@ -65,6 +65,14 @@ defmodule SqueezeWeb.Router do
     get "/strava", StravaIntegrationController, :request
     get "/strava/callback", StravaIntegrationController, :callback
     post "/strava/callback", StravaIntegrationController, :callback
+
+    get "/garmin", GarminIntegrationController, :request
+    get "/garmin/callback", GarminIntegrationController, :callback
+    post "/garmin/callback", GarminIntegrationController, :callback
+
+    get "/fitbit", FitbitIntegrationController, :request
+    get "/fitbit/callback", FitbitIntegrationController, :callback
+    post "/fitbit/callback", FitbitIntegrationController, :callback
   end
 
   scope "/auth", SqueezeWeb do
@@ -124,7 +132,13 @@ defmodule SqueezeWeb.Router do
     get "/strava", StravaWebhookController, :challenge
     post "/strava", StravaWebhookController, :webhook
 
+    get "/fitbit", FitbitWebhookController, :webhook
+    post "/fitbit", FitbitWebhookController, :webhook
+
     post "/stripe", StripeWebhookController, :webhook
+
+    get "/garmin", GarminWebhookController, :webhook
+    post "/garmin", GarminWebhookController, :webhook
   end
 
   scope "/", SqueezeWeb do

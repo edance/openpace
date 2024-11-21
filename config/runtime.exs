@@ -96,4 +96,15 @@ if config_env() == :prod do
     api_key: System.get_env("STRIPE_SECRET_KEY"),
     publishable_key: System.get_env("STRIPE_PUBLISHABLE_KEY"),
     webhook_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
+
+  config :squeeze, Squeeze.OAuth2.Fitbit,
+    client_id: System.get_env("FITBIT_CLIENT_ID"),
+    client_secret: System.get_env("FITBIT_CLIENT_SECRET"),
+    redirect_uri: "https://www.openpace.co/integration/fitbit/callback",
+    webhook_challenge: System.get_env("FITBIT_WEBHOOK_TOKEN")
+
+  config :squeeze, Squeeze.Garmin,
+    consumer_key: System.get_env("GARMIN_CONSUMER_KEY"),
+    consumer_secret: System.get_env("GARMIN_CONSUMER_SECRET"),
+    redirect_uri: "https://www.openpace.co/integration/garmin/callback"
 end

@@ -77,7 +77,7 @@ defmodule SqueezeWeb.StravaIntegrationController do
       _ ->
         conn
         |> put_flash(:error, "Authentication failed")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.home_path(conn, :index))
     end
   end
 

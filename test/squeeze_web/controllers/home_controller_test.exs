@@ -18,7 +18,7 @@ defmodule SqueezeWeb.HomeControllerTest do
         conn
         |> post("/", subscription: %{"email" => "test@test.com"})
 
-      assert get_flash(conn, :info) == "Thanks for signing up!"
+      assert Phoenix.Flash.get(conn.assigns.flash, :info) == "Thanks for signing up!"
       assert redirected_to(conn) == home_path(conn, :index)
     end
 
@@ -28,7 +28,7 @@ defmodule SqueezeWeb.HomeControllerTest do
         conn
         |> post("/", subscription: %{"email" => "test"})
 
-      assert get_flash(conn, :error) == "Invalid email address"
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email address"
     end
   end
 end

@@ -81,7 +81,7 @@ defmodule Squeeze.Mixfile do
       {:oauth2, "~> 0.9"},
       {:argon2_elixir, "~> 2.0"},
       {:number, "~> 1.0.0"},
-      {:tesla, "~> 1.5.0"},
+      {:tesla, "~> 1.13.0"},
       {:hackney, "~> 1.18"},
       {:jason, "~> 1.4"},
       {:sma, "~> 0.1"},
@@ -104,7 +104,7 @@ defmodule Squeeze.Mixfile do
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:floki, ">= 0.30.0", only: :test},
       {:excoveralls, "~> 0.14.6", only: :test},
-      {:mox, "~> 0.4", only: :test}
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 
