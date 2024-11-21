@@ -7,8 +7,6 @@ defmodule SqueezeWeb.Api.SegmentController do
 
   action_fallback SqueezeWeb.Api.FallbackController
 
-  @strava_segments Application.compile_env(:squeeze, :strava_segments)
-
   def starred(conn, params) do
     user = conn.assigns.current_user
 
@@ -35,11 +33,15 @@ defmodule SqueezeWeb.Api.SegmentController do
     ]
 
     Client.new(credential)
-    |> @strava_segments.get_logged_in_athlete_starred_segments(opts)
+    |> segments_module().get_logged_in_athlete_starred_segments(opts)
   end
 
   defp get_strava_segment(credential, id) do
     Client.new(credential)
-    |> @strava_segments.get_segment_by_id(id)
+    |> segments_module().get_segment_by_id(id)
+  end
+
+  defp segments_module do
+    Application.get_env(:squeeze, :strava_segments, Strava.Segments)
   end
 end

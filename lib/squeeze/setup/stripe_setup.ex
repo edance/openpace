@@ -5,8 +5,6 @@ defmodule Squeeze.Setup.StripeSetup do
 
   alias Squeeze.Billing
 
-  @payment_processor Application.compile_env(:squeeze, :payment_processor)
-
   def setup do
     product = create_product()
     plan = create_plan(product)
@@ -28,7 +26,7 @@ defmodule Squeeze.Setup.StripeSetup do
       type: "service"
     }
 
-    {:ok, product} = @payment_processor.create_product(attrs)
+    {:ok, product} = payment_module().create_product(attrs)
     product
   end
 
@@ -42,7 +40,11 @@ defmodule Squeeze.Setup.StripeSetup do
       amount: cost_in_cents
     }
 
-    {:ok, plan} = @payment_processor.create_plan(attrs)
+    {:ok, plan} = payment_module().create_plan(attrs)
     plan
+  end
+
+  defp payment_module do
+    Application.get_env(:squeeze, :payment_processor, Squeeze.StripePaymentProcessor)
   end
 end

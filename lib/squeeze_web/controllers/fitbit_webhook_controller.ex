@@ -7,12 +7,10 @@ defmodule SqueezeWeb.FitbitWebhookController do
   alias Squeeze.Fitbit.Client
   alias Squeeze.Logger
 
-  @challenge Application.compile_env(:squeeze, Squeeze.OAuth2.Fitbit)[:webhook_challenge]
-
   plug :log_webhook_event
 
   def webhook(conn, %{"verify" => verify_token}) do
-    if verify_token == @challenge do
+    if verify_token == challenge() do
       send_resp(conn, 204, "")
     else
       conn
@@ -49,6 +47,7 @@ defmodule SqueezeWeb.FitbitWebhookController do
     credential = Accounts.get_credential("fitbit", event["ownerId"])
     client = Client.new(credential)
     {:ok, response} = Client.get_daily_activity_summary(client, event["date"])
+
     response.body["activities"]
     |> Enum.each(&create_activity(credential, &1))
   end
@@ -61,5 +60,9 @@ defmodule SqueezeWeb.FitbitWebhookController do
     body = Jason.encode!(conn.params)
     Logger.log_webhook_event(%{provider: "fitbit", body: body})
     conn
+  end
+
+  defp challenge do
+    Application.get_env(:squeeze, Squeeze.OAuth2.Fitbit)[:webhook_challenge]
   end
 end

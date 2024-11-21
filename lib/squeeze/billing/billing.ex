@@ -7,7 +7,6 @@ defmodule Squeeze.Billing do
   alias Squeeze.Billing.{Invoice, PaymentMethod}
   alias Squeeze.Repo
 
-  @payment_processor Application.compile_env(:squeeze, :payment_processor)
   @trial_period_days 30
 
   @doc """
@@ -31,7 +30,7 @@ defmodule Squeeze.Billing do
   end
 
   def find_or_create_external_customer(%User{customer_id: nil} = user) do
-    case @payment_processor.create_customer(Map.from_struct(user)) do
+    case payment_module().create_customer(Map.from_struct(user)) do
       {:ok, customer} ->
         user
         |> User.payment_processor_changeset(%{customer_id: customer.id})
@@ -54,7 +53,7 @@ defmodule Squeeze.Billing do
 
   """
   def start_free_trial(%User{subscription_id: nil} = user) do
-    {:ok, customer} = @payment_processor.create_customer(Map.from_struct(user))
+    {:ok, customer} = payment_module().create_customer(Map.from_struct(user))
 
     attrs =
       case get_default_plan() do
@@ -63,7 +62,7 @@ defmodule Squeeze.Billing do
 
         plan ->
           {:ok, subscription} =
-            @payment_processor.create_subscription(
+            payment_module().create_subscription(
               customer.id,
               plan.provider_id,
               @trial_period_days
@@ -300,7 +299,7 @@ defmodule Squeeze.Billing do
 
   """
   def cancel_subscription(%User{subscription_id: subscription_id} = user) do
-    @payment_processor.cancel_subscription(subscription_id)
+    payment_module().cancel_subscription(subscription_id)
     attrs = %{subscription_status: :canceled, subscription_id: nil}
 
     user
@@ -354,5 +353,9 @@ defmodule Squeeze.Billing do
     invoice
     |> Invoice.changeset(attrs)
     |> Repo.update()
+  end
+
+  defp payment_module do
+    Application.get_env(:squeeze, :payment_processor, Squeeze.StripePaymentProcessor)
   end
 end

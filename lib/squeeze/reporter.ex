@@ -8,8 +8,6 @@ defmodule Squeeze.Reporter do
   alias Squeeze.Accounts.User
   alias Squeeze.MailingList.Subscription
 
-  # @slack_token Application.compile_env(:slack, :api_token)
-
   def report_new_user(%User{} = user) do
     text =
       if user.user_prefs.rename_activities do

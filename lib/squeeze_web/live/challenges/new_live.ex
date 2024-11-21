@@ -9,8 +9,6 @@ defmodule SqueezeWeb.Challenges.NewLive do
   alias Squeeze.Strava.Client
   alias SqueezeWeb.Endpoint
 
-  @strava_segments Application.compile_env(:squeeze, :strava_segments)
-
   @impl true
   def mount(%{"challenge_type" => type}, _session, socket) do
     type = String.to_atom(type)
@@ -95,11 +93,15 @@ defmodule SqueezeWeb.Challenges.NewLive do
     ]
 
     Client.new(credential)
-    |> @strava_segments.get_logged_in_athlete_starred_segments(opts)
+    |> segments_module().get_logged_in_athlete_starred_segments(opts)
   end
 
   defp get_strava_segment(credential, id) do
     Client.new(credential)
-    |> @strava_segments.get_segment_by_id(id)
+    |> segments_module().get_segment_by_id(id)
+  end
+
+  defp segments_module do
+    Application.get_env(:squeeze, :strava_segments, Strava.Segments)
   end
 end

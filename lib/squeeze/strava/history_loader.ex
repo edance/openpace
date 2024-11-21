@@ -9,8 +9,6 @@ defmodule Squeeze.Strava.HistoryLoader do
   alias Squeeze.Strava.{ActivityFormatter, Client}
   alias Strava.Paginator
 
-  @strava_activities Application.compile_env(:squeeze, :strava_activities)
-
   def load_recent(%Credential{} = credential) do
     load_recent(credential.user, credential)
   end
@@ -44,7 +42,7 @@ defmodule Squeeze.Strava.HistoryLoader do
     Paginator.stream(
       fn pagination ->
         pagination = Keyword.merge(pagination, query)
-        @strava_activities.get_logged_in_athlete_activities(client, pagination)
+        activities_module().get_logged_in_athlete_activities(client, pagination)
       end,
       per_page: 30
     )
@@ -54,5 +52,9 @@ defmodule Squeeze.Strava.HistoryLoader do
 
   defp query(%{sync_at: sync_at}) do
     [after: DateTime.to_unix(sync_at)]
+  end
+
+  defp activities_module do
+    Application.get_env(:squeeze, :strava_activities, Strava.Activities)
   end
 end

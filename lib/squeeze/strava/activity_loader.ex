@@ -13,9 +13,6 @@ defmodule Squeeze.Strava.ActivityLoader do
 
   import Squeeze.Utils, only: [cast_float: 1]
 
-  @strava_activities Application.compile_env(:squeeze, :strava_activities)
-  @strava_streams Application.compile_env(:squeeze, :strava_streams)
-
   def update_or_create_activity(%Credential{} = credential, strava_activity_id)
       when is_binary(strava_activity_id) or is_integer(strava_activity_id) do
     case fetch_strava_activity(credential, strava_activity_id) do
@@ -54,7 +51,7 @@ defmodule Squeeze.Strava.ActivityLoader do
   defp fetch_strava_activity(%Credential{} = credential, activity_id) do
     credential
     |> Client.new()
-    |> @strava_activities.get_activity_by_id(activity_id)
+    |> activities_module().get_activity_by_id(activity_id)
   end
 
   defp save_trackpoints(credential, %{external_id: strava_activity_id} = activity) do
@@ -99,9 +96,17 @@ defmodule Squeeze.Strava.ActivityLoader do
     }
   end
 
+  defp activities_module do
+    Application.get_env(:squeeze, :strava_activities, Strava.Activities)
+  end
+
+  defp streams_module do
+    Application.get_env(:squeeze, :strava_streams, Strava.Streams)
+  end
+
   defp fetch_streams(id, credential) do
     client = Client.new(credential)
     streams = StreamSetConverter.streams() |> Enum.join(",")
-    @strava_streams.get_activity_streams(client, id, streams, true)
+    streams_module().get_activity_streams(client, id, streams, true)
   end
 end

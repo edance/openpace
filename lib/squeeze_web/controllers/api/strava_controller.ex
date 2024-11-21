@@ -5,8 +5,6 @@ defmodule SqueezeWeb.Api.StravaController do
   alias Squeeze.Accounts
   alias Squeeze.Strava.HistoryLoader
 
-  @strava_auth Application.compile_env(:squeeze, :strava_auth)
-
   def exchange_code(conn, %{"code" => code}) do
     user = conn.assigns.current_user
     client = get_token!(code)
@@ -24,11 +22,15 @@ defmodule SqueezeWeb.Api.StravaController do
   end
 
   defp get_token!(code) do
-    @strava_auth.get_token!(code: code, grant_type: "authorization_code")
+    auth_module().get_token!(code: code, grant_type: "authorization_code")
   end
 
   defp get_athlete!(client) do
-    @strava_auth.get_athlete!(client)
+    auth_module().get_athlete!(client)
+  end
+
+  defp auth_module do
+    Application.get_env(:squeeze, :strava_auth, Strava.Auth)
   end
 
   defp user_params(athlete) do

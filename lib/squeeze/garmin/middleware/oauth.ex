@@ -3,8 +3,6 @@ defmodule Squeeze.Garmin.Middleware.OAuth do
 
   @behaviour Tesla.Middleware
 
-  @config Application.compile_env(:squeeze, Squeeze.Garmin)
-
   alias Squeeze.OAuth1
 
   def call(env, next, opts) do
@@ -12,15 +10,20 @@ defmodule Squeeze.Garmin.Middleware.OAuth do
     method = env.method |> Atom.to_string() |> String.upcase()
     params = OAuth1.sign(method, env.url, env.query, creds)
     {header, _req_params} = OAuth1.header(params)
+
     env
     |> Tesla.put_headers([header])
     |> Tesla.run(next)
   end
 
   defp oauth_credentials(opts) do
-    @config
+    config()
     |> Keyword.take([:consumer_key, :consumer_secret])
     |> Keyword.merge(opts)
     |> OAuth1.credentials()
+  end
+
+  defp config do
+    Application.get_env(:squeeze, Squeeze.Garmin)
   end
 end

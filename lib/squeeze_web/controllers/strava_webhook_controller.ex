@@ -9,8 +9,6 @@ defmodule SqueezeWeb.StravaWebhookController do
 
   require Logger
 
-  @strava_activities Application.compile_env(:squeeze, :strava_activities)
-
   plug :validate_token when action in [:challenge]
   plug :log_event
 
@@ -64,7 +62,11 @@ defmodule SqueezeWeb.StravaWebhookController do
   def fetch_strava_activity(user, activity_id) do
     user
     |> Client.new()
-    |> @strava_activities.get_activity_by_id(activity_id)
+    |> activities_module().get_activity_by_id(activity_id)
+  end
+
+  defp activities_module do
+    Application.get_env(:squeeze, :strava_activities, Strava.Activities)
   end
 
   defp validate_token(conn, _) do

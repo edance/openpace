@@ -46,14 +46,6 @@ config :squeeze, :notification_provider, Squeeze.ExpoNotifications.DefaultNotifi
 # In application.ex, we allow fit decoder workers but not in production
 config :squeeze, :allow_strava_upload, true
 
-config :squeeze, :strava_activities, Strava.Activities
-config :squeeze, :strava_auth, Strava.Auth
-config :squeeze, :strava_client, Strava.Client
-config :squeeze, :strava_segments, Strava.Segments
-config :squeeze, :strava_streams, Strava.Streams
-
-config :squeeze, :payment_processor, Squeeze.StripePaymentProcessor
-
 config :squeeze, Squeeze.Guardian,
   issuer: "squeeze",
   secret_key: "1kALJhfwksHIiVmnVwuZv327H+u1jnE7ZC/c3EAJcurvH5sAHbm+KA87R/eivO29"

@@ -7,8 +7,6 @@ defmodule Squeeze.Garmin.Auth do
 
   alias Squeeze.Garmin.Client
 
-  @config Application.compile_env(:squeeze, Squeeze.Garmin)
-
   def get_user!(opts) do
     url = "https://healthapi.garmin.com/wellness-api/rest/user/id"
 
@@ -19,7 +17,7 @@ defmodule Squeeze.Garmin.Auth do
   end
 
   def authorize_url!(params) do
-    callback = @config[:redirect_uri]
+    callback = redirect_uri()
     query_params = URI.encode_query(params)
     "https://connect.garmin.com/oauthConfirm?#{query_params}&oauth_callback=#{callback}"
   end
@@ -42,5 +40,10 @@ defmodule Squeeze.Garmin.Auth do
     |> Client.post!(url, [])
     |> Map.get(:body)
     |> URI.decode_query()
+  end
+
+  def redirect_uri do
+    Application.get_env(:squeeze, Squeeze.Garmin)
+    |> Keyword.get(:redirect_uri, "http://localhost:4000/auth/garmin/callback")
   end
 end
