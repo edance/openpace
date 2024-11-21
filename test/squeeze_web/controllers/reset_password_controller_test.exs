@@ -28,7 +28,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
         conn
         |> get(expired_link(user))
 
-      assert get_flash(conn, :error) == "Token has expired"
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Token has expired"
       assert redirected_to(conn) == home_path(conn, :index)
     end
 
@@ -40,7 +40,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
         conn
         |> get(invalid_link(user))
 
-      assert get_flash(conn, :error) == "Token not valid"
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Token not valid"
       assert redirected_to(conn) == home_path(conn, :index)
     end
   end
@@ -53,7 +53,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       link = PasswordLinkGenerator.create_link(user)
       conn = post(conn, link, user: attrs)
 
-      assert get_flash(conn, :info) == "Password was reset"
+      assert Phoenix.Flash.get(conn.assigns.flash, :info) == "Password was reset"
       assert redirected_to(conn) == session_path(conn, :new)
 
       refute user.encrypted_password ==
@@ -76,7 +76,7 @@ defmodule SqueezeWeb.ResetPasswordControllerTest do
       attrs = %{encrypted_password: "password1234"}
       link = invalid_link(user)
       conn = post(conn, link, user: attrs)
-      assert get_flash(conn, :error) == "Token not valid"
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Token not valid"
       assert redirected_to(conn) == home_path(conn, :index)
     end
   end

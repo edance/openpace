@@ -16,6 +16,7 @@ defmodule Squeeze.Garmin.AuthBehaviour do
   @doc """
   Requests a temporary OAuth token from Garmin.
   """
+  @callback request_token!() :: map()
   @callback request_token!(opts :: Keyword.t()) :: map()
 
   @doc """
