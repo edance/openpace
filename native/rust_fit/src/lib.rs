@@ -22,10 +22,13 @@ struct Trackpoint {
     cadence: Option<i32>,
     coordinates: Option<Coordinates>,
     distance: Option<f64>,
+    grade_smooth: Option<f64>,
     heartrate: Option<i32>,
-    velocity: Option<f64>,
     moving: bool,
+    temp: Option<i32>,
     time: i64,
+    velocity: Option<f64>,
+    watts: Option<f64>,
 }
 
 #[derive(NifStruct)]
@@ -64,6 +67,11 @@ struct Activity {
     laps: Vec<Lap>,
 }
 
+fn round_decimal(value: f64, decimal_places: Option<u32>) -> f64 {
+    let scale = 10.0_f64.powi(decimal_places.unwrap_or(1) as i32);
+    (value * scale).round() / scale
+}
+
 fn parse_timestamp(timestamp: &str) -> Result<DateTime<Utc>, Error> {
     // Try ISO format first
     if let Ok(dt) = DateTime::parse_from_rfc3339(timestamp) {
@@ -75,6 +83,44 @@ fn parse_timestamp(timestamp: &str) -> Result<DateTime<Utc>, Error> {
         .map_err(|e| Error::Term(Box::new(e.to_string())))?;
     
     Ok(DateTime::from_naive_utc_and_offset(dt, Utc))
+}
+
+fn create_trackpoint(
+    fields: &HashMap<String, String>,
+    start_time: DateTime<Utc>,
+    prev_distance: Option<f64>
+) -> (Trackpoint, Option<f64>) {
+    let timestamp = parse_timestamp(&fields["timestamp"]).unwrap_or(start_time);
+    let time = (timestamp - start_time).num_seconds();
+    let current_distance = fields.get("distance")
+        .and_then(|v| v.parse().ok())
+        .map(|v| round_decimal(v, Some(1)));
+
+    let moving = match (prev_distance, current_distance) {
+        (Some(prev), Some(curr)) => prev != curr,
+        _ => true
+    };
+
+    let trackpoint = Trackpoint {
+        altitude: get_value_by_priority(&fields, &["enhanced_altitude", "altitude"])
+            .and_then(|v| v.parse().ok())
+            .map(|v| round_decimal(v, Some(1))),
+        cadence: fields.get("cadence").and_then(|v| v.parse().ok()),
+        coordinates: parse_coordinates(&fields),
+        distance: current_distance,
+        grade_smooth: fields.get("grade").and_then(|v| v.parse().ok())
+            .map(|v| round_decimal(v, Some(1))),
+        heartrate: fields.get("heart_rate").and_then(|v| v.parse().ok()),
+        moving,
+        temp: fields.get("temperature").and_then(|v| v.parse().ok()),
+        time,
+        velocity: get_value_by_priority(&fields, &["enhanced_speed", "speed"])
+            .and_then(|v| v.parse().ok())
+            .map(|v| round_decimal(v, Some(1))),
+        watts: fields.get("power").and_then(|v| v.parse().ok()),
+    };
+
+    (trackpoint, current_distance)
 }
 
 fn get_sport_type(sport: &str) -> (String, String) {
@@ -98,11 +144,11 @@ fn get_value_by_priority(fields: &HashMap<String, String>, keys: &[&str]) -> Opt
 fn parse_coordinates(fields: &HashMap<String, String>) -> Option<Coordinates> {
     let lat = fields.get("position_lat")
         .and_then(|v| v.parse::<f64>().ok())
-        .map(|v| v / 11_930_465.0);
+        .map(|v| round_decimal(v / 11_930_465.0, Some(5)));
     
     let lon = fields.get("position_long")
         .and_then(|v| v.parse::<f64>().ok())
-        .map(|v| v / 11_930_465.0);
+        .map(|v| round_decimal(v / 11_930_465.0, Some(5)));
 
     match (lat, lon) {
         (Some(lat), Some(lon)) => Some(Coordinates { lat, lon }),
@@ -132,26 +178,14 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
     // Parse trackpoints
     let trackpoints: Vec<Trackpoint> = records.iter()
         .filter(|record| record.kind() == MesgNum::Record)
-        .map(|record| {
+        .scan(None, |prev_distance, record| {
             let fields: HashMap<String, String> = record.fields().iter()
                 .map(|field| (field.name().to_string(), field.value().to_string()))
                 .collect();
 
-            let timestamp = parse_timestamp(&fields["timestamp"]).unwrap_or(start_time);
-            let time = (timestamp - start_time).num_seconds();
-
-            Trackpoint {
-                altitude: get_value_by_priority(&fields, &["enhanced_altitude", "altitude"])
-                    .and_then(|v| v.parse().ok()),
-                cadence: fields.get("cadence").and_then(|v| v.parse().ok()),
-                coordinates: parse_coordinates(&fields),
-                distance: fields.get("distance").and_then(|v| v.parse().ok()),
-                heartrate: fields.get("heart_rate").and_then(|v| v.parse().ok()),
-                velocity: get_value_by_priority(&fields, &["enhanced_speed", "speed"])
-                    .and_then(|v| v.parse().ok()),
-                moving: true,
-                time,
-            }
+            let (trackpoint, current_distance) = create_trackpoint(&fields, start_time, *prev_distance);
+            *prev_distance = current_distance;
+            Some(trackpoint)
         })
         .collect();
 
@@ -165,7 +199,6 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
 
     // Encode with precision and handle the Result
     let polyline = encode_coordinates(coords, 5).unwrap();
-
 
     // Parse laps
     let laps: Vec<Lap> = records.iter()
