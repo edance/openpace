@@ -17,7 +17,7 @@ defmodule SqueezeWeb do
   and import those modules here.
   """
 
-  def static_paths, do: ~w(assets docs fonts images favicon.ico robots.txt .well-known)
+  def static_paths, do: ~w(assets docs fonts images favicon.ico robots.txt .well-known logo.jpg)
 
   def controller do
     quote do
