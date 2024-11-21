@@ -12,13 +12,13 @@ defmodule SqueezeWeb.FitbitIntegrationController do
 
   def request(conn, _) do
     scope = "activity heartrate profile weight location"
-    url = Fitbit.Auth.authorize_url!(scope: scope, expires_in: 31_536_000)
+    url = auth_module().authorize_url!(scope: scope, expires_in: 31_536_000)
     redirect(conn, external: url)
   end
 
   def callback(conn, %{"code" => code}) do
-    client = Fitbit.Auth.get_token!(code: code, grant_type: "authorization_code")
-    credential_params = Fitbit.Auth.get_credential!(client)
+    client = auth_module().get_token!(code: code, grant_type: "authorization_code")
+    credential_params = auth_module().get_credential!(client)
 
     cond do
       user = Accounts.get_user_by_credential(credential_params) ->
@@ -30,6 +30,10 @@ defmodule SqueezeWeb.FitbitIntegrationController do
       true ->
         create_user_and_redirect(conn, credential_params)
     end
+  end
+
+  def auth_module do
+    Application.get_env(:squeeze, :fitbit_auth, Fitbit.Auth)
   end
 
   defp connect_and_redirect(conn, credential_params) do

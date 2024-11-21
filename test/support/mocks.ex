@@ -14,3 +14,6 @@ Mox.defmock(Squeeze.MockPaymentProcessor, for: Squeeze.PaymentProcessor)
 
 # Garmin Mocks
 Mox.defmock(Squeeze.Garmin.AuthMock, for: Squeeze.Garmin.AuthBehaviour)
+
+# Fitbit Mocks
+Mox.defmock(Squeeze.Fitbit.AuthMock, for: Squeeze.Fitbit.AuthBehaviour)

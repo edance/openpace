@@ -1,5 +1,10 @@
 defmodule Squeeze.Fitbit.Auth do
-  @moduledoc false
+  @moduledoc """
+  Handles OAuth2 authentication flow for Fitbit integration.
+  Implements the Squeeze.Fitbit.AuthBehaviour for standardized authentication methods.
+  """
+
+  @behaviour Squeeze.Fitbit.AuthBehaviour
 
   use OAuth2.Strategy
 
@@ -10,6 +15,7 @@ defmodule Squeeze.Fitbit.Auth do
     token_url: "https://api.fitbit.com/oauth2/token"
   ]
 
+  @impl true
   def new do
     config = Application.get_env(:squeeze, Squeeze.OAuth2.Fitbit)
 
@@ -18,18 +24,29 @@ defmodule Squeeze.Fitbit.Auth do
     |> OAuth2.Client.new()
   end
 
+  @impl true
   def authorize_url!(params \\ []) do
     OAuth2.Client.authorize_url!(new(), params)
   end
 
+  @impl true
   def get_token(params \\ [], headers \\ []) do
     OAuth2.Client.get_token(new(), params, headers)
   end
 
+  @impl true
   def get_token!(params \\ [], headers \\ []) do
     OAuth2.Client.get_token!(new(), params, headers)
   end
 
+  @impl true
+  def get_credential!(%{token: token}) do
+    token
+    |> Map.take([:access_token, :refresh_token])
+    |> Map.merge(%{provider: "fitbit", uid: token.other_params["user_id"]})
+  end
+
+  # OAuth2.Strategy callbacks
   def authorize_url(client, params) do
     client
     |> put_param(:response_type, "code")
@@ -47,14 +64,11 @@ defmodule Squeeze.Fitbit.Auth do
     |> put_param(:grant_type, grant_type)
     |> put_param(:redirect_uri, client.redirect_uri)
     |> merge_params(params)
-    |> put_header("Authorization", "Basic " <> Base.encode64(client.client_id <> ":" <> client.client_secret))
+    |> put_header(
+      "Authorization",
+      "Basic " <> Base.encode64(client.client_id <> ":" <> client.client_secret)
+    )
     |> put_header("Accept", "application/json")
     |> put_headers(headers)
-  end
-
-  def get_credential!(%{token: token}) do
-    token
-    |> Map.take([:access_token, :refresh_token])
-    |> Map.merge(%{provider: "fitbit", uid: token.other_params["user_id"]})
   end
 end
