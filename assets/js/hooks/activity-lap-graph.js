@@ -61,14 +61,25 @@ export default {
     // Create a div for the tooltip and hide it initially
     const tooltip = container
       .append("div")
-      .attr("class", "absolute text-sm bg-white shadow-md rounded px-2 py-1")
+      .attr(
+        "class",
+        "absolute text-sm bg-white dark:bg-gray-700 shadow-md rounded px-2 py-1"
+      )
       .style("opacity", 0)
-      .style("top", "0");
+      .style("top", "0")
+      .style("pointer-events", "none");
 
-    const tooltipHeader = tooltip.append("div").attr("class", "font-bold");
-    const tooltipBody = tooltip.append("div");
+    const tooltipHeader = tooltip
+      .append("div")
+      .attr(
+        "class",
+        "text-gray-800 dark:text-gray-200 text-base font-semibold"
+      );
+    const tooltipBody = tooltip
+      .append("div")
+      .attr("class", "text-gray-800 dark:text-gray-200 text-sm");
 
-    this.handleEvent("laps", ({ laps }) => {
+    this.handleEvent("laps", ({ laps, training_paces }) => {
       if (!laps?.length) {
         return;
       }
@@ -80,7 +91,7 @@ export default {
       const totalDistance = d3.sum(xValues);
       const minPace = Math.floor(d3.min(yValues));
       const maxPace = Math.ceil(d3.max(yValues));
-      const yPadding = (maxPace - minPace) / 2;
+      const yPadding = (maxPace - minPace) / 4;
 
       const x = d3
         .scaleLinear()
@@ -92,24 +103,60 @@ export default {
         .domain([minPace - yPadding, maxPace + yPadding])
         .range([margin.top, height - margin.bottom]);
 
-      const xAxis = (g) => g.call(d3.axisBottom(x));
+      const xAxis = (g) =>
+        g
+          .call(d3.axisBottom(x))
+          .call((g) =>
+            g
+              .select(".domain")
+              .attr("class", "stroke-gray-800 dark:stroke-white")
+          )
+          .call((g) =>
+            g
+              .selectAll(".tick line")
+              .attr("class", "stroke-gray-800 dark:stroke-white")
+          )
+          .call((g) =>
+            g
+              .selectAll(".tick text")
+              .attr("class", "fill-gray-800 dark:fill-white")
+          );
+
+      const yAxis = (g) =>
+        g
+          .call(
+            d3
+              .axisLeft(y)
+              .tickValues(range(minPace, maxPace))
+              .tickFormat((d) => this.yTick(d))
+          )
+          .call((g) =>
+            g
+              .select(".domain")
+              .attr("class", "stroke-gray-800 dark:stroke-white")
+          )
+          .call((g) =>
+            g
+              .selectAll(".tick line")
+              .attr("class", "stroke-gray-800 dark:stroke-white")
+          )
+          .call((g) =>
+            g
+              .selectAll(".tick text")
+              .attr("class", "fill-gray-800 dark:fill-white")
+          );
+
+      // Update the axis appending
       svg
         .append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .attr("class", "axis")
         .call(xAxis);
 
-      const yAxis = (g) =>
-        g.call(
-          d3
-            .axisLeft(y)
-            .tickValues(range(minPace, maxPace))
-
-            .tickFormat((d) => this.yTick(d))
-        );
       svg
         .append("g")
         .attr("transform", `translate(${margin.left}, 0)`)
-        .style("font-family", fonts.base)
+        .attr("class", "axis")
         .call(yAxis);
 
       const mouseLine = svg
@@ -118,6 +165,54 @@ export default {
         .attr("stroke", isDarkMode() ? "white" : colors.black)
         .attr("stroke-width", 1)
         .attr("opacity", 0);
+
+      // Create gradient definitions for each training pace
+      const defs = svg.append("defs");
+
+      // Helper function to create gradient for a pace
+      const createGradient = (id, color) => {
+        const gradient = defs
+          .append("linearGradient")
+          .attr("id", id)
+          .attr("x1", "0%")
+          .attr("y1", "0%")
+          .attr("x2", "0%")
+          .attr("y2", "100%");
+
+        gradient
+          .append("stop")
+          .attr("offset", "0%")
+          .attr("stop-color", color)
+          .attr("stop-opacity", 1);
+
+        gradient
+          .append("stop")
+          .attr("offset", "100%")
+          .attr("stop-color", color)
+          .attr("stop-opacity", 0.2);
+
+        return `url(#${id})`;
+      };
+
+      console.log("training", training_paces);
+
+      // Helper function to get gradient for a pace
+      const getTrainingPaceGradient = (speed) => {
+        if (!training_paces) {
+          return createGradient("default-gradient", "rgb(99 102 241)");
+        }
+
+        const matchingPace = training_paces.find(
+          (pace) => speed >= pace.min_speed && speed <= pace.max_speed
+        );
+
+        const color = matchingPace ? matchingPace.color : "rgb(99 102 241)";
+        const id = `gradient-${
+          matchingPace ? matchingPace.name.toLowerCase() : "default"
+        }`;
+
+        return createGradient(id, color);
+      };
 
       // Create the lap bars
       const bars = svg
@@ -149,9 +244,17 @@ export default {
           mouseLine.attr("d", `M ${posX} 0 V ${barY}`);
           const data = elem.data()[0];
 
-          tooltipHeader.html(`Lap: ${data.split}`);
+          // Find matching training pace
+          const matchingPace = training_paces?.find(
+            (pace) =>
+              data.average_speed >= pace.min_speed &&
+              data.average_speed <= pace.max_speed
+          );
+
+          tooltipHeader.html(`Lap ${data.split}`);
 
           const tooltipFeatures = [
+            matchingPace?.name,
             formatDistance(data.distance, this.imperial, 2),
             formatVelocity(
               data.average_speed,
@@ -159,9 +262,19 @@ export default {
               this.activityType
             ),
             formatDuration(data.elapsed_time),
-          ];
+          ].filter((x) => x);
 
-          tooltipBody.html(tooltipFeatures.join(" &middot; "));
+          // Add color dot for the zone
+          const colorDot = matchingPace
+            ? `<div class="flex gap-2 items-center">
+         <div style="background: ${
+           matchingPace.color
+         }" class="rounded-full h-2 w-2"></div>
+         <div>${tooltipFeatures.join(" &middot; ")}</div>
+       </div>`
+            : tooltipFeatures.join(" &middot; ");
+
+          tooltipBody.html(colorDot);
 
           const tooltipWidth = tooltip.node().getBoundingClientRect().width;
           posX = posX - tooltipWidth / 2;
@@ -173,8 +286,20 @@ export default {
             tooltip.style("left", posX + "px").style("right", "auto");
           }
         })
-        .attr("class", "fill-indigo-500 dark:fill-indigo-400")
+        .attr("fill", (d) => getTrainingPaceGradient(d.average_speed))
         .attr("fill-opacity", 0.5)
+        .attr("stroke", (d) => {
+          const matchingPace = training_paces?.find(
+            (pace) =>
+              d.average_speed >= pace.min_speed &&
+              d.average_speed <= pace.max_speed
+          );
+          return matchingPace ? matchingPace.color : "rgb(99 102 241)";
+        })
+        .attr("stroke-width", 2)
+        .attr("stroke-opacity", 1.0)
+        .attr("rx", 8) // rounded corners
+        .attr("ry", 8) // rounded corners
         .attr("x", (_, idx) => {
           let values = [0, ...xValues];
           values = values.map((_, index) =>

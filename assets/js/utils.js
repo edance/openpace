@@ -12,6 +12,20 @@ export function formatDate(date) {
   return [year, pad(month), pad(day)].join("-");
 }
 
+export function formatAltitude(altitude, imperial) {
+  if (imperial) {
+    return `${Math.round(altitude * 3.28084)}ft`;
+  }
+  return `${Math.round(altitude)}m`;
+}
+
+export function formatTemperature(temp, imperial) {
+  if (imperial) {
+    return `${Math.round(temp * 1.8 + 32)}°F`;
+  }
+  return `${Math.round(temp)}°C`;
+}
+
 export function formatDuration(duration) {
   const hours = Math.floor(duration / 3600);
   const minutes = Math.floor((duration % 3600) / 60);
@@ -28,13 +42,10 @@ export function formatVelocity(speed, imperial, activityType) {
   const distance = imperial ? 1609 : 1000; // Mile or kilometer
 
   if (activityType === "run") {
-    const value = distance / 60 / speed;
+    const value = Math.round(distance / speed); // time in seconds
 
-    const min = Math.floor(value);
-    const sec = Math.round((value - min) * 60);
     const label = imperial ? "/mi" : "/km";
-
-    return `${min}:${pad(sec)}${label}`;
+    return formatDuration(value) + label;
   }
 
   const value = (speed * 60 * 60) / distance;
