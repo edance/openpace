@@ -8,6 +8,12 @@ use std::fs::File;
 use std::io::BufReader;
 use geo_types::LineString;
 
+// TODO: Trackpoints velocity smooth
+// TODO: Trackpoints grade smooth
+// TODO: Laps start_index, end_index
+// TODO: Laps start_date_local
+// TODO: Laps total_elevation_gain
+
 #[derive(NifStruct)]
 #[module = "Squeeze.FitRecord.Coordinates"]
 struct Coordinates {
@@ -85,10 +91,34 @@ fn parse_timestamp(timestamp: &str) -> Result<DateTime<Utc>, Error> {
     Ok(DateTime::from_naive_utc_and_offset(dt, Utc))
 }
 
+fn calculate_velocity(
+    current_distance: Option<f64>,
+    current_time: i64,
+    previous_points: &[(f64, i64)]
+) -> Option<f64> {
+    match (current_distance, previous_points.first()) {
+        (Some(curr_dist), Some((prev_dist, prev_time))) => {
+            let distance_change = curr_dist - prev_dist;
+            let time_change = (current_time - prev_time) as f64;
+            
+            if time_change > 0.0 {
+                Some(round_decimal(distance_change / time_change, Some(1)))
+            } else {
+                None
+            }
+        },
+        (Some(curr_dist), None) if current_time > 0 => {
+            Some(round_decimal(curr_dist / current_time as f64, Some(1)))
+        },
+        _ => None
+    }
+}
+
 fn create_trackpoint(
     fields: &HashMap<String, String>,
     start_time: DateTime<Utc>,
-    prev_distance: Option<f64>
+    prev_distance: Option<f64>,
+    previous_points: &[(f64, i64)]
 ) -> (Trackpoint, Option<f64>) {
     let timestamp = parse_timestamp(&fields["timestamp"]).unwrap_or(start_time);
     let time = (timestamp - start_time).num_seconds();
@@ -100,6 +130,8 @@ fn create_trackpoint(
         (Some(prev), Some(curr)) => prev != curr,
         _ => true
     };
+
+    let velocity = calculate_velocity(current_distance, time, previous_points);
 
     let trackpoint = Trackpoint {
         altitude: get_value_by_priority(&fields, &["enhanced_altitude", "altitude"])
@@ -114,9 +146,7 @@ fn create_trackpoint(
         moving,
         temp: fields.get("temperature").and_then(|v| v.parse().ok()),
         time,
-        velocity: get_value_by_priority(&fields, &["enhanced_speed", "speed"])
-            .and_then(|v| v.parse().ok())
-            .map(|v| round_decimal(v, Some(1))),
+        velocity,
         watts: fields.get("power").and_then(|v| v.parse().ok()),
     };
 
@@ -176,18 +206,28 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
     let start_time = parse_timestamp(&session_fields["start_time"])?;
     
     // Parse trackpoints
-    let trackpoints: Vec<Trackpoint> = records.iter()
-        .filter(|record| record.kind() == MesgNum::Record)
-        .scan(None, |prev_distance, record| {
-            let fields: HashMap<String, String> = record.fields().iter()
-                .map(|field| (field.name().to_string(), field.value().to_string()))
-                .collect();
+let mut previous_points: Vec<(f64, i64)> = Vec::with_capacity(5);
+let trackpoints: Vec<Trackpoint> = records.iter()
+    .filter(|record| record.kind() == MesgNum::Record)
+    .scan(None, |prev_distance, record| {
+        let fields: HashMap<String, String> = record.fields().iter()
+            .map(|field| (field.name().to_string(), field.value().to_string()))
+            .collect();
 
-            let (trackpoint, current_distance) = create_trackpoint(&fields, start_time, *prev_distance);
-            *prev_distance = current_distance;
-            Some(trackpoint)
-        })
-        .collect();
+        let (trackpoint, current_distance) = create_trackpoint(&fields, start_time, *prev_distance, &previous_points);
+        
+        // Update previous points
+        if let Some(dist) = current_distance {
+            if previous_points.len() >= 5 {
+                previous_points.remove(0);
+            }
+            previous_points.push((dist, trackpoint.time));
+        }
+        
+        *prev_distance = current_distance;
+        Some(trackpoint)
+    })
+    .collect();
 
     // Create a LineString from our coordinates
     let coords: LineString<f64> = LineString::from(
