@@ -1,8 +1,8 @@
 defmodule Squeeze.Fitbit.ActivityLoader do
   @moduledoc false
 
-  alias Squeeze.Activities
   alias Squeeze.Accounts.Credential
+  alias Squeeze.Activities
   alias Squeeze.ActivityMatcher
 
   def update_or_create_activity(%Credential{} = credential, fitbit_activity) do

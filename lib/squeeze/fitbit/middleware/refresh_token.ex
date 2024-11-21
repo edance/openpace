@@ -1,10 +1,26 @@
 defmodule Squeeze.Fitbit.Middleware.RefreshToken do
-  @moduledoc false
+  @moduledoc """
+  Tesla middleware that handles OAuth2 token refresh for Fitbit API requests.
+
+  When a request receives a 401 Unauthorized response, this middleware:
+  1. Attempts to refresh the access token using the provided refresh token
+  2. Updates the request headers with the new access token
+  3. Retries the original request
+  4. Calls an optional callback with the new token information
+
+  ## Options
+
+    * `:refresh_token` - The OAuth2 refresh token to use for token refresh
+    * `:token_refreshed` - Optional callback function that receives the new OAuth2.Client
+  """
 
   @behaviour Tesla.Middleware
 
   alias Squeeze.Fitbit.{Auth, Client}
 
+  @doc """
+  Handles the middleware processing of the request.
+  """
   def call(env, next, opts) do
     refresh_token = Keyword.get(opts, :refresh_token)
 
@@ -39,10 +55,12 @@ defmodule Squeeze.Fitbit.Middleware.RefreshToken do
 
   # Invoke the optional `:token_refreshed` callback function if provided.
   defp token_refreshed(%OAuth2.Client{} = client, opts) do
-    token_refreshed = Keyword.get(opts, :token_refreshed)
+    case Keyword.get(opts, :token_refreshed) do
+      token_refreshed when is_function(token_refreshed, 1) ->
+        token_refreshed.(client)
 
-    if is_function(token_refreshed, 1) do
-      apply(token_refreshed, [client])
+      _ ->
+        nil
     end
   end
 end

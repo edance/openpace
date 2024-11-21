@@ -17,3 +17,4 @@ Mox.defmock(Squeeze.Garmin.AuthMock, for: Squeeze.Garmin.AuthBehaviour)
 
 # Fitbit Mocks
 Mox.defmock(Squeeze.Fitbit.AuthMock, for: Squeeze.Fitbit.AuthBehaviour)
+Mox.defmock(Squeeze.Fitbit.ClientMock, for: Squeeze.Fitbit.ClientBehaviour)

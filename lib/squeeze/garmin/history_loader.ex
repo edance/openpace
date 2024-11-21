@@ -1,7 +1,7 @@
 defmodule Squeeze.Garmin.HistoryLoader do
   @moduledoc false
 
-  alias Squeeze.Accounts.{Credential}
+  alias Squeeze.Accounts.Credential
   alias Squeeze.Garmin.Client
 
   # GET https://healthapi.garmin.com/wellness-api/rest/backfill/activities

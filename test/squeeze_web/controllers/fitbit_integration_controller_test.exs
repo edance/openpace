@@ -2,7 +2,7 @@ defmodule SqueezeWeb.FitbitIntegrationControllerTest do
   use SqueezeWeb.ConnCase
   import Mox
 
-  alias Squeeze.Fitbit.AuthMock
+  alias Squeeze.Fitbit.{AuthMock, ClientMock}
 
   # Make sure mocks are verified when the test exits
   setup :verify_on_exit!
@@ -30,17 +30,7 @@ defmodule SqueezeWeb.FitbitIntegrationControllerTest do
         uid: "12345"
       }
 
-      user_data = %{
-        "firstName" => "John",
-        "lastName" => "Doe",
-        "avatar" => "avatar.jpg",
-        "gender" => "MALE",
-        "dateOfBirth" => "1990-01-01",
-        "timezone" => "America/New_York",
-        "distanceUnit" => "en_US"
-      }
-
-      {:ok, client: client, credential_params: credential_params, user_data: user_data}
+      {:ok, client: client, credential_params: credential_params}
     end
 
     test "signs in existing user with Fitbit credentials", %{
@@ -68,9 +58,6 @@ defmodule SqueezeWeb.FitbitIntegrationControllerTest do
       client: client,
       credential_params: credential_params
     } do
-      user = insert(:user)
-      conn = assign(conn, :current_user, user)
-
       expect(AuthMock, :get_token!, fn [code: "test_code", grant_type: "authorization_code"] ->
         client
       end)
@@ -82,24 +69,40 @@ defmodule SqueezeWeb.FitbitIntegrationControllerTest do
       assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Connected to fitbit"
     end
+  end
 
-    test "creates new user through Fitbit", %{
-      conn: conn,
-      client: client,
-      credential_params: credential_params,
-      user_data: user_data
-    } do
+  describe "#callback without user" do
+    @tag :no_user
+
+    test "creates new user through Fitbit", %{conn: conn} do
+      client = %{access_token: "test_access_token"}
+
+      credential_params = %{
+        access_token: "test_access_token",
+        refresh_token: "test_refresh_token",
+        provider: "fitbit",
+        uid: "12345"
+      }
+
+      user_data = %{
+        "firstName" => "John",
+        "lastName" => "Doe",
+        "avatar" => "avatar.jpg",
+        "gender" => "MALE",
+        "dateOfBirth" => "1990-01-01",
+        "timezone" => "America/New_York",
+        "distanceUnit" => "en_US"
+      }
+
       expect(AuthMock, :get_token!, fn [code: "test_code", grant_type: "authorization_code"] ->
         client
       end)
 
       expect(AuthMock, :get_credential!, fn ^client -> credential_params end)
 
-      expect(Squeeze.Fitbit.Client, :new, fn "test_access_token" ->
-        %{}
-      end)
+      expect(ClientMock, :new, fn _ -> %{} end)
 
-      expect(Squeeze.Fitbit.Client, :get_logged_in_user, fn %{} ->
+      expect(ClientMock, :get_logged_in_user, fn %{} ->
         {:ok, user_data}
       end)
 

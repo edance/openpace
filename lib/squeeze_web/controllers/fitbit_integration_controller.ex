@@ -36,6 +36,10 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     Application.get_env(:squeeze, :fitbit_auth, Fitbit.Auth)
   end
 
+  def client_module do
+    Application.get_env(:squeeze, :fitbit_client, Fitbit.Client)
+  end
+
   defp connect_and_redirect(conn, credential_params) do
     user = conn.assigns.current_user
 
@@ -81,11 +85,18 @@ defmodule SqueezeWeb.FitbitIntegrationController do
   end
 
   defp user_attrs(credential_params) do
-    {:ok, user_data} =
-      credential_params.access_token
-      |> Fitbit.Client.new()
-      |> Fitbit.Client.get_logged_in_user()
+    client = client_module().new(credential_params.access_token)
 
+    case client_module().get_logged_in_user(client) do
+      {:ok, user_data} ->
+        parse_user_data(user_data)
+
+      {:error, _} ->
+        %{}
+    end
+  end
+
+  defp parse_user_data(user_data) do
     %{
       first_name: user_data["firstName"],
       last_name: user_data["lastName"],
@@ -116,17 +127,15 @@ defmodule SqueezeWeb.FitbitIntegrationController do
   end
 
   defp redirect_current_user(conn, credential) do
-    load_history(credential)
-
     conn
     |> put_flash(:info, "Connected to #{credential.provider}")
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp setup_integration(conn, _credential) do
-    #   client = Fitbit.Client.new(credential)
+    #   client = client_module().new(credential)
     #
-    #   case Fitbit.Client.create_subscription(client, credential.user_id) do
+    #   case client_module().create_subscription(client, credential.user_id) do
     #     {:ok, _} ->
     #       conn
     #
@@ -135,10 +144,5 @@ defmodule SqueezeWeb.FitbitIntegrationController do
     #       |> put_flash(:error, "Failed to setup subscription: #{reason}")
     #   end
     conn
-  end
-
-  def load_history(%{provider: "fitbit", uid: id}) do
-    credential = Accounts.get_credential("fitbit", id)
-    Task.start(fn -> Squeeze.Fitbit.HistoryLoader.load_recent(credential) end)
   end
 end

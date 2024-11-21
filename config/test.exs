@@ -34,6 +34,7 @@ config :squeeze, :payment_processor, Squeeze.MockPaymentProcessor
 config :squeeze, :garmin_auth, Squeeze.Garmin.AuthMock
 
 config :squeeze, :fitbit_auth, Squeeze.Fitbit.AuthMock
+config :squeeze, :fitbit_client, Squeeze.Fitbit.ClientMock
 
 config :squeeze, Squeeze.OAuth2.Fitbit,
   client_id: "1",
