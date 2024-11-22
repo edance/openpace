@@ -8,7 +8,6 @@ use std::fs::File;
 use std::io::BufReader;
 use geo_types::LineString;
 
-// TODO: Trackpoints velocity smooth
 // TODO: Trackpoints grade smooth
 // TODO: Laps start_index, end_index
 // TODO: Laps start_date_local
@@ -33,7 +32,7 @@ struct Trackpoint {
     moving: bool,
     temp: Option<i32>,
     time: i64,
-    velocity: Option<f64>,
+    velocity_smooth: Option<f64>,
     watts: Option<f64>,
 }
 
@@ -87,7 +86,7 @@ fn parse_timestamp(timestamp: &str) -> Result<DateTime<Utc>, Error> {
     // Try custom format
     let dt = NaiveDateTime::parse_from_str(timestamp, "%Y-%m-%d %H:%M:%S %z")
         .map_err(|e| Error::Term(Box::new(e.to_string())))?;
-    
+
     Ok(DateTime::from_naive_utc_and_offset(dt, Utc))
 }
 
@@ -100,7 +99,7 @@ fn calculate_velocity(
         (Some(curr_dist), Some((prev_dist, prev_time))) => {
             let distance_change = curr_dist - prev_dist;
             let time_change = (current_time - prev_time) as f64;
-            
+
             if time_change > 0.0 {
                 Some(round_decimal(distance_change / time_change, Some(1)))
             } else {
@@ -114,15 +113,41 @@ fn calculate_velocity(
     }
 }
 
+fn calculate_grade(
+    current_altitude: Option<f64>,
+    current_distance: Option<f64>,
+    previous_points: &[(f64, f64, i64)] // (altitude, distance, time)
+) -> Option<f64> {
+    match (current_altitude, current_distance, previous_points.first()) {
+        (Some(curr_alt), Some(curr_dist), Some((prev_alt, prev_dist, _))) => {
+            let elevation_change = curr_alt - prev_alt;
+            let distance_change = curr_dist - prev_dist;
+
+            if distance_change > 0.0 {
+                // Convert to percentage
+                Some(round_decimal((elevation_change / distance_change) * 100.0, Some(1)))
+            } else {
+                None
+            }
+        },
+        _ => None
+    }
+}
+
 fn create_trackpoint(
     fields: &HashMap<String, String>,
     start_time: DateTime<Utc>,
     prev_distance: Option<f64>,
-    previous_points: &[(f64, i64)]
-) -> (Trackpoint, Option<f64>) {
+    previous_points: &[(f64, f64, i64)] // (altitude, distance, time)
+) -> (Trackpoint, Option<f64>, Option<f64>) {
     let timestamp = parse_timestamp(&fields["timestamp"]).unwrap_or(start_time);
     let time = (timestamp - start_time).num_seconds();
+
     let current_distance = fields.get("distance")
+        .and_then(|v| v.parse().ok())
+        .map(|v| round_decimal(v, Some(1)));
+
+    let current_altitude = get_value_by_priority(&fields, &["enhanced_altitude", "altitude"])
         .and_then(|v| v.parse().ok())
         .map(|v| round_decimal(v, Some(1)));
 
@@ -131,26 +156,24 @@ fn create_trackpoint(
         _ => true
     };
 
-    let velocity = calculate_velocity(current_distance, time, previous_points);
+    let velocity = calculate_velocity(current_distance, time, &previous_points.iter().map(|(_, d, t)| (*d, *t)).collect::<Vec<_>>());
+    let grade = calculate_grade(current_altitude, current_distance, previous_points);
 
     let trackpoint = Trackpoint {
-        altitude: get_value_by_priority(&fields, &["enhanced_altitude", "altitude"])
-            .and_then(|v| v.parse().ok())
-            .map(|v| round_decimal(v, Some(1))),
+        altitude: current_altitude,
         cadence: fields.get("cadence").and_then(|v| v.parse().ok()),
         coordinates: parse_coordinates(&fields),
         distance: current_distance,
-        grade_smooth: fields.get("grade").and_then(|v| v.parse().ok())
-            .map(|v| round_decimal(v, Some(1))),
+        grade_smooth: grade,
         heartrate: fields.get("heart_rate").and_then(|v| v.parse().ok()),
         moving,
         temp: fields.get("temperature").and_then(|v| v.parse().ok()),
         time,
-        velocity,
+        velocity_smooth: velocity,
         watts: fields.get("power").and_then(|v| v.parse().ok()),
     };
 
-    (trackpoint, current_distance)
+    (trackpoint, current_distance, current_altitude)
 }
 
 fn get_sport_type(sport: &str) -> (String, String) {
@@ -175,7 +198,7 @@ fn parse_coordinates(fields: &HashMap<String, String>) -> Option<Coordinates> {
     let lat = fields.get("position_lat")
         .and_then(|v| v.parse::<f64>().ok())
         .map(|v| round_decimal(v / 11_930_465.0, Some(5)));
-    
+
     let lon = fields.get("position_long")
         .and_then(|v| v.parse::<f64>().ok())
         .map(|v| round_decimal(v / 11_930_465.0, Some(5)));
@@ -190,7 +213,7 @@ fn parse_coordinates(fields: &HashMap<String, String>) -> Option<Coordinates> {
 fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error> {
     let fp = File::open(file_path).map_err(|e| Error::Term(Box::new(e.to_string())))?;
     let mut reader = BufReader::new(fp);
-    
+
     let records = fitparser::from_reader(&mut reader)
         .map_err(|e| Error::Term(Box::new(e.to_string())))?;
 
@@ -204,30 +227,32 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
         .collect();
 
     let start_time = parse_timestamp(&session_fields["start_time"])?;
-    
-    // Parse trackpoints
-let mut previous_points: Vec<(f64, i64)> = Vec::with_capacity(5);
-let trackpoints: Vec<Trackpoint> = records.iter()
-    .filter(|record| record.kind() == MesgNum::Record)
-    .scan(None, |prev_distance, record| {
-        let fields: HashMap<String, String> = record.fields().iter()
-            .map(|field| (field.name().to_string(), field.value().to_string()))
-            .collect();
 
-        let (trackpoint, current_distance) = create_trackpoint(&fields, start_time, *prev_distance, &previous_points);
-        
-        // Update previous points
-        if let Some(dist) = current_distance {
-            if previous_points.len() >= 5 {
-                previous_points.remove(0);
+    // Parse trackpoints
+    let mut previous_points: Vec<(f64, f64, i64)> = Vec::with_capacity(5); // (altitude, distance, time)
+    let trackpoints: Vec<Trackpoint> = records.iter()
+        .filter(|record| record.kind() == MesgNum::Record)
+        .scan((None, None), |(prev_distance, prev_altitude), record| {
+            let fields: HashMap<String, String> = record.fields().iter()
+                .map(|field| (field.name().to_string(), field.value().to_string()))
+                .collect();
+
+            let (trackpoint, current_distance, current_altitude) = 
+            create_trackpoint(&fields, start_time, *prev_distance, &previous_points);
+
+            // Update previous points
+            if let (Some(dist), Some(alt)) = (current_distance, current_altitude) {
+                if previous_points.len() >= 5 {
+                    previous_points.remove(0);
+                }
+                previous_points.push((alt, dist, trackpoint.time));
             }
-            previous_points.push((dist, trackpoint.time));
-        }
-        
-        *prev_distance = current_distance;
-        Some(trackpoint)
-    })
-    .collect();
+
+            *prev_distance = current_distance;
+            *prev_altitude = current_altitude;
+            Some(trackpoint)
+        })
+        .collect();
 
     // Create a LineString from our coordinates
     let coords: LineString<f64> = LineString::from(
