@@ -8,10 +8,8 @@ use std::fs::File;
 use std::io::BufReader;
 use geo_types::LineString;
 
-// TODO: Trackpoints grade smooth
 // TODO: Laps start_index, end_index
 // TODO: Laps start_date_local
-// TODO: Laps total_elevation_gain
 
 #[derive(NifStruct)]
 #[module = "Squeeze.FitRecord.Coordinates"]
@@ -276,13 +274,16 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
 
             let start_time = parse_timestamp(&fields["start_time"]).unwrap_or(start_time);
 
+
             Lap {
                 average_cadence: get_value_by_priority(&fields, &["avg_running_cadence", "avg_cadence"])
                     .and_then(|v| v.parse().ok()),
                 average_speed: get_value_by_priority(&fields, &["enhanced_avg_speed", "avg_speed"])
                     .and_then(|v| v.parse().ok()),
                 distance: fields.get("total_distance").and_then(|v| v.parse().ok()),
-                elapsed_time: fields.get("total_elapsed_time").and_then(|v| v.parse().ok()),
+                elapsed_time: fields.get("total_elapsed_time")
+                    .and_then(|v| v.parse::<f64>().ok())
+                    .map(|v| v.round() as i32),
                 start_index: 0,
                 end_index: 0,
                 lap_index: i as i32,
