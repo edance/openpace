@@ -8,7 +8,6 @@ use std::fs::File;
 use std::io::BufReader;
 use geo_types::LineString;
 
-// TODO: Laps start_index, end_index
 // TODO: Laps start_date_local
 
 #[derive(NifStruct)]
@@ -224,7 +223,7 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
         .map(|field| (field.name().to_string(), field.value().to_string()))
         .collect();
 
-    let start_time = parse_timestamp(&session_fields["start_time"])?;
+    let activity_start_time = parse_timestamp(&session_fields["start_time"])?;
 
     // Parse trackpoints
     let mut previous_points: Vec<(f64, f64, i64)> = Vec::with_capacity(5); // (altitude, distance, time)
@@ -236,7 +235,7 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
                 .collect();
 
             let (trackpoint, current_distance, current_altitude) = 
-            create_trackpoint(&fields, start_time, *prev_distance, &previous_points);
+            create_trackpoint(&fields, activity_start_time, *prev_distance, &previous_points);
 
             // Update previous points
             if let (Some(dist), Some(alt)) = (current_distance, current_altitude) {
@@ -272,8 +271,23 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
                 .map(|field| (field.name().to_string(), field.value().to_string()))
                 .collect();
 
-            let start_time = parse_timestamp(&fields["start_time"]).unwrap_or(start_time);
+            let lap_start_time = parse_timestamp(&fields["start_time"]).unwrap_or(activity_start_time);
+            let lap_end_time = parse_timestamp(&fields["timestamp"]).unwrap_or(lap_start_time);
 
+            // Find the start and end index for the lap
+            let start_index = trackpoints.iter()
+                .position(|tp| {
+                    let tp_time = activity_start_time + chrono::Duration::seconds(tp.time);
+                    tp_time >= lap_start_time
+                })
+                .unwrap_or(0) as i32;
+
+            let end_index = trackpoints.iter()
+                .position(|tp| {
+                    let tp_time = activity_start_time + chrono::Duration::seconds(tp.time);
+                    tp_time >= lap_end_time
+                })
+                .unwrap_or(trackpoints.len() - 1) as i32;
 
             Lap {
                 average_cadence: get_value_by_priority(&fields, &["avg_running_cadence", "avg_cadence"])
@@ -284,16 +298,16 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
                 elapsed_time: fields.get("total_elapsed_time")
                     .and_then(|v| v.parse::<f64>().ok())
                     .map(|v| v.round() as i32),
-                start_index: 0,
-                end_index: 0,
+                start_index,
+                end_index,
                 lap_index: i as i32,
                 max_speed: get_value_by_priority(&fields, &["enhanced_max_speed", "max_speed"])
                     .and_then(|v| v.parse().ok()),
                 moving_time: fields.get("total_elapsed_time").and_then(|v| v.parse().ok()),
                 name: fields.get("event").cloned(),
                 split: (i + 1) as i32,
-                start_date: start_time.naive_utc().to_string(),
-                start_date_local: start_time.naive_utc().to_string(),
+                start_date: lap_start_time.naive_utc().to_string(),
+                start_date_local: lap_start_time.naive_utc().to_string(),
                 total_elevation_gain: fields.get("total_ascent").and_then(|v| v.parse().ok()),
             }
         })
@@ -308,8 +322,8 @@ fn parse_fit_file<'a>(env: Env<'a>, file_path: String) -> Result<Term<'a>, Error
         duration: session_fields.get("total_elapsed_time").and_then(|v| v.parse().ok()),
         moving_time: session_fields.get("total_elapsed_time").and_then(|v| v.parse().ok()),
         elapsed_time: session_fields.get("total_elapsed_time").and_then(|v| v.parse().ok()),
-        start_at: start_time.to_string(),
-        start_at_local: start_time.to_string(),
+        start_at: activity_start_time.to_string(),
+        start_at_local: activity_start_time.to_string(),
         elevation_gain: session_fields.get("total_ascent").and_then(|v| v.parse().ok()),
         polyline,
         trackpoints,
