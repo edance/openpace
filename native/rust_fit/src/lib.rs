@@ -9,6 +9,10 @@ use std::io::BufReader;
 use geo_types::LineString;
 
 // TODO: Laps start_date_local
+// TODO: Fix start_date_local for activity
+// TODO: Add tests
+// TODO: Refactor to make more readable
+// TODO: Add fields like ground contact time, vertical oscillation, etc.
 
 #[derive(NifStruct)]
 #[module = "Squeeze.FitRecord.Coordinates"]
