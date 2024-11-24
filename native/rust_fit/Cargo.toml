@@ -12,4 +12,7 @@ crate-type = ["cdylib"]
 [dependencies]
 fitparser = "0.7.0"
 rustler = "0.34.0"
+chrono = { version = "0.4", features = ["serde"] }
+polyline = "0.11"
+geo-types = "0.7"
 
